@@ -107,6 +107,4 @@
         </div>
     </div>
     <!-- TEAM COMA SPACE -->
-    </div>
-  </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

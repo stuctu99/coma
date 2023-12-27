@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+	</div>
+  </div>
   <!--   Core   -->
   <script src="/resource/js/plugins/jquery/dist/jquery.min.js"></script>
   <script src="/resource/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
