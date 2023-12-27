@@ -11,3 +11,7 @@ $(".sub-menu li a").mouseenter(function (e) {
 
       $(this).css("cursor", "pointer");
 })
+
+$("#messenger-btn").click(function(){
+	open("${pageContext.request.contextPath}/chat","_blank","width=550px; height=600px;");
+})

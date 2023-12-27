@@ -13,7 +13,7 @@
     Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim
   </title>
   <!-- Favicon -->
-  <link href="/resource/img/brand/favicon.png" rel="icon" type="image/png">
+  <link href="/resource/img/brand/favicon_2.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -153,7 +153,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
           <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
+            <a class="nav-link" id="messenger-btn">
               <i class="ni ni-spaceship"></i> Messenger
             </a>
           </li>
