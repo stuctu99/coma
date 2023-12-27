@@ -21,12 +21,12 @@
   <link href="/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
-  <style>
+  <!-- <style>
     div{
       border: 2px solid red;
     }
 
-  </style>
+  </style> -->
 </head>
 
 <body class="">
