@@ -12,11 +12,12 @@
               <h3>문서 종류</h3>
             </div>
             <div class="col-3">
-            	<select class="form-control form-control-sm">
-				  <option>휴가 신청서</option>
-				  <option>지출 결의서</option>
-				  <option>품의서</option>
-				  <option>기타 문서</option>
+            	<select class="form-control form-control-sm" onchange="docType(this.value);">
+				  <option value="" selected disabled hidden>선택하세요</option>
+				  <option value="휴가신청서">휴가신청서</option>
+				  <option value="지출결의서">지출결의서</option>
+				  <option value="품의서">품의서</option>
+				  <option value="기타">기타</option>
 				</select>
             </div>
             <div class="col-3">
@@ -137,15 +138,91 @@
           </div>
           <div class="row">
             <div class="col-12">
-              <h1>문서 종류별 입력</h1>
+             	<hr>
             </div>
           </div>
+          
+          <div id="휴가신청서" style="display:none;">
+	          <div class="row">
+		          	<div class="col-3">
+		          		<h2>휴가종류</h2>
+		          	</div>
+		          	<div class="col-3">
+		          		<select class="form-control form-control-sm">
+						  <option>연차</option>
+						  <option>반차</option>
+						</select>
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+	          </div>
+	      </div>
+	        
+          <div id="지출결의서" style="display:none;">      
+	          <div class="row">
+		          	<div class="col-3">
+		          		<h2>지출결의서</h2>
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+	          </div> 
+           </div>
+          <div id="품의서" style="display:none;">
+	          <div class="row">
+		          	<div class="col-3">
+		          		<h2>품의서</h2>
+		          	</div>
+		          	<div class="col-3">	
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+	          </div>
+          </div>
+          
+          <div id="기타" style="display:none;">
+	           <div class="row">
+		          	<div class="col-3">
+		          		<h2>기타 문서</h2>
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+		          	<div class="col-3">
+		          	</div>
+	          </div>
+	     </div>
+          
           <!-- coma content space -->
         </div>
     </div>
     <!-- TEAM COMA SPACE -->
     </div>
   </div>
+  
+  
+  <script>
+  	const docType = function(value){
+  		
+  		console.log("테스트: " + value);
+  		
+  		document.getElementById("휴가신청서").style.display= "none";
+  		document.getElementById("지출결의서").style.display= "none";
+  		document.getElementById("품의서").style.display= "none";
+  		document.getElementById("기타").style.display= "none";
+  		
+  		document.getElementById(value).style.display="block";
+  	}
+  
+  </script>
   
   <style>
   	 .appr_table{
