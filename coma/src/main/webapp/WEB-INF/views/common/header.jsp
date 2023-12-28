@@ -10,7 +10,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
-    Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim
+    Coma Academy
   </title>
   <!-- Favicon -->
   <link href="/resource/img/brand/favicon_2.png" rel="icon" type="image/png">
@@ -108,7 +108,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="#">
+            <a class="nav-link " href="/calender">
               <i class="ni ni-pin-3 text-orange"></i> 캘린더
             </a>
           </li>
