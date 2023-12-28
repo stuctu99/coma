@@ -12,6 +12,12 @@ $(".sub-menu li a").mouseenter(function (e) {
       $(this).css("cursor", "pointer");
 })
 
+
+let messenger;
+
 $("#messenger-btn").click(function(){
-	open("${pageContext.request.contextPath}/chat","_blank","width=550px; height=600px;");
+	messenger = window.open("/chatting","_blank","width=550px, height=600px, location=no");
 })
+
+
+
