@@ -240,27 +240,40 @@ div {
 					<div class="modal-body">
 						<div class="container">
 							<div class="row">
-								<div class="col-12">
-								<strong>채팅방 제목</strong>								
+								<div class="col-6">
+									<strong>채팅방 제목</strong>								
+								</div>
+								<div class="col-6">
+									<strong>유형</strong>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
+								<div class="col-6">
 									<input type="text"/>
 								</div>
+								<div class="col-6">
+									<select name="roomType">
+										<option value="All">공통</option>
+										<option value="D1">관리부</option>
+										<option value="D2">행정부</option>
+										<option value="D3">회계부</option>
+										<option value="D4">교육부</option>
+										<option value="D5">취업부</option>
+									</select>
+								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
+								<div class="col-6">
 								<strong>비밀번호</strong>								
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
+								<div class="col-6">
 									<input type="password" id="password" disabled/>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
+								<div class="col-6">
 									<input type="checkbox" id="passwordFlag"/>
 									<label for="passwordFlag"><strong>비밀번호</strong></label>
 								</div>

@@ -157,6 +157,7 @@
               <i class="ni ni-spaceship"></i> Messenger
             </a>
           </li>
+         </ul>
       </div>
     </div>
   </nav>
