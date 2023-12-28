@@ -3,7 +3,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
 /*     div{
       border: 2px solid red;
@@ -18,7 +19,8 @@
 		<div class="col-12">
 			<div class="row">
 				<div class="col-1"></div>
-				<div id="chart_div" class="col-10"></div>
+				<!-- <div id="chart_div" class="col-10"></div> -->
+				<div><canvas id="myChart"></canvas></div>
 				<div class="col-1"></div>
 			</div>
 		</div>
@@ -118,7 +120,45 @@
 	</div>
 </div>
 <script>
-google.charts.load('current', {'packages':['bar']});
+//chart.js
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+//Google 차트 js
+/* google.charts.load('current', {'packages':['bar']});
 google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
@@ -155,7 +195,7 @@ function drawChart() {
       chart.draw(data, google.charts.Bar.convertOptions(options));
     }
   }
-}
+} */
 </script>
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

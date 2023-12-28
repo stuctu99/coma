@@ -3,6 +3,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
+
+
+
 <!-- TEAM COMA SPACE -->
 <style>
 /*   div{
@@ -20,6 +23,7 @@
 } 
 
 </style>
+
 <div class="coma-container"
 	style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
 	<div class="row">
@@ -78,50 +82,9 @@
 					<h2>내 일정</h2>
 				</div>
 			</div>
-			<div class="date-wrap bigContainer" >
-            <div class="date-month">
-                
-                <div class="button_wrap">
-                    <button type="button" id="month-prev" class="month-move btn btn-primary" data-ym="2022-04-01"> < </button>
-                    <span id="month-this">2022.05</span>
-                    <button type="button" id="month-next" class="month-move btn btn-primary" data-ym="2022-06-01"> > </button>
-                </div>
-            </div>
-            <table class="date-month">
-                <thead>
-                    <tr>
-                        <th>일</th>
-                        <th>월</th>
-                        <th>화</th>
-                        <th>수</th>
-                        <th>목</th>
-                        <th>금</th>
-                        <th>토</th>
-                    </tr>
-                </thead>
-                <tbody id="tbl-month">
-                    <tr>
-                        <td class="sun"><a>1</a></td>
-                        <td class=""><a href="/news/schedule?date=2022-05-02">2</a></td>
-                        <td class=""><a>3</a></td>
-                        <td class=""><a>4</a></td>
-                        <td class="today"><a>5</a></td>
-                        <td class=""><a>6</a></td>
-                        <td class="sat"><a>7</a></td>
-                    </tr>
-                    <!-- 행 반복 -->
-                    <tr>
-                        <td class="sun"><a>29</a></td>
-                        <td class=""><a>30</a></td>
-                        <td class=""><a>31</a></td>
-                        <td class=""><a></a></td>
-                        <td class=""><a></a></td>
-                        <td class=""><a></a></td>
-                        <td class="sat"></a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+			<div>
+				달력
+			</div>
 		</div>
 		
 		<div class=" col-8">
@@ -164,8 +127,6 @@
 								<td>간식이 간다 이벤트</td>
 								<td>2023.11.5</td>
 							</tr>
-						
-						
 						</table>
 					</div>
 				</div>
@@ -173,6 +134,7 @@
 		</div>
 	</div>
 </div>
+
 
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
