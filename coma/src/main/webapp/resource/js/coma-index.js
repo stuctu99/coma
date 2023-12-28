@@ -13,10 +13,9 @@ $(".sub-menu li a").mouseenter(function (e) {
 })
 
 
-let messenger;
 
 $("#messenger-btn").click(function(){
-	messenger = window.open("/chatting","_blank","width=550px, height=600px, location=no");
+	window.open("/chatting","_blank","width=550px, height=600px");
 })
 
 

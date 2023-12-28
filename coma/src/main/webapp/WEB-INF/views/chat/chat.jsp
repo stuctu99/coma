@@ -57,8 +57,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>원장</small> <small>유병승</small>
+				<div class="col-2 job-name">
+					<small>원장</small>
+				</div>
+				<div class="col-7">
+					<small>유병승</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
@@ -66,8 +69,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>부원장</small> <small>이규홍</small>
+				<div class="col-2 job-name">
+					<small>부원장</small>
+				</div>
+				<div class="col-7">
+					<small>이규홍</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
@@ -80,8 +86,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>팀장</small> <small>정우현</small>
+				<div class="col-2 job-name">
+					<small>팀장</small>
+				</div>
+				<div class="col-7">
+					<small>정우현</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
@@ -89,8 +98,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>팀원</small> <small>장세영</small>
+				<div class="col-2 job-name">
+					<small>팀원</small>
+				</div>
+				<div class="col-7">
+					<small>장세영</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
@@ -103,8 +115,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>팀장</small> <small>이보연</small>
+				<div class="col-2 job-name">
+					<small>팀장</small>
+				</div>
+				<div class="col-7">
+					 <small>이보연</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
@@ -112,8 +127,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>사원</small> <small>최종민</small>
+				<div class="col-2 job-name">
+					<small>사원</small>
+				</div>
+				<div class="col-7">
+					 <small>최종민</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
@@ -126,8 +144,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>강사팀장</small> <small>김철수</small>
+				<div class="col-2 job-name">
+					<small>강사팀장</small>
+				</div>
+				<div class="col-7">
+					 <small>김철수</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
@@ -135,8 +156,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>강사</small> <small>김영희</small>
+				<div class="col-2 job-name">
+					<small>강사</small> 
+				</div>
+				<div class="col-7">
+					<small>김영희</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
@@ -149,8 +173,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>팀장</small> <small>이보연</small>
+				<div class="col-2 job-name">
+					<small>팀장</small>
+				</div>
+				<div class="col-7">
+					 <small>이보연</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
@@ -158,8 +185,11 @@ div {
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-9">
-					<small>사원</small> <small>최종민</small>
+				<div class="col-2 job-name">
+					<small>팀원</small>
+				</div>
+				<div class="col-7">
+					<small>최종민</small>
 				</div>
 				<div class="col-2" style="padding: 0px 0px;">
 					<button class="btn btn-outline-primary">대화</button>
