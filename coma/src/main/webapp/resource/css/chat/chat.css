@@ -4,6 +4,7 @@ header {
   top: 0; left: 0;
   width: 100%;
   height: 110px;
+  z-index: 100;
   background-color: white;
 }
 section {
@@ -17,11 +18,20 @@ footer {
   background-color:white;
 }
 
+.btn{
+	padding:4px 15px !important;
+	height: 30px;
+}
 
 div.container{
 	max-width: 1536px !important;
 	overflow: auto;
 }
+
+div.container h4{
+	margin:0;
+}
+
 
 button.menu{
 	width:100%;
@@ -73,7 +83,7 @@ hr {
 
 #create-room{
 	display: none;
-	position: absolute;
+	position: fixed;
 	right: 30px;
 	bottom: 30px;
 }
@@ -89,10 +99,12 @@ hr {
 }
 
 .job-class{
-	border-top: 1px solid gray;
-	border-bottom: 1px solid gray;
+	border-top: 1px solid rgba(236, 230, 237, 0.9);
+	border-bottom: 1px solid rgba(236, 230, 237, 0.9);
+	padding-top:5px;
 	padding-bottom: 5px;
-	margin-bottom: 10px;
+	margin-top:7px !important;
+	margin-bottom: 7px;
 }
 
 .job-name{
@@ -101,11 +113,25 @@ hr {
 }
 
 .chatting-room{
-	border: 1px solid gray;
+	border-top: 1px solid rgba(236, 230, 237, 0.9);
+	border-bottom: 1px solid rgba(236, 230, 237, 0.9);
+	padding-top:5px;
 	padding-bottom: 5px;
-	margin-bottom: 10px;
+	margin-top:7px !important;
+	margin-bottom: 7px;
 }
 
 .footer-hr{
 	margin:5px 0 !important;
+}
+
+
+/* Create Room Modal */
+.modal-body{
+	border-top: 1px solid rgba(236, 230, 237, 0.9);
+	border-bottom: 1px solid rgba(236, 230, 237, 0.9);
+}
+
+.modal-body .row{
+	margin: 5px 0px;
 }
