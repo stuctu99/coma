@@ -143,7 +143,3 @@ function fullDays(date) {
             drawMonth($(this).data('ym'));
         });
     });
-
-    
-    
->>>>>>> refs/heads/master
