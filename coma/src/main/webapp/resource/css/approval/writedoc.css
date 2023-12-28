@@ -1,0 +1,17 @@
+ .appr_table{
+    width: 700px;
+    height: 150px;
+    border: 1px solid #444444;
+    
+  }
+  .ref_table{
+  	width: 700px;
+  	height: 30px;
+  	  border: 1px solid #444444;
+  }
+  th, td, th {
+    border: 1px solid #444444;
+  }
+  .nav-item{
+  	margin: 5px;
+  }

@@ -1,0 +1,111 @@
+@charset "UTF-8";
+header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 110px;
+  background-color: white;
+}
+section {
+  padding-top: 110px; padding-bottom: 50px;
+}
+footer {
+  position: fixed;
+  bottom: 0; left: 0;
+  height: 5px;
+  width: 100%;
+  background-color:white;
+}
+
+
+div.container{
+	max-width: 1536px !important;
+	overflow: auto;
+}
+
+button.menu{
+	width:100%;
+}
+
+div.header-menu > div{
+	padding: 0 0;
+}
+
+div.header-menu>div:nth-child(1){
+/*	background-color: #edebf0;*/
+}
+
+strong:has(div){
+	background-color: #f1ebf7;
+}
+
+.emp-list>.row:nth-child(1){
+	margin-top:10px;
+	text-align: center;
+}
+
+.chatting-list>.row:nth-child(1){
+	margin-top:10px;
+	text-align: center;
+}
+
+div.header-menu img{
+	width:40px;
+	height: 40px;
+	padding: 1px 1px;
+	margin-bottom: 5px;
+}
+
+hr {
+    margin: 2px 0 !important;
+    color: inherit;
+    border: 0;
+    border-top: var(--bs-border-width) solid;
+    opacity: .25;
+}
+
+.chat-title{
+	padding:5px;
+	background-color: #a24ff0;
+	color: #f1ebf7;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#create-room{
+	display: none;
+	position: absolute;
+	right: 30px;
+	bottom: 30px;
+}
+
+.emp-list, .chatting-list{
+	margin-top:5px;
+	text-align: left;
+}
+
+.emp-list>div.row{
+	padding:0px 5px;
+	margin-bottom: 2px;
+}
+
+.job-class{
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
+
+.job-name{
+	text-align: right;
+	font-weight: bold;
+}
+
+.chatting-room{
+	border: 1px solid gray;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
+
+.footer-hr{
+	margin:5px 0 !important;
+}
