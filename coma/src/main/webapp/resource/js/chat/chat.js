@@ -26,8 +26,27 @@ $(".chatting-list-btn").click(function(){
 	$("#create-room").css("display","block");
 })
 
+/* 방생성 입력 창 패스워드 활성화 */
+
+$("#passwordFlag").click(function(){
+	console.log(this);
+	if($("#passwordFlag").is(":checked")){
+		console.log("체크");
+		$("#password").prop("disabled",false);
+		$("#password").focus();
+	}else{
+		$("#password").prop("disabled",true);
+	}
+})
+
+/* 방생성 */
+const createRoom = () =>{
+	console.log("active");
+}
 
 
+
+/* 웹소켓 채팅 */
 function getId(id){
 	return document.getElementById(id);
 }
