@@ -1,5 +1,7 @@
   	const docType = function(value){
   		
+  		console.log(value);
+  		
   		document.getElementById("leave").style.display= "none";
   		document.getElementById("cash").style.display= "none";
   		document.getElementById("req").style.display= "none";

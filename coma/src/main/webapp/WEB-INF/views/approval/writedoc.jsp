@@ -31,7 +31,7 @@
 	       
 		            <div class="col-12">
 		            	 <select class="form-control form-control-sm" onchange="docType(this.value);">
-						  <option value="" selected disabled hidden>선택하세요</option>
+						  <option value="" selected disabled hidden>문서 종류를 선택하세요.</option>
 						  <option value="leave">휴가신청서</option>
 						  <option value="cash">지출결의서</option>
 						  <option value="req">품의서</option>
@@ -56,7 +56,7 @@
 	          </div>
           </div>
           <div class="row">
-            <div class="col-3">
+            <div class="col-3 line_btn">
             	<button type="button" class="btn btn-secondary btn-lg">결재선 설정</button>
             </div>
             <div class="col-3">
@@ -70,42 +70,37 @@
             <div class="col-12">
               <table class="appr_table">
               	<tr>
+              		<td style="width:100px">
+              			
+              		</td>
+              		<td>
+              			인사팀
+              		</td>
               		<td>
               			
               		</td>
               		<td>
-              			직책
+              			
               		</td>
               		<td>
-              			직책
-              		</td>
-              		<td>
-              			직책
-              		</td>
-              		<td>
-              			직책
+              			
               		</td>
               	</tr>
               	<tr>
-              		<td>
-              			<h1>결</h1>
-              			<h1>재</h1>
+              		<td class="sign_td">
+              			<h5>결재자</h5>
               		</td>
-              		<td>
-              			<h1>서</h1>
-              			<h1>명</h1>
+              		<td class="sign_td">
+
               		</td>
-              		<td >
-              			<h1>서</h1>
-              			<h1>명</h1>
+              		<td class="sign_td">
+              			
               		</td>
-              		<td >
-              			<h1>서</h1>
-              			<h1>명</h1>
+              		<td class="sign_td">
+              		
               		</td>
-              		<td >
-              			<h1>서</h1>
-              			<h1>명</h1>
+              		<td class="sign_td">
+              		
               		</td>
               	</tr>
             
@@ -114,21 +109,21 @@
               			
               		</td>
               		<td>
-              			이름
+              			이보연
               		</td>
               		<td>
-              			이름
+              			
               		</td>
               		<td>
-              			이름
+              			
               		</td>
               		<td>
-              			이름
+              			
               		</td>
               	</tr>
            		<tr>
-           			<th style="width:120px" >참조자</th>
-           			<td colspan="4">이보연</td>
+           			<th style="width:100px" >참조자</th>
+           			<td colspan="4" class="ref_name"> 이보연, 정우현</td>
            		</tr>
               </table>
             </div>
@@ -138,6 +133,12 @@
             <div class="col-12">
             </div>
           </div>
+          <div class="row line3">
+          	<div class="col-12 ">
+          	
+          	</div>
+          </div>  
+          
           <!-- 토스트 에디터 -->
           <div class="row">
             <div class="col-12">

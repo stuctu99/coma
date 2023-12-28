@@ -1,5 +1,5 @@
 .row{
-	    /* border: 1px solid #444444;*/
+	  /*   border: 1px solid #444444;*/
 	     background-color: lavenderblush;
 	     width: 100%;
 	  
@@ -8,16 +8,29 @@
  .appr_table{
     width: 700px;
     height: 150px;
-    border: 1px solid #444444;
+    border: 1px solid rgb(192, 192, 192);
+    background-color: rgb(255, 255, 255);
+ 
     
   }
+  
+  .sign_td{
+	  width: 100px;
+	  height: 100px;
+	  
+  }
+  .ref_name{
+	  text-align: left;
+
+  }
+  
  .ref_table{
   	width: 700px;
   	height: 30px;
-    border: 1px solid #444444;
+    border: 1px solid rgb(192, 192, 192);
   }
   th, td, th {
-    border: 1px solid #444444;
+    border: 1px solid rgb(192, 192, 192);
   }
   .nav-item{
   	margin: 5px;
@@ -29,7 +42,10 @@
 	
 	
   }
-  
+  .line_btn{
+	  text-align: left;
+	  margin: 5px;
+  }
 
   
   .line1{
@@ -39,3 +55,4 @@
   .line3{
 	  height: 50px;
   }
+  
