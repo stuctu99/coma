@@ -8,8 +8,13 @@ public class ApprovalController {
 
 	
 	@GetMapping("/approval/writedoc")
-	public String test() {
+	public String writeDoc() {
 		return "/approval/writedoc";
+	}
+	
+	@GetMapping("/approval/sign")
+	public String sign() {
+		return "/approval/sign";
 	}
 	
 }

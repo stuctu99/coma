@@ -1,17 +1,41 @@
+.row{
+	    /* border: 1px solid #444444;*/
+	     background-color: lavenderblush;
+	     width: 100%;
+	  
+  }
+ 
  .appr_table{
     width: 700px;
     height: 150px;
     border: 1px solid #444444;
     
   }
-  .ref_table{
+ .ref_table{
   	width: 700px;
   	height: 30px;
-  	  border: 1px solid #444444;
+    border: 1px solid #444444;
   }
   th, td, th {
     border: 1px solid #444444;
   }
   .nav-item{
   	margin: 5px;
+  }
+
+  .doc_basic{
+	  
+	width: 100%;
+	
+	
+  }
+  
+
+  
+  .line1{
+	  height: 50px;
+	  text-align: right;
+  }
+  .line3{
+	  height: 50px;
   }
