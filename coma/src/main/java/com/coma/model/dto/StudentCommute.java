@@ -16,5 +16,5 @@ public class StudentCommute {
 	private String stuCommuteNo;
 	private String stuCommuteStatus;
 	private Date stuCommuteDate;
-	private String stuNo;
+	private String stuNo; //test이후에 수정예정
 }
