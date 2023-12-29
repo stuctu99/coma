@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
@@ -98,10 +102,10 @@
 			<div class="row">
 				<div class="col-8" style="padding-right:0px;">
 					<form>
-					<input class="form-control form-control-sm" type="text" placeholder="추가할 사원 이름" required>
+					<input class="form-control form-control-sm" id="empNname" type="text" placeholder="추가할 사원 이름" required>
 				</div>
 				<div class="col-2">
-					<button type=submit class="btn btn-primary btn-sm">
+					<button type=submit class="btn btn-primary btn-sm" onclick="fn_addEmp();">
 						<span>사원 추가</span>
 					</button>
 					</form>
@@ -123,16 +127,20 @@
 		            </tr>
 		        </thead>
 		        <tbody class="list">
+		         <c:if test="${not empty emps}">
+		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
-		        		<td>아이디</td>
-		        		<td><a href="#">이름</a></td>
-		        		<td>부서</td>
-		        		<td>직책</td>
+		        		<td><c:out value="${e.empId }"/></td>
+		        		<td><a href="#"><c:out value="${e.empName }"/></a></td>
+		        		<td><c:out value="${e.deptCode }"/></td>
+		        		<td><c:out value="${e.jobCode }"/></td>
 		        		<td><a href="#">근무상태</a></td>
 		        		<td>
-			        		<button type="button" class="btn btn-secondary btn-sm">삭제</button>
+			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp();">삭제</button>
 		        		</td>
 		        	</tr>
+					 </c:forEach>
+		           </c:if>
 		        </tbody>
 		    </table>
 		</div>
@@ -176,6 +184,37 @@ const myChart = new Chart(ctx, {
     }
 });
 
+function fn_addEmp(){
+	const empName=document.getElementById("empNname").value;
+	console.log(empName);
+	fetch("${path}/admin/addEmp?empName="+empName)
+	.then(response=>{
+		console.log(response);
+		if(response.status!=200){
+			throw new Error("");
+		}
+		return response.json();
+	}).then(data=>{
+		console.log(data);
+	}).catch(e=>{
+		alert(e);
+	});
+}
+
+function fn_deleteEmp(){
+	fetch("${path}/admin/deletdEmp?empName=${emps.empName}")
+	.then(response=>{
+		console.log(response);
+		if(response.status!=200){
+			throw new Error("");
+		}
+		return response.json();
+	}).then(data=>{
+		console.log(data);
+	}).catch(e=>{
+		alert(e);
+	});
+}
 
 //Google 차트 js
 /* google.charts.load('current', {'packages':['bar']});
