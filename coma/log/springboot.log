@@ -3611,3 +3611,5 @@ java.lang.NumberFormatException: For input string: "empName"
 2023-12-29T17:27:31.892+09:00  INFO 2092 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
 2023-12-29T17:27:31.896+09:00  INFO 2092 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 0.727 seconds (process running for 3971.406)
 2023-12-29T17:27:31.898+09:00  INFO 2092 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-12-29T17:39:06.870+09:00  INFO 2092 --- [RMI TCP Connection(90)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-12-29T17:39:06.895+09:00  INFO 2092 --- [RMI TCP Connection(90)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
