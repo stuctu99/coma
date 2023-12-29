@@ -1,4 +1,4 @@
-package com.coma.chatting.model.dto;
+package com.coma.model.dto;
 
 import java.sql.Date;
 

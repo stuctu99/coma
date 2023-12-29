@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.coma.chatting.model.dto.Emp;
+import com.coma.model.dto.Emp;
 
 @Repository
 public class ChattingDaoImpl implements ChattingDao {

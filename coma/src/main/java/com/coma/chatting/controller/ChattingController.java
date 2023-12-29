@@ -7,8 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.coma.chatting.model.dto.Emp;
 import com.coma.chatting.model.service.ChattingService;
+import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
 
