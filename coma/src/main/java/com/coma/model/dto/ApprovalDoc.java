@@ -1,4 +1,4 @@
-package com.coma.approval.model.dto;
+package com.coma.model.dto;
 
 import java.security.Timestamp;
 
