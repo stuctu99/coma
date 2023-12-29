@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,6 +65,7 @@ div {
 			<!------------------- 사원 데이터 ----------------------->
 			<div class="row">
 				<div class="col-12 job-class">
+					<c:out value="${empList}"/>
 					<strong>임원진</strong>
 				</div>
 			</div>
@@ -231,7 +234,7 @@ div {
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">채팅방 생성</h5>
+						<h3 class="modal-title" id="exampleModalLabel">채팅방 생성</h3>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>

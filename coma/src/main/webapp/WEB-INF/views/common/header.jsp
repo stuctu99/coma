@@ -37,7 +37,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="./index.html">
+      <a class="navbar-brand pt-0" href="/">
         <img src="/resource/img/brand/COMA2.png" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
@@ -77,7 +77,7 @@
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <a href="./index.html">
+              <a href="/">
                 <img src="/resource/img/brand/blue.png">
               </a>
             </div>
@@ -168,7 +168,7 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="./index.html">COMA GROUPWARE</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/">COMA GROUPWARE</a>
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
