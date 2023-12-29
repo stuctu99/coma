@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.coma.chatting.model.dao.ChattingDao;
+import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,13 @@ public class ChattingServiceImpl implements ChattingService {
 	public List<String> chattingList() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public int insertChattingRoom(ChattingRoom room) {
+		// TODO Auto-generated method stub
+		return dao.insertChattingRoom(session, room);
 	}
 
 }

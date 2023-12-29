@@ -28,14 +28,14 @@ $(".chatting-list-btn").click(function(){
 
 /* 방생성 입력 창 패스워드 활성화 */
 
-$("#passwordFlag").click(function(){
+$("#roomPasswordFlag").click(function(){
 	console.log(this);
-	if($("#passwordFlag").is(":checked")){
+	if($("#roomPasswordFlag").is(":checked")){
 		console.log("체크");
-		$("#password").prop("disabled",false);
-		$("#password").focus();
+		$("#roomPassword").prop("disabled",false);
+		$("#roomPassword").focus();
 	}else{
-		$("#password").prop("disabled",true);
+		$("#roomPassword").prop("disabled",true);
 	}
 })
 

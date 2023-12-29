@@ -233,6 +233,7 @@ div {
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
+				<form action="/chatting" method="post">
 					<div class="modal-header">
 						<h3 class="modal-title" id="exampleModalLabel">채팅방 생성</h3>
 						<button type="button" class="close" data-dismiss="modal"
@@ -252,11 +253,11 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="text"/>
+									<input type="text" name="roomName"/>
 								</div>
 								<div class="col-6">
 									<select name="roomType">
-										<option value="All">공통</option>
+										<option value="A">공통</option>
 										<option value="D1">관리부</option>
 										<option value="D2">행정부</option>
 										<option value="D3">회계부</option>
@@ -272,22 +273,25 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="password" id="password" disabled/>
+									<input type="password" name="roomPassword" id="roomPassword" disabled/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="checkbox" id="passwordFlag"/>
-									<label for="passwordFlag"><strong>비밀번호</strong></label>
+									<input type="checkbox" name="roomPasswordFlag" id="roomPasswordFlag"/>
+									<label for="roomPasswordFlag"><strong>비밀번호</strong></label>
 								</div>
 							</div>
 						</div>
+			
 					</div>
+					
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
-						<button type="button" onclick="createRoom();" class="btn btn-primary">생성</button>
+						<button class="btn btn-primary">생성</button>
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>
