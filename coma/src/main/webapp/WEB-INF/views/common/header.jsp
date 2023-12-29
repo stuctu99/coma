@@ -10,7 +10,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
-    Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim
+    Coma Academy
   </title>
   <!-- Favicon -->
   <link href="/resource/img/brand/favicon_2.png" rel="icon" type="image/png">
@@ -102,7 +102,7 @@
               <i class="ni ni-planet text-blue"></i> 전자결재
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
-              <li><a href="">결재신청</a></li>
+              <li><a href="/approval/writedoc">결재신청</a></li>
               <li><a href="">결재문서함</a></li>
               <li><a href="">?</a></li>
             </ul>
