@@ -553,3 +553,10 @@ Caused by: org.apache.ibatis.builder.BuilderException: Mapper's namespace cannot
 2023-12-29T12:30:58.666+09:00  INFO 20040 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
 2023-12-29T12:30:58.705+09:00  INFO 20040 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
 2023-12-29T12:30:58.715+09:00  INFO 20040 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 2.486 seconds (process running for 3.136)
+2023-12-29T12:33:52.913+09:00  INFO 20040 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-29T12:33:52.914+09:00  INFO 20040 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-12-29T12:33:52.915+09:00  INFO 20040 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2023-12-29T12:38:06.279+09:00  INFO 20040 --- [RMI TCP Connection(16)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2023-12-29T12:38:06.295+09:00  INFO 20040 --- [RMI TCP Connection(16)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-12-29T12:38:16.310+09:00  WARN 20040 --- [RMI TCP Connection(16)-127.0.0.1] com.zaxxer.hikari.pool.HikariPool        : Timed-out waiting for close connection executor to shutdown
+2023-12-29T12:38:16.310+09:00  INFO 20040 --- [RMI TCP Connection(16)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
