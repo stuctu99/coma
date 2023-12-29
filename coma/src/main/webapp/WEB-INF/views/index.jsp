@@ -3,7 +3,18 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+ <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const calendarEl = document.getElementById('calendar')
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          expandRows: true, // 화면에 맞게 높이 설정
+        })
+        calendar.render()
+      })
 
+    </script>
 
 
 <!-- TEAM COMA SPACE -->
@@ -11,6 +22,7 @@
 /*   div{
 	border: 2px solid red;
 }   */
+
 .bigContainer{
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
@@ -18,6 +30,17 @@
 	background-color: #f1edff;
 	border-radius: 20px;
 }
+.bigContainer2{
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	padding: 30px;
+	background-color: #f1edff;
+	border-radius: 50px;
+}
+#calendar{
+	height: 500px;
+}
+
  td{
 	    padding: 15px;
 } 
@@ -35,7 +58,7 @@
 			</div>
 			<div class="bigContainer"
 				style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
-				<h1 class="current-time" id="current-time"></h1>
+				<h1 class="current-time" id="current-time">09:11:32</h1>
 				<div class="row" class="row"
 					style="display: flex; flex-direction: row; justify-content: space-evenly;">
 					<div>
@@ -82,13 +105,13 @@
 					<h2>내 일정</h2>
 				</div>
 			</div>
-			<div>
-				달력
+			<div class="bigContainer2">
+				<div id='calendar'></div>
 			</div>
 		</div>
 		
 		<div class=" col-8">
-			<div class="bigContainer" >
+			<div class="bigContainer"  >
 				<div class = "row">
 					<div class= col-12 style="text-align: center;">
 						<h1 style="text-align: center; margin : 150px;"> <i class="ni ni-world"></i>인사과 user1님, 환영합니다. </h1>
