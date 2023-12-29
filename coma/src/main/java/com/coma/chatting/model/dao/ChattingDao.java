@@ -8,7 +8,7 @@ import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.Emp;
 
 public interface ChattingDao {
-	List<Emp> selectEmpAll(SqlSession session);
-	
+	List<Emp> selectEmpListAll(SqlSession session);
+	List<ChattingRoom> selectRoomList(SqlSession session);
 	int insertChattingRoom(SqlSession session, ChattingRoom room);
 }

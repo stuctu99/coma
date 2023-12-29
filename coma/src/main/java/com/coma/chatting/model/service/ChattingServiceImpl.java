@@ -17,18 +17,16 @@ public class ChattingServiceImpl implements ChattingService {
 	private final ChattingDao dao;
 	private final SqlSession session;
 	
-	
 	@Override
-	public List<Emp> selectEmpAll() {
+	public List<Emp> selectEmpListAll() {
 		// TODO Auto-generated method stub
-		return dao.selectEmpAll(session);
+		return dao.selectEmpListAll(session);
 	}
 
-
 	@Override
-	public List<String> chattingList() {
+	public List<ChattingRoom> selectRoomList() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.selectRoomList(session);
 	}
 
 
@@ -37,5 +35,7 @@ public class ChattingServiceImpl implements ChattingService {
 		// TODO Auto-generated method stub
 		return dao.insertChattingRoom(session, room);
 	}
+
+
 
 }

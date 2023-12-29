@@ -59,157 +59,31 @@ div {
 		<div class="container emp-list">
 			<div class="row">
 				<div class="col-12">
-					<h4>사원 리스트</h4>
+					<h2>사원 리스트</h2>
 				</div>
 			</div>
 			<!------------------- 사원 데이터 ----------------------->
-			<div class="row">
-				<div class="col-12 job-class">
-					<c:out value="${empList}"/>
-					<strong>임원진</strong>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>원장</small>
-				</div>
-				<div class="col-7">
-					<small>유병승</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
+			<c:if test="${not empty emp}">
+				<c:forEach var="e" items="${emp}">
+					<div class="row">
+						<div class="col-12 job-class">
+							<strong><c:out value="${e.empId}"/></strong>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-2 job-name">
+							<small><c:out value="${e.empId }"/></small>
+						</div>
+						<div class="col-8">
+							<small><c:out value="${e.empName}"/></small>
+						</div>
+						<div class="col-2">
+							<button class="btn btn-outline-primary">채팅</button>
+						</div>
+					</div>
+				</c:forEach>
+			</c:if>
 			<!---------------------------------------------------->
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>부원장</small>
-				</div>
-				<div class="col-7">
-					<small>이규홍</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12 job-class">
-					<strong>인사부</strong>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>팀장</small>
-				</div>
-				<div class="col-7">
-					<small>정우현</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>팀원</small>
-				</div>
-				<div class="col-7">
-					<small>장세영</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12 job-class">
-					<strong>행정문서부</strong>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>팀장</small>
-				</div>
-				<div class="col-7">
-					<small>이보연</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>사원</small>
-				</div>
-				<div class="col-7">
-					<small>최종민</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12 job-class">
-					<strong>강사부</strong>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>강사팀장</small>
-				</div>
-				<div class="col-7">
-					<small>김철수</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>강사</small>
-				</div>
-				<div class="col-7">
-					<small>김영희</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12 job-class">
-					<strong>행정문서부</strong>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>팀장</small>
-				</div>
-				<div class="col-7">
-					<small>이보연</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-2 job-name">
-					<small>팀원</small>
-				</div>
-				<div class="col-7">
-					<small>최종민</small>
-				</div>
-				<div class="col-2" style="padding: 0px 0px;">
-					<button class="btn btn-primary">채팅</button>
-				</div>
-			</div>
 		</div>
 		<!-- <button id="create-room" class="btn btn-outline-primary">+</button> -->
 		<!-- ----------------------------------------------------------- -->
@@ -217,13 +91,23 @@ div {
 		<div class="container chatting-list" style="display: none">
 			<div class="row">
 				<div class="col-12">
-					<h4>채팅 리스트</h4>
+					<h2>채팅 리스트</h2>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-12 chatting-room">
-					<strong>임원진</strong>
+				<div class="col-2">
+					<strong>유형</strong>
 				</div>
+				<div class="col-8">
+					<strong>제목</strong>
+				</div>
+				<div class="col-2">
+					<button id="create-room" type="button" class="btn btn-primary" data-toggle="modal"
+						data-target="#exampleModal">방생성</button>
+				</div>
+			</div>
+			<div class="container content">
+			
 			</div>
 		</div>
 
@@ -233,7 +117,7 @@ div {
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-				<form action="/chatting" method="post">
+				<form action="/messenger" method="post">
 					<div class="modal-header">
 						<h3 class="modal-title" id="exampleModalLabel">채팅방 생성</h3>
 						<button type="button" class="close" data-dismiss="modal"
@@ -317,8 +201,7 @@ div {
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
-					<button id="create-room" type="button" class="btn btn-primary" data-toggle="modal"
-						data-target="#exampleModal">+</button>
+					
 				</div>
 			</div>
 			<div class="row">
