@@ -1,6 +1,5 @@
-package com.coma.approval.model.dto;
+package com.coma.model.dto;
 
-import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ApprovalRequest {
+public class ApprovalAttachment {
 
-	private String reqNo;
-	private String reqDetail;
-	private Date reqDate;
+	private String attachNo;
+	private String attachOriName;
+	private String attachReName;
 	private String docNo;
+	
 }

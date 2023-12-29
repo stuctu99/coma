@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,6 +65,7 @@ div {
 			<!------------------- 사원 데이터 ----------------------->
 			<div class="row">
 				<div class="col-12 job-class">
+					<c:out value="${empList}"/>
 					<strong>임원진</strong>
 				</div>
 			</div>
@@ -231,7 +234,7 @@ div {
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">채팅방 생성</h5>
+						<h3 class="modal-title" id="exampleModalLabel">채팅방 생성</h3>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -240,27 +243,40 @@ div {
 					<div class="modal-body">
 						<div class="container">
 							<div class="row">
-								<div class="col-12">
-								<strong>채팅방 제목</strong>								
+								<div class="col-6">
+									<strong>채팅방 제목</strong>								
+								</div>
+								<div class="col-6">
+									<strong>유형</strong>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
+								<div class="col-6">
 									<input type="text"/>
 								</div>
+								<div class="col-6">
+									<select name="roomType">
+										<option value="All">공통</option>
+										<option value="D1">관리부</option>
+										<option value="D2">행정부</option>
+										<option value="D3">회계부</option>
+										<option value="D4">교육부</option>
+										<option value="D5">취업부</option>
+									</select>
+								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
+								<div class="col-6">
 								<strong>비밀번호</strong>								
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
+								<div class="col-6">
 									<input type="password" id="password" disabled/>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
+								<div class="col-6">
 									<input type="checkbox" id="passwordFlag"/>
 									<label for="passwordFlag"><strong>비밀번호</strong></label>
 								</div>

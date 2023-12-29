@@ -1,4 +1,4 @@
-package com.coma.approval.model.dto;
+package com.coma.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Referrer {
+public class Approver {
 
-	private String referrerNo;
+	private String approverNo;
 	private String docNo;
 	private String empId;
+	private String apprStatus;
+	private int apprOrder;
+	
 }
