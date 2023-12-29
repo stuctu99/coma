@@ -13,7 +13,8 @@ $(".sub-menu li a").mouseenter(function (e) {
 })
 
 $("#messenger-btn").click(function(){
-	open("${pageContext.request.contextPath}/chat","_blank","width=550px; height=600px;");
+	/*${pageContext.request.contextPath}*/
+	open("/chatting","_blank","width=550px; height=600px;");
 })
 
     
