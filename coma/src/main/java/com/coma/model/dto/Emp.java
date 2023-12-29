@@ -21,9 +21,9 @@ public class Emp {
    private String empCurrent;
    private String empPhone;
    private String empPhoto;
-   private String empVacation;
+   private int empVacation;
    private String empAccess;
-   private String jobCode;
-   private String deptCode;
+   private String jobCode;//test 이후 객체로 바꿀 예정
+   private String deptCode;//test 이후 객체로 바꿀 예정
    
 }
