@@ -5,8 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-import com.coma.mypage.model.dto.EmpWhDto;
+import com.coma.model.dto.Emp;
 import com.coma.mypage.model.service.MypageService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ public class MypageController {
 	
 	@GetMapping("/mypageDetails")
 	public void test(Model m) {
-	    EmpWhDto emp = service.selelctDto("COMA_1");
+	    Emp emp = service.selelctDto("COMA_1");
 	    m.addAttribute("emp", emp);
 	    System.out.println(emp);
 	    

@@ -1,7 +1,7 @@
 package com.coma.mypage.model.service;
 
-import com.coma.mypage.model.dto.EmpWhDto;
+import com.coma.model.dto.Emp;
 
 public interface CommonService {
-	EmpWhDto selectEmpAll();
+	Emp selectEmpAll();
 }

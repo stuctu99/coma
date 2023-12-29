@@ -1883,3 +1883,264 @@ Caused by: java.lang.ClassFormatError: Duplicate method name "updatetEmp" with s
 	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1506) ~[spring-beans-6.1.2.jar:6.1.2]
 	... 32 common frames omitted
 
+2023-12-29T12:31:38.568+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 25948 (C:\Users\Julia\git\coma3\coma\target\classes started by Julia in C:\Users\Julia\git\coma3\coma)
+2023-12-29T12:31:38.571+09:00 DEBUG 25948 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2023-12-29T12:31:38.572+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2023-12-29T12:31:38.655+09:00  INFO 25948 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Julia\.m2\repository\com\oracle\database\jdbc\ojdbc11\23.3.0.23.09\ojdbc11-23.3.0.23.09.jar referenced one or more files that do not exist: file:/C:/Users/Julia/.m2/repository/com/oracle/database/jdbc/ojdbc11/23.3.0.23.09/oraclepki.jar
+2023-12-29T12:31:38.655+09:00  INFO 25948 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-29T12:31:38.655+09:00  INFO 25948 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-29T12:31:39.650+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-12-29T12:31:39.679+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 0 JDBC repository interfaces.
+2023-12-29T12:31:39.857+09:00  WARN 25948 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coma]' package. Please check your configuration.
+2023-12-29T12:31:40.558+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2023-12-29T12:31:40.578+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-12-29T12:31:40.579+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2023-12-29T12:31:40.905+09:00  INFO 25948 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2023-12-29T12:31:40.917+09:00  INFO 25948 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-12-29T12:31:40.918+09:00  INFO 25948 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2261 ms
+2023-12-29T12:31:41.453+09:00  INFO 25948 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-12-29T12:31:41.837+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-12-29T12:31:42.322+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@2d2b5f95
+2023-12-29T12:31:42.327+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-12-29T12:31:42.562+09:00  INFO 25948 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-12-29T12:31:42.644+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2023-12-29T12:31:42.658+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 4.739 seconds (process running for 5.902)
+2023-12-29T12:31:48.508+09:00  INFO 25948 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-29T12:31:48.508+09:00  INFO 25948 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-12-29T12:31:48.510+09:00  INFO 25948 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-12-29T12:31:48.879+09:00 ERROR 25948 --- [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00942: table or view does not exist
+
+https://docs.oracle.com/error-help/db/ora-00942/
+### The error may exist in file [C:\Users\Julia\git\coma3\coma\target\classes\mappers\emp-mapper.xml]
+### The error may involve emp.selelctDto-Inline
+### The error occurred while setting parameters
+### SQL: SELECT * FROM EMP WHERE EMP_ID=?
+### Cause: java.sql.SQLSyntaxErrorException: ORA-00942: table or view does not exist
+
+https://docs.oracle.com/error-help/db/ora-00942/
+; bad SQL grammar []] with root cause
+
+oracle.jdbc.OracleDatabaseException: ORA-00942: table or view does not exist
+
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:710) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:608) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1330) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:1102) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:456) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:498) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:272) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.T4CPreparedStatement.executeForDescribe(T4CPreparedStatement.java:1198) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.OracleStatement.prepareDefineBufferAndExecute(OracleStatement.java:1390) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:1269) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.OracleStatement.executeSQLSelect(OracleStatement.java:1794) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1592) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3754) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.OraclePreparedStatement.execute(OraclePreparedStatement.java:4202) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.execute(OraclePreparedStatementWrapper.java:1015) ~[ojdbc11-23.3.0.23.09.jar:23.3.0.23.09]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java) ~[HikariCP-5.0.1.jar:na]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectOne(DefaultSqlSession.java:75) ~[mybatis-3.5.14.jar:3.5.14]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:425) ~[mybatis-spring-3.0.3.jar:3.0.3]
+	at jdk.proxy2/jdk.proxy2.$Proxy72.selectOne(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectOne(SqlSessionTemplate.java:160) ~[mybatis-spring-3.0.3.jar:3.0.3]
+	at com.coma.mypage.model.dao.MypageDaoImpl.selelctDto(MypageDaoImpl.java:21) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:352) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:765) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137) ~[spring-tx-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:765) ~[spring-aop-6.1.2.jar:6.1.2]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:717) ~[spring-aop-6.1.2.jar:6.1.2]
+	at com.coma.mypage.model.dao.MypageDaoImpl$$SpringCGLIB$$0.selelctDto(<generated>) ~[classes/:na]
+	at com.coma.mypage.model.service.MypageServiceImpl.selelctDto(MypageServiceImpl.java:27) ~[classes/:na]
+	at com.coma.mypage.controller.MypageController.test(MypageController.java:22) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:262) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.2.jar:6.1.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.17.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.2.jar:6.1.2]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.17.jar:10.1.17]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+
+2023-12-29T12:32:11.979+09:00  INFO 25948 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2023-12-29T12:32:12.030+09:00  INFO 25948 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-12-29T12:32:12.080+09:00  INFO 25948 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-12-29T12:32:12.181+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 25948 (C:\Users\Julia\git\coma3\coma\target\classes started by Julia in C:\Users\Julia\git\coma3\coma)
+2023-12-29T12:32:12.181+09:00 DEBUG 25948 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2023-12-29T12:32:12.181+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2023-12-29T12:32:12.457+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-12-29T12:32:12.466+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2023-12-29T12:32:12.514+09:00  WARN 25948 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coma]' package. Please check your configuration.
+2023-12-29T12:32:12.592+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2023-12-29T12:32:12.593+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-12-29T12:32:12.594+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2023-12-29T12:32:12.881+09:00  INFO 25948 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2023-12-29T12:32:12.890+09:00  INFO 25948 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-12-29T12:32:12.890+09:00  INFO 25948 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 703 ms
+2023-12-29T12:32:12.996+09:00  INFO 25948 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-12-29T12:32:13.127+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2023-12-29T12:32:13.210+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection oracle.jdbc.driver.T4CConnection@15d02a73
+2023-12-29T12:32:13.211+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2023-12-29T12:32:13.266+09:00  INFO 25948 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-12-29T12:32:13.285+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2023-12-29T12:32:13.294+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 1.153 seconds (process running for 36.54)
+2023-12-29T12:32:13.298+09:00  INFO 25948 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-12-29T12:32:13.322+09:00  INFO 25948 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-29T12:32:13.322+09:00  INFO 25948 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-12-29T12:32:13.324+09:00  INFO 25948 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-12-29T12:34:38.537+09:00  INFO 25948 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2023-12-29T12:34:38.559+09:00  INFO 25948 --- [Thread-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2023-12-29T12:34:38.596+09:00  INFO 25948 --- [Thread-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2023-12-29T12:34:38.705+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 25948 (C:\Users\Julia\git\coma3\coma\target\classes started by Julia in C:\Users\Julia\git\coma3\coma)
+2023-12-29T12:34:38.705+09:00 DEBUG 25948 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2023-12-29T12:34:38.705+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2023-12-29T12:34:38.938+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-12-29T12:34:38.947+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2023-12-29T12:34:38.981+09:00  WARN 25948 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coma]' package. Please check your configuration.
+2023-12-29T12:34:39.035+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2023-12-29T12:34:39.036+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-12-29T12:34:39.036+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2023-12-29T12:34:39.157+09:00  INFO 25948 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2023-12-29T12:34:39.162+09:00  INFO 25948 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-12-29T12:34:39.163+09:00  INFO 25948 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 455 ms
+2023-12-29T12:34:39.241+09:00  INFO 25948 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-12-29T12:34:39.322+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2023-12-29T12:34:39.373+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection oracle.jdbc.driver.T4CConnection@6cad289b
+2023-12-29T12:34:39.373+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2023-12-29T12:34:39.399+09:00  INFO 25948 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-12-29T12:34:39.418+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2023-12-29T12:34:39.426+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 0.77 seconds (process running for 182.671)
+2023-12-29T12:34:39.429+09:00  INFO 25948 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-12-29T12:43:45.954+09:00  INFO 25948 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (1 addition, 0 deletions, 1 modification)
+2023-12-29T12:43:45.978+09:00  INFO 25948 --- [Thread-13] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2023-12-29T12:43:55.990+09:00  WARN 25948 --- [Thread-13] com.zaxxer.hikari.pool.HikariPool        : Timed-out waiting for close connection executor to shutdown
+2023-12-29T12:43:55.992+09:00  INFO 25948 --- [Thread-13] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2023-12-29T12:43:56.093+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 25948 (C:\Users\Julia\git\coma3\coma\target\classes started by Julia in C:\Users\Julia\git\coma3\coma)
+2023-12-29T12:43:56.093+09:00 DEBUG 25948 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2023-12-29T12:43:56.093+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2023-12-29T12:43:56.325+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-12-29T12:43:56.333+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JDBC repository interfaces.
+2023-12-29T12:43:56.369+09:00  WARN 25948 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coma]' package. Please check your configuration.
+2023-12-29T12:43:56.426+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2023-12-29T12:43:56.427+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-12-29T12:43:56.427+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2023-12-29T12:43:56.551+09:00  INFO 25948 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2023-12-29T12:43:56.555+09:00  INFO 25948 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-12-29T12:43:56.555+09:00  INFO 25948 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 459 ms
+2023-12-29T12:43:56.634+09:00  INFO 25948 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-12-29T12:43:56.716+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2023-12-29T12:43:56.764+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection oracle.jdbc.driver.T4CConnection@6776cf72
+2023-12-29T12:43:56.765+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2023-12-29T12:43:56.789+09:00  INFO 25948 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-12-29T12:43:56.803+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2023-12-29T12:43:56.811+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 0.753 seconds (process running for 740.055)
+2023-12-29T12:43:56.813+09:00  INFO 25948 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-12-29T12:44:39.619+09:00  INFO 25948 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (2 additions, 0 deletions, 0 modifications)
+2023-12-29T12:44:39.643+09:00  INFO 25948 --- [Thread-17] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2023-12-29T12:44:39.683+09:00  INFO 25948 --- [Thread-17] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2023-12-29T12:44:39.793+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 25948 (C:\Users\Julia\git\coma3\coma\target\classes started by Julia in C:\Users\Julia\git\coma3\coma)
+2023-12-29T12:44:39.793+09:00 DEBUG 25948 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2023-12-29T12:44:39.793+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2023-12-29T12:44:40.067+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-12-29T12:44:40.076+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2023-12-29T12:44:40.109+09:00  WARN 25948 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coma]' package. Please check your configuration.
+2023-12-29T12:44:40.167+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2023-12-29T12:44:40.167+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-12-29T12:44:40.167+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2023-12-29T12:44:40.288+09:00  INFO 25948 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2023-12-29T12:44:40.293+09:00  INFO 25948 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-12-29T12:44:40.293+09:00  INFO 25948 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 497 ms
+2023-12-29T12:44:40.375+09:00  INFO 25948 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-12-29T12:44:40.446+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2023-12-29T12:44:40.499+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection oracle.jdbc.driver.T4CConnection@471ed293
+2023-12-29T12:44:40.499+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2023-12-29T12:44:40.520+09:00  INFO 25948 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-12-29T12:44:40.537+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2023-12-29T12:44:40.542+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 0.803 seconds (process running for 783.787)
+2023-12-29T12:44:40.545+09:00  INFO 25948 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-12-29T12:45:44.723+09:00  INFO 25948 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 4 class path changes (2 additions, 2 deletions, 0 modifications)
+2023-12-29T12:45:44.752+09:00  INFO 25948 --- [Thread-21] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2023-12-29T12:45:44.789+09:00  INFO 25948 --- [Thread-21] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2023-12-29T12:45:44.875+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 25948 (C:\Users\Julia\git\coma3\coma\target\classes started by Julia in C:\Users\Julia\git\coma3\coma)
+2023-12-29T12:45:44.876+09:00 DEBUG 25948 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2023-12-29T12:45:44.876+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2023-12-29T12:45:45.126+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-12-29T12:45:45.135+09:00  INFO 25948 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2023-12-29T12:45:45.174+09:00  WARN 25948 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coma]' package. Please check your configuration.
+2023-12-29T12:45:45.236+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2023-12-29T12:45:45.237+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-12-29T12:45:45.238+09:00  INFO 25948 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2023-12-29T12:45:45.371+09:00  INFO 25948 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2023-12-29T12:45:45.376+09:00  INFO 25948 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-12-29T12:45:45.376+09:00  INFO 25948 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 497 ms
+2023-12-29T12:45:45.447+09:00  INFO 25948 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2023-12-29T12:45:45.528+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2023-12-29T12:45:45.577+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-6 - Added connection oracle.jdbc.driver.T4CConnection@2c0f77cc
+2023-12-29T12:45:45.577+09:00  INFO 25948 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2023-12-29T12:45:45.597+09:00  INFO 25948 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-12-29T12:45:45.616+09:00  INFO 25948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2023-12-29T12:45:45.625+09:00  INFO 25948 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 0.784 seconds (process running for 848.869)
+2023-12-29T12:45:45.627+09:00  INFO 25948 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
