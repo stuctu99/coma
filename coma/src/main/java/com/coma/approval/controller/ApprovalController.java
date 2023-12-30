@@ -12,6 +12,11 @@ public class ApprovalController {
 		return "/approval/writedoc";
 	}
 	
+	@GetMapping("/approval/viewdoc")
+	public String viewDoc() {
+		return "/approval/viewdoc";
+	}
+	
 	@GetMapping("/approval/sign")
 	public String sign() {
 		return "/approval/sign";

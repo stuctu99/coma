@@ -1,9 +1,17 @@
 .row{
-	  /*   border: 1px solid #444444;*/
-	     background-color: lavenderblush;
+/*	     border: 1px solid #444444;*/
+/*	     background-color: lavenderblush;*/
 	     width: 100%;
+	     margin: 40px;
 	  
   }
+
+.ck_appr{
+	
+	margin-top: -40px;
+	text-align: left;
+	
+}
  
  .appr_table{
     width: 700px;
@@ -14,9 +22,9 @@
     
   }
   
-  .sign_td{
+  .after_td{
 	  width: 100px;
-	  height: 100px;
+	  height: 30px;
 	  
   }
   .ref_name{
@@ -42,17 +50,11 @@
 	
 	
   }
-  .line_btn{
-	  text-align: left;
-	  margin: 5px;
-  }
 
   
-  .line1{
-	  height: 50px;
-	  text-align: right;
-  }
-  .line3{
-	  height: 50px;
-  }
+/*  .line1{*/
+/*	  height: 50px;*/
+/*	  text-align: right;*/
+/*  }*/
+
   
