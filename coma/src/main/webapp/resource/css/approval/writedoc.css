@@ -1,6 +1,5 @@
 .row{
 /*	     border: 1px solid #444444;*/
-/*	     background-color: lavenderblush;*/
 	     width: 100%;
 	     margin: 40px;
 	  
@@ -11,6 +10,11 @@
 	margin-top: -40px;
 	text-align: left;
 	
+}
+
+.date_bo{
+	
+	margin-top: -10px;
 }
  
  .appr_table{
@@ -50,11 +54,12 @@
 	
 	
   }
-
   
-/*  .line1{*/
-/*	  height: 50px;*/
-/*	  text-align: right;*/
-/*  }*/
+  .btn_container{
+/*	  border: 1px solid #444444;*/
+	  margin-top: 70px;
+	  
+  }
+
 
   
