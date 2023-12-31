@@ -87,9 +87,9 @@
 		<div class="col-1" style="margin-left:15px;">
 			<select class="form-control form-control-sm" name="selectEmp">
 			  <option value="all">전체</option>
-			  <option value="empName">이름</option>
-			  <option value="deptCode">부서</option>
-			  <option value="jobCode">직책</option>
+			  <option value="EMP_NAME">이름</option>
+			  <option value="DEPT_CODE">부서</option>
+			  <option value="JOB_CODE">직책</option>
 			</select>
 		</div>
 		<div class="col-2" style="padding-left:0px;">
@@ -131,7 +131,7 @@
 		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
 		        		<td><c:out value="${e.empId }"/></td>
-		        		<td><a href="#"><c:out value="${e.empName }"/></a></td>
+		        		<td><a href="#" id="empName"><c:out value="${e.empName }"/></a></td>
 		        		<td><c:out value="${e.deptCode }"/></td>
 		        		<td><c:out value="${e.jobCode }"/></td>
 		        		<td><a href="#">근무상태</a></td>
