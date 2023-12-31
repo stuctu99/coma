@@ -19,7 +19,8 @@
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
           <!-- coma content space -->
-          
+   
+<!-- 공통사항 -->          
           <div class="doc_basic">
 	  
 	          
@@ -53,7 +54,7 @@
 	            </div>
 	          </div>
           </div>
-          
+<!-- 결재선 설정 -->          
           <div class="app_line">
           
 	          <div class="row">
@@ -119,9 +120,9 @@
  	
 <!-- 문서별 입력 내용 -->
 
+    <!-- 휴가신청서 -->   
           <div id="leave" style="display:none;">
-       		<hr>
-       		
+       		<hr>		
        		<h2>휴가 신청서</h2>
 	          <div class="row">
 	          		<div class="col-3">
@@ -174,7 +175,8 @@
 			     </div>  
 
 	      </div>
-	        
+
+    <!-- 지출결의서 -->   		        
           <div id="cash" style="display:none;">  
           <hr>    
           	<h2>지출결의서</h2>
@@ -214,6 +216,7 @@
 	          	<div class="col-2"></div>
 	          </div>
            </div>
+    <!-- 품의서 -->              
           <div id="req" style="display:none;">
           <hr>
           	<h2>품의서</h2>
@@ -234,7 +237,8 @@
 	          	<div class="col-2"></div>
 	          </div>
           </div>
-          
+         
+    <!-- 기타 문서 -->             
           <div id="etc" style="display:none;">
           <hr>
           		<h2>기타 문서</h2>
@@ -258,12 +262,14 @@
 	     </div>
           
               
-    <!-- 토스트 에디터 -->
+<!-- 토스트 에디터 -->
     <div class="row">
       <div class="col-12">
        	  <div id="content"></div>
       </div>
     </div>      
+    
+<!-- 첨부파일 -->
     
    	<div class="row">
 		<div class="col-12">
@@ -274,7 +280,8 @@
 		</div>
 		
 	</div>    
-          
+	
+<!-- 작성 완료 버튼 -->          
     <div class="row btn_container">
     	<div class="col-11"></div>
     	<div class="col-1">
