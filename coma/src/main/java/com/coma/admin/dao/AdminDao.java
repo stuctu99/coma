@@ -33,4 +33,7 @@ public class AdminDao {
 	public List<Student> selectStudent(SqlSession session){
 		return session.selectList("student.selectStudent");
 	}
+	public List<Student> searchStudent(SqlSession session, Map<String, Object> searchMap){
+		return session.selectList("student.searchStudent",searchMap);
+	}
 }

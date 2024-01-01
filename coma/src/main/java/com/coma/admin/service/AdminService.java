@@ -1,5 +1,6 @@
 package com.coma.admin.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,10 @@ public class AdminService {
 	//학생관련 서비스
 	public List<Student> selectStudent(){
 		return dao.selectStudent(session);
+	}
+	
+	public List<Student> searchStudent(HashMap<String, Object> searchMap){
+		return dao.searchStudent(session, searchMap);
 	}
 
 }

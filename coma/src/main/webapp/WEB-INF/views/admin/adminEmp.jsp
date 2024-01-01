@@ -186,13 +186,29 @@ const myChart = new Chart(ctx, {
 function fn_searchEmp(){
 	const searchData=document.getElementById("searchData").value;
 	const textData=documnet.getElementById("textData").value;
+	feth("${path}/admin/searchEmp",{
+		method:"get",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify{searchData:searchData,textData:textData}
+	}).then(response=>{
+		if(response.status!=200) throw new Error(repsonse.status);
+		return response.json();
+	}).then(result=>{
+		console.(result);
+	}).catch(e=>{
+		console.log(e);
+	})
 }
 
 
 function fn_addEmp(){
 	const empName=document.getElementById("empNname").value;
 	console.log(empName);
-	fetch("${path}/admin/addEmp?empName="+empName)
+	fetch("${path}/admin/addEmp",{
+		method:"get",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify{empNname:empNname}
+	})
 	.then(response=>{
 		console.log(response);
 		if(response.status!=200){
@@ -207,7 +223,11 @@ function fn_addEmp(){
 }
 
 function fn_deleteEmp(){
-	fetch("${path}/admin/deletdEmp?empName=${emps.empName}")
+	fetch("${path}/admin/deletdEmp",{
+		method:"get",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify{empNname:empNname}
+	})
 	.then(response=>{
 		console.log(response);
 		if(response.status!=200){

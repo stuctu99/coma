@@ -2,11 +2,11 @@ package com.coma.admin.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.coma.admin.service.AdminService;
@@ -15,9 +15,9 @@ import com.coma.model.dto.Student;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@Controller
 public class AdminController {
 	private final AdminService service;
 	
@@ -41,11 +41,9 @@ public class AdminController {
 	}
 	
 	@GetMapping("/searchEmp")
-	public void searchEmp(String searchData, String textValue) {
-		Map<String, Object> searchMap=new HashMap<String, Object>();
-		searchMap.put("searchData", searchData);
-		searchMap.put("textValue", textValue);
+	public List<Emp> searchEmp(@RequestBody HashMap<String, Object> searchMap) {
 		List<Emp> emps=service.searchEmp(searchMap);
+		return emps;
 	}
 	
 	//학생관련 컨트롤러
@@ -56,7 +54,9 @@ public class AdminController {
 	}
 	
 	@GetMapping("/searchStudent")
-	public List<Student> searchStudent(){
-		
+	public List<Student> searchStudent(@RequestBody HashMap<String, Object> searchMap){
+		List<Student> students=service.searchStudent(searchMap);
+		return students;
 	}
+
 }
