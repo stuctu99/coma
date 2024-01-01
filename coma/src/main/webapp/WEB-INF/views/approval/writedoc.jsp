@@ -10,7 +10,7 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
   <!-- Editor's Style -->
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-
+<script src="/resource/js/jquery-3.7.0.js"></script>
 <link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
 
 
@@ -270,14 +270,24 @@
     </div>      
     
 <!-- 첨부파일 -->
-    
-   	<div class="row">
+	<div class="row">
 		<div class="col-12">
+			<button type="button" class="btn btn-outline-primary" onclick="fn_addFileForm();">파일 추가</button>
+			<button type="button" class="btn btn-outline-danger" onclick="fn_deleteFileForm();">파일 삭제</button>
+		</div>
+	</div>
+    	
+   	<div class="row" id="basicFileForm" >
+   		<div class="col-3">
+   			<span class="file_span">첨부파일 1</span>
+   		</div>
+		<div class="col-7">
 			    <div class="custom-file">
-			        <input type="file" class="custom-file-input" id="customFileLang" lang="en">
-			        <label class="custom-file-label" for="customFileLang">첨부 파일</label>
+			        <input type="file" name="upfile" class="custom-file-input" id="customFileLang" lang="en">
+			        <label class="custom-file-label" for="customFileLang"></label>
 			    </div>
 		</div>
+		<div class="col-2"></div>
 		
 	</div>    
 	
