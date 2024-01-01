@@ -31,6 +31,7 @@ const addDelFunction=(function(){
 	const addFile=()=>{
 		if(count<=3){
 			const fileForm = $("#basicFileForm").clone(true);
+			fileForm.find(".custom-file-label").text("");
 			fileForm.find(".file_span").text("첨부파일 " + count);
 			$(".btn_container").before(fileForm);
 			count++; 

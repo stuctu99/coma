@@ -3,8 +3,10 @@ package com.coma.approval.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -49,34 +51,52 @@ public class ApprovalController {
 	}
 	
 	@PostMapping
-	public String insertApproval(MultipartFile upFile, String docNo, ApprovalDoc doc, ApprovalAttachment attach, 
+	public String insertApproval(MultipartFile[] upFile, String docNo, 
+									ApprovalDoc doc , 
 									Approver approver, Referrer ref, ApprovalLeave leave, ApprovalCash cash,
 									ApprovalRequest req, ApprovalEtc etc, HttpSession session) {
 		
+		System.out.println(upFile);
+		System.out.println(doc);
+		
 		String path = session.getServletContext().getRealPath("/resources/upload/approval");
+		
+		List<ApprovalAttachment> files = new ArrayList<>();
+		
 		if(upFile!=null) {
-			if(upFile.isEmpty()) {
-				String oriName = upFile.getOriginalFilename();
-				String ext = oriName.substring(oriName.lastIndexOf("."));
-				Date today = new Date(System.currentTimeMillis());
-				int randomNum = (int)(Math.random()*10000)+1;
-				String rename = "appr_" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(today)+"_"+randomNum;
-				
-				try {
-					upFile.transferTo(new File(path, rename));
+			for(MultipartFile mf:upFile) {
+				if(mf.isEmpty()) {
+					String oriName = mf.getOriginalFilename();
+					String ext = oriName.substring(oriName.lastIndexOf("."));
+					Date today = new Date(System.currentTimeMillis());
+					int randomNum = (int)(Math.random()*10000)+1;
+					String rename = "appr_" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(today)+"_"+randomNum;
 					
-				}catch(IOException e) {
-					e.printStackTrace();
+					try {
+						mf.transferTo(new File(path, rename));
+						ApprovalAttachment file = ApprovalAttachment.builder()
+												.attachOriName(oriName)
+												.attachReName(rename)
+												.build();
+						files.add(file);
+					}catch(IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}
+			}	
 		}
 		
+		//doc dto에 필드로 List 추가했을 경우-> 
+//		doc.setFiles(files);
+		 
 		
+		
+		//Map으로 할 경우->
 		Map data = new HashMap<>();
 		data.put("docNo",docNo);
-		data.put("doc",doc);
+//		data.put("doc",doc);
 		
-		data.put("attach",attach);
+		data.put("files", files);
 		
 		data.put("approver",approver);
 		data.put("ref",ref);

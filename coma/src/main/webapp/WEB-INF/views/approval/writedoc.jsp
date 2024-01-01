@@ -15,7 +15,8 @@
 
 
     <!-- TEAM COMA SPACE -->
-	<form>
+	<form action="${pageContext.request.contextPath }/approval" method="post"
+					enctype="multipart/form-data">
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
           <!-- coma content space -->
@@ -41,19 +42,19 @@
 		            <div class="col-2">
 		            </div>
 
-		      </div>    
+		     </div>    
 
-	          <div class="row">
+	         <div class="row">
 	            <div class="col-3">
 	            	문서 제목
 	            </div>
 	            <div class="col-7">
 	            	<input class="form-control" type="text" placeholder="제목">
 	            </div>  
-	            <div class="col-2">
-	            </div>
-	          </div>
-          </div>
+	            <div class="col-2"></div>
+	         </div>
+          </div><!-- doc_basic -->
+          
 <!-- 결재선 설정 -->          
           <div class="app_line">
           
@@ -101,10 +102,9 @@
 							  </div>
 						</div>
 	            </div>
-    			<div class="col-2">
-	            </div>
-          	</div>
-          	 <div class="row ck_appr">
+    			<div class="col-2"></div>
+          	 </div>
+          	<div class="row ck_appr">
 	          	<div class="col-3">
 	          	</div>
 	          	<div class="col-7">
@@ -113,10 +113,9 @@
 					</button>
 
 	          	</div>
-	          	<div class="col-2">
-	          	</div>
-         </div> 
-           
+	          	<div class="col-2"></div>
+           </div> 
+   		</div>  <!-- app_line --> 
  	
 <!-- 문서별 입력 내용 -->
 
@@ -141,7 +140,7 @@
 		          	</div>
 		  
 	          </div>  
-		       <div class="row">
+		      <div class="row">
 				<!-- 휴가 신청 날짜 선택 -->
 					<div class="col-3">
 	          			휴가 날짜
@@ -172,7 +171,7 @@
 							</div>
 		     		  </div>
 		     		  <div class="col-3"></div>
-			     </div>  
+			    </div>  
 
 	      </div>
 
@@ -290,7 +289,7 @@
 		<div class="col-2"></div>
 		
 	</div>    
-	
+	 
 <!-- 작성 완료 버튼 -->          
     <div class="row btn_container">
     	<div class="col-11"></div>
@@ -302,7 +301,7 @@
         </div>
     </div>
 
-   </form>   
+</form>   
     
     <!-- TEAM COMA SPACE -->
     </div>
