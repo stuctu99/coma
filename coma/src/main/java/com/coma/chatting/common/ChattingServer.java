@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-@ServerEndpoint(value="/chat")
+@ServerEndpoint(value="/chatting")
 public class ChattingServer extends TextWebSocketHandler{
 	
 	private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>());

@@ -20,5 +20,5 @@ public class ChattingRoom {
 	private String roomPasswordFlag;
 	private String roomPassword;
 	private Date roomCreateDate;
-	private List<ChattingJoin> joinMember;
+	/* private List<ChattingJoin> joinMember; */
 }

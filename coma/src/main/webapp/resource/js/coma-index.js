@@ -14,7 +14,7 @@ $(".sub-menu li a").mouseenter(function (e) {
 
 $("#messenger-btn").click(function(){
 	/*${pageContext.request.contextPath}*/
-	open("/chatting","_blank","width=550px; height=600px;");
+	open("/messenger","_blank","width=550px; height=600px;");
 })
 
     
