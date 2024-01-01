@@ -15,9 +15,9 @@ import com.coma.model.dto.Student;
 
 import lombok.RequiredArgsConstructor;
 
+@Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@Controller
 public class AdminController {
 	private final AdminService service;
 	
