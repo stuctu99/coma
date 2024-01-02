@@ -1,6 +1,7 @@
 package com.coma.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,6 @@ public class Emp {
    private String empPhoto;
    private int empVacation;
    private String empAccess;
-   private String jobCode;//test 이후 객체로 바꿀 예정
-   private String deptCode;//test 이후 객체로 바꿀 예정
-   
+   private Dept dept;
+   private Job job;
 }

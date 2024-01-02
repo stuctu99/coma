@@ -15,6 +15,7 @@ $(".emp-list-btn").click(function() {
 	$(".chatting-list").css("display", "none");
 	$("#create-room").css("display", "none");
 })
+
 /*	< div class="row" >
 		<div class="col-12">
 			<h4>채팅 리스트</h4>
@@ -85,7 +86,6 @@ $("#roomPasswordFlag").click(function() {
 const createRoom = () => {
 	console.log("active");
 }
-
 
 
 /* 웹소켓 채팅 */
