@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.coma.approval.model.service.ApprovalService;
 import com.coma.model.dto.ApprovalAttachment;
-import com.coma.model.dto.ApprovalCash;
-import com.coma.model.dto.ApprovalDoc;
-import com.coma.model.dto.ApprovalEtc;
-import com.coma.model.dto.ApprovalLeave;
-import com.coma.model.dto.ApprovalRequest;
-import com.coma.model.dto.Approver;
-import com.coma.model.dto.Referrer;
+import com.coma.model.dto.Emp;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +29,9 @@ public class ApprovalController {
 	private final ApprovalService service;
 	
 	@GetMapping("/writedoc")
-	public String writeDoc() {
+	public String writeDoc(Model model, String approver) {
+		List<Emp> emp = service.selectEmpListAll();
+		model.addAttribute("emp", emp);
 		return "/approval/writedoc";
 	}
 	
@@ -103,6 +98,8 @@ public class ApprovalController {
 //		data.put("etc",etc);
 		
 //		int result = service.insertApproval(data);
+		
+		List<Emp> testEmp =  service.selectEmpListAll();
 		
 		return "redirect:/approval";
 	}

@@ -56,9 +56,6 @@ const fn_addFileForm=addDelFunction[0];
 const fn_deleteFileForm=addDelFunction[1];
 
 
-
-
-
 $(document).on("change",".custom-file-input",(e=>{
 	
 	const fileName = e.target.files[0].name;
@@ -67,3 +64,19 @@ $(document).on("change",".custom-file-input",(e=>{
 	
 }));
 
+
+$("#search_app").keyup(function(){
+	const path = location.host;
+	const appAjax=()=>{
+		
+		fetch("/approval/writedoc")
+		.then(response=>{
+			console.log(response); 
+			return response.json()
+		})
+		.then(data=>{
+			console.log(data);
+		})
+	}
+	
+});
