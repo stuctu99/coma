@@ -12,10 +12,13 @@ $(".sub-menu li a").mouseenter(function (e) {
       $(this).css("cursor", "pointer");
 })
 
-$("#messenger-btn").click(function(){
-	/*${pageContext.request.contextPath}*/
+/*$("#messenger-btn").click(function(){
+	${pageContext.request.contextPath}
 	open("/messenger","_blank","width=550px; height=600px;");
 })
-
-    
+*/
+  
+const messenger_active = (path) => {
+	open(path+"/messenger","_blank","width=550px; height=600px;");
+}
     

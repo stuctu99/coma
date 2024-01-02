@@ -1,3 +1,4 @@
+/*const contextPath=location.hostname;*/
 /*$(".menu").hover(function(){
 	$(this).css("backgroundColor","#edebf0").css("cursor","pointer").css("opacity",0.9);
 	$(this).children().css("width","45px").css("height","45px");
@@ -26,6 +27,7 @@ $(".emp-list-btn").click(function() {
 			<strong>임원진</strong>
 		</div>
 	</div>*/
+	
 $(".chatting-list-btn").click(function() {
 	$(this).css("backgroundColor", "#edebf0").css("opacity", 0.9);
 	$(this).children().css("width", "45px").css("height", "45px");
@@ -47,18 +49,32 @@ $(".chatting-list-btn").click(function() {
 			const $content = $(".content");
 			$content.html("");
 		data.forEach(d=>{
-			const $div = $("<div>").addClass("row").css("line-heiht",2.0);
+			const $div = $("<div>").addClass("row");
 			const $div_type = $("<div>").addClass("col-2 chatting-room");
 			const $div_title = $("<div>").addClass("col-8 chatting-room");
-			const $div_btn = $("<div>").addClass("col-2 chatting-room");
+			const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top","2px");
+			const $input = $("<input>").attr("name","roomNo").attr("type","hidden").val(d.roomNo);
 			const $strong_type = $("<strong>");
 			const $strong_title = $("<strong>");
-			const $room_enter = $("<button>").addClass("room-enter btn btn-outline-primary").text("입장");
-			$strong_type.text(d.roomType);
+			const $room_enter = $("<button>").addClass("room-enter btn btn-outline-primary").text("입장").attr("onclick","enter_room('"+d.roomNo+"');");
+		
+		/*	console.log(d.roomType.roomTypeName);
+			switch(d.roomType.roomTypeName){
+				case 'A' : $strong_type.text('공용'); break;
+				case 'D1' : $strong_type.text('관리부'); break;
+				case 'D2' : $strong_type.text('행정부'); break;
+				case 'D3' : $strong_type.text('회계부'); break;
+				case 'D4' : $strong_type.text('교육부'); break;
+				case 'D5' : $strong_type.text('취업부'); break;
+				
+			}*/
+			
+			$strong_type.text(d.roomType.roomTypeName);
 			$strong_title.text(d.roomName);
 			$div_type.append($strong_type);
 			$div_title.append($strong_title);
 			$div_btn.append($room_enter);
+			/*$div_btn.append($input);*/
 			$div.append($div_type);
 			$div.append($div_title);
 			$div.append($div_btn);
@@ -86,6 +102,16 @@ $("#roomPasswordFlag").click(function() {
 const createRoom = () => {
 	console.log("active");
 }
+
+
+/* 방입장 */
+const enter_room = (roomNo) => {
+	const pathValue = $("#pathValue").val();
+	console.log(pathValue);
+	console.log(roomNo);
+	location.href=pathValue+"/messenger/room/"+roomNo;
+}
+
 
 
 /* 웹소켓 채팅 */
