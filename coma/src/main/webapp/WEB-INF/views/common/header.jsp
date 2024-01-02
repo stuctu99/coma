@@ -1,5 +1,5 @@
-<%@ page import="com.coma.model.dto.Emp" %>
-<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%-- <%@ page import="com.coma.model.dto.Emp" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -30,7 +30,7 @@
   </style> -->
 </head>
 <body class="">
-  <c:set var="e" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+  <%-- <c:set var="e" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> --%>
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
@@ -180,7 +180,8 @@
                   <img alt="Image placeholder" src="/resource/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">${e.empName }</span>
+                  <%-- <span class="mb-0 text-sm  font-weight-bold">${e.empName }</span> --%>
+                  <span class="mb-0 text-sm  font-weight-bold">COMA EMP</span>
                 </div>
               </div>
             </a>
