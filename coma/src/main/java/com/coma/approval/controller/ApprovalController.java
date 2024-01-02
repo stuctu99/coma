@@ -51,13 +51,9 @@ public class ApprovalController {
 	}
 	
 	@PostMapping
-	public String insertApproval(MultipartFile[] upFile, String docNo, 
-									ApprovalDoc doc , 
-									Approver approver, Referrer ref, ApprovalLeave leave, ApprovalCash cash,
-									ApprovalRequest req, ApprovalEtc etc, HttpSession session) {
+	public String insertApproval(MultipartFile[] upFile, String title, HttpSession session) {
 		
 		System.out.println(upFile);
-		System.out.println(doc);
 		
 		String path = session.getServletContext().getRealPath("/resources/upload/approval");
 		
@@ -91,22 +87,22 @@ public class ApprovalController {
 		 
 		
 		
-		//Map으로 할 경우->
-		Map data = new HashMap<>();
-		data.put("docNo",docNo);
-//		data.put("doc",doc);
+//		//Map으로 할 경우->
+//		Map data = new HashMap<>();
+//		data.put("docNo",docNo);
+////		data.put("doc",doc);
+//		
+//		data.put("files", files);
+//		
+//		data.put("approver",approver);
+//		data.put("ref",ref);
+//		
+//		data.put("leave",leave);
+//		data.put("cash",cash);
+//		data.put("req",req);
+//		data.put("etc",etc);
 		
-		data.put("files", files);
-		
-		data.put("approver",approver);
-		data.put("ref",ref);
-		
-		data.put("leave",leave);
-		data.put("cash",cash);
-		data.put("req",req);
-		data.put("etc",etc);
-		
-		int result = service.insertApproval(data);
+//		int result = service.insertApproval(data);
 		
 		return "redirect:/approval";
 	}

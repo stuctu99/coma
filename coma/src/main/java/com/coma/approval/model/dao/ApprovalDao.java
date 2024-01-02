@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 public interface ApprovalDao {
 
 	
+	
 	int insertApprDoc(SqlSession session, Map data);
 	int insertCash(SqlSession session, Map data);
 	int insertReq(SqlSession session, Map data);

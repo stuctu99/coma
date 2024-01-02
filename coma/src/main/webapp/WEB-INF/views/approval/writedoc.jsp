@@ -14,6 +14,7 @@
 <link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
 
 
+
     <!-- TEAM COMA SPACE -->
 	<form action="${pageContext.request.contextPath }/approval" method="post"
 					enctype="multipart/form-data">
@@ -49,7 +50,7 @@
 	            	문서 제목
 	            </div>
 	            <div class="col-7">
-	            	<input class="form-control" type="text" placeholder="제목">
+	            	<input class="form-control" type="text" placeholder="제목" name="title">
 	            </div>  
 	            <div class="col-2"></div>
 	         </div>
@@ -62,6 +63,7 @@
 	     		<div class="col-3">
 	     			결재자
 	     		</div>
+	     		
 	            <div class="col-7">
 			            <div class="input-group mb-3">	  
 							  <input type="search" class="form-control" placeholder="이름을 입력하세요." aria-label="Example text with button addon" aria-describedby="button-addon1">
@@ -74,7 +76,7 @@
 	           	<div class="col-2">
 	            </div>
 	          </div> 	
-	          
+         
 	          <div class="row ck_appr">
 	          	<div class="col-3">
 	          	</div>
@@ -308,9 +310,7 @@
   </div>
   
 
-  
-
-<script src="/resource/js/approval/approval.js"></script> 
+ <script src="/resource/js/approval/approval.js"></script> 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 

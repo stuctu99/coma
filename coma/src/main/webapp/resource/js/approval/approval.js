@@ -59,9 +59,11 @@ const fn_deleteFileForm=addDelFunction[1];
 
 
 
-$("input[name=upfile]").change(e=>{
+$(document).on("change",".custom-file-input",(e=>{
 	
 	const fileName = e.target.files[0].name;
+	console.log(fileName)
 	$(e.target).next(".custom-file-label").text(fileName);
 	
-});
+}));
+
