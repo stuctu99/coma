@@ -16508,3 +16508,5 @@ Caused by: java.lang.Error: Unresolved compilation problems:
 2024-01-02T17:25:34.923+09:00  INFO 18396 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-01-02T17:25:34.923+09:00  INFO 18396 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2024-01-02T17:25:34.924+09:00  INFO 18396 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-02T17:45:49.293+09:00  INFO 18396 --- [RMI TCP Connection(47)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2024-01-02T17:45:49.317+09:00  INFO 18396 --- [RMI TCP Connection(47)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
