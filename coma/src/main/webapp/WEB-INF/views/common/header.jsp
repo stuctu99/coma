@@ -25,10 +25,8 @@
     div{
       border: 2px solid red;
     }
-
   </style> -->
 </head>
-
 <body class="">
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">

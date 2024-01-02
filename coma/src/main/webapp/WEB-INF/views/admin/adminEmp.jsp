@@ -85,15 +85,15 @@
 	<div class="row" style="display: flex; align-items: center;">
 	<div class="col-1"></div>
 		<div class="col-1" style="margin-left:15px;">
-			<select class="form-control form-control-sm" name="selectEmp">
+			<select class="form-control form-control-sm" id="searchData">
 			  <option value="all">전체</option>
-			  <option value="empName">이름</option>
-			  <option value="deptCode">부서</option>
-			  <option value="jobCode">직책</option>
+			  <option value="EMP_NAME">이름</option>
+			  <option value="DEPT_CODE">부서</option>
+			  <option value="JOB_CODE">직책</option>
 			</select>
 		</div>
 		<div class="col-2" style="padding-left:0px;">
-			<input class="form-control form-control-sm" type="text" placeholder="검색바">
+			<input class="form-control form-control-sm" type="text" id="texthData" placeholder="검색바">
 		</div>
 		<div class="col-5" style="padding-left:0px;">
 			<button type="button" class="btn btn-secondary btn-sm">검색</button>
@@ -131,7 +131,7 @@
 		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
 		        		<td><c:out value="${e.empId }"/></td>
-		        		<td><a href="#"><c:out value="${e.empName }"/></a></td>
+		        		<td><a href="#" id="empName"><c:out value="${e.empName }"/></a></td>
 		        		<td><c:out value="${e.deptCode }"/></td>
 		        		<td><c:out value="${e.jobCode }"/></td>
 		        		<td><a href="#">근무상태</a></td>
@@ -183,11 +183,32 @@ const myChart = new Chart(ctx, {
         }
     }
 });
+function fn_searchEmp(){
+	const searchData=document.getElementById("searchData").value;
+	const textData=documnet.getElementById("textData").value;
+	feth("${path}/admin/searchEmp",{
+		method:"get",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify{searchData:searchData,textData:textData}
+	}).then(response=>{
+		if(response.status!=200) throw new Error(repsonse.status);
+		return response.json();
+	}).then(result=>{
+		console.(result);
+	}).catch(e=>{
+		console.log(e);
+	})
+}
+
 
 function fn_addEmp(){
 	const empName=document.getElementById("empNname").value;
 	console.log(empName);
-	fetch("${path}/admin/addEmp?empName="+empName)
+	fetch("${path}/admin/addEmp",{
+		method:"get",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify{empNname:empNname}
+	})
 	.then(response=>{
 		console.log(response);
 		if(response.status!=200){
@@ -202,7 +223,11 @@ function fn_addEmp(){
 }
 
 function fn_deleteEmp(){
-	fetch("${path}/admin/deletdEmp?empName=${emps.empName}")
+	fetch("${path}/admin/deletdEmp",{
+		method:"get",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify{empNname:empNname}
+	})
 	.then(response=>{
 		console.log(response);
 		if(response.status!=200){
