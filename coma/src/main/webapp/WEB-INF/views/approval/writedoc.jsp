@@ -19,12 +19,7 @@
 	<!-- path.. -->
 	<input type="hidden" id="pathValue" value="${pageContext.request.contextPath}"/> 
 	
-<%-- 	<c:if test="${not empty emp}"> --%>
-<%-- 		<c:forEach var="e" items="${emp}"> --%>
-<%-- 			<c:out value="${e.empName }"/> --%>
-<%-- 		</c:forEach> --%>
-		
-<%-- 	</c:if> --%>
+
 
 
 
@@ -80,7 +75,14 @@
 	     		
 	            <div class="col-7">
 			            <div class="input-group mb-3">	  
-							  <input type="search" id="search_app" class="form-control" placeholder="이름을 입력하세요." aria-label="Example text with button addon" aria-describedby="button-addon1">
+							  <input type="search" list="serach_list" id="search_app" class="form-control" placeholder="이름을 입력하세요." aria-label="Example text with button addon" aria-describedby="button-addon1">
+					
+							 		<datalist id="serach_list">
+							 			 <option value="테스트"></option>
+							 		</datalist> 
+							 		
+
+							 		
 							  <div class="input-group-prepend">
 							    <button class="btn btn-outline-primary" type="button" id="button-addon1">추가하기</button>
 							  	<input type="hidden">

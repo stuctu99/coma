@@ -97,7 +97,9 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 			fetch("/approval/approver?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
-				console.log(data);
+				data.forEach(e=>{
+					/* datalist 옵션태그 만들기 */
+				});
 			});
 		
 	},800);
