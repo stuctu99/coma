@@ -25,10 +25,8 @@
     div{
       border: 2px solid red;
     }
-
   </style> -->
 </head>
-
 <body class="">
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
@@ -102,7 +100,7 @@
               <i class="ni ni-planet text-blue"></i> 전자결재
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
-              <li><a href="/approval/writedoc">결재신청</a></li>
+              <li><a href="${pageContext.request.contextPath}/approval/writedoc">결재신청</a></li>
               <li><a href="">결재문서함</a></li>
               <li><a href="">?</a></li>
             </ul>
