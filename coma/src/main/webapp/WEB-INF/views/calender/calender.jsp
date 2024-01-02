@@ -4,17 +4,18 @@
 
 <head>
     <meta charset='utf-8' />
-    <!-- 라이센스 필요한 애 우앙 $480 음.. 맹글어볼깡? 
+    <!-- 
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.8/index.global.min.js'></script>
     -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+</head>
 
-    <style>
-        #calendar {
-            width: 80vw;
-            height: 80vh;
-        }
-      #Modal {
+ <style>
+	  #calendar {
+	      width: 80vw;
+	      height: 80vh;
+	  }
+	#Modal {
   display: none;
   position: fixed;
   z-index: 1000;
@@ -79,7 +80,6 @@
   border: 1px solid #ccc;
   border-radius: 3px;
   appearance: none;
-  background-image: url("dropdown-arrow.png");
   background-repeat: no-repeat;
   background-position: right center;
   background-size: 10px;
@@ -98,7 +98,19 @@ input[type="datetime-local"] {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  width: 30%;
+}
+.colflex{
+  display: flex;
+  flex-direction: column;
+}
+.colflex>div{
+  display: flex;
+}
+.colflex>div:last-child{
+  justify-content: center;
+}
+.colflex>div>span:first-child,.colflex>div>h3:first-child{
+  width:30%;
 }
     </style>
 </head>
@@ -109,23 +121,39 @@ input[type="datetime-local"] {
         <div id="cont" style="text-align: center;">
             <br>
             <h1>일정 상세페이지</h1>
-            제목 <input type="text" id="schTitle" value=""><br>
-            시작시간 <input type="datetime-local" id="schStart" value="2023-11-24"/>
-            종료시간 <input type="datetime-local" id="schEnd" value=""/><br>
-            내용<br> <textarea id="schContent" value=""> </textarea><br>
-            하루종일 <input type="checkbox" id="allDay"><br> 
-            일정색상 <select id="schBColor">
-                <option value="red">빨강색</option>
-                <option value="orange">주황색</option>
-                <option value="yellow">노랑색</option>
-                <option value="green">초록색</option>
-                <option value="blue">파랑색</option>
-                <option value="indigo">남색</option>
-                <option value="purple">보라색</option>
-              </select><br>
-
-            <button onclick="fCalAdd()">저장하기</button>
-            <button onclick="fMClose()">취소하기</button>
+            <div class="colflex">
+              <div>
+                <span>제목</span> <input type="text" id="schTitle" value="">
+              </div>
+              <div>
+                <span>시작시간</span> <input type="datetime-local" id="schStart" value="" />
+              </div>
+              <div>
+                <span>종료시간</span> <input type="datetime-local" id="schEnd" value=""/>
+              </div>
+              <div>
+                <h3>내용</h3> <textarea id="schContent"> </textarea>
+              </div>
+              <div>
+                <span>하루종일</span> <input type="checkbox" id="allDay">
+              </div>
+              <div>
+              <span>일정색상</span>
+               <select id="schBColor">
+                  <option value="red">빨강색</option>
+                  <option value="orange">주황색</option>
+                  <option value="yellow">노랑색</option>
+                  <option value="green">초록색</option>
+                  <option value="blue">파랑색</option>
+                  <option value="indigo">남색</option>
+                  <option value="purple">보라색</option>
+                </select>
+              </div>
+              <div>
+                <button onclick="fCalAdd()">저장하기</button>
+                <button onclick="fMClose()">취소하기</button>
+              </div>
+            </div>
         </div>
     </div>
     <!-- 실제 화면을 담을 영역 -->
@@ -140,7 +168,7 @@ input[type="datetime-local"] {
         const schTitle = document.querySelector("#schTitle");
         const schAllday = document.querySelector("#allDay");
         const schBColor = document.querySelector("#schBColor");
-    
+        const schContent = document.querySelector("#schContent");
 
 
         //캘린더 헤더 옵션
@@ -150,7 +178,7 @@ input[type="datetime-local"] {
             right: 'dayGridMonth,dayGridWeek,timeGridDay'
         }
 
-        // 캘린더 생성 옵션(참공)
+        // 캘린더 생성 옵션(참고)
         const calendarOption = {
             height: '700px', // calendar 높이 설정
             expandRows: true, // 화면에 맞게 높이 재설정
@@ -179,11 +207,10 @@ input[type="datetime-local"] {
             */
             nowIndicator: true,
             //events:[],
-            eventSources: [
-                './commonEvents.json',  // Ajax 요청 URL임에 유의!
-                './KYREvents.json',
-                './SYREvents.json'
-            ]
+            eventSources:[
+            /*  fetch("${path}/calender/calenderTest") */
+            	
+           ] 
         }
 
         // 캘린더 생성
@@ -192,7 +219,8 @@ input[type="datetime-local"] {
         calendar.render();
 
         // 캘린더 이벤트 등록
-        calendar.on("eventAdd", info => console.log("Add:", info));
+        calendar.on("eventAdd", info => console.log("Add:", info
+        ));
         calendar.on("eventChange", info => console.log("Change:", info));
         calendar.on("eventRemove", info => console.log("Remove:", info));
         calendar.on("eventClick", info => {
@@ -200,21 +228,23 @@ input[type="datetime-local"] {
             console.log('Event: ', info.event.extendedProps);
             console.log('Coordinates: ', info.jsEvent);
             console.log('View: ', info.view);
-            // 재미로 그냥 보더색 바꾸깅
-            info.el.style.borderColor = 'red';
+         
+       
         });
         calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
         calendar.on("eventMouseLeave", info => console.log("eLeave:", info));
         calendar.on("dateClick", info => console.log("dateClick:", info));
         calendar.on("select", info => {
-            console.log("체킁:", info.startStr);
-            schStart.value = '2023-11-14';
-            schEnd.value = info.end;
+            console.log("select:", info);
+             
+            schStart.value=info.startStr+" 09:00:00";
+            schEnd.value=info.endStr+" 18:00:00";
+           console.log(info.startStr);
 
             Modal.style.display = "block";
         });
 
-        // 일정(이벤트) 추가하깅
+        // 일정(이벤트) 추가하기
         function fCalAdd() {
             if (!schTitle.value) {
                 alert("제목에 머라도 쓰자")
@@ -228,10 +258,13 @@ input[type="datetime-local"] {
                 start: schStart.value,
                 end: schEnd.value,
                 title: schTitle.value,
+                //content: schContent.value 이거 안되는거 나중에 해결
                 allDay: schAllday.checked,
-                backgroundColor: bColor,
+                backgroundColor: bColor
 
             };
+
+            
 
             calendar.addEvent(event);
             fMClose();
@@ -243,12 +276,5 @@ input[type="datetime-local"] {
         }
     </script>
 </body>
-
-
-
-
-
-
-
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -8,6 +8,7 @@ public class CalenderController {
 	
 	@RequestMapping("/calender")
 	public String calender() {
+		System.out.println("tst");
 		return "/calender/calender";
 	}
 }
