@@ -10385,3 +10385,23 @@ Caused by: org.apache.ibatis.builder.BuilderException: Mapper's namespace cannot
 2024-01-02T12:44:22.488+09:00  INFO 3876 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
 2024-01-02T12:44:22.512+09:00  INFO 3876 --- [Thread-64] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Shutdown initiated...
 2024-01-02T12:44:22.535+09:00  INFO 3876 --- [Thread-64] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Shutdown completed.
+2024-01-02T12:44:22.603+09:00  INFO 3876 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 3876 (C:\Users\LeeKyuHong\git\coma\coma\target\classes started by LeeKyuHong in C:\Users\LeeKyuHong\git\coma\coma)
+2024-01-02T12:44:22.603+09:00 DEBUG 3876 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2024-01-02T12:44:22.603+09:00  INFO 3876 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2024-01-02T12:44:22.780+09:00  INFO 3876 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-02T12:44:22.787+09:00  INFO 3876 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JDBC repository interfaces.
+2024-01-02T12:44:22.814+09:00  WARN 3876 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.coma]' package. Please check your configuration.
+2024-01-02T12:44:22.852+09:00  INFO 3876 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-01-02T12:44:22.852+09:00  INFO 3876 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-02T12:44:22.852+09:00  INFO 3876 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-01-02T12:44:22.926+09:00  INFO 3876 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-01-02T12:44:22.928+09:00  INFO 3876 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2024-01-02T12:44:22.929+09:00  INFO 3876 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 324 ms
+2024-01-02T12:44:23.002+09:00  INFO 3876 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-01-02T12:44:23.059+09:00  INFO 3876 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Starting...
+2024-01-02T12:44:23.107+09:00  INFO 3876 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-16 - Added connection oracle.jdbc.driver.T4CConnection@4b27f677
+2024-01-02T12:44:23.107+09:00  INFO 3876 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Start completed.
+2024-01-02T12:44:23.123+09:00  INFO 3876 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-02T12:44:23.135+09:00  INFO 3876 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-01-02T12:44:23.138+09:00  INFO 3876 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 0.558 seconds (process running for 1362.014)
+2024-01-02T12:44:23.139+09:00  INFO 3876 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
