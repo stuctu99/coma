@@ -66,15 +66,19 @@ $(document).on("change",".custom-file-input",(e=>{
 
 
 $("#search_app").keyup(function(){
-	const path = location.host;
+	console.log("test");
+	const path = $("#pathValue").val();
+	console.log(path);
 	const appAjax=()=>{
 		
-		fetch("/approval/writedoc")
+		fetch(path+"/approval/approver")
 		.then(response=>{
+			console.log("ttt")
 			console.log(response); 
 			return response.json()
 		})
 		.then(data=>{
+				console.log("ttt2")
 			console.log(data);
 		})
 	}

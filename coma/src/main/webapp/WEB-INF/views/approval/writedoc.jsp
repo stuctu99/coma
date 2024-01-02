@@ -14,17 +14,44 @@
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <script src="/resource/js/jquery-3.7.0.js"></script>
 <link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
-	테스트
+
 	
 	<!-- path.. -->
-	<input type="hidden" id="pathValue" value="#{path }"/>
+	<input type="hidden" id="pathValue" value="${pageContext.request.contextPath}"/> 
 	
-	<c:if test="${not empty emp}">
-		<c:forEach var="e" items="${emp}">
-			<c:out value="${e.empName }"/>
-		</c:forEach>
+<%-- 	<c:if test="${not empty emp}"> --%>
+<%-- 		<c:forEach var="e" items="${emp}"> --%>
+<%-- 			<c:out value="${e.empName }"/> --%>
+<%-- 		</c:forEach> --%>
 		
-	</c:if>
+<%-- 	</c:if> --%>
+
+<input type="text" id="data">
+
+<script>
+/* 디바운스 - 과부하 안걸리도록 입력할때마다 요청을 보내는게 아니라 1초의 간격을 두고 입력할때까지 기다림*/
+	document.querySelector("#data")
+	.addEventListener("keyup",(()=>{
+			let requestFunc;
+			return e=>{
+				
+				if(requestFunc){
+					clearTimeout(requestFunc);
+				}
+				requestFunc = setTimeout(()=>{
+					console.log("/approval/test?data="+e.target.value);
+					fetch("/approval/test?data="+e.target.value)
+					.then(result=>result.text())
+					.then(data=>{
+						console.log(data);
+			});
+		},800);
+			}
+	})());
+
+</script>
+
+
 
     <!-- TEAM COMA SPACE -->
 	<form action="${pageContext.request.contextPath }/approval" method="post"
