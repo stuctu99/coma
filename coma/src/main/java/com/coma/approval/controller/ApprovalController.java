@@ -30,6 +30,9 @@ public class ApprovalController {
 	
 	@GetMapping("/writedoc")
 	public String writeDoc(Model model, String approver) {
+		
+		
+		
 		List<Emp> emp = service.selectEmpListAll();
 		model.addAttribute("emp", emp);
 		return "/approval/writedoc";
