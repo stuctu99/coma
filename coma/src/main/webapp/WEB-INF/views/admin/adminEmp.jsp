@@ -10,39 +10,39 @@
 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
-	div{
+/* 	div{
       border: 2px solid red;
-    }
+    } */
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row">
-		<div class="col-8" >
+		<div class="col-1"></div>
+		<div class="col-7" >
 			<div style="text-align:center;">
 				<h1>사원 관리 페이지</h1>
 			</div>
-			<div style="width:100%; height:400px;">
+			<div style="width:100%; height:550px;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="myChart"></canvas>
 			</div>
 		</div>
-		<div class="col-4">
+		<div class="col-3">
 			<div style="text-align:center;">
 				<h1>부서별 사원 명수</h1>
 			</div>
 			<div class="row">
-				<c:forEach var="d" items="${depts }">
-					<div class="col-6">
-					    <div class="input-group">
-							<div>
-								<label for="example-text-input" class="form-control-label"><c:out value="${d.deptType }"/></label>
-								<input class="form-control form-control-sm" type="text" style="background-color: #ffffff;" placeholder="00명" readonly="readonly">
-							</div>
-					    </div>
+			<c:forEach var="ec" items="${empCount }">
+				<div class="col-6" style="text-align: center;">
+					<div>
+						<label for="example-text-input" class="form-control-label"><c:out value="${ec.DEPT_TYPE }"/></label>
+						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center;" placeholder="${ec.DEPTCOUNT }명" readonly>
 					</div>
-				</c:forEach>
+				</div>
+			</c:forEach>
 			</div>
 		</div>
+		<div class="col-1"></div>
 	</div>
 </div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
@@ -60,7 +60,7 @@
 			</select>
 		</div>
 		<div class="col-2" style="padding-left:0px;">
-			<input class="form-control form-control-sm" type="text" id="texthData" placeholder="검색바">
+			<input class="form-control form-control-sm" type="text" id="textData" placeholder="검색바">
 		</div>
 		<div class="col-5" style="padding-left:0px;">
 			<button type="button" class="btn btn-secondary btn-sm" style="width:50px;" onclick="fn_searchEmp();">검색</button>
@@ -110,6 +110,7 @@
 		           </c:if>
 		        </tbody>
 		    </table>
+		    <div>${pageBar }</div>
 		</div>
 	</div>
 </div>
@@ -150,10 +151,13 @@ const myChart = new Chart(ctx, {
         }
     }
 });
+
+//사원 부서별, 직책별 검색
 function fn_searchEmp(){
 	const searchData=document.getElementById("searchData").value;
-	const textData=documnet.getElementById("textData").value;
-	feth("/admin/searchEmp",{
+	const textData=document.getElementById("textData").value;
+	console.log(searchData,textData);
+	fetch("/admin/searchEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify({
@@ -171,6 +175,7 @@ function fn_searchEmp(){
 }
 
 
+//신입사원 아이디 생성 및 배포
 function fn_addEmp(){
 	const empName=document.getElementById("empName").value;
 	console.log(empName);
@@ -192,6 +197,7 @@ function fn_addEmp(){
 	});
 }
 
+//사원 퇴사후 아이디 비활성화
 function fn_deleteEmp(e){
 	console.log(e);
 	fetch("/admin/deleteEmp",{

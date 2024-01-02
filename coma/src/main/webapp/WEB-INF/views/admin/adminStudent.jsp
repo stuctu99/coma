@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
@@ -13,33 +17,33 @@
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row">
-		<div class="col-8" >
+	<div class="col-1"></div>
+		<div class="col-7" >
 			<div style="text-align:center;">
 				<h1>학생 관리 페이지</h1>
 			</div>
-			<div style="width:100%; height:400px;">
+			<div style="width:100%; height:550px;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="myChart"></canvas>
 			</div>
 		</div>
-		<div class="col-4">
+		<div class="col-3">
 			<div style="text-align:center;">
-				<h1>담당강사별 학생 명수</h1>
+				<h1>반별 학생 수</h1>
 			</div>
 			<div class="row">
-				<c:forEach var="s" items="${students }">
-					<div class="col-6">
-					    <div class="input-group">
-							<div>
-								<label for="example-text-input" class="form-control-label"><c:out value="${s. }"/></label>
-								<input class="form-control form-control-sm" type="text" style="background-color: #ffffff;" placeholder="00명" readonly="readonly">
-							</div>
-					    </div>
+			<c:forEach var="s" items="${studentCount }">
+				<div class="col-6">
+					<div style="text-align: center;">
+						<label for="example-text-input" class="form-control-label"><c:out value=""/>${s.EMP_NAME }</label>
+						<input class="form-control form-control-sm" type="text" value="${s.STUDENTCOUNT }명" style="text-align: center;">
 					</div>
-				</c:forEach>
+				</div>
+			</c:forEach>
 			</div>
 		</div>
 	</div>
+	<div class="col-1"></div>
 </div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
 	<h1>학생 리스트</h1>
@@ -67,20 +71,20 @@
 		        <thead class="thead-light">
 		            <tr>
 		                <th>학생 이름</th>
-		                <th>소속 반</th>
 		                <th>담당 강사</th>
 		                <th>수료여부</th>
 		                <th>취업여부</th>
 		            </tr>
 		        </thead>
-		        <tbody class="list">
+		        <tbody class="list" id="studentChart">
+		        <c:forEach var="s" items="${students }">
 		        	<tr>
-		        		<td><a href="#">이름</a></td>
-		        		<td>소속 반</td>
-		        		<td>담당 강사</td>
-		        		<td>수료여부</td>
-		        		<td>취업여부</td>
+		        		<td><a href="#"><c:out value="${s.stuName }"/></a></td>
+		        		<td><c:out value="${s.empId }"/></td>
+		        		<td><c:out value="${s.stuComStatus }"/></td>
+		        		<td><c:out value="${s.stuEmpStatus }"/></td>
 		        	</tr>
+		        </c:forEach>
 		        </tbody>
 		    </table>
 		</div>
@@ -138,7 +142,19 @@ function fn_searchEmp(){
 		if(response.status!=200) throw new Error(repsonse.status);
 		return response.json();
 	}).then(result=>{
-		console.(result);
+		const tbody=document.getElementById("studentChart");
+		result.forEach((e)=>{
+			const $tr=document.creatElement('tr');
+			const $td1=document.creatElement('td');
+			const $a=document.creatElement('a');
+			$a.setAttridute('href','#');
+			$td1.append($a);
+			const $td2=document.creatElement('td');
+			const $td3=document.creatElement('td');
+			const $td4=document.creatElement('td');
+			
+		})
+		console.log(result);
 	}).catch(e=>{
 		console.log(e);
 	})

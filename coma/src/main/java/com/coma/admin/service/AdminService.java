@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.coma.admin.dao.AdminDao;
-import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Student;
 
@@ -22,12 +21,16 @@ public class AdminService {
 	private final SqlSession session;
 	
 	//사원관련 서비스
-	public List<Emp> selectEmpAll(){
-		return dao.selectEmpAll(session);
+	public List<Emp> selectEmpAll(Map<String, Integer> page){
+		return dao.selectEmpAll(session, page);
 	}
 	
-	public List<Dept> selectDept() {
-		return dao.selectDept(session);
+	public int countEmp() {
+		return dao.countEmp(session);
+	}
+	
+	public List<Map> countEmpByDept() {
+		return dao.countEmpByDept(session);
 	}
 	
 	public int insertEmp(HashMap<String, Object> empName) {
@@ -49,6 +52,10 @@ public class AdminService {
 	
 	public List<Student> searchStudent(HashMap<String, Object> searchMap){
 		return dao.searchStudent(session, searchMap);
+	}
+	
+	public List<Map> studentCountByEmpId(){
+		return dao.studentCountByEmpId(session);
 	}
 
 }
