@@ -80,17 +80,17 @@
 	<div class="row" style="display: flex; align-items: center;">
 	<div class="col-1"></div>
 		<div class="col-1" style="margin-left:15px;">
-			<select class="form-control form-control-sm" name="selectEmp">
+			<select class="form-control form-control-sm" id="searchData">
 			  <option value="student">학생</option>
 			  <option value="studentCom">수료생</option>
 			  <option value="studentEmp">취업생</option>
 			</select>
 		</div>
 		<div class="col-2" style="padding-left:0px;">
-			<input class="form-control form-control-sm" type="text" placeholder="이름으로 검색 고정">
+			<input class="form-control form-control-sm" type="text" id="textData" placeholder="이름으로 검색 고정">
 		</div>
 		<div class="col-5" style="padding-left:0px;">
-			<button type="button" class="btn btn-secondary btn-sm">검색</button>
+			<button type="button" class="btn btn-secondary btn-sm" onclick="fn_searchEmp();">검색</button>
 		</div>
 	</div>
 	<div class="table-responsive" style="padding: 0px 115px 0px 115px;">
@@ -103,7 +103,6 @@
 		                <th>담당 강사</th>
 		                <th>수료여부</th>
 		                <th>취업여부</th>
-		                <th></th>
 		            </tr>
 		        </thead>
 		        <tbody class="list">
@@ -156,6 +155,23 @@ const myChart = new Chart(ctx, {
         }
     }
 });
+
+function fn_searchEmp(){
+	const searchData=document.getElementById("searchData").value;
+	const textData=documnet.getElementById("textData").value;
+	feth("${path}/",{
+		method:"post",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify{searchData:searchData,textData:textData}
+	}).then(response=>{
+		if(response.status!=200) throw new Error(repsonse.status);
+		return response.json();
+	}).then(result=>{
+		console.(result);
+	}).catch(e=>{
+		console.log(e);
+	})
+}
 
 //Google 차트 js
 /* google.charts.load('current', {'packages':['bar']});

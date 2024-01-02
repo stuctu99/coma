@@ -8,10 +8,10 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.coma.MyAuthority;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,8 +35,9 @@ public class Emp implements UserDetails{
    private String empPhoto;
    private int empVacation;
    private String empAccess;
-   private String jobCode;//test 이후 객체로 바꿀 예정
-   private String deptCode;//test 이후 객체로 바꿀 예정
+   private Dept dept;
+   private Job job;
+ 
    
    
    @Override
@@ -51,6 +52,7 @@ public class Emp implements UserDetails{
 		}
 		
 		return auth;
+
 }
 
    @Override

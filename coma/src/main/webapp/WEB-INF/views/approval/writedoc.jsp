@@ -10,16 +10,18 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
   <!-- Editor's Style -->
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-
+<script src="/resource/js/jquery-3.7.0.js"></script>
 <link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
 
 
     <!-- TEAM COMA SPACE -->
-	<form>
+	<form action="${pageContext.request.contextPath }/approval" method="post"
+					enctype="multipart/form-data">
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
           <!-- coma content space -->
-          
+   
+<!-- 공통사항 -->          
           <div class="doc_basic">
 	  
 	          
@@ -40,20 +42,20 @@
 		            <div class="col-2">
 		            </div>
 
-		      </div>    
+		     </div>    
 
-	          <div class="row">
+	         <div class="row">
 	            <div class="col-3">
 	            	문서 제목
 	            </div>
 	            <div class="col-7">
 	            	<input class="form-control" type="text" placeholder="제목">
 	            </div>  
-	            <div class="col-2">
-	            </div>
-	          </div>
-          </div>
+	            <div class="col-2"></div>
+	         </div>
+          </div><!-- doc_basic -->
           
+<!-- 결재선 설정 -->          
           <div class="app_line">
           
 	          <div class="row">
@@ -100,10 +102,9 @@
 							  </div>
 						</div>
 	            </div>
-    			<div class="col-2">
-	            </div>
-          	</div>
-          	 <div class="row ck_appr">
+    			<div class="col-2"></div>
+          	 </div>
+          	<div class="row ck_appr">
 	          	<div class="col-3">
 	          	</div>
 	          	<div class="col-7">
@@ -112,16 +113,15 @@
 					</button>
 
 	          	</div>
-	          	<div class="col-2">
-	          	</div>
-         </div> 
-           
+	          	<div class="col-2"></div>
+           </div> 
+   		</div>  <!-- app_line --> 
  	
 <!-- 문서별 입력 내용 -->
 
+    <!-- 휴가신청서 -->   
           <div id="leave" style="display:none;">
-       		<hr>
-       		
+       		<hr>		
        		<h2>휴가 신청서</h2>
 	          <div class="row">
 	          		<div class="col-3">
@@ -140,7 +140,7 @@
 		          	</div>
 		  
 	          </div>  
-		       <div class="row">
+		      <div class="row">
 				<!-- 휴가 신청 날짜 선택 -->
 					<div class="col-3">
 	          			휴가 날짜
@@ -171,10 +171,11 @@
 							</div>
 		     		  </div>
 		     		  <div class="col-3"></div>
-			     </div>  
+			    </div>  
 
 	      </div>
-	        
+
+    <!-- 지출결의서 -->   		        
           <div id="cash" style="display:none;">  
           <hr>    
           	<h2>지출결의서</h2>
@@ -214,6 +215,7 @@
 	          	<div class="col-2"></div>
 	          </div>
            </div>
+    <!-- 품의서 -->              
           <div id="req" style="display:none;">
           <hr>
           	<h2>품의서</h2>
@@ -234,7 +236,8 @@
 	          	<div class="col-2"></div>
 	          </div>
           </div>
-          
+         
+    <!-- 기타 문서 -->             
           <div id="etc" style="display:none;">
           <hr>
           		<h2>기타 문서</h2>
@@ -258,23 +261,36 @@
 	     </div>
           
               
-    <!-- 토스트 에디터 -->
+<!-- 토스트 에디터 -->
     <div class="row">
       <div class="col-12">
        	  <div id="content"></div>
       </div>
     </div>      
     
-   	<div class="row">
+<!-- 첨부파일 -->
+	<div class="row">
 		<div class="col-12">
+			<button type="button" class="btn btn-outline-primary" onclick="fn_addFileForm();">파일 추가</button>
+			<button type="button" class="btn btn-outline-danger" onclick="fn_deleteFileForm();">파일 삭제</button>
+		</div>
+	</div>
+    	
+   	<div class="row" id="basicFileForm" >
+   		<div class="col-3">
+   			<span class="file_span">첨부파일 1</span>
+   		</div>
+		<div class="col-7">
 			    <div class="custom-file">
-			        <input type="file" class="custom-file-input" id="customFileLang" lang="en">
-			        <label class="custom-file-label" for="customFileLang">첨부 파일</label>
+			        <input type="file" name="upfile" class="custom-file-input" id="customFileLang" lang="en">
+			        <label class="custom-file-label" for="customFileLang"></label>
 			    </div>
 		</div>
+		<div class="col-2"></div>
 		
 	</div>    
-          
+	 
+<!-- 작성 완료 버튼 -->          
     <div class="row btn_container">
     	<div class="col-11"></div>
     	<div class="col-1">
@@ -285,7 +301,7 @@
         </div>
     </div>
 
-   </form>   
+</form>   
     
     <!-- TEAM COMA SPACE -->
     </div>
