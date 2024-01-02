@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="path" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,12 +21,12 @@ Latest compiled JavaScript
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
 	rel="stylesheet">
 <!-- Icons -->
-<link href="/resource/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+<link href="${path }/resource/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
 <link
-	href="/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"
+	href="${path }/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"
 	rel="stylesheet" />
 <!-- CSS Files -->
-<link href="/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+<link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 <style>
 div {
 	/* border: 1px solid red; */
@@ -45,10 +46,10 @@ div {
 			<hr style="margin: 2px 0;">
 			<div class="row header-menu">
 				<div class="col-6 emp-list-btn">
-					<img src="/resource/img/chat/list-icon.png" />
+					<img src="${path }/resource/img/chat/list-icon.png" />
 				</div>
 				<div class="col-6 chatting-list-btn">
-					<img src="/resource/img/chat/chat-icon.png" />
+					<img src="${path }/resource/img/chat/chat-icon.png" />
 				</div>
 			</div>
 			<hr>
@@ -107,6 +108,7 @@ div {
 					<h2>제목</h2>
 				</div>
 				<div class="col-2">
+					<input type="hidden" id="pathValue" value="${path }"/>
 					<button id="create-room" type="button" class="btn btn-primary" data-toggle="modal"
 						data-target="#exampleModal">방생성</button>
 				</div>
@@ -217,14 +219,14 @@ div {
 		</div>
 	</footer>
 </body>
-<script src="/resource/js/plugins/jquery/dist/jquery.min.js"></script>
+<script src="${path }/resource/js/plugins/jquery/dist/jquery.min.js"></script>
 <script
-	src="/resource/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	src="${path }/resource/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!--   Optional JS   -->
-<script src="/resource/js/plugins/chart.js/dist/Chart.min.js"></script>
-<script src="/resource/js/plugins/chart.js/dist/Chart.extension.js"></script>
+<script src="${path }/resource/js/plugins/chart.js/dist/Chart.min.js"></script>
+<script src="${path }/resource/js/plugins/chart.js/dist/Chart.extension.js"></script>
 <!--   Argon JS   -->
-<script src="/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
+<script src="${path }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-<script src="/resource/js/chat/chat.js"></script>
+<script src="${path }/resource/js/chat/chat.js"></script>
 </html>

@@ -13,14 +13,14 @@
     Coma Academy
   </title>
   <!-- Favicon -->
-  <link href="/resource/img/brand/favicon_2.png" rel="icon" type="image/png">
+  <link href="${path }/resource/img/brand/favicon_2.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
-  <link href="/resource/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-  <link href="/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="${path }/resource/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+  <link href="${path }/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
   <!-- <style>
     div{
       border: 2px solid red;
@@ -39,36 +39,7 @@
         <img src="/resource/img/brand/COMA2.png" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
-      <ul class="nav align-items-center d-md-none">
-        <li class="nav-item dropdown">
-          <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-            <div class=" dropdown-header noti-title">
-              <h6 class="text-overflow m-0">Welcome!</h6>
-            </div>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-single-02"></i>
-              <span>My profile</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-settings-gear-65"></i>
-              <span>Settings</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-calendar-grid-58"></i>
-              <span>Activity</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-support-16"></i>
-              <span>Support</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
-              <i class="ni ni-user-run"></i>
-              <span>Logout</span>
-            </a>
-          </div>
-        </li>
-      </ul>
+    
       <!-- Collapse -->
       <div class="collapse navbar-collapse" id="sidenav-collapse-main">
         <!-- Collapse header -->
@@ -151,7 +122,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
           <li class="nav-item">
-            <a class="nav-link" id="messenger-btn">
+            <a class="nav-link" id="messenger-btn" onclick="messenger_active('${pageContext.request.contextPath}');">
               <i class="ni ni-spaceship"></i> Messenger
             </a>
           </li>

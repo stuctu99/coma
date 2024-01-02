@@ -12,7 +12,7 @@ import com.coma.model.dto.Emp;
 @Repository
 public class ChattingDaoImpl implements ChattingDao {
 //	select
-	@Override
+	@Override	
 	public List<Emp> selectEmpListAll(SqlSession session) {
 		// TODO Auto-generated method stub
 		return session.selectList("emp.selectEmpAllforChatting");
