@@ -65,22 +65,45 @@ $(document).on("change",".custom-file-input",(e=>{
 }));
 
 
-$("#search_app").keyup(function(){
-	console.log("test");
-	const path = $("#pathValue").val();
-	console.log(path);
-	const appAjax=()=>{
+//$("#search_app").keyup(function(){
+//	console.log("test");
+//	const path = $("#pathValue").val();
+//	console.log(path);
+//	const appAjax=()=>{
+//		
+//		fetch(path+"/approval/approver")
+//		.then(response=>{
+//			console.log("ttt")
+//			console.log(response); 
+//			return response.json()
+//		})
+//		.then(data=>{
+//				console.log("ttt2")
+//			console.log(data);
+//		})
+//	}
+//	
+//});
+
+document.querySelector("#search_app").addEventListener("keyup",(()=>{
+	let requestFunc; //closure
+	return e=>{
 		
-		fetch(path+"/approval/approver")
-		.then(response=>{
-			console.log("ttt")
-			console.log(response); 
-			return response.json()
-		})
-		.then(data=>{
-				console.log("ttt2")
-			console.log(data);
-		})
-	}
-	
-});
+		if(requestFunc){
+			clearTimeout(requestFunc);
+			
+		}
+		requestFunc = setTimeout(()=>{
+			fetch("/approval/approver?data="+e.target.value)
+			.then(result=>result.text())
+			.then(data=>{
+				console.log(data);
+			});
+		
+	},800);
+			}
+})());
+
+
+
+

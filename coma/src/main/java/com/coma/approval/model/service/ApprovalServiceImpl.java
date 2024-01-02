@@ -18,11 +18,14 @@ public class ApprovalServiceImpl implements ApprovalService {
 	private final ApprovalDao dao;
 	private final SqlSession session;
 	
+	
 	@Override
-	public List<Emp> selectEmpListAll() {
-		// TODO Auto-generated method stub
-		return dao.selectEmpListAll(session);
+	public List<Emp> selectEmpByData(String data){
+		
+		return dao.selectEmpByData(session, data);
+		
 	}
+
 	
 	@Override
 	public int insertApproval(Map data) {

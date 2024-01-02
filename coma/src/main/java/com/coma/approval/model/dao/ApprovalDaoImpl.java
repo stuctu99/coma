@@ -11,10 +11,11 @@ import com.coma.model.dto.Emp;
 @Repository
 public class ApprovalDaoImpl implements ApprovalDao {
 
+	
 	@Override
-	public List<Emp> selectEmpListAll(SqlSession session) {
-		// TODO Auto-generated method stub
-		return session.selectList("emp.selectEmpAllforChatting");
+	public List<Emp> selectEmpByData(SqlSession session, String data){
+		
+		return session.selectList("emp.selectEmpByData", data);
 	}
 	
 	@Override

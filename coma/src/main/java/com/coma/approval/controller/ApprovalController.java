@@ -33,18 +33,13 @@ public class ApprovalController {
 	private final Gson gson;
 	
 	@GetMapping("/approver")
-	public void writeDoc(Model model, String approver, HttpServletResponse response) throws IOException {
+	@ResponseBody
+	public List<Emp> writeDoc(String data, Model model, String approver, HttpServletResponse response) throws IOException {
 		
-		System.out.println(response);
-		System.out.println(approver);
+		System.out.println(data);
+		List<Emp> emp = service.selectEmpByData(data);
 		
-		List<Emp> emp = service.selectEmpListAll();
-		
-		response.setContentType("application/json;charset=utf-8");
-		gson.toJson(emp, response.getWriter());
-		
-//		model.addAttribute("emp", emp);
-//		return "/approval/approver";
+		return emp;
 	}
 	
 	@GetMapping("/test")
@@ -122,7 +117,7 @@ public class ApprovalController {
 		
 //		int result = service.insertApproval(data);
 		
-		List<Emp> testEmp =  service.selectEmpListAll();
+//		List<Emp> testEmp =  service.selectEmpListAll();
 		
 		return "redirect:/approval";
 	}

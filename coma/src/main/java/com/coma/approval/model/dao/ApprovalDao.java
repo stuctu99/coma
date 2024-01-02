@@ -10,7 +10,7 @@ import com.coma.model.dto.Emp;
 public interface ApprovalDao {
 
 	
-	public List<Emp> selectEmpListAll(SqlSession session);
+	List<Emp> selectEmpByData(SqlSession session, String data);
 	
 	int insertApprDoc(SqlSession session, Map data);
 	int insertCash(SqlSession session, Map data);
