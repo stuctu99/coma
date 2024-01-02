@@ -1,6 +1,7 @@
 package com.coma.model.dto;
 
-import java.security.Timestamp;
+
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.AllArgsConstructor;

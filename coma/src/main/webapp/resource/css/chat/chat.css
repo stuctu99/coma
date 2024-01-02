@@ -89,6 +89,14 @@ hr {
 	display: none;
 }
 
+#passwordScreen{
+	display: none;
+}
+
+#passwordScreen .modal-body{
+	text-align: center;
+}
+
 .emp-list, .chatting-list{
 	margin-top:5px;
 	text-align: left;

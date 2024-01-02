@@ -51,13 +51,27 @@ $(".chatting-list-btn").click(function() {
 		data.forEach(d=>{
 			const $div = $("<div>").addClass("row");
 			const $div_type = $("<div>").addClass("col-2 chatting-room");
-			const $div_title = $("<div>").addClass("col-8 chatting-room");
+			const $div_title = $("<div>").addClass("col-7 chatting-room").css("text-align","left");
 			const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top","2px");
 			const $input = $("<input>").attr("name","roomNo").attr("type","hidden").val(d.roomNo);
 			const $strong_type = $("<strong>");
-			const $strong_title = $("<strong>");
-			const $room_enter = $("<button>").addClass("room-enter btn btn-outline-primary").text("입장").attr("onclick","enter_room('"+d.roomNo+"');");
-		
+			const $strong_title = $("<strong>").css("padding-right","3px");
+			/*const $recentMsg = $("<div>").addClass("col-3 chatting-room");*/
+			const $recentMsg = $("<small>").text("테스트");
+			const $i = $("<div>").addClass("col-1 chatting-room");
+			const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
+			if(d.roomPasswordFlag=='Y'){
+				$room_enter.attr("data-toggle","modal").attr("data-target","#passwordScreen");
+				$("#check-roomNo").val(d.roomNo);
+			}else{
+				$room_enter.attr("onclick","enter_room('"+d.roomNo+"');");
+			}
+			
+			if(d.roomPasswordFlag=='Y'){
+				 $i.append($("<i>").addClass("fa-solid fa-lock"));
+			}else{
+				$i.append($("<i>").addClass("fa-solid fa-lock-open"));
+			}
 		/*	console.log(d.roomType.roomTypeName);
 			switch(d.roomType.roomTypeName){
 				case 'A' : $strong_type.text('공용'); break;
@@ -73,10 +87,13 @@ $(".chatting-list-btn").click(function() {
 			$strong_title.text(d.roomName);
 			$div_type.append($strong_type);
 			$div_title.append($strong_title);
+			/*$div_title.append($i);*/
 			$div_btn.append($room_enter);
 			/*$div_btn.append($input);*/
 			$div.append($div_type);
 			$div.append($div_title);
+			$div_title.append($recentMsg);
+			$div.append($i);
 			$div.append($div_btn);
 			console.log($div);
 			$content.append($div);		
@@ -87,7 +104,7 @@ $(".chatting-list-btn").click(function() {
 
 /* 방생성 입력 창 패스워드 활성화 */
 
-$("#roomPasswordFlag").click(function() {
+$("roomPasswordFlag").click(function() {
 	console.log(this);
 	if ($("#roomPasswordFlag").is(":checked")) {
 		console.log("체크");
@@ -102,14 +119,45 @@ $("#roomPasswordFlag").click(function() {
 const createRoom = () => {
 	console.log("active");
 }
-
+/*
+const passwordCheck = () =>{
+	const roomNo = $("#check-roomNo").val();
+	const password = $("#passwordCode").val();
+	const info = {
+		"roomNo" : roomNo,
+		"password" : password
+	}
+	
+	console.log(password);
+	fetch("/messenger/passwordCheck",{
+		method : "post",
+		header : {
+			"Content-Type" : "application/json",
+		},
+		body : JSON.stringify(info)
+	})
+	.then(response=>{
+		if(response.status!=200){
+			alert("잘못된접근");
+		}
+		
+		return response.json();
+	})
+	.then(data=>{
+		if(!data){
+			alert("비밀번호가 틀립니다.");
+		}else{
+			enter_room(roomNo);
+		}
+	})
+}
+*/
 
 /* 방입장 */
 const enter_room = (roomNo) => {
 	const pathValue = $("#pathValue").val();
-	console.log(pathValue);
 	console.log(roomNo);
-	location.href=pathValue+"/messenger/room/"+roomNo;
+	/*location.href=pathValue+"/messenger/room/";*/
 }
 
 
@@ -129,7 +177,7 @@ var talk = getId('contents');
 var msg = getId('msg');
 
 btnLogin.onclick = function() {
-	server = new WebSocket("ws://" + location.host + "/chat");
+	server = new WebSocket("ws://" + location.host + "/chatting");
 
 	server.onmessage = function(msg) {
 		var data = JSON.parse(msg.data);

@@ -1,13 +1,14 @@
 package com.coma.chatting.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -51,5 +52,12 @@ public class ChattingController {
 		return "redirect:/messenger";
 	}
 	
+	@PostMapping("/passwordCheck")
+	@ResponseBody
+	public String checkPassword(@RequestBody Map<String,String> roomInfo) {
+		System.out.println(roomInfo);
+		
+		return roomInfo.get("roomNo");
+	}
 	
 }

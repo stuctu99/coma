@@ -203,6 +203,32 @@ div {
 			<textarea id="msg"></textarea>
 			<button type="button" id="btnSend" class="btn btn-primary">전송</button>
 		</div> -->
+		<div class="modal fade" id="passwordScreen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" id="passwordScreen_title">입장코드입력</h4>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <div class="container">
+		        	<div class="row">
+		        		<div class="col-12">
+		        			<input type="hidden" id="check-roomNo" value=""/>
+		        			<input type="password" id="passwordCode" name="passwordCode" placeholder="입장코드를 입력하세요."/>
+		        		</div>
+		        	</div>
+		        </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">돌아가기</button>
+		        <button type="button" class="btn btn-primary" onclick="passwordCheck();" >입장</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	</section>
 	<footer>
 		<div class="container">
@@ -219,6 +245,7 @@ div {
 		</div>
 	</footer>
 </body>
+<script src="https://kit.fontawesome.com/787f35b479.js" crossorigin="anonymous"></script>
 <script src="${path }/resource/js/plugins/jquery/dist/jquery.min.js"></script>
 <script
 	src="${path }/resource/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
