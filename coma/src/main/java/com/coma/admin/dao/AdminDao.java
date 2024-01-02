@@ -1,11 +1,14 @@
 package com.coma.admin.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Student;
 
@@ -17,12 +20,16 @@ public class AdminDao {
 		return session.selectList("emp.selectEmpAll");
 	}
 	
-	public int insertEmp(SqlSession session, String userName) {
-		return session.insert("emp.insertEmp", userName);
+	public List<Dept> selectDept(SqlSession session) {
+		return session.selectList("emp.selectDept");
 	}
 	
-	public int deleteEmp(SqlSession session, String userName) {
-		return session.update("emp.deleteEmp", userName);
+	public int insertEmp(SqlSession session, HashMap<String, Object> empName) {
+		return session.insert("emp.insertEmp", empName);
+	}
+	
+	public int deleteEmp(SqlSession session, @RequestBody HashMap<String, Object> empId) {
+		return session.update("emp.deleteEmp", empId);
 	}
 	
 	public List<Emp> searchEmp(SqlSession session, Map<String, Object> searchMap){

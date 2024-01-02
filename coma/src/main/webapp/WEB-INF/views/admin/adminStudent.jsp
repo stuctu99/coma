@@ -12,65 +12,33 @@
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
-	<div style="text-align:center;">
-		<h1>학생 관리 페이지</h1>
-	</div>
 	<div class="row">
-		<div class="col-12">
-			<div class="row">
-				<div class="col-1"></div>
+		<div class="col-8" >
+			<div style="text-align:center;">
+				<h1>학생 관리 페이지</h1>
+			</div>
+			<div style="width:100%; height:400px;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
-				<div><canvas id="myChart"></canvas></div>
-				<div class="col-1"></div>
+				<canvas id="myChart"></canvas>
 			</div>
 		</div>
-	</div>
-	<div style="text-align:center; margin:10px 0px 10px 0px;">
-		<h1>반별 학생 수</h1>
-	</div>
-	<div class="row" style="margin-top:10px; margin-bottom: 10px; display: flex; justify-content: space-around;">
-		<div class="col-1"></div>
-		<div class="col-2.5">
-			<div class="form-group">
-			    <div class="input-group">
-			      <div class="input-group-prepend">
-			        <span class="input-group-text" id="inputGroup-sizing-default">총 학생 수</span>
-			      </div>
-			      <input type="text" style="background-color: #ffffff;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
-			    </div>
+		<div class="col-4">
+			<div style="text-align:center;">
+				<h1>담당강사별 학생 명수</h1>
+			</div>
+			<div class="row">
+				<c:forEach var="s" items="${students }">
+					<div class="col-6">
+					    <div class="input-group">
+							<div>
+								<label for="example-text-input" class="form-control-label"><c:out value="${s. }"/></label>
+								<input class="form-control form-control-sm" type="text" style="background-color: #ffffff;" placeholder="00명" readonly="readonly">
+							</div>
+					    </div>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
-		<div class="col-2.5">
-			<div class="form-group">
-			    <div class="input-group">
-			      <div class="input-group-prepend">
-			        <span class="input-group-text" id="inputGroup-sizing-default">00반</span>
-			      </div>
-			      <input type="text" style="background-color: #ffffff;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
-			    </div>
-			</div>
-		</div>
-		<div class="col-2.5">
-			<div class="form-group">
-			    <div class="input-group">
-			      <div class="input-group-prepend">
-			        <span class="input-group-text" id="inputGroup-sizing-default">00반</span>
-			      </div>
-			      <input type="text" style="background-color: #ffffff;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
-			    </div>
-			</div>
-		</div>
-		<div class="col-2.5">
-			<div class="form-group">
-			    <div class="input-group">
-			      <div class="input-group-prepend">
-			        <span class="input-group-text" id="inputGroup-sizing-default">00반</span>
-			      </div>
-			      <input type="text" style="background-color: #ffffff;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
-			    </div>
-			</div>
-		</div>
-		<div class="col-1"></div>
 	</div>
 </div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
@@ -159,10 +127,13 @@ const myChart = new Chart(ctx, {
 function fn_searchEmp(){
 	const searchData=document.getElementById("searchData").value;
 	const textData=documnet.getElementById("textData").value;
-	feth("${path}/",{
+	feth("/admin/searchStudent",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
-		body:JSON.stringify{searchData:searchData,textData:textData}
+		body:JSON.stringify({
+			searchData:searchData,
+			textData:textData
+		})
 	}).then(response=>{
 		if(response.status!=200) throw new Error(repsonse.status);
 		return response.json();

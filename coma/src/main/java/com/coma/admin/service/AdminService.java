@@ -6,8 +6,10 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.coma.admin.dao.AdminDao;
+import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Student;
 
@@ -24,12 +26,16 @@ public class AdminService {
 		return dao.selectEmpAll(session);
 	}
 	
-	public int insertEmp(String userName) {
-		return dao.insertEmp(session, userName);
+	public List<Dept> selectDept() {
+		return dao.selectDept(session);
 	}
 	
-	public int deleteEmp(String userName) {
-		return dao.deleteEmp(session, userName);
+	public int insertEmp(HashMap<String, Object> empName) {
+		return dao.insertEmp(session, empName);
+	}
+	
+	public int deleteEmp(@RequestBody HashMap<String, Object> empId) {
+		return dao.deleteEmp(session, empId);
 	}
 	
 	public List<Emp> searchEmp(Map<String, Object> searchMap){
