@@ -150,6 +150,8 @@ const addDelAppr=(function(){
 			$('.appr_container').append(i_tag);
 		
 			btn_tag.popover();
+			 /* 부트스트랩은 js를 사용하여 동적으로 웹 페이지를 조작하고 업데이트하기때문에 
+            동적으로 생성된 요소에 대해서는 초기화 작업이 필요.*/
 			appr_num++;
 		}else{
 			
@@ -158,10 +160,22 @@ const addDelAppr=(function(){
 		
 	}; 
 	
-	const delAppr=(element)=>{
+	const delAppr=(element)=>{ /* element : 삭제 icon */
 		if(appr_num!=1){
-			$(element).prev().remove();
+			
+			const btn = $(element).prev(); 
+			
+			if(btn.data('bs.popover')){ 
+				/* data()메소드를 사용하여 요소에 연결된 데이터를 가져옴.
+				-> 해당 요소에 popver가 초기화되었는지 확인.
+				bs.popver 데이터가 존재하면 초기화된 것.
+				-> popver('dispose')호출해 popver 제거. */
+				btn.popover('dispose');
+			}
+			
+			btn.remove();
 			$(element).remove();
+		
 			
 			appr_num--;
 		}
