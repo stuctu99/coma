@@ -16508,3 +16508,106 @@ Caused by: java.lang.Error: Unresolved compilation problems:
 2024-01-02T17:25:34.923+09:00  INFO 18396 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-01-02T17:25:34.923+09:00  INFO 18396 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2024-01-02T17:25:34.924+09:00  INFO 18396 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-03T14:19:28.667+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 13156 (C:\Users\rudgu\git\coma\coma\target\classes started by rudgu in C:\Users\rudgu\git\coma\coma)
+2024-01-03T14:19:28.669+09:00 DEBUG 13156 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2024-01-03T14:19:28.670+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T14:19:28.715+09:00  INFO 13156 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\rudgu\.m2\repository\com\oracle\database\jdbc\ojdbc11\23.3.0.23.09\ojdbc11-23.3.0.23.09.jar referenced one or more files that do not exist: file:/C:/Users/rudgu/.m2/repository/com/oracle/database/jdbc/ojdbc11/23.3.0.23.09/oraclepki.jar
+2024-01-03T14:19:28.716+09:00  INFO 13156 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-03T14:19:28.716+09:00  INFO 13156 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-03T14:19:29.181+09:00  INFO 13156 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T14:19:29.202+09:00  INFO 13156 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 JDBC repository interfaces.
+2024-01-03T14:19:29.605+09:00  INFO 13156 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-01-03T14:19:29.615+09:00  INFO 13156 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T14:19:29.615+09:00  INFO 13156 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-01-03T14:19:29.750+09:00  INFO 13156 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-01-03T14:19:29.755+09:00  INFO 13156 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-03T14:19:29.755+09:00  INFO 13156 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1039 ms
+2024-01-03T14:19:30.077+09:00  INFO 13156 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-01-03T14:19:30.263+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-03T14:19:30.529+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@20220127
+2024-01-03T14:19:30.531+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-01-03T14:19:30.644+09:00  INFO 13156 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T14:19:30.678+09:00  INFO 13156 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-01-03T14:19:30.686+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 2.286 seconds (process running for 2.792)
+2024-01-03T14:19:42.439+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-03T14:19:42.439+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-03T14:19:42.440+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-03T14:29:17.264+09:00  INFO 13156 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-01-03T14:29:17.285+09:00  INFO 13156 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-01-03T14:29:27.287+09:00  WARN 13156 --- [Thread-7] com.zaxxer.hikari.pool.HikariPool        : Timed-out waiting for close connection executor to shutdown
+2024-01-03T14:29:27.291+09:00  INFO 13156 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-01-03T14:29:27.350+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 13156 (C:\Users\rudgu\git\coma\coma\target\classes started by rudgu in C:\Users\rudgu\git\coma\coma)
+2024-01-03T14:29:27.351+09:00 DEBUG 13156 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2024-01-03T14:29:27.351+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T14:29:27.484+09:00  INFO 13156 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T14:29:27.492+09:00  INFO 13156 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2024-01-03T14:29:27.556+09:00  INFO 13156 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-01-03T14:29:27.557+09:00  INFO 13156 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T14:29:27.557+09:00  INFO 13156 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-01-03T14:29:27.615+09:00  INFO 13156 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-01-03T14:29:27.617+09:00  INFO 13156 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-03T14:29:27.617+09:00  INFO 13156 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 264 ms
+2024-01-03T14:29:27.690+09:00  INFO 13156 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-01-03T14:29:27.740+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-01-03T14:29:27.806+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection oracle.jdbc.driver.T4CConnection@7819661a
+2024-01-03T14:29:27.806+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-01-03T14:29:27.824+09:00  INFO 13156 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T14:29:27.833+09:00  INFO 13156 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-01-03T14:29:27.836+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 0.505 seconds (process running for 599.993)
+2024-01-03T14:29:27.838+09:00  INFO 13156 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-01-03T14:29:31.803+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-03T14:29:31.803+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-03T14:29:31.804+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-03T14:29:38.480+09:00  INFO 13156 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-01-03T14:29:38.492+09:00  INFO 13156 --- [Thread-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-01-03T14:29:38.550+09:00  INFO 13156 --- [Thread-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-01-03T14:29:38.605+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 13156 (C:\Users\rudgu\git\coma\coma\target\classes started by rudgu in C:\Users\rudgu\git\coma\coma)
+2024-01-03T14:29:38.605+09:00 DEBUG 13156 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2024-01-03T14:29:38.605+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T14:29:38.731+09:00  INFO 13156 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T14:29:38.738+09:00  INFO 13156 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JDBC repository interfaces.
+2024-01-03T14:29:38.795+09:00  INFO 13156 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-01-03T14:29:38.795+09:00  INFO 13156 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T14:29:38.796+09:00  INFO 13156 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-01-03T14:29:38.848+09:00  INFO 13156 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-01-03T14:29:38.850+09:00  INFO 13156 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-03T14:29:38.850+09:00  INFO 13156 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 244 ms
+2024-01-03T14:29:38.916+09:00  INFO 13156 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-01-03T14:29:38.953+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2024-01-03T14:29:39.003+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection oracle.jdbc.driver.T4CConnection@14e84c2b
+2024-01-03T14:29:39.003+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2024-01-03T14:29:39.013+09:00  INFO 13156 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T14:29:39.021+09:00  INFO 13156 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-01-03T14:29:39.025+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 0.436 seconds (process running for 611.183)
+2024-01-03T14:29:39.026+09:00  INFO 13156 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-01-03T14:29:39.472+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-03T14:29:39.472+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-03T14:29:39.473+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-03T14:29:51.708+09:00  INFO 13156 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-01-03T14:29:51.721+09:00  INFO 13156 --- [Thread-13] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2024-01-03T14:29:51.776+09:00  INFO 13156 --- [Thread-13] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2024-01-03T14:29:51.822+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : Starting ComaApplication using Java 17.0.8.1 with PID 13156 (C:\Users\rudgu\git\coma\coma\target\classes started by rudgu in C:\Users\rudgu\git\coma\coma)
+2024-01-03T14:29:51.823+09:00 DEBUG 13156 --- [restartedMain] com.coma.ComaApplication                 : Running with Spring Boot v3.2.1, Spring v6.1.2
+2024-01-03T14:29:51.823+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T14:29:51.944+09:00  INFO 13156 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T14:29:51.951+09:00  INFO 13156 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JDBC repository interfaces.
+2024-01-03T14:29:51.997+09:00  INFO 13156 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-01-03T14:29:51.997+09:00  INFO 13156 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T14:29:51.998+09:00  INFO 13156 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-01-03T14:29:52.050+09:00  INFO 13156 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-01-03T14:29:52.052+09:00  INFO 13156 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-03T14:29:52.052+09:00  INFO 13156 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 228 ms
+2024-01-03T14:29:52.125+09:00  INFO 13156 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-01-03T14:29:52.166+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2024-01-03T14:29:52.232+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection oracle.jdbc.driver.T4CConnection@1a458f8d
+2024-01-03T14:29:52.233+09:00  INFO 13156 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2024-01-03T14:29:52.242+09:00  INFO 13156 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T14:29:52.250+09:00  INFO 13156 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-01-03T14:29:52.253+09:00  INFO 13156 --- [restartedMain] com.coma.ComaApplication                 : Started ComaApplication in 0.445 seconds (process running for 624.412)
+2024-01-03T14:29:52.254+09:00  INFO 13156 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-01-03T14:29:52.346+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-03T14:29:52.346+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-03T14:29:52.347+09:00  INFO 13156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-01-03T14:31:40.747+09:00  INFO 13156 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-01-03T14:31:40.758+09:00  INFO 13156 --- [Thread-17] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2024-01-03T14:31:40.818+09:00  INFO 13156 --- [Thread-17] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.

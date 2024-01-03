@@ -115,6 +115,15 @@ input[type="datetime-local"] {
     </style>
 </head>
 
+
+<head>
+    <meta charset='utf-8' />
+    <!-- 
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.8/index.global.min.js'></script>
+    -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+</head>
+
 <body>
     <!-- 모달은 메인 영역 밖으로 빼어 놓는게 좋음-->
     <div id="Modal">
@@ -158,9 +167,11 @@ input[type="datetime-local"] {
     </div>
     <!-- 실제 화면을 담을 영역 -->
     <div id="Wrapper">
-        <div id='calendar'></div>
+        <div id='calendar'>
+        </div>
     </div>
     <script>
+
         const Modal = document.querySelector("#Modal");
         const calendarEl = document.querySelector('#calendar');
         const schStart = document.querySelector("#schStart");
@@ -197,7 +208,7 @@ input[type="datetime-local"] {
             eventStartEditable: false,
             eventDurationEditable: true,
             */
-            dayMaxEventRows: true,  // Row 높이보다 많으면 +숫자 more 링크 보임!
+            dayMaxEvents: true,  // Row 높이보다 많으면 +숫자 more 링크 보임!
             /*
             views: {
                 dayGridMonth: {
@@ -206,13 +217,50 @@ input[type="datetime-local"] {
             },
             */
             nowIndicator: true,
-            //events:[],
-            eventSources:[
-            /*  fetch("${path}/calender/calenderTest") */
-            	
-           ] 
-        }
+           /*  events:[
+             ], */
+             events: {
+            	    url: "/calender/calender.do",
+            	    method: "GET",
+            	    extraParams: {
+            	        dataType: "JSON"
+            	    },
+            	    success: function(data, xhr) {
+            	        var events = [];
+            	        $.each(data, function(index, event) {
+            	            events.push({
+            	                title: event.schTitle,
+            	                start: event.schStart,
+            	                end: event.schEnd
+            	            });
+            	        });
+            	  		console.log(data);
+           
+            	  		
+            	        return events;
+            	    },
+            	    failure: function() {
+            	        alert('이벤트를 가져오는 도중 오류가 발생했습니다!');
+            	    },
+            	},
+          	 	
+          		/* success: function(data) {
+					console.log(data);
+				},
+				
+          	 	error: function() {
+          	            alert('이벤트를 가져오는 도중 오류가 발생했습니다!');
+          	 	}
+  				
+            },  */
+          
+            
 
+            eventSources:[          
+            	 
+            ] 
+        }
+	
         // 캘린더 생성
         const calendar = new FullCalendar.Calendar(calendarEl, calendarOption);
         // 캘린더 그리깅
@@ -227,23 +275,20 @@ input[type="datetime-local"] {
             console.log("eClick:", info);
             console.log('Event: ', info.event.extendedProps);
             console.log('Coordinates: ', info.jsEvent);
-            console.log('View: ', info.view);
-         
-       
+            console.log('View: ', info.view); 
         });
         calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
         calendar.on("eventMouseLeave", info => console.log("eLeave:", info));
         calendar.on("dateClick", info => console.log("dateClick:", info));
         calendar.on("select", info => {
-            console.log("select:", info);
-             
+            console.log("select:", info);          
             schStart.value=info.startStr+" 09:00:00";
             schEnd.value=info.endStr+" 18:00:00";
            console.log(info.startStr);
-
-            Modal.style.display = "block";
+            Modal.style.display = "block";         
         });
 
+        
         // 일정(이벤트) 추가하기
         function fCalAdd() {
             if (!schTitle.value) {
@@ -258,6 +303,7 @@ input[type="datetime-local"] {
                 start: schStart.value,
                 end: schEnd.value,
                 title: schTitle.value,
+                /* title: value, */
                 //content: schContent.value 이거 안되는거 나중에 해결
                 allDay: schAllday.checked,
                 backgroundColor: bColor

@@ -1,5 +1,7 @@
 package com.coma.model.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +15,5 @@ public class Calender {
 
 	private String calNo; 
 	private String empId; //test이후에 수정예정
+	private List<Schedule> schedule;
 }
