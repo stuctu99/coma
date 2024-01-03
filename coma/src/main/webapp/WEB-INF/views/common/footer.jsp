@@ -14,7 +14,7 @@
   <!--   Argon JS   -->
   <script src="${path }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-  
+
   <script src="${path }/resource/js/coma-index.js"></script>
 
   <script>
@@ -29,7 +29,6 @@
       item.slideToggle(500);
     })
   </script>
-
 </body>
 
 </html>

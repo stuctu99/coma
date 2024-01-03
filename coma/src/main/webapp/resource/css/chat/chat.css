@@ -107,16 +107,6 @@ hr {
 	margin-bottom: 2px;
 }
 
-.emp-list .col-2{
-	text-align: right;
-}
-
-
-.chatting-list > .content > .row{
-	line-height: 2.5 !important;
-	text-align: center;
-} 
-
 .job-class{
 	border-top: 1px solid rgba(236, 230, 237, 0.9);
 	border-bottom: 1px solid rgba(236, 230, 237, 0.9);
@@ -162,3 +152,4 @@ hr {
 .chatting-list h2{
 	text-align: center;
 }
+

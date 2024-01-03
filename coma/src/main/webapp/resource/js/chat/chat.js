@@ -16,7 +16,6 @@ $(".emp-list-btn").click(function() {
 	$(".chatting-list").css("display", "none");
 	$("#create-room").css("display", "none");
 })
-
 /*	< div class="row" >
 		<div class="col-12">
 			<h4>채팅 리스트</h4>
@@ -160,6 +159,7 @@ const enter_room = (roomNo) => {
 	console.log(roomNo);
 	/*location.href=pathValue+"/messenger/room/";*/
 }
+
 
 
 
