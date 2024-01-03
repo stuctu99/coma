@@ -50,19 +50,19 @@
 </div>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row" style="display: flex; align-items: center;">
-	<div class="col-1"></div>
-		<div class="col-1" style="margin-left:15px;">
+		<div class="col-1"></div>
+		<!-- <div class="col-1" style="margin-left:15px;">
 			<select class="form-control form-control-sm" id="searchData">
 			  <option value="student">학생</option>
 			  <option value="studentCom">수료생</option>
 			  <option value="studentEmp">취업생</option>
 			</select>
+		</div> -->
+		<div class="col-1.5" style="padding-left:0px; ">
+			<input class="form-control form-control-sm" type="text" id="textData" placeholder="이름으로 검색">
 		</div>
-		<div class="col-2" style="padding-left:0px;">
-			<input class="form-control form-control-sm" type="text" id="textData" placeholder="이름으로 검색 고정">
-		</div>
-		<div class="col-5" style="padding-left:0px;">
-			<button type="button" class="btn btn-secondary btn-sm" onclick="fn_searchEmp();">검색</button>
+		<div class="col-9.5" style="padding-left:0px;">
+			<button type="button" class="btn btn-secondary btn-sm" onclick="fn_searchStudent();">검색</button>
 		</div>
 	</div>
 	<div class="table-responsive" style="padding: 0px 115px 0px 115px;">
@@ -76,7 +76,7 @@
 		                <th>취업여부</th>
 		            </tr>
 		        </thead>
-		        <tbody class="list" id="studentChart">
+		        <tbody class="list" id="studentTable">
 		        <c:forEach var="s" items="${students }">
 		        	<tr>
 		        		<td><a href="#"><c:out value="${s.stuName }"/></a></td>
@@ -87,6 +87,7 @@
 		        </c:forEach>
 		        </tbody>
 		    </table>
+		    <div id="pageBar">${pageBar }</div>
 		</div>
 	</div>
 </div>
@@ -128,37 +129,58 @@ const myChart = new Chart(ctx, {
     }
 });
 
-function fn_searchEmp(){
-	const searchData=document.getElementById("searchData").value;
-	const textData=documnet.getElementById("textData").value;
-	feth("/admin/searchStudent",{
+function fn_searchStudent(cPage=1,numPerpage=5,url){
+	//const searchData=document.getElementById("searchData").value;
+	const textData=document.getElementById("textData").value;
+	console.log(textData);
+	fetch(url?'${path}'+url:"/admin/searchStudent",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify({
-			searchData:searchData,
+			cPage:cPage,
+			numPerpage:numPerpage,
 			textData:textData
 		})
 	}).then(response=>{
 		if(response.status!=200) throw new Error(repsonse.status);
 		return response.json();
 	}).then(result=>{
-		const tbody=document.getElementById("studentChart");
-		result.forEach((e)=>{
-			const $tr=document.creatElement('tr');
-			const $td1=document.creatElement('td');
-			const $a=document.creatElement('a');
-			$a.setAttridute('href','#');
-			$td1.append($a);
-			const $td2=document.creatElement('td');
-			const $td3=document.creatElement('td');
-			const $td4=document.creatElement('td');
-			
-		})
-		console.log(result);
+// 		console.log(result.pageBar);
+		console.log(result.students);
+		const $tbody=document.getElementById("studentTable");
+		const $div=document.getElementById("pageBar");
+		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
+		$trList.forEach($tr => {
+		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
+		});
+		//Array.prototype.forEach.call($tbody.children,e=>e.remove());
+		result.students.forEach((e)=>{
+			const $tr=document.createElement('tr');
+			const $td1=document.createElement('td');
+			const $a=document.createElement('a');
+			$a.setAttribute('href','#');
+			$a.innerText=e.stuName;
+			$td1.appendChild($a);
+			const $td2=document.createElement('td');
+			$td2.innerText=e.empId;
+			const $td3=document.createElement('td');
+			$td3.innerText=e.stuComStatus;
+			const $td4=document.createElement('td');
+			$td4.innerText=e.stuEmpStatus;
+			$tr.appendChild($td1);
+			$tr.appendChild($td2);
+			$tr.appendChild($td3);
+			$tr.appendChild($td4);
+			$tbody.appendChild($tr);
+		})		
+		$div.innerText="";
+		$div.innerHTML=result.pageBar;
+		
 	}).catch(e=>{
 		console.log(e);
 	})
 }
+
 
 //Google 차트 js
 /* google.charts.load('current', {'packages':['bar']});
