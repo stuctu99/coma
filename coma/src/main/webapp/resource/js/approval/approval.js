@@ -83,7 +83,7 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 				
 					/*console.log(e.empName);*/
 					const search_op = $('<option>');
-					search_op.val(e.empName);
+					search_op.val(e.empName+" "+e.dept.deptType + e.job.jobType);
 					
 					 $('#serach_list').append(search_op);
 					
@@ -111,9 +111,10 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 				$('option').remove();	
 				
 				JSON.parse(data).forEach(e=>{
-					
+		
+				/*	console.log(e.dept.deptType + e.job.jobType);*/
 					const search_op = $('<option>');
-					search_op.val(e.empName);
+					search_op.val(e.empName+" "+e.dept.deptType + e.job.jobType);
 					 $('#serach_list2').append(search_op);
 						
 
@@ -125,8 +126,57 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 })());
 
 
-$('.ref_btn').click(function(){
+$('.app_btn').click(function(){
 	
+	if($('#app_fix1').text()==""){
+
+		$('#app_fix1').css('display','');
 	
+		const emp = $('#search_app').val();
+		emp_arr = emp.split(" ");
+		console.log(emp_arr);
+		
+		const emp_name = emp_arr[0];
+		const emp_type = emp_arr[1];
+		
+		$('#app_fix1').text(emp_name);
+		$('#app_fix1').attr('data-content',emp_type);
+	
+
+	} else if($('#app_fix2').text()==""){
+		
+		$('#app_fix2').css('display','');
+	
+		const emp = $('#search_app').val();
+		emp_arr = emp.split(" ");
+		console.log(emp_arr);
+		
+		const emp_name = emp_arr[0];
+		const emp_type = emp_arr[1];
+		
+		$('#app_fix2').text(emp_name);
+		$('#app_fix2').attr('data-content',emp_type);
+	
+	} else if($('#app_fix3').text()==""){
+		
+		$('#app_fix3').css('display','');
+	
+		const emp = $('#search_app').val();
+		emp_arr = emp.split(" ");
+		console.log(emp_arr);
+		
+		const emp_name = emp_arr[0];
+		const emp_type = emp_arr[1];
+		
+		$('#app_fix3').text(emp_name);
+		$('#app_fix3').attr('data-content',emp_type);
+	} else{
+		
+		alert("결재자는 3명까지 추가 가능합니다.");
+	}
+
 	
 });
+
+	
+	
