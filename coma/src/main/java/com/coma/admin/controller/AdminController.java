@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.admin.service.AdminService;
-import com.coma.common.pagefactoy.PageFactoy;
+import com.coma.common.pagefactory.PageFactory;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Student;
 
@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminController {
 	private final AdminService service;
-	private final PageFactoy pageFactory;
+	private final PageFactory pageFactory;
 	//private final BCryptPasswordEncoder passwordEncoder;
 	
 	//사원관련 컨트롤러
