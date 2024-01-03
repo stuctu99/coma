@@ -118,8 +118,8 @@
               <i class="ni ni-single-02 text-yellow"></i> 게시판
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
-              <li><a href="">공지게시판</a></li>
-              <li><a href="">자유게시판</a></li>
+              <li><a href="/board/noticelist">공지게시판</a></li>
+              <li><a href="/board/freelist">자유게시판</a></li>
             </ul>
           </li>
           <li class="nav-item">
