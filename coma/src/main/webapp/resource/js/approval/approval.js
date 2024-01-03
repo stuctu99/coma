@@ -130,9 +130,9 @@ const addDelAppr=(function(){
 	
 	const addAppr=()=>{
 		if(appr_num<=3){
-			const i_tag = $('<i class="ni ni-fat-remove">');
 			const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
 								+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
+			const i_tag = $('<i class="ni ni-fat-remove" onclick="delAppr(this);">');
 			
 			const emp = $('#search_app').val();
 			const emp_arr = emp.split(" ");
@@ -146,8 +146,8 @@ const addDelAppr=(function(){
 			btn_tag.attr('data-content',emp_type);
 			/*btn_tag.setAttribute('data-content',emp_type);*/
 			
-			$('.appr_container').append(i_tag);
 			$('.appr_container').append(btn_tag);
+			$('.appr_container').append(i_tag);
 		
 			btn_tag.popover();
 			appr_num++;
@@ -158,8 +158,10 @@ const addDelAppr=(function(){
 		
 	}; 
 	
-	const delAppr=()=>{
+	const delAppr=(element)=>{
 		if(appr_num!=1){
+			$(element).prev().remove();
+			$(element).remove();
 			
 			appr_num--;
 		}
