@@ -81,7 +81,7 @@
 							 		<datalist id="serach_list">
 							 		</datalist> 	 		
 							  <div class="input-group-prepend">
-							   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1">추가하기</button>
+							   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" onclick="addAppr();">추가하기</button>
 							  		<input type="hidden">
 							  </div>
 						</div>
@@ -94,13 +94,8 @@
 	          <div class="row ck_appr">
 	          	<div class="col-3">
 	          	</div>
-	          	<div class="col-7">
-	          		<button type="button" style="display:none" id="app_fix1" class="btn btn-secondary" data-container="body" 
-	          		data-toggle="popover" data-color="secondary" data-placement="top" data-content=""></button>
-					<button type="button" style="display:none" id="app_fix2" class="btn btn-secondary" data-container="body" 
-					data-toggle="popover" data-color="secondary" data-placement="top" data-content=""></button>
-					<button type="button" style="display:none" id="app_fix3" class="btn btn-secondary" data-container="body" 
-					data-toggle="popover" data-color="secondary" data-placement="top" data-content=""></button>
+	          	<div class="col-7 appr_container">
+	     
 	          	</div>
 	          	<div class="col-2">
 	          	</div>

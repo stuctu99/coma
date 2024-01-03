@@ -125,58 +125,85 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			}
 })());
 
-
-$('.app_btn').click(function(){
+const addDelAppr=(function(){
+	let appr_num=1;
 	
-	if($('#app_fix1').text()==""){
-
-		$('#app_fix1').css('display','');
+	const addAppr=()=>{
+		if(appr_num<=3){
+			const i_tag = $('<i class="ni ni-fat-remove">');
+			const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
+								+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
+			
+			const emp = $('#search_app').val();
+			const emp_arr = emp.split(" ");
+			
+			const emp_name = emp_arr[0];
+			const emp_type = emp_arr[1];
+		
+			
+			btn_tag.text(emp_name);
+			console.log(emp_type)
+			btn_tag.attr('data-content',emp_type);
+			/*btn_tag.setAttribute('data-content',emp_type);*/
+			
+			$('.appr_container').append(i_tag);
+			$('.appr_container').append(btn_tag);
+		
+			btn_tag.popover();
+			appr_num++;
+		}else{
+			
+			alert("결재자는 3명까지 추가 가능합니다.");
+		}
+		
+	}; 
 	
-		const emp = $('#search_app').val();
-		emp_arr = emp.split(" ");
-		console.log(emp_arr);
+	const delAppr=()=>{
+		if(appr_num!=1){
+			
+			appr_num--;
+		}
 		
-		const emp_name = emp_arr[0];
-		const emp_type = emp_arr[1];
-		
-		$('#app_fix1').text(emp_name);
-		$('#app_fix1').attr('data-content',emp_type);
-	
-
-	} else if($('#app_fix2').text()==""){
-		
-		$('#app_fix2').css('display','');
-	
-		const emp = $('#search_app').val();
-		emp_arr = emp.split(" ");
-		console.log(emp_arr);
-		
-		const emp_name = emp_arr[0];
-		const emp_type = emp_arr[1];
-		
-		$('#app_fix2').text(emp_name);
-		$('#app_fix2').attr('data-content',emp_type);
-	
-	} else if($('#app_fix3').text()==""){
-		
-		$('#app_fix3').css('display','');
-	
-		const emp = $('#search_app').val();
-		emp_arr = emp.split(" ");
-		console.log(emp_arr);
-		
-		const emp_name = emp_arr[0];
-		const emp_type = emp_arr[1];
-		
-		$('#app_fix3').text(emp_name);
-		$('#app_fix3').attr('data-content',emp_type);
-	} else{
-		
-		alert("결재자는 3명까지 추가 가능합니다.");
 	}
-
+	return [addAppr, delAppr];
 	
-});
+})();
 
+const addAppr=addDelAppr[0];
+const delAppr=addDelAppr[1];
+	
+/*	$('.app_btn').on("click", function(){
+		
+		let app_num=1;
+		 
+		
+		const i_tag = $('<i class="ni ni-fat-remove">');
+		const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+app_num +'"'
+							+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
+		
+		const emp = $('#search_app').val();
+		const emp_arr = emp.split(" ");
+		
+		const emp_name = emp_arr[0];
+		const emp_type = emp_arr[1];
+	
+		
+		btn_tag.text(emp_name);
+		console.log(emp_type)
+		btn_tag.attr('data-content',emp_type);
+		btn_tag.setAttribute('data-content',emp_type);
+		
+		$('.appr_container').append(i_tag);
+		$('.appr_container').append(btn_tag);
+	
+		btn_tag.popover();
+	
+		app_num++;
+		
+		}
+	
+})();
+*/
+	
 	
 	
