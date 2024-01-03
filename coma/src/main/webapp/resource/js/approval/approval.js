@@ -132,7 +132,7 @@ const addDelAppr=(function(){
 		if(appr_num<=3){
 			const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
 								+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
-			const i_tag = $('<i class="ni ni-fat-remove" onclick="delAppr(this);">');
+			const i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delAppr(this);">');
 			
 			const emp = $('#search_app').val();
 			const emp_arr = emp.split(" ");
