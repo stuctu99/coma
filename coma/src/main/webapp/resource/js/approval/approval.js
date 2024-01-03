@@ -99,6 +99,8 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 			.then(data=>{
 				data.forEach(e=>{
 					/* datalist 옵션태그 만들기 */
+					let op = '<option value="">'
+					
 				});
 			});
 		
