@@ -40,15 +40,33 @@ public class BoardController {
 	public void selectBoardList(@RequestParam("boardType") String boardType, Model m){
 		List<Board> boards = new ArrayList<>();
 		
-		if(boardType!=null && boardType.equals("공지")) {
-			boards = service.selectNoticeAll();
-		}else if(boardType!=null && boardType.equals("자유")) {
-			boards = service.selectFreeAll();
-		}
+//		if(boardType!=null && boardType.equals("공지")) {
+//			boards = service.selectNoticeAll();
+//		}else if(boardType!=null && boardType.equals("자유")) {
+//			boards = service.selectFreeAll();
+//		}
+		
+		boards = service.selectBoardAll(boardType);
+		
 		
 		m.addAttribute("boards", boards);
 		
 	}
+	
+//	@GetMapping("/post")
+//	public void selectBoardByNo(Model m) {
+//		
+//	}
+	
+//	@GetPost("/insert")
+//	public void insertBoard
+//	
+//	@GetPost("/update")
+//	public void updateBoard
+//	
+//	@GetPost("/delete")
+//	public void deleteBoard
+//	
 	
 	
 	
