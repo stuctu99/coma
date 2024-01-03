@@ -35,8 +35,8 @@ public class Emp {//implements UserDetails{
    private String empPhoto;
    private int empVacation;
    private String empAccess;
-   private Dept dept;
-   private Job job;
+   private Dept deptCode;
+   private Job jobCode;
    
 //   @Override
 //	public Collection<? extends GrantedAuthority> getAuthorities() {	

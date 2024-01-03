@@ -40,15 +40,30 @@ public class AdminDao {
 	}
 	
 	public List<Emp> searchEmp(SqlSession session, Map<String, Object> searchMap){
-		return session.selectList("emp.searchData", searchMap);
+		return session.selectList("emp.searchEmp", searchMap);
 	}
 	
 	//학생관련 Dao
-	public List<Student> selectStudent(SqlSession session){
-		return session.selectList("student.selectStudent");
+	public List<Student> selectStudent(SqlSession session, Map<String, Integer> page){
+		int cPage=(Integer)page.get("cPage");
+		int numPerpage=(Integer)page.get("numPerpage");
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
+		return session.selectList("student.selectStudent",null,rb);
 	}
+	
+	public int countStudent(SqlSession session) {
+		return session.selectOne("student.countStudent");
+	}
+	
 	public List<Student> searchStudent(SqlSession session, Map<String, Object> searchMap){
-		return session.selectList("student.searchStudent",searchMap);
+		int cPage=(int)searchMap.get("cPage");
+		int numPerpage=(Integer)searchMap.get("numPerpage");
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
+		return session.selectList("student.searchStudent",searchMap,rb);
+	}
+	
+	public int countStudentByData(SqlSession session, Map<String, Object> searchMap) {
+		return session.selectOne("student.countStudentByData",searchMap);
 	}
 	
 	public List<Map> studentCountByEmpId(SqlSession session){

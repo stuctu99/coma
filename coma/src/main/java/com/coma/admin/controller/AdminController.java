@@ -65,17 +65,20 @@ public class AdminController {
 	
 	//학생관련 컨트롤러
 	@GetMapping("/adminStudent")
-	public void adminStudent(Model m) {
-		List<Student> students=service.selectStudent();
+	public void adminStudent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="15") int numPerpage, Model m) {
+		List<Student> students=service.selectStudent(Map.of("cPage",cPage,"numPerpage",numPerpage));
+		int totalData=service.countStudent();
 		List<Map> studentCount=service.studentCountByEmpId();
 		m.addAttribute("students",students);
 		m.addAttribute("studentCount",studentCount);
+		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, "/admin/adminStudent"));
 	}
 	
 	@PostMapping("/searchStudent")
-	public List<Student> searchStudent(@RequestBody HashMap<String, Object> searchMap){
+	public @ResponseBody Map<String,Object> searchStudent(@RequestBody HashMap<String, Object> searchMap){
 		List<Student> students=service.searchStudent(searchMap);
-		return students;
+		int totalData=service.countStudentByData(searchMap);
+		return Map.of("students",students,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchStudent"));
 	}
 
 }

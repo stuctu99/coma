@@ -13,14 +13,14 @@
     Coma Academy
   </title>
   <!-- Favicon -->
-  <link href="/resource/img/brand/favicon_2.png" rel="icon" type="image/png">
+  <link href="${path }/resource/img/brand/favicon_2.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
-  <link href="/resource/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-  <link href="/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="${path }/resource/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+  <link href="${path }/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
   <!-- <style>
     div{
       border: 2px solid red;
@@ -152,7 +152,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
           <li class="nav-item">
-            <a class="nav-link" id="messenger-btn">
+            <a class="nav-link" id="messenger-btn" onclick="messenger_active('${pageContext.request.contextPath}');">
               <i class="ni ni-spaceship"></i> Messenger
             </a>
           </li>
