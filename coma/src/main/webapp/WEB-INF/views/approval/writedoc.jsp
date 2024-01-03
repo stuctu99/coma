@@ -95,11 +95,14 @@
 	          	<div class="col-3">
 	          	</div>
 	          	<div class="col-7">
-	          		<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="인사팀장">
+	          		<button type="button" id="app_fix1" class="btn btn-secondary" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="인사팀장">
 					  이보연
 					</button>
-					<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="교육팀장">
+					<button type="button" id="app_fix2" class="btn btn-secondary" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="교육팀장">
 					  정우현
+					</button>
+					<button type="button" id="app_fix3" class="btn btn-secondary" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="교육팀장">
+					  김철수
 					</button>
 	          	</div>
 	          	<div class="col-2">
@@ -118,7 +121,8 @@
 							 		<datalist id="serach_list2">
 							 		</datalist> 	 	
 							  <div class="input-group-prepend">
-							    <button class="btn btn-outline-primary" type="button" id="button-addon1">검색하기</button>
+							    <button class="btn btn-outline-primary ref_btn" type="button" id="button-addon1">추가
+							    하기</button>
 							  </div>
 						</div>
 	            </div>

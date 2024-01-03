@@ -65,26 +65,6 @@ $(document).on("change",".custom-file-input",(e=>{
 }));
 
 
-//$("#search_app").keyup(function(){
-//	console.log("test");
-//	const path = $("#pathValue").val();
-//	console.log(path);
-//	const appAjax=()=>{
-//		
-//		fetch(path+"/approval/approver")
-//		.then(response=>{
-//			console.log("ttt")
-//			console.log(response); 
-//			return response.json()
-//		})
-//		.then(data=>{
-//				console.log("ttt2")
-//			console.log(data);
-//		})
-//	}
-//	
-//});
-
 document.querySelector("#search_app").addEventListener("keyup",(()=>{
 	let requestFunc; //closure
 	return e=>{
@@ -135,6 +115,7 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 					const search_op = $('<option>');
 					search_op.val(e.empName);
 					 $('#serach_list2').append(search_op);
+						
 
 				});
 			});
@@ -144,4 +125,8 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 })());
 
 
-
+$('.ref_btn').click(function(){
+	
+	
+	
+});
