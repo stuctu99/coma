@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="/resource/css/chat/chat.css" rel="stylesheet">
+<link href="${path }/resource/css/chat/chat.css" rel="stylesheet">
 <!-- Latest compiled and minified CSS -->
 <!-- <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"

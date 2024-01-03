@@ -92,6 +92,7 @@ $(".chatting-list-btn").click(function() {
 			/*$div_btn.append($input);*/
 			$div.append($div_type);
 			$div.append($div_title);
+			$div_title.append($("<br>"));
 			$div_title.append($recentMsg);
 			$div.append($i);
 			$div.append($div_btn);
