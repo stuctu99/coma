@@ -78,7 +78,7 @@
 							  <input type="search" list="serach_list" id="search_app" class="form-control" placeholder="이름을 입력하세요." aria-label="Example text with button addon" aria-describedby="button-addon1">
 					
 							 		<datalist id="serach_list">
-							 			 <option value="테스트"></option>
+<!-- 							 			 <option value="테스트"></option> -->
 							 		</datalist> 
 							 		
 
