@@ -3,6 +3,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- 
 <link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
 <script src="/resource/js/approval/approval.js"></script> -->
@@ -12,6 +14,19 @@
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <script src="/resource/js/jquery-3.7.0.js"></script>
 <link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
+
+	
+	<!-- path.. -->
+	<input type="hidden" id="pathValue" value="${pageContext.request.contextPath}"/> 
+	
+<%-- 	<c:if test="${not empty emp}"> --%>
+<%-- 		<c:forEach var="e" items="${emp}"> --%>
+<%-- 			<c:out value="${e.empName }"/> --%>
+<%-- 		</c:forEach> --%>
+		
+<%-- 	</c:if> --%>
+
+
 
 
     <!-- TEAM COMA SPACE -->
@@ -49,7 +64,7 @@
 	            	문서 제목
 	            </div>
 	            <div class="col-7">
-	            	<input class="form-control" type="text" placeholder="제목">
+	            	<input class="form-control" type="text" placeholder="제목" name="title">
 	            </div>  
 	            <div class="col-2"></div>
 	         </div>
@@ -62,11 +77,13 @@
 	     		<div class="col-3">
 	     			결재자
 	     		</div>
+	     		
 	            <div class="col-7">
 			            <div class="input-group mb-3">	  
-							  <input type="search" class="form-control" placeholder="이름을 입력하세요." aria-label="Example text with button addon" aria-describedby="button-addon1">
+							  <input type="search" id="search_app" class="form-control" placeholder="이름을 입력하세요." aria-label="Example text with button addon" aria-describedby="button-addon1">
 							  <div class="input-group-prepend">
-							    <button class="btn btn-outline-primary" type="button" id="button-addon1">검색하기</button>
+							    <button class="btn btn-outline-primary" type="button" id="button-addon1">추가하기</button>
+							  	<input type="hidden">
 							  </div>
 						</div>
 
@@ -74,7 +91,7 @@
 	           	<div class="col-2">
 	            </div>
 	          </div> 	
-	          
+         
 	          <div class="row ck_appr">
 	          	<div class="col-3">
 	          	</div>
@@ -308,9 +325,7 @@
   </div>
   
 
-  
-
-<script src="/resource/js/approval/approval.js"></script> 
+ <script src="/resource/js/approval/approval.js"></script> 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
