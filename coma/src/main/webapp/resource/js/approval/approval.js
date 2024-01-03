@@ -100,7 +100,7 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 				JSON.parse(data).forEach(e=>{
 					/* datalist 옵션태그 만들기 */
 				
-					console.log(e.empName);
+					/*console.log(e.empName);*/
 					const search_op = $('<option>');
 					search_op.val(e.empName);
 					
@@ -113,6 +113,34 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 			}
 })());
 
+
+document.querySelector("#search_ref").addEventListener("keyup",(()=>{
+			
+	let requestFunc; //closure
+	return e=>{
+		
+		if(requestFunc){
+			clearTimeout(requestFunc);
+			
+		}
+		requestFunc = setTimeout(()=>{
+			fetch("/approval/approver?data="+e.target.value)
+			.then(result=>result.text())
+			.then(data=>{
+				$('option').remove();	
+				
+				JSON.parse(data).forEach(e=>{
+					
+					const search_op = $('<option>');
+					search_op.val(e.empName);
+					 $('#serach_list2').append(search_op);
+
+				});
+			});
+		
+	},800);
+			}
+})());
 
 
 
