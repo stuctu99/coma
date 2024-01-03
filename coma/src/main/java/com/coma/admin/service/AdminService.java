@@ -46,12 +46,20 @@ public class AdminService {
 	}
 	
 	//학생관련 서비스
-	public List<Student> selectStudent(){
-		return dao.selectStudent(session);
+	public List<Student> selectStudent(Map<String, Integer> page){
+		return dao.selectStudent(session, page);
+	}
+	
+	public int countStudent() {
+		return dao.countStudent(session);
 	}
 	
 	public List<Student> searchStudent(HashMap<String, Object> searchMap){
 		return dao.searchStudent(session, searchMap);
+	}
+	
+	public int countStudentByData(HashMap<String, Object> searchMap) {
+		return dao.countStudentByData(session, searchMap);
 	}
 	
 	public List<Map> studentCountByEmpId(){

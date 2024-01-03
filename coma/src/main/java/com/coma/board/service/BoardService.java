@@ -9,4 +9,6 @@ public interface BoardService {
 	List<Board> selectNoticeAll();
 	
 	List<Board> selectFreeAll();
+
+	List<Board> selectBoardAll(String boardType);
 }

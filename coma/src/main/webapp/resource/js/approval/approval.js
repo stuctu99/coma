@@ -56,12 +56,63 @@ const fn_addFileForm=addDelFunction[0];
 const fn_deleteFileForm=addDelFunction[1];
 
 
-
-
-
-$("input[name=upfile]").change(e=>{
+$(document).on("change",".custom-file-input",(e=>{
 	
 	const fileName = e.target.files[0].name;
+	console.log(fileName)
 	$(e.target).next(".custom-file-label").text(fileName);
 	
-});
+}));
+
+
+//$("#search_app").keyup(function(){
+//	console.log("test");
+//	const path = $("#pathValue").val();
+//	console.log(path);
+//	const appAjax=()=>{
+//		
+//		fetch(path+"/approval/approver")
+//		.then(response=>{
+//			console.log("ttt")
+//			console.log(response); 
+//			return response.json()
+//		})
+//		.then(data=>{
+//				console.log("ttt2")
+//			console.log(data);
+//		})
+//	}
+//	
+//});
+
+document.querySelector("#search_app").addEventListener("keyup",(()=>{
+	let requestFunc; //closure
+	return e=>{
+		
+		if(requestFunc){
+			clearTimeout(requestFunc);
+			
+		}
+		requestFunc = setTimeout(()=>{
+			fetch("/approval/approver?data="+e.target.value)
+			.then(result=>result.text())
+			.then(data=>{
+				JSON.parse(data).forEach(e=>{
+					/* datalist 옵션태그 만들기 */
+				
+					console.log(e.empName);
+					const search_op = $('<option>');
+					search_op.val(e.empName);
+					
+					 $('#serach_list').append(search_op);
+					
+				});
+			});
+		
+	},800);
+			}
+})());
+
+
+
+

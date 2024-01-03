@@ -29,4 +29,12 @@ public class BoardServiceImpl implements BoardService {
 		return dao.selectFreeAll(session);
 	}
 
+	@Override
+	public List<Board> selectBoardAll(String boardType) {
+		// TODO Auto-generated method stub
+		return dao.selectBoarAll(session, boardType);
+	}
+	
+	
+
 }
