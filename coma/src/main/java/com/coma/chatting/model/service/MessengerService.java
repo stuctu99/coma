@@ -7,7 +7,7 @@ import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
-public interface ChattingService {
+public interface MessengerService {
 	List<Emp> selectEmpListAll();
 	List<Dept> selectDept();
 	List<ChattingRoom> selectRoomList();

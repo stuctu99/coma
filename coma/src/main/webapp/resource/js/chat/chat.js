@@ -51,7 +51,7 @@ $(".chatting-list-btn").click(function() {
 			const $div = $("<div>").addClass("row");
 			const $div_type = $("<div>").addClass("col-2 chatting-room");
 			const $div_title = $("<div>").addClass("col-7 chatting-room").css("text-align","left");
-			const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top","2px");
+			const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top","12px");
 			const $input = $("<input>").attr("name","roomNo").attr("type","hidden").val(d.roomNo);
 			const $strong_type = $("<strong>");
 			const $strong_title = $("<strong>").css("padding-right","3px");
@@ -59,19 +59,14 @@ $(".chatting-list-btn").click(function() {
 			const $recentMsg = $("<small>").text("테스트");
 			const $i = $("<div>").addClass("col-1 chatting-room");
 			const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
-			if(d.roomPasswordFlag=='Y'){
-				console.log("방번호 체크 : "+d.roomNo);
-				$room_enter.attr("data-toggle","modal").attr("data-target","#passwordScreen");
-				$("#check-roomNo").val(d.roomNo);
-			}else{
-				$room_enter.attr("onclick","enter_room('"+d.roomNo+"');");
-			}
+			$room_enter.attr("onclick","enter_room('"+d.roomNo+"','"+d.roomPasswordFlag+"');");
 			
 			if(d.roomPasswordFlag=='Y'){
 				 $i.append($("<i>").addClass("fa-solid fa-lock"));
 			}else{
 				$i.append($("<i>").addClass("fa-solid fa-lock-open"));
 			}
+			$i.css("padding-top","14px");
 		/*	console.log(d.roomType.roomTypeName);
 			switch(d.roomType.roomTypeName){
 				case 'A' : $strong_type.text('공용'); break;
@@ -147,80 +142,29 @@ const passwordCheck = () =>{
 	})
 	.then(data=>{
 		console.log(data);
-		if(data==null){
-			alert("비밀번호가 틀립니다.");
+		if(data.flag){
+			enter_chattingRoom(data.room.roomNo);
 		}else{
-			enter_room(data.roomNo);
+			alert("비밀번호가 틀립니다.");
 		}
 	})
 }
 
 
-/* 방입장 */
-const enter_room = (roomNo) => {
+/* 방입장 전 체크 */
+const enter_room = (roomNo,roomPasswordFlag) => {
 	const pathValue = $("#pathValue").val();
-	console.log("fn_enter_room : "+roomNo);
+	if(roomPasswordFlag=='Y'){
+				console.log("방번호 체크 : "+roomNo);
+				$("#check-roomNo").val(roomNo);
+				$(".enter-room").attr("data-toggle","modal").attr("data-target","#passwordScreen");
+	}else{
+		console.log(roomNo);
+		enter_chattingRoom(roomNo);	
+	}
 	/*location.href=pathValue+"/messenger/room/";*/
 }
 
-
-/* 웹소켓 채팅 */
-function getId(id) {
-	return document.getElementById(id);
-}
-
-var data = {};//전송 데이터(JSON)
-
-var server;
-var mid = getId('mid');
-var btnLogin = getId('btnLogin');
-var btnSend = getId('btnSend');
-var talk = getId('contents');
-var msg = getId('msg');
-
-btnLogin.onclick = function() {
-	server = new WebSocket("ws://" + location.host + "/chatting");
-
-	server.onmessage = function(msg) {
-		var data = JSON.parse(msg.data);
-		var css;
-
-		console.log(data);
-
-		if (data.mid == mid.value) {
-			css = 'class=me';
-		} else {
-			css = 'class=other';
-		}
-
-		var item = `<div ${css} >
-		                <span><b>${data.mid}</b></span> [ ${data.date} ]<br/>
-                      <span>${data.msg}</span>
-						</div>`;
-
-		talk.innerHTML += item;
-		talk.scrollTop = talk.scrollHeight;//스크롤바 하단으로 이동
-	}
-}
-
-msg.onkeyup = function(ev) {
-	if (ev.keyCode == 13) {
-		send();
-	}
-}
-
-btnSend.onclick = function() {
-	send();
-}
-
-function send() {
-	if (msg.value.trim() != '') {
-		data.mid = getId('mid').value;
-		data.msg = msg.value;
-		data.date = new Date().toLocaleString();
-		var temp = JSON.stringify(data);
-		server.send(temp);
-	}
-	msg.value = '';
-
+const enter_chattingRoom = (roomNo) =>{
+	location.href="/ChattingRoom/room/"+roomNo;
 }

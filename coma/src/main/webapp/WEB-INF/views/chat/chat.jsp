@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ItTalk</title>
 <link href="${path }/resource/css/chat/chat.css" rel="stylesheet">
 <!-- Latest compiled and minified CSS -->
 <!-- <link
@@ -224,7 +224,7 @@ div {
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">돌아가기</button>
-		        <button type="button" class="btn btn-primary" onclick="passwordCheck();" >입장</button>
+		        <button type="button" class="btn btn-primary" id="password-check" onclick="passwordCheck();" >입장</button>
 		      </div>
 		    </div>
 		  </div>

@@ -9,7 +9,7 @@ import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
-public interface ChattingDao {
+public interface MessengerDao {
 	List<Emp> selectEmpListAll(SqlSession session);
 	List<Dept> selectDept(SqlSession session);
 	List<ChattingRoom> selectRoomList(SqlSession session);

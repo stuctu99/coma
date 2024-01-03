@@ -11,7 +11,7 @@ import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
 @Repository
-public class ChattingDaoImpl implements ChattingDao {
+public class MessengerDaoImpl implements MessengerDao {
 //	select
 	@Override
 	public List<Emp> selectEmpListAll(SqlSession session) {
