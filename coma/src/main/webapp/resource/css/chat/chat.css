@@ -99,10 +99,6 @@ hr {
 	margin-bottom: 2px;
 }
 
-.emp-list .col-2{
-	text-align: right;
-}
-
 .job-class{
 	border-top: 1px solid rgba(236, 230, 237, 0.9);
 	border-bottom: 1px solid rgba(236, 230, 237, 0.9);
@@ -143,8 +139,4 @@ hr {
 
 .content{
 	padding: 0px 1px !important;
-}
-
-.chatting-list h2{
-	text-align: center;
 }

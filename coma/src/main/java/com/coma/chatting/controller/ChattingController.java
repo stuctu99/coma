@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.chatting.model.service.ChattingService;
 import com.coma.model.dto.ChattingRoom;
-import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
@@ -26,9 +25,10 @@ public class ChattingController {
 	@GetMapping
 	public String MessengerOpen(Model model) {
 		List<Emp> emp = service.selectEmpListAll();
-		List<Dept> dept = service.selectDept();
+		for(Emp e : emp) {
+			System.out.println(e);
+		}
 		model.addAttribute("emp", emp);
-		model.addAttribute("dept",dept);
 		return "chat/chat"; 
 	}
 	

@@ -1,6 +1,7 @@
 package com.coma.model.dto;
 
 import java.sql.Date;
+
 //import java.util.ArrayList;
 //import java.util.Collection;
 //import java.util.List;
@@ -11,7 +12,6 @@ import java.sql.Date;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
 //import com.coma.MyAuthority;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,8 +37,6 @@ public class Emp {//implements UserDetails{
    private String empAccess;
    private Dept dept;
    private Job job;
- 
-}
    
 //   @Override
 //	public Collection<? extends GrantedAuthority> getAuthorities() {	
@@ -91,4 +89,4 @@ public class Emp {//implements UserDetails{
 //		return null;
 //	}
 //	
-//}
+}

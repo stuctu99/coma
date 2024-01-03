@@ -10,6 +10,6 @@ public class BeanConfig {
 
 	@Bean
 	public Gson gson() {
-		return new Gson();
+		return new Gson();	
 	}
 }

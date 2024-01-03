@@ -13,7 +13,6 @@
   <script src="/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script src="/resource/js/coma-index.js"></script>
-
   <script>
     window.TrackJS &&
       TrackJS.install({
@@ -26,7 +25,6 @@
       item.slideToggle(500);
     })
   </script>
-
 </body>
 
 </html>
