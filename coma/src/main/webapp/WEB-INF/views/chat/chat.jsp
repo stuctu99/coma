@@ -65,23 +65,28 @@ div {
 			</div>
 			<!------------------- 사원 데이터 ----------------------->
 			<c:if test="${not empty emp}">
-				<c:forEach var="e" items="${emp}">
-					<div class="row">
-						<div class="col-12 job-class">
-							<strong><c:out value="${e.empId}"/></strong>
+				<c:forEach var="d" items="${dept}">
+						<div class="row">
+							<div class="col-12 job-class">
+								<strong><c:out value="${d.deptType}"/>부</strong>
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-2 job-name">
-							<small><c:out value="${e.empId }"/></small>
+						
+					<c:forEach var="e" items="${emp}">
+						<c:if test="${e.dept.deptCode eq d.deptCode}">
+						<div class="row">
+							<div class="col-2 job-name">
+								<small><c:out value="${e.job.jobType }"/></small>
+							</div>
+							<div class="col-8">
+								<small><c:out value="${e.empName}"/></small>
+							</div>
+							<div class="col-2">
+								<button id="chatting-active" class="btn btn-outline-primary">채팅</button>
+							</div>
 						</div>
-						<div class="col-8">
-							<small><c:out value="${e.empName}"/></small>
-						</div>
-						<div class="col-2">
-							<button class="btn btn-outline-primary">채팅</button>
-						</div>
-					</div>
+						</c:if>
+					</c:forEach>
 				</c:forEach>
 			</c:if>
 			<!---------------------------------------------------->

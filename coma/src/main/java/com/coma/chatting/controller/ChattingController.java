@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.chatting.model.service.ChattingService;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
@@ -27,10 +28,13 @@ public class ChattingController {
 	@GetMapping
 	public String MessengerOpen(Model model) {
 		List<Emp> emp = service.selectEmpListAll();
+		List<Dept> dept = service.selectDept();
+		model.addAttribute("emp", emp);
+		model.addAttribute("dept",dept);
 		for(Emp e : emp) {
 			System.out.println(e);
 		}
-		model.addAttribute("emp", emp);
+		System.out.println(dept);
 		return "chat/chat"; 
 	}
 	
@@ -54,10 +58,13 @@ public class ChattingController {
 	
 	@PostMapping("/passwordCheck")
 	@ResponseBody
-	public Map<String,String> checkPassword(@RequestBody Map<String,String> roomInfo) {
+	public ChattingRoom checkPassword(@RequestBody Map<String,String> roomInfo) {
+		System.out.println(roomInfo);
+		ChattingRoom room = service.passwordCheck(roomInfo);
+		boolean enterFlag = false;
+		System.out.println(room);
 		
-		
-		return roomInfo;
+		return room!=null?room:null;
 	}
 	
 }

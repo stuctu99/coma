@@ -60,6 +60,7 @@ $(".chatting-list-btn").click(function() {
 			const $i = $("<div>").addClass("col-1 chatting-room");
 			const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
 			if(d.roomPasswordFlag=='Y'){
+				console.log("방번호 체크 : "+d.roomNo);
 				$room_enter.attr("data-toggle","modal").attr("data-target","#passwordScreen");
 				$("#check-roomNo").val(d.roomNo);
 			}else{
@@ -127,7 +128,7 @@ const passwordCheck = () =>{
 		"roomNo" : roomNo,
 		"password" : password
 	}
-	
+	console.log(roomNo);
 	console.log(password);
 	fetch("/messenger/passwordCheck",{
 		method : "post",
@@ -146,7 +147,7 @@ const passwordCheck = () =>{
 	})
 	.then(data=>{
 		console.log(data);
-		if(!data){
+		if(data==null){
 			alert("비밀번호가 틀립니다.");
 		}else{
 			enter_room(data.roomNo);
@@ -158,7 +159,7 @@ const passwordCheck = () =>{
 /* 방입장 */
 const enter_room = (roomNo) => {
 	const pathValue = $("#pathValue").val();
-	console.log(roomNo);
+	console.log("fn_enter_room : "+roomNo);
 	/*location.href=pathValue+"/messenger/room/";*/
 }
 
