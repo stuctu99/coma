@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Dept {
-	private String detpCode;
+	private String deptCode;
 	private String deptType;
 }

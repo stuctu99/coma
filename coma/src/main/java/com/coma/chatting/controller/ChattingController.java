@@ -54,10 +54,10 @@ public class ChattingController {
 	
 	@PostMapping("/passwordCheck")
 	@ResponseBody
-	public String checkPassword(@RequestBody Map<String,String> roomInfo) {
-		System.out.println(roomInfo);
+	public Map<String,String> checkPassword(@RequestBody Map<String,String> roomInfo) {
 		
-		return roomInfo.get("roomNo");
+		
+		return roomInfo;
 	}
 	
 }

@@ -119,7 +119,7 @@ $("roomPasswordFlag").click(function() {
 const createRoom = () => {
 	console.log("active");
 }
-/*
+
 const passwordCheck = () =>{
 	const roomNo = $("#check-roomNo").val();
 	const password = $("#passwordCode").val();
@@ -131,12 +131,13 @@ const passwordCheck = () =>{
 	console.log(password);
 	fetch("/messenger/passwordCheck",{
 		method : "post",
-		header : {
+		headers : {
 			"Content-Type" : "application/json",
 		},
 		body : JSON.stringify(info)
 	})
 	.then(response=>{
+		console.log(response);
 		if(response.status!=200){
 			alert("잘못된접근");
 		}
@@ -144,14 +145,15 @@ const passwordCheck = () =>{
 		return response.json();
 	})
 	.then(data=>{
+		console.log(data);
 		if(!data){
 			alert("비밀번호가 틀립니다.");
 		}else{
-			enter_room(roomNo);
+			enter_room(data.roomNo);
 		}
 	})
 }
-*/
+
 
 /* 방입장 */
 const enter_room = (roomNo) => {
@@ -159,8 +161,6 @@ const enter_room = (roomNo) => {
 	console.log(roomNo);
 	/*location.href=pathValue+"/messenger/room/";*/
 }
-
-
 
 
 /* 웹소켓 채팅 */
