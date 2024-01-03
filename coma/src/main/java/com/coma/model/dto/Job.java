@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Job {
 	private String jobCode;
-	private String jobTitle;
+	private String jobType;
 }

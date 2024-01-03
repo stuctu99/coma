@@ -6,5 +6,6 @@ public class ChattingMessage {
 	private String chatNo;
 	private String chatContent;
 	private Date chatCreateDate;
-	private Emp empId;
+	private Emp empId; //String empId
+	private ChattingRoom roomNo; //String roomNo
 }

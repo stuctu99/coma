@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
@@ -12,66 +16,34 @@
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
-	<div style="text-align:center;">
-		<h1>학생 관리 페이지</h1>
-	</div>
 	<div class="row">
-		<div class="col-12">
-			<div class="row">
-				<div class="col-1"></div>
+	<div class="col-1"></div>
+		<div class="col-7" >
+			<div style="text-align:center;">
+				<h1>학생 관리 페이지</h1>
+			</div>
+			<div style="width:100%; height:550px;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
-				<div><canvas id="myChart"></canvas></div>
-				<div class="col-1"></div>
+				<canvas id="myChart"></canvas>
+			</div>
+		</div>
+		<div class="col-3">
+			<div style="text-align:center;">
+				<h1>반별 학생 수</h1>
+			</div>
+			<div class="row">
+			<c:forEach var="s" items="${studentCount }">
+				<div class="col-6">
+					<div style="text-align: center;">
+						<label for="example-text-input" class="form-control-label"><c:out value=""/>${s.EMP_NAME }</label>
+						<input class="form-control form-control-sm" type="text" value="${s.STUDENTCOUNT }명" style="text-align: center;">
+					</div>
+				</div>
+			</c:forEach>
 			</div>
 		</div>
 	</div>
-	<div style="text-align:center; margin:10px 0px 10px 0px;">
-		<h1>반별 학생 수</h1>
-	</div>
-	<div class="row" style="margin-top:10px; margin-bottom: 10px; display: flex; justify-content: space-around;">
-		<div class="col-1"></div>
-		<div class="col-2.5">
-			<div class="form-group">
-			    <div class="input-group">
-			      <div class="input-group-prepend">
-			        <span class="input-group-text" id="inputGroup-sizing-default">총 학생 수</span>
-			      </div>
-			      <input type="text" style="background-color: #ffffff;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
-			    </div>
-			</div>
-		</div>
-		<div class="col-2.5">
-			<div class="form-group">
-			    <div class="input-group">
-			      <div class="input-group-prepend">
-			        <span class="input-group-text" id="inputGroup-sizing-default">00반</span>
-			      </div>
-			      <input type="text" style="background-color: #ffffff;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
-			    </div>
-			</div>
-		</div>
-		<div class="col-2.5">
-			<div class="form-group">
-			    <div class="input-group">
-			      <div class="input-group-prepend">
-			        <span class="input-group-text" id="inputGroup-sizing-default">00반</span>
-			      </div>
-			      <input type="text" style="background-color: #ffffff;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
-			    </div>
-			</div>
-		</div>
-		<div class="col-2.5">
-			<div class="form-group">
-			    <div class="input-group">
-			      <div class="input-group-prepend">
-			        <span class="input-group-text" id="inputGroup-sizing-default">00반</span>
-			      </div>
-			      <input type="text" style="background-color: #ffffff;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
-			    </div>
-			</div>
-		</div>
-		<div class="col-1"></div>
-	</div>
+	<div class="col-1"></div>
 </div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
 	<h1>학생 리스트</h1>
@@ -80,17 +52,17 @@
 	<div class="row" style="display: flex; align-items: center;">
 	<div class="col-1"></div>
 		<div class="col-1" style="margin-left:15px;">
-			<select class="form-control form-control-sm" name="selectEmp">
+			<select class="form-control form-control-sm" id="searchData">
 			  <option value="student">학생</option>
 			  <option value="studentCom">수료생</option>
 			  <option value="studentEmp">취업생</option>
 			</select>
 		</div>
 		<div class="col-2" style="padding-left:0px;">
-			<input class="form-control form-control-sm" type="text" placeholder="이름으로 검색 고정">
+			<input class="form-control form-control-sm" type="text" id="textData" placeholder="이름으로 검색 고정">
 		</div>
 		<div class="col-5" style="padding-left:0px;">
-			<button type="button" class="btn btn-secondary btn-sm">검색</button>
+			<button type="button" class="btn btn-secondary btn-sm" onclick="fn_searchEmp();">검색</button>
 		</div>
 	</div>
 	<div class="table-responsive" style="padding: 0px 115px 0px 115px;">
@@ -99,21 +71,20 @@
 		        <thead class="thead-light">
 		            <tr>
 		                <th>학생 이름</th>
-		                <th>소속 반</th>
 		                <th>담당 강사</th>
 		                <th>수료여부</th>
 		                <th>취업여부</th>
-		                <th></th>
 		            </tr>
 		        </thead>
-		        <tbody class="list">
+		        <tbody class="list" id="studentChart">
+		        <c:forEach var="s" items="${students }">
 		        	<tr>
-		        		<td><a href="#">이름</a></td>
-		        		<td>소속 반</td>
-		        		<td>담당 강사</td>
-		        		<td>수료여부</td>
-		        		<td>취업여부</td>
+		        		<td><a href="#"><c:out value="${s.stuName }"/></a></td>
+		        		<td><c:out value="${s.empId }"/></td>
+		        		<td><c:out value="${s.stuComStatus }"/></td>
+		        		<td><c:out value="${s.stuEmpStatus }"/></td>
 		        	</tr>
+		        </c:forEach>
 		        </tbody>
 		    </table>
 		</div>
@@ -156,6 +127,38 @@ const myChart = new Chart(ctx, {
         }
     }
 });
+
+function fn_searchEmp(){
+	const searchData=document.getElementById("searchData").value;
+	const textData=documnet.getElementById("textData").value;
+	feth("/admin/searchStudent",{
+		method:"post",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify({
+			searchData:searchData,
+			textData:textData
+		})
+	}).then(response=>{
+		if(response.status!=200) throw new Error(repsonse.status);
+		return response.json();
+	}).then(result=>{
+		const tbody=document.getElementById("studentChart");
+		result.forEach((e)=>{
+			const $tr=document.creatElement('tr');
+			const $td1=document.creatElement('td');
+			const $a=document.creatElement('a');
+			$a.setAttridute('href','#');
+			$td1.append($a);
+			const $td2=document.creatElement('td');
+			const $td3=document.creatElement('td');
+			const $td4=document.creatElement('td');
+			
+		})
+		console.log(result);
+	}).catch(e=>{
+		console.log(e);
+	})
+}
 
 //Google 차트 js
 /* google.charts.load('current', {'packages':['bar']});

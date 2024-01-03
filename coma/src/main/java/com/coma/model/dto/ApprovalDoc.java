@@ -1,6 +1,7 @@
 package com.coma.model.dto;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,4 +21,6 @@ public class ApprovalDoc {
 	private Timestamp docCorrectDate;
 	private String docProgress;
 	private String empId;
+	
+	private List<ApprovalAttachment> files;
 }
