@@ -220,7 +220,7 @@ input[type="datetime-local"] {
            /*  events:[
              ], */
              events: {
-            	    url: "/calender/calender.do",
+            	    url: "/calendar/calendar.do",
             	    method: "GET",
             	    extraParams: {
             	        dataType: "JSON"
@@ -279,12 +279,22 @@ input[type="datetime-local"] {
         });
         calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
         calendar.on("eventMouseLeave", info => console.log("eLeave:", info));
-        calendar.on("dateClick", info => console.log("dateClick:", info));
+        calendar.on("dateClick", info => {
+        	console.log(info);
+        	console.log("dateClick:", info.dateStr);
+        	schStart.value=info.dateStr+" 09:00:00";
+        	schEnd.value=info.dateStr+" 18:00:00";
+        	$("#schTitle").val($(".fc-event-title").text());
+            
+  		}); 
         calendar.on("select", info => {
             console.log("select:", info);          
             schStart.value=info.startStr+" 09:00:00";
-            schEnd.value=info.endStr+" 18:00:00";
-           console.log(info.startStr);
+           var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
+           var dateString = endData.toISOString();
+           dateString = dateString.split("T")[0] + " 18:00:00";
+          schEnd.value=  dateString;
+  
             Modal.style.display = "block";         
         });
 
@@ -292,27 +302,24 @@ input[type="datetime-local"] {
         // 일정(이벤트) 추가하기
         function fCalAdd() {
             if (!schTitle.value) {
-                alert("제목에 머라도 쓰자")
+                alert("제목을 입력해주세요")
                 schTitle.focus();
                 return;
+                
             }
             let bColor = schBColor.value;
-
 
             let event = {
                 start: schStart.value,
                 end: schEnd.value,
                 title: schTitle.value,
-                /* title: value, */
-                //content: schContent.value 이거 안되는거 나중에 해결
+
                 allDay: schAllday.checked,
                 backgroundColor: bColor
-
+			// 아마 이부분에 ajax가 들어가면 될거같아요
             };
-
-            
-
             calendar.addEvent(event);
+            
             fMClose();
         }
 

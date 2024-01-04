@@ -106,7 +106,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="/calender">
+            <a class="nav-link " href="/calendar">
               <i class="ni ni-pin-3 text-orange"></i> 캘린더
             </a>
           </li>

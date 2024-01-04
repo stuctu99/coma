@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Calender {
+public class Calendar {
 
 	private String calNo; 
 	private String empId; //test이후에 수정예정

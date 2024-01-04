@@ -1,14 +1,14 @@
-package com.coma.calender.model.dao;
+package com.coma.calendar.model.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.coma.model.dto.Calender;
+import com.coma.model.dto.Calendar;
 import com.coma.model.dto.Schedule;
 
-public interface CalenderDao {
+public interface CalendarDao {
 
-	List<Calender> selectCalender(SqlSession session);
+	List<Calendar> selectCalendar(SqlSession session);
 	List<Schedule> scheduleAll(SqlSession session);
 }

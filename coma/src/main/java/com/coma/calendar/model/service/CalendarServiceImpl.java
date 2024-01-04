@@ -1,27 +1,27 @@
-package com.coma.calender.model.service;
+package com.coma.calendar.model.service;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
-import com.coma.calender.model.dao.CalenderDao;
-import com.coma.model.dto.Calender;
+import com.coma.calendar.model.dao.CalendarDao;
+import com.coma.model.dto.Calendar;
 import com.coma.model.dto.Schedule;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CalenderServiceImpl implements CalenderService {
+public class CalendarServiceImpl implements CalendarService {
 	
-	private final CalenderDao dao;
+	private final CalendarDao dao;
 	private final SqlSession session;
 	
 	@Override
-	public List<Calender> selectCalender() {
+	public List<Calendar> selectCalendar() {
 		// TODO Auto-generated method stub
-		return dao.selectCalender(session);
+		return dao.selectCalendar(session);
 	}
 
 	@Override

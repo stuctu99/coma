@@ -1,20 +1,20 @@
-package com.coma.calender.model.dao;
+package com.coma.calendar.model.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.coma.model.dto.Calender;
+import com.coma.model.dto.Calendar;
 import com.coma.model.dto.Schedule;
 
 @Repository
-public class CalenderDaoImpl implements CalenderDao {
+public class CalendarDaoImpl implements CalendarDao {
 
 	@Override
-	public List<Calender> selectCalender(SqlSession session) {
+	public List<Calendar> selectCalendar(SqlSession session) {
 		// TODO Auto-generated method stub
-		return session.selectList("calender.selectCalender");
+		return session.selectList("calendar.selectCalender");
 	}
 
 	@Override
