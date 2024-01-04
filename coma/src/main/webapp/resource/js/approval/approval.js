@@ -97,6 +97,7 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 const app_name_arr = [];
 const app_dept_arr = [];
 const app_job_arr = [];
+const app_all_arr = [];
 
 const addDelAppr=(function(){
 	let appr_num=1;
@@ -115,35 +116,45 @@ const addDelAppr=(function(){
 			
 			/*적힌 값과 선택한 값 일치하는지 비교*/
 				if($('#search_app').val()==emp_name+" "+emp_dept+" "+emp_job){
-					if(appr_num<=3){
-						const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
-											+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
-						const i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delAppr(this);">');
-						
-				
-						
-						app_name_arr.push(emp_name);
-						app_dept_arr.push(emp_dept);
-						app_job_arr.push(emp_job);
-				
-						
-						btn_tag.text(emp_name);
-						btn_tag.attr('data-content',emp_dept+emp_job);
-						console.log("dept: " + emp_dept);
-						console.log("job: " + emp_job);
-						
-						$('.appr_container').append(btn_tag);
-						$('.appr_container').append(i_tag);
 					
-						btn_tag.popover();
-						 /* 부트스트랩은 js를 사용하여 동적으로 웹 페이지를 조작하고 업데이트하기때문에 
-			            동적으로 생성된 요소에 대해서는 초기화 작업이 필요.*/
-						appr_num++;
+					/* 중복 결재자 있는지 확인 */
+					if(!app_all_arr.includes($('#search_app').val())){
+					
+						/* 추가한 결재자 3명 이하인지 확인 */
+						if(appr_num<=3){
+							const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
+												+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
+							const i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delAppr(this);">');
+							
+					
+							app_all_arr.push(emp);
+							app_name_arr.push(emp_name);
+							app_dept_arr.push(emp_dept);
+							app_job_arr.push(emp_job);
+							
+							
+							btn_tag.text(emp_name);
+							btn_tag.attr('data-content',emp_dept+" "+emp_job);
+							console.log("dept: " + emp_dept);
+							console.log("job: " + emp_job);
+							
+							$('.appr_container').append(btn_tag);
+							$('.appr_container').append(i_tag);
+						
+							btn_tag.popover();
+							 /* 부트스트랩은 js를 사용하여 동적으로 웹 페이지를 조작하고 업데이트하기때문에 
+				            동적으로 생성된 요소에 대해서는 초기화 작업이 필요.*/
+							appr_num++;
+						}else{
+							
+							alert("결재자는 3명까지 추가 가능합니다.");
+						}
+					
 					}else{
-						
-						alert("결재자는 3명까지 추가 가능합니다.");
+						alert("이미 추가된 결재자입니다.");
 					}
-					
+				
+				
 				}else{
 					alert("없는 사원입니다.");
 				}
@@ -165,9 +176,29 @@ const addDelAppr=(function(){
 					-> popver('dispose')호출해 popver 제거. */
 				btn.popover('dispose');
 			}
+				
+
+					
+				const del_name = btn.text();
+				
+				const del_type = btn.attr('data-content');
+				const del_type_arr = del_type.split(" ");
+				
+				const del_dept = del_type_arr[0];
+				const del_job = del_type_arr[1];
+
+				for(let i=0; i<app_all_arr.length; i++){
+					if(app_all_arr[i]===del_name+" "+del_type){
+						app_all_arr.splice(i, 1);
+						i--;
+					}
+				}
 			
+			/* 서버로 값 보낼때는 app_all_arr 파싱해서 보내기 */
+		
 			btn.remove();
 			$(element).remove();
+		
 		
 			
 			appr_num--;
