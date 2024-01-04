@@ -25,7 +25,6 @@ const editor = new toastui.Editor({
     previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
 });
 
-
 const addDelFunction=(function(){
 	let count=2;
 	const addFile=()=>{
@@ -64,6 +63,7 @@ $(document).on("change",".custom-file-input",(e=>{
 	
 }));
 
+/* 결재자 검색을 위한 datalist */
 
 document.querySelector("#search_app").addEventListener("keyup",(()=>{
 	let requestFunc; //closure
@@ -95,6 +95,8 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 })());
 
 
+/* 참조자 검색을 위한 datalist */
+
 document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			
 	let requestFunc; //closure
@@ -114,7 +116,7 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 		
 				/*	console.log(e.dept.deptType + e.job.jobType);*/
 					const search_op = $('<option>');
-					search_op.val(e.empName+" "+e.dept.deptType + e.job.jobType);
+					search_op.val(e.empName+" "+e.dept.deptType+" "+ e.job.jobType);
 					 $('#serach_list2').append(search_op);
 						
 
@@ -125,25 +127,35 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			}
 })());
 
+/* 결재자 추가, 삭제  */
+
+const app_name_arr = [];
+const app_dept_arr = [];
+const app_job_arr = [];
+
 const addDelAppr=(function(){
 	let appr_num=1;
 	
 	const addAppr=()=>{
+
+	console.log($('#app_'))
+		
 		if(appr_num<=3){
 			const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
 								+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
 			const i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delAppr(this);">');
 			
-			const emp = $('#search_app').val();
+			const emp = $('#search_app').val(); /*name + dept + job */
 			const emp_arr = emp.split(" ");
 			
 			const emp_name = emp_arr[0];
-			const emp_type = emp_arr[1];
+			const emp_dept = emp_arr[1];
+			const emp_job = emp_arr[2];
 		
 			
 			btn_tag.text(emp_name);
-			console.log(emp_type)
-			btn_tag.attr('data-content',emp_type);
+			console.log(emp_dept+emp_job)
+			btn_tag.attr('data-content',emp_dept+emp_job);
 			/*btn_tag.setAttribute('data-content',emp_type);*/
 			
 			$('.appr_container').append(btn_tag);
@@ -167,9 +179,9 @@ const addDelAppr=(function(){
 			
 			if(btn.data('bs.popover')){ 
 				/* data()메소드를 사용하여 요소에 연결된 데이터를 가져옴.
-				-> 해당 요소에 popver가 초기화되었는지 확인.
-				bs.popver 데이터가 존재하면 초기화된 것.
-				-> popver('dispose')호출해 popver 제거. */
+					-> 해당 요소에 popver가 초기화되었는지 확인.
+				   bs.popver 데이터가 존재하면 초기화된 것.
+					-> popver('dispose')호출해 popver 제거. */
 				btn.popover('dispose');
 			}
 			
