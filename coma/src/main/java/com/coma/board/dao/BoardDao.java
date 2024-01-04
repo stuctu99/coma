@@ -13,4 +13,6 @@ public interface BoardDao {
 	List<Board> selectFreeAll(SqlSession session);
 	
 	List<Board> selectBoarAll(SqlSession session, String boardType);
+	
+	Board selectBoardByNo(SqlSession session, String boardType, int boardNo);
 }

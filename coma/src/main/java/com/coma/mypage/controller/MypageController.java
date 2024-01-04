@@ -23,7 +23,13 @@ public class MypageController {
 	    m.addAttribute("emp", emp);
 	    System.out.println(emp);
 	    
-
+	}
+	@GetMapping("/EmployeeDetails")
+	public void test2(Model m) {
+		 Emp emp = service.selelctDto("COMA_1");
+		 m.addAttribute("emp", emp);
+		 System.out.println(emp);
+		
 	}
 
 	

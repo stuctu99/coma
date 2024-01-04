@@ -16,11 +16,11 @@ import com.coma.model.dto.Student;
 public class AdminDao {
 	
 	//사원관련 Dao
-	public List<Emp> selectEmpAll(SqlSession session, Map<String, Integer> page){
+	public List<Emp> selectEmpAllByCurrent(SqlSession session, Map<String, Integer> page){
 		int cPage=(Integer)page.get("cPage");
 		int numPerpage=(Integer)page.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
-		return session.selectList("emp.selectEmpAll",null,rb);
+		return session.selectList("emp.selectEmpAllByCurrent",null,rb);
 	}
 	
 	public int countEmp(SqlSession session) {
@@ -40,7 +40,12 @@ public class AdminDao {
 	}
 	
 	public List<Emp> searchEmp(SqlSession session, Map<String, Object> searchMap){
+		System.out.println(searchMap);
 		return session.selectList("emp.searchEmp", searchMap);
+	}
+	
+	public int countEmpByData(SqlSession session, Map<String, Object> searchMap) {
+		return session.selectOne("emp.countEmpByData",searchMap);
 	}
 	
 	//학생관련 Dao
@@ -68,5 +73,13 @@ public class AdminDao {
 	
 	public List<Map> studentCountByEmpId(SqlSession session){
 		return session.selectList("student.studentCountByEmpId");
+	}
+	
+	//chart.jks 메소드
+	public List<Map> charEmpData(SqlSession session) {
+		return session.selectList("emp.charEmpData");
+	}
+	public List<Map> charStudentData(SqlSession session) {
+		return session.selectList("student.charStudentData");
 	}
 }

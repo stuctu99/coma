@@ -11,8 +11,11 @@
 * {
 font-family: 'Noto Sans KR', sans-serif;
 }
-	
-	
+
+.coma-container{
+	height: 1063.5px;
+}
+
 .main-content{
 	height: 100%;
 }
@@ -23,13 +26,12 @@ body {
 	font-size: 13px;
 }
 .table-responsive {
-    margin: 30px 0;
+    margin: 0px 0;
 }
 .table-wrapper {
 	background: #fff;
 	padding: 20px 25px;
 	border-radius: 3px;
-	min-width: 1000px;
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .table-title {        
@@ -42,7 +44,7 @@ body {
 }
 .table-title h2 {
 	margin: 5px 0 0;
-	font-size: 24px;
+	font-size: 38px;
 }
 .table-title .btn-group {
 	float: right;
@@ -157,13 +159,14 @@ table.table .avatar {
 }    
 </style>
 
+<div class="coma-container">
 <div class="container-xl">
 	<div class="table-responsive">
 		<div class="table-wrapper">
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2>자유게시판</h2><br><br>
+						<h2>자유게시판</h2>
 					</div>
 					<div class="col-sm-6">
 						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><span>글쓰기</span></a>					
@@ -196,7 +199,7 @@ table.table .avatar {
 							</span>
 						</td>
 						<td>${free.boardNo }</td>
-	   					<td><a href="">${free.boardTitle }</a></td>
+	   					<td><a href="/detail">${free.boardTitle }</a></td>
 	   					<td>${free.empId }</td>
 	   					<td>${free.boardDate }</td>
 	   					<td>${free.boardReadCount }</td>
@@ -207,5 +210,7 @@ table.table .avatar {
 		</div>
 	</div>        
 </div>
+</div>
+
     <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

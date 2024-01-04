@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+footer#chatView-footer {
+  position: fixed;
+  bottom: 55px; left: 0;
+  height: 5px;
+  width: 100%;
+  background-color:white;
+}
+
+#btnSend{
+	margin:0 auto;
+	width: 85px;
+    height: 53px;
+}
+
+.me, .other{
+	width:230px;
+	height: 100%;
+	white-space: normal;
+}
+
+
+.me{
+	float: right;
+	background-color: yellow;
+}
+
+.other{
+	float: left;
+	background-color: aquamarine;
+}

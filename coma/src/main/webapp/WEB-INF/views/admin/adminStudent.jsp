@@ -25,6 +25,16 @@
 			<div style="width:100%; height:550px;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="myChart"></canvas>
+				<div class="row">
+					<div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+						<label for="example-text-input" class="form-control-label"><c:out value="총 누적 학생 수"/></label>
+						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; width:200px;" value="${totalStudent }명" readonly>
+					</div>
+					<div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+						<label for="example-text-input" class="form-control-label"><c:out value="총 누적 학생 수"/></label>
+						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; width:200px;" value="${totalStudent }명" readonly>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="col-3">
@@ -129,7 +139,7 @@ const myChart = new Chart(ctx, {
     }
 });
 
-function fn_searchStudent(cPage=1,numPerpage=5,url){
+function fn_searchStudent(cPage=1,numPerpage=10,url){
 	//const searchData=document.getElementById("searchData").value;
 	const textData=document.getElementById("textData").value;
 	console.log(textData);
@@ -145,8 +155,8 @@ function fn_searchStudent(cPage=1,numPerpage=5,url){
 		if(response.status!=200) throw new Error(repsonse.status);
 		return response.json();
 	}).then(result=>{
-// 		console.log(result.pageBar);
-		console.log(result.students);
+		//console.log(result.pageBar);
+		//console.log(result.students);
 		const $tbody=document.getElementById("studentTable");
 		const $div=document.getElementById("pageBar");
 		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.

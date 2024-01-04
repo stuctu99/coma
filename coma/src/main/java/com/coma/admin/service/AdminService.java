@@ -21,8 +21,8 @@ public class AdminService {
 	private final SqlSession session;
 	
 	//사원관련 서비스
-	public List<Emp> selectEmpAll(Map<String, Integer> page){
-		return dao.selectEmpAll(session, page);
+	public List<Emp> selectEmpAllByCurrent(Map<String, Integer> page){
+		return dao.selectEmpAllByCurrent(session, page);
 	}
 	
 	public int countEmp() {
@@ -45,6 +45,10 @@ public class AdminService {
 		return dao.searchEmp(session, searchMap);
 	}
 	
+	public int countEmpByData(Map<String, Object> searchMap) {
+		return dao.countEmpByData(session, searchMap);
+	}
+	
 	//학생관련 서비스
 	public List<Student> selectStudent(Map<String, Integer> page){
 		return dao.selectStudent(session, page);
@@ -64,6 +68,14 @@ public class AdminService {
 	
 	public List<Map> studentCountByEmpId(){
 		return dao.studentCountByEmpId(session);
+	}
+	
+	//chart.js 메소드
+	public List<Map> charEmpData() {
+		return dao.charEmpData(session);
+	}
+	public List<Map> charStudentData() {
+		return dao.charStudentData(session);
 	}
 
 }

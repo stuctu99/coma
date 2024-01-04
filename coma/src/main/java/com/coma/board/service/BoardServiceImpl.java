@@ -34,6 +34,14 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return dao.selectBoarAll(session, boardType);
 	}
+
+	@Override
+	public Board selectBoardByNo(String boardType, int boardNo) {
+		// TODO Auto-generated method stub
+		return dao.selectBoardByNo(session, boardType, boardNo);
+	}
+	
+	
 	
 	
 

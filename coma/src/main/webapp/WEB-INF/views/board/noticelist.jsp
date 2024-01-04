@@ -10,8 +10,11 @@
 * {
 font-family: 'Noto Sans KR', sans-serif;
 }
-	
-	
+
+.coma-container{
+	height: 1063.5px;
+}
+
 .main-content{
 	height: 100%;
 }
@@ -22,13 +25,12 @@ body {
 	font-size: 13px;
 }
 .table-responsive {
-    margin: 30px 0;
+    margin: 0px 0;
 }
 .table-wrapper {
 	background: #fff;
 	padding: 20px 25px;
 	border-radius: 3px;
-	min-width: 1000px;
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .table-title {        
@@ -41,7 +43,7 @@ body {
 }
 .table-title h2 {
 	margin: 5px 0 0;
-	font-size: 24px;
+	font-size: 38px;
 }
 .table-title .btn-group {
 	float: right;
@@ -156,13 +158,14 @@ table.table .avatar {
 }    
 </style>
 
+<div class="coma-container">
 <div class="container-xl">
 	<div class="table-responsive">
 		<div class="table-wrapper">
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2>공지사항</h2><br><br>
+						<h2>공지사항</h2>
 					</div>
 					<div class="col-sm-6">
 						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><span>공지추가</span></a>
@@ -196,7 +199,8 @@ table.table .avatar {
 							</span>
 						</td>
 						<td>${notice.boardDate }</td>
-	   					<td><a href="">${notice.boardTitle }</a></td>
+	   					<td><a href="${pageContext.request.contextPath}/board/detail?boardNo=${notice.boardNo }&boardType=${notice.boardType}">
+	   						${notice.boardTitle }</a></td>
 	   					<td>${notice.boardReadCount }</td>
 	   					<td></td>
 	   					<td></td>
@@ -207,7 +211,7 @@ table.table .avatar {
 		</div>
 	</div>        
 </div>
-
+</div>
 <%-- <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 	* {
