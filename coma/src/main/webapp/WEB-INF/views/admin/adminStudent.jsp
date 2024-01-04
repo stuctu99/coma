@@ -22,17 +22,21 @@
 			<div style="text-align:center;">
 				<h1>학생 관리 페이지</h1>
 			</div>
-			<div style="width:100%; height:550px;">
+			<div style="width:100%; height:750px;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="myChart"></canvas>
 				<div class="row">
-					<div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-						<label for="example-text-input" class="form-control-label"><c:out value="총 누적 학생 수"/></label>
-						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; width:200px;" value="${totalStudent }명" readonly>
+					<div class="col-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+						<label for="example-text-input" class="form-control-label"><c:out value="총 학생 수"/></label>
+						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; " value="${totalStudent }명" readonly>
 					</div>
-					<div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-						<label for="example-text-input" class="form-control-label"><c:out value="총 누적 학생 수"/></label>
-						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; width:200px;" value="${totalStudent }명" readonly>
+					<div class="col-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+						<label for="example-text-input" class="form-control-label"><c:out value="총 수료한 학생 수"/></label>
+						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; " value="${studentComStatusData }명" readonly>
+					</div>
+					<div class="col-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+						<label for="example-text-input" class="form-control-label"><c:out value="총 취업한 학생 수"/></label>
+						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; " value="${studentEmpStatusData }명" readonly>
 					</div>
 				</div>
 			</div>
@@ -102,39 +106,51 @@
 	</div>
 </div>
 <script>
-//chart.js
+//chart.js 
+const chartData=${chartStudentData}
+const chartObject=JSON.stringify(chartData);
+const chartStudentData=JSON.parse(chartObject);
+
+var labelList = new Array();
+var valueList = new Array();
+var colorList = new Array();
+
+for(let i=0;i<chartStudentData.length;i++){
+	let e=chartStudentData[i];
+	labelList.push(e.EMP_NAME);
+	valueList.push(e.STUDENTCOUNT);
+	colorList.push(colorize());
+
+}
+
+function colorize() {
+	var r = Math.floor(Math.random()*200);
+	var g = Math.floor(Math.random()*200);
+	var b = Math.floor(Math.random()*200);
+	var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.2)';
+	return color;
+}
+
+
 const ctx = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: labelList,
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
+            label: '사원 근태 통계',
+            data: valueList,
+            backgroundColor: colorList
         }]
     },
     options: {
         scales: {
-            y: {
-                beginAtZero: true
-            }
+        	yAxes : [ {
+				ticks : {
+					beginAtZero : true,
+					//stepSize: 0.5
+				}
+			} ]
         }
     }
 });

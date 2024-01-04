@@ -29,6 +29,14 @@ public class AdminService {
 		return dao.countEmp(session);
 	}
 	
+	public int countStudentByCom() {
+		return dao.countStudentByCom(session);
+	}
+	
+	public int countStudentByEmp() {
+		return dao.countStudentByEmp(session);
+	}
+	
 	public List<Map> countEmpByDept() {
 		return dao.countEmpByDept(session);
 	}

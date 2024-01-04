@@ -23,12 +23,12 @@ public class AdminDao {
 		return session.selectList("emp.selectEmpAllByCurrent",null,rb);
 	}
 	
-	public int countEmp(SqlSession session) {
-		return session.selectOne("emp.countEmp");
-	}
-	
 	public List<Map> countEmpByDept(SqlSession session) {
 		return session.selectList("emp.countEmpByDept");
+	}
+	
+	public int countEmp(SqlSession session) {
+		return session.selectOne("emp.countEmp");
 	}
 	
 	public int insertEmp(SqlSession session, HashMap<String, Object> empName) {
@@ -73,6 +73,14 @@ public class AdminDao {
 	
 	public List<Map> studentCountByEmpId(SqlSession session){
 		return session.selectList("student.studentCountByEmpId");
+	}
+	
+	public int countStudentByEmp(SqlSession session) {
+		return session.selectOne("student.countStudentByEmp");
+	}
+	
+	public int countStudentByCom(SqlSession session) {
+		return session.selectOne("student.countStudentByCom");
 	}
 	
 	//chart.jks 메소드

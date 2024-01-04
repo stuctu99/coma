@@ -1,6 +1,7 @@
 package com.coma.admin.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,9 @@ import com.coma.admin.service.AdminService;
 import com.coma.common.pagefactory.PageFactory;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Student;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,8 +38,25 @@ public class AdminController {
 		List<Emp> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage));
 		int totalData=service.countEmp();
 		List<Map> empCount=service.countEmpByDept();
+		
 		//chart.js 메소드
 		List<Map> chartEmp=service.charEmpData();
+		Gson gson=new Gson();
+		JsonArray jArray=new JsonArray();
+		//Iterator<Map> it=chartEmp.iterator();
+		Iterator<Map> it=empCount.iterator();
+		while (it.hasNext()) {
+		    Map<String, Object> dataMap = it.next();
+		    JsonObject jsonObject = new JsonObject();
+
+		    for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+		        jsonObject.addProperty(entry.getKey(), entry.getValue().toString());
+		    }
+
+		    jArray.add(jsonObject);
+		}
+		String jsonString = gson.toJson(jArray);
+		m.addAttribute("chartEmpData",jsonString);
 		m.addAttribute("emps",emps);
 		m.addAttribute("empCount",empCount);
 		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, "/admin/adminEmp"));
@@ -75,12 +96,32 @@ public class AdminController {
 	public void adminStudent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m) {
 		List<Student> students=service.selectStudent(Map.of("cPage",cPage,"numPerpage",numPerpage));
 		int totalData=service.countStudent();
+		int studentComStatusData=service.countStudentByCom();
+		int studentEmpStatusData=service.countStudentByEmp();
 		List<Map> studentCount=service.studentCountByEmpId();
 		//chart.js 메소드
 		List<Map> chartStudent=service.charStudentData();
+		Gson gson=new Gson();
+		JsonArray jArray=new JsonArray();
+		//Iterator<Map> it=chartStudent.iterator();
+		Iterator<Map> it=studentCount.iterator();
+		while (it.hasNext()) {
+		    Map<String, Object> dataMap = it.next();
+		    JsonObject jsonObject = new JsonObject();
+
+		    for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+		        jsonObject.addProperty(entry.getKey(), entry.getValue().toString());
+		    }
+
+		    jArray.add(jsonObject);
+		}
+		String jsonString = gson.toJson(jArray);
+		m.addAttribute("chartStudentData",jsonString);
 		m.addAttribute("students",students);
 		m.addAttribute("studentCount",studentCount);
 		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, "/admin/adminStudent"));
+		m.addAttribute("studentComStatusData",studentComStatusData);
+		m.addAttribute("studentEmpStatusData",studentEmpStatusData);
 		m.addAttribute("totalStudent",totalData);
 	}
 	
