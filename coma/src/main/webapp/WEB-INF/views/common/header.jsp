@@ -1,3 +1,5 @@
+<%-- <%@ page import="com.coma.model.dto.Emp" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -28,6 +30,7 @@
   </style> -->
 </head>
 <body class="">
+  <c:set var="e" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
@@ -39,7 +42,7 @@
         <img src="/resource/img/brand/COMA2.png" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
-      <ul class="nav align-items-center d-md-none">
+      <!-- <ul class="nav align-items-center d-md-none">
         <li class="nav-item dropdown">
           <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
             <div class=" dropdown-header noti-title">
@@ -62,13 +65,13 @@
               <span>Support</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
+            <a href="/logout" class="dropdown-item">
               <i class="ni ni-user-run"></i>
               <span>Logout</span>
             </a>
           </div>
         </li>
-      </ul>
+      </ul> -->
       <!-- Collapse -->
       <div class="collapse navbar-collapse" id="sidenav-collapse-main">
         <!-- Collapse header -->
@@ -112,7 +115,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link ">
-              <i class="ni ni-single-02 text-yellow"></i> 공지사항
+              <i class="ni ni-single-02 text-yellow"></i> 게시판
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
               <li><a href="/board/noticelist">공지게시판</a></li>
@@ -177,7 +180,7 @@
                   <img alt="Image placeholder" src="/resource/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">COMA EMP</span>
+                  <span class="mb-0 text-sm  font-weight-bold">${e.empName }</span>
                 </div>
               </div>
             </a>
@@ -202,7 +205,7 @@
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
+              <a href="/logout" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>
