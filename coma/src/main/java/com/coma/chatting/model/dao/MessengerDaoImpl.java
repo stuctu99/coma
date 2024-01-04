@@ -22,7 +22,7 @@ public class MessengerDaoImpl implements MessengerDao {
 	@Override
 	public List<Dept> selectDept(SqlSession session) {
 		// TODO Auto-generated method stub
-		return session.selectList("emp.selectDeptList");
+		return session.selectList("emp.selectDeptListforChatting");
 	}
 
 	@Override

@@ -22,9 +22,13 @@
 			<div style="text-align:center;">
 				<h1>사원 관리 페이지</h1>
 			</div>
-			<div style="width:100%; height:550px;">
+			<div style="width:100%; height:750px;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="myChart"></canvas>
+				<div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+					<label for="example-text-input" class="form-control-label"><c:out value="총 사원 수"/></label>
+					<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; width:200px;" value="${totalEmp }명" readonly>
+				</div>
 			</div>
 		</div>
 		<div class="col-3">
@@ -36,7 +40,7 @@
 				<div class="col-6" style="text-align: center;">
 					<div>
 						<label for="example-text-input" class="form-control-label"><c:out value="${ec.DEPT_TYPE }"/></label>
-						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center;" placeholder="${ec.DEPTCOUNT }명" readonly>
+						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center;" value="${ec.DEPTCOUNT }명" readonly>
 					</div>
 				</div>
 			</c:forEach>
@@ -55,8 +59,8 @@
 			<select class="form-control form-control-sm" id="searchData">
 			  <option value="all">전체</option>
 			  <option value="EMP_NAME">이름</option>
-			  <option value="DEPT_CODE">부서</option>
-			  <option value="JOB_CODE">직책</option>
+			  <option value="DEPT_TYPE">부서</option>
+			  <option value="JOB_TYPE">직책</option>
 			</select>
 		</div>
 		<div class="col-2" style="padding-left:0px;">
@@ -99,8 +103,8 @@
 		        	<tr>
 		        		<td><c:out value="${e.empId }"/></td>
 		        		<td><a href="#"><c:out value="${e.empName }"/></a></td>
-		        		<td><c:out value="${e.deptCode.deptCode }"/></td>
-		        		<td><c:out value="${e.jobCode.jobCode }"/></td>
+ 		        		<td><c:out value="${e.dept.deptType }"/></td>
+		        		<td><c:out value="${e.job.jobType }"/></td>
 		        		<td><a href="#"><c:out value="${e.empCurrent }"/></a></td>
 		        		<td>
 			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.empId }');">삭제</button>
@@ -110,57 +114,72 @@
 		           </c:if>
 		        </tbody>
 		    </table>
-		    <div>${pageBar }</div>
+		    <div id="pageBar">${pageBar }</div>
 		</div>
 	</div>
 </div>
 <script>
 //chart.js
+const chartData=${chartEmpData}
+const chartObject=JSON.stringify(chartData);
+const chartEmpData=JSON.parse(chartObject);
+
+var labelList = new Array();
+var valueList = new Array();
+var colorList = new Array();
+
+for(let i=0;i<chartEmpData.length;i++){
+	let e=chartEmpData[i];
+	labelList.push(e.DEPT_TYPE);
+	valueList.push(e.DEPTCOUNT);
+	colorList.push(colorize());
+
+}
+
+function colorize() {
+	var r = Math.floor(Math.random()*200);
+	var g = Math.floor(Math.random()*200);
+	var b = Math.floor(Math.random()*200);
+	var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.2)';
+	return color;
+}
+
+
 const ctx = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: labelList,
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
+            label: '사원 근태 통계',
+            data: valueList,
+            backgroundColor: colorList
         }]
     },
     options: {
         scales: {
-            y: {
-                beginAtZero: true
-            }
+        	yAxes : [ {
+				ticks : {
+					beginAtZero : true,
+					stepSize: 1
+				}
+			} ]
+
         }
     }
 });
 
 //사원 부서별, 직책별 검색
-function fn_searchEmp(){
+function fn_searchEmp(cPage=1,numPerpage=10,url){
 	const searchData=document.getElementById("searchData").value;
 	const textData=document.getElementById("textData").value;
 	console.log(searchData,textData);
-	fetch("/admin/searchEmp",{
+	fetch(url?'${path}'+url:"/admin/searchEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify({
+			cPage:cPage,
+			numPerpage:numPerpage,
 			searchData:searchData,
 			textData:textData
 		})
@@ -169,32 +188,31 @@ function fn_searchEmp(){
 		return response.json();
 	}).then(result=>{
 		console.log(result);
-		console.log(result);
 		const $tbody=document.getElementById("empTable");
+		const $div=document.getElementById("pageBar");
 		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
 		$trList.forEach($tr => {
 		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
 		});
-		//Array.prototype.forEach.call($tbody.children,e=>e.remove());
-		result.students.forEach((e)=>{
+		result.emps.forEach((e)=>{
 			const $tr=document.createElement('tr');
 			const $td1=document.createElement('td');
 			const $a=document.createElement('a');
-			$td1.innerText=e.emps.empId;
+			$td1.innerText=e.empId;
 			
 			const $td2=document.createElement('td');
 			$a.setAttribute('href','#');
-			$a.innerText=e.emps.empName;
+			$a.innerText=e.empName;
 			$td2.appendChild($a);
 			
 			const $td3=document.createElement('td');
-			$td3.innerText=e.emps.deptCode;
+			$td3.innerText=e.dept.deptType;
 			
 			const $td4=document.createElement('td');
-			$td4.innerText=e.emps.jobCode;;
+			$td4.innerText=e.job.jobType;
 			
 			const $td5=document.createElement('td');
-			$td5.innerText=e.emps.empCurrent;
+			$td5.innerText=e.empCurrent;
 			
 			const $td6 = document.createElement('td');
 			const $button = document.createElement('button');
@@ -212,6 +230,8 @@ function fn_searchEmp(){
 			$tr.appendChild($td6);
 			$tbody.appendChild($tr);
 		})
+		$div.innerText="";
+		$div.innerHTML=result.pageBar;
 	}).catch(e=>{
 		console.log(e);
 	})
@@ -221,8 +241,7 @@ function fn_searchEmp(){
 //신입사원 아이디 생성 및 배포
 function fn_addEmp(){
 	const empName=document.getElementById("empName").value;
-	console.log(empName);
-	fetch("/admin/insertEmp",{
+	fetch("${path}/admin/insertEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify({empName:empName})
@@ -240,7 +259,6 @@ function fn_addEmp(){
 		$trList.forEach($tr => {
 		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
 		});
-		//Array.prototype.forEach.call($tbody.children,e=>e.remove());
 		result.students.forEach((e)=>{
 			const $tr=document.createElement('tr');
 			const $td1=document.createElement('td');
@@ -253,10 +271,10 @@ function fn_addEmp(){
 			$td2.appendChild($a);
 			
 			const $td3=document.createElement('td');
-			$td3.innerText=e.emps.deptCode;
+			$td3.innerText=e.dept.deptType;
 			
 			const $td4=document.createElement('td');
-			$td4.innerText=e.emps.jobCode;;
+			$td4.innerText=e.job.jobType;
 			
 			const $td5=document.createElement('td');
 			$td5.innerText=e.emps.empCurrent;
@@ -284,8 +302,7 @@ function fn_addEmp(){
 
 //사원 퇴사후 아이디 비활성화
 function fn_deleteEmp(e){
-	console.log(e);
-	fetch("/admin/deleteEmp",{
+	fetch("${path}/admin/deleteEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify({
@@ -318,10 +335,10 @@ function fn_deleteEmp(e){
 			$td2.appendChild($a);
 			
 			const $td3=document.createElement('td');
-			$td3.innerText=e.emps.deptCode;
+			$td3.innerText=e.dept.deptType;
 			
 			const $td4=document.createElement('td');
-			$td4.innerText=e.emps.jobCode;;
+			$td4.innerText=e.job.jobType;
 			
 			const $td5=document.createElement('td');
 			$td5.innerText=e.emps.empCurrent;

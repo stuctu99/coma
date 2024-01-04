@@ -1,6 +1,7 @@
 package com.coma.model.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +17,8 @@ public class Schedule {
 	private String schDateNo;
 	private String schTitle;
 	private String schContent;
-	private Date schStart;
-	private Date schEnd;
+	private Timestamp schStart;
+	private Timestamp schEnd;
 	private String schType;
 	private String calNo; //test이후에 수정예정
 }
