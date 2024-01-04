@@ -182,11 +182,7 @@ const addDelAppr=(function(){
 				const del_name = btn.text();
 				
 				const del_type = btn.attr('data-content');
-				const del_type_arr = del_type.split(" ");
 				
-				const del_dept = del_type_arr[0];
-				const del_job = del_type_arr[1];
-
 				for(let i=0; i<app_all_arr.length; i++){
 					if(app_all_arr[i]===del_name+" "+del_type){
 						app_all_arr.splice(i, 1);
@@ -245,5 +241,118 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 	},800);
 			}
 })());
+
+
+
+/* 참조자 추가, 삭제  */
+
+const ref_name_arr = [];
+const ref_dept_arr = [];
+const ref_job_arr = [];
+const ref_all_arr = [];
+
+const addDelref=(function(){
+	let ref_num=1;
+	
+	const addref=()=>{
+
+				const emp = $('#search_ref').val(); /*name + dept + job */
+	
+				const emp_arr = emp.split(" ");
+				
+				const emp_name = emp_arr[0];
+				const emp_dept = emp_arr[1];
+				const emp_job = emp_arr[2];
+			
+			/*적힌 값과 선택한 값 일치하는지 비교*/
+				if($('#search_ref').val()==emp_name+" "+emp_dept+" "+emp_job){
+					
+					/* 중복 참조자 있는지 확인 */
+					if(!ref_all_arr.includes($('#search_ref').val())){
+					
+						/* 추가한 참조자 3명 이하인지 확인 */
+						if(ref_num<=3){
+							const ref_btn_tag = $('<button type="button" class="btn btn-secondary" id="ref_fix'+ref_num +'"'
+												+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
+							const ref_i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delref(this);">');
+							
+					
+							ref_all_arr.push(emp);
+							ref_name_arr.push(emp_name);
+							ref_dept_arr.push(emp_dept);
+							ref_job_arr.push(emp_job);
+							
+							
+							ref_btn_tag.text(emp_name);
+							ref_btn_tag.attr('data-content',emp_dept+" "+emp_job);
+							console.log("dept: " + emp_dept);
+							console.log("job: " + emp_job);
+							
+							$('.ref_container').append(ref_btn_tag);
+							$('.ref_container').append(ref_i_tag);
+						
+							ref_btn_tag.popover();
+							ref_num++;
+						}else{
+							
+							alert("참조자는 3명까지 추가 가능합니다.");
+						}
+					
+					}else{
+						alert("이미 추가된 결재자입니다.");
+					}
+				
+				
+				}else{
+					alert("없는 사원입니다.");
+				}
+				
+			
+			
+		
+	}; 
+	
+	const delref=(element)=>{ /* element : 삭제 icon */
+		if(ref_num!=1){
+			
+			const btn = $(element).prev(); 
+			
+			if(btn.data('bs.popover')){ 
+				btn.popover('dispose');
+			}
+				
+
+					
+				const del_ref_name = btn.text();
+				
+				const del_ref_type = btn.attr('data-content');
+				
+				console.log("before : "+ ref_all_arr);
+				for(let i=0; i<ref_all_arr.length; i++){
+					if(ref_all_arr[i]===del_ref_name+" "+del_ref_type){
+						ref_all_arr.splice(i, 1);
+						i--;
+					}
+				}
+					console.log("after : "+ ref_all_arr);
+			
+			/* 서버로 값 보낼때는 ref_all_arr 파싱해서 보내기 */
+		
+			btn.remove();
+			$(element).remove();
+		
+		
+			
+			ref_num--;
+		}
+		
+	}
+	return [addref, delref];
+	
+})();
+
+const addref=addDelref[0];
+const delref=addDelref[1];
+
 
 	

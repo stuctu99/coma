@@ -81,8 +81,9 @@
 							 		<datalist id="search_list1">
 							 		</datalist> 	 		
 							  <div class="input-group-prepend">
-							   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" onclick="addAppr();">추가하기</button>
-							  		<input type="hidden">
+							   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" 
+							   		onclick="addAppr();">추가하기</button>
+							  		<!-- <input type="hidden"> -->
 							  </div>
 						</div>
 
@@ -113,8 +114,8 @@
 							 		<datalist id="search_list2">
 							 		</datalist> 	 	
 							  <div class="input-group-prepend">
-							    <button class="btn btn-outline-primary ref_btn" type="button" id="button-addon1">추가
-							    하기</button>
+							    <button class="btn btn-outline-primary ref_btn" type="button" id="button-addon1"
+							    onclick="addref();">추가하기</button>
 							  </div>
 						</div>
 	            </div>
@@ -123,10 +124,7 @@
           	<div class="row ck_appr">
 	          	<div class="col-3">
 	          	</div>
-	          	<div class="col-7">
-	          		<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="인사팀장">
-					  이규홍
-					</button>
+	          	<div class="col-7 ref_container">
 
 	          	</div>
 	          	<div class="col-2"></div>
