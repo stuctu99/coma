@@ -36,7 +36,6 @@ public class ApprovalController {
 	@ResponseBody
 	public List<Emp> writeDoc(String data, Model model, String approver, HttpServletResponse response) throws IOException {
 		
-		System.out.println(data);
 		List<Emp> emp = service.selectEmpByData(data);
 		
 		return emp;

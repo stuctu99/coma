@@ -60,7 +60,7 @@
 			</select>
 		</div>
 		<div class="col-2" style="padding-left:0px;">
-			<input class="form-control form-control-sm" type="text" id="textData" placeholder="검색바">
+			<input class="form-control form-control-sm" type="text" id="textData" placeholder="검색할 단어 입력">
 		</div>
 		<div class="col-5" style="padding-left:0px;">
 			<button type="button" class="btn btn-secondary btn-sm" style="width:50px;" onclick="fn_searchEmp();">검색</button>
@@ -93,14 +93,14 @@
 		                <th></th>
 		            </tr>
 		        </thead>
-		        <tbody class="list">
+		        <tbody class="list" id="empTable">
 		         <c:if test="${not empty emps}">
 		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
 		        		<td><c:out value="${e.empId }"/></td>
 		        		<td><a href="#"><c:out value="${e.empName }"/></a></td>
-		        		<td><c:out value="${e.deptCode }"/></td>
-		        		<td><c:out value="${e.jobCode }"/></td>
+		        		<td><c:out value="${e.deptCode.deptCode }"/></td>
+		        		<td><c:out value="${e.jobCode.jobCode }"/></td>
 		        		<td><a href="#"><c:out value="${e.empCurrent }"/></a></td>
 		        		<td>
 			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.empId }');">삭제</button>
@@ -169,6 +169,49 @@ function fn_searchEmp(){
 		return response.json();
 	}).then(result=>{
 		console.log(result);
+		console.log(result);
+		const $tbody=document.getElementById("empTable");
+		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
+		$trList.forEach($tr => {
+		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
+		});
+		//Array.prototype.forEach.call($tbody.children,e=>e.remove());
+		result.students.forEach((e)=>{
+			const $tr=document.createElement('tr');
+			const $td1=document.createElement('td');
+			const $a=document.createElement('a');
+			$td1.innerText=e.emps.empId;
+			
+			const $td2=document.createElement('td');
+			$a.setAttribute('href','#');
+			$a.innerText=e.emps.empName;
+			$td2.appendChild($a);
+			
+			const $td3=document.createElement('td');
+			$td3.innerText=e.emps.deptCode;
+			
+			const $td4=document.createElement('td');
+			$td4.innerText=e.emps.jobCode;;
+			
+			const $td5=document.createElement('td');
+			$td5.innerText=e.emps.empCurrent;
+			
+			const $td6 = document.createElement('td');
+			const $button = document.createElement('button');
+			$button.setAttribute('type', 'button');
+			$button.setAttribute('class', 'btn btn-secondary btn-sm');
+			$button.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
+			$button.innerText = '삭제';
+			$td6.appendChild($button);
+			
+			$tr.appendChild($td1);
+			$tr.appendChild($td2);
+			$tr.appendChild($td3);
+			$tr.appendChild($td4);
+			$tr.appendChild($td5);
+			$tr.appendChild($td6);
+			$tbody.appendChild($tr);
+		})
 	}).catch(e=>{
 		console.log(e);
 	})
@@ -190,8 +233,50 @@ function fn_addEmp(){
 			throw new Error("");
 		}
 		return response.json();
-	}).then(data=>{
-		console.log(data);
+	}).then(result=>{
+		console.log(result);
+		const $tbody=document.getElementById("empTable");
+		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
+		$trList.forEach($tr => {
+		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
+		});
+		//Array.prototype.forEach.call($tbody.children,e=>e.remove());
+		result.students.forEach((e)=>{
+			const $tr=document.createElement('tr');
+			const $td1=document.createElement('td');
+			const $a=document.createElement('a');
+			$td1.innerText=e.emps.empId;
+			
+			const $td2=document.createElement('td');
+			$a.setAttribute('href','#');
+			$a.innerText=e.emps.empName;
+			$td2.appendChild($a);
+			
+			const $td3=document.createElement('td');
+			$td3.innerText=e.emps.deptCode;
+			
+			const $td4=document.createElement('td');
+			$td4.innerText=e.emps.jobCode;;
+			
+			const $td5=document.createElement('td');
+			$td5.innerText=e.emps.empCurrent;
+			
+			const $td6 = document.createElement('td');
+			const $button = document.createElement('button');
+			$button.setAttribute('type', 'button');
+			$button.setAttribute('class', 'btn btn-secondary btn-sm');
+			$button.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
+			$button.innerText = '삭제';
+			$td6.appendChild($button);
+			
+			$tr.appendChild($td1);
+			$tr.appendChild($td2);
+			$tr.appendChild($td3);
+			$tr.appendChild($td4);
+			$tr.appendChild($td5);
+			$tr.appendChild($td6);
+			$tbody.appendChild($tr);
+		})
 	}).catch(e=>{
 		alert(e);
 	});
@@ -203,7 +288,9 @@ function fn_deleteEmp(e){
 	fetch("/admin/deleteEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
-		body:JSON.stringify({empId:e}),
+		body:JSON.stringify({
+			empId:e
+		})
 	})
 	.then(response=>{
 		console.log(response);
@@ -211,11 +298,54 @@ function fn_deleteEmp(e){
 			throw new Error("");
 		}
 		return response.json();
-	}).then(data=>{
-		console.log(data);
+	}).then(result=>{
+		console.log(result);
+		const $tbody=document.getElementById("empTable");
+		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
+		$trList.forEach($tr => {
+		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
+		});
+		//Array.prototype.forEach.call($tbody.children,e=>e.remove());
+		result.students.forEach((e)=>{
+			const $tr=document.createElement('tr');
+			const $td1=document.createElement('td');
+			const $a=document.createElement('a');
+			$td1.innerText=e.emps.empId;
+			
+			const $td2=document.createElement('td');
+			$a.setAttribute('href','#');
+			$a.innerText=e.emps.empName;
+			$td2.appendChild($a);
+			
+			const $td3=document.createElement('td');
+			$td3.innerText=e.emps.deptCode;
+			
+			const $td4=document.createElement('td');
+			$td4.innerText=e.emps.jobCode;;
+			
+			const $td5=document.createElement('td');
+			$td5.innerText=e.emps.empCurrent;
+			
+			const $td6 = document.createElement('td');
+			const $button = document.createElement('button');
+			$button.setAttribute('type', 'button');
+			$button.setAttribute('class', 'btn btn-secondary btn-sm');
+			$button.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
+			$button.innerText = '삭제';
+			$td6.appendChild($button);
+			
+			$tr.appendChild($td1);
+			$tr.appendChild($td2);
+			$tr.appendChild($td3);
+			$tr.appendChild($td4);
+			$tr.appendChild($td5);
+			$tr.appendChild($td6);
+			$tbody.appendChild($tr);
+		})
 	}).catch(e=>{
 		alert(e);
 	});
+
 }
 
 //Google 차트 js
