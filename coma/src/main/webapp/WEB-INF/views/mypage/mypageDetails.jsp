@@ -3,9 +3,10 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <style>
-/* div{
+/*  div{
 	border: 2px solid red;
 }  */
 .container {
@@ -20,6 +21,7 @@
 form {
 	display: flex;
 	flex-direction: column;
+	
 }
 
 label {
@@ -63,177 +65,120 @@ text-align: left;
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
-		<div class="container">
-			<div class="profile">
-				<div>
-				<img src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"
-					alt="Profile Image" class="profile-image" style="width: 300px; height: 300px">
-					
-					<form>
-						<div class="custom-file">
-							<input type="file" class="custom-file-input" id="customFileLang" lang="en">
-							<label class="custom-file-label" for="customFileLang">Select file</label>
-						</div>
-					</form>
+		<form>
+		<div class="row">
+			<div class="col-6">
+			 <input type="file" id="accompany-file" name="accompany-file" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
+				<div class="file-btn" onclick="openFileDialog();">
+					<img src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"
+						alt="Profile Image" class="profile-image" style="width: 200px; height: 300px">
+						
 				</div>
-				<form>	
-					<table>
-						<tr>
-							<td colspan='2'>
-								<h1>나의 정보</h1>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="form-group" >
-							        <label for="example-text-input" class="form-control-label">아이디</label>
-							        <input class="form-control" type="text" value="user01" id="example-text-input">
-							    </div>
-							</td>
-							<td>
-								<div class="form-group">
-							        <label for="example-text-input" class="form-control-label">이름</label>
-							        <input class="form-control" type="text" value="정우현" id="example-text-input">
-							    </div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								 <div class="form-group" style="display:block">
-							        <label for="example-date-input" class="form-control-label">생일</label>
-							        <input class="form-control" type="date" value="2018-11-23" id="example-date-input">
-							    </div>
-							</td>
-							<td>
-								<div class="form-group">
-							        <label for="example-text-input" class="form-control-label">성별</label>
-							        <input class="form-control" type="text" value="여" id="example-text-input">
-							    </div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								 <div class="form-group">
-							        <label for="example-email-input" class="form-control-label">Email</label>
-							        <input type= "email" class="form-control" type="email" value="dngus@gus" id="example-email-input">
-							    </div>
-							</td>
-							<td>
-								<div class="form-group">
-							        <label for="example-tel-input" class="form-control-label">연락처</label>
-							        <input class="form-control" type="tel" value="01012345678" id="example-tel-input">
-							    </div>
-							</td>
-						</tr>
-						<tr>
-							<td  colspan='2'> 
-								<div class="form-group" > 
-								    <label for="example-tel-input" class="form-control-label">주소 변경</label>
-								    <div style="display:flex">
-									    <input class="form-control" type="text" id="example-tel-input" placeholder="우편번호" style="width:150px;">
-										<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-									</div>
-									<input class="form-control" type="text" id="example-tel-input" placeholder="주소" style="width:500px;">
-									<input class="form-control" type="text" id="example-tel-input" placeholder="상세주소" style="width:500px;">
-									<input class="form-control" type="text" id="example-tel-input" placeholder="참고항목" style="width:500px;">
-							    </div>
-							</td>
-							<td>
-							
-							</td>
-						</tr>
-					</table>
-					<table>
-						<tr>
-							<td colspan='2'>
-								<h1>상세 정보</h1>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="dept">부서</label>
-							    <select class="form-control" id="dept">
-							      <option>회계팀</option>
-							      <option>행정팀</option>
-							      <option>강사팀</option>
-							      <option>취업팀</option>
-							      <option>관리자</option>
-							    </select>
-							</td>
-							<td>
-								<label for="job">직책</label>
-							    <select class="form-control" id="job">
-							      <option>사원</option>
-							      <option>팀장</option>
-							      <option>부장</option>
-							      <option>관리자</option>
-							    </select>
-							</td>
-						</tr>
-						<tr>
-							<td  colspan='2'>
-								 <div class="form-group" >
-							        <label for="example-date-input" class="form-control-label">채용일시</label>
-							        <input class="form-control" type="date" value="2018-11-23" id="example-date-input">
-							    </div>
-							</td>
-						</tr>
-					</table>
-				</form>
+				<div>
+					<h5>사진을 눌러주세요</h5>	
+				</div>
+				<div>
+					<div class="row">
+						<div class="form-group col-6">
+					        <label for="example-deptCode-input" class="form-control-label">부서</label>
+					        <input class="form-control" type="text" value="${emp.dept.deptType}" id="example-deptCode-input" readonly>
+					    </div>
+					    <div class="form-group col-6">
+					        <label for="example-jobCode-input" class="form-control-label">직책</label>
+					        <input class="form-control" type="text" value="${emp.job.jobType}" id="example-jobCode-input" readonly>
+					    </div>
+					 </div>
+					<div class="form-group" >
+				        <label for="example-hiredate-input" class="form-control-label">채용일시</label>
+				        <input class="form-control" type="date" value="${emp.empHireDate}" id="example-hiredate-input" readonly>
+				    </div>
+					
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="row">
+					<div class="form-group col-6" >
+				        <label for="example-id-input" class="form-control-label">아이디</label>
+				        <input class="form-control" type="text" value="${emp.empId}" id="example-id-input">
+				    </div>
+	   			    <div class="form-group col-6">
+				        <label for="example-name-input" class="form-control-label">이름</label>
+				        <input class="form-control" type="text" value="${emp.empName}" id="example-name-input">
+				    </div>
+				</div>
+				<div class="row">
+				    <div class="form-group col-6">
+				        <label for="example-password-input" class="form-control-label">New Password</label>
+				        <input class="form-control" type="password" value="password" id="example-password-input">
+				    </div>
+				    <div class="form-group col-6">
+				        <label for="example-password2-input" class="form-control-label">Password</label>
+				        <input class="form-control" type="password" value="password" id="example-password2-input">
+				    </div>
+			    </div>
+			    <div class="row">
+				    <div class="form-group col-6" style="display:block">
+				        <label for="example-birthday-input" class="form-control-label">생일</label>
+				        <input class="form-control" type="date" value="${emp.empBrithDate}" id="example-birthday-input">
+				    </div>
+					<div class="form-group col-6">
+				        <label for="example-gender-input" class="form-control-label">성별</label>
+				        <input class="form-control" type="text" value="${emp.empGender == 'M' ? '남' : '여'}" id="example-gender-input">
+				    </div>
+			    </div>
+			    <div class="form-group">
+			        <label for="example-tel-input" class="form-control-label">전화번호</label>
+			        <input type= "email" class="form-control" value= "${emp.empPhone}"  id="example-tel-input">
+			    </div>
+			    <div class="form-group" > 
+				    <label for="address_kakao" class="form-control-label">주소 변경</label>
+					<input class="form-control" type="text" id="address_kakao" name="address" value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="width:500px;">
+					<input class="form-control" type="text" name="address_detail" value= "${emp.empAddrDetail}" placeholder="상세주소" style="width:500px;">
+			    </div>
+			    <button type="submit" class="btn btn-primary" >회원정보 변경</button>
 			</div>
 		</div>
 	</div>
+	</form>
 </div>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    function sample6_execDaumPostcode() {
+//카카오 지도 관련 함수 
+window.onload = function(){
+    document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
+        //카카오 지도 발생
         new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
-                
-                } else {
-                    document.getElementById("sample6_extraAddress").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
+            oncomplete: function(data) { //선택시 입력값 세팅
+                document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
             }
         }).open();
-    }
+    });
+}
+
+//사진 누르면 파일  미리보기 기능 함수 
+function openFileDialog() {
+    const fileInput = document.querySelector('input[type=file]');
+      fileInput.click();
+      fileInput.addEventListener('change', function () {
+         const selectedFiles = fileInput.files;
+         console.log(selectedFiles);
+     });
+}
+$("#accompany-file").change(e => {
+    $.each(e.target.files, (i, f) => {
+        const filereader = new FileReader();
+        filereader.readAsDataURL(f);
+        filereader.onload = (e) => {
+            console.log(e.target.result);
+            $(".file-btn").attr("display", "none");
+            const path = e.target.result;
+            const img = $("<img>").attr({ "src": path, "width": "200px", "height": "250px" }).on("click",openFileDialog);
+            $(".file-btn").html(img);
+        }
+    });
+});
 </script>
 
 <!-- TEAM COMA SPACE -->
