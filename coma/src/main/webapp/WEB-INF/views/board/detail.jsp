@@ -13,5 +13,7 @@
 font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
-
+<c:set var="board" value="${board }"/>
+<h1>글내용</h1>
+<p>${board.boardContent }</p>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

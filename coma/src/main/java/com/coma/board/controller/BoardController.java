@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,6 +51,16 @@ public class BoardController {
 		
 		
 		m.addAttribute("boards", boards);
+		
+	}
+	
+	@GetMapping("/detail")
+	public String selectBoardByNo(@RequestParam("boardNo") int boardNo, String boardType, Model m) {
+		Board b = service.selectBoardByNo(boardType, boardNo);
+		
+		m.addAttribute("board", b);
+		System.out.println(b);
+		return "detail";
 		
 	}
 	

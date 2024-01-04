@@ -49,7 +49,7 @@ $(".chatting-list-btn").click(function() {
 			$content.html("");
 		data.forEach(d=>{
 			const $div = $("<div>").addClass("row");
-			const $div_type = $("<div>").addClass("col-2 chatting-room");
+			const $div_type = $("<div>").addClass("col-2 chatting-room").css("display","flex").css("justify-content","center").css("align-items","center");
 			const $div_title = $("<div>").addClass("col-7 chatting-room").css("text-align","left");
 			const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top","12px");
 			const $input = $("<input>").attr("name","roomNo").attr("type","hidden").val(d.roomNo);

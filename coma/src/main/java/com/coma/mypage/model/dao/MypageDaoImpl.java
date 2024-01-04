@@ -18,7 +18,7 @@ public class MypageDaoImpl implements MypageDao  {
 	public Emp selelctDto(SqlSession session, String id) {
 		// TODO Auto-generated method stub
 //		System.out.println(id);
-		return session.selectOne("emp.selelctDto", id);
+		return session.selectOne("emp.selectEmpById", id);
 	}
 
 }

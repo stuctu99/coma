@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="${path }/resource/css/chat/chat.css" rel="stylesheet">
+<link href="${path }/resource/css/chat/chatView.css" rel="stylesheet">
 <!-- Latest compiled and minified CSS -->
 <!-- <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -56,21 +57,23 @@ div {
 					<img src="${path }/resource/img/chat/chat-icon.png" />
 				</div>
 			</div> --%>
+			<button id="start_chat">시작하기</button>
 			<hr>
 			<hr>
 		</div>
 	</header>
 	<section>
 		<h1>채팅화면</h1>
+		<div id="contents"></div>
 	</section>
-	<footer>
+	<footer id="chatView-footer">
 		<div class="container">
 			<div class="row">
 				<div class="col-10">
-					<textarea cols="58"></textarea>
+					<input type="text" id="msg" size=10/>
 				</div>
 				<div class="col-2">
-					<button class="btn btn-primary" style="margin:0 auto;">입력</button>
+					<button id="btnSend" class="btn btn-primary">입력</button>
 				</div>
 			</div>
 			<div class="row">
@@ -93,7 +96,6 @@ div {
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script src="${path }/resource/js/chat/chat.js"></script>
 <script>
-	$(function(){
 		/* 웹소켓 채팅 */
 		alert("환영합니다!");
 		function getId(id) {
@@ -108,8 +110,7 @@ div {
 		var btnSend = getId('btnSend');
 		var talk = getId('contents');
 		var msg = getId('msg');
-
-		function() {
+		$(document).ready(function() {
 			server = new WebSocket("ws://" + location.host + "/chatting");
 
 			server.onmessage = function(msg) {
@@ -118,21 +119,19 @@ div {
 
 				console.log(data);
 
-				if (data.mid == mid.value) {
+				if (data.mid == "test"/* mid.value */) {
 					css = 'class=me';
 				} else {
 					css = 'class=other';
 				}
 
-				var item = `<div ${css} >
-				                <span><b>${data.mid}</b></span> [ ${data.date} ]<br/>
-		                      <span>${data.msg}</span>
-								</div>`;
+				var item = "<div "+css+"><span><b>"+data.mid+"</b></span>[ "+data.date+" ]<br/><span>"+data.msg+"</span></div>";
 
 				talk.innerHTML += item;
 				talk.scrollTop = talk.scrollHeight;//스크롤바 하단으로 이동
 			}
-		}
+		})
+		
 
 		msg.onkeyup = function(ev) {
 			if (ev.keyCode == 13) {
@@ -146,7 +145,7 @@ div {
 
 		function send() {
 			if (msg.value.trim() != '') {
-				data.mid = getId('mid').value;
+				data.mid = "test"/* getId('mid').value */;
 				data.msg = msg.value;
 				data.date = new Date().toLocaleString();
 				var temp = JSON.stringify(data);
@@ -155,7 +154,6 @@ div {
 			msg.value = '';
 
 		}
-	})
 
 </script>
 </html>

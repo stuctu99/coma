@@ -11,4 +11,6 @@ public interface BoardService {
 	List<Board> selectFreeAll();
 
 	List<Board> selectBoardAll(String boardType);
+	
+	Board selectBoardByNo(String boardType, int boardNo);
 }
