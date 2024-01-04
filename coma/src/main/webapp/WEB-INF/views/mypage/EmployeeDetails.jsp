@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<%-- <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> --%>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
@@ -66,6 +67,7 @@ text-align: left;
 #example-tel-input
 </style>
 <!-- TEAM COMA SPACE -->
+
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
@@ -113,7 +115,7 @@ text-align: left;
 				        <label for="example-id-input" class="form-control-label">아이디</label>
 				        <input class="form-control" type="text" value="${emp.empId}" id="example-id-input" readonly>
 				    </div>
-	   			    <div class="form-group col-6">
+	   			    <div class="form-group col-6">  			    
 				        <label for="example-name-input" class="form-control-label">이름</label>
 				        <input class="form-control" type="text" value="${emp.empName}" id="example-name-input" readonly>
 				    </div>
@@ -134,7 +136,7 @@ text-align: left;
 			    </div>
 			    <div class="form-group" > 
 				    <label for="address_kakao" class="form-control-label">주소 변경</label>
-					<input class="form-control" type="text" id="address_kakao" name="address" value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="width:500px;" >
+					<input class="form-control" type="text" id="address_kakao" name="address" value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="width:500px;" readonly>
 					<input class="form-control" type="text" name="address_detail" value= "${emp.empAddrDetail}" placeholder="상세주소" style="width:500px;" readonly>
 			    </div>
 			    <button type="submit" class="btn btn-primary" >회원정보 변경</button>

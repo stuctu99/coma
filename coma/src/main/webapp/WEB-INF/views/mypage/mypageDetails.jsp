@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
@@ -65,13 +70,22 @@ text-align: left;
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
-		<form>
+		 <form id="employeeForm" action="${path}/mypage/updatemypage" method="post"  enctype="multipart/form-data">
 		<div class="row">
 			<div class="col-6">
-			 <input type="file" id="accompany-file" name="accompany-file" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
+			 <input type="file" id="accompany-file" name="profile" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
 				<div class="file-btn" onclick="openFileDialog();">
-					<img src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"
-						alt="Profile Image" class="profile-image" style="width: 200px; height: 300px">
+					  <%-- 프로필 이미지 가 없으면 기본이미지 --%>
+					 <c:if test="${empty loginMember.profileImage}" >
+					 	<img src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"
+							alt="Profile Image" class="profile-image" style="width: 200px; height: 300px">
+					 	<!-- <img src="/resources/upload/profile/user.png" id="profileImage"> -->
+                     </c:if>
+					 <%-- 프로필 이미지 가 있으면 이미지 --%>
+                        <c:if test="${!empty loginMember.profileImage}" >
+                            <img src = "${emp.empPhoto}" id="profileImage">
+                      </c:if>
+					 
 						
 				</div>
 				<div>
@@ -99,43 +113,43 @@ text-align: left;
 				<div class="row">
 					<div class="form-group col-6" >
 				        <label for="example-id-input" class="form-control-label">아이디</label>
-				        <input class="form-control" type="text" value="${emp.empId}" id="example-id-input">
+				        <input class="form-control" type="text" value="${emp.empId}" id="example-id-input" name="empId" readonly>
 				    </div>
 	   			    <div class="form-group col-6">
 				        <label for="example-name-input" class="form-control-label">이름</label>
-				        <input class="form-control" type="text" value="${emp.empName}" id="example-name-input">
+				        <input class="form-control" type="text" value="${emp.empName}" id="example-name-input" name="empName">
 				    </div>
 				</div>
 				<div class="row">
 				    <div class="form-group col-6">
 				        <label for="example-password-input" class="form-control-label">New Password</label>
-				        <input class="form-control" type="password" value="password" id="example-password-input">
+				        <input class="form-control" type="password" placeholder="새 비밀번호"  id="example-password-input" name="empPw" >
 				    </div>
 				    <div class="form-group col-6">
 				        <label for="example-password2-input" class="form-control-label">Password</label>
-				        <input class="form-control" type="password" value="password" id="example-password2-input">
+				        <input class="form-control" type="password" placeholder="비밀번호 확인"  id="example-password2-input">
 				    </div>
 			    </div>
 			    <div class="row">
 				    <div class="form-group col-6" style="display:block">
 				        <label for="example-birthday-input" class="form-control-label">생일</label>
-				        <input class="form-control" type="date" value="${emp.empBrithDate}" id="example-birthday-input">
+				        <input class="form-control" type="date" value="${emp.empBrithDate}" id="example-birthday-input" name="empBrithDate">
 				    </div>
 					<div class="form-group col-6">
 				        <label for="example-gender-input" class="form-control-label">성별</label>
-				        <input class="form-control" type="text" value="${emp.empGender == 'M' ? '남' : '여'}" id="example-gender-input">
+				        <input class="form-control" type="text" value="${emp.empGender == 'M' ? '남' : '여'}" id="example-gender-input" name="empGender">
 				    </div>
 			    </div>
 			    <div class="form-group">
 			        <label for="example-tel-input" class="form-control-label">전화번호</label>
-			        <input type= "email" class="form-control" value= "${emp.empPhone}"  id="example-tel-input">
+			        <input type= "tel" class="form-control" value= "${emp.empPhone}"  id="example-tel-input" name="empPhone">
 			    </div>
 			    <div class="form-group" > 
 				    <label for="address_kakao" class="form-control-label">주소 변경</label>
 					<input class="form-control" type="text" id="address_kakao" name="address" value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="width:500px;">
 					<input class="form-control" type="text" name="address_detail" value= "${emp.empAddrDetail}" placeholder="상세주소" style="width:500px;">
 			    </div>
-			    <button type="submit" class="btn btn-primary" >회원정보 변경</button>
+			    <button type="button" class="btn btn-primary" onclick="submitEmployeeForm()">회원정보 변경</button>
 			</div>
 		</div>
 	</div>
@@ -179,6 +193,10 @@ $("#accompany-file").change(e => {
         }
     });
 });
+function submitEmployeeForm() {
+    var form = document.getElementById("employeeForm");
+    form.submit();
+}
 </script>
 
 <!-- TEAM COMA SPACE -->

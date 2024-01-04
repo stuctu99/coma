@@ -1,8 +1,8 @@
 package com.coma.mypage.model.service;
 
-import com.coma.model.dto.Emp;
+import java.util.Map;
 
 public interface MypageService {
-	int updatetEmp(Emp e);
-	Emp selelctDto(String id);
+	int updateEmp(Map<String, Object> emp);
 }
+

@@ -1,36 +1,26 @@
 package com.coma.mypage.model.service;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
-import com.coma.model.dto.Emp;
 import com.coma.mypage.model.dao.MypageDao;
-
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class MypageServiceImpl implements MypageService,CommonService {
+public class MypageServiceImpl implements MypageService {
 	private final MypageDao dao;
 	private final SqlSession session;
 	
 	  @Override
-	public int updatetEmp(Emp e) {
+	public int updateEmp(Map<String, Object> emp) {
 		// TODO Auto-generated method stub
-		return dao.updatetEmp(session , e);
+		return dao.updateEmp(session , emp);
 	}
 
-	@Override
-	public Emp selelctDto(String id) {
-		// TODO Auto-generated method stub
-		return dao.selelctDto(session, id);
-	}
 
-	@Override
-	public Emp selectEmpAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	  
 }
