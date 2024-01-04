@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class ApprovalController {
 
 	private final ApprovalService service;
-	private final Gson gson;
+
 	
 	@GetMapping("/approver")
 	@ResponseBody

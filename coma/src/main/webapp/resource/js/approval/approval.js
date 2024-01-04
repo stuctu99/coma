@@ -81,7 +81,8 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 					/* datalist 옵션태그 만들기 */
 				
 					const search_op = $('<option>');
-					search_op.val(e.empName+" "+e.dept.deptType+" "+e.job.jobType);
+					search_op.val(e.empId + " "+ e.empName+" "+e.dept.deptType+" "+e.job.jobType);
+					
 					
 					$("#search_list1").append(search_op);
 				});
@@ -93,11 +94,12 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 
 
 /* 결재자 추가, 삭제  */
-
+const app_all_arr = [];
+const app_id_arr = [];
 const app_name_arr = [];
 const app_dept_arr = [];
 const app_job_arr = [];
-const app_all_arr = [];
+
 
 const addDelAppr=(function(){
 	let appr_num=1;
@@ -107,15 +109,14 @@ const addDelAppr=(function(){
 				const emp = $('#search_app').val(); /*name + dept + job */
 	
 				const emp_arr = emp.split(" ");
-				
-				console.log("empArr : "+ emp_arr);
-				
-				const emp_name = emp_arr[0];
-				const emp_dept = emp_arr[1];
-				const emp_job = emp_arr[2];
+
+				const emp_id = emp_arr[0]
+				const emp_name = emp_arr[1];
+				const emp_dept = emp_arr[2];
+				const emp_job = emp_arr[3];
 			
 			/*적힌 값과 선택한 값 일치하는지 비교*/
-				if($('#search_app').val()==emp_name+" "+emp_dept+" "+emp_job){
+				if($('#search_app').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){
 					
 					/* 중복 결재자 있는지 확인 */
 					if(!app_all_arr.includes($('#search_app').val())){
@@ -128,15 +129,15 @@ const addDelAppr=(function(){
 							
 					
 							app_all_arr.push(emp);
+							app_id_arr.push(emp_id);
 							app_name_arr.push(emp_name);
 							app_dept_arr.push(emp_dept);
 							app_job_arr.push(emp_job);
 							
 							
-							btn_tag.text(emp_name);
+							btn_tag.text(emp_id +" "+ emp_name);
 							btn_tag.attr('data-content',emp_dept+" "+emp_job);
-							console.log("dept: " + emp_dept);
-							console.log("job: " + emp_job);
+
 							
 							$('.appr_container').append(btn_tag);
 							$('.appr_container').append(i_tag);
@@ -145,6 +146,8 @@ const addDelAppr=(function(){
 							 /* 부트스트랩은 js를 사용하여 동적으로 웹 페이지를 조작하고 업데이트하기때문에 
 				            동적으로 생성된 요소에 대해서는 초기화 작업이 필요.*/
 							appr_num++;
+							
+							$('#search_app').val("");
 						}else{
 							
 							alert("결재자는 3명까지 추가 가능합니다.");
@@ -189,7 +192,7 @@ const addDelAppr=(function(){
 						i--;
 					}
 				}
-			
+
 			/* 서버로 값 보낼때는 app_all_arr 파싱해서 보내기 */
 		
 			btn.remove();
@@ -231,7 +234,7 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 		
 				/*	console.log(e.dept.deptType + e.job.jobType);*/
 					const search_op = $('<option>');
-					search_op.val(e.empName+" "+e.dept.deptType+" "+ e.job.jobType);
+					search_op.val(e.empId+" "+e.empName+" "+e.dept.deptType+" "+ e.job.jobType);
 					 $('#search_list2').append(search_op);
 						
 
@@ -246,6 +249,7 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 
 /* 참조자 추가, 삭제  */
 
+const ref_id_arr = [];
 const ref_name_arr = [];
 const ref_dept_arr = [];
 const ref_job_arr = [];
@@ -260,12 +264,13 @@ const addDelref=(function(){
 	
 				const emp_arr = emp.split(" ");
 				
-				const emp_name = emp_arr[0];
-				const emp_dept = emp_arr[1];
-				const emp_job = emp_arr[2];
+				const emp_id = emp_arr[0]
+				const emp_name = emp_arr[1];
+				const emp_dept = emp_arr[2];
+				const emp_job = emp_arr[3];
 			
 			/*적힌 값과 선택한 값 일치하는지 비교*/
-				if($('#search_ref').val()==emp_name+" "+emp_dept+" "+emp_job){
+				if($('#search_ref').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){
 					
 					/* 중복 참조자 있는지 확인 */
 					if(!ref_all_arr.includes($('#search_ref').val())){
@@ -276,30 +281,34 @@ const addDelref=(function(){
 												+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
 							const ref_i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delref(this);">');
 							
+							console.log("idddd: "+emp_id);
 					
 							ref_all_arr.push(emp);
+							ref_id_arr.push(emp_id);
 							ref_name_arr.push(emp_name);
 							ref_dept_arr.push(emp_dept);
 							ref_job_arr.push(emp_job);
 							
+							console.log("iiiidddd arr: "+ ref_id_arr);
 							
-							ref_btn_tag.text(emp_name);
+							ref_btn_tag.text(emp_id+" "+emp_name);
 							ref_btn_tag.attr('data-content',emp_dept+" "+emp_job);
-							console.log("dept: " + emp_dept);
-							console.log("job: " + emp_job);
+
 							
 							$('.ref_container').append(ref_btn_tag);
 							$('.ref_container').append(ref_i_tag);
 						
 							ref_btn_tag.popover();
 							ref_num++;
+							
+							$('#search_ref').val("");
 						}else{
 							
 							alert("참조자는 3명까지 추가 가능합니다.");
 						}
 					
 					}else{
-						alert("이미 추가된 결재자입니다.");
+						alert("이미 추가된 참조자입니다.");
 					}
 				
 				
@@ -324,18 +333,17 @@ const addDelref=(function(){
 
 					
 				const del_ref_name = btn.text();
-				
+
 				const del_ref_type = btn.attr('data-content');
-				
-				console.log("before : "+ ref_all_arr);
+			
 				for(let i=0; i<ref_all_arr.length; i++){
 					if(ref_all_arr[i]===del_ref_name+" "+del_ref_type){
 						ref_all_arr.splice(i, 1);
 						i--;
 					}
 				}
-					console.log("after : "+ ref_all_arr);
-			
+				
+				
 			/* 서버로 값 보낼때는 ref_all_arr 파싱해서 보내기 */
 		
 			btn.remove();

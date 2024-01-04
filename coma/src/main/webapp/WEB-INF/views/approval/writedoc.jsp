@@ -96,7 +96,7 @@
 	          	<div class="col-3">
 	          	</div>
 	          	<div class="col-7 appr_container">
-	     
+	          		<input type="hidden" id="appr_id">
 	          	</div>
 	          	<div class="col-2">
 	          	</div>
