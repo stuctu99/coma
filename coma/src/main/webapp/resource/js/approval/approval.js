@@ -71,7 +71,6 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 		
 		if(requestFunc){
 			clearTimeout(requestFunc);
-			
 		}
 		requestFunc = setTimeout(()=>{
 			fetch("/approval/approver?data="+e.target.value)
@@ -81,12 +80,10 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 				JSON.parse(data).forEach(e=>{
 					/* datalist 옵션태그 만들기 */
 				
-					/*console.log(e.empName);*/
 					const search_op = $('<option>');
-					search_op.val(e.empName+" "+e.dept.deptType + e.job.jobType);
+					search_op.val(e.empName+" "+e.dept.deptType+" "+e.job.jobType);
 					
-					 $('#serach_list').append(search_op);
-					
+					$("#search_list1").append(search_op);
 				});
 			});
 		
@@ -94,38 +91,6 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 			}
 })());
 
-
-/* 참조자 검색을 위한 datalist */
-
-document.querySelector("#search_ref").addEventListener("keyup",(()=>{
-			
-	let requestFunc; //closure
-	return e=>{
-		
-		if(requestFunc){
-			clearTimeout(requestFunc);
-			
-		}
-		requestFunc = setTimeout(()=>{
-			fetch("/approval/approver?data="+e.target.value)
-			.then(result=>result.text())
-			.then(data=>{
-				$('option').remove();	
-				
-				JSON.parse(data).forEach(e=>{
-		
-				/*	console.log(e.dept.deptType + e.job.jobType);*/
-					const search_op = $('<option>');
-					search_op.val(e.empName+" "+e.dept.deptType+" "+ e.job.jobType);
-					 $('#serach_list2').append(search_op);
-						
-
-				});
-			});
-		
-	},800);
-			}
-})());
 
 /* 결재자 추가, 삭제  */
 
@@ -138,37 +103,53 @@ const addDelAppr=(function(){
 	
 	const addAppr=()=>{
 
-	console.log($('#app_'))
-		
-		if(appr_num<=3){
-			const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
-								+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
-			const i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delAppr(this);">');
+				const emp = $('#search_app').val(); /*name + dept + job */
+	
+				const emp_arr = emp.split(" ");
+				
+				console.log("empArr : "+ emp_arr);
+				
+				const emp_name = emp_arr[0];
+				const emp_dept = emp_arr[1];
+				const emp_job = emp_arr[2];
 			
-			const emp = $('#search_app').val(); /*name + dept + job */
-			const emp_arr = emp.split(" ");
+			/*적힌 값과 선택한 값 일치하는지 비교*/
+				if($('#search_app').val()==emp_name+" "+emp_dept+" "+emp_job){
+					if(appr_num<=3){
+						const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
+											+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
+						const i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delAppr(this);">');
+						
+				
+						
+						app_name_arr.push(emp_name);
+						app_dept_arr.push(emp_dept);
+						app_job_arr.push(emp_job);
+				
+						
+						btn_tag.text(emp_name);
+						btn_tag.attr('data-content',emp_dept+emp_job);
+						console.log("dept: " + emp_dept);
+						console.log("job: " + emp_job);
+						
+						$('.appr_container').append(btn_tag);
+						$('.appr_container').append(i_tag);
+					
+						btn_tag.popover();
+						 /* 부트스트랩은 js를 사용하여 동적으로 웹 페이지를 조작하고 업데이트하기때문에 
+			            동적으로 생성된 요소에 대해서는 초기화 작업이 필요.*/
+						appr_num++;
+					}else{
+						
+						alert("결재자는 3명까지 추가 가능합니다.");
+					}
+					
+				}else{
+					alert("없는 사원입니다.");
+				}
+				
 			
-			const emp_name = emp_arr[0];
-			const emp_dept = emp_arr[1];
-			const emp_job = emp_arr[2];
-		
 			
-			btn_tag.text(emp_name);
-			console.log(emp_dept+emp_job)
-			btn_tag.attr('data-content',emp_dept+emp_job);
-			/*btn_tag.setAttribute('data-content',emp_type);*/
-			
-			$('.appr_container').append(btn_tag);
-			$('.appr_container').append(i_tag);
-		
-			btn_tag.popover();
-			 /* 부트스트랩은 js를 사용하여 동적으로 웹 페이지를 조작하고 업데이트하기때문에 
-            동적으로 생성된 요소에 대해서는 초기화 작업이 필요.*/
-			appr_num++;
-		}else{
-			
-			alert("결재자는 3명까지 추가 가능합니다.");
-		}
 		
 	}; 
 	
@@ -199,39 +180,39 @@ const addDelAppr=(function(){
 
 const addAppr=addDelAppr[0];
 const delAppr=addDelAppr[1];
+
 	
-/*	$('.app_btn').on("click", function(){
+
+/* 참조자 검색을 위한 datalist */
+
+document.querySelector("#search_ref").addEventListener("keyup",(()=>{
+			
+	let requestFunc; //closure
+	return e=>{
 		
-		let app_num=1;
-		 
-		
-		const i_tag = $('<i class="ni ni-fat-remove">');
-		const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+app_num +'"'
-							+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
-		
-		const emp = $('#search_app').val();
-		const emp_arr = emp.split(" ");
-		
-		const emp_name = emp_arr[0];
-		const emp_type = emp_arr[1];
-	
-		
-		btn_tag.text(emp_name);
-		console.log(emp_type)
-		btn_tag.attr('data-content',emp_type);
-		btn_tag.setAttribute('data-content',emp_type);
-		
-		$('.appr_container').append(i_tag);
-		$('.appr_container').append(btn_tag);
-	
-		btn_tag.popover();
-	
-		app_num++;
-		
+		if(requestFunc){
+			clearTimeout(requestFunc);
+			
 		}
-	
-})();
-*/
-	
-	
+		requestFunc = setTimeout(()=>{
+			fetch("/approval/approver?data="+e.target.value)
+			.then(result=>result.text())
+			.then(data=>{
+				$('option').remove();	
+				
+				JSON.parse(data).forEach(e=>{
+		
+				/*	console.log(e.dept.deptType + e.job.jobType);*/
+					const search_op = $('<option>');
+					search_op.val(e.empName+" "+e.dept.deptType+" "+ e.job.jobType);
+					 $('#search_list2').append(search_op);
+						
+
+				});
+			});
+		
+	},800);
+			}
+})());
+
 	

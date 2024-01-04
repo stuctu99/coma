@@ -26,7 +26,7 @@
 
     <!-- TEAM COMA SPACE -->
 	<form action="${pageContext.request.contextPath }/approval" method="post"
-					enctype="multipart/form-data">
+					enctype="multipart/form-data" >
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
           <!-- coma content space -->
@@ -75,10 +75,10 @@
 	     		
 	            <div class="col-7">
 			            <div class="input-group mb-3">	  
-							  <input type="search" list="serach_list" id="search_app" class="form-control" 
+							  <input type="search" list="search_list1" id="search_app" class="form-control" 
 							   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
-							   aria-describedby="button-addon1">
-							 		<datalist id="serach_list">
+							   aria-describedby="button-addon1" autocomplete="off">
+							 		<datalist id="search_list1">
 							 		</datalist> 	 		
 							  <div class="input-group-prepend">
 							   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" onclick="addAppr();">추가하기</button>
@@ -107,10 +107,10 @@
 	     		</div>
 		        <div class="col-7">
 		           		<div class="input-group mb-3">	  
-							   <input type="search" list="serach_list2" id="search_ref" class="form-control" 
+							   <input type="search" list="search_list2" id="search_ref" class="form-control" 
 							   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
 							   aria-describedby="button-addon1">
-							 		<datalist id="serach_list2">
+							 		<datalist id="search_list2">
 							 		</datalist> 	 	
 							  <div class="input-group-prepend">
 							    <button class="btn btn-outline-primary ref_btn" type="button" id="button-addon1">추가
