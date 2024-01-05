@@ -25,7 +25,7 @@
 
 
     <!-- TEAM COMA SPACE -->
-	<form action="${pageContext.request.contextPath }/approval" method="post"
+	<form action="${pageContext.request.contextPath }/approval/insertdoc" method="post"
 					enctype="multipart/form-data" >
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
@@ -40,14 +40,14 @@
 	       				문서 종류
 	       			</div>
 		            <div class="col-7">
-		            	 <select class="form-control form-control-sm" onchange="docType(this.value);">
-						  <option value="" selected disabled hidden>문서 종류를 선택하세요.</option>
-						  <option value="leave">휴가신청서</option>
-						  <option value="cash">지출결의서</option>
-						  <option value="req">품의서</option>
-						  <option value="etc">기타</option>
+		            	 <select class="form-control form-control-sm" onchange="fn_docType(this.value);">
+							  <option value="" selected disabled hidden>문서 종류를 선택하세요.</option>
+							  <option value="leave">휴가신청서</option>
+							  <option value="cash">지출결의서</option>
+							  <option value="req">품의서</option>
+							  <option value="etc">기타</option>
 						</select> 
-					
+						<input type="hidden" id="docType" name="docType">
 		            </div>
 		            <div class="col-2">
 		            </div>
@@ -296,7 +296,7 @@
    		</div>
 		<div class="col-7">
 			    <div class="custom-file">
-			        <input type="file" name="upfile" class="custom-file-input" id="customFileLang" lang="en">
+			        <input type="file" name="upFile" class="custom-file-input" id="customFileLang" lang="en">
 			        <label class="custom-file-label" for="customFileLang"></label>
 			    </div>
 		</div>
@@ -308,7 +308,7 @@
     <div class="row btn_container">
     	<div class="col-11"></div>
     	<div class="col-1">
-    			<button type="button" class="btn btn-primary btn-lg">작성 완료</button>
+    			<input type="submit" class="btn btn-primary btn-lg">작성 완료</button>
     	</div>
     </div>      
           <!-- coma content space -->
