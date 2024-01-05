@@ -19,6 +19,6 @@ public class ChattingRoom {
 	private String roomPasswordFlag;
 	private String roomPassword;
 	private Date roomCreateDate;
-	private ChattingRoomType roomType;
+	private ChattingRoomType roomTypeObj;
 	/* private List<ChattingJoin> joinMember; */
 }
