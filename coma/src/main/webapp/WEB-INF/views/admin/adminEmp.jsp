@@ -91,8 +91,8 @@
 		            <tr>
 		                <th>사원 아이디</th>
 		                <th>사원 이름</th>
-		                <th>소속 부서</th>
 		                <th>직책</th>
+		                <th>소속 부서</th>
 		                <th>근태상태</th>
 		                <th></th>
 		            </tr>
@@ -102,9 +102,9 @@
 		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
 		        		<td><c:out value="${e.empId }"/></td>
-		        		<td><a href="#"><c:out value="${e.empName }"/></a></td>
- 		        		<td><c:out value="${e.dept.deptType }"/></td>
+		        		<td><a href="${path }/mypage/EmployeeDetails?empName=${e.empName }"><c:out value="${e.empName }"/></a></td>
 		        		<td><c:out value="${e.job.jobType }"/></td>
+ 		        		<td><c:out value="${e.dept.deptType }"/></td>
 		        		<td><a href="#"><c:out value="${e.empCurrent }"/></a></td>
 		        		<td>
 			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.empId }');">삭제</button>
@@ -120,14 +120,16 @@
 </div>
 <script>
 //chart.js
-const chartData=${chartEmpData}
-const chartObject=JSON.stringify(chartData);
-const chartEmpData=JSON.parse(chartObject);
+const chartData=${chartEmpData}	//응답받은 차트데이터 변수에 저장
+const chartObject=JSON.stringify(chartData);	//JSON형식으로 데이터 형변환
+const chartEmpData=JSON.parse(chartObject);	//JSON 형식의 문자열을 다시 JavaScript 객체로 변환
 
+//JSON형식으로 변환한 값을 저장하기 배열 생성
 var labelList = new Array();
 var valueList = new Array();
 var colorList = new Array();
 
+//JSON형식으로 변환한 chartEmpData 데이터 값만큼 반복문 실행하면 배열 변수에 각각의 값을 대입 
 for(let i=0;i<chartEmpData.length;i++){
 	let e=chartEmpData[i];
 	labelList.push(e.DEPT_TYPE);
@@ -135,7 +137,7 @@ for(let i=0;i<chartEmpData.length;i++){
 	colorList.push(colorize());
 
 }
-
+//차트 색상 랜덤 설정
 function colorize() {
 	var r = Math.floor(Math.random()*200);
 	var g = Math.floor(Math.random()*200);
@@ -206,10 +208,10 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 			$td2.appendChild($a);
 			
 			const $td3=document.createElement('td');
-			$td3.innerText=e.dept.deptType;
+			$td3.innerText=e.job.jobType;
 			
 			const $td4=document.createElement('td');
-			$td4.innerText=e.job.jobType;
+			$td4.innerText=e.dept.deptType;
 			
 			const $td5=document.createElement('td');
 			$td5.innerText=e.empCurrent;
@@ -241,10 +243,14 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 //신입사원 아이디 생성 및 배포
 function fn_addEmp(){
 	const empName=document.getElementById("empName").value;
+	location.replace("${path}/admin/insertEmp?empName="+empName);
+	/* const empName=document.getElementById("empName").value;
 	fetch("${path}/admin/insertEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
-		body:JSON.stringify({empName:empName})
+		body:JSON.stringify({
+			empName:empName
+			})
 	})
 	.then(response=>{
 		console.log(response);
@@ -297,12 +303,13 @@ function fn_addEmp(){
 		})
 	}).catch(e=>{
 		alert(e);
-	});
+	}); */
 }
 
 //사원 퇴사후 아이디 비활성화
 function fn_deleteEmp(e){
-	fetch("${path}/admin/deleteEmp",{
+	location.replace("${path}/admin/deleteEmp?empId="+e);
+	/* fetch("${path}/admin/deleteEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify({
@@ -318,6 +325,7 @@ function fn_deleteEmp(e){
 	}).then(result=>{
 		console.log(result);
 		const $tbody=document.getElementById("empTable");
+		const $div=document.getElementById("pageBar");
 		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
 		$trList.forEach($tr => {
 		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
@@ -359,9 +367,11 @@ function fn_deleteEmp(e){
 			$tr.appendChild($td6);
 			$tbody.appendChild($tr);
 		})
+		$div.innerText="";
+		$div.innerHTML=result.pageBar;
 	}).catch(e=>{
 		alert(e);
-	});
+	}); */
 
 }
 

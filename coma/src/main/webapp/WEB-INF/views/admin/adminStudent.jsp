@@ -107,14 +107,16 @@
 </div>
 <script>
 //chart.js 
-const chartData=${chartStudentData}
-const chartObject=JSON.stringify(chartData);
-const chartStudentData=JSON.parse(chartObject);
+const chartData=${chartStudentData}	//응답받은 차트데이터 변수에 저장
+const chartObject=JSON.stringify(chartData);	//JSON형식으로 데이터 형변환
+const chartStudentData=JSON.parse(chartObject);	//JSON 형식의 문자열을 다시 JavaScript 객체로 변환
 
+//JSON형식으로 변환한 값을 저장하기 배열 생성
 var labelList = new Array();
 var valueList = new Array();
 var colorList = new Array();
 
+//JSON형식으로 변환한 chartEmpData 데이터 값만큼 반복문 실행하면 배열 변수에 각각의 값을 대입 
 for(let i=0;i<chartStudentData.length;i++){
 	let e=chartStudentData[i];
 	labelList.push(e.EMP_NAME);
@@ -122,7 +124,7 @@ for(let i=0;i<chartStudentData.length;i++){
 	colorList.push(colorize());
 
 }
-
+//차트 색상 랜덤 설정
 function colorize() {
 	var r = Math.floor(Math.random()*200);
 	var g = Math.floor(Math.random()*200);
