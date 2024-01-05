@@ -35,6 +35,7 @@ build/
 Scripts/
 .dbeaver/
 src/main/resources/
-/log/
-/logs/
+log/
+logs/
 .DS_Store
+upload/
