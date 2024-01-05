@@ -24,76 +24,76 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/messenger")
 @RequiredArgsConstructor
 public class MessengerController {
-   private final MessengerService service;
+	private final MessengerService service;
 
-   @GetMapping
-   public String MessengerOpen(Model model) {
-      List<Emp> emp = service.selectEmpListAll();
-      List<Dept> dept = service.selectDept();
-      model.addAttribute("emp", emp);
-      model.addAttribute("dept", dept);
-      for (Emp e : emp) {
-         System.out.println(e);
-      }
-      System.out.println(dept);
-      return "chat/chat";
-   }
+	@GetMapping
+	public String MessengerOpen(Model model) {
+		List<Emp> emp = service.selectEmpListAll();
+		List<Dept> dept = service.selectDept();
+		model.addAttribute("emp", emp);
+		model.addAttribute("dept", dept);
+		for (Emp e : emp) {
+			System.out.println(e);
+		}
+		System.out.println(dept);
+		return "chat/chat";
+	}
 
-   @GetMapping("/roomlist")
-   @ResponseBody
-   public List<ChattingRoom> chatRoomList() {
-      return service.selectRoomList();
-   }
+	@GetMapping("/roomlist")
+	@ResponseBody
+	public List<ChattingRoom> chatRoomList() {
+		return service.selectRoomList();
+	}
 
-   @PostMapping("/createRoom")
-   @ResponseBody
-   public Map<String, String> createRoom(@RequestBody Map<String, String> roomInfo) {
-      ChattingRoom room = new ChattingRoom();
-      ChattingRoomType roomType = new ChattingRoomType();
-      
-      room.setRoomName(roomInfo.get("roomName"));
-      room.setRoomPassword(roomInfo.get("roomPassword"));
-      room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
+	@PostMapping("/createRoom")
+	@ResponseBody
+	public Map<String, String> createRoom(@RequestBody Map<String, String> roomInfo) {
+		ChattingRoom room = new ChattingRoom();
+		ChattingRoomType roomType = new ChattingRoomType();
+		
+		room.setRoomName(roomInfo.get("roomName"));
+		room.setRoomPassword(roomInfo.get("roomPassword"));
+		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
 
-      roomType.setRoomType(roomInfo.get("roomType"));
-      room.setRoomTypeObj(roomType);
-      
-      System.out.println();
-      
-      if (room.getRoomPasswordFlag() != null) {
-         room.setRoomPasswordFlag("Y");
-      } else {
-         room.setRoomPasswordFlag("N");
-      }
+		roomType.setRoomType(roomInfo.get("roomType"));
+		room.setRoomTypeObj(roomType);
+		
+		System.out.println();
+		
+		if (room.getRoomPasswordFlag() != null) {
+			room.setRoomPasswordFlag("Y");
+		} else {
+			room.setRoomPasswordFlag("N");
+		}
 
-      System.out.println(roomInfo);
-      int result = service.insertChattingRoom(room);
-      Map<String, String> data = new HashMap<>();
-      data.put("result", "success");
+		System.out.println(roomInfo);
+		int result = service.insertChattingRoom(room);
+		Map<String, String> data = new HashMap<>();
+		data.put("result", "success");
 
-      return data;
-   }
+		return data;
+	}
 
-   @PostMapping("/passwordCheck")
-   @ResponseBody
-   public Map<String, Object> checkPassword(@RequestBody Map<String, String> roomInfo) {
-      Map<String, Object> data = new HashMap<String, Object>();
-      System.out.println(roomInfo);
-      ChattingRoom room = service.passwordCheck(roomInfo);
+	@PostMapping("/passwordCheck")
+	@ResponseBody
+	public Map<String, Object> checkPassword(@RequestBody Map<String, String> roomInfo) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		System.out.println(roomInfo);
+		ChattingRoom room = service.passwordCheck(roomInfo);
 
-      Boolean flag = false;
+		Boolean flag = false;
 
-      if (room != null) {
-         flag = true;
-         data.put("flag", flag);
-         data.put("room", room);
-      } else {
-         data.put("flag", flag);
-         data.put("msg", "비밀번호가 틀렸습니다.");
-      }
-      System.out.println(room);
+		if (room != null) {
+			flag = true;
+			data.put("flag", flag);
+			data.put("room", room);
+		} else {
+			data.put("flag", flag);
+			data.put("msg", "비밀번호가 틀렸습니다.");
+		}
+		System.out.println(room);
 
-      return data;
-   }
+		return data;
+	}
 
 }

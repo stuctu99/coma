@@ -10,11 +10,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.firewall.DefaultHttpFirewall;
 import org.springframework.security.web.firewall.HttpFirewall;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfing {
-	
+
 	@Autowired
 	private DBConnectionProvider dbpv;
 	
@@ -38,9 +37,5 @@ public class SecurityConfing {
 				.authenticationProvider(dbpv)
 				.build();
 				
-		}
 	}
-
-
-
-
+}

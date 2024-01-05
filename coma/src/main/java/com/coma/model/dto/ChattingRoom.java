@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ChattingRoom {
-   private String roomNo;
-   private String roomName;
-   /* private String roomType; */
-   private String roomPasswordFlag;
-   private String roomPassword;
-   private Date roomCreateDate;
-   private ChattingRoomType roomTypeObj;
-   /* private List<ChattingJoin> joinMember; */
+	private String roomNo;
+	private String roomName;
+	/* private String roomType; */
+	private String roomPasswordFlag;
+	private String roomPassword;
+	private Date roomCreateDate;
+	private ChattingRoomType roomTypeObj;
+	/* private List<ChattingJoin> joinMember; */
 }

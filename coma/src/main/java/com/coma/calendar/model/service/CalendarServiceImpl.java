@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.coma.calendar.model.dao.CalendarDao;
 import com.coma.model.dto.Calendar;
-import com.coma.model.dto.Schedule;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,11 +24,7 @@ public class CalendarServiceImpl implements CalendarService {
 		return dao.selectCalendar(session);
 	}
 
-	@Override
-	public List<Schedule> scheduleAll() {
-		// TODO Auto-generated method stub
-		return dao.scheduleAll(session);
-	}
+
 	
 
 }

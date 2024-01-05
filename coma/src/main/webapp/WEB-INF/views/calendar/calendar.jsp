@@ -84,7 +84,7 @@
   background-position: right center;
   background-size: 10px;
 } 
-#schContent {
+#calContent {
   width: 90%;
   height: 100px;
   padding: 10px;
@@ -118,9 +118,7 @@ input[type="datetime-local"] {
 
 <head>
     <meta charset='utf-8' />
-    <!-- 
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.8/index.global.min.js'></script>
-    -->
+ 
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 </head>
 
@@ -132,23 +130,21 @@ input[type="datetime-local"] {
             <h1>일정 상세페이지</h1>
             <div class="colflex">
               <div>
-                <span>제목</span> <input type="text" id="schTitle" value="">
+                <span>제목</span> <input type="text" id="calTitle" value="">
               </div>
               <div>
-                <span>시작시간</span> <input type="datetime-local" id="schStart" value="" />
+                <span>시작시간</span> <input type="datetime-local" id="calStart" value="" />
               </div>
               <div>
-                <span>종료시간</span> <input type="datetime-local" id="schEnd" value=""/>
+                <span>종료시간</span> <input type="datetime-local" id="calEnd" value=""/>
               </div>
               <div>
-                <h3>내용</h3> <textarea id="schContent"> </textarea>
+                <h3>내용</h3> <textarea id="calContent"> </textarea>
               </div>
-              <div>
-                <span>하루종일</span> <input type="checkbox" id="allDay">
-              </div>
+              
               <div>
               <span>일정색상</span>
-               <select id="schBColor">
+               <select id="calBColor">
                   <option value="red">빨강색</option>
                   <option value="orange">주황색</option>
                   <option value="yellow">노랑색</option>
@@ -174,12 +170,11 @@ input[type="datetime-local"] {
 
         const Modal = document.querySelector("#Modal");
         const calendarEl = document.querySelector('#calendar');
-        const schStart = document.querySelector("#schStart");
-        const schEnd = document.querySelector("#schEnd");
-        const schTitle = document.querySelector("#schTitle");
-        const schAllday = document.querySelector("#allDay");
-        const schBColor = document.querySelector("#schBColor");
-        const schContent = document.querySelector("#schContent");
+        const calStart = document.querySelector("#calStart");
+        const calEnd = document.querySelector("#calEnd");
+        const calTitle = document.querySelector("#calTitle");
+        const calBColor = document.querySelector("#calBColor");
+        const calContent = document.querySelector("#calContent");
 
 
         //캘린더 헤더 옵션
@@ -229,13 +224,13 @@ input[type="datetime-local"] {
             	        var events = [];
             	        $.each(data, function(index, event) {
             	            events.push({
-            	                title: event.schTitle,
-            	                start: event.schStart,
-            	                end: event.schEnd
+            	                title: event.calTitle,
+            	                start: event.calStart,
+            	                end: event.calEnd
             	            });
             	        });
             	  		console.log(data);
-           
+           		
             	  		
             	        return events;
             	    },
@@ -282,18 +277,18 @@ input[type="datetime-local"] {
         calendar.on("dateClick", info => {
         	console.log(info);
         	console.log("dateClick:", info.dateStr);
-        	schStart.value=info.dateStr+" 09:00:00";
-        	schEnd.value=info.dateStr+" 18:00:00";
-        	$("#schTitle").val($(".fc-event-title").text());
+        	calStart.value=info.dateStr+" 09:00:00";
+        	calEnd.value=info.dateStr+" 18:00:00";
+        	$("#calTitle").val($(".fc-event-title").text());
             
   		}); 
         calendar.on("select", info => {
             console.log("select:", info);          
-            schStart.value=info.startStr+" 09:00:00";
+            calStart.value=info.startStr+" 09:00:00";
            var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
            var dateString = endData.toISOString();
            dateString = dateString.split("T")[0] + " 18:00:00";
-          schEnd.value=  dateString;
+           calEnd.value=  dateString;
   
             Modal.style.display = "block";         
         });
@@ -301,20 +296,20 @@ input[type="datetime-local"] {
         
         // 일정(이벤트) 추가하기
         function fCalAdd() {
-            if (!schTitle.value) {
+            if (!calTitle.value) {
                 alert("제목을 입력해주세요")
-                schTitle.focus();
+                calTitle.focus();
                 return;
                 
             }
-            let bColor = schBColor.value;
+            let bColor = calBColor.value;
 
             let event = {
-                start: schStart.value,
-                end: schEnd.value,
-                title: schTitle.value,
+                start: calStart.value,
+                end: calEnd.value,
+                title: calTitle.value,
 
-                allDay: schAllday.checked,
+       
                 backgroundColor: bColor
 			// 아마 이부분에 ajax가 들어가면 될거같아요
             };
