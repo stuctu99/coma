@@ -104,7 +104,7 @@ const app_job_arr = [];
 
 
 const addDelAppr=(function(){
-	let appr_num=1;
+	let appr_num=1; /* n번째 결재자. id, name 뒤에 붙음 */
 	
 	const addAppr=()=>{
 
@@ -126,7 +126,8 @@ const addDelAppr=(function(){
 						/* 추가한 결재자 3명 이하인지 확인 */
 						if(appr_num<=3){
 							const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
-												+ 'data-container="body" data-toggle="popover" data-color="secondary" data-placement="top">');
+												+ 'data-container="body" data-toggle="popover" data-color="secondary"'
+												+ 'name="app_fix'+appr_num +'"'+'data-placement="top">');
 							const i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delAppr(this);">');
 							
 					
@@ -188,21 +189,28 @@ const addDelAppr=(function(){
 				
 				const del_type = btn.attr('data-content');
 				
-				for(let i=0; i<app_all_arr.length; i++){
+				let i;
+				
+				for(i=0; i<app_all_arr.length; i++){
 					if(app_all_arr[i]===del_name+" "+del_type){
 						app_all_arr.splice(i, 1);
 						i--;
 					}
 				}
+/*				
+				if($('#app_fix1')){
+					
+					
+					
+				}else if($('#app_'))*/
 
 			/* 서버로 값 보낼때는 app_all_arr 파싱해서 보내기 */
 		
 			btn.remove();
 			$(element).remove();
 		
-		
-			
 			appr_num--;
+			
 		}
 		
 	}
