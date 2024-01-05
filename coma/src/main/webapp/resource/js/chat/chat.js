@@ -78,7 +78,7 @@ $(".chatting-list-btn").click(function() {
 				
 			}*/
 			
-			$strong_type.text(d.roomType.roomTypeName);
+			$strong_type.text(d.roomTypeObj.roomTypeName);
 			$strong_title.text(d.roomName);
 			$div_type.append($strong_type);
 			$div_title.append($strong_title);
@@ -100,7 +100,7 @@ $(".chatting-list-btn").click(function() {
 
 /* 방생성 입력 창 패스워드 활성화 */
 
-$("roomPasswordFlag").click(function() {
+$("#roomPasswordFlag").click(function() {
 	console.log(this);
 	if ($("#roomPasswordFlag").is(":checked")) {
 		console.log("체크");
@@ -140,9 +140,10 @@ const createRoom = () => {
 	})
 	.then(data=>{
 		if(data.result=="success"){
-			alert("방 생성 성공!");
+			console.log("방생성 성공");
+			location.href="/messenger";
 		}else{
-			alert("방 생성 실패!");
+			console.log("방생성 실패");
 		}
 	})
 	

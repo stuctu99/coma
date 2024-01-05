@@ -90,7 +90,7 @@ div {
 						</c:if>
 					</c:forEach>
 				</c:forEach>
-			</c:if>
+			</c:if>f
 			<!---------------------------------------------------->
 		</div>
 		<!-- <button id="create-room" class="btn btn-outline-primary">+</button> -->
@@ -149,7 +149,7 @@ div {
 									<input type="text" name="roomName" id="roomName"/>
 								</div>
 								<div class="col-6">
-									<select name="roomType">
+									<select name="roomType" id="roomType">
 										<option value="A">공통</option>
 										<option value="D1">관리부</option>
 										<option value="D2">행정부</option>
