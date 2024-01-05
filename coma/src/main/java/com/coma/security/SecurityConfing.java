@@ -18,16 +18,6 @@ public class SecurityConfing {
 	@Autowired
 	private DBConnectionProvider dbpv;
 	
-	   public void configure(WebSecurity web) throws Exception{
-		      web.httpFirewall(defaultHttpFirewall());
-		   }
-		   
-		   @Bean
-		   public HttpFirewall defaultHttpFirewall() {
-		      return new DefaultHttpFirewall();
-		   }
-	
-	
 	@Bean
 	SecurityFilterChain authenticationPath(HttpSecurity http) throws Exception {
 		return http

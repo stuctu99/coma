@@ -24,16 +24,14 @@ public class MypageController {
 	
 	//나의 상세보기로 화면 전환하는 메소드
 	@GetMapping("/mypageDetails")
-	public void test() {
-	}
+	public void test() { }
 	
 	//상세보기 수정 메소드
 	@PostMapping("/updatemypage")
 	public String  updateEmployee(@RequestParam Map<String, Object> emp
 								//@RequestParam("upFile") MultipartFile upFile,
 								//HttpSession session
-								) {
-		
+								) {	  				
 		// 프로필 사진 업로드하기 
 //		String path = session.getServletContext().getRealPath("/resources/upload/profile");
 //		//폴더가 없으면 만들어라! 
@@ -53,7 +51,9 @@ public class MypageController {
 //			}
 //		}
 		
-		
+		String newPassword = (String) emp.get("empPw");
+	    String newEncryptedPassword = passwordEncoder.encode(newPassword);
+	    emp.put("empPw", newEncryptedPassword);
 		System.out.println(emp);
 		int result = service.updateEmp(emp);
 		System.out.println(result);
