@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 	private final AdminService service;
 	private final PageFactory pageFactory;
-	//private final BCryptPasswordEncoder passwordEncoder;
+	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	//사원관련 컨트롤러
 	@GetMapping("/adminEmp")
@@ -66,8 +68,8 @@ public class AdminController {
 	//신규 사원 아이디 생성
 	@PostMapping("/insertEmp")
 	public @ResponseBody List<Emp> insertEmp(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, @RequestBody HashMap<String, Object> empName) {
-		//String password=passwordEncoder.encode("1234");
-		//empName.put("password", password);
+		String password=passwordEncoder.encode("1234");
+		empName.put("password", password);
 		System.out.println(empName);
 		service.insertEmp(empName);
 		List<Emp> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage));

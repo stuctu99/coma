@@ -22,7 +22,7 @@
 			<div style="text-align:center;">
 				<h1>사원 관리 페이지</h1>
 			</div>
-			<div style="width:100%; height:750px;">
+			<div style="width:100%; height:100%;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="myChart"></canvas>
 				<div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
