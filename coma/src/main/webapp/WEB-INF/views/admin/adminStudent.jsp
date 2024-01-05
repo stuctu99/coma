@@ -28,7 +28,7 @@
 					</select>
 				</div> -->
 			</div>
-			<div style="width:100%; height:550px;">
+			<div style="width:100%; height:350px;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="stuCurentChart"></canvas>
 				<%-- <div class="row">
@@ -46,14 +46,15 @@
 					</div>
 				</div> --%>
 			</div>
-		</div>
-		<div class="col-5">
 			<div style="width:100%; height:350px;">
 				<canvas id="stuComChart"></canvas>
 			</div>
 			<div style="width:100%; height:350px;">
 				<canvas id="stuEmpChart"></canvas>
 			</div>
+		</div>
+		<div class="col-5">
+
 		</div>
 		<div class="col-1">
 			<%-- <div style="text-align:center;">
@@ -231,16 +232,6 @@ const myChart2 = new Chart(ctx2, {
             data: [10,20,30],
             backgroundColor: colorList
         }]
-    },
-    options: {
-        scales: {
-        	yAxes : [ {
-				ticks : {
-					beginAtZero : true,
-					//stepSize: 0.5
-				}
-			} ]
-        }
     }
 });
 
@@ -254,16 +245,6 @@ const myChart3 = new Chart(ctx3, {
             data: [10,20,30],
             backgroundColor: colorList
         }]
-    },
-    options: {
-        scales: {
-        	yAxes : [ {
-				ticks : {
-					beginAtZero : true,
-					//stepSize: 0.5
-				}
-			} ]
-        }
     }
 });
 
