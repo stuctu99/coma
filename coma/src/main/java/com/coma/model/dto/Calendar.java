@@ -1,5 +1,6 @@
 package com.coma.model.dto;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +14,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Calendar {
 
-	private String calNo; 
-	private String empId; //test이후에 수정예정
-	private List<Schedule> schedule;
+	private String calNo;
+	private String calTitle;
+	private String calContent;
+	private Timestamp calStart;
+	private Timestamp calEnd;
+	private String calType;
+	private String calColor;
+	private List<Emp> empId; //test이후에 수정예정
+
 }
