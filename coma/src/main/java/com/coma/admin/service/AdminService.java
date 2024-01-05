@@ -41,8 +41,8 @@ public class AdminService {
 		return dao.countEmpByDept(session);
 	}
 	
-	public int insertEmp(HashMap<String, Object> empName) {
-		return dao.insertEmp(session, empName);
+	public int insertEmp(HashMap<String, Object> empData) {
+		return dao.insertEmp(session, empData);
 	}
 	
 	public int deleteEmp(@RequestBody HashMap<String, Object> empId) {
@@ -76,6 +76,11 @@ public class AdminService {
 	
 	public List<Map> studentCountByEmpId(){
 		return dao.studentCountByEmpId(session);
+	}
+	
+	//학생 수료 자동화 기능
+	public int updateStudentByCom() {
+		return dao.updateStudentByCom(session);
 	}
 	
 	//chart.js 메소드

@@ -25,17 +25,31 @@
 			<div style="width:100%; height:100%;">
 				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="myChart"></canvas>
-				<div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+				<%-- <div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
 					<label for="example-text-input" class="form-control-label"><c:out value="총 사원 수"/></label>
 					<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; width:200px;" value="${totalEmp }명" readonly>
-				</div>
+				</div> --%>
 			</div>
 		</div>
 		<div class="col-3">
 			<div style="text-align:center;">
 				<h1>부서별 사원 명수</h1>
+				<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
+					<thead class="list">
+						<tr>
+							<th>총 사원 수</th>
+							<td><c:out value="${totalEmp }"/></td>
+						</tr>
+						<c:forEach var="ec" items="${empCount }">
+							<tr>
+								<th><c:out value="${ec.DEPT_TYPE }"/></th>
+								<td><c:out value="${ec.DEPTCOUNT }"/></td>
+							</tr>
+						</c:forEach>
+					</thead>
+				</table>
 			</div>
-			<div class="row">
+			<%-- <div class="row">
 			<c:forEach var="ec" items="${empCount }">
 				<div class="col-6" style="text-align: center;">
 					<div>
@@ -44,7 +58,7 @@
 					</div>
 				</div>
 			</c:forEach>
-			</div>
+			</div> --%>
 		</div>
 		<div class="col-1"></div>
 	</div>
@@ -200,6 +214,7 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 			const $tr=document.createElement('tr');
 			const $td1=document.createElement('td');
 			const $a=document.createElement('a');
+			const $a2=document.createElement('a');
 			$td1.innerText=e.empId;
 			
 			const $td2=document.createElement('td');
@@ -214,7 +229,9 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 			$td4.innerText=e.dept.deptType;
 			
 			const $td5=document.createElement('td');
-			$td5.innerText=e.empCurrent;
+			$a2.setAttribute('href','#');
+			$a2.innerText=e.empCurrent;
+			$td5.appendChild($a2);
 			
 			const $td6 = document.createElement('td');
 			const $button = document.createElement('button');
