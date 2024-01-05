@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class MypageController {
 	@Autowired
 	private final MypageService service;
+	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	//나의 상세보기로 화면 전환하는 메소드
 	@GetMapping("/mypageDetails")
