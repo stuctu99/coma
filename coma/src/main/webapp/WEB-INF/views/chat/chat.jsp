@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
@@ -12,26 +12,26 @@
 <link href="${path }/resource/css/chat/chat.css" rel="stylesheet">
 <!-- Latest compiled and minified CSS -->
 <!-- <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+   rel="stylesheet">
 <script src="/resource/js/jquery-3.7.0.js"></script>
 Latest compiled JavaScript
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
 <link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
-	rel="stylesheet">
+   href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+   rel="stylesheet">
 <!-- Icons -->
 <link href="${path }/resource/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
 <link
-	href="${path }/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"
-	rel="stylesheet" />
+   href="${path }/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"
+   rel="stylesheet" />
 <!-- CSS Files -->
 <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 <style>
 div {
-	/* border: 1px solid red; */
-	
+   /* border: 1px solid red; */
+   
 }
 </style>
 </head>
@@ -95,32 +95,29 @@ div {
 		</div>
 		<!-- <button id="create-room" class="btn btn-outline-primary">+</button> -->
 		<!-- ----------------------------------------------------------- -->
-
-		<div class="container chatting-list" style="display: none">
-			<div class="row">
-				<div class="col-12">
-					<h2>채팅 리스트</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-2" style="display:flex; justify-content:center; align-items:center;">
-					<h3>유형</h3>
-				</div>
-				<div class="col-8">
-					<strong></strong>
-				</div>
-				<div class="col-2">
-					<input type="hidden" id="pathValue" value="${path }"/>
-					<button id="create-room" type="button" class="btn btn-primary" data-toggle="modal"
-						data-target="#exampleModal">방생성</button>
-				</div>
-			</div>
-			<div class="container content">
-			
-			</div>
-		</div>
-
-
+      <div class="container chatting-list" style="display: none">
+         <div class="row">
+            <div class="col-12">
+               <h2>채팅 리스트</h2>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-2" style="display:flex; justify-content:center; align-items:center;">
+               <h3>유형</h3>
+            </div>
+            <div class="col-8">
+               <strong></strong>
+            </div>
+            <div class="col-2">
+               <input type="hidden" id="pathValue" value="${path }"/>
+               <button id="create-room" type="button" class="btn btn-primary" data-toggle="modal"
+                  data-target="#exampleModal">방생성</button>
+            </div>
+         </div>
+         <div class="container content">
+         
+         </div>
+      </div>
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -188,7 +185,6 @@ div {
 				</div>
 			</div>
 		</div>
-
 		<!-- <div class="row">
 			<input type="text" id="mid"/>
 			<button type="button" id="btnLogin" class="btn btn-primary">로그인</button>
@@ -251,7 +247,7 @@ div {
 <script src="https://kit.fontawesome.com/787f35b479.js" crossorigin="anonymous"></script>
 <script src="${path }/resource/js/plugins/jquery/dist/jquery.min.js"></script>
 <script
-	src="${path }/resource/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   src="${path }/resource/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!--   Optional JS   -->
 <script src="${path }/resource/js/plugins/chart.js/dist/Chart.min.js"></script>
 <script src="${path }/resource/js/plugins/chart.js/dist/Chart.extension.js"></script>
