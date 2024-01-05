@@ -123,11 +123,11 @@ text-align: left;
 				<div class="row">
 				    <div class="form-group col-6">
 				        <label for="example-password-input" class="form-control-label">New Password</label>
-				        <input class="form-control" type="password" placeholder="새 비밀번호"  id="example-password-input" name="empPw" >
+				        <input class="form-control" type="newPwd" placeholder="새 비밀번호"  id="example-password-input" name="empPw" >
 				    </div>
 				    <div class="form-group col-6">
 				        <label for="example-password2-input" class="form-control-label">Password</label>
-				        <input class="form-control" type="password" placeholder="비밀번호 확인"  id="example-password2-input">
+				        <input class="form-control" type="checkPwd" placeholder="비밀번호 확인"  id="example-password2-input">
 				    </div>
 			    </div>
 			    <div class="row">
@@ -136,9 +136,21 @@ text-align: left;
 				        <input class="form-control" type="date" value="${emp.empBrithDate}" id="example-birthday-input" name="empBrithDate">
 				    </div>
 					<div class="form-group col-6">
-				        <label for="example-gender-input" class="form-control-label">성별</label>
-				        <input class="form-control" type="text" value="${emp.empGender == 'M' ? '남' : '여'}" id="example-gender-input" name="empGender">
-				    </div>
+					    <label class="form-control-label">성별</label>
+					    <div class="row">
+					        <div class="custom-control custom-radio mb-3 col-4">
+					            <input type="radio" id="customRadio1" name="empGender" value="M" class="custom-control-input"
+					                   <c:if test="${emp.empGender == 'M'}">checked</c:if>>
+					            <label class="custom-control-label" for="customRadio1">M</label>
+					        </div>
+					
+					        <div class="custom-control custom-radio col-8">
+					            <input type="radio" id="customRadio2" name="empGender" value="F" class="custom-control-input"
+					                   <c:if test="${emp.empGender == 'F'}">checked</c:if>>
+					            <label class="custom-control-label" for="customRadio2">F</label>
+					        </div>
+					    </div>
+					</div>
 			    </div>
 			    <div class="form-group">
 			        <label for="example-tel-input" class="form-control-label">전화번호</label>

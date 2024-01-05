@@ -1,32 +1,72 @@
 @charset "UTF-8";
 
 footer#chatView-footer {
-  position: fixed;
-  bottom: 55px; left: 0;
-  height: 5px;
-  width: 100%;
-  background-color:white;
+	position: fixed;
+	bottom: 55px;
+	left: 0;
+	height: 0px;
+	width: 100%;
+	background-color: white;
 }
 
-#btnSend{
-	margin:0 auto;
+#contents{
+	width: 100%;
+	/*overflow-y: scroll;*/
+}
+
+#btnSend {
+	margin: 0 auto;
 	width: 85px;
-    height: 53px;
+	height: 53px;
 }
 
-.me, .other{
-	width:230px;
+.me,
+.other {
+	width: 230px;
 	height: 100%;
 	white-space: normal;
 }
 
 
-.me{
+.me {
 	float: right;
 	background-color: yellow;
 }
 
-.other{
+.other {
 	float: left;
 	background-color: aquamarine;
+}
+
+#bars {
+/*	position: fixed;
+	top: 0px;
+	left: 0px;*/
+	background-color: #a24ff0;
+	padding: 12px 15px;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+	color: white;
+	font-size: 22px;
+}
+
+.container{
+	height: 550px;
+}
+
+#menu {
+	position: fixed;
+	top: 0;
+	right: 0;
+	background-color: #a24ff0;
+	height: 100vh;
+	padding: 10px 10px;
+	transition: transform 0.3s ease;
+
+	transform: translateX(100%);
+}
+
+#menu.active {
+	transform: translateX(0%);
 }

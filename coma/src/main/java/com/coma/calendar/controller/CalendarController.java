@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.calendar.model.service.CalendarService;
 import com.coma.model.dto.Calendar;
-import com.coma.model.dto.Schedule;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,17 +25,12 @@ public class CalendarController {
 		
 		return "/calendar/calendar";
 	}
-//	@GetMapping("/calender.do")
-//	@ResponseBody
-//	public List<Calendar> selectCalendar(){
-//		System.out.println("안녕");
-//		return service.selectCalender();
-//	}
 	@GetMapping("/calendar.do")
 	@ResponseBody
-	public List<Schedule> scheduleAll(){
+	public List<Calendar> selectCalendar(){
 		System.out.println("안녕");
-		return service.scheduleAll();
+		return service.selectCalendar();
 	}
+	
 
 }

@@ -15,10 +15,11 @@
 <!-- <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<script src="/resource/js/jquery-3.7.0.js"></script>
+
 Latest compiled JavaScript
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+<script src="/resource/js/jquery-3.7.0.js"></script>
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
 	rel="stylesheet">
@@ -40,14 +41,26 @@ div {
 	<header>
 		<div class="container text-center">
 			<div class="row">
-				<hr>
-				<div class="col-12 chat-title">
+				<div class="col-1">
+					<button id="bars">&#9776</button>
+				</div>
+				<div class="col-11 chat-title">
 					<h1>itTalk</h1>
 				</div>
 			</div>
 			<hr style="margin: 2px 0;">
-			<div>
+			<div class="row">
+				<div class="col-11">
 				<h2>채팅방</h2>
+				</div>
+			
+						<nav id="menu">
+		        <ul>
+		            <li><a href="">HOME</a></li>
+		            <li><a href="">COMPANY</a></li>
+		            <li><a href="">CONTACT</a></li>
+		        </ul>
+    </nav>
 			</div>
 			<%-- <div class="row header-menu">
 				<div class="col-6 emp-list-btn">
@@ -57,29 +70,34 @@ div {
 					<img src="${path }/resource/img/chat/chat-icon.png" />
 				</div>
 			</div> --%>
-			<button id="start_chat">시작하기</button>
 			<hr>
 			<hr>
 		</div>
 	</header>
 	<section>
-		<h1>채팅화면</h1>
-		<div id="contents"></div>
+		<div class="container">
+			<div class="row">
+				<h1>채팅화면</h1>
+			</div>
+			<div class="row">
+				<div id="contents"></div>
+			</div>
+		</div>
 	</section>
 	<footer id="chatView-footer">
 		<div class="container">
-			<div class="row">
-				<div class="col-10">
-					<input type="text" id="msg" size=10/>
-				</div>
-				<div class="col-2">
-					<button id="btnSend" class="btn btn-primary">입력</button>
+			<div class="row" style="padding:0px 10px;">
+				<div class="input-group mb-3">
+			  	<input type="text" id="msg" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+				  <div class="input-group-append">
+				    <button id="btnSend" class="btn btn-outline-primary" type="button" id="button-addon2" style="height:100%;">Button</button>
+				  </div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-12">
+				<!-- <div class="col-12">
 					<hr class="footer-hr">
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</footer>
@@ -96,7 +114,14 @@ div {
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script src="${path }/resource/js/chat/chat.js"></script>
 <script>
+
+		
 		/* 웹소켓 채팅 */
+/* 		$(document).ready(function(){
+			
+			
+			
+		}) */
 		alert("환영합니다!");
 		function getId(id) {
 			return document.getElementById(id);
@@ -105,13 +130,13 @@ div {
 		var data = {};//전송 데이터(JSON)
 
 		var server;
-		var mid = getId('mid');
+		/* var mid = getId('mid'); */
 		var btnLogin = getId('btnLogin');
 		var btnSend = getId('btnSend');
 		var talk = getId('contents');
 		var msg = getId('msg');
 		$(document).ready(function() {
-			server = new WebSocket("ws://" + location.host + "/chatting");
+			server = new WebSocket("ws://" + location.host + "/chattingServer");
 
 			server.onmessage = function(msg) {
 				var data = JSON.parse(msg.data);
@@ -119,7 +144,7 @@ div {
 
 				console.log(data);
 
-				if (data.mid == "test"/* mid.value */) {
+				if (data.mid == "test" /* mid.value */ ) {
 					css = 'class=me';
 				} else {
 					css = 'class=other';
@@ -145,15 +170,21 @@ div {
 
 		function send() {
 			if (msg.value.trim() != '') {
-				data.mid = "test"/* getId('mid').value */;
+				data.mid = "test" /* getId('mid').value ; */
 				data.msg = msg.value;
 				data.date = new Date().toLocaleString();
 				var temp = JSON.stringify(data);
 				server.send(temp);
 			}
-			msg.value = '';
-
+		msg.value = '';
 		}
+		
+		let bars = document.querySelector("#bars");
+        let menu = document.querySelector("#menu");
+
+        bars.addEventListener('click',function(){
+            menu.classList.toggle("active");
+        });
 
 </script>
 </html>
