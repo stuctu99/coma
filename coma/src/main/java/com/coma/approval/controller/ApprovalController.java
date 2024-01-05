@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.coma.approval.model.service.ApprovalService;
 import com.coma.model.dto.ApprovalAttachment;
+import com.coma.model.dto.ApprovalCash;
+import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.ApprovalEtc;
+import com.coma.model.dto.ApprovalLeave;
+import com.coma.model.dto.ApprovalRequest;
+import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
-import com.google.gson.Gson;
+import com.coma.model.dto.Referrer;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -32,9 +40,9 @@ public class ApprovalController {
 	private final ApprovalService service;
 
 	
-	@GetMapping("/approver")
+	@GetMapping("/apprline")
 	@ResponseBody
-	public List<Emp> writeDoc(String data, Model model, String approver, HttpServletResponse response) throws IOException {
+	public List<Emp> searchApprLine(String data, Model model, String approver, HttpServletResponse response) throws IOException {
 		
 		List<Emp> emp = service.selectEmpByData(data);
 		
@@ -62,23 +70,38 @@ public class ApprovalController {
 		return "/approval/sign";
 	}
 	
-	@PostMapping
-	public String insertApproval(MultipartFile[] upFile, String title, HttpSession session) {
+	@PostMapping("/insertdoc")
+	public String insertApproval(MultipartFile[] upFile, String title, HttpSession session,
+								String docType) {
+
+		System.out.println("********"+upFile);
 		
-		System.out.println(upFile);
+		String path = session.getServletContext().getRealPath("/resource/upload/approval");
 		
-		String path = session.getServletContext().getRealPath("/resources/upload/approval");
+		
+		List<ApprovalDoc> doc = new ArrayList<>();
+		
+		List<ApprovalLeave> leave = new ArrayList<>();
+		List<ApprovalCash> cash = new ArrayList<>();
+		List<ApprovalRequest> req = new ArrayList<>();
+		List<ApprovalEtc> etc = new ArrayList<>();
 		
 		List<ApprovalAttachment> files = new ArrayList<>();
 		
+		List<Approver> approver = new ArrayList<>();
+		List<Referrer> ref = new ArrayList<>();
+		
+		
 		if(upFile!=null) {
 			for(MultipartFile mf:upFile) {
-				if(mf.isEmpty()) {
+				if(!mf.isEmpty()) {
 					String oriName = mf.getOriginalFilename();
 					String ext = oriName.substring(oriName.lastIndexOf("."));
 					Date today = new Date(System.currentTimeMillis());
 					int randomNum = (int)(Math.random()*10000)+1;
-					String rename = "appr_" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(today)+"_"+randomNum;
+					String rename = "appr_" + new SimpleDateFormat("yyyyMMddHHmmssSSS")
+									.format(today)+"_"+randomNum+ext;
+					
 					
 					try {
 						mf.transferTo(new File(path, rename));
@@ -100,11 +123,11 @@ public class ApprovalController {
 		
 		
 //		//Map으로 할 경우->
-//		Map data = new HashMap<>();
+		Map data = new HashMap<>();
 //		data.put("docNo",docNo);
-////		data.put("doc",doc);
+//		data.put("doc",doc);
 //		
-//		data.put("files", files);
+		data.put("files", files);
 //		
 //		data.put("approver",approver);
 //		data.put("ref",ref);
@@ -118,6 +141,6 @@ public class ApprovalController {
 		
 //		List<Emp> testEmp =  service.selectEmpListAll();
 		
-		return "redirect:/approval";
+		return "redirect:/approval/writedoc";
 	}
 }
