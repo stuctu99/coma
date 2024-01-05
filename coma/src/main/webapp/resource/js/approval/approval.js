@@ -1,6 +1,8 @@
-const docType = function(value){
+const fn_docType = function(value){
 	
-	console.log(value);
+	$('#docType').val(value);
+	console.log($('#docType').val());
+	
 	
 	document.getElementById("leave").style.display= "none";
 	document.getElementById("cash").style.display= "none";
@@ -73,7 +75,7 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 			clearTimeout(requestFunc);
 		}
 		requestFunc = setTimeout(()=>{
-			fetch("/approval/approver?data="+e.target.value)
+			fetch("/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
 				$('option').remove();			
@@ -225,7 +227,7 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			
 		}
 		requestFunc = setTimeout(()=>{
-			fetch("/approval/approver?data="+e.target.value)
+			fetch("/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
 				$('option').remove();	
