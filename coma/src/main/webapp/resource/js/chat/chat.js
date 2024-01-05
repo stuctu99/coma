@@ -113,7 +113,39 @@ $("roomPasswordFlag").click(function() {
 
 /* 방생성 */
 const createRoom = () => {
-	console.log("active");
+	const roomName =$("#roomName").val();
+	const roomPassword = $("#roomPassword").val();
+	const roomPasswordFlag = $("#roomPasswordFlag").val();
+	const roomType = $("#roomType").val();
+	const ChattingRoom = {
+		"roomName":roomName,
+		"roomPassword":roomPassword,
+		"roomType":roomType,
+		"roomPasswordFlag":roomPasswordFlag
+	}
+	fetch("/messenger/createRoom",{
+		method:"POST",
+		headers:{
+			"Content-Type":"application/json"
+		},
+		body: JSON.stringify(ChattingRoom)
+	})
+	.then(response=>{
+		console.log(response);
+		if(response.status!=200){
+			alert("잘못된접근");
+		}
+		
+		return response.json();
+	})
+	.then(data=>{
+		if(data.result=="success"){
+			alert("방 생성 성공!");
+		}else{
+			alert("방 생성 실패!");
+		}
+	})
+	
 }
 
 const passwordCheck = () =>{
@@ -166,5 +198,8 @@ const enter_room = (roomNo,roomPasswordFlag) => {
 }
 
 const enter_chattingRoom = (roomNo) =>{
-	location.href="/ChattingRoom/room/"+roomNo;
+	/*ajax 통신으로 구현 할 수 있지 않을까?*/
+	const user = $("#empId").val();
+	console.log(user);
+	location.href="/chatting/room/"+roomNo+user;
 }

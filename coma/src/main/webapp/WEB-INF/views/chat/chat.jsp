@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
+<c:set var="loginmember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +61,8 @@ div {
 		<div class="container emp-list">
 			<div class="row">
 				<div class="col-12">
-					<h2>사원 리스트</h2>
+					<input type="hidden" id="empId" value="${loginmember.empId }"/>
+					<h2>사원 리스트${loginmember }</h2>
 				</div>
 			</div>
 			<!------------------- 사원 데이터 ----------------------->
@@ -124,7 +126,7 @@ div {
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-				<form action="/messenger" method="post">
+<!-- 				<form action="/messenger/createRoom" method="post"> -->
 					<div class="modal-header">
 						<h3 class="modal-title" id="exampleModalLabel">채팅방 생성</h3>
 						<button type="button" class="close" data-dismiss="modal"
@@ -144,7 +146,7 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="text" name="roomName"/>
+									<input type="text" name="roomName" id="roomName"/>
 								</div>
 								<div class="col-6">
 									<select name="roomType">
@@ -180,9 +182,9 @@ div {
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
-						<button class="btn btn-primary">생성</button>
+						<button class="btn btn-primary" onclick="createRoom();">생성</button>
 					</div>
-					</form>
+					<!-- </form> -->
 				</div>
 			</div>
 		</div>
@@ -212,6 +214,7 @@ div {
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
+		      
 		      <div class="modal-body">
 		        <div class="container">
 		        	<div class="row">
