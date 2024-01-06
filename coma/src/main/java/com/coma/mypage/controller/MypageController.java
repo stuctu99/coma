@@ -66,7 +66,7 @@ public class MypageController {
 	
 	
 	
-	
+//업로드 폴더가 없다면 만들어주는 메소드 
 	private void createFolder(String folderPath) {
 	    // Convert the folder path to a Path object
 	    Path path = Paths.get(folderPath);
@@ -82,7 +82,12 @@ public class MypageController {
 
 	//인사팀에서 상세보기 
 	@GetMapping("/EmployeeDetails")
-	public void test2() { }
+	public void test2() {
+		
+		
+		
+		
+	}
 
 	
 	
