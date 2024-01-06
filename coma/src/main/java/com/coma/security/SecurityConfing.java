@@ -14,14 +14,6 @@ import org.springframework.security.web.firewall.HttpFirewall;
 @EnableWebSecurity
 public class SecurityConfing {
 
-	   public void configure(WebSecurity web) throws Exception{
-		      web.httpFirewall(defaultHttpFirewall());
-		   }
-		   
-		   @Bean
-		   public HttpFirewall defaultHttpFirewall() {
-		      return new DefaultHttpFirewall();
-		   }
 	
 	@Autowired
 	private DBConnectionProvider dbpv;

@@ -27,6 +27,8 @@ const editor = new toastui.Editor({
     previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
 });
 
+// ----------------------- 파일 첨부 ----------------------- 
+
 const addDelFunction=(function(){
 	let count=2;
 	const addFile=()=>{
@@ -65,7 +67,8 @@ $(document).on("change",".custom-file-input",(e=>{
 	
 }));
 
-/* 결재자 검색을 위한 datalist */
+/*-----------------------  결재자 검색을 위한 datalist ----------------------- */
+
 
 document.querySelector("#search_app").addEventListener("keyup",(()=>{
 	let requestFunc; //closure
@@ -83,6 +86,7 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 					/* datalist 옵션태그 만들기 */
 				
 					const search_op = $('<option>');
+
 					search_op.val(e.empId + " "+ e.empName+" "+e.dept.deptType+" "+e.job.jobType);
 					
 					
@@ -95,7 +99,7 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 })());
 
 
-/* 결재자 추가, 삭제  */
+/* ----------------------- 결재자 추가, 삭제 ----------------------- */
 const app_all_arr = [];
 const app_id_arr = [];
 const app_name_arr = [];
@@ -104,7 +108,7 @@ const app_job_arr = [];
 
 
 const addDelAppr=(function(){
-	let appr_num=1; /* n번째 결재자. id, name 뒤에 붙음 */
+	let appr_num=0; /* n번째 결재자. id, name 뒤에 붙음 */
 	
 	const addAppr=()=>{
 
@@ -124,7 +128,7 @@ const addDelAppr=(function(){
 					if(!app_all_arr.includes($('#search_app').val())){
 					
 						/* 추가한 결재자 3명 이하인지 확인 */
-						if(appr_num<=3){
+						if(appr_num<=2){
 							const btn_tag = $('<button type="button" class="btn btn-secondary" id="app_fix'+appr_num +'"'
 												+ 'data-container="body" data-toggle="popover" data-color="secondary"'
 												+ 'name="app_fix'+appr_num +'"'+'data-placement="top">');
@@ -138,8 +142,10 @@ const addDelAppr=(function(){
 							app_job_arr.push(emp_job);
 							
 							
+							
 							btn_tag.text(emp_id +" "+ emp_name);
 							btn_tag.attr('data-content',emp_dept+" "+emp_job);
+
 
 							
 							$('.appr_container').append(btn_tag);
@@ -149,6 +155,13 @@ const addDelAppr=(function(){
 							 /* 부트스트랩은 js를 사용하여 동적으로 웹 페이지를 조작하고 업데이트하기때문에 
 				            동적으로 생성된 요소에 대해서는 초기화 작업이 필요.*/
 							appr_num++;
+	
+							let appr_result = $('.appr_result'); // hidden input
+							
+							for(let i=0; i<app_all_arr.length; i++){ //배열 길이만큼 반복
+								appr_result[i].value = app_all_arr[i]; // hidden input의 value에 배열 값 넣기
+							}
+				
 							
 							$('#search_app').val("");
 						}else{
@@ -171,7 +184,7 @@ const addDelAppr=(function(){
 	}; 
 	
 	const delAppr=(element)=>{ /* element : 삭제 icon */
-		if(appr_num!=1){
+		if(appr_num!=0){
 			
 			const btn = $(element).prev(); 
 			
@@ -189,20 +202,26 @@ const addDelAppr=(function(){
 				
 				const del_type = btn.attr('data-content');
 				
-				let i;
-				
-				for(i=0; i<app_all_arr.length; i++){
-					if(app_all_arr[i]===del_name+" "+del_type){
-						app_all_arr.splice(i, 1);
-						i--;
+			
+				for(let i=0; i<app_all_arr.length; i++){   /* 배열의 길이만큼 반복 */
+					if(app_all_arr[i]===del_name+" "+del_type){ /* 배열 안에 선택한 값과 일치하는 값이 있는지 */
+						app_all_arr.splice(i, 1); /* i 인덱스에서 1개 요소 제거 */
+						i--; /* 현재 인덱스에서 다시 검사 */
 					}
 				}
-/*				
-				if($('#app_fix1')){
+
+				let appr_result = $('.appr_result'); // hidden input
 					
-					
-					
-				}else if($('#app_'))*/
+				for(let i=0; i<app_all_arr.length; i++){ /* 배열의 길이만큼 반복 */
+				
+					appr_result[i].value = app_all_arr[i]; // hidden input의 value에 배열 값 넣기
+				
+				}
+
+	
+			for(let i=app_all_arr.length; i<3; i++){ //배열길이부터 ~ hidden 개수 전까지 비워주기
+				appr_result[i].value=""; 
+			}
 
 			/* 서버로 값 보낼때는 app_all_arr 파싱해서 보내기 */
 		
@@ -210,7 +229,8 @@ const addDelAppr=(function(){
 			$(element).remove();
 		
 			appr_num--;
-			
+
+		
 		}
 		
 	}
@@ -223,7 +243,7 @@ const delAppr=addDelAppr[1];
 
 	
 
-/* 참조자 검색을 위한 datalist */
+/*-----------------------  참조자 검색을 위한 datalist ----------------------- */
 
 document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			
@@ -257,7 +277,7 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 
 
 
-/* 참조자 추가, 삭제  */
+/* ----------------------- 참조자 추가, 삭제 -----------------------  */
 
 const ref_id_arr = [];
 const ref_name_arr = [];
@@ -330,6 +350,7 @@ const addDelref=(function(){
 			
 		
 	}; 
+		
 	
 	const delref=(element)=>{ /* element : 삭제 icon */
 		if(ref_num!=1){

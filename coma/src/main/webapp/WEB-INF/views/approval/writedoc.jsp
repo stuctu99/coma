@@ -96,7 +96,9 @@
 	          	<div class="col-3">
 	          	</div>
 	          	<div class="col-7 appr_container">
-	          		<input type="hidden" id="appr_id">
+	          		<input type="hidden" name="appr_result[]" class="appr_result">
+	          		<input type="hidden" name="appr_result[]" class="appr_result">
+	          		<input type="hidden" name="appr_result[]" class="appr_result">
 	          	</div>
 	          	<div class="col-2">
 	          	</div>

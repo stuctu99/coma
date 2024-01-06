@@ -57,17 +57,17 @@ public class ApprovalController {
 	
 	@GetMapping("/writedoc")
 	public String writeDoc() {
-		return "/approval/writedoc";
+		return "approval/writedoc";
 	}
 	
 	@GetMapping("/viewdoc")
 	public String viewDoc() {
-		return "/approval/viewdoc";
+		return "approval/viewdoc";
 	}
 	
 	@GetMapping("/sign")
 	public String sign() {
-		return "/approval/sign";
+		return "approval/sign";
 	}
 	
 	@PostMapping("/insertdoc")
