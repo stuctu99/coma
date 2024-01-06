@@ -60,7 +60,7 @@ public class MessengerController {
 		
 		System.out.println();
 		
-		if (room.getRoomPasswordFlag() != null) {
+		if (!room.getRoomPasswordFlag().equals("")) {
 			room.setRoomPasswordFlag("Y");
 		} else {
 			room.setRoomPasswordFlag("N");
@@ -69,7 +69,11 @@ public class MessengerController {
 		System.out.println(roomInfo);
 		int result = service.insertChattingRoom(room);
 		Map<String, String> data = new HashMap<>();
-		data.put("result", "success");
+		if(result>0) {
+			data.put("result", "success");
+		}else {
+			data.put("result", "fail");
+		}
 
 		return data;
 	}

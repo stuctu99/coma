@@ -16,116 +16,108 @@
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
-	<div class="row">
+	<div class="row" style="margin-top:10px;">
 		<div class="col-1"></div>
-		<div class="col-5" >
+		<div class="col-6" >
 			<div style="text-align:center;">
-				<h1>학생 관리 페이지</h1>
-				<!-- <div style="display: flex; justify-content: flex-end;">
-					<select class="form-control form-control-sm" style="width:90px;">
-					  <option value="studentCom">수료율</option>
-					  <option value="studentEmp">취업율</option>
-					</select>
-				</div> -->
+				<h1>학생 근태 통계</h1>
 			</div>
-			<div style="width:100%; height:350px;">
-				<!-- <div id="chart_div" class="col-10"></div> -->
-				<canvas id="stuCurentChart"></canvas>
-				<%-- <div class="row">
-					<div class="col-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-						<label for="example-text-input" class="form-control-label"><c:out value="총 재적 학생 수"/></label>
-						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; " value="${totalStudent }명" readonly>
-					</div>
-					<div class="col-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-						<label for="example-text-input" class="form-control-label"><c:out value="총 수료한 학생 수"/></label>
-						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; " value="${studentComStatusData }명" readonly>
-					</div>
-					<div class="col-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-						<label for="example-text-input" class="form-control-label"><c:out value="총 취업한 학생 수"/></label>
-						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; " value="${studentEmpStatusData }명" readonly>
-					</div>
-				</div> --%>
-			</div>
-			<div style="width:100%; height:350px;">
-				<canvas id="stuComChart"></canvas>
-			</div>
-			<div style="width:100%; height:350px;">
-				<canvas id="stuEmpChart"></canvas>
+			<div>
+				<canvas id="stuCurentChart" style="height:250px; width:400px"></canvas>
 			</div>
 		</div>
-		<div class="col-5">
-
+		<div class="col-4">
+			<div class="row" style="display: flex; justify-content: center;">
+				<div style="text-align:center;">
+					<h1>학생 근태 수치</h1>
+					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
+						<thead class="list">
+							<c:forEach var="s" items="${studentCount }">
+								<tr>
+									<th><c:out value="${s.EMP_NAME }"/></th>
+									<td><c:out value="${s.STUDENTCOUNT }"/></td>
+								</tr>
+							</c:forEach>
+						</thead>
+					</table>
+				</div>
+			</div>
 		</div>
-		<div class="col-1">
-			<%-- <div style="text-align:center;">
-				<h1>반별 학생 수</h1>
-				<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
-					<thead class="list">
-						<tr>
-							<th>재적 학생 수</th>
-							<td><c:out value="${totalStudent }"/></td>
-						</tr>
-						<c:forEach var="s" items="${studentCount }">
+		<div class="col-1"></div>
+	</div>
+	<div class="row" style="margin-top:20px;">
+		<div class="col-1"></div>
+		<div class="col-6" >
+			<div style="text-align:center;">
+				<h1>학생 수료율 통계</h1>
+			</div>
+			<div>
+				<canvas id="stuComChart" style="height:200px; width:400px"></canvas>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="row" style="display: flex; justify-content: center;">
+				<div style="text-align:center;">
+					<h1>학생 수료율 수치</h1>
+					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
+						<thead class="list">
 							<tr>
-								<th><c:out value="${s.EMP_NAME }"/></th>
-								<td><c:out value="${s.STUDENTCOUNT }"/></td>
+								<th>재적 학생 수</th>
+								<td><c:out value="${totalStudent }"/></td>
 							</tr>
-						</c:forEach>
-						<tr>
-							<th>수료생 수</th>
-							<td><c:out value="${studentComStatusData }"/></td>
-						</tr>
-						<tr>
-							<th>취업생 수</th>
-							<td><c:out value="${studentEmpStatusData }"/></td>
-						</tr>
-					</thead>
-				</table>
-			</div> --%>
-		</div>
-	</div>
-	<div class="coma-container">
-		<div class="row" style="display: flex; justify-content: center;">
-			<div style="text-align:center;">
-				<h1>반별 학생 수</h1>
-				<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
-					<thead class="list">
-						<tr>
-							<th>재적 학생 수</th>
-							<c:forEach var="s" items="${studentCount }">
-								<th><c:out value="${s.EMP_NAME }"/></th>
-							</c:forEach>
-							<th>수료생 수</th>
-							<th>취업생 수</th>
-						</tr>
-					</thead>
-					<tbody class="list">
-						<tr>
-							<td><c:out value="${totalStudent }"/></td>
-							<c:forEach var="s" items="${studentCount }">
-								<td><c:out value="${s.STUDENTCOUNT }"/></td>
-							</c:forEach>
-							
-							<td><c:out value="${studentComStatusData }"/></td>
-							<td><c:out value="${studentEmpStatusData }"/></td>
-						</tr>
-					</tbody>
-				</table>
-				</div>
-		<%-- <c:forEach var="s" items="${studentCount }">
-			<div class="col-6">
-				<div style="text-align: center;">
-					<label for="example-text-input" class="form-control-label"><c:out value=""/>${s.EMP_NAME }</label>
-					<input class="form-control form-control-sm" type="text" value="${s.STUDENTCOUNT }명" style="text-align: center;">
+							<tr>
+								<th>수료생 수</th>
+								<td><c:out value="${studentComStatusData }"/></td>
+							</tr>
+							<tr>
+								<th>수료생 퍼센트</th>
+								<td><c:out value="${studentComStatusData }"/>%</td>
+							</tr>
+						</thead>
+					</table>
 				</div>
 			</div>
-		</c:forEach> --%>
 		</div>
+		<div class="col-1"></div>
 	</div>
-	<div class="col-1"></div>
+	<div class="row" style="margin-top:20px;">
+		<div class="col-1"></div>
+		<div class="col-6" >
+			<div style="text-align:center;">
+				<h1>학생 취업율 통계</h1>
+			</div>
+			<div>
+				<canvas id="stuEmpChart" style="height:200px; width:400px"></canvas>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="row" style="display: flex; justify-content: center;">
+				<div style="text-align:center;">
+					<h1>학생 취업율 수치</h1>
+					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
+						<thead class="list">
+							<tr>
+								<th>재적 학생 수</th>
+								<td><c:out value="${totalStudent }"/></td>
+							</tr>
+							<tr>
+								<th>취업생 수</th>
+								<td><c:out value="${studentEmpStatusData }"/></td>
+							</tr>
+							<tr>
+								<th>취업생 퍼센트</th>
+								<td><c:out value="${studentEmpStatusData }"/>%</td>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-1"></div>
+	</div>
 </div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
-	<h1>학생 리스트</h1>
+	<h1 style="margin-top:50px;">학생 리스트</h1>
 </div>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row" style="display: flex; align-items: center;">
@@ -232,7 +224,10 @@ const myChart2 = new Chart(ctx2, {
             data: [10,20,30],
             backgroundColor: colorList
         }]
-    }
+    },
+    option: {
+		responsive: false
+	}
 });
 
 const ctx3 = document.getElementById('stuEmpChart').getContext('2d');
@@ -245,6 +240,9 @@ const myChart3 = new Chart(ctx3, {
             data: [10,20,30],
             backgroundColor: colorList
         }]
+    },
+    option: {
+    		responsive: false
     }
 });
 
