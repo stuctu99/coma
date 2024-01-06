@@ -25,6 +25,7 @@ public class EmpServiceImpl implements EmpService {
 	@Override
 	public Emp selectEmpById(String empId) {
 		// TODO Auto-generated method stub
+		System.out.println("service" +empId);
 		return dao.selectEmpById(session, empId);
 	}
 
