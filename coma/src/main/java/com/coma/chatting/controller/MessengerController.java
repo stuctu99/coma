@@ -32,10 +32,11 @@ public class MessengerController {
 		List<Dept> dept = service.selectDept();
 		model.addAttribute("emp", emp);
 		model.addAttribute("dept", dept);
-		for (Emp e : emp) {
-			System.out.println(e);
-		}
-		System.out.println(dept);
+		
+		/* 조회 데이터 확인용
+		 * for (Emp e : emp) { System.out.println(e); }
+		 *System.out.println(dept);
+		*/
 		return "chat/chat";
 	}
 

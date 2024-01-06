@@ -1,12 +1,67 @@
 @charset "UTF-8";
+html{
+	margin:0 auto;
+}
+
+header>div.container{
+	height: 125px;
+}
 
 footer#chatView-footer {
+	z-index: 999;
 	position: fixed;
-	bottom: 55px;
-	left: 0;
-	height: 0px;
-	width: 100%;
-	background-color: white;
+    bottom: 0px;
+    left: 0;
+    height: 52px;
+    width: 100%;
+    background-color: white;
+}
+
+section{
+	padding-top: 125px;
+	padding-bottom: 50px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.messageView{
+	overflow: hidden !important;
+}
+
+.emp-info{
+	padding: 0px 5px !important;
+	line-height: 1.7 !important;
+	text-align: left;
+}
+
+.profile{
+	padding-left: 0px !important;
+}
+
+.profile>img#profile-img{
+	width: 25px;
+	height: 25px;
+	border: 1px solid black;
+	border-radius: 12px;
+}
+
+.chat-title img#joinList{
+	width: 15px;
+	height: 15px;
+}
+
+.profile-list{
+	height: 518px !important;
+	padding-top: 15px;
+	margin-bottom: 15px;
+}
+
+.profile-list > .row{
+	margin-bottom: 4px;
+}
+
+.profile-list > .row>div:nth-last-child(1){
+	text-align: left;
 }
 
 #contents{
@@ -42,6 +97,7 @@ footer#chatView-footer {
 /*	position: fixed;
 	top: 0px;
 	left: 0px;*/
+	width: 100%;
 	background-color: #a24ff0;
 	padding: 12px 15px;
 	border: 0;
@@ -49,6 +105,25 @@ footer#chatView-footer {
 	cursor: pointer;
 	color: white;
 	font-size: 22px;
+}
+#back {
+/*	position: fixed;
+	top: 0px;
+	left: 0px;*/
+	width: 100%;
+	background-color: white;
+	padding: 0px 0px;
+	margin-left: 3px;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+	color: #a24ff0;
+	font-size: 22px;
+}
+
+.connectView{
+	font-weight: bolder;
+	color: black;
 }
 
 .container{
@@ -59,14 +134,38 @@ footer#chatView-footer {
 	position: fixed;
 	top: 0;
 	right: 0;
-	background-color: #a24ff0;
-	height: 100vh;
+	background-color: white;
+	height: 100%;
 	padding: 10px 10px;
 	transition: transform 0.3s ease;
-
 	transform: translateX(100%);
+	z-index: -999;
+}
+
+#menu>ul{
+	list-style: none;
+	padding-left: 0px;
+	/*border-bottom: 1px solid slateblue;*/
 }
 
 #menu.active {
 	transform: translateX(0%);
+}
+
+#exit-btn{
+	width: 180px;
+}
+
+#message-content{
+	width: 100%;
+}
+
+.msgcontainer{
+	display:flex;
+	flex-direction: column;
+}
+
+.openMsgContainer{
+	align-items: center;
+	margin-bottom:5px;
 }

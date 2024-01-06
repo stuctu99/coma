@@ -161,7 +161,7 @@ const passwordCheck = () =>{
 	fetch("/messenger/passwordCheck",{
 		method : "post",
 		headers : {
-			"Content-Type" : "application/json",
+			"Content-Type" : "application/json"
 		},
 		body : JSON.stringify(info)
 	})
@@ -198,9 +198,37 @@ const enter_room = (roomNo,roomPasswordFlag) => {
 	/*location.href=pathValue+"/messenger/room/";*/
 }
 
+/* 채팅방 입장 */
 const enter_chattingRoom = (roomNo) =>{
+	console.log("여기?");
+	const empId = $("#empId").val();
+	const joinInfo = {
+		"roomNo" : roomNo,
+		"empId" : empId
+	}
+	fetch("/chatting",{
+		method:"post",
+		headers:{
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify(joinInfo)
+	})
+	.then(response=>{
+		if(response.status!=200){
+			alert("채팅방입장불가!");
+		}
+		console.log(response);
+		return response.json();
+	})
+	.then(data=>{
+		//ChattingJoin 객체 전달 String roomNo, String empId
+		console.log(data);
+		if(data){
+			location.href="/chatting/room/"+roomNo;
+		}
+	})
 	/*ajax 통신으로 구현 할 수 있지 않을까?*/
-	const user = $("#empId").val();
+	/*const user = $("#empId").val();
 	console.log(user);
-	location.href="/chatting/room/"+roomNo+user;
+	location.href="/chatting/room/"+roomNo+user;*/
 }

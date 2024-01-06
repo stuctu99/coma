@@ -19,6 +19,6 @@ $(".sub-menu li a").mouseenter(function (e) {
 */
   
 const messenger_active = (path) => {
-	open(path+"/messenger","_blank","width=550px; height=600px;");
+	open(path+"/messenger","_blank","width=550px; height=600px; left=0px; top=0px;");
 }
     
