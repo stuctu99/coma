@@ -62,7 +62,7 @@ div {
 			<div class="row">
 				<div class="col-12">
 					<input type="hidden" id="empId" value="${loginmember.empId }"/>
-					<h2>사원 리스트${loginmember }</h2>
+					<h2>사원 리스트${loginmember.empId }</h2>
 				</div>
 			</div>
 			<!------------------- 사원 데이터 ----------------------->
@@ -90,7 +90,7 @@ div {
 						</c:if>
 					</c:forEach>
 				</c:forEach>
-			</c:if>f
+			</c:if>
 			<!---------------------------------------------------->
 		</div>
 		<!-- <button id="create-room" class="btn btn-outline-primary">+</button> -->

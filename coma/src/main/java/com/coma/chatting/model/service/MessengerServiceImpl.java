@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.coma.chatting.model.dao.MessengerDao;
+import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
@@ -38,7 +39,6 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.selectRoomList(session);
 	}
 
-
 	@Override
 	public int insertChattingRoom(ChattingRoom room) {
 		// TODO Auto-generated method stub
@@ -50,6 +50,7 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.passwordCheck(session, roomInfo);
 	}
+
 
 	
 

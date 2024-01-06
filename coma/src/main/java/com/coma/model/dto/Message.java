@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChattingJoin {  
-	private ChattingRoom roomObj;
-	private Emp empObj;
+public class Message {
+	private String type;
+	private String sender;
+	private String receiver;
+	private String msg;
+	private String room;
 }
