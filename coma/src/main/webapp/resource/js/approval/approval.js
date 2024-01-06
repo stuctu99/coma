@@ -170,8 +170,9 @@ const addDelAppr=(function(){
 							
 							for(let i=0; i<app_all_arr.length; i++){ //배열 길이만큼 반복
 								appr_result[i].value = app_all_arr[i]; // hidden input의 value에 배열 값 넣기
+							
 							}
-				
+							
 							
 							$('#search_app').val("");
 						}else{
@@ -338,7 +339,15 @@ const addDelref=(function(){
 						
 							ref_btn_tag.popover();
 							ref_num++;
+
+							let ref_result = $('.ref_result'); // hidden input
 							
+							for(let i=0; i<ref_all_arr.length; i++){ //배열 길이만큼 반복
+								ref_result[i].value = ref_all_arr[i]; // hidden input의 value에 배열 값 넣기
+							
+							}
+							
+
 							$('#search_ref').val("");
 						}else{
 							
