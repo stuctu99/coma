@@ -13,6 +13,9 @@
 /* 	div{
       border: 2px solid red;
     } */
+    .tableSize{
+    	width:300px;
+    }
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
@@ -23,16 +26,11 @@
 				<h1>사원 관리 페이지</h1>
 			</div>
 			<div style="width:100%; height:100%;">
-				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="myChart"></canvas>
-				<%-- <div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-					<label for="example-text-input" class="form-control-label"><c:out value="총 사원 수"/></label>
-					<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; width:200px;" value="${totalEmp }명" readonly>
-				</div> --%>
 			</div>
 		</div>
 		<div class="col-3">
-			<div style="text-align:center;">
+			<div class="tableSize" style="text-align:center;">
 				<h1>부서별 사원 명수</h1>
 				<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 					<thead class="list">
@@ -49,20 +47,11 @@
 					</thead>
 				</table>
 			</div>
-			<%-- <div class="row">
-			<c:forEach var="ec" items="${empCount }">
-				<div class="col-6" style="text-align: center;">
-					<div>
-						<label for="example-text-input" class="form-control-label"><c:out value="${ec.DEPT_TYPE }"/></label>
-						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center;" value="${ec.DEPTCOUNT }명" readonly>
-					</div>
-				</div>
-			</c:forEach>
-			</div> --%>
 		</div>
 		<div class="col-1"></div>
 	</div>
 </div>
+<div style="border: 1px solid #c1c0c073;"></div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
 	<h1>사원 리스트</h1>
 </div>
