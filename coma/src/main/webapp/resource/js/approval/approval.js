@@ -27,7 +27,7 @@ const editor = new toastui.Editor({
     previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
 });
 
-// ----------------------- 파일 첨부 ----------------------- 
+/* ----------------------- 파일 첨부 ----------------------- */
 
 const addDelFunction=(function(){
 	let count=2;
@@ -70,7 +70,9 @@ $(document).on("change",".custom-file-input",(e=>{
 /*-----------------------  결재자 검색을 위한 datalist ----------------------- */
 
 
-document.querySelector("#search_app").addEventListener("keyup",(()=>{
+const searchAppInput = document.querySelector("#search_app");
+
+searchAppInput.addEventListener("keyup",(()=>{
 	let requestFunc; //closure
 	return e=>{
 		
@@ -81,17 +83,21 @@ document.querySelector("#search_app").addEventListener("keyup",(()=>{
 			fetch("/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
+				
 				$('option').remove();			
 				JSON.parse(data).forEach(e=>{
 					/* datalist 옵션태그 만들기 */
 				
-					const search_op = $('<option>');
+					const search_op = $('<option class="app_op">');
 
 					search_op.val(e.empId + " "+ e.empName+" "+e.dept.deptType+" "+e.job.jobType);
 					
 					
 					$("#search_list1").append(search_op);
+				
 				});
+				
+				
 			});
 		
 	},800);
@@ -108,18 +114,22 @@ const app_job_arr = [];
 
 
 const addDelAppr=(function(){
-	let appr_num=0; /* n번째 결재자. id, name 뒤에 붙음 */
+	let appr_num=0; // n번째 결재자. id, name 뒤에 붙음 
+	
 	
 	const addAppr=()=>{
-
-				const emp = $('#search_app').val(); /*name + dept + job */
+					
+				const emp = $('#search_app').val(); // id + name + dept + job 
 	
+		
 				const emp_arr = emp.split(" ");
 
 				const emp_id = emp_arr[0]
 				const emp_name = emp_arr[1];
 				const emp_dept = emp_arr[2];
 				const emp_job = emp_arr[3];
+			
+	
 			
 			/*적힌 값과 선택한 값 일치하는지 비교*/
 				if($('#search_app').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){
@@ -183,7 +193,7 @@ const addDelAppr=(function(){
 		
 	}; 
 	
-	const delAppr=(element)=>{ /* element : 삭제 icon */
+	const delAppr=(element)=>{ // element : 삭제 icon 
 		if(appr_num!=0){
 			
 			const btn = $(element).prev(); 
@@ -203,16 +213,16 @@ const addDelAppr=(function(){
 				const del_type = btn.attr('data-content');
 				
 			
-				for(let i=0; i<app_all_arr.length; i++){   /* 배열의 길이만큼 반복 */
-					if(app_all_arr[i]===del_name+" "+del_type){ /* 배열 안에 선택한 값과 일치하는 값이 있는지 */
-						app_all_arr.splice(i, 1); /* i 인덱스에서 1개 요소 제거 */
-						i--; /* 현재 인덱스에서 다시 검사 */
+				for(let i=0; i<app_all_arr.length; i++){   // 추가된 결재자 배열의 길이만큼 반복 
+					if(app_all_arr[i]===del_name+" "+del_type){ // 배열 안에 선택한 값과 일치하는 값이 있는지 
+						app_all_arr.splice(i, 1); // i 인덱스에서 1개 요소 제거 
+						i--; // 현재 인덱스에서 다시 검사 
 					}
 				}
 
 				let appr_result = $('.appr_result'); // hidden input
 					
-				for(let i=0; i<app_all_arr.length; i++){ /* 배열의 길이만큼 반복 */
+				for(let i=0; i<app_all_arr.length; i++){ // 배열의 길이만큼 반복 
 				
 					appr_result[i].value = app_all_arr[i]; // hidden input의 value에 배열 값 넣기
 				
@@ -223,7 +233,7 @@ const addDelAppr=(function(){
 				appr_result[i].value=""; 
 			}
 
-			/* 서버로 값 보낼때는 app_all_arr 파싱해서 보내기 */
+			// 서버로 값 보낼때는 app_all_arr 파싱해서 보내기 
 		
 			btn.remove();
 			$(element).remove();
@@ -261,8 +271,8 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 				$('option').remove();	
 				
 				JSON.parse(data).forEach(e=>{
-		
-				/*	console.log(e.dept.deptType + e.job.jobType);*/
+					//datalist 옵션 태그 만들기
+				
 					const search_op = $('<option>');
 					search_op.val(e.empId+" "+e.empName+" "+e.dept.deptType+" "+ e.job.jobType);
 					 $('#search_list2').append(search_op);
@@ -286,11 +296,11 @@ const ref_job_arr = [];
 const ref_all_arr = [];
 
 const addDelref=(function(){
-	let ref_num=1;
+	let ref_num=0; //n번째 참조자. id, name 뒤에 붙음.
 	
 	const addref=()=>{
 
-				const emp = $('#search_ref').val(); /*name + dept + job */
+				const emp = $('#search_ref').val(); //id + name + dept + job 
 	
 				const emp_arr = emp.split(" ");
 				
@@ -318,8 +328,6 @@ const addDelref=(function(){
 							ref_name_arr.push(emp_name);
 							ref_dept_arr.push(emp_dept);
 							ref_job_arr.push(emp_job);
-							
-							console.log("iiiidddd arr: "+ ref_id_arr);
 							
 							ref_btn_tag.text(emp_id+" "+emp_name);
 							ref_btn_tag.attr('data-content',emp_dept+" "+emp_job);
@@ -353,7 +361,7 @@ const addDelref=(function(){
 		
 	
 	const delref=(element)=>{ /* element : 삭제 icon */
-		if(ref_num!=1){
+		if(ref_num!=0){
 			
 			const btn = $(element).prev(); 
 			
@@ -374,8 +382,19 @@ const addDelref=(function(){
 					}
 				}
 				
+			let ref_result = $('.ref_result'); //hidden input
+			
+			for(let i=0; i<ref_all_arr.length; i++){ //추가된 참조자 배열 길이만큼 반복
+				ref_result[i].value = ref_all_arr[i]; //hidden input의 value에 배열 값 넣기
 				
-			/* 서버로 값 보낼때는 ref_all_arr 파싱해서 보내기 */
+			}
+			
+			for(let i=ref_all_arr.length; i<3; i++){ //배열 길이부터 ~ hidden개수 전까지
+				ref_result[i].value=""; //비워주기
+				
+			}
+
+			// 서버로 값 보낼때는 ref_all_arr 파싱해서 보내기 
 		
 			btn.remove();
 			$(element).remove();
