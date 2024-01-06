@@ -18,7 +18,7 @@
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row" style="margin-top:10px;">
 		<div class="col-1"></div>
-		<div class="col-5" >
+		<div class="col-6" >
 			<div style="text-align:center;">
 				<h1>학생 근태 통계</h1>
 			</div>
@@ -26,7 +26,7 @@
 				<canvas id="stuCurentChart" style="height:250px; width:400px"></canvas>
 			</div>
 		</div>
-		<div class="col-5">
+		<div class="col-4">
 			<div class="row" style="display: flex; justify-content: center;">
 				<div style="text-align:center;">
 					<h1>학생 근태 수치</h1>
@@ -47,7 +47,7 @@
 	</div>
 	<div class="row" style="margin-top:20px;">
 		<div class="col-1"></div>
-		<div class="col-5" >
+		<div class="col-6" >
 			<div style="text-align:center;">
 				<h1>학생 수료율 통계</h1>
 			</div>
@@ -55,7 +55,7 @@
 				<canvas id="stuComChart" style="height:200px; width:400px"></canvas>
 			</div>
 		</div>
-		<div class="col-5">
+		<div class="col-4">
 			<div class="row" style="display: flex; justify-content: center;">
 				<div style="text-align:center;">
 					<h1>학생 수료율 수치</h1>
@@ -82,7 +82,7 @@
 	</div>
 	<div class="row" style="margin-top:20px;">
 		<div class="col-1"></div>
-		<div class="col-5" >
+		<div class="col-6" >
 			<div style="text-align:center;">
 				<h1>학생 취업율 통계</h1>
 			</div>
@@ -90,7 +90,7 @@
 				<canvas id="stuEmpChart" style="height:200px; width:400px"></canvas>
 			</div>
 		</div>
-		<div class="col-5">
+		<div class="col-4">
 			<div class="row" style="display: flex; justify-content: center;">
 				<div style="text-align:center;">
 					<h1>학생 취업율 수치</h1>
@@ -117,7 +117,7 @@
 	</div>
 </div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
-	<h1>학생 리스트</h1>
+	<h1 style="margin-top:50px;">학생 리스트</h1>
 </div>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row" style="display: flex; align-items: center;">

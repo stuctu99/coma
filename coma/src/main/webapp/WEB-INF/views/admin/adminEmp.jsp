@@ -116,7 +116,7 @@
 		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
 		        		<td><c:out value="${e.empId }"/></td>
-		        		<td><a href="${path }/mypage/EmployeeDetails?empName=${e.empName }"><c:out value="${e.empName }"/></a></td>
+		        		<td><a href="${path }/mypage/EmployeeDetails?empName=${e.empId }"><c:out value="${e.empName }"/></a></td>
 		        		<td><c:out value="${e.job.jobType }"/></td>
  		        		<td><c:out value="${e.dept.deptType }"/></td>
 		        		<td><a href="#"><c:out value="${e.empCurrent }"/></a></td>
