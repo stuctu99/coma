@@ -1,5 +1,10 @@
 package com.coma.mypage.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.coma.mypage.model.service.MypageService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/mypage")
@@ -28,38 +35,51 @@ public class MypageController {
 	
 	//상세보기 수정 메소드
 	@PostMapping("/updatemypage")
-	public String  updateEmployee(@RequestParam Map<String, Object> emp
-								//@RequestParam("upFile") MultipartFile upFile,
-								//HttpSession session
-								) {	  				
-		// 프로필 사진 업로드하기 
-//		String path = session.getServletContext().getRealPath("/resources/upload/profile");
-//		//폴더가 없으면 만들어라! 
-//		File dir = new File(path);
-//		if (!dir.exists()) {
-//			dir.mkdirs(); 
-//		}
-//		
-//		if (upFile != null && !upFile.isEmpty()) {
-//			String profilename = upFile.getOriginalFilename();
-//
-//			try {
-//				upFile.transferTo(new File(path, profilename));
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//
-//			}
-//		}
-		
+	public String  updateEmployee(@RequestParam Map<String, Object> emp,
+			@RequestParam("empPhoto") MultipartFile file, HttpSession session
+								)throws IOException {	  				
+	// 프로필 사진 업로드하기 
+		//파일 경로 
+		String profilepath = session.getServletContext().getRealPath("/resource/upload/profile/");
+		//폴더가 없으면 만들어주는 메소드 
+		createFolder(profilepath);
+
+		// 첨부파일데이터가 비어있지 않으면 업로드하기 
+		if (!file.isEmpty()) {
+		    String path = profilepath + file.getOriginalFilename();
+		    file.transferTo(new File(path));
+		}
+			
+
+//		System.out.println("EMP" +emp);
+		//비밀번호 값 받아서 암호화하기 
 		String newPassword = (String) emp.get("empPw");
+//		System.out.println( "뉴 비밀번호 "+newPassword);
 	    String newEncryptedPassword = passwordEncoder.encode(newPassword);
-	    emp.put("empPw", newEncryptedPassword);
-		System.out.println(emp);
+//	    System.out.println( "암호화된 비밀번호  "+newEncryptedPassword);
+	    emp.put("empPhoto", file.getOriginalFilename());
+	    emp.put("newEmpPw", newEncryptedPassword);
 		int result = service.updateEmp(emp);
-		System.out.println(result);
+//		System.out.println(result);
 		return "redirect:/";
 	}
 	
+	
+	
+	
+	private void createFolder(String folderPath) {
+	    // Convert the folder path to a Path object
+	    Path path = Paths.get(folderPath);
+	    if (Files.notExists(path)) {
+	        try {
+	            Files.createDirectories(path);
+	            System.out.println("업로드 폴더 만들었다 !!  ");
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+
 	//인사팀에서 상세보기 
 	@GetMapping("/EmployeeDetails")
 	public void test2() { }
