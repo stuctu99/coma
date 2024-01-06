@@ -75,7 +75,7 @@
 	     		
 	            <div class="col-7">
 			            <div class="input-group mb-3">	  
-							  <input type="search" list="search_list1" id="search_app" class="form-control" 
+							  <input type="text" list="search_list1" id="search_app" class="form-control" 
 							   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
 							   aria-describedby="button-addon1" autocomplete="off">
 							 		<datalist id="search_list1">
@@ -96,7 +96,9 @@
 	          	<div class="col-3">
 	          	</div>
 	          	<div class="col-7 appr_container">
-	          		<input type="hidden" id="appr_id">
+	          		<input type="hidden" name="appr_result[]" class="appr_result">
+	          		<input type="hidden" name="appr_result[]" class="appr_result">
+	          		<input type="hidden" name="appr_result[]" class="appr_result">
 	          	</div>
 	          	<div class="col-2">
 	          	</div>
@@ -108,7 +110,7 @@
 	     		</div>
 		        <div class="col-7">
 		           		<div class="input-group mb-3">	  
-							   <input type="search" list="search_list2" id="search_ref" class="form-control" 
+							   <input type="text" list="search_list2" id="search_ref" class="form-control" 
 							   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
 							   aria-describedby="button-addon1">
 							 		<datalist id="search_list2">
@@ -118,6 +120,7 @@
 							    onclick="addref();">추가하기</button>
 							  </div>
 						</div>
+
 	            </div>
     			<div class="col-2"></div>
           	 </div>
@@ -125,7 +128,9 @@
 	          	<div class="col-3">
 	          	</div>
 	          	<div class="col-7 ref_container">
-
+					<input type="hidden" name="ref_result[]" class="ref_result">
+	          		<input type="hidden" name="ref_result[]" class="ref_result">
+	          		<input type="hidden" name="ref_result[]" class="ref_result">
 	          	</div>
 	          	<div class="col-2"></div>
            </div> 

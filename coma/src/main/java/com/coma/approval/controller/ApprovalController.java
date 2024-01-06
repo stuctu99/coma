@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,24 +58,26 @@ public class ApprovalController {
 	
 	@GetMapping("/writedoc")
 	public String writeDoc() {
-		return "/approval/writedoc";
+		return "approval/writedoc";
 	}
 	
 	@GetMapping("/viewdoc")
 	public String viewDoc() {
-		return "/approval/viewdoc";
+		return "approval/viewdoc";
 	}
 	
 	@GetMapping("/sign")
 	public String sign() {
-		return "/approval/sign";
+		return "approval/sign";
 	}
 	
 	@PostMapping("/insertdoc")
 	public String insertApproval(MultipartFile[] upFile, String title, HttpSession session,
-								String docType) {
+								String docType, 
+								@RequestParam(name="appr_result[]", required=false) List<String> apprResults,
+								@RequestParam(name="ref_result[]", required=false) List<String> refResults) {
 
-		System.out.println("********"+upFile);
+		System.out.println(refResults);
 		
 		String path = session.getServletContext().getRealPath("/resource/upload/approval");
 		
