@@ -77,19 +77,29 @@ section{
 
 .me,
 .other {
-	width: 230px;
-	height: 100%;
+	width: 100%;
 	white-space: normal;
 }
 
 
 .me {
+	justify-content: flex-end;
 	float: right;
+	margin-bottom: 5px;
+}
+
+.me>span{
 	background-color: yellow;
 }
 
 .other {
+	justify-content: flex-start;
 	float: left;
+	margin-bottom: 5px;
+	
+}
+
+.other>span{
 	background-color: aquamarine;
 }
 
@@ -160,12 +170,8 @@ section{
 	width: 100%;
 }
 
-.msgcontainer{
-	display:flex;
-	flex-direction: column;
-}
 
 .openMsgContainer{
-	align-items: center;
+	justify-content: center;
 	margin-bottom:5px;
 }

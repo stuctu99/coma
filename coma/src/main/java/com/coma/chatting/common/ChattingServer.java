@@ -21,6 +21,7 @@ public class ChattingServer extends TextWebSocketHandler {
 	//동일한 아이디는 하나의 Session을 유지하기 위해 Map을 이용
 	//Map<String,Map<String,WebSocketSession>> clients; // room별 분리?
 	private Map<String, WebSocketSession> clients = new HashMap<String, WebSocketSession>();
+	private Map<String,Map<String,WebSocketSession>> room = new HashMap<String,Map<String,WebSocketSession>>();
 	private final ObjectMapper mapper; //Jackson Converter
 	private int count = 0;
 	@Override
@@ -48,19 +49,41 @@ public class ChattingServer extends TextWebSocketHandler {
 	}
 	
 	private void addClient(WebSocketSession session, Message msg) {
-		clients.put(msg.getSender(), session);
-		sendMessage(msg);
+		boolean roomCheck = room.containsKey(msg.getRoom());
+		
+		if(roomCheck) {
+			for(Map.Entry<String,Map<String,WebSocketSession>> chatRoom : room.entrySet()) {
+				System.out.println("현재 세션 유지중인 채팅방 리스트 : "+chatRoom);
+				if(chatRoom.getKey().equals(msg.getRoom())) {
+					clients.put(msg.getSender(), session);
+					
+				}
+			}
+			room.put(msg.getRoom(), clients);
+			sendMessage(msg);
+		}else {
+			clients.put(msg.getSender(),session);
+			room.put(msg.getRoom(), clients);
+			sendMessage(msg);
+		}
+		
 	}
 	
 	private void sendMessage(Message msg) {
 //		모든접속자에게 메세지 전송 => 특정 방 접속자에게 보낼 수 있는 로직 구현하기
-		for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
-			WebSocketSession session = client.getValue();
-			try {
-				String message  = mapper.writeValueAsString(msg);
-				session.sendMessage(new TextMessage(message));
-			}catch(Exception e) {
-				e.printStackTrace();
+		System.out.println("Message정보출력 ======= "+msg);
+		for(Map.Entry<String, Map<String,WebSocketSession>> chatRoom : room.entrySet()) {
+			if(chatRoom.getKey().equals(msg.getRoom())) {
+			for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
+				WebSocketSession session = client.getValue();
+				System.out.println("session INFO : "+ session);
+				try {
+					String message  = mapper.writeValueAsString(msg);
+					session.sendMessage(new TextMessage(message));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 			}
 		}
 	}
