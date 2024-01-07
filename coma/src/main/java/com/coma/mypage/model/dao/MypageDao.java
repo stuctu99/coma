@@ -9,5 +9,5 @@ import com.coma.model.dto.Emp;
 
 public interface MypageDao {
 	int updateEmp(SqlSession session, Map<String, Object> emp);
-
+	int updateEmployeeDetail (SqlSession session, Map<String, Object> emp);
 }

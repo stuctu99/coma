@@ -118,8 +118,8 @@
               <i class="ni ni-single-02 text-yellow"></i> 게시판
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
-              <li><a href="/board/noticelist">공지게시판</a></li>
-              <li><a href="/board/freelist">자유게시판</a></li>
+              <li><a href="${path }/board/noticelist?boardType=0">공지게시판</a></li>
+              <li><a href="${path }/board/freelist?boardType=1">자유게시판</a></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -177,7 +177,13 @@
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="/resource/img/theme/team-4-800x800.jpg">
+               	<c:if test="${e.empPhoto == null}" >
+				 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 36px; height: 36px">
+                 </c:if>
+				 <%-- 프로필 이미지 가 있으면 이미지 --%>
+                   <c:if test="${e.empPhoto != null}" >
+						<img src="${pageContext.request.contextPath}/resource/upload/profile/${e.empPhoto}" alt="Profile Image" id="profileImage"style="width: 36px; height: 36px">
+                   </c:if>
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span class="mb-0 text-sm  font-weight-bold">${e.empName }</span>

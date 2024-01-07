@@ -4,5 +4,6 @@ import java.util.Map;
 
 public interface MypageService {
 	int updateEmp(Map<String, Object> emp);
+	int updateEmployeeDetail(Map<String, Object> emp);
 }
 

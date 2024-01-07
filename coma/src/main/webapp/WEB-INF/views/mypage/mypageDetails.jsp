@@ -55,18 +55,10 @@ text-align: left;
 label{
 text-align: left;
 }
-/* .form-group{
-	display: flex;
-	align-items: center;
 
-} */
-/* #passwordMatchMessage {
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-    } */
+select:disabled, select[readonly] {
+    background-color:  #f1edff;  
+}
 
 
 </style>
@@ -95,17 +87,50 @@ text-align: left;
 					<div class="row">
 						<div class="form-group col-6">
 					        <label for="example-deptCode-input" class="form-control-label">부서</label>
-					        <input class="form-control" type="text" value="${emp.dept.deptType}" id="example-deptCode-input" readonly>
+					        <input class="form-control" type="text" value="${emp.dept.deptType}" id="example-deptCode-input" style="background-color:  #f1edff;" readonly>
 					    </div>
 					    <div class="form-group col-6">
 					        <label for="example-jobCode-input" class="form-control-label">직책</label>
-					        <input class="form-control" type="text" value="${emp.job.jobType}" id="example-jobCode-input" readonly>
+					        <input class="form-control" type="text" value="${emp.job.jobType}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
 					    </div>
 					 </div>
-					<div class="form-group" >
-				        <label for="example-hiredate-input" class="form-control-label">채용일시</label>
-				        <input class="form-control" type="date" value="${emp.empHireDate}" id="example-hiredate-input" readonly>
-				    </div>
+					<div class="row">
+					 	<div class="form-group col-6">
+						    <label for="exampleFormControlSelect1" class="form-control-label"">연차 개수 </label>
+						    <select class="form-control" id="exampleFormControlSelect1" style="background-color:  #f1edff;" disabled>
+						      <option>1</option>
+						      <option>2</option>
+						      <option>3</option>
+						      <option>4</option>
+						      <option>5</option>
+						      <option>6</option>
+						      <option>7</option>
+						      <option>8</option>
+						      <option>9</option>
+						      <option>10</option>
+						      <option>11</option>
+						      <option>12</option>
+						      <option>13</option>
+						      <option>14</option>
+						      <option>15</option>
+						      <option>16</option>
+						      <option>17</option>
+						      <option>18</option>
+						      <option>19</option>
+						      <option>20</option>
+						      <option>21</option>
+						      <option>22</option>
+						      <option>23</option>
+						      <option>24</option>
+						      <option>25</option>
+						    </select>
+						  </div>
+						<div class="form-group col-6">
+						    <label for="example-hiredate-input" class="form-control-label">채용일시</label>
+						    <input class="form-control" type="date" value="${emp.empHireDate}" id="example-hiredate-input" style="background-color:  #f1edff;" disabled>
+						</div>
+
+					 </div>
 					
 				</div>
 			</div>
@@ -113,7 +138,7 @@ text-align: left;
 				<div class="row">
 					<div class="form-group col-6" >
 				        <label for="example-id-input" class="form-control-label">아이디</label>
-				        <input class="form-control" type="text" value="${emp.empId}" id="example-id-input" name="empId" readonly>
+				        <input class="form-control" type="text" value="${emp.empId}" id="example-id-input" name="empId" style="background-color:  #f1edff;" readonly >
 				    </div>
 	   			    <div class="form-group col-6">
 				        <label for="example-name-input" class="form-control-label">이름</label>
@@ -173,6 +198,20 @@ text-align: left;
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Assuming emp.empVacation holds the initial value
+    var initialVacationValue = "${emp.empVacation}";
+    
+    // Set the selected attribute based on the initial value
+    var selectElement = document.getElementById("exampleFormControlSelect1");
+    for (var i = 0; i < selectElement.options.length; i++) {
+      if (selectElement.options[i].value === initialVacationValue) {
+        selectElement.options[i].selected = true;
+        break;
+      }
+    }
+  });
+
 
 //카카오 지도 관련 함수 
 window.onload = function(){

@@ -32,6 +32,12 @@ public class MypageServiceImpl implements MypageService {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		return result;
 	}
+	@Override
+	public int updateEmployeeDetail(Map<String, Object> emp) {
+		int result=dao.updateEmployeeDetail(session, emp);
+		return result;
+	}
+	 
 
 
 	  

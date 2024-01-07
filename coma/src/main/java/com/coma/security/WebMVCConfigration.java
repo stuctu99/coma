@@ -23,7 +23,7 @@ public class WebMVCConfigration implements WebMvcConfigurer{
 //		registry.addRedirectViewController("/loginsuccess","index");
 		registry.addViewController("/noticelist").setViewName("board/noticelist");
 //		registry.addViewController("/detail").setViewName("board/detail");
-		
+		registry.addViewController("/createPost").setViewName("board/createPost");
 	}
 	
 	

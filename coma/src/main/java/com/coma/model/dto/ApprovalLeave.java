@@ -20,5 +20,7 @@ public class ApprovalLeave {
 	private String leaveHalf;
 	private String leaveDetail;
 	private String docNo;
-	
+
 }
+
+
