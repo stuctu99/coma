@@ -59,7 +59,7 @@ public class MypageController {
 		    file.transferTo(new File(path));
 		}			
 
-//		System.out.println("EMP" +emp);
+		System.out.println("EMP" +emp);
 		//비밀번호 값 받아서 암호화하기 
 		String newPassword = (String) emp.get("empPw");
 //		System.out.println( "뉴 비밀번호 "+newPassword);
@@ -68,7 +68,7 @@ public class MypageController {
 	    emp.put("empPhoto", file.getOriginalFilename());
 	    emp.put("newEmpPw", newEncryptedPassword);
 		int result = service.updateEmp(emp);
-//		System.out.println(result);
+		System.out.println(result);
 		return "redirect:/";
 	}
 	
