@@ -146,7 +146,7 @@ const addDelAppr=(function(){
 	
 			
 			/*적힌 값과 선택한 값 일치하는지 비교*/
-				if($('#search_app').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){
+				if($('#search_app').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){ //수정 필요
 					
 					/* 중복 결재자 있는지 확인 */
 					if(!app_all_arr.includes($('#search_app').val())){
@@ -325,7 +325,7 @@ const addDelref=(function(){
 				const emp_job = emp_arr[3];
 			
 			/*적힌 값과 선택한 값 일치하는지 비교*/
-				if($('#search_ref').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){
+				if($('#search_ref').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){ //수정 필요
 					
 					/* 중복 참조자 있는지 확인 */
 					if(!ref_all_arr.includes($('#search_ref').val())){

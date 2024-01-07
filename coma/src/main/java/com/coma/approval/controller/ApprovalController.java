@@ -12,9 +12,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +47,10 @@ public class ApprovalController {
 
 	private final ApprovalService service;
 
+//	@Autowired
+//	private ApprovalDoc doc;
 	
+
 	//---------------------- 결재자/참조자 검색 -------------------------------
 	
 	@GetMapping("/apprline")
@@ -88,6 +89,12 @@ public class ApprovalController {
 	//----------------------String -> LocalDate 변경 메소드-------------------------------
 	
 	public LocalDate formatDate(String beforeDate) {
+		
+		
+		if(beforeDate == null || beforeDate.isEmpty()) {
+			System.err.println("날짜 비어있음");
+			return null;
+		}
 		
 			SimpleDateFormat leaveStartFormat = new SimpleDateFormat("MM/dd/yyyy");
 			
@@ -148,70 +155,76 @@ public class ApprovalController {
 		        System.err.println("폴더 생성 중 오류 발생: " + e.getMessage());
 		    }
 		}
+
+		//-------- ApprovalDoc doc 에 나머지 객체/리스트들을 필드로 추가.
 		
-		
-		
-		List<ApprovalDoc> doc = new ArrayList<>();
-		
-		List<ApprovalLeave> leave = new ArrayList<>();
-		List<ApprovalCash> cash = new ArrayList<>();
-		List<ApprovalRequest> req = new ArrayList<>();
-		List<ApprovalEtc> etc = new ArrayList<>();
+		ApprovalDoc doc = null;
+	
+		ApprovalLeave leave = null;
+		ApprovalCash cash = null;
+		ApprovalRequest req = null;
+		ApprovalEtc etc = null;
 		
 		List<ApprovalAttachment> files = new ArrayList<>();
 		
 		List<Approver> approver = new ArrayList<>();
 		List<Referrer> ref = new ArrayList<>();
 		
+		//--------
 		
-		//공통사항 객체 리스트
-		doc.add(
-				ApprovalDoc.builder()
+		
+		//공통사항 객체
+	
+				doc = ApprovalDoc.builder()
 					.docType(docType)
 					.docTitle(title)
 					.empId(loginMember)
-					.build()	
-				);
+					.build();	
+			
 		
+		//휴가신청서 객체
+		if(formatDate(leaveStart)!=null && formatDate(leaveEnd) != null) {
+			
+				leave = ApprovalLeave.builder()
+							.leaveType(leaveType)
+			                .leaveStart(java.sql.Date.valueOf(formatDate(leaveStart)))
+			                .leaveEnd(java.sql.Date.valueOf(formatDate(leaveEnd)))
+			                .leaveDetail(editorContent)
+			                .build();
+		        
+		}
 		
-		//휴가신청서 객체 리스트
-		leave.add(
-				ApprovalLeave.builder()
-					.leaveType(leaveType)
-	                .leaveStart(java.sql.Date.valueOf(formatDate(leaveStart)))
-	                .leaveEnd(java.sql.Date.valueOf(formatDate(leaveEnd)))
-	                .leaveDetail(editorContent)
-	                .build()
-	            );
+	
 		
-		//지출결의서 객체 리스트
-		cash.add(
-				ApprovalCash.builder()
-					.cashExpense(expense)
-					.cashDate(java.sql.Date.valueOf(formatDate(cashDate)))
-					.cashDetail(editorContent)
-					.build()
-				
-				);
+		//지출결의서 객체 
+		if(formatDate(cashDate)!=null) {
+	
+				cash = ApprovalCash.builder()
+							.cashExpense(expense)
+							.cashDate(java.sql.Date.valueOf(formatDate(cashDate)))
+							.cashDetail(editorContent)
+							.build();
+		}
 		
-		//품의서 객체 리스트
-		req.add(
-				ApprovalRequest.builder()
-					.reqDetail(editorContent)
-					.reqDate(java.sql.Date.valueOf(formatDate(reqDate)))
-					.build()
-				
-				);
+		//품의서 객체 
+		if(formatDate(reqDate)!=null) {
+			
+				req = ApprovalRequest.builder()
+							.reqDetail(editorContent)
+							.reqDate(java.sql.Date.valueOf(formatDate(reqDate)))
+							.build();
+		}
 		
-		//기타 문서 객체 리스트
-		etc.add(
-				ApprovalEtc.builder()
-					.etcDetail(editorContent)
-					.etcDate(java.sql.Date.valueOf(formatDate(etcDate)))
-					.build()
-				);
+		//기타 문서 객체
+		if(formatDate(reqDate)!=null) {
+			
+				etc = ApprovalEtc.builder()
+							.etcDetail(editorContent)
+							.etcDate(java.sql.Date.valueOf(formatDate(etcDate)))
+							.build();
+		}
 		
-		//첨부파일 저장 로직
+		//첨부파일 저장 로직, 객체 리스트
 		
 		if(upFile!=null) {
 			for(MultipartFile mf:upFile) {
@@ -240,36 +253,55 @@ public class ApprovalController {
 				}
 			}	
 		}
+
 		
 		//결재자 객체 리스트
 		
+		for(int i=0; i<apprResults.size(); i++) { //apprResults = 프론트에서 넘어온 String[]
+			
+			String result = apprResults.get(i); // result = 결재자 한 명의 정보
+
+			String[] splitResult = result.split(" "); //띄어쓰기 기준으로 정보 분리.
+		
+			approver.add(
+					Approver.builder() //결재자 한 명
+						.empId(splitResult[0]) //해당 결재자의 id
+						.apprOrder(i) //apprResults 배열 내 순서(결재 순번)
+						.build()
+					);
+			
+		}
 		
 		//참조자 객체 리스트
+		for(int i=0; i< refResults.size(); i++) { 
+					
+					String result = refResults.get(i); 
+		
+					String[] splitResult = result.split(" "); 
+				
+					ref.add(
+							Referrer.builder() 
+								.empId(splitResult[0]) //해당 참조자의 id
+								.build()
+							);
+					
+				}
 		
 		
-		//doc dto에 필드로 List 추가했을 경우-> 
-//		doc.setFiles(files);
+		doc.setLeave(leave);
+		doc.setCash(cash);
+		doc.setReq(req);
+		doc.setEtc(etc);
+		doc.setFiles(files);
+		doc.setApprover(approver);
+		doc.setRef(ref);
+		
+		
+		service.insertApproval(doc);
+		
+		
 		 
-		
-		
-//		//Map으로 할 경우->
-		Map data = new HashMap<>();
-//		data.put("docNo",docNo);
-//		data.put("doc",doc);
-//		
-		data.put("files", files);
-//		
-//		data.put("approver",approver);
-//		data.put("ref",ref);
-//		
-//		data.put("leave",leave);
-//		data.put("cash",cash);
-//		data.put("req",req);
-//		data.put("etc",etc);
-		
-//		int result = service.insertApproval(data);
-		
-//		List<Emp> testEmp =  service.selectEmpListAll();
+
 		
 		return "redirect:/approval/writedoc";
 	}

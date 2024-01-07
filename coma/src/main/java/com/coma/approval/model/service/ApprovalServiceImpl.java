@@ -1,12 +1,12 @@
 package com.coma.approval.model.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.coma.approval.model.dao.ApprovalDao;
+import com.coma.model.dto.ApprovalDoc;
 import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 	
 	@Override
-	public int insertApproval(Map data) {
+	public int insertApproval(ApprovalDoc all) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
