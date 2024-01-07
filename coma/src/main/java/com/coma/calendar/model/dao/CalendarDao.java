@@ -10,5 +10,5 @@ import com.coma.model.dto.Calendar;
 public interface CalendarDao {
 
 	List<Calendar> selectCalendar(SqlSession session);
-	
+	int calendarInsert(SqlSession session,Calendar event);
 }
