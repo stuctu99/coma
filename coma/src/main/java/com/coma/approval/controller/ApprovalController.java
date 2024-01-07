@@ -76,11 +76,11 @@ public class ApprovalController {
 								String docType, String title,
 								@RequestParam(name="appr_result[]", required=false) List<String> apprResults,
 								@RequestParam(name="ref_result[]", required=false) List<String> refResults,
-								@RequestParam(name="editorContent") String editorContent, //에디터 값 안넘어감
+								String editorContent,
 								String leaveType, String leaveStart, String leaveEnd,
 								Integer expense, String cashDate, String reqDate, String etcDate) {
 		
-		System.out.println(editorContent);
+		System.out.println("에디터: "+ editorContent);
 		System.out.println(title);
 		System.out.println(expense);
 		System.out.println(cashDate);

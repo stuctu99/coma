@@ -17,6 +17,8 @@ const fn_leaveType = function(value){
 	$('#leaveType').val(value);
 
 }
+
+/* ----------------------- 에디터 생성 ----------------------- */
   	
 const editor = new toastui.Editor({
     el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
@@ -25,14 +27,19 @@ const editor = new toastui.Editor({
     previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
 });
 
+/* ---------------------- 에디터 값 넘기기 ----------------------- */
 
-//const editorForm = document.getElementById('app_form');
-//const editorContentInput = document.getElementById('editorContent');
-//
-//editorForm.addEventListener('submit', function(){
-//	editorContentInput.value = editor.getHtml();
-//	
-//});
+function submitForm() { //input type="button"
+
+    const editorContentInput = document.getElementById('editorContent'); //hidden input
+    const markdownContent = editor.getMarkdown(); //입력한 값
+    editorContentInput.value = markdownContent; //hidden input에 입력 값 넣기
+    
+    const editorForm = document.getElementById('app_form'); //form태그
+    
+    editorForm.submit(); //form submit
+}
+
 
 /* ----------------------- 파일 첨부 ----------------------- */
 
