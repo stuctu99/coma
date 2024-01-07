@@ -15,6 +15,7 @@
 <script src="/resource/js/jquery-3.7.0.js"></script>
 <link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
 
+<c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
 	
 	<!-- path.. -->
 	<input type="hidden" id="pathValue" value="${pageContext.request.contextPath}"/> 
@@ -33,6 +34,7 @@
    
 <!----------------------- 공통사항 ----------------------->          
           <div class="doc_basic">
+    		<input type="hidden" name="loginMember" value="${loginMember }">
 	  
 	          
 	          <div class="row">

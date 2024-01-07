@@ -1,8 +1,15 @@
 package com.coma.approval.controller;
 
+
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,14 +39,18 @@ import com.coma.model.dto.Referrer;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/approval")
 @RequiredArgsConstructor
+@Slf4j
 public class ApprovalController {
 
 	private final ApprovalService service;
 
+	
+	//---------------------- 결재자/참조자 검색 -------------------------------
 	
 	@GetMapping("/apprline")
 	@ResponseBody
@@ -49,6 +60,8 @@ public class ApprovalController {
 		
 		return emp;
 	}
+	
+	//---------------------------------------------------------------------
 	
 	@GetMapping("/test")
 	@ResponseBody
@@ -71,8 +84,47 @@ public class ApprovalController {
 		return "approval/sign";
 	}
 	
+	
+	//----------------------String -> LocalDate 변경 메소드-------------------------------
+	
+	public LocalDate formatDate(String beforeDate) {
+		
+			SimpleDateFormat leaveStartFormat = new SimpleDateFormat("MM/dd/yyyy");
+			
+			String formattedDateString=""; //초기화 
+			
+			try {
+				
+				//beforeDate 문자열을 SimpleDateFormat을 이용하여 Date 객체로 파싱. ("MM/dd/yyyy")을 받음.
+				Date date = leaveStartFormat.parse(beforeDate);
+		
+				
+				// Date 객체를 다시 문자열로 포맷팅
+				SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				// 변환된 문자열 formattedDateString에 저장
+				formattedDateString = outputDateFormat.format(date);
+				
+				
+			}catch(ParseException e) {
+				e.printStackTrace();
+			}
+			
+				//DateTieFormatter와 LocalDate.parse를 이용해 "yyyy/MM/dd"형식의 문자열을 LocalDate 객체로 변환.
+			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		        LocalDate localDate = LocalDate.parse(formattedDateString, formatter);
+
+		        System.out.println(localDate);
+	
+		        return localDate;
+	}
+	
+	//-------------------------------------------------------------
+	
+	//---------------------- insert -------------------------------
+	
 	@PostMapping("/insertdoc")
 	public String insertApproval(MultipartFile[] upFile, HttpSession session,
+								String loginMember,
 								String docType, String title,
 								@RequestParam(name="appr_result[]", required=false) List<String> apprResults,
 								@RequestParam(name="ref_result[]", required=false) List<String> refResults,
@@ -80,15 +132,23 @@ public class ApprovalController {
 								String leaveType, String leaveStart, String leaveEnd,
 								Integer expense, String cashDate, String reqDate, String etcDate) {
 		
-		System.out.println("에디터: "+ editorContent);
-		System.out.println(title);
-		System.out.println(expense);
-		System.out.println(cashDate);
-		System.out.println(reqDate);
-		System.out.println(etcDate);
-	
+
 		
 		String path = session.getServletContext().getRealPath("/resource/upload/approval");
+		
+		// 경로를 문자열에서 Path 객체로 변환(문자열보다 권장됨)
+		Path folderPath = Paths.get(path);
+
+		// 해당 경로에 폴더가 없으면 생성
+		if (!Files.exists(folderPath)) {
+		    try {
+		        Files.createDirectories(folderPath);
+		        System.out.println("폴더 생성: " + folderPath);
+		    } catch (Exception e) {
+		        System.err.println("폴더 생성 중 오류 발생: " + e.getMessage());
+		    }
+		}
+		
 		
 		
 		List<ApprovalDoc> doc = new ArrayList<>();
@@ -104,6 +164,55 @@ public class ApprovalController {
 		List<Referrer> ref = new ArrayList<>();
 		
 		
+		//공통사항 객체 리스트
+		doc.add(
+				ApprovalDoc.builder()
+					.docType(docType)
+					.docTitle(title)
+					.empId(loginMember)
+					.build()	
+				);
+		
+		
+		//휴가신청서 객체 리스트
+		leave.add(
+				ApprovalLeave.builder()
+					.leaveType(leaveType)
+	                .leaveStart(java.sql.Date.valueOf(formatDate(leaveStart)))
+	                .leaveEnd(java.sql.Date.valueOf(formatDate(leaveEnd)))
+	                .leaveDetail(editorContent)
+	                .build()
+	            );
+		
+		//지출결의서 객체 리스트
+		cash.add(
+				ApprovalCash.builder()
+					.cashExpense(expense)
+					.cashDate(java.sql.Date.valueOf(formatDate(cashDate)))
+					.cashDetail(editorContent)
+					.build()
+				
+				);
+		
+		//품의서 객체 리스트
+		req.add(
+				ApprovalRequest.builder()
+					.reqDetail(editorContent)
+					.reqDate(java.sql.Date.valueOf(formatDate(reqDate)))
+					.build()
+				
+				);
+		
+		//기타 문서 객체 리스트
+		etc.add(
+				ApprovalEtc.builder()
+					.etcDetail(editorContent)
+					.etcDate(java.sql.Date.valueOf(formatDate(etcDate)))
+					.build()
+				);
+		
+		//첨부파일 저장 로직
+		
 		if(upFile!=null) {
 			for(MultipartFile mf:upFile) {
 				if(!mf.isEmpty()) {
@@ -117,17 +226,26 @@ public class ApprovalController {
 					
 					try {
 						mf.transferTo(new File(path, rename));
-						ApprovalAttachment file = ApprovalAttachment.builder()
-												.attachOriName(oriName)
-												.attachReName(rename)
-												.build();
-						files.add(file);
+						
+						//첨부파일 객체 리스트 
+						files.add(		
+								ApprovalAttachment.builder()
+										.attachOriName(oriName)
+										.attachReName(rename)
+										.build()
+								);
 					}catch(IOException e) {
 						e.printStackTrace();
 					}
 				}
 			}	
 		}
+		
+		//결재자 객체 리스트
+		
+		
+		//참조자 객체 리스트
+		
 		
 		//doc dto에 필드로 List 추가했을 경우-> 
 //		doc.setFiles(files);
@@ -155,4 +273,7 @@ public class ApprovalController {
 		
 		return "redirect:/approval/writedoc";
 	}
+//---------------------------------------------------------------------
+	
 }
+
