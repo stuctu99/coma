@@ -226,7 +226,8 @@ input[type="datetime-local"] {
             	            events.push({
             	                title: event.calTitle,
             	                start: event.calStart,
-            	                end: event.calEnd
+            	                end: event.calEnd,
+            	                backgroundColor: calBColor
             	            });
             	        });
             	  		console.log(data);
@@ -310,7 +311,7 @@ input[type="datetime-local"] {
                 title: calTitle.value,
 
        
-                backgroundColor: bColor
+                backgroundColor: calBColor
 			// 아마 이부분에 ajax가 들어가면 될거같아요
             };
             calendar.addEvent(event);
