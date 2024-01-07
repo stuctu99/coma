@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.coma.emp.service.EmpService;
+
 import com.coma.emp.service.EmpServiceImpl;
 import com.coma.model.dto.Emp;
 import com.coma.mypage.model.service.MypageService;
@@ -33,16 +35,20 @@ public class MypageController {
 	private final MypageService service;
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	private final EmpServiceImpl  empService;
+	private final Logger logger = LoggerFactory.getLogger(MypageController.class);
+	
 	//나의 상세보기로 화면 전환하는 메소드
 	@GetMapping("/mypageDetails")
-	public void test() { }
+	public void test() {
+		//logger.debug("들어왔다");
+	}
 	
 	//상세보기 수정 메소드
 	@PostMapping("/updatemypage")
 	public String  updateEmployee(@RequestParam Map<String, Object> emp,
 			@RequestParam("empPhoto") MultipartFile file, HttpSession session
 								)throws IOException {	  				
-	// 프로필 사진 업로드하기 
+		// 프로필 사진 업로드하기 
 		//파일 경로 
 		String profilepath = session.getServletContext().getRealPath("/resource/upload/profile/");
 		//폴더가 없으면 만들어주는 메소드 
@@ -65,7 +71,8 @@ public class MypageController {
 //		System.out.println(result);
 		return "redirect:/";
 	}
-			
+	
+	
 //업로드 폴더가 없다면 만들어주는 메소드 
 	private void createFolder(String folderPath) {
 	    // Convert the folder path to a Path object
@@ -80,6 +87,7 @@ public class MypageController {
 	    }
 	}
 
+	
 	//인사팀에서 상세보기들어가기 페이지  
 	@GetMapping("/EmployeeDetails")
 	public void employeeDetails(@RequestParam("empId") String empId, Model model) {
@@ -90,13 +98,23 @@ public class MypageController {
 	    model.addAttribute("emp", e);	    
 	}
 	
+	
 	@PostMapping("/EmployeeDetailEnd")
 	public String  updateEmployeeDetail(@RequestParam Map<String, Object> emp) {
+		//logger.debug();
+		
 		System.out.println("Received!!!"+emp);
 		int result = service.updateEmployeeDetail(emp);
 		System.out.println(result);
 		return "redirect:/admin/adminEmp";
 	}
+	
+	//휴가근황보는 메소드 
+	@GetMapping("/vacationSituation")
+	public void vacation() {
+		
+	}
+	
 	
 
 	

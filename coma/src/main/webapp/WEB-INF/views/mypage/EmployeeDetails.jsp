@@ -74,9 +74,17 @@ text-align: left;
 		 <form id="employeeForm" action="${path}/mypage/EmployeeDetailEnd" method="post">
 		<div class="row">
 			<div class="col-6">
-				<div class="file-btn" onclick="openFileDialog();">
-					<img src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"
-						alt="Profile Image" class="profile-image" style="width: 200px; height: 300px">	
+				<div class="file-btn" ">
+					<div class="file-btn" >
+					  <%-- 프로필 이미지 가 없으면 기본이미지 --%>
+						 <c:if test="${emp.empPhoto == null}" >
+						 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 200px; height: 300px">
+	                     </c:if>
+						 <%-- 프로필 이미지 가 있으면 이미지 --%>
+	                      <c:if test="${emp.empPhoto != null}" >
+								<img src="${pageContext.request.contextPath}/resource/upload/profile/${emp.empPhoto}" alt="Profile Image" id="profileImage"style="width: 200px; height: 300px">
+	                      </c:if>
+					</div>
 				</div>
 				<div>
 					<div class="row">
