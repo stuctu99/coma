@@ -25,8 +25,8 @@
 
 
     <!-- TEAM COMA SPACE -->
-	<form action="${pageContext.request.contextPath }/approval" method="post"
-					enctype="multipart/form-data">
+	<form action="${pageContext.request.contextPath }/approval/insertdoc" method="post"
+					enctype="multipart/form-data" >
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
           <!-- coma content space -->
@@ -40,14 +40,14 @@
 	       				문서 종류
 	       			</div>
 		            <div class="col-7">
-		            	 <select class="form-control form-control-sm" onchange="docType(this.value);">
-						  <option value="" selected disabled hidden>문서 종류를 선택하세요.</option>
-						  <option value="leave">휴가신청서</option>
-						  <option value="cash">지출결의서</option>
-						  <option value="req">품의서</option>
-						  <option value="etc">기타</option>
+		            	 <select class="form-control form-control-sm" onchange="fn_docType(this.value);">
+							  <option value="" selected disabled hidden>문서 종류를 선택하세요.</option>
+							  <option value="leave">휴가신청서</option>
+							  <option value="cash">지출결의서</option>
+							  <option value="req">품의서</option>
+							  <option value="etc">기타</option>
 						</select> 
-					
+						<input type="hidden" id="docType" name="docType">
 		            </div>
 		            <div class="col-2">
 		            </div>
@@ -75,14 +75,15 @@
 	     		
 	            <div class="col-7">
 			            <div class="input-group mb-3">	  
-							  <input type="search" list="serach_list" id="search_app" class="form-control" 
+							  <input type="text" list="search_list1" id="search_app" class="form-control" 
 							   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
-							   aria-describedby="button-addon1">
-							 		<datalist id="serach_list">
+							   aria-describedby="button-addon1" autocomplete="off">
+							 		<datalist id="search_list1">
 							 		</datalist> 	 		
 							  <div class="input-group-prepend">
-							   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" onclick="addAppr();">추가하기</button>
-							  		<input type="hidden">
+							   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" 
+							   		onclick="addAppr();">추가하기</button>
+							  		<!-- <input type="hidden"> -->
 							  </div>
 						</div>
 
@@ -95,7 +96,9 @@
 	          	<div class="col-3">
 	          	</div>
 	          	<div class="col-7 appr_container">
-	     
+	          		<input type="hidden" name="appr_result[]" class="appr_result">
+	          		<input type="hidden" name="appr_result[]" class="appr_result">
+	          		<input type="hidden" name="appr_result[]" class="appr_result">
 	          	</div>
 	          	<div class="col-2">
 	          	</div>
@@ -107,27 +110,27 @@
 	     		</div>
 		        <div class="col-7">
 		           		<div class="input-group mb-3">	  
-							   <input type="search" list="serach_list2" id="search_ref" class="form-control" 
+							   <input type="text" list="search_list2" id="search_ref" class="form-control" 
 							   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
 							   aria-describedby="button-addon1">
-							 		<datalist id="serach_list2">
+							 		<datalist id="search_list2">
 							 		</datalist> 	 	
 							  <div class="input-group-prepend">
-							    <button class="btn btn-outline-primary ref_btn" type="button" id="button-addon1">추가
-							    하기</button>
+							    <button class="btn btn-outline-primary ref_btn" type="button" id="button-addon1"
+							    onclick="addref();">추가하기</button>
 							  </div>
 						</div>
+
 	            </div>
     			<div class="col-2"></div>
           	 </div>
           	<div class="row ck_appr">
 	          	<div class="col-3">
 	          	</div>
-	          	<div class="col-7">
-	          		<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="인사팀장">
-					  이규홍
-					</button>
-
+	          	<div class="col-7 ref_container">
+					<input type="hidden" name="ref_result[]" class="ref_result">
+	          		<input type="hidden" name="ref_result[]" class="ref_result">
+	          		<input type="hidden" name="ref_result[]" class="ref_result">
 	          	</div>
 	          	<div class="col-2"></div>
            </div> 
@@ -298,7 +301,7 @@
    		</div>
 		<div class="col-7">
 			    <div class="custom-file">
-			        <input type="file" name="upfile" class="custom-file-input" id="customFileLang" lang="en">
+			        <input type="file" name="upFile" class="custom-file-input" id="customFileLang" lang="en">
 			        <label class="custom-file-label" for="customFileLang"></label>
 			    </div>
 		</div>
@@ -310,7 +313,7 @@
     <div class="row btn_container">
     	<div class="col-11"></div>
     	<div class="col-1">
-    			<button type="button" class="btn btn-primary btn-lg">작성 완료</button>
+    			<input type="submit" class="btn btn-primary btn-lg">작성 완료</button>
     	</div>
     </div>      
           <!-- coma content space -->

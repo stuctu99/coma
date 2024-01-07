@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
@@ -22,15 +23,16 @@ public class MessengerDaoImpl implements MessengerDao {
 	@Override
 	public List<Dept> selectDept(SqlSession session) {
 		// TODO Auto-generated method stub
-		return session.selectList("emp.selectDeptList");
+		return session.selectList("emp.selectDeptListforChatting");
 	}
+
 
 	@Override
 	public List<ChattingRoom> selectRoomList(SqlSession session) {
 		// TODO Auto-generated method stub
 		return session.selectList("chatting.selectRoomList");
 	}
-
+	
 	@Override
 	public ChattingRoom passwordCheck(SqlSession session, Map<String, String> roomInfo) {
 		// TODO Auto-generated method stub

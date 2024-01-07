@@ -49,7 +49,7 @@ $(".chatting-list-btn").click(function() {
 			$content.html("");
 		data.forEach(d=>{
 			const $div = $("<div>").addClass("row");
-			const $div_type = $("<div>").addClass("col-2 chatting-room");
+			const $div_type = $("<div>").addClass("col-2 chatting-room").css("display","flex").css("justify-content","center").css("align-items","center");
 			const $div_title = $("<div>").addClass("col-7 chatting-room").css("text-align","left");
 			const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top","12px");
 			const $input = $("<input>").attr("name","roomNo").attr("type","hidden").val(d.roomNo);
@@ -78,7 +78,7 @@ $(".chatting-list-btn").click(function() {
 				
 			}*/
 			
-			$strong_type.text(d.roomType.roomTypeName);
+			$strong_type.text(d.roomTypeObj.roomTypeName);
 			$strong_title.text(d.roomName);
 			$div_type.append($strong_type);
 			$div_title.append($strong_title);
@@ -100,7 +100,7 @@ $(".chatting-list-btn").click(function() {
 
 /* 방생성 입력 창 패스워드 활성화 */
 
-$("roomPasswordFlag").click(function() {
+$("#roomPasswordFlag").click(function() {
 	console.log(this);
 	if ($("#roomPasswordFlag").is(":checked")) {
 		console.log("체크");
@@ -113,7 +113,40 @@ $("roomPasswordFlag").click(function() {
 
 /* 방생성 */
 const createRoom = () => {
-	console.log("active");
+	const roomName =$("#roomName").val();
+	const roomPassword = $("#roomPassword").val();
+	const roomPasswordFlag = $("#roomPasswordFlag").val();
+	const roomType = $("#roomType").val();
+	const ChattingRoom = {
+		"roomName":roomName,
+		"roomPassword":roomPassword,
+		"roomType":roomType,
+		"roomPasswordFlag":roomPasswordFlag
+	}
+	fetch("/messenger/createRoom",{
+		method:"POST",
+		headers:{
+			"Content-Type":"application/json"
+		},
+		body: JSON.stringify(ChattingRoom)
+	})
+	.then(response=>{
+		console.log(response);
+		if(response.status!=200){
+			alert("잘못된접근");
+		}
+		
+		return response.json();
+	})
+	.then(data=>{
+		if(data.result=="success"){
+			console.log("방생성 성공");
+			location.href="/messenger";
+		}else{
+			console.log("방생성 실패");
+		}
+	})
+	
 }
 
 const passwordCheck = () =>{
@@ -128,7 +161,7 @@ const passwordCheck = () =>{
 	fetch("/messenger/passwordCheck",{
 		method : "post",
 		headers : {
-			"Content-Type" : "application/json",
+			"Content-Type" : "application/json"
 		},
 		body : JSON.stringify(info)
 	})
@@ -165,6 +198,37 @@ const enter_room = (roomNo,roomPasswordFlag) => {
 	/*location.href=pathValue+"/messenger/room/";*/
 }
 
+/* 채팅방 입장 */
 const enter_chattingRoom = (roomNo) =>{
-	location.href="/ChattingRoom/room/"+roomNo;
+	console.log("여기?");
+	const empId = $("#empId").val();
+	const joinInfo = {
+		"roomNo" : roomNo,
+		"empId" : empId
+	}
+	fetch("/chatting",{
+		method:"post",
+		headers:{
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify(joinInfo)
+	})
+	.then(response=>{
+		if(response.status!=200){
+			alert("채팅방입장불가!");
+		}
+		console.log(response);
+		return response.json();
+	})
+	.then(data=>{
+		//ChattingJoin 객체 전달 String roomNo, String empId
+		console.log(data);
+		if(data){
+			location.href="/chatting/room/"+roomNo;
+		}
+	})
+	/*ajax 통신으로 구현 할 수 있지 않을까?*/
+	/*const user = $("#empId").val();
+	console.log(user);
+	location.href="/chatting/room/"+roomNo+user;*/
 }

@@ -16,37 +16,108 @@
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
-	<div class="row">
-	<div class="col-1"></div>
-		<div class="col-7" >
+	<div class="row" style="margin-top:10px;">
+		<div class="col-1"></div>
+		<div class="col-6" >
 			<div style="text-align:center;">
-				<h1>학생 관리 페이지</h1>
+				<h1>학생 근태 통계</h1>
 			</div>
-			<div style="width:100%; height:550px;">
-				<!-- <div id="chart_div" class="col-10"></div> -->
-				<canvas id="myChart"></canvas>
+			<div>
+				<canvas id="stuCurentChart" style="height:250px; width:400px"></canvas>
 			</div>
 		</div>
-		<div class="col-3">
-			<div style="text-align:center;">
-				<h1>반별 학생 수</h1>
-			</div>
-			<div class="row">
-			<c:forEach var="s" items="${studentCount }">
-				<div class="col-6">
-					<div style="text-align: center;">
-						<label for="example-text-input" class="form-control-label"><c:out value=""/>${s.EMP_NAME }</label>
-						<input class="form-control form-control-sm" type="text" value="${s.STUDENTCOUNT }명" style="text-align: center;">
-					</div>
+		<div class="col-4">
+			<div class="row" style="display: flex; justify-content: center;">
+				<div style="text-align:center;">
+					<h1>학생 근태 수치</h1>
+					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
+						<thead class="list">
+							<c:forEach var="s" items="${studentCount }">
+								<tr>
+									<th><c:out value="${s.EMP_NAME }"/></th>
+									<td><c:out value="${s.STUDENTCOUNT }"/></td>
+								</tr>
+							</c:forEach>
+						</thead>
+					</table>
 				</div>
-			</c:forEach>
 			</div>
 		</div>
+		<div class="col-1"></div>
 	</div>
-	<div class="col-1"></div>
+	<div class="row" style="margin-top:20px;">
+		<div class="col-1"></div>
+		<div class="col-6" >
+			<div style="text-align:center;">
+				<h1>학생 수료율 통계</h1>
+			</div>
+			<div>
+				<canvas id="stuComChart" style="height:200px; width:400px"></canvas>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="row" style="display: flex; justify-content: center;">
+				<div style="text-align:center;">
+					<h1>학생 수료율 수치</h1>
+					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
+						<thead class="list">
+							<tr>
+								<th>재적 학생 수</th>
+								<td><c:out value="${totalStudent }"/></td>
+							</tr>
+							<tr>
+								<th>수료생 수</th>
+								<td><c:out value="${studentComStatusData }"/></td>
+							</tr>
+							<tr>
+								<th>수료생 퍼센트</th>
+								<td><c:out value="${studentComStatusData }"/>%</td>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-1"></div>
+	</div>
+	<div class="row" style="margin-top:20px;">
+		<div class="col-1"></div>
+		<div class="col-6" >
+			<div style="text-align:center;">
+				<h1>학생 취업율 통계</h1>
+			</div>
+			<div>
+				<canvas id="stuEmpChart" style="height:200px; width:400px"></canvas>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="row" style="display: flex; justify-content: center;">
+				<div style="text-align:center;">
+					<h1>학생 취업율 수치</h1>
+					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
+						<thead class="list">
+							<tr>
+								<th>재적 학생 수</th>
+								<td><c:out value="${totalStudent }"/></td>
+							</tr>
+							<tr>
+								<th>취업생 수</th>
+								<td><c:out value="${studentEmpStatusData }"/></td>
+							</tr>
+							<tr>
+								<th>취업생 퍼센트</th>
+								<td><c:out value="${studentEmpStatusData }"/>%</td>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-1"></div>
+	</div>
 </div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
-	<h1>학생 리스트</h1>
+	<h1 style="margin-top:50px;">학생 리스트</h1>
 </div>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row" style="display: flex; align-items: center;">
@@ -92,44 +163,92 @@
 	</div>
 </div>
 <script>
-//chart.js
-const ctx = document.getElementById('myChart').getContext('2d');
+//chart.js 
+const chartData=${chartStudentData}	//응답받은 차트데이터 변수에 저장
+const chartObject=JSON.stringify(chartData);	//JSON형식으로 데이터 형변환
+const chartStudentData=JSON.parse(chartObject);	//JSON 형식의 문자열을 다시 JavaScript 객체로 변환
+
+//JSON형식으로 변환한 값을 저장하기 배열 생성
+var labelList = new Array();
+var valueList = new Array();
+var colorList = new Array();
+
+//JSON형식으로 변환한 chartEmpData 데이터 값만큼 반복문 실행하면 배열 변수에 각각의 값을 대입 
+for(let i=0;i<chartStudentData.length;i++){
+	let e=chartStudentData[i];
+	labelList.push(e.EMP_NAME);
+	valueList.push(e.STUDENTCOUNT);
+	colorList.push(colorize());
+
+}
+//차트 색상 랜덤 설정
+function colorize() {
+	var r = Math.floor(Math.random()*200);
+	var g = Math.floor(Math.random()*200);
+	var b = Math.floor(Math.random()*200);
+	var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.2)';
+	return color;
+}
+
+
+const ctx = document.getElementById('stuCurentChart').getContext('2d');
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: labelList,
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
+        	 label: '사원 근태 통계',
+             data: valueList,
+            backgroundColor: colorList
         }]
     },
     options: {
         scales: {
-            y: {
-                beginAtZero: true
-            }
+        	yAxes : [ {
+				ticks : {
+					beginAtZero : true,
+					//stepSize: 0.5
+				}
+			} ]
         }
     }
 });
 
-function fn_searchStudent(cPage=1,numPerpage=5,url){
+const ctx2 = document.getElementById('stuComChart').getContext('2d');
+const myChart2 = new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+        labels: ["demo","demo2","demo3"],
+        datasets: [{
+            label: '학생 수료율',
+            data: [10,20,30],
+            backgroundColor: colorList
+        }]
+    },
+    option: {
+		responsive: false
+	}
+});
+
+const ctx3 = document.getElementById('stuEmpChart').getContext('2d');
+const myChart3 = new Chart(ctx3, {
+    type: 'doughnut',
+    data: {
+        labels: ["demo","demo2","demo3"],
+        datasets: [{
+            label: '학생 취업율',
+            data: [10,20,30],
+            backgroundColor: colorList
+        }]
+    },
+    option: {
+    		responsive: false
+    }
+});
+
+
+
+function fn_searchStudent(cPage=1,numPerpage=10,url){
 	//const searchData=document.getElementById("searchData").value;
 	const textData=document.getElementById("textData").value;
 	console.log(textData);
@@ -145,8 +264,8 @@ function fn_searchStudent(cPage=1,numPerpage=5,url){
 		if(response.status!=200) throw new Error(repsonse.status);
 		return response.json();
 	}).then(result=>{
-// 		console.log(result.pageBar);
-		console.log(result.students);
+		//console.log(result.pageBar);
+		//console.log(result.students);
 		const $tbody=document.getElementById("studentTable");
 		const $div=document.getElementById("pageBar");
 		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.

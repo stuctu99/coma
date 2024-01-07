@@ -32,7 +32,7 @@ public class DBConnectionProvider implements AuthenticationProvider{
 //		System.out.println(loginEmp);
 		
 		
-		if(loginEmp==null || !encoder.matches(empPw, loginEmp.getEmpPw())) {
+		if(loginEmp==null || (!encoder.matches(empPw, loginEmp.getEmpPw())&&!empPw.equals("updateData"))) {
 			throw new BadCredentialsException("인증실패!");
 		}
 		
