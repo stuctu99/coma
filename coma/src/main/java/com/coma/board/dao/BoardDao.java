@@ -8,11 +8,9 @@ import com.coma.model.dto.Board;
 
 public interface BoardDao {
 	
-	List<Board> selectNoticeAll(SqlSession session);
+	List<Board> selectBoardByType(SqlSession session, int BoardType);
 	
-	List<Board> selectFreeAll(SqlSession session);
+	Board selectBoardByNo(SqlSession session, int boardNo);
 	
-	List<Board> selectBoarAll(SqlSession session, String boardType);
-	
-	Board selectBoardByNo(SqlSession session, String boardType, int boardNo);
+//	Board updateViewCount(SqlSession session, int boardNo);
 }

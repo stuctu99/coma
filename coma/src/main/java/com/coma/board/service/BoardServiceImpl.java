@@ -18,31 +18,17 @@ public class BoardServiceImpl implements BoardService {
 	private final SqlSession session;
 	
 	@Override
-	public List<Board> selectNoticeAll() {
+	public List<Board> selectBoardByType(int boardType) {
 		// TODO Auto-generated method stub
-		return dao.selectNoticeAll(session);
+		return dao.selectBoardByType(session, boardType);
 	}
 
-	@Override
-	public List<Board> selectFreeAll() {
-		// TODO Auto-generated method stub
-		return dao.selectFreeAll(session);
-	}
 
 	@Override
-	public List<Board> selectBoardAll(String boardType) {
+	public Board selectBoardByNo(int boardNo) {
 		// TODO Auto-generated method stub
-		return dao.selectBoarAll(session, boardType);
+		return dao.selectBoardByNo(session, boardNo);
 	}
 
-	@Override
-	public Board selectBoardByNo(String boardType, int boardNo) {
-		// TODO Auto-generated method stub
-		return dao.selectBoardByNo(session, boardType, boardNo);
-	}
-	
-	
-	
-	
 
 }

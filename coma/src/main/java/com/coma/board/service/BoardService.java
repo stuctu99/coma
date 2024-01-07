@@ -6,11 +6,9 @@ import com.coma.model.dto.Board;
 
 public interface BoardService {
 	
-	List<Board> selectNoticeAll();
+	List<Board> selectBoardByType(int boardType);
 	
-	List<Board> selectFreeAll();
+	Board selectBoardByNo(int boardNo);
+	
 
-	List<Board> selectBoardAll(String boardType);
-	
-	Board selectBoardByNo(String boardType, int boardNo);
 }
