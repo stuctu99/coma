@@ -1,55 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
+    pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
- <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const calendarEl = document.getElementById('calendar')
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          expandRows: true, // 화면에 맞게 높이 설정
-        })
-        calendar.render()
-      })
-
-    </script>
-
-
-<!-- TEAM COMA SPACE -->
-<style>
-/*   div{
-	border: 2px solid red;
-}   */
-
-.bigContainer{
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	text-align: center;
-	padding: 50px 50px 50px 70px;
-	background-color: #f1edff;
-	border-radius: 20px;
-}
-.bigContainer2{
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	text-align: center;
-	padding: 30px;
-	background-color: #f1edff;
-	border-radius: 50px;
-}
-#calendar{
-	height: 500px;
-}
-
- td{
-	    padding: 15px;
-} 
-
-</style>
-<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <div class="coma-container"
 	style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
 	<div class="row">
@@ -117,7 +70,7 @@
 			<div class="bigContainer"  >
 				<div class = "row">
 					<div class= col-12 style="text-align: center;">
-						<h1 style="text-align: center; margin : 150px;"> <i class="ni ni-world"></i>${emp.dept.deptType }과 ${emp.empName }님 환영합니다 </h1>
+						<h1 style="text-align: center; margin : 150px;"> <i class="ni ni-world"></i>인사과 user1님, 환영합니다. </h1>
 					</div>
 				</div>
 				<div class = "row" style="padding:30px;">
@@ -126,16 +79,33 @@
 					</div>
 				</div>
 				<div class = "row" style="padding:30px;">
-					<div class= col-12 style="text-align: -webkit-center;">
-						<table>
-							<c:forEach var="mainNotice" items="${mainNotice}">
-				                <tr>
-				                	<td>${mainNotice.boardNo }</td>
-				                    <td>${mainNotice.empId}</td>
-				                    <td><a href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
-				                    <td>${mainNotice.boardDate}</td>
-				                </tr>
-				            </c:forEach>
+					<div class= col-12>
+						<table >
+							<tr>
+								<td>김코마</td>
+								<td>새해가 밝았습니다</td>
+								<td>2023.12.29</td>
+							</tr>
+							<tr>
+								<td>김사장</td>
+								<td>COMA에 산타가 나타났다! 이벤트</td>
+								<td>2023.12.15</td>
+							</tr>
+							<tr>
+								<td>김코마</td>
+								<td>방역시간 안내공지</td>
+								<td>2023.12.5</td>
+							</tr>
+							<tr>
+								<td>김코마</td>
+								<td>컴퓨터 설치 안내공지</td>
+								<td>2023.11.20</td>
+							</tr>
+							<tr>
+								<td>김코마</td>
+								<td>간식이 간다 이벤트</td>
+								<td>2023.11.5</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -143,7 +113,5 @@
 		</div>
 	</div>
 </div>
-
-
-<!-- TEAM COMA SPACE -->
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+    <!-- TEAM COMA SPACE -->
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

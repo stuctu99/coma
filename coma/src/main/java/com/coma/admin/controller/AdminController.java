@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,20 +68,20 @@ public class AdminController {
 	
 	//신규 사원 아이디 생성
 	@PostMapping("/insertEmp")
-	public String insertEmp(@RequestBody HashMap<String, Object> empName) {
+	public @ResponseBody int insertEmp(@RequestBody HashMap<String, Object> empData) {
 		String password=passwordEncoder.encode("1234");	//신규 사원 아이디 생성시 비밀번호 암호화
-		empName.put("password", password);
-		service.insertEmp(empName);
-		return "redirect:/";
+		empData.put("password", password);
+		int ressult=service.insertEmp(empData);	
+		return ressult;
 		
 	}
 	
 	//퇴사한 사원 처리
 	@PostMapping("/deleteEmp")
-	public String deleteEmp(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, @RequestBody HashMap<String, Object> empId) {
-		service.deleteEmp(empId);
-		List<Emp> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage));
-		return "redirect:/";
+	public @ResponseBody int deleteEmp(@RequestBody HashMap<String, Object> empId) {
+		int resutl=service.deleteEmp(empId);
+		//List<Emp> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage));
+		return resutl;
 	}
 	
 	//사원 검색
@@ -126,6 +126,12 @@ public class AdminController {
 		m.addAttribute("studentComStatusData",studentComStatusData);
 		m.addAttribute("studentEmpStatusData",studentEmpStatusData);
 		m.addAttribute("totalStudent",totalData);
+	}
+	
+	//학생 수료 자동화 기능
+	@Scheduled(cron = "0 0 18 1 ?")
+	public void updateStudentByCom() {
+		int result=service.updateStudentByCom();
 	}
 	
 	//학생 검색 기능

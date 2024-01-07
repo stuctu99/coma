@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
@@ -55,16 +55,12 @@ text-align: left;
 label{
 text-align: left;
 }
-/* .form-group{
-	display: flex;
-	align-items: center;
 
-} */
-
+select:disabled, select[readonly] {
+    background-color:  #f1edff;  
+}
 
 
-
-#example-tel-input
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
@@ -73,20 +69,16 @@ text-align: left;
 		 <form id="employeeForm" action="${path}/mypage/updatemypage" method="post"  enctype="multipart/form-data">
 		<div class="row">
 			<div class="col-6">
-			 <input type="file" id="accompany-file" name="profile" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
-				<div class="file-btn" onclick="openFileDialog();">
+			 <input type="file" id="accompany-file" name="empPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
+				<div class="file-btn" onclick="openFileDialog();" style="cursor: pointer;">
 					  <%-- 프로필 이미지 가 없으면 기본이미지 --%>
-					 <c:if test="${empty loginMember.profileImage}" >
-					 	<img src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"
-							alt="Profile Image" class="profile-image" style="width: 200px; height: 300px">
-					 	<!-- <img src="/resources/upload/profile/user.png" id="profileImage"> -->
+					 <c:if test="${emp.empPhoto == null}" >
+					 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 200px; height: 300px">
                      </c:if>
 					 <%-- 프로필 이미지 가 있으면 이미지 --%>
-                        <c:if test="${!empty loginMember.profileImage}" >
-                            <img src = "${emp.empPhoto}" id="profileImage">
+                      <c:if test="${emp.empPhoto != null}" >
+							<img src="${pageContext.request.contextPath}/resource/upload/profile/${emp.empPhoto}" alt="Profile Image" id="profileImage"style="width: 200px; height: 300px">
                       </c:if>
-					 
-						
 				</div>
 				<div>
 					<h5>사진을 눌러주세요</h5>	
@@ -95,17 +87,50 @@ text-align: left;
 					<div class="row">
 						<div class="form-group col-6">
 					        <label for="example-deptCode-input" class="form-control-label">부서</label>
-					        <input class="form-control" type="text" value="${emp.dept.deptType}" id="example-deptCode-input" readonly>
+					        <input class="form-control" type="text" value="${emp.dept.deptType}" id="example-deptCode-input" style="background-color:  #f1edff;" readonly>
 					    </div>
 					    <div class="form-group col-6">
 					        <label for="example-jobCode-input" class="form-control-label">직책</label>
-					        <input class="form-control" type="text" value="${emp.job.jobType}" id="example-jobCode-input" readonly>
+					        <input class="form-control" type="text" value="${emp.job.jobType}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
 					    </div>
 					 </div>
-					<div class="form-group" >
-				        <label for="example-hiredate-input" class="form-control-label">채용일시</label>
-				        <input class="form-control" type="date" value="${emp.empHireDate}" id="example-hiredate-input" readonly>
-				    </div>
+					<div class="row">
+					 	<div class="form-group col-6">
+						    <label for="exampleFormControlSelect1" class="form-control-label"">연차 개수 </label>
+						    <select class="form-control" id="exampleFormControlSelect1" style="background-color:  #f1edff;" disabled>
+						      <option>1</option>
+						      <option>2</option>
+						      <option>3</option>
+						      <option>4</option>
+						      <option>5</option>
+						      <option>6</option>
+						      <option>7</option>
+						      <option>8</option>
+						      <option>9</option>
+						      <option>10</option>
+						      <option>11</option>
+						      <option>12</option>
+						      <option>13</option>
+						      <option>14</option>
+						      <option>15</option>
+						      <option>16</option>
+						      <option>17</option>
+						      <option>18</option>
+						      <option>19</option>
+						      <option>20</option>
+						      <option>21</option>
+						      <option>22</option>
+						      <option>23</option>
+						      <option>24</option>
+						      <option>25</option>
+						    </select>
+						  </div>
+						<div class="form-group col-6">
+						    <label for="example-hiredate-input" class="form-control-label">채용일시</label>
+						    <input class="form-control" type="date" value="${emp.empHireDate}" id="example-hiredate-input" style="background-color:  #f1edff;" disabled>
+						</div>
+
+					 </div>
 					
 				</div>
 			</div>
@@ -113,7 +138,7 @@ text-align: left;
 				<div class="row">
 					<div class="form-group col-6" >
 				        <label for="example-id-input" class="form-control-label">아이디</label>
-				        <input class="form-control" type="text" value="${emp.empId}" id="example-id-input" name="empId" readonly>
+				        <input class="form-control" type="text" value="${emp.empId}" id="example-id-input" name="empId" style="background-color:  #f1edff;" readonly >
 				    </div>
 	   			    <div class="form-group col-6">
 				        <label for="example-name-input" class="form-control-label">이름</label>
@@ -121,32 +146,47 @@ text-align: left;
 				    </div>
 				</div>
 				<div class="row">
-				    <div class="form-group col-6">
-				        <label for="example-password-input" class="form-control-label">New Password</label>
-				        <input class="form-control" type="password" placeholder="새 비밀번호"  id="example-password-input" name="empPw" >
-				    </div>
-				    <div class="form-group col-6">
-				        <label for="example-password2-input" class="form-control-label">Password</label>
-				        <input class="form-control" type="password" placeholder="비밀번호 확인"  id="example-password2-input">
-				    </div>
-			    </div>
+				  <div class="form-group col-6" style="margin-bottom: 0;">
+				    <label for="example-password-input" class="form-control-label">New Password</label>
+				    <input class="form-control" type="password" placeholder="새 비밀번호" id="example-password-input" name="empPw">
+				  </div>
+				  <div class="form-group col-6" style="margin-bottom: 0;">
+				    <label for="example-password2-input" class="form-control-label">Password</label>
+				    <input class="form-control" type="password" placeholder="비밀번호 확인" id="example-password2-input">
+				  </div>
+				</div>
+				<div class="row" style ="padding-left: 20px; padding-bottom: 30px;">
+					<div id="passwordMatchMessage"></div>
+				</div>
 			    <div class="row">
 				    <div class="form-group col-6" style="display:block">
 				        <label for="example-birthday-input" class="form-control-label">생일</label>
 				        <input class="form-control" type="date" value="${emp.empBrithDate}" id="example-birthday-input" name="empBrithDate">
 				    </div>
 					<div class="form-group col-6">
-				        <label for="example-gender-input" class="form-control-label">성별</label>
-				        <input class="form-control" type="text" value="${emp.empGender == 'M' ? '남' : '여'}" id="example-gender-input" name="empGender">
-				    </div>
+					    <label class="form-control-label">성별</label>
+					    <div class="row">
+					        <div class="custom-control custom-radio mb-3 col-4">
+					            <input type="radio" id="customRadio1" name="empGender" value="M" class="custom-control-input"
+					                   <c:if test="${emp.empGender == 'M'}">checked</c:if>>
+					            <label class="custom-control-label" for="customRadio1">M</label>
+					        </div>
+					
+					        <div class="custom-control custom-radio col-8">
+					            <input type="radio" id="customRadio2" name="empGender" value="F" class="custom-control-input"
+					                   <c:if test="${emp.empGender == 'F'}">checked</c:if>>
+					            <label class="custom-control-label" for="customRadio2">F</label>
+					        </div>
+					    </div>
+					</div>
 			    </div>
 			    <div class="form-group">
 			        <label for="example-tel-input" class="form-control-label">전화번호</label>
 			        <input type= "tel" class="form-control" value= "${emp.empPhone}"  id="example-tel-input" name="empPhone">
 			    </div>
-			    <div class="form-group" > 
+			    <div class="form-group"  > 
 				    <label for="address_kakao" class="form-control-label">주소 변경</label>
-					<input class="form-control" type="text" id="address_kakao" name="address" value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="width:500px;">
+					<input class="form-control" type="text" id="address_kakao" name="address" value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="width:500px;cursor: pointer;">
 					<input class="form-control" type="text" name="address_detail" value= "${emp.empAddrDetail}" placeholder="상세주소" style="width:500px;">
 			    </div>
 			    <button type="button" class="btn btn-primary" onclick="submitEmployeeForm()">회원정보 변경</button>
@@ -158,6 +198,21 @@ text-align: left;
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Assuming emp.empVacation holds the initial value
+    var initialVacationValue = "${emp.empVacation}";
+    
+    // Set the selected attribute based on the initial value
+    var selectElement = document.getElementById("exampleFormControlSelect1");
+    for (var i = 0; i < selectElement.options.length; i++) {
+      if (selectElement.options[i].value === initialVacationValue) {
+        selectElement.options[i].selected = true;
+        break;
+      }
+    }
+  });
+
+
 //카카오 지도 관련 함수 
 window.onload = function(){
     document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
@@ -171,7 +226,7 @@ window.onload = function(){
     });
 }
 
-//사진 누르면 파일  미리보기 기능 함수 
+//사진 부분을 누르면 input type이 file로 변하게 되는 함수. 
 function openFileDialog() {
     const fileInput = document.querySelector('input[type=file]');
       fileInput.click();
@@ -180,6 +235,7 @@ function openFileDialog() {
          console.log(selectedFiles);
      });
 }
+/* 사진 미리보기 기능 함수  */
 $("#accompany-file").change(e => {
     $.each(e.target.files, (i, f) => {
         const filereader = new FileReader();
@@ -193,10 +249,34 @@ $("#accompany-file").change(e => {
         }
     });
 });
+/* submit 기능 함수  */
 function submitEmployeeForm() {
     var form = document.getElementById("employeeForm");
     form.submit();
 }
+
+
+/* 비밀번호 확인 여부 ajax */
+$(document).ready(function () {
+    // Function to check password match and update the message
+    function checkPasswordMatch() {
+      var newPassword = $('#example-password-input').val();
+      var confirmPassword = $('#example-password2-input').val();
+      var messageElement = $('#passwordMatchMessage');
+
+      if (newPassword === confirmPassword) {
+        messageElement.text('Passwords match!');
+        messageElement.css('color', 'green');  // Set color to red for match
+        // You can perform any additional actions here if passwords match
+      } else {
+        messageElement.text('Passwords do not match!');
+        messageElement.css('color', 'red');  // Set color to green for no match
+      }
+    }
+
+    // Bind the function to input change events
+    $('#example-password-input, #example-password2-input').on('input', checkPasswordMatch);
+  });
 </script>
 
 <!-- TEAM COMA SPACE -->

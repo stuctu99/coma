@@ -1,65 +1,115 @@
 package com.coma.chatting.common;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import jakarta.websocket.OnClose;
-import jakarta.websocket.OnMessage;
-import jakarta.websocket.OnOpen;
-import jakarta.websocket.Session;
-import jakarta.websocket.server.ServerEndpoint;
-import lombok.extern.slf4j.Slf4j;
+import com.coma.model.dto.Message;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Slf4j
+import lombok.RequiredArgsConstructor;
+
 @Component
-@ServerEndpoint(value="/chatting")
-public class ChattingServer extends TextWebSocketHandler{
+@RequiredArgsConstructor
+public class ChattingServer extends TextWebSocketHandler {
 	
-	private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>());
+	//동일한 아이디는 하나의 Session을 유지하기 위해 Map을 이용
+	//Map<String,Map<String,WebSocketSession>> clients; // room별 분리?
+	private Map<String, WebSocketSession> clients = new HashMap<String, WebSocketSession>();
+	private Map<String,Map<String,WebSocketSession>> room = new HashMap<String,Map<String,WebSocketSession>>();
+	private final ObjectMapper mapper; //Jackson Converter
+	private int count = 0;
+	@Override
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		
+		System.out.println("채팅서버 접속!!!");
+	}
+
+	@Override
+	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		System.out.println("메세지 받았다.");
+		System.out.println(message.getPayload()); // 클라이언트가 전송한 메세지
+		Message msg = mapper.readValue(message.getPayload(), Message.class);
+		switch(msg.getType()) {
+			case "open":addClient(session,msg); break;
+			case "msg":sendMessage(msg);break;
+		}
+		
+	}
+
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		System.out.println("채팅서버 나갔다!!!");
+		System.out.println(status.getReason() + " " + status.getCode());
+	}
 	
-	@OnOpen
-	public void onOpen(Session session) {
-		System.out.println("open session : "+session.toString());
-		if(!clients.contains(session)) {
-			clients.add(session);
-			System.out.println("session open : "+session.getUserPrincipal());
+	private void addClient(WebSocketSession session, Message msg) {
+		boolean roomCheck = room.containsKey(msg.getRoom());
+		
+		if(roomCheck) {
+			for(Map.Entry<String,Map<String,WebSocketSession>> chatRoom : room.entrySet()) {
+				System.out.println("현재 세션 유지중인 채팅방 리스트 : "+chatRoom);
+				if(chatRoom.getKey().equals(msg.getRoom())) {
+					clients.put(msg.getSender(), session);
+					
+				}
+			}
+			room.put(msg.getRoom(), clients);
+			sendMessage(msg);
 		}else {
-			System.out.println("이미 연결된 세션");
+			clients.put(msg.getSender(),session);
+			room.put(msg.getRoom(), clients);
+			sendMessage(msg);
+		}
+		
+	}
+	
+	private void sendMessage(Message msg) {
+//		모든접속자에게 메세지 전송 => 특정 방 접속자에게 보낼 수 있는 로직 구현하기
+		System.out.println("Message정보출력 ======= "+msg);
+		for(Map.Entry<String, Map<String,WebSocketSession>> chatRoom : room.entrySet()) {
+			if(chatRoom.getKey().equals(msg.getRoom())) {
+			for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
+				WebSocketSession session = client.getValue();
+				System.out.println("session INFO : "+ session);
+				try {
+					String message  = mapper.writeValueAsString(msg);
+					session.sendMessage(new TextMessage(message));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			}
 		}
 	}
 	
-	@OnMessage
-	public void onMessage(String msg, Session session) throws Exception{
-		System.out.println("receive message : "+msg);
-		for(Session s : clients) {
-			System.out.println("send data : "+msg);
-			s.getBasicRemote().sendText(msg);
-		}
-	}
-	
-	@OnClose
-	public void onClose(Session session) {
-		System.out.println("session close : "+session.getUserPrincipal());
-		clients.remove(session);
-	}
 	
 	
+	
+
 	/*
-	 * @Override public void afterConnectionEstablished(WebSocketSession session)
-	 * throws Exception { log.debug("채팅서버 접속");
-	 * log.debug(session.getId()+" : "+session.getRemoteAddress()); }
+	 * private static Set<Session> clients = Collections.synchronizedSet(new
+	 * HashSet<Session>());
 	 * 
-	 * @Override protected void handleTextMessage(WebSocketSession session,
-	 * TextMessage message) throws Exception { log.debug("메세지전달");
-	 * log.debug(message.getPayload()); //클라이언트가 보낸 메세지 }
+	 * @OnOpen public void onOpen(Session session) {
+	 * System.out.println("open session : "+session.toString());
+	 * if(!clients.contains(session)) { clients.add(session);
+	 * System.out.println("session open : "+session.getUserPrincipal()); }else {
+	 * System.out.println("이미 연결된 세션"); } }
 	 * 
-	 * @Override public void afterConnectionClosed(WebSocketSession session,
-	 * CloseStatus status) throws Exception { log.debug("채팅서버나가기");
-	 * log.debug(status.getReason()+" : "+status.getCode()); }
+	 * @OnMessage public void onMessage(String msg, Session session) throws
+	 * Exception{ System.out.println("receive message : "+msg); for(Session s :
+	 * clients) { System.out.println("send data : "+msg);
+	 * s.getBasicRemote().sendText(msg); } }
+	 * 
+	 * @OnClose public void onClose(Session session) {
+	 * System.out.println("session close : "+session.getUserPrincipal());
+	 * clients.remove(session); }
 	 */
-	
+
 }

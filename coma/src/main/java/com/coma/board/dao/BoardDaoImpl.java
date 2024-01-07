@@ -11,27 +11,16 @@ import com.coma.model.dto.Board;
 public class BoardDaoImpl implements BoardDao {
 
 	@Override
-	public List<Board> selectNoticeAll(SqlSession session) {
-		return session.selectList("board.selectNoticeAll");
+	public List<Board> selectBoardByType(SqlSession session, int boardType) {
+		return session.selectList("board.selectBoardByType", boardType);
 	}
 
 	@Override
-	public List<Board> selectFreeAll(SqlSession session) {
+	public Board selectBoardByNo(SqlSession session, int boardNo) {
 		// TODO Auto-generated method stub
-		return session.selectList("board.selectFreeAll");
+		return session.selectOne("board.selectBoardByNo", boardNo);
 	}
 
-	@Override
-	public List<Board> selectBoarAll(SqlSession session, String boardType) {
-		// TODO Auto-generated method stub
-		return session.selectList("board.selectBoardAll");
-	}
-
-	@Override
-	public Board selectBoardByNo(SqlSession session, String boardType, int boardNo) {
-		// TODO Auto-generated method stub
-		return session.selectOne("board.selectBoardByNo");
-	}
 	
 	
 

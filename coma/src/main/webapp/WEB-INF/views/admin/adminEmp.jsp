@@ -13,6 +13,9 @@
 /* 	div{
       border: 2px solid red;
     } */
+    .tableSize{
+    	width:300px;
+    }
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
@@ -23,32 +26,32 @@
 				<h1>사원 관리 페이지</h1>
 			</div>
 			<div style="width:100%; height:100%;">
-				<!-- <div id="chart_div" class="col-10"></div> -->
 				<canvas id="myChart"></canvas>
-				<div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-					<label for="example-text-input" class="form-control-label"><c:out value="총 사원 수"/></label>
-					<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center; width:200px;" value="${totalEmp }명" readonly>
-				</div>
 			</div>
 		</div>
 		<div class="col-3">
-			<div style="text-align:center;">
+			<div class="tableSize" style="text-align:center;">
 				<h1>부서별 사원 명수</h1>
-			</div>
-			<div class="row">
-			<c:forEach var="ec" items="${empCount }">
-				<div class="col-6" style="text-align: center;">
-					<div>
-						<label for="example-text-input" class="form-control-label"><c:out value="${ec.DEPT_TYPE }"/></label>
-						<input class="form-control form-control-sm" type="text" style="background-color: #ffffff; text-align: center;" value="${ec.DEPTCOUNT }명" readonly>
-					</div>
-				</div>
-			</c:forEach>
+				<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
+					<thead class="list">
+						<tr>
+							<th>총 사원 수</th>
+							<td><c:out value="${totalEmp }"/></td>
+						</tr>
+						<c:forEach var="ec" items="${empCount }">
+							<tr>
+								<th><c:out value="${ec.DEPT_TYPE }"/></th>
+								<td><c:out value="${ec.DEPTCOUNT }"/></td>
+							</tr>
+						</c:forEach>
+					</thead>
+				</table>
 			</div>
 		</div>
 		<div class="col-1"></div>
 	</div>
 </div>
+<div style="border: 1px solid #c1c0c073;"></div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
 	<h1>사원 리스트</h1>
 </div>
@@ -102,7 +105,7 @@
 		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
 		        		<td><c:out value="${e.empId }"/></td>
-		        		<td><a href="${path }/mypage/EmployeeDetails?empName=${e.empName }"><c:out value="${e.empName }"/></a></td>
+		        		<td><a href="${path }/mypage/EmployeeDetails?empId=${e.empId }"><c:out value="${e.empName }"/></a></td>
 		        		<td><c:out value="${e.job.jobType }"/></td>
  		        		<td><c:out value="${e.dept.deptType }"/></td>
 		        		<td><a href="#"><c:out value="${e.empCurrent }"/></a></td>
@@ -200,6 +203,7 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 			const $tr=document.createElement('tr');
 			const $td1=document.createElement('td');
 			const $a=document.createElement('a');
+			const $a2=document.createElement('a');
 			$td1.innerText=e.empId;
 			
 			const $td2=document.createElement('td');
@@ -214,7 +218,9 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 			$td4.innerText=e.dept.deptType;
 			
 			const $td5=document.createElement('td');
-			$td5.innerText=e.empCurrent;
+			$a2.setAttribute('href','#');
+			$a2.innerText=e.empCurrent;
+			$td5.appendChild($a2);
 			
 			const $td6 = document.createElement('td');
 			const $button = document.createElement('button');
@@ -243,8 +249,7 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 //신입사원 아이디 생성 및 배포
 function fn_addEmp(){
 	const empName=document.getElementById("empName").value;
-	location.replace("${path}/admin/insertEmp?empName="+empName);
-	/* const empName=document.getElementById("empName").value;
+	console.log(empName);
 	fetch("${path}/admin/insertEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
@@ -259,57 +264,18 @@ function fn_addEmp(){
 		}
 		return response.json();
 	}).then(result=>{
-		console.log(result);
-		const $tbody=document.getElementById("empTable");
-		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
-		$trList.forEach($tr => {
-		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
-		});
-		result.students.forEach((e)=>{
-			const $tr=document.createElement('tr');
-			const $td1=document.createElement('td');
-			const $a=document.createElement('a');
-			$td1.innerText=e.emps.empId;
-			
-			const $td2=document.createElement('td');
-			$a.setAttribute('href','#');
-			$a.innerText=e.emps.empName;
-			$td2.appendChild($a);
-			
-			const $td3=document.createElement('td');
-			$td3.innerText=e.dept.deptType;
-			
-			const $td4=document.createElement('td');
-			$td4.innerText=e.job.jobType;
-			
-			const $td5=document.createElement('td');
-			$td5.innerText=e.emps.empCurrent;
-			
-			const $td6 = document.createElement('td');
-			const $button = document.createElement('button');
-			$button.setAttribute('type', 'button');
-			$button.setAttribute('class', 'btn btn-secondary btn-sm');
-			$button.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
-			$button.innerText = '삭제';
-			$td6.appendChild($button);
-			
-			$tr.appendChild($td1);
-			$tr.appendChild($td2);
-			$tr.appendChild($td3);
-			$tr.appendChild($td4);
-			$tr.appendChild($td5);
-			$tr.appendChild($td6);
-			$tbody.appendChild($tr);
-		})
+		if(result>0){
+			alert("신규 아이디가 등록 되었습니다.");
+			window.location.href = "${path}/admin/adminEmp";
+		}
 	}).catch(e=>{
 		alert(e);
-	}); */
-}
+	});
+} 
 
 //사원 퇴사후 아이디 비활성화
 function fn_deleteEmp(e){
-	location.replace("${path}/admin/deleteEmp?empId="+e);
-	/* fetch("${path}/admin/deleteEmp",{
+	fetch("${path}/admin/deleteEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify({
@@ -323,55 +289,13 @@ function fn_deleteEmp(e){
 		}
 		return response.json();
 	}).then(result=>{
-		console.log(result);
-		const $tbody=document.getElementById("empTable");
-		const $div=document.getElementById("pageBar");
-		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
-		$trList.forEach($tr => {
-		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
-		});
-		//Array.prototype.forEach.call($tbody.children,e=>e.remove());
-		result.students.forEach((e)=>{
-			const $tr=document.createElement('tr');
-			const $td1=document.createElement('td');
-			const $a=document.createElement('a');
-			$td1.innerText=e.emps.empId;
-			
-			const $td2=document.createElement('td');
-			$a.setAttribute('href','#');
-			$a.innerText=e.emps.empName;
-			$td2.appendChild($a);
-			
-			const $td3=document.createElement('td');
-			$td3.innerText=e.dept.deptType;
-			
-			const $td4=document.createElement('td');
-			$td4.innerText=e.job.jobType;
-			
-			const $td5=document.createElement('td');
-			$td5.innerText=e.emps.empCurrent;
-			
-			const $td6 = document.createElement('td');
-			const $button = document.createElement('button');
-			$button.setAttribute('type', 'button');
-			$button.setAttribute('class', 'btn btn-secondary btn-sm');
-			$button.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
-			$button.innerText = '삭제';
-			$td6.appendChild($button);
-			
-			$tr.appendChild($td1);
-			$tr.appendChild($td2);
-			$tr.appendChild($td3);
-			$tr.appendChild($td4);
-			$tr.appendChild($td5);
-			$tr.appendChild($td6);
-			$tbody.appendChild($tr);
-		})
-		$div.innerText="";
-		$div.innerHTML=result.pageBar;
+		if(result>0){
+			alert("퇴사처리 완료 되었습니다.");
+			window.location.href = "${path}/admin/adminEmp";
+		}
 	}).catch(e=>{
 		alert(e);
-	}); */
+	}); 
 
 }
 

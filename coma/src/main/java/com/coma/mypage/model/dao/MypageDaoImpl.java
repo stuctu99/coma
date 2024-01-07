@@ -13,6 +13,11 @@ public class MypageDaoImpl implements MypageDao  {
 		return session.update("emp.updateEmp" , emp);
 	}
 
+	@Override
+	public int updateEmployeeDetail(SqlSession session, Map<String, Object> emp) {		
+		return session.update("emp.updateEmployeeDetail" , emp);
+	}
+
 
 
 }

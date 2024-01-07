@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -31,8 +32,8 @@ public class AdminDao {
 		return session.selectOne("emp.countEmp");
 	}
 	
-	public int insertEmp(SqlSession session, HashMap<String, Object> empName) {
-		return session.insert("emp.insertEmp", empName);
+	public int insertEmp(SqlSession session, HashMap<String, Object> empData) {
+		return session.insert("emp.insertEmp", empData);
 	}
 	
 	public int deleteEmp(SqlSession session, @RequestBody HashMap<String, Object> empId) {
@@ -81,6 +82,11 @@ public class AdminDao {
 	
 	public int countStudentByCom(SqlSession session) {
 		return session.selectOne("student.countStudentByCom");
+	}
+	
+	//학생 수료 자동화 기능
+	public int updateStudentByCom(SqlSession session) {
+		return session.update("student.updateStudentByCom");
 	}
 	
 	//chart.jks 메소드
