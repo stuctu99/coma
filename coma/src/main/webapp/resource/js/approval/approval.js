@@ -1,7 +1,6 @@
 const fn_docType = function(value){
 	
 	$('#docType').val(value);
-	console.log($('#docType').val());
 	
 	
 	document.getElementById("leave").style.display= "none";
@@ -13,11 +12,10 @@ const fn_docType = function(value){
 }
   
   	
-const leave_type = function(value){
+const fn_leaveType = function(value){
 	
-	document.getElementById("half_leave").style.display="none";
-	
-	document.getElementById(value).style.display="block";
+	$('#leaveType').val(value);
+
 }
   	
 const editor = new toastui.Editor({
@@ -26,6 +24,15 @@ const editor = new toastui.Editor({
     initialEditType: 'wysiwyg',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
     previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
 });
+
+
+//const editorForm = document.getElementById('app_form');
+//const editorContentInput = document.getElementById('editorContent');
+//
+//editorForm.addEventListener('submit', function(){
+//	editorContentInput.value = editor.getHtml();
+//	
+//});
 
 /* ----------------------- 파일 첨부 ----------------------- */
 

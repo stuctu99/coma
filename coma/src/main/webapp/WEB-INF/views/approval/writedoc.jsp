@@ -26,7 +26,7 @@
 
     <!-- TEAM COMA SPACE -->
 	<form action="${pageContext.request.contextPath }/approval/insertdoc" method="post"
-					enctype="multipart/form-data" >
+					enctype="multipart/form-data">
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
           <!-- coma content space -->
@@ -147,14 +147,15 @@
 	          			휴가 종류
 	          		</div>
 		          	<div class="col-7">
-		          		<select class="form-control form-control-sm" onchange="leave_type(this.value)">
+		          		<select class="form-control form-control-sm" onchange="fn_leaveType(this.value)";>
 		          		  <option value="" selected disabled hidden>휴가 종류를 선택하세요.</option>
 						  <option>연차</option>
 						  <option>반차(오전)</option>
 						  <option>반차(오후)</option>
 						</select>
-				
+		          		<input type="hidden" name="leaveType" id="leaveType">
 		          	</div>
+		          	
 		          	<div class="col-2">
 		          	</div>
 		  
@@ -172,7 +173,7 @@
 							                <div class="input-group-prepend">
 							                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 							                </div>
-							                <input class="form-control" placeholder="시작 날짜" type="text" >
+							                <input class="form-control" name="leaveStart" placeholder="시작 날짜" type="text" >
 							            </div>
 							        </div>
 							    </div>
@@ -183,7 +184,7 @@
 							                <div class="input-group-prepend">
 							                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 							                </div>
-							                <input class="form-control" placeholder="끝 날짜" type="text" >
+							                <input class="form-control" name="leaveEnd" placeholder="끝 날짜" type="text" >
 							            </div>
 							        </div>
 							    </div>
@@ -208,7 +209,7 @@
 						      <div class="input-group-prepend">
 						        <span class="input-group-text">￦</span>
 						      </div>
-						      <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+						      <input type="text" name="expense" class="form-control" aria-label="Amount (to the nearest dollar)">
 						      <div class="input-group-append">
 						        <span class="input-group-text">.00</span>
 						      </div>
@@ -227,7 +228,7 @@
 					        <div class="input-group-prepend">
 					            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 					        </div>
-					        <input class="form-control datepicker" placeholder="날짜를 선택하세요." type="text" >
+					        <input name="cashDate" class="form-control datepicker" placeholder="날짜를 선택하세요." type="text" >
 					    </div>
 					</div>
 	          	</div>
@@ -248,7 +249,7 @@
 					        <div class="input-group-prepend">
 					            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 					        </div>
-					        <input class="form-control datepicker" placeholder="날짜를 선택하세요." type="text">
+					        <input name="reqDate" class="form-control datepicker" placeholder="날짜를 선택하세요." type="text">
 					    </div>
 					</div>
 	          	</div>
@@ -270,7 +271,7 @@
 				        <div class="input-group-prepend">
 				            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 				        </div>
-				        <input class="form-control datepicker" placeholder="날짜를 선택하세요." type="text">
+				        <input name="etcDate" class="form-control datepicker" placeholder="날짜를 선택하세요." type="text">
 				    </div>
 				</div>
           	</div>
@@ -283,10 +284,11 @@
 <!-- 토스트 에디터 -->
     <div class="row">
       <div class="col-12">
-       	  <div id="content"></div>
+       	  <div id="content" name="content"></div>
       </div>
     </div>      
     
+    <input type=hidden name="editorContent" id="editorContent">
 <!-- 첨부파일 -->
 	<div class="row">
 		<div class="col-12">

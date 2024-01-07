@@ -72,12 +72,21 @@ public class ApprovalController {
 	}
 	
 	@PostMapping("/insertdoc")
-	public String insertApproval(MultipartFile[] upFile, String title, HttpSession session,
-								String docType, 
+	public String insertApproval(MultipartFile[] upFile, HttpSession session,
+								String docType, String title,
 								@RequestParam(name="appr_result[]", required=false) List<String> apprResults,
-								@RequestParam(name="ref_result[]", required=false) List<String> refResults) {
-
-		System.out.println(refResults);
+								@RequestParam(name="ref_result[]", required=false) List<String> refResults,
+								@RequestParam(name="editorContent") String editorContent, //에디터 값 안넘어감
+								String leaveType, String leaveStart, String leaveEnd,
+								Integer expense, String cashDate, String reqDate, String etcDate) {
+		
+		System.out.println(editorContent);
+		System.out.println(title);
+		System.out.println(expense);
+		System.out.println(cashDate);
+		System.out.println(reqDate);
+		System.out.println(etcDate);
+	
 		
 		String path = session.getServletContext().getRealPath("/resource/upload/approval");
 		
