@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Component
+//@Component
 public class ApprovalDoc {
 
 	private String docNo;
