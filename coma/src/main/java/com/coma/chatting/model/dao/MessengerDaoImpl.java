@@ -38,6 +38,13 @@ public class MessengerDaoImpl implements MessengerDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("chatting.selectRoomPasswordCheck",roomInfo);
 	}
+	
+
+	@Override
+	public List<ChattingRoom> selectChatRoomListByType(SqlSession session, String type) {
+		// TODO Auto-generated method stub
+		return session.selectList("chatting.selectChatRoomListByType",type);
+	}
 
 	// insert
 	@Override

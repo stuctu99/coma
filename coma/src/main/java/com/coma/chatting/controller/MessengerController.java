@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,12 @@ public class MessengerController {
 	public List<ChattingRoom> chatRoomList() {
 		return service.selectRoomList();
 	}
+	
+	@GetMapping("/roomlist/{type}")
+	@ResponseBody
+	public List<ChattingRoom> chatRoomListByType(@PathVariable String type){
+		return service.selectChatRoomListByType(type);
+	}
 
 	@PostMapping("/createRoom")
 	@ResponseBody
@@ -58,14 +65,7 @@ public class MessengerController {
 
 		roomType.setRoomType(roomInfo.get("roomType"));
 		room.setRoomTypeObj(roomType);
-		
-		System.out.println();
-		
-		if (!room.getRoomPasswordFlag().equals("")) {
-			room.setRoomPasswordFlag("Y");
-		} else {
-			room.setRoomPasswordFlag("N");
-		}
+		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
 
 		System.out.println(roomInfo);
 		int result = service.insertChattingRoom(room);

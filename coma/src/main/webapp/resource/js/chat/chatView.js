@@ -62,7 +62,26 @@
 
 $("#exit-btn").click(function() {
 	if (confirm("채팅방을 완전히 나가겠습니까?")) {
-		alert("이렇게도된다!!!");
+		const roomNo = $("#roomNo").val();
+		const empId = $("#loginMember").val();
+		fetch("/chatting",{
+			method:"DELETE",
+			headers:{"Content-Type":"application/json"},
+			body:JSON.stringify({"roomNo":roomNo,"empId":empId})
+		})
+		.then(response=>{
+			if(response.status!=200){
+				throw new error("관리자에게 문의하세요!!!");
+			}
+			return response.json();
+		})
+		.then(data=>{
+			if(data.result=="success"){
+				location.href="/messenger";
+			}else{
+				alert("관리자에게 문의하세요!");
+			}
+		})
 	}
 })
 
@@ -118,9 +137,11 @@ server.onmessage = (response) => {
 }
 const messagePrint = (msg) => {
 	const div = document.createElement("div");
+	const msgDiv = document.createElement("div");
 	const content = document.createElement("span");
 	content.innerText = msg.msg;
-	div.appendChild(content);
+	msgDiv.appendChild(content);
+	/*msgDiv.classList.add("col-3");*/
 	div.classList.add("row");
 
 	if (msg.sender == empId) {
@@ -130,7 +151,7 @@ const messagePrint = (msg) => {
 		//이외 receiver
 		div.classList.add("other");
 	}
-
+	div.appendChild(msgDiv)
 	document.querySelector(".messageView"+msg.room).appendChild(div);
 }
 
