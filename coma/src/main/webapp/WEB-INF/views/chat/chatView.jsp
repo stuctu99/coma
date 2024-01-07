@@ -102,7 +102,16 @@ div {
 		</div>
 	</header>
 	<section>
-		<div class="container messageView">
+		<div class="container messageView${roomNo }">
+			<!-- <div class="row openMsgContainer">
+				<h4>접속하셨습니다.</h4>
+			</div>
+			<div class="row other">
+					<span>하이</span>
+			</div>
+			<div class="row me">
+					<span>하이</span>
+			</div> -->
 		</div>
 	</section>
 	<footer id="chatView-footer">

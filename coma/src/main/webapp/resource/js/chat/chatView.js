@@ -55,116 +55,121 @@
 			}
 			msg.value = '';
 
-		}*/
-	$("#exit-btn").click(function(){
-		if(confirm("채팅방을 완전히 나가겠습니까?")){
-			alert("이렇게도된다!!!");
 		}
-	})
-	
-	$("#back").click(function(){
-		window.history.back();
-	})
-		
-	const server = new WebSocket("ws://"+location.host+"/chattingServer");
-	const roomNo = $("#roomNo").val();
-	const empId = $("#loginMember").val();
-	const connectCheck = $("div#"+empId);
-	console.log(roomNo, empId);
-	
-	server.onopen=(response)=>{
-		connectCheck.parent().css("backgroundColor","").css("opacity",0.8);
-		connectCheck.css("color","lime");
-		console.log(empId);
-		console.log(response);
-		/*fetch("/chatting",{
-			method:"post",
-			headers:{"Content-Type":"application/json"},
-			body: JSON.stringify({"roomNo":roomNo,"empId":empId})
-		})
-		.then(response=>{
-			if(response.status!=200){
-				alert("접근할 수 없습니다. 관리자에게 문의하세요. ERROR CODE : "+response.status);
-			}
-			return response.json();
-		})
-		.then(data=>{
-			if(!data){
-				msg = new Message("open",empId,"","",roomNo);				
-				server.send(msg.convert());
-			}else{
-				console.log("이미존재!!");
-			}
-		})*/
-		const msg = new Message("open",empId,"","",roomNo);
-		server.send(msg.convert());
-		
+*/
+
+
+
+$("#exit-btn").click(function() {
+	if (confirm("채팅방을 완전히 나가겠습니까?")) {
+		alert("이렇게도된다!!!");
 	}
-	
-	server.onmessage=(response)=>{
-		console.log(response);
-		const receiveMsg = Message.deconvert(response.data);
-		console.log("asdasd"+receiveMsg);
-		switch(receiveMsg.type){
-			case "open": openMessage(receiveMsg); break;
-			case "msg": messagePrint(receiveMsg); break;
+})
+
+$("#back").click(function() {
+	window.history.back();
+})
+
+const server = new WebSocket("ws://" + location.host + "/chattingServer");
+const roomNo = $("#roomNo").val();
+const empId = $("#loginMember").val();
+const connectCheck = $("div#" + empId);
+console.log(roomNo, empId);
+
+server.onopen = (response) => {
+	connectCheck.parent().css("backgroundColor", "").css("opacity", 0.8);
+	connectCheck.css("color", "lime");
+	console.log(empId);
+	console.log(response);
+	/*fetch("/chatting",{
+		method:"post",
+		headers:{"Content-Type":"application/json"},
+		body: JSON.stringify({"roomNo":roomNo,"empId":empId})
+	})
+	.then(response=>{
+		if(response.status!=200){
+			alert("접근할 수 없습니다. 관리자에게 문의하세요. ERROR CODE : "+response.status);
 		}
-		
-		console.log(receiveMsg);
-	}
-	const messagePrint=(msg)=>{
-		const div = document.createElement("div");
-		const content = document.createElement("span");
-		content.innerText = msg.msg;
-		div.appendChild(content);
-		div.classList.add("row");
-		
-		if(msg.sender==empId){
-			//sender가 로그인한 사원
-			div.classList.add("me");
+		return response.json();
+	})
+	.then(data=>{
+		if(!data){
+			msg = new Message("open",empId,"","",roomNo);				
+			server.send(msg.convert());
 		}else{
-			//이외 receiver
-			div.classList.add("other");
+			console.log("이미존재!!");
 		}
-		
-		document.querySelector(".messageView").appendChild(div);
+	})*/
+	const msg = new Message("open", empId, "", "", roomNo);
+	server.send(msg.convert());
+
+}
+
+server.onmessage = (response) => {
+	console.log(response);
+	const receiveMsg = Message.deconvert(response.data);
+	console.log("asdasd" + receiveMsg);
+	switch (receiveMsg.type) {
+		case "open": openMessage(receiveMsg); break;
+		case "msg": messagePrint(receiveMsg); break;
 	}
-	
-	const sendMessage = () =>{
-		const msg = document.querySelector("#msg").value;
-		document.querySelector("#msg").value="";
-		server.send(new Message("msg",empId,"",msg,roomNo).convert());
+
+	console.log(receiveMsg);
+}
+const messagePrint = (msg) => {
+	const div = document.createElement("div");
+	const content = document.createElement("span");
+	content.innerText = msg.msg;
+	div.appendChild(content);
+	div.classList.add("row");
+
+	if (msg.sender == empId) {
+		//sender가 로그인한 사원
+		div.classList.add("me");
+	} else {
+		//이외 receiver
+		div.classList.add("other");
 	}
-	
-	const openMessage = (msg) =>{
-		const container = $("<div>").addClass("row openMsgContainer");
-		const content = $("<h4>").text(`${msg.sender}님이 접속하셨습니다.`);
-		container.append(content);
-		$("#message-content").append(container);
-	}
-	
-	window.onload=()=>{
-		document.getElementById("msg").addEventListener("keyup",e=>{
-			if(e.key=='Enter'){
-				/*sendMessage();*/
-				document.querySelector("#btnSend").click();
-				document.querySelector("#msg").value="";
-			}
-		})
-	}
-	
-	class Message{
-		constructor(type="",sender="",receiver="",msg="",room=""){
-			this.type = type;
-			this.sender = sender;
-			this.reciever = receiver;
-			this.msg = msg;
-			this.room = room;
+
+	document.querySelector(".messageView"+msg.room).appendChild(div);
+}
+
+const sendMessage = () => {
+	const msg = document.querySelector("#msg").value;
+	document.querySelector("#msg").value = "";
+	server.send(new Message("msg", empId, "", msg, roomNo).convert());
+}
+
+const openMessage = (msg) => {
+	const container = $("<div>").addClass("row openMsgContainer");
+	const content = $("<h4>").text(`${msg.sender}님이 접속하셨습니다.`);
+	container.append(content);
+	console.log("asdasdasdasdasd.messageView"+msg.room);
+	$(".messageView"+msg.room).append(container);
+}
+
+window.onload = () => {
+	document.getElementById("msg").addEventListener("keyup", e => {
+		if (e.key == 'Enter') {
+			/*sendMessage();*/
+			document.querySelector("#btnSend").click();
+			document.querySelector("#msg").value = "";
 		}
-		convert(){
-			return JSON.stringify(this);
-		}
-		static deconvert(data){
-			return JSON.parse(data);
-		}
+	})
+}
+
+class Message {
+	constructor(type = "", sender = "", receiver = "", msg = "", room = "") {
+		this.type = type;
+		this.sender = sender;
+		this.reciever = receiver;
+		this.msg = msg;
+		this.room = room;
 	}
+	convert() {
+		return JSON.stringify(this);
+	}
+	static deconvert(data) {
+		return JSON.parse(data);
+	}
+}
