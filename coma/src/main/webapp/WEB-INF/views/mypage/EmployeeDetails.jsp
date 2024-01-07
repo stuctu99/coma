@@ -152,11 +152,11 @@ text-align: left;
 				<div class="row">
 					<div class="form-group col-6" >
 				        <label for="example-id-input" class="form-control-label">아이디</label>
-				        <input class="form-control" type="text" value="${emp.empId}" id="example-id-input" style="background-color:  #f1edff;" readonly>
+				        <input class="form-control" type="text" value="${emp.empId}" name = "empId" id="example-id-input" style="background-color:  #f1edff;" readonly>
 				    </div>
 	   			    <div class="form-group col-6">  			    
 				        <label for="example-name-input" class="form-control-label">이름</label>
-				        <input class="form-control" type="text" value="${emp.empName}" id="example-name-input" style="background-color:  #f1edff;" readonly>
+				        <input class="form-control" type="text" value="${emp.empName}"  id="example-name-input" style="background-color:  #f1edff;" readonly>
 				    </div>
 				</div>
 			    <div class="row">

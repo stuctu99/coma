@@ -7,18 +7,6 @@
 	<jsp:param name="id" value="mine" />
 </jsp:include>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
- <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const calendarEl = document.getElementById('calendar')
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          expandRows: true, // 화면에 맞게 높이 설정
-        })
-        calendar.render()
-      })
-
-    </script>
-
 
 <!-- TEAM COMA SPACE -->
 <style>
@@ -99,9 +87,9 @@
 			</div>
 			<div class="bigContainer"
 				style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
-				<h5>잔여 휴가 18일 남았습니다.</h5>
+				<h4>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
 				<button type="button" class="btn btn-primary">휴가 신청</button>
-				<button type="button" class="btn btn-primary">휴가 신청</button>
+				<button type="button" class="btn btn-primary" id="vacationButton">휴가 근황</button>
 			</div>
 			<div class="row">
 				<div class="col-12">
@@ -143,7 +131,25 @@
 		</div>
 	</div>
 </div>
+ <script>
+/* 달력 */
+ 	document.addEventListener('DOMContentLoaded', function() {
+	    const calendarEl = document.getElementById('calendar')
+	    const calendar = new FullCalendar.Calendar(calendarEl, {
+	    	initialView: 'dayGridMonth',
+	        expandRows: true, // 화면에 맞게 높이 설정
+	    })
+	        calendar.render();
+    });
+//휴가 근황 페이지 전환되는 기능 
+$('#vacationButton').click(function() {
+	  // 경로 설정
+	  var path = '${path}/mypage/vacationSituation';	  
+	  // 페이지 이동
+	  window.location.href = path;
+});
 
+</script>
 
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

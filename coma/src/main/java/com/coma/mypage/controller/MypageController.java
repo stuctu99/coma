@@ -46,8 +46,9 @@ public class MypageController {
 	//상세보기 수정 메소드
 	@PostMapping("/updatemypage")
 	public String  updateEmployee(@RequestParam Map<String, Object> emp,
-			@RequestParam("empPhoto") MultipartFile file, HttpSession session
-								)throws IOException {	  				
+			@RequestParam("empPhoto") MultipartFile file,
+			HttpSession session //, Model model 
+			)throws IOException {	  				
 		// 프로필 사진 업로드하기 
 		//파일 경로 
 		String profilepath = session.getServletContext().getRealPath("/resource/upload/profile/");
@@ -59,7 +60,7 @@ public class MypageController {
 		    file.transferTo(new File(path));
 		}			
 
-//		System.out.println("EMP" +emp);
+		System.out.println("EMP" +emp);
 		//비밀번호 값 받아서 암호화하기 
 		String newPassword = (String) emp.get("empPw");
 //		System.out.println( "뉴 비밀번호 "+newPassword);
@@ -67,8 +68,22 @@ public class MypageController {
 //	    System.out.println( "암호화된 비밀번호  "+newEncryptedPassword);
 	    emp.put("empPhoto", file.getOriginalFilename());
 	    emp.put("newEmpPw", newEncryptedPassword);
+	    
 		int result = service.updateEmp(emp);
 //		System.out.println(result);
+		
+//		//result 결과에 따라서 메세지 출력 
+//		String msg, loc;		
+//		if(result>0) {
+//			msg="입력성공";
+//			loc="index";
+//		}else {
+//			msg="입력실패";
+//			loc = "mypage/mypageDetails";			
+//		}
+//		model.addAttribute("msg",msg);
+//		model.addAttribute("loc",loc);
+//		return "common/msg";
 		return "redirect:/";
 	}
 	
@@ -100,13 +115,29 @@ public class MypageController {
 	
 	
 	@PostMapping("/EmployeeDetailEnd")
-	public String  updateEmployeeDetail(@RequestParam Map<String, Object> emp) {
+	public String  updateEmployeeDetail(@RequestParam Map<String, Object> emp, Model model) {
 		//logger.debug();
 		
-		System.out.println("Received!!!"+emp);
+		//System.out.println("Received!!!"+emp);
+		
+		//받은 값을 update 시키는 메소드 
 		int result = service.updateEmployeeDetail(emp);
-		System.out.println(result);
-		return "redirect:/admin/adminEmp";
+		//result 결과에 따라서 메세지 출력 
+		String msg, loc;		
+		if(result>0) {
+			msg="입력성공";
+			loc="admin/adminEmp";
+		}else {
+			Object empId = emp.get("empId");
+			msg="입력실패";
+			loc = "mypage/EmployeeDetails?empId=" + empId;
+			
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		return "common/msg";
+		//System.out.println(result);
+		//return "redirect:/admin/adminEmp";
 	}
 	
 	//휴가근황보는 메소드 
