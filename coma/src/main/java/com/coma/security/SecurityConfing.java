@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
 
 
 @Configuration
@@ -26,7 +30,7 @@ public class SecurityConfing {
 					.requestMatchers("/resource/**").permitAll()
 					.requestMatchers("/WEB-INF/views/**").permitAll()
 					.anyRequest().authenticated();
-				})	
+				})	 
 				.formLogin(formlogin->{
 					formlogin
 					.loginPage("/loginpage")
@@ -36,8 +40,20 @@ public class SecurityConfing {
 				.logout(logout->logout.logoutUrl("/logout"))
 				.authenticationProvider(dbpv)
 				.build();
+		
+				
 				
 		}
+	
+//	  public void configure(WebSecurity web) throws Exception{
+//	      web.httpFirewall(defaultHttpFirewall());
+//	      
+//	   }
+//
+//		@Bean
+//		HttpFirewall defaultHttpFirewall() {
+//			      return new DefaultHttpFirewall();
+//	   }
 	}
 
 

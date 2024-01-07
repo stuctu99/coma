@@ -1,5 +1,6 @@
 package com.coma.model.dto;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,12 +28,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+ 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Emp implements UserDetails{
+public class Emp implements UserDetails, Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
    private String empId;
    private String empPw;
@@ -47,6 +50,7 @@ public class Emp implements UserDetails{
    private String empAccess;
    private Dept dept;
    private Job job;
+   
    
    @Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {	
