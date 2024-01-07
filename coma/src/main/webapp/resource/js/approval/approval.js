@@ -1,7 +1,6 @@
 const fn_docType = function(value){
 	
 	$('#docType').val(value);
-	console.log($('#docType').val());
 	
 	
 	document.getElementById("leave").style.display= "none";
@@ -13,12 +12,13 @@ const fn_docType = function(value){
 }
   
   	
-const leave_type = function(value){
+const fn_leaveType = function(value){
 	
-	document.getElementById("half_leave").style.display="none";
-	
-	document.getElementById(value).style.display="block";
+	$('#leaveType').val(value);
+
 }
+
+/* ----------------------- 에디터 생성 ----------------------- */
   	
 const editor = new toastui.Editor({
     el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
@@ -26,6 +26,20 @@ const editor = new toastui.Editor({
     initialEditType: 'wysiwyg',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
     previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
 });
+
+/* ---------------------- 에디터 값 넘기기 ----------------------- */
+
+function submitForm() { //input type="button"
+
+    const editorContentInput = document.getElementById('editorContent'); //hidden input
+    const markdownContent = editor.getMarkdown(); //입력한 값
+    editorContentInput.value = markdownContent; //hidden input에 입력 값 넣기
+    
+    const editorForm = document.getElementById('app_form'); //form태그
+    
+    editorForm.submit(); //form submit
+}
+
 
 /* ----------------------- 파일 첨부 ----------------------- */
 
@@ -132,7 +146,7 @@ const addDelAppr=(function(){
 	
 			
 			/*적힌 값과 선택한 값 일치하는지 비교*/
-				if($('#search_app').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){
+				if($('#search_app').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){ //수정 필요
 					
 					/* 중복 결재자 있는지 확인 */
 					if(!app_all_arr.includes($('#search_app').val())){
@@ -311,7 +325,7 @@ const addDelref=(function(){
 				const emp_job = emp_arr[3];
 			
 			/*적힌 값과 선택한 값 일치하는지 비교*/
-				if($('#search_ref').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){
+				if($('#search_ref').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){ //수정 필요
 					
 					/* 중복 참조자 있는지 확인 */
 					if(!ref_all_arr.includes($('#search_ref').val())){

@@ -7,7 +7,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
-    Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim
+    Coma Login
   </title>
   <!-- Favicon -->
   <link href="${pageContext.request.contextPath }/resource/img/brand/favicon.png" rel="icon" type="image/png">
@@ -49,6 +49,7 @@
               </div> -->
               <form action="/logintest" method="post" role="form">
                 <div class="custom-control custom-control-alternative custom-checkbox" style="margin-bottom: 14px;">
+                
                   <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
                   <label class="custom-control-label" for=" customCheckLogin">
                     <span class="text-muted" style="text-align: center">아이디 저장</span>
