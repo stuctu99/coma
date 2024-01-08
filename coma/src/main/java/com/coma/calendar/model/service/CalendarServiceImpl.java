@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CalendarServiceImpl implements CalendarService {
 	
+
 	private final CalendarDao dao;
 	private final SqlSession session;
 	
@@ -22,6 +23,11 @@ public class CalendarServiceImpl implements CalendarService {
 	public List<Calendar> selectCalendar() {
 		// TODO Auto-generated method stub
 		return dao.selectCalendar(session);
+	}
+	@Override
+	public int calendarInsert(Calendar event) {
+		// TODO Auto-generated method stub
+		return dao.calendarInsert(session,event);
 	}
 
 

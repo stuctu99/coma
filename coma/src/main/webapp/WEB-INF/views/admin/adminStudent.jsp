@@ -13,6 +13,9 @@
 /*     div{
       border: 2px solid red;
     } */
+    .tableSize{
+    	width:300px;
+    }
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
@@ -28,7 +31,7 @@
 		</div>
 		<div class="col-4">
 			<div class="row" style="display: flex; justify-content: center;">
-				<div style="text-align:center;">
+				<div class="tableSize" style="text-align:center;">
 					<h1>학생 근태 수치</h1>
 					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 						<thead class="list">
@@ -45,6 +48,7 @@
 		</div>
 		<div class="col-1"></div>
 	</div>
+	<div style="border: 1px solid #c1c0c073;"></div>
 	<div class="row" style="margin-top:20px;">
 		<div class="col-1"></div>
 		<div class="col-6" >
@@ -57,7 +61,7 @@
 		</div>
 		<div class="col-4">
 			<div class="row" style="display: flex; justify-content: center;">
-				<div style="text-align:center;">
+				<div class="tableSize" style="text-align:center;">
 					<h1>학생 수료율 수치</h1>
 					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 						<thead class="list">
@@ -80,6 +84,7 @@
 		</div>
 		<div class="col-1"></div>
 	</div>
+	<div style="border: 1px solid #c1c0c073;"></div>
 	<div class="row" style="margin-top:20px;">
 		<div class="col-1"></div>
 		<div class="col-6" >
@@ -92,7 +97,7 @@
 		</div>
 		<div class="col-4">
 			<div class="row" style="display: flex; justify-content: center;">
-				<div style="text-align:center;">
+				<div class="tableSize" style="text-align:center;">
 					<h1>학생 취업율 수치</h1>
 					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 						<thead class="list">
@@ -116,19 +121,13 @@
 		<div class="col-1"></div>
 	</div>
 </div>
+<div style="border: 1px solid #c1c0c073;"></div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
 	<h1 style="margin-top:50px;">학생 리스트</h1>
 </div>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row" style="display: flex; align-items: center;">
 		<div class="col-1"></div>
-		<!-- <div class="col-1" style="margin-left:15px;">
-			<select class="form-control form-control-sm" id="searchData">
-			  <option value="student">학생</option>
-			  <option value="studentCom">수료생</option>
-			  <option value="studentEmp">취업생</option>
-			</select>
-		</div> -->
 		<div class="col-1.5" style="padding-left:0px; ">
 			<input class="form-control form-control-sm" type="text" id="textData" placeholder="이름으로 검색">
 		</div>

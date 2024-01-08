@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="commute">
+	<resultMap type="commute" id="commuteMap">
+		<id column="EMP_COMMUTE_NO" property="CommuteNo"/>
+		<result column="EMP_COMMUTE_CLOCKOUT" property="CommuteClockout"/>
+		<result column="EMP_COMMUTE_CLOCKIN" property="CommuteClockin"/>
+		<result column="EMP_COMMUTE_WORKDATE" property="commuteWorkDate"/>
+		<result column="EMP_COMMUTE_STATUS" property="CommuteStatus"/>
+		<result column="EMP_COMMUTE_STARTTIME" property="commuteStarttime"/>
+		<result column="EMP_COMMUTE_ENDTIME" property="commuteEndTime"/>		
+	</resultMap>
+
+
+</mapper>

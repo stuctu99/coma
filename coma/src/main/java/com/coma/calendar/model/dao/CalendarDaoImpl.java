@@ -11,10 +11,16 @@ import com.coma.model.dto.Calendar;
 @Repository
 public class CalendarDaoImpl implements CalendarDao {
 
+
 	@Override
 	public List<Calendar> selectCalendar(SqlSession session) {
 		// TODO Auto-generated method stub
 		return session.selectList("calendar.selectCalendar");
+	}
+	@Override
+	public int calendarInsert(SqlSession session, Calendar event) {
+		// TODO Auto-generated method stub
+		return session.insert("calendar.calendarInsert",event);
 	}
 
 	

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<!-- null 값에 대해서  null로 처리하겠다-->
+        <setting name="jdbcTypeForNull" value="NULL" />
+    </settings>
+	<typeAliases>
+			<!-- jm -->
+			<typeAlias type="com.coma.model.dto.Emp" alias="emp"/>
+			<typeAlias type="com.coma.model.dto.Board" alias="board"/>
+			<typeAlias type="com.coma.model.dto.BoardFile" alias="boardFile"/>
+			<typeAlias type="com.coma.model.dto.Reply" alias="reply"/>
+			<typeAlias type="com.coma.model.dto.Dept" alias="dept" />
+			<typeAlias type="com.coma.model.dto.Job" alias="job" />
+			
+			<!-- wh -->
+	        <typeAlias type="com.coma.model.dto.Commute" alias="commute" />
+			
+			<!-- yc -->
+			<typeAlias type="com.coma.model.dto.ChattingRoom" alias="chattingRoom" />
+	     	<typeAlias type="com.coma.model.dto.ChattingMessage" alias="chattingMessage" />
+	        <typeAlias type="com.coma.model.dto.ChattingJoin" alias="chattingJoin" />
+			<typeAlias type="com.coma.model.dto.ChattingRoomType" alias="chattingRoomType"/>
+			
+			<!-- bo -->
+			<typeAlias type="com.coma.model.dto.ApprovalDoc" alias="apprDoc" />
+			<typeAlias type="com.coma.model.dto.ApprovalLeave" alias="apprLeave" />
+			<typeAlias type="com.coma.model.dto.ApprovalCash" alias="apprCash"/>
+			<typeAlias type="com.coma.model.dto.ApprovalRequest" alias="apprReq" />
+			<typeAlias type="com.coma.model.dto.ApprovalEtc" alias="apprEtc" />
+			<typeAlias type="com.coma.model.dto.ApprovalAttachment" alias="apprAttach" />
+			<typeAlias type="com.coma.model.dto.Approver" alias="approver" />
+			<typeAlias type="com.coma.model.dto.Referrer" alias="refer" />
+			
+			<!-- gh -->
+			<typeAlias type="com.coma.model.dto.Student" alias="student"/>
+			<typeAlias type="com.coma.model.dto.StudentCommute" alias="studentCommute"/>
+			<typeAlias type="com.coma.model.dto.Calendar" alias="calendar"/>
+			
+		</typeAliases>
+</configuration>

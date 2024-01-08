@@ -8,5 +8,5 @@ import com.coma.model.dto.Calendar;
 public interface CalendarService {
 
 	List<Calendar> selectCalendar();
-
+	int calendarInsert(Calendar event);
 }
