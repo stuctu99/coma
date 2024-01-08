@@ -144,7 +144,7 @@ input[type="datetime-local"] {
               
               <div>
               <span>일정색상</span>
-               <select id="calBColor">
+               <select id="calColor">
                   <option value="red">빨강색</option>
                   <option value="orange">주황색</option>
                   <option value="yellow">노랑색</option>
@@ -173,7 +173,7 @@ input[type="datetime-local"] {
         const calStart = document.querySelector("#calStart");
         const calEnd = document.querySelector("#calEnd");
         const calTitle = document.querySelector("#calTitle");
-        const calBColor = document.querySelector("#calBColor");
+        const calColor = document.querySelector("#calColor").value;
         const calContent = document.querySelector("#calContent");
 
 
@@ -215,7 +215,7 @@ input[type="datetime-local"] {
            /*  events:[
              ], */
              events: {
-            	    url: "/calendar/calendar.do",
+            	    url: "calendar/calendar.do",
             	    method: "GET",
             	    extraParams: {
             	        dataType: "JSON"
@@ -226,7 +226,9 @@ input[type="datetime-local"] {
             	            events.push({
             	                title: event.calTitle,
             	                start: event.calStart,
-            	                end: event.calEnd
+            	                end: event.calEnd,
+            	                 backgroundColor: event.calColor
+            	                /* borderColor: calColor */
             	            });
             	        });
             	  		console.log(data);
@@ -264,32 +266,34 @@ input[type="datetime-local"] {
         // 캘린더 이벤트 등록
         calendar.on("eventAdd", info => console.log("Add:", info
         ));
-        calendar.on("eventChange", info => console.log("Change:", info));
-        calendar.on("eventRemove", info => console.log("Remove:", info));
+         /*  calendar.on("eventChange", info => console.log("Change:", info));
+        calendar.on("eventRemove", info => console.log("Remove:", info)); */
         calendar.on("eventClick", info => {
             console.log("eClick:", info);
             console.log('Event: ', info.event.extendedProps);
             console.log('Coordinates: ', info.jsEvent);
             console.log('View: ', info.view); 
         });
-        calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
-        calendar.on("eventMouseLeave", info => console.log("eLeave:", info));
+        /* calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
+        calendar.on("eventMouseLeave", info => console.log("eLeave:", info)); */ 
         calendar.on("dateClick", info => {
-        	console.log(info);
+        	console.log("dateClick: "+info);
         	console.log("dateClick:", info.dateStr);
         	calStart.value=info.dateStr+" 09:00:00";
         	calEnd.value=info.dateStr+" 18:00:00";
-        	$("#calTitle").val($(".fc-event-title").text());
+        	
             
   		}); 
         calendar.on("select", info => {
-            console.log("select:", info);          
+           console.log("select : " , info);          
             calStart.value=info.startStr+" 09:00:00";
            var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
            var dateString = endData.toISOString();
            dateString = dateString.split("T")[0] + " 18:00:00";
            calEnd.value=  dateString;
-  
+            console.log("엔드전 : ", info.endStr); 
+           info.endStr=calEnd.value; 
+           console.log("엔드스타 : ",info.endStr);
             Modal.style.display = "block";         
         });
 
@@ -302,18 +306,29 @@ input[type="datetime-local"] {
                 return;
                 
             }
-            let bColor = calBColor.value;
-
+            let bColor = calColor.value;
+		
             let event = {
-                start: calStart.value,
-                end: calEnd.value,
-                title: calTitle.value,
-
-       
-                backgroundColor: bColor
-			// 아마 이부분에 ajax가 들어가면 될거같아요
+            
+            		calStart: calStart.value,
+                    calEnd: calEnd.value,
+                    calTitle: calTitle.value, 
+                    calColor: calColor
             };
-            calendar.addEvent(event);
+			
+            $.ajax({
+                url: "/calendar/calendarInsert",
+                method: "POST",
+                dataType: "json",
+                data: JSON.stringify(event),
+                contentType: 'application/json',
+                success: function(data){
+		            calendar.addEvent(event);                	
+                },
+                error: function(){
+                	alert('일정등록중 오류가 발생하였습니다 다시 시도하십시오');
+                }
+            })
             
             fMClose();
         }
