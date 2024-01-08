@@ -9,6 +9,7 @@
 		<result column="EMP_COMMUTE_STATUS" property="CommuteStatus"/>
 		<result column="EMP_COMMUTE_STARTTIME" property="commuteStarttime"/>
 		<result column="EMP_COMMUTE_ENDTIME" property="commuteEndTime"/>		
+		<association property="" resultMap="emp.empMap" />
 	</resultMap>
 
 

@@ -39,3 +39,7 @@ log/
 logs/
 .DS_Store
 upload/
+
+### mapper ###
+/src/main/resources/mappers/emp
+/src/main/resources/mappers/student
