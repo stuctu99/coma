@@ -67,28 +67,27 @@
 				style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
 				<h1 class="current-time" id="current-time">09:11:32</h1>
 				<div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly;">
-					<div class="btncss">
+					<div class="btncss" id ="clockin">
 						<i class="ni ni-briefcase-24"></i>
 					</div>
-					<div  class="btncss">
+					<div  class="btncss" id ="starttime">
 						<i class="ni ni-button-pause"></i>
 					</div >
-					<div class="btncss">
+					<div class="btncss" id ="endtime">
 						<i class="ni ni-button-play"></i>
 					</div>
-					<div class="btncss">
+					<div class="btncss" id ="clockout">
 						<i class="ni ni-spaceship"></i>
 					</div>
 				</div>
-				<div class="row " 
-					style="display: flex; flex-direction: row; justify-content: space-evenly;">
-					<div>출근하기</div>
-					<div>외출하기</div>
-					<div>복귀하기</div>
-					<div>퇴근하기</div>
+				<div class="row "  style="display: flex; flex-direction: row; justify-content: space-evenly;">
+					<label for="clockin" class="form-control-label">출근하기</label>
+					<label for="starttime" class="form-control-label">외출하기</label>
+					<label for="endtime" class="form-control-label">복귀하기</label>
+					<label for="clockout" class="form-control-label">퇴근하기</label>
+
 				</div>
-				<div class="row "
-					style="display: flex; flex-direction: row; justify-content: space-evenly;">
+				<div class="row " style="display: flex; flex-direction: row; justify-content: space-evenly;">
 					<div>08:51</div>
 					<div>11:50</div>
 					<div>15:23</div>
@@ -157,11 +156,14 @@
 	        calendar.render();
     });
 //휴가 근황 페이지 전환되는 기능 
-$('#vacationButton').click(function() {
-	  // 경로 설정
-	  var path = '${path}/mypage/vacationSituation';	  
-	  // 페이지 이동
-	  window.location.href = path;
+/* $(document).ready(function() {
+    $('#vacationButton').click(function() {
+        window.location.href = '${path}/mypage/vacationSituation';
+    });
+}); */
+//출근하기 버튼누르기 !
+document.getElementById('clockin').addEventListener('click', function() {
+    window.location.href = '${path}/commute/insertCommute';
 });
 
 </script>
