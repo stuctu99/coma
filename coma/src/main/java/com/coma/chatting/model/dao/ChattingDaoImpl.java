@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.coma.model.dto.ChattingJoin;
+import com.coma.model.dto.ChattingMessage;
 
 @Repository
 public class ChattingDaoImpl implements ChattingDao {
@@ -36,6 +37,13 @@ public class ChattingDaoImpl implements ChattingDao {
 		// TODO Auto-generated method stub
 		return session.delete("chatting.deleteChatRoomJoinEmpById",data);
 	}
+
+	@Override
+	public int insertChattingMessage(SqlSession session, ChattingMessage message) {
+		// TODO Auto-generated method stub
+		return session.insert("chatting.insertChattingMessage",message);
+	}
+	
 
 	
 }

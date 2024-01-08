@@ -1,5 +1,7 @@
 package com.coma.model.dto;
 
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +17,5 @@ public class Message {
 	private String receiver;
 	private String msg;
 	private String room;
+	private Timestamp time;
 }

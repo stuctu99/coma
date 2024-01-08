@@ -86,15 +86,17 @@ $("#exit-btn").click(function() {
 })
 
 $("#back").click(function() {
-	window.history.back();
+	close();
 })
 
 const server = new WebSocket("ws://" + location.host + "/chattingServer");
 const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
 const connectCheck = $("div#" + empId);
+const time = Date.now();
 console.log(roomNo, empId);
 
+console.log(empName);
 server.onopen = (response) => {
 	connectCheck.parent().css("backgroundColor", "").css("opacity", 0.8);
 	connectCheck.css("color", "lime");
@@ -119,15 +121,16 @@ server.onopen = (response) => {
 			console.log("이미존재!!");
 		}
 	})*/
-	const msg = new Message("open", empId, "", "", roomNo);
+	/*constructor(type,chatNo,chatContent,chatCreateDate,empId,roomNo)*/
+	const msg = new Message("open","","",new Date(time),empId,roomNo);
 	server.send(msg.convert());
 
 }
 
 server.onmessage = (response) => {
-	console.log(response);
+	console.log("response응답데이터 "+response.data);
 	const receiveMsg = Message.deconvert(response.data);
-	console.log("asdasd" + receiveMsg);
+	console.log("asdasd" + receiveMsg.type);
 	switch (receiveMsg.type) {
 		case "open": openMessage(receiveMsg); break;
 		case "msg": messagePrint(receiveMsg); break;
@@ -140,12 +143,12 @@ const messagePrint = (msg) => {
 	const msgDiv = document.createElement("div");
 	const content = document.createElement("span");
 	
-	content.innerText = msg.msg;
+	content.innerText = msg.chatContent;
 	msgDiv.appendChild(content);
 	/*msgDiv.classList.add("col-3");*/
 	div.classList.add("row");
 
-	if (msg.sender == empId) {
+	if (msg.empId == empId) {
 		//sender가 로그인한 사원
 		div.classList.add("me");
 	} else {
@@ -153,21 +156,21 @@ const messagePrint = (msg) => {
 		div.classList.add("other");
 	}
 	div.appendChild(msgDiv)
-	document.querySelector(".messageView"+msg.room).appendChild(div);
+	document.querySelector(".messageView"+msg.roomNo).appendChild(div);
 }
 
 const sendMessage = () => {
 	const msg = document.querySelector("#msg").value;
 	document.querySelector("#msg").value = "";
-	server.send(new Message("msg", empId, "", msg, roomNo).convert());
+	/*type,chatNo,chatContent,chatCreateDate,empId,roomNo*/
+	server.send(new Message("msg","",msg,new Date(time),empId,roomNo).convert());
 }
 
 const openMessage = (msg) => {
 	const container = $("<div>").addClass("row openMsgContainer");
-	const content = $("<h4>").text(`${msg.sender}님이 접속하셨습니다.`);
+	const content = $("<h4>").text(`${msg.empId}님이 접속하셨습니다.`);
 	container.append(content);
-	console.log("asdasdasdasdasd.messageView"+msg.room);
-	$(".messageView"+msg.room).append(container);
+	$(".messageView"+msg.roomNo).append(container);
 }
 
 window.onload = () => {
@@ -181,12 +184,22 @@ window.onload = () => {
 }
 
 class Message {
-	constructor(type = "", sender = "", receiver = "", msg = "", room = "") {
+	/*constructor(type = "", sender = "", receiver = "", msg = "", room = "", time) {
 		this.type = type;
 		this.sender = sender;
 		this.reciever = receiver;
 		this.msg = msg;
 		this.room = room;
+		this.time = time;
+	}*/
+	
+	constructor(type="",chatNo="",chatContent="",chatCreateDate,empId="",roomNo=""){
+		this.type=type;
+		this.chatNo = chatNo;
+		this.chatContent=chatContent;
+		this.chatCreateDate = chatCreateDate;
+		this.empId= empId;
+		this.roomNo = roomNo;
 	}
 	convert() {
 		return JSON.stringify(this);

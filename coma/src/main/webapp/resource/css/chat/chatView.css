@@ -50,10 +50,7 @@ section>div:nth-last-child(1){
 	border-radius: 12px;
 }
 
-.chat-title img#joinList{
-	width: 15px;
-	height: 15px;
-}
+
 
 .profile-list{
 	height: 518px !important;

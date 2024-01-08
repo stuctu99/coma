@@ -48,7 +48,7 @@ div {
 					<button id="bars">&#9776</button>
 				</div>
 				<div class="col-11 chat-title">
-					<h1>itTalk &nbsp;<img id="joinList" src="${path }/resource/img/chat/user.png" alt="joinMember-list" /></h1>		
+					<h1>itTalk</h1>		
 					<input type="hidden" id="roomNo" value="${roomNo}"/>
 					<input type="hidden" id="loginMember" value="${loginmember.empId }"/>
 				</div>
@@ -145,7 +145,6 @@ div {
 <script src="${path }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script src="${path }/resource/js/chat/chat.js"></script>
-<script src="${path }/resource/js/chat/chatView.js"></script>
 <script>
 	let bars = document.querySelector("#bars");
 	let menu = document.querySelector("#menu");
@@ -153,5 +152,8 @@ div {
 	bars.addEventListener('click', function() {
 		menu.classList.toggle("active");
 	});
+	
+	const empName = "${loginmember.empName}";
 </script>
+<script src="${path }/resource/js/chat/chatView.js"></script>
 </html>

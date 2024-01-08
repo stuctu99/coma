@@ -1,6 +1,6 @@
 package com.coma.model.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ChattingMessage {
+	private String type;
 	private String chatNo;
 	private String chatContent;
-	private Date chatCreateDate;
-	private Emp empObj; //String empId
-	private ChattingRoom roomObj; //String roomNo
+	private Timestamp chatCreateDate;
+	private String empId; //String empId
+	private String roomNo; //String roomNo
 }

@@ -28,6 +28,8 @@ $(".emp-list-btn").click(function() {
 	</div>*/
 	
 $(".chatting-list-btn").click(function() {
+	const type = $("#searchType");
+	type.val("ALL").prop("selected",true);
 	$(this).css("backgroundColor", "#edebf0").css("opacity", 0.9);
 	$(this).children().css("width", "45px").css("height", "45px");
 	$(".emp-list-btn").css("backgroundColor", "white").css("cursor", "pointer").css("opacity", 1.0);
@@ -59,8 +61,10 @@ $(".chatting-list-btn").click(function() {
 			const $recentMsg = $("<small>").text("테스트");
 			const $i = $("<div>").addClass("col-1 chatting-room");
 			const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
+			/*const $img = $("<img>").attr("src","/resource/img/chat/user.png").attr("id","joinList");*/
+			const $user_i = $("<i>").addClass("fa-solid fa-user");
 			$room_enter.attr("onclick","enter_room('"+d.roomNo+"','"+d.roomPasswordFlag+"');");
-			
+			/*<img id="joinList" src="${path }/resource/img/chat/user.png" alt="joinMember-list" />*/
 			if(d.roomPasswordFlag=='Y'){
 				 $i.append($("<i>").addClass("fa-solid fa-lock"));
 			}else{
@@ -87,12 +91,13 @@ $(".chatting-list-btn").click(function() {
 			/*$div_btn.append($input);*/
 			$div.append($div_type);
 			$div.append($div_title);
+			$div_title.append($user_i);
 			$div_title.append($("<br>"));
 			$div_title.append($recentMsg);
 			$div.append($i);
 			$div.append($div_btn);
 			console.log($div);
-			$content.append($div);		
+			$content.append($div);
 		})
 
 	})
@@ -100,8 +105,7 @@ $(".chatting-list-btn").click(function() {
 
 /* 방 유형별 출력 */
 const fn_roomListByType = (e) => {
-	const type = $("#searchType").val();
-	console.log(type);
+	type = $("#searchType").val();
 	$(this).css("backgroundColor", "#edebf0").css("opacity", 0.9);
 	$(this).children().css("width", "45px").css("height", "45px");
 	$(".emp-list-btn").css("backgroundColor", "white").css("cursor", "pointer").css("opacity", 1.0);
@@ -124,6 +128,7 @@ const fn_roomListByType = (e) => {
 			/*const $content = $(".chatting-list");*/
 			const $content = $(".content");
 			$content.html("");
+		if(data.length>0){
 		data.forEach(d=>{
 			const $div = $("<div>").addClass("row");
 			const $div_type = $("<div>").addClass("col-2 chatting-room").css("display","flex").css("justify-content","center").css("align-items","center");
@@ -171,7 +176,10 @@ const fn_roomListByType = (e) => {
 			console.log($div);
 			$content.append($div);		
 		})
-
+		}else{
+			$content.html($("<h3>").text("생성된 채팅방이 없습니다."));
+			$content.css("text-align","center");
+		}
 	})
 }
 
@@ -306,7 +314,8 @@ const enter_chattingRoom = (roomNo) =>{
 		//ChattingJoin 객체 전달 String roomNo, String empId
 		console.log(data);
 		if(data){
-			location.href="/chatting/room/"+roomNo;
+			/*location.href="/chatting/room/"+roomNo;*/
+			open("/chatting/room/"+roomNo,"_blank","width=600px; height=600px;");
 		}
 	})
 	/*ajax 통신으로 구현 할 수 있지 않을까?*/

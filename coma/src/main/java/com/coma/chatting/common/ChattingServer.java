@@ -9,7 +9,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.coma.model.dto.Message;
+import com.coma.chatting.model.service.ChattingService;
+import com.coma.model.dto.ChattingMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class ChattingServer extends TextWebSocketHandler {
 	private Map<String, WebSocketSession> clients = new HashMap<String, WebSocketSession>();
 	
 	private final ObjectMapper mapper; //Jackson Converter
+	private final ChattingService service;
 
 	
 	
@@ -37,7 +39,8 @@ public class ChattingServer extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println("메세지 받았다.");
 		System.out.println(message.getPayload()); // 클라이언트가 전송한 메세지
-		Message msg = mapper.readValue(message.getPayload(), Message.class);
+		ChattingMessage msg = mapper.readValue(message.getPayload(), ChattingMessage.class);
+		System.out.println("데이터가 어떻게 들어오는거니? "+msg);
 		switch(msg.getType()) {
 			case "open":addClient(session,msg); break;
 			case "msg":sendMessage(msg);break;
@@ -51,35 +54,40 @@ public class ChattingServer extends TextWebSocketHandler {
 		System.out.println(status.getReason() + " " + status.getCode());
 	}
 	
-	private void addClient(WebSocketSession session, Message msg) {
+	private void addClient(WebSocketSession session, ChattingMessage msg) {
 		//이미 세션이 연결되어 있는 채팅방 존재 체크
-		boolean roomCheck = room.containsKey(msg.getRoom());
+		boolean roomCheck = room.containsKey(msg.getRoomNo());
 		
 		//채팅방 존재 시 존재하는 채팅방에 세션정보 추가
 		if(roomCheck) {
 			for(Map.Entry<String,Map<String,WebSocketSession>> chatRoom : room.entrySet()) {
 				System.out.println("현재 세션 유지중인 채팅방 리스트 : "+chatRoom);
-				if(chatRoom.getKey().equals(msg.getRoom())) {
-					clients.put(msg.getSender(), session);
+				if(chatRoom.getKey().equals(msg.getRoomNo())) {
+					clients.put(msg.getEmpId(), session);
 					
 				}
 			}
-			room.put(msg.getRoom(), clients);
+			room.put(msg.getRoomNo(), clients);
 			sendMessage(msg);
 		}else {
 			//채팅방 정보가 없을 때 최초 입장하는 세션을 기준으로 방정보를 session에 먼저 넣기
-			clients.put(msg.getSender(),session);
-			room.put(msg.getRoom(), clients);
+			clients.put(msg.getEmpId(),session);
+			room.put(msg.getRoomNo(), clients);
 			sendMessage(msg);
 		}
+		System.out.println("채팅방에 존재하는 세션정보: "+room.get(msg.getRoomNo()));
 		
 	}
 	
-	private void sendMessage(Message msg) {
+	private void sendMessage(ChattingMessage msg) {
 //		모든접속자에게 메세지 전송 => 특정 방 접속자에게 보낼 수 있는 로직 구현하기
+		
+		if(msg.getType().equals("msg")) {
+			int result = service.insertChattingMessage(msg);
+		}
 		System.out.println("Message정보출력 ======= "+msg);
 		for(Map.Entry<String, Map<String,WebSocketSession>> chatRoom : room.entrySet()) {
-			if(chatRoom.getKey().equals(msg.getRoom())) {
+			if(chatRoom.getKey().equals(msg.getRoomNo())) {
 			for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
 				WebSocketSession session = client.getValue();
 				System.out.println("session INFO : "+ session);
