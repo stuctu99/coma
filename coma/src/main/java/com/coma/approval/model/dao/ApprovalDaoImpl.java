@@ -5,13 +5,20 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.coma.model.dto.ApprovalAttachment;
+import com.coma.model.dto.ApprovalCash;
 import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.ApprovalEtc;
+import com.coma.model.dto.ApprovalLeave;
+import com.coma.model.dto.ApprovalRequest;
+import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
+import com.coma.model.dto.Referrer;
 
 @Repository
 public class ApprovalDaoImpl implements ApprovalDao {
 
-	
+
 	@Override
 	public List<Emp> selectEmpByData(SqlSession session, String data){
 		
@@ -19,8 +26,46 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	}
 	
 	@Override
-	public int insertApproval(SqlSession session, ApprovalDoc all) {
-		return 0;
+	public int insertApprovalDoc(SqlSession session, ApprovalDoc doc) {
+		return session.insert("approval.insertApprovalDoc", doc);
 	}
+
+	@Override
+	public int insertLeave(SqlSession session, ApprovalLeave leave) {
+		return session.insert("approval.insertLeave", leave);
+	}
+
+	@Override
+	public int insertCash(SqlSession session, ApprovalCash cash) {
+		return session.insert("approval.insertCash", cash);
+	}
+
+	@Override
+	public int insertReq(SqlSession session, ApprovalRequest req) {
+		return session.insert("approval.insertReq", req);
+	}
+
+	@Override
+	public int insertEtc(SqlSession session, ApprovalEtc etc) {
+		return session.insert("approval.insertEtc",etc);
+	}
+
+	@Override
+	public int insertAttach(SqlSession session, ApprovalAttachment file) {
+		return session.insert("approval.insertAttach", file);
+	}
+
+	@Override
+	public int insertApprover(SqlSession session, Approver approver) {
+		return session.insert("approval.insertApprover", approver);
+	}
+
+	@Override
+	public int insertRefer(SqlSession session, Referrer ref) {
+		return session.insert("approval.insertRefer", ref);
+	}
+
+
+	
 
 }
