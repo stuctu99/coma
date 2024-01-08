@@ -19,4 +19,5 @@ public class Commute {
 	private Date commuteStarttime;
 	private Date commuteEndTime;
 	
+	
 }
