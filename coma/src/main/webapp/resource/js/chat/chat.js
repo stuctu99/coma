@@ -284,6 +284,12 @@ $(function(){
 	})
 })
 
+/* modal창 출력 시 input태그 autofocus하는 방법 */
+$(function(){
+	$("#passwordScreen").on("shown.bs.modal",function(){
+		$("#passwordCode").focus();	
+	})
+})
 
 /* 방입장 전 체크 */
 const enter_room = (roomNo,roomPasswordFlag) => {
