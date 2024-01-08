@@ -34,8 +34,11 @@ build/
 
 Scripts/
 .dbeaver/
-.application.yml
+application.yml
 log/
 logs/
 .DS_Store
 upload/
+
+### mapper ###
+src/main/resources/

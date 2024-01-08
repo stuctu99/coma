@@ -27,11 +27,16 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	
 	@Override
 	public int insertApprovalDoc(SqlSession session, ApprovalDoc doc) {
-		return session.insert("approval.insertApprovalDoc", doc);
+		
+		System.out.println("dao doc까지는 오니????");
+		int result = session.insert("approval.insertApprovalDoc", doc);
+		System.out.println("dao return 확인: "+ result);
+		return result;
 	}
 
 	@Override
 	public int insertLeave(SqlSession session, ApprovalLeave leave) {
+		System.out.println("leave실행전*****");
 		return session.insert("approval.insertLeave", leave);
 	}
 
@@ -52,16 +57,19 @@ public class ApprovalDaoImpl implements ApprovalDao {
 
 	@Override
 	public int insertAttach(SqlSession session, ApprovalAttachment file) {
+		System.out.println("attach 실행 전**********");
 		return session.insert("approval.insertAttach", file);
 	}
 
 	@Override
 	public int insertApprover(SqlSession session, Approver approver) {
+		System.out.println("dao insertApprover 실행 전: ");
 		return session.insert("approval.insertApprover", approver);
 	}
 
 	@Override
 	public int insertRefer(SqlSession session, Referrer ref) {
+		System.out.println("dao insertRef 실행 전: ");
 		return session.insert("approval.insertRefer", ref);
 	}
 
