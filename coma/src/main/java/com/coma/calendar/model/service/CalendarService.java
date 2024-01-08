@@ -1,6 +1,7 @@
 package com.coma.calendar.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.coma.model.dto.Calendar;
 
@@ -8,5 +9,6 @@ import com.coma.model.dto.Calendar;
 public interface CalendarService {
 
 	List<Calendar> selectCalendar();
-	int calendarInsert(Calendar event);
+	List<Calendar> selectCalendarDept(String deptCode);
+	int calendarInsert(Map<String,String> event);
 }
