@@ -28,25 +28,26 @@ public class CommuteServiceImpl implements CommuteService {
 	@Override
 	public Commute selectCommute(String empId) {
 		// TODO Auto-generated method stub
-		return null;
+		//return dao.selectCommute(session,empId);
+		return dao.selectCommute(session,empId);
 	}
 
 	@Override
-	public int updateClockout(Map<String, Object> emp) {
+	public int updateClockout(Map<String, Object> empId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.updateClockout(session,empId);
 	}
 
 	@Override
-	public int updateStartTime(Map<String, Object> emp) {
+	public int updateStartTime(Map<String, Object> empId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.updateStartTime(session,empId);
 	}
 
 	@Override
-	public int updateEndTime(Map<String, Object> emp) {
+	public int updateEndTime(Map<String, Object> empId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.updateEndTime(session,empId);
 	}
 
 

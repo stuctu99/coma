@@ -11,16 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Commute {
-	private String commuteNo;
-	private Emp emp;
-	private Date commuteClock;
-	private Date commuteClockin;
-	private Date commuteWorkDate;
-	private String commuteStatus;
-	private Date commuteStarttime;
-	private Date commuteEndtime;
-	private String commutelateness;
-	private String commuteAbsence;
-	
-	
+   private String commuteNo;
+   private String empId;
+   private Date commuteClockout;
+   private Date commuteClockin;
+   private Date commuteWorkDate;
+   private String commuteStatus;
+   private Date commuteStarttime;
+   private Date commuteEndtime;
+   private String commutelateness;
+   private String commuteAbsence;
+
 }
