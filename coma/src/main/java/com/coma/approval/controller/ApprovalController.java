@@ -137,7 +137,8 @@ public class ApprovalController {
 								@RequestParam(name="ref_result[]", required=false) List<String> refResults,
 								String editorContent,
 								String leaveType, String leaveStart, String leaveEnd,
-								Integer expense, String cashDate, String reqDate, String etcDate) {
+								Integer expense, String cashDate, String reqDate, String etcDate,
+								Model model) {
 		
 
 		
@@ -296,14 +297,25 @@ public class ApprovalController {
 		doc.setApprover(approver);
 		doc.setRef(ref);
 		
+		String msg, loc;
+		try {
+			service.insertApproval(doc);	
+			msg="문서 등록 성공";
+			loc="approval/writedoc"; // 결재 문서함 주소로 수정 
+		}catch(RuntimeException e){
+			msg="문서 등록 실패";
+			loc="approval/writedoc";
+			for(ApprovalAttachment a : files) {
+				File delFile = new File(path, a.getAttachReName());
+				delFile.delete();
+			}
+		}
 		
-		service.insertApproval(doc);
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
 		
 		
-		 
-
-		
-		return "redirect:/approval/writedoc";
+		return "common/msg";
 	}
 //---------------------------------------------------------------------
 	

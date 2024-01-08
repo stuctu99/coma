@@ -72,7 +72,7 @@
 
 	<insert id="insertApprovalDoc" parameterType="apprDoc">
 		INSERT INTO APPRVAL_DOC VALUES('DOC_'||SEQ_APPROVAL_NO.NEXTVAL, #{docType}, #{docTitle}, DEFAULT, NULL, '대기', #{empId})
-		<selectKey keyProperty="docNo" order="AFTER" resultType="_int">
+		<selectKey keyProperty="docNo" order="AFTER" resultType="string">
 			SELECT 'DOC_'||SEQ_APPROVAL_NO.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
