@@ -41,5 +41,4 @@ logs/
 upload/
 
 ### mapper ###
-/src/main/resources/mappers/emp/*.xml
-/src/main/resources/mappers/student/*.xml
+src/main/resources/
