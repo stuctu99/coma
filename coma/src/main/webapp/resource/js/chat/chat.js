@@ -266,12 +266,23 @@ const passwordCheck = () =>{
 	.then(data=>{
 		console.log(data);
 		if(data.flag){
+			$("#passwordCode").val("");
 			enter_chattingRoom(data.room.roomNo);
+			$("#passwordScreen").modal('hide');
 		}else{
 			alert("비밀번호가 틀립니다.");
+			$("#passwordCode").val("");
 		}
 	})
 }
+
+$(function(){
+	$("#passwordCode").on("keyup", (e) => {
+		if (e.key == 'Enter') {
+			passwordCheck();
+		}
+	})
+})
 
 
 /* 방입장 전 체크 */

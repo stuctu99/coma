@@ -11,9 +11,12 @@ import com.coma.model.dto.ChattingMessage;
 public interface ChattingDao {
 	ChattingJoin selectCheckJoin(SqlSession session, Map<String, String> joinInfo);
 	List<ChattingJoin> selectRoomMemberList(SqlSession session, String roomNo);
+	List<ChattingMessage> selectChatMessageByRoomNo(SqlSession session, String roomNo);
 	
 	int insertJoinEmp(SqlSession session, Map<String, String> joinInfo);
-	int insertChattingMessage(SqlSession session, ChattingMessage message);
 	
+	int insertChattingMessage(SqlSession session, List<ChattingMessage> msgPackages);
+	 
+	/* int insertChattingMessage(SqlSession session, ChattingMessage msg); */
 	int deleteChatRoomJoinEmpById(SqlSession session, Map<String,String> data);
 }

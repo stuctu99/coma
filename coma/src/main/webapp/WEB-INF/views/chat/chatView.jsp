@@ -103,24 +103,35 @@ div {
 	</header>
 	<section>
 		<div class="container messageView${roomNo }">
-			<!-- <div class="row openMsgContainer">
-				<h4>접속하셨습니다.</h4>
-			</div>
-			<div class="row other">
-					<span>하이</span>
-			</div>
-			<div class="row me">
-					<span>하이</span>
-			</div> -->
+			<c:if test="${not empty chatMsg }">
+				<c:forEach var="msg" items="${chatMsg }">
+					<c:if test="${msg.empId eq loginmember.empId}">
+						<div class="row me">
+							<small><fmt:formatDate value="${msg.chatCreateDate}" pattern="HH:mm"/>&nbsp;&nbsp;</small>
+							<div>
+								<span><c:out value="${msg.chatContent }"/></span>
+							</div>
+						</div>
+					</c:if>
+					<c:if test="${msg.empId != loginmember.empId }">
+						<div class="row other">
+							<div>
+								<span><c:out value="${msg.chatContent }"/></span>
+							</div>
+							<small>&nbsp;&nbsp;<fmt:formatDate value="${msg.chatCreateDate}" pattern="HH:mm"/></small>
+						</div>
+					</c:if> 
+				</c:forEach>
+			</c:if>
 		</div>
 	</section>
 	<footer id="chatView-footer">
 		<div class="container">
 			<div class="row" style="padding: 0px 10px;">
 				<div class="input-group mb-3">
-					<input type="text" id="msg" class="form-control" placeholder="Recipient's username"	aria-label="Recipient's username" aria-describedby="button-addon2">
+					<input type="text" id="msg" class="form-control" placeholder="메세지를 입력하세요!"	aria-label="Recipient's username" aria-describedby="button-addon2">
 					<div class="input-group-append">
-						<button id="btnSend" class="btn btn-outline-primary" type="button" id="button-addon2" style="height: 100%;" onclick="sendMessage();">전송</button>
+						<button id="btnSend" class="btn btn-outline-primary" type="button" id="button-addon2" style="height: 100%;" onclick="sendMessage();" >전송</button>
 					</div>
 				</div>
 			</div>

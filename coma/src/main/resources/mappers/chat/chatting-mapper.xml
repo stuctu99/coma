@@ -14,9 +14,11 @@
 	<resultMap type="chattingMessage" id="chattingMessageMap">
 		<id column="CHAT_NO" property="chatNo"/>
 		<result column="CHAT_CONTENT" property="chatContent"/>
-		<result column="chatCreateDate" property="chatCreateDate"/>
-		<association property="empIdObj" resultMap="emp.empMap"/>
-		<association property="roomNoObj" resultMap="chattingRoomMap"/>
+		<result column="CHAT_CREATE_DATE" property="chatCreateDate"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="ROOM_NO" property="roomNo"/>
+		<!-- <association property="empIdObj" resultMap="emp.empMap"/>
+		<association property="roomNoObj" resultMap="chattingRoomMap"/> -->
 	</resultMap>
 	
 	<resultMap type="chattingRoomType" id="chattingRoomTypeMap">
@@ -57,6 +59,10 @@
 		</where>
 	</select>
 	
+	<select id="selectChatMessageByRoomNo" parameterType="string" resultMap="chattingMessageMap">
+		SELECT * FROM CHAT_MESSAGE WHERE ROOM_NO = #{roomNo} ORDER BY CHAT_CREATE_DATE ASC
+	</select>
+	
 	
 	<!-- insert -->
 	<insert id="insertCreateRoom" parameterType="chattingRoom">
@@ -79,6 +85,14 @@
 		</choose>
 	</insert>
 	
+	<insert id="insertChattingMessage" parameterType="java.util.List" >
+		<!-- INSERT ALL INTO CHAT_MESSAGE(CHAT_NO,CHAT_CONTENT,CHAT_CREATE_DATE,EMP_ID,ROOM_NO) VALUES -->
+		<!-- ('CM_'||SEQ_CHAT_NO.NEXTVAL,#{chatContent},#{chatCreateDate},#{empId},#{roomNo}) -->
+		<foreach collection="list" item="msg" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL" index="index">
+			INTO CHAT_MESSAGE VALUES ('CM_'||SEQ_CHAT_NO.NEXTVAL||#{index},#{msg.chatContent},#{msg.chatCreateDate},#{msg.empId},#{msg.roomNo})
+		</foreach>	
+		
+	</insert>
 	<!-- update -->
 	
 	<!-- delete -->

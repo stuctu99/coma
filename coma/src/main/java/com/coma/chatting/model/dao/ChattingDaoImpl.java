@@ -25,6 +25,12 @@ public class ChattingDaoImpl implements ChattingDao {
 		// TODO Auto-generated method stub
 		return session.selectList("chatting.selectRoomMemberList",roomNo);
 	}
+	
+	@Override
+	public List<ChattingMessage> selectChatMessageByRoomNo(SqlSession session, String roomNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("chatting.selectChatMessageByRoomNo",roomNo);
+	}
 
 	@Override
 	public int insertJoinEmp(SqlSession session, Map<String, String> joinInfo) {
@@ -33,16 +39,32 @@ public class ChattingDaoImpl implements ChattingDao {
 	}
 
 	@Override
+	public int insertChattingMessage(SqlSession session, List<ChattingMessage> msgPackages) {
+		// TODO Auto-generated method stub
+		int result = 0;
+//		for(ChattingMessage msg : msgPackages) {
+//			result = session.insert("chatting.insertChattingMessage",msg);
+//		}
+		
+		return session.insert("chatting.insertChattingMessage",msgPackages);
+	}
+
+//	@Override
+//	public int insertChattingMessage(SqlSession session, ChattingMessage msg) {
+//		// TODO Auto-generated method stub
+//		return session.insert("chatting.insertChattingMessage",msg);
+//	}
+
+	@Override
 	public int deleteChatRoomJoinEmpById(SqlSession session, Map<String, String> data) {
 		// TODO Auto-generated method stub
 		return session.delete("chatting.deleteChatRoomJoinEmpById",data);
 	}
 
-	@Override
-	public int insertChattingMessage(SqlSession session, ChattingMessage message) {
-		// TODO Auto-generated method stub
-		return session.insert("chatting.insertChattingMessage",message);
-	}
+	
+
+	
+	
 	
 
 	

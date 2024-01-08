@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.chatting.model.service.ChattingService;
 import com.coma.model.dto.ChattingJoin;
+import com.coma.model.dto.ChattingMessage;
 
 import lombok.RequiredArgsConstructor;
 
@@ -52,9 +53,11 @@ public class ChattingController {
 	public String chattingStart(@PathVariable String roomNo, Model model) {
 		//채팅 방 정보 + 로그인 세션 아이디 DB저장하기
 		List<ChattingJoin> roomMemberList = service.selectRoomMemberList(roomNo);
+		List<ChattingMessage> chatMsg = service.selectChatMessageByRoomNo(roomNo);
 		System.out.println(roomNo);
 		model.addAttribute("roomNo", roomNo);
 		model.addAttribute("roomMemberList", roomMemberList);
+		model.addAttribute("chatMsg",chatMsg);
 		return "chat/chatView";
 	}
 	

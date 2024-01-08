@@ -29,22 +29,44 @@ public class ChattingServiceImpl implements ChattingService {
 		// TODO Auto-generated method stub
 		return dao.selectRoomMemberList(session, roomNo);
 	}
+	
+	@Override
+	public List<ChattingMessage> selectChatMessageByRoomNo(String roomNo) {
+		// TODO Auto-generated method stub
+		return dao.selectChatMessageByRoomNo(session, roomNo);
+	}
+	
+	
+	
 	@Override
 	@Transactional
 	public int insertJoinEmp(Map<String, String> joinInfo) {
 		// TODO Auto-generated method stub
 		return dao.insertJoinEmp(session, joinInfo);
 	}
+	
+	
+	@Override
+	@Transactional
+	public int insertChattingMessage(List<ChattingMessage> msgPackages) {
+		// TODO Auto-generated method stub
+		return dao.insertChattingMessage(session, msgPackages);
+	}
+//	@Override
+//	public int insertChattingMessage(ChattingMessage msg) {
+//		// TODO Auto-generated method stub
+//		return dao.insertChattingMessage(session, msg);
+//	}
+	
+	
+	
 	@Override
 	@Transactional
 	public int deleteChatRoomJoinEmpById(Map<String, String> data) {
 		// TODO Auto-generated method stub
 		return dao.deleteChatRoomJoinEmpById(session, data);
 	}
-	@Override
-	public int insertChattingMessage(ChattingMessage message) {
-		// TODO Auto-generated method stub
-		return dao.insertChattingMessage(session, message);
-	}
+	
+	
 
 }

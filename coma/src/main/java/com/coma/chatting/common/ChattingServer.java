@@ -1,6 +1,8 @@
 package com.coma.chatting.common;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -24,6 +26,7 @@ public class ChattingServer extends TextWebSocketHandler {
 	//Map<String,Map<String,WebSocketSession>> clients; // room별 분리?
 	private Map<String,Map<String,WebSocketSession>> room = new HashMap<String,Map<String,WebSocketSession>>();
 	private Map<String, WebSocketSession> clients = new HashMap<String, WebSocketSession>();
+	private List<ChattingMessage> msgPackages = new ArrayList<>();
 	
 	private final ObjectMapper mapper; //Jackson Converter
 	private final ChattingService service;
@@ -51,7 +54,9 @@ public class ChattingServer extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		System.out.println("채팅서버 나갔다!!!");
-		System.out.println(status.getReason() + " " + status.getCode());
+		for(Map.Entry<String, Map<String,WebSocketSession>> t : room.entrySet()) {
+			System.out.println("이걸봐야한다!!!!!!!!!!"+t.getKey()+" : "+t.getValue());
+		}
 	}
 	
 	private void addClient(WebSocketSession session, ChattingMessage msg) {
@@ -83,7 +88,18 @@ public class ChattingServer extends TextWebSocketHandler {
 //		모든접속자에게 메세지 전송 => 특정 방 접속자에게 보낼 수 있는 로직 구현하기
 		
 		if(msg.getType().equals("msg")) {
-			int result = service.insertChattingMessage(msg);
+			msgPackages.add(msg);
+			if(msgPackages.size()>=30) {
+				System.out.println("=========================================================="+msgPackages);
+				 int result = service.insertChattingMessage(msgPackages); 
+				
+				if(result>0) { 
+					System.out.println("메세지 저장 완료");
+			  }else {
+				  System.out.println("메세지 저장 실패"); 
+			   } 
+			}
+			 
 		}
 		System.out.println("Message정보출력 ======= "+msg);
 		for(Map.Entry<String, Map<String,WebSocketSession>> chatRoom : room.entrySet()) {

@@ -89,11 +89,20 @@ $("#back").click(function() {
 	close();
 })
 
+$(function(){
+	
+	$("section>.container").scrollTop($("section>.container")[0].scrollHeight);	
+})
+
+
+
+
+/* 채팅구현 */
+
 const server = new WebSocket("ws://" + location.host + "/chattingServer");
 const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
 const connectCheck = $("div#" + empId);
-const time = Date.now();
 console.log(roomNo, empId);
 
 console.log(empName);
@@ -122,7 +131,7 @@ server.onopen = (response) => {
 		}
 	})*/
 	/*constructor(type,chatNo,chatContent,chatCreateDate,empId,roomNo)*/
-	const msg = new Message("open","","",new Date(time),empId,roomNo);
+	const msg = new Message("open","","",new Date(Date.now()),empId,roomNo);
 	server.send(msg.convert());
 
 }
@@ -163,7 +172,7 @@ const sendMessage = () => {
 	const msg = document.querySelector("#msg").value;
 	document.querySelector("#msg").value = "";
 	/*type,chatNo,chatContent,chatCreateDate,empId,roomNo*/
-	server.send(new Message("msg","",msg,new Date(time),empId,roomNo).convert());
+	server.send(new Message("msg","",msg,new Date(Date.now()),empId,roomNo).convert());
 }
 
 const openMessage = (msg) => {
@@ -174,11 +183,18 @@ const openMessage = (msg) => {
 }
 
 window.onload = () => {
-	document.getElementById("msg").addEventListener("keyup", e => {
+	const $msg = $("#msg");
+	$msg.focus();	
+	$msg.on("keyup", (e) => {
+		const $msg = $("#msg").val()
 		if (e.key == 'Enter') {
 			/*sendMessage();*/
-			document.querySelector("#btnSend").click();
-			document.querySelector("#msg").value = "";
+			if($msg.length>0){
+				$("#btnSend").click();
+				$("#msg").val("");
+			}else{
+				alert("채팅을 입력하세요.");
+			}
 		}
 	})
 }

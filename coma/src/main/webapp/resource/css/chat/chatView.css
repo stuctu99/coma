@@ -24,7 +24,9 @@ section{
 	padding-right: 5px;
 }
 
-section>div:nth-last-child(1){
+section>div:nth-child(1){
+	max-height: 500px !important;
+	overflow: auto;
 	background-color: white;
 	margin: 0 auto;
 }
@@ -91,6 +93,7 @@ section>div:nth-last-child(1){
 }
 
 .me>div{
+	max-width: 300px !important;
 	background-color: #f7ef0a;
 	border-radius: 8px;
 	padding:10px 15px;
@@ -104,6 +107,7 @@ section>div:nth-last-child(1){
 }
 
 .other>div{
+	max-width: 300px !important;
 	background-color: aquamarine;
 	border-radius: 8px;
 	padding:10px 15px;
