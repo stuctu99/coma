@@ -134,8 +134,8 @@
 							<c:forEach var="mainNotice" items="${mainNotice}">
 				                <tr>
 				                	<td>${mainNotice.boardNo }</td>
-				                    <td>${mainNotice.emp.empId}</td>
-				                    <td>${mainNotice.emp.empName}</td>
+				                    <%-- <td>${mainNotice.emp.empId}</td>
+				                    <td>${mainNotice.emp.empName}</td> --%>
 				                    <td><a href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
 				                    <td>${mainNotice.boardDate}</td>
 				                </tr>

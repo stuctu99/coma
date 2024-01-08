@@ -32,7 +32,12 @@
 	</select>
 	
 	<insert id="insertBoard" parameterType="board">
-		INSERT INTO BOARD(BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE)
-		VALUES(SEQ_BOD_NO.NEXTVAL, #{boardTitle}, #{boardContent}, SYSDATE)
+		INSERT INTO BOARD(BOARD_NO, EMP_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_TYPE)
+		VALUES(SEQ_BOD_NO.NEXTVAL, #{emp.empId}, #{boardTitle}, #{boardContent}, SYSDATE, 0)
 	</insert>
+	
+	<select id="selectBoardCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+	</select>
 </mapper>

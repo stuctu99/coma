@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.coma.board.service.BoardService;
+import com.coma.common.pagefactory.PageFactory;
 import com.coma.model.dto.Board;
+import com.coma.model.dto.Emp;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +29,19 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	
 	private final BoardService service;
+	private final PageFactory pageFactory;
 	
 	//타입으로 분류해서 BoardList model에추가
 	@GetMapping({"/freelist", "/noticelist"})
-	public void selectBoardAll(@RequestParam(required = false, defaultValue="0") int boardType, Model m){
-	        List<Board> boards = service.selectBoardByType(boardType);
+	public void selectBoardAll(	@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "5") int numPerpage,
+								@RequestParam(required = false, defaultValue="0") int boardType, Model m){
+	        List<Board> boards = service.selectBoardByType(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
+	        
+	        int totalData=service.selectBoardCount();
+	        
 	        m.addAttribute("boards", boards);
+	        m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, totalData, "/redirect"));
+	        m.addAttribute("totalData", totalData);
 	          
 	}
 	
@@ -53,10 +63,20 @@ public class BoardController {
 	
 
 	
-	@PostMapping("writePost")
-	public String uploadImg(Board b, Model m, MultipartFile upFile, HttpSession session) {
+	@PostMapping("/writePost")
+	public String uploadImg(String title, String writer, String contenttest, Model m, MultipartFile upFile, HttpSession session) {
+		
+		Board b=    Board.builder().boardTitle(title)
+					.emp(Emp.builder()
+							.empId(writer)
+							.build())
+					.boardContent(contenttest)
+					.build();
+		
+		System.out.println(b);
 		
 		int result = service.insertBoard(b);
+		
 		String msg, loc;
 		if(result>0) {
 			msg="등록성공";

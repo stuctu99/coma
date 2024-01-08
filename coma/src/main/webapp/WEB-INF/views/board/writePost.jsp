@@ -12,6 +12,7 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <!-- TOAST UI Editor CDN(CSS) -->
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
 
 <div class="container" style="margin-top:30px">
 	<div class="row">
@@ -26,21 +27,34 @@
 			</div>
 	        <form action="${path }/board/writePost" method="POST" enctype="multipart/form-data">
 				<div class="form-group">
-				  <input type="text" class="form-control" id="title" name = "title" placeholder="제목을 입력해주세요">
+				  <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요">
 				</div>
-				
+	        	<div>
+	        		<input type="text" class="form-control" value="${loginMember.empName }" style="width:100px;">
+	        		<input type="hidden" name="writer" value="${loginMember.empId }" >
+	        	</div>
+				<br>
 				<!-- TOAST에디터 적용할 div -->
 			    <div class="content form-group">
 				</div>
+				<input type="text" name="contenttest" id="test1" style="display:none">
 				
 			    <button type="submit" class="btn btn-primary">글쓰기</button>
 			  </form>
+			  <button type="button" id="test" class="btn btn-primary" onclick="fn_test();">테스트</button>
 		</div>
 	</div>
 </div>	
 
 <script>
 const editor = new toastui.Editor({
+	const editorRef = useRef();
+	
+    const onChange = () => {
+	    const data = editorRef.current.getInstance().getHTML();
+	    console.log(data);
+	  };
+	
     el: document.querySelector('.content'),
     initialEditType: 'wysiwyg',
     previewStyle: 'vertical',
@@ -82,7 +96,15 @@ const editor = new toastui.Editor({
     }
 });
 
-function submitForm() { //input type="button"
+
+/* const fn_test = () =>{
+	const content = editor.getHTML();
+	const test = document.querySelector("#test1").innerHTML = content;
+	console.log(content);
+} */
+
+
+/* .boaunction submitForm() { //input type="button"
 
     const editorContentInput = document.getElementById('editorContent'); //hidden input
     const markdownContent = editor.getMarkdown(); //입력한 값
@@ -91,6 +113,6 @@ function submitForm() { //input type="button"
     const editorForm = document.getElementById('app_form'); //form태그
     
     editorForm.submit(); //form submit
-}
+} */
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
