@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Commute {
 	private String commuteNo;
-	private String empId;
+	private Emp emp;
 	private Date commuteClock;
 	private Date commuteClockin;
 	private Date commuteWorkDate;

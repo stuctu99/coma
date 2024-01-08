@@ -54,8 +54,7 @@
 
 </style>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
-<div class="coma-container"
-	style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
+<div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
 	<div class="row">
 		<div class=" col-4">
 			<div class="row">
@@ -88,10 +87,10 @@
 
 				</div>
 				<div class="row " style="display: flex; flex-direction: row; justify-content: space-evenly;">
-					<div>08:51</div>
-					<div>11:50</div>
-					<div>15:23</div>
-					<div>18:01</div>
+					<div id="clockInResult"> </div>
+					<div id="starttimeResult">11:50</div>
+					<div id="endtimeResult">15:23</div>
+					<div id="clockoutResult"> 18:01</div>
 				</div>
 			</div>
 			<div class="row">
@@ -163,9 +162,44 @@
     });
 }); */
 //출근하기 버튼누르기 !
-document.getElementById('clockin').addEventListener('click', function() {
-    window.location.href = '${path}/commute/insertCommute';
-});
+function getFormatTime(date){
+	var hh=date.getHours();
+	hh = hh >= 10 ? hh : '0' +hh;
+	var mm =date.getMinutes();
+	mm = mm >= 10 ? mm : '0' +mm;
+	var ss =date.getSeconds();
+	ss = ss >= 10 ? ss : '0' +ss;
+	return hh + ':'+mm + ':'+ ss ;
+	
+}
+ document.getElementById('clockin').addEventListener('click', function() {
+	 	var empId = '${emp.empId}';
+	 	//var currentTime = new Date().toLocaleTimeString([], { hour12: false });
+	 	var time = getFormatTime(new Date());
+	 	console.log(time)
+	 	console.log(empId)
+        fetch('${path}/commute/insertCommute',{
+    		method:"post",
+    		headers:{"Content-Type":"application/json"},
+    		body: JSON.stringify({
+    			empId: empId
+            })
+    	}).then(response=>{
+    		console.log(response);
+    		if(response.status!=200){
+    			throw new Error("");
+    		}
+    		return response.json();
+    	}).then(result=>{
+    		if(result>0){
+    			alert("출근했습니다.");
+    			//window.location.href = "${path}";
+    			document.getElementById('clockInResult').textContent = time;
+    		}
+    	}).catch(e=>{
+    		alert(e);
+    	});
+    });
 
 </script>
 

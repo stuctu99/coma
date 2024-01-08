@@ -10,6 +10,9 @@
 		<result column="EMP_COMMUTE_STARTTIME" property="commuteStarttime"/>
 		<result column="EMP_COMMUTE_ENDTIME" property="commuteEndTime"/>		
 	</resultMap>
+	<insert id="insertCommute" parameterType="map">
+		INSERT INTO EMP_COMMUTE VALUES('EC_'||SEQ_ECO_NO.NEXTVAL, #{empId},NULL, SYSDATE,SYSDATE,'근무중',NULL,NULL,'N','N')
+	</insert>
 
 
 </mapper>

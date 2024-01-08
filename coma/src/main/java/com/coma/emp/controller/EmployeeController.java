@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.coma.board.service.BoardService;
+import com.coma.commute.service.CommuteService;
 import com.coma.model.dto.Board;
+import com.coma.model.dto.Commute;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EmployeeController {
 	
 	private final BoardService service;
+	private final CommuteService commuteService;
 	
 //	@PostMapping("/loginsuccess")
 //	public String successLogin(Principal data) {
@@ -40,11 +43,13 @@ public class EmployeeController {
 	
 	
 	@GetMapping("/")
-	public ModelAndView selectMainNotice(@RequestParam(defaultValue="0") int boardType) {
+	public ModelAndView selectMainNotice(@RequestParam(defaultValue="0") int boardType,String empId) {
 		
 		List<Board> boards = service.selectBoardByType(boardType);
         List<Board> mainNotice = boards.stream().limit(5).collect(Collectors.toList());
-		
-		return new ModelAndView("index").addObject("mainNotice", mainNotice);
+        System.out.println(empId);
+        Commute myCommute = commuteService.selectCommute(empId);
+        
+		return new ModelAndView("index").addObject("mainNotice", mainNotice).addObject(myCommute);
 	}
 }

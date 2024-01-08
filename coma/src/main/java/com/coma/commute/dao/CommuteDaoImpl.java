@@ -1,16 +1,18 @@
 package com.coma.commute.dao;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 @Repository
 public class CommuteDaoImpl implements CommuteDao {
 
 	@Override
-	public int insertCommute(SqlSession session, Map<String, Object> emp) {
+	public int insertCommute(SqlSession session, @RequestBody HashMap<String, Object> empId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return session.insert("commute.insertCommute",empId);
 	}
 
 	@Override

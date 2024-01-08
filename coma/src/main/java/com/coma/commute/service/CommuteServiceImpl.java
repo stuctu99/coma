@@ -1,11 +1,14 @@
 package com.coma.commute.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.coma.commute.dao.CommuteDao;
+import com.coma.model.dto.Commute;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,9 +20,15 @@ public class CommuteServiceImpl implements CommuteService {
 	
 	
 	@Override
-	public int insertCommute(Map<String, Object> emp) {
+	public int insertCommute(@RequestBody HashMap<String, Object> empId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.insertCommute(session,empId);
+	}
+	
+	@Override
+	public Commute selectCommute(String empId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -39,5 +48,7 @@ public class CommuteServiceImpl implements CommuteService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }
