@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="calendar">
+	
+	<resultMap id="calendarMap"  type="calendar">
+		<id column="cal_No" property="calNo"/>
+		<result column="cal_title" property="calTitle"/>
+		<result column="cal_content" property="calContent"/>
+		<result column="cal_start" property="calStart"/>
+		<result column="cal_end" property="calEnd"/>
+		<result column="cal_type" property="calType"/>
+		<result column="cal_color" property="calColor"/>
+		<!-- <result column="emp_id" property="empId"/> -->
+		<collection property="empId"  resultMap="emp.empMap"/>
+				
+	</resultMap>
+	
+
+	<select id="selectCalendar" resultMap="calendarMap">
+	SELECT * FROM CALENDAR 
+	</select>
+	<insert id="calendarInsert" parameterType="calendar">
+	INSERT INTO CALENDAR VALUES('CAL_'||SEQ_CAL_NO.NEXTVAL,#{calTitle},'TEST2내용',#{calStart},#{calEnd},'ALL',#{calColor},'COMA_1')
+	</insert>
+<!-- 인서트구문 수정할것 -->
+</mapper>

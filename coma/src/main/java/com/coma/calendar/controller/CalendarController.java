@@ -39,7 +39,7 @@ public class CalendarController {
 //	public String calendarInsert(@RequestBody Calendar data) {
 //		System.out.println(data);
 //       int result= service.calendarInsert(data);
-//            return "redirect:/calendar";
+//            return "insert 완료!";
 //      
 //}
 }

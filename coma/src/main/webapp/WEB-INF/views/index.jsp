@@ -7,18 +7,6 @@
 	<jsp:param name="id" value="mine" />
 </jsp:include>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
- <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const calendarEl = document.getElementById('calendar')
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          expandRows: true, // 화면에 맞게 높이 설정
-        })
-        calendar.render()
-      })
-
-    </script>
-
 
 <!-- TEAM COMA SPACE -->
 <style>
@@ -48,6 +36,22 @@
 	    padding: 15px;
 } 
 
+
+.btncss {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #5e72e4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
 </style>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <div class="coma-container"
@@ -62,18 +66,17 @@
 			<div class="bigContainer"
 				style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
 				<h1 class="current-time" id="current-time">09:11:32</h1>
-				<div class="row" class="row"
-					style="display: flex; flex-direction: row; justify-content: space-evenly;">
-					<div>
+				<div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly;">
+					<div class="btncss">
 						<i class="ni ni-briefcase-24"></i>
 					</div>
-					<div>
+					<div  class="btncss">
 						<i class="ni ni-button-pause"></i>
-					</div>
-					<div>
+					</div >
+					<div class="btncss">
 						<i class="ni ni-button-play"></i>
 					</div>
-					<div>
+					<div class="btncss">
 						<i class="ni ni-spaceship"></i>
 					</div>
 				</div>
@@ -99,9 +102,9 @@
 			</div>
 			<div class="bigContainer"
 				style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
-				<h5>잔여 휴가 18일 남았습니다.</h5>
+				<h4>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
 				<button type="button" class="btn btn-primary">휴가 신청</button>
-				<button type="button" class="btn btn-primary">휴가 신청</button>
+				<button type="button" class="btn btn-primary" id="vacationButton">휴가 근황</button>
 			</div>
 			<div class="row">
 				<div class="col-12">
@@ -131,7 +134,8 @@
 							<c:forEach var="mainNotice" items="${mainNotice}">
 				                <tr>
 				                	<td>${mainNotice.boardNo }</td>
-				                    <td>${mainNotice.empId}</td>
+				                    <td>${mainNotice.emp.empId}</td>
+				                    <td>${mainNotice.emp.empName}</td>
 				                    <td><a href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
 				                    <td>${mainNotice.boardDate}</td>
 				                </tr>
@@ -143,7 +147,25 @@
 		</div>
 	</div>
 </div>
+ <script>
+/* 달력 */
+ 	document.addEventListener('DOMContentLoaded', function() {
+	    const calendarEl = document.getElementById('calendar')
+	    const calendar = new FullCalendar.Calendar(calendarEl, {
+	    	initialView: 'dayGridMonth',
+	        expandRows: true, // 화면에 맞게 높이 설정
+	    })
+	        calendar.render();
+    });
+//휴가 근황 페이지 전환되는 기능 
+$('#vacationButton').click(function() {
+	  // 경로 설정
+	  var path = '${path}/mypage/vacationSituation';	  
+	  // 페이지 이동
+	  window.location.href = path;
+});
 
+</script>
 
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

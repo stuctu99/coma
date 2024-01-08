@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BoardFile {
 	private String boardFileNo;
-	private String boardNo;
 	private String boardFileOriname;
 	private String boardFileRename;
 	private Date boardFileDate;
+	private Board board;
 }

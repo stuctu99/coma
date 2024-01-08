@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="loginmember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <head>
     <meta charset='utf-8' />
     <!-- 
@@ -129,8 +132,19 @@ input[type="datetime-local"] {
             <br>
             <h1>일정 상세페이지</h1>
             <div class="colflex">
+            <div>
+             <input type="hidden" id="empId" value="${loginmember.empId}">
+             </div>
               <div>
                 <span>제목</span> <input type="text" id="calTitle" value="">
+              </div>
+               <div>
+              <span>타입</span>
+               <select id="calType">
+                  <option value="MY">개인</option>
+                  <option value="DEPT">부서별</option>
+                  <option value="ALL">전체</option>
+                </select>
               </div>
               <div>
                 <span>시작시간</span> <input type="datetime-local" id="calStart" value="" />
@@ -144,16 +158,18 @@ input[type="datetime-local"] {
               
               <div>
               <span>일정색상</span>
-               <select id="calColor">
+               <select id="calColor" name="calColor">
+                  <option value="yellow">노랑색</option>
                   <option value="red">빨강색</option>
                   <option value="orange">주황색</option>
-                  <option value="yellow">노랑색</option>
                   <option value="green">초록색</option>
                   <option value="blue">파랑색</option>
                   <option value="indigo">남색</option>
                   <option value="purple">보라색</option>
                 </select>
               </div>
+              
+              
               <div>
                 <button onclick="fCalAdd()">저장하기</button>
                 <button onclick="fMClose()">취소하기</button>
@@ -173,10 +189,10 @@ input[type="datetime-local"] {
         const calStart = document.querySelector("#calStart");
         const calEnd = document.querySelector("#calEnd");
         const calTitle = document.querySelector("#calTitle");
-        const calColor = document.querySelector("#calColor").value;
+        const calColor = document.querySelector("#calColor");      
         const calContent = document.querySelector("#calContent");
-
-
+        const calType = document.querySelector("#calType");
+		const empId = document.querySelector("#empId");
         //캘린더 헤더 옵션
         const headerToolbar = {
             left: 'prevYear,prev,next,nextYear today',
@@ -220,6 +236,7 @@ input[type="datetime-local"] {
             	    extraParams: {
             	        dataType: "JSON"
             	    },
+            	    
             	    success: function(data, xhr) {
             	        var events = [];
             	        $.each(data, function(index, event) {
@@ -227,8 +244,10 @@ input[type="datetime-local"] {
             	                title: event.calTitle,
             	                start: event.calStart,
             	                end: event.calEnd,
-            	                 backgroundColor: event.calColor
-            	                /* borderColor: calColor */
+            	                 backgroundColor: event.calColor,
+            	                 empId: empId.value,// 추가
+            	                 calContent: calContent.value,// 추가
+            	                 calType: calType.value//추가
             	            });
             	        });
             	  		console.log(data);
@@ -306,16 +325,19 @@ input[type="datetime-local"] {
                 return;
                 
             }
+
             let bColor = calColor.value;
-		
             let event = {
             
+                    empId: empId.value, //추가
+                    calTitle: calTitle.value, 
+                    calContent: calContent.value, // 추가
             		calStart: calStart.value,
                     calEnd: calEnd.value,
-                    calTitle: calTitle.value, 
-                    calColor: calColor
+                    calType: calType.value, //추가
+                    calColor: calColor.value
             };
-			
+			console.log(event)
             $.ajax({
                 url: "/calendar/calendarInsert",
                 method: "POST",

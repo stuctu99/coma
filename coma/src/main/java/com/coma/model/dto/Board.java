@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Board {
 	private int boardNo;
-	private String empId;
+	private Emp emp;
 	private String boardTitle;
 	private String boardContent;
 	private Date boardDate;
