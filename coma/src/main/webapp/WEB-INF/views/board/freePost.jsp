@@ -21,7 +21,7 @@
 			</div>
 			<div class="table post-details-flex">
 			  <div class="title">제목 ${post.boardTitle}</div>
-			  <div class="author">글쓴이 ${post.empId}</div>
+			  <div class="author">글쓴이 ${post.emp.empId}</div>
 			  <div class="content">내용 ${post.boardContent}</div>
 			</div>
 		</div>

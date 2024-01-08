@@ -31,4 +31,19 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	@Override
+	public int insertBoard(Board b) {
+		// TODO Auto-generated method stub
+		return dao.insertBoard(session, b);
+	}
+
+
+	@Override
+	public int selectBoardCount() {
+		// TODO Auto-generated method stub
+		return dao.selectBoardCount(session);
+	}
+	
+	
+
 }

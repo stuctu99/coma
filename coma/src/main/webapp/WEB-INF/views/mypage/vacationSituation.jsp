@@ -3,8 +3,13 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
-<div class="coma-container"
-	style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
+<style>
+	div{
+		border: 2px solid red;
+	}
+</style>
+
+<div class="coma-container" style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
 	<div class="row">
 		<div class=" col-4">
 			<div class="row">
