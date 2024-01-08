@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -131,7 +132,7 @@ public class ApprovalController {
 	
 	@PostMapping("/insertdoc")
 	public String insertApproval(MultipartFile[] upFile, HttpSession session,
-								String loginMember,
+								String empId,
 								String docType, String title,
 								@RequestParam(name="appr_result[]", required=false) List<String> apprResults,
 								@RequestParam(name="ref_result[]", required=false) List<String> refResults,
@@ -140,7 +141,6 @@ public class ApprovalController {
 								Integer expense, String cashDate, String reqDate, String etcDate,
 								Model model) {
 		
-
 		
 		String path = session.getServletContext().getRealPath("/resource/upload/approval");
 		
@@ -171,15 +171,15 @@ public class ApprovalController {
 		List<Approver> approver = new ArrayList<>();
 		List<Referrer> ref = new ArrayList<>();
 		
-		//--------
-		
+
+
 		
 		//공통사항 객체
-	
+
 				doc = ApprovalDoc.builder()
 					.docType(docType)
 					.docTitle(title)
-					.empId(loginMember)
+					.empId(empId)
 					.build();	
 			
 		
@@ -258,18 +258,25 @@ public class ApprovalController {
 		
 		//결재자 객체 리스트
 		
+		System.out.println("********결재자 객체 리스트: "+apprResults);
+		
 		for(int i=0; i<apprResults.size(); i++) { //apprResults = 프론트에서 넘어온 String[]
 			
 			String result = apprResults.get(i); // result = 결재자 한 명의 정보
 
 			String[] splitResult = result.split(" "); //띄어쓰기 기준으로 정보 분리.
 		
-			approver.add(
-					Approver.builder() //결재자 한 명
-						.empId(splitResult[0]) //해당 결재자의 id
-						.apprOrder(i) //apprResults 배열 내 순서(결재 순번)
-						.build()
-					);
+			System.out.println("결재자 아이디 확인*****************"+splitResult[0]);
+			
+			if(splitResult[0]!=null && !splitResult[0].equals("")) {
+
+				approver.add(
+						Approver.builder() //결재자 한 명
+							.empId(splitResult[0]) //해당 결재자의 id
+							.apprOrder(i) //apprResults 배열 내 순서(결재 순번)
+							.build()
+						);
+			}
 			
 		}
 		
@@ -279,13 +286,14 @@ public class ApprovalController {
 					String result = refResults.get(i); 
 		
 					String[] splitResult = result.split(" "); 
-				
-					ref.add(
+			if(splitResult[0]!=null && !splitResult[0].equals("")) {
+		
+				ref.add(
 							Referrer.builder() 
 								.empId(splitResult[0]) //해당 참조자의 id
 								.build()
 							);
-					
+			}		
 				}
 		
 		
@@ -297,9 +305,12 @@ public class ApprovalController {
 		doc.setApprover(approver);
 		doc.setRef(ref);
 		
+		System.out.println("controller doc객체 확인"+doc);
+		
 		String msg, loc;
 		try {
-			service.insertApproval(doc);	
+			int result = service.insertApproval(doc);	
+			System.out.println("controller 305번줄 result확인: " + result);
 			msg="문서 등록 성공";
 			loc="approval/writedoc"; // 결재 문서함 주소로 수정 
 		}catch(RuntimeException e){
