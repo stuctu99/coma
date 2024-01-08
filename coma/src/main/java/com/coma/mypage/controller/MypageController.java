@@ -70,6 +70,7 @@ public class MypageController {
 	    emp.put("newEmpPw", newEncryptedPassword);
 	    
 		int result = service.updateEmp(emp);
+<<<<<<< HEAD
 //		System.out.println(result);
 		
 //		//result 결과에 따라서 메세지 출력 
@@ -84,6 +85,9 @@ public class MypageController {
 //		model.addAttribute("msg",msg);
 //		model.addAttribute("loc",loc);
 //		return "common/msg";
+=======
+		System.out.println(result);
+>>>>>>> refs/heads/woohyeon
 		return "redirect:/";
 	}
 	
