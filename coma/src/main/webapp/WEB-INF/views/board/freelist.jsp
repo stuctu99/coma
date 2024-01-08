@@ -16,9 +16,7 @@
 					<div class="col-sm-6">
 						<h2>자유게시판</h2>
 					</div>
-					<!-- <div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><span>글쓰기</span></a>					
-					</div> -->
+					
 				</div>
 			</div>
 			<table class="table table-striped table-hover">
@@ -48,13 +46,16 @@
 						</td>
 						<td>${free.boardNo }</td>
 	   					<td><a href="/board/freePost?boardNo=${free.boardNo }">${free.boardTitle }</a></td>
-	   					<td>${free.empId }</td>
+	   					<td>${free.emp.empId }</td>
 	   					<td>${free.boardDate }</td>
 	   					<td>${free.boardReadCount }</td>
 					</tr>				
 					</c:forEach>
 				</tbody>
 			</table>
+			<div class="col-sm-6" style="text-align: right;">
+				<a href="/writePost" class="btn btn-success"><span>글쓰기</span></a>					
+			</div>
 		</div>
 	</div>        
 </div>

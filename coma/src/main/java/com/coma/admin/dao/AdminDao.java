@@ -6,10 +6,10 @@ import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.coma.model.dto.Commute;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Student;
 
@@ -22,6 +22,10 @@ public class AdminDao {
 		int numPerpage=(Integer)page.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
 		return session.selectList("emp.selectEmpAllByCurrent",null,rb);
+	}
+	
+	public List<Commute> selectEmpAllByCommute(SqlSession session){
+		return session.selectList("emp.selectEmpAllByCommute");
 	}
 	
 	public List<Map> countEmpByDept(SqlSession session) {
@@ -48,6 +52,12 @@ public class AdminDao {
 	public int countEmpByData(SqlSession session, Map<String, Object> searchMap) {
 		return session.selectOne("emp.countEmpByData",searchMap);
 	}
+	
+	//chart.js 메소드
+	public List<Map> charEmpData(SqlSession session) {
+		return session.selectList("coummute.charEmpData");
+	}	
+	
 	
 	//학생관련 Dao
 	public List<Student> selectStudent(SqlSession session, Map<String, Integer> page){
@@ -85,15 +95,16 @@ public class AdminDao {
 	}
 	
 	//학생 수료 자동화 기능
-	public int updateStudentByCom(SqlSession session) {
-		return session.update("student.updateStudentByCom");
+	public List studentByCom(SqlSession session) {
+		return session.selectList("studentCommute.studentByCom");
+	}
+	
+	public int updateStudentByCom(SqlSession session, List student) {
+		return session.update("student.updateStudentByCom", student);
 	}
 	
 	//chart.jks 메소드
-	public List<Map> charEmpData(SqlSession session) {
-		return session.selectList("emp.charEmpData");
-	}
 	public List<Map> charStudentData(SqlSession session) {
-		return session.selectList("student.charStudentData");
+		return session.selectList("studentCommute.charStudentByCom");
 	}
 }

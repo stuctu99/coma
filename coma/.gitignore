@@ -39,3 +39,6 @@ log/
 logs/
 .DS_Store
 upload/
+
+### mapper ###
+src/main/resources/

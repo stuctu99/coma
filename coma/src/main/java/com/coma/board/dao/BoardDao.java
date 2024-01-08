@@ -12,5 +12,7 @@ public interface BoardDao {
 	
 	Board selectBoardByNo(SqlSession session, int boardNo);
 	
-//	Board updateViewCount(SqlSession session, int boardNo);
+	int insertBoard(SqlSession session, Board b);
+	
+	int selectBoardCount(SqlSession session);
 }

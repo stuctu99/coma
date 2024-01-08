@@ -21,6 +21,18 @@ public class BoardDaoImpl implements BoardDao {
 		return session.selectOne("board.selectBoardByNo", boardNo);
 	}
 
+	@Override
+	public int insertBoard(SqlSession session, Board b) {
+		// TODO Auto-generated method stub
+		return session.insert("board.insertBoard");
+	}
+
+	@Override
+	public int selectBoardCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("board.selectBoardCount");
+	}
+
 	
 	
 
