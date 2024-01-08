@@ -191,17 +191,19 @@ $("#roomPasswordFlag").click(function() {
 })
 
 /* 방생성 */
-const createRoom = () => {
+const createRoom = (empId) => {
 	const roomName =$("#roomName").val();
 	const roomPassword = $("#roomPassword").val();
 	const roomPasswordFlag = $("#roomPasswordFlag").val();
 	const roomType = $("#roomType").val();
+	console.log("방생성 ID : "+empId);
 	console.log(roomPasswordFlag);
 	const ChattingRoom = {
 		"roomName":roomName,
 		"roomPassword":roomPassword,
 		"roomType":roomType,
-		"roomPasswordFlag":roomPasswordFlag
+		"roomPasswordFlag":roomPasswordFlag,
+		"empId":empId
 	}
 	fetch("/messenger/createRoom",{
 		method:"POST",

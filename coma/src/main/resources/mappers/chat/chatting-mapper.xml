@@ -33,7 +33,7 @@
 	
 	<!-- select -->
 	<select id="selectRoomList" resultMap="chattingRoomMap">
-		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE)
+		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE) ORDER BY ROOM_CREATE_DATE DESC 
 	</select>
 	<select id="selectRoomPasswordCheck" parameterType="map" resultMap="chattingRoomMap">
 		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE) WHERE ROOM_NO = #{roomNo} AND ROOM_PASSWORD = #{password}
@@ -61,16 +61,22 @@
 	<!-- insert -->
 	<insert id="insertCreateRoom" parameterType="chattingRoom">
 		<if test='roomPasswordFlag != null and roomPasswordFlag eq "Y"'>
-			INSERT INTO CHAT_ROOM VALUES('CR_'||SEQ_CHATROOM_NO.NEXTVAL,#{roomName},#{roomTypeObj.roomType},#{roomPasswordFlag},#{roomPassword},DEFAULT)
+			INSERT INTO CHAT_ROOM VALUES('CR_'||SEQ_CHATROOM_NO.NEXTVAL,#{roomName},#{roomTypeObj.roomType},#{roomPasswordFlag},#{roomPassword},SYSTIMESTAMP)
 		</if>
 		<if test='roomPasswordFlag != null and roomPasswordFlag eq "N"'>
-			INSERT INTO CHAT_ROOM VALUES('CR_'||SEQ_CHATROOM_NO.NEXTVAL,#{roomName},#{roomTypeObj.roomType},#{roomPasswordFlag},NULL,DEFAULT)
+			INSERT INTO CHAT_ROOM VALUES('CR_'||SEQ_CHATROOM_NO.NEXTVAL,#{roomName},#{roomTypeObj.roomType},#{roomPasswordFlag},NULL,SYSTIMESTAMP)
 		</if>
 	</insert>
 	
 	<insert id="insertJoinEmp" parameterType="map">
-		INSERT INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES (#{roomNo}, #{empId}) 
-	
+		<choose>
+			<when test='roomNo!=null and roomNo!=""'> 
+				INSERT INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES (#{roomNo}, #{empId}) 
+			</when>
+			<otherwise>
+				INSERT INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES ('CR_'||SEQ_CHATROOM_NO.CURRVAL, #{empId})
+			</otherwise>
+		</choose>
 	</insert>
 	
 	<!-- update -->

@@ -188,7 +188,7 @@ div {
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
-						<button class="btn btn-primary" onclick="createRoom();">생성</button>
+						<button class="btn btn-primary" onclick="createRoom('${loginmember.empId}');">생성</button>
 					</div>
 					<!-- </form> -->
 				</div>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.coma.chatting.model.service.ChattingService;
 import com.coma.chatting.model.service.MessengerService;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.ChattingRoomType;
@@ -26,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessengerController {
 	private final MessengerService service;
-
 	@GetMapping
 	public String MessengerOpen(Model model) {
 		List<Emp> emp = service.selectEmpListAll();
@@ -55,10 +55,9 @@ public class MessengerController {
 
 	@PostMapping("/createRoom")
 	@ResponseBody
-	public Map<String, String> createRoom(@RequestBody Map<String, String> roomInfo) {
+	public Map<String, Object> createRoom(@RequestBody Map<String, String> roomInfo) {
 		ChattingRoom room = new ChattingRoom();
 		ChattingRoomType roomType = new ChattingRoomType();
-		
 		room.setRoomName(roomInfo.get("roomName"));
 		room.setRoomPassword(roomInfo.get("roomPassword"));
 		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
@@ -66,10 +65,11 @@ public class MessengerController {
 		roomType.setRoomType(roomInfo.get("roomType"));
 		room.setRoomTypeObj(roomType);
 		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
+		room.setEmpId(roomInfo.get("empId"));
 
 		System.out.println(roomInfo);
 		int result = service.insertChattingRoom(room);
-		Map<String, String> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<>();
 		if(result>0) {
 			data.put("result", "success");
 		}else {

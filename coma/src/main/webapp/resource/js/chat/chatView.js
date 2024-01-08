@@ -139,6 +139,7 @@ const messagePrint = (msg) => {
 	const div = document.createElement("div");
 	const msgDiv = document.createElement("div");
 	const content = document.createElement("span");
+	
 	content.innerText = msg.msg;
 	msgDiv.appendChild(content);
 	/*msgDiv.classList.add("col-3");*/
