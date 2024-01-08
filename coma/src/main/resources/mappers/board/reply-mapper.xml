@@ -3,9 +3,9 @@
 <mapper namespace="reply">
 	<resultMap type="reply" id="replyMap">
 		<id column="REPLY_NO" property="replyNo"/>
-		<result column="BOARD_NO" property="boardNo"/>
 		<result column="REPLY_CONTENT" property="replyContent"/>
 		<result column="REPLY_DATE" property="replyDate"/>
 		<result column="REPLY_PARENT_NO" property="replyParentNo"/>
+		<association resultMap="board.boardMap" property="board"/>
 	</resultMap>
 </mapper>

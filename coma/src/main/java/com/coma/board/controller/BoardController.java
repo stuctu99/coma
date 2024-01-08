@@ -1,18 +1,23 @@
 package com.coma.board.controller;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.coma.board.service.BoardService;
 import com.coma.model.dto.Board;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/board")
@@ -27,17 +32,68 @@ public class BoardController {
 	public void selectBoardAll(@RequestParam(required = false, defaultValue="0") int boardType, Model m){
 	        List<Board> boards = service.selectBoardByType(boardType);
 	        m.addAttribute("boards", boards);
-	        
-	        List<Board> mainNotice = boards.stream().limit(5).collect(Collectors.toList());
-	        m.addAttribute("mainNotice", mainNotice);  
+	          
 	}
 	
+	//글상세화면메소드
 	@GetMapping("/freePost")
 	public void selectPost(@RequestParam int boardNo, Model m) {
 	        Board post = service.selectBoardByNo(boardNo);
 	        m.addAttribute("post", post);
 	}
 	
+//	//글쓰기처리메소드
+//	@PostMapping("/writePost")
+//	public String insertPost(Board b) {
+//		
+//		int result = service.insertBoard(b);
+//		
+//		return "/redirect";
+//	}
+	
+
+	
+	@PostMapping("writePost")
+	public String uploadImg(Board b, Model m, MultipartFile upFile, HttpSession session) {
+		
+		int result = service.insertBoard(b);
+		String msg, loc;
+		if(result>0) {
+			msg="등록성공";
+			loc="/freelist";
+		}else {
+			msg="등록실패";
+			loc="/freelist";
+		}
+		m.addAttribute("msg", msg);
+		m.addAttribute("loc", loc);
+		
+		
+		//파일업로드 경로
+		String path = session.getServletContext().getRealPath("/resources/upload/board");
+		
+		
+		
+		if(upFile!=null) {
+			if(!upFile.isEmpty()) {
+				String oriName = upFile.getOriginalFilename();
+				String ext = oriName.substring(oriName.lastIndexOf("."));
+				Date today = new Date(System.currentTimeMillis());
+				int randomNum = (int)(Math.random()*10000)+1;
+				String rename = "COMA"+"_"+ new SimpleDateFormat("yyyyMMddHHmmssSSS")
+								.format(today)+"_"+randomNum+ext;
+				try {
+					upFile.transferTo(new File(path,rename));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
+		
+		return "redirect:/freelist";
+	}
 	
 	
 	
