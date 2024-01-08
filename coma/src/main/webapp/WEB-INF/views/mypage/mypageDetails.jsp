@@ -63,16 +63,13 @@ select:disabled, select[readonly] {
 
 </style>
 <!-- TEAM COMA SPACE -->
-${emp}
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
 		 <form id="employeeForm" action="${path}/mypage/updatemypage" method="post"  enctype="multipart/form-data">
 		<div class="row">
 			<div class="col-6">
-				<input type="file" id="accompany-file" name="empPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style=" display: none;  margin: 0px; padding: 0px;">
-				<input class="form-control" type="file" id="example-id-input" name="empPhoto" >
-
+			 <input type="file" id="accompany-file" name="empPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
 				<div class="file-btn" onclick="openFileDialog();" style="cursor: pointer;">
 					  <%-- 프로필 이미지 가 없으면 기본이미지 --%>
 					 <c:if test="${emp.empPhoto == null}" >
@@ -99,7 +96,7 @@ ${emp}
 					 </div>
 					<div class="row">
 					 	<div class="form-group col-6">
-						    <label for="exampleFormControlSelect1" class="form-control-label">연차 개수 </label>
+						    <label for="exampleFormControlSelect1" class="form-control-label"">연차 개수 </label>
 						    <select class="form-control" id="exampleFormControlSelect1" style="background-color:  #f1edff;" disabled>
 						      <option>1</option>
 						      <option>2</option>
