@@ -63,15 +63,13 @@ public class MypageController {
 		System.out.println("EMP" +emp);
 		//비밀번호 값 받아서 암호화하기 
 		String newPassword = (String) emp.get("empPw");
-//		System.out.println( "뉴 비밀번호 "+newPassword);
 	    String newEncryptedPassword = passwordEncoder.encode(newPassword);
 //	    System.out.println( "암호화된 비밀번호  "+newEncryptedPassword);
 	    emp.put("empPhoto", file.getOriginalFilename());
 	    emp.put("newEmpPw", newEncryptedPassword);
 	    
 		int result = service.updateEmp(emp);
-<<<<<<< HEAD
-//		System.out.println(result);
+		System.out.println(result);
 		
 //		//result 결과에 따라서 메세지 출력 
 //		String msg, loc;		
@@ -85,9 +83,6 @@ public class MypageController {
 //		model.addAttribute("msg",msg);
 //		model.addAttribute("loc",loc);
 //		return "common/msg";
-=======
-		System.out.println(result);
->>>>>>> refs/heads/woohyeon
 		return "redirect:/";
 	}
 	
