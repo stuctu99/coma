@@ -32,8 +32,8 @@ public class ApprovalDoc {
 	
 	private List<ApprovalAttachment> files;
 	
-	List<Approver> approver;
-	List<Referrer> ref;
+	private List<Approver> approver;
+	private List<Referrer> ref;
 	
 
 }
