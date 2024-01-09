@@ -158,6 +158,7 @@ const messagePrint = (msg) => {
 		</div>
 	
 	*/
+	console.log(msg);
 	const div = document.createElement("div");
 	const nameDiv = document.createElement("div");
 	const nameSpan = document.createElement("span");
@@ -193,46 +194,35 @@ const messagePrint = (msg) => {
 		console.log(data);
 		if (msg.empId == empId) {
 			//sender가 로그인한 사원
+			console.log("나"+data.empName);
+		} else {
+			//이외 receiver
+			console.log("상대"+data.empName);
+		}	
+	})*/
+			if (msg.empId == empId) {
+			//sender가 로그인한 사원
 			nameDiv.classList.add("row","me");
-			nameSpan.innertext=data.empName;
+			nameSpan.innerText='나';
+			console.log(nameSpan);
 			nameDiv.appendChild(nameSpan);
 			div.classList.add("me");
-			div.appendChild(nameDiv);
+			/*div.appendChild(nameDiv);*/
 			div.appendChild(timeDiv);
 			div.appendChild(msgDiv);
 		} else {
 			//이외 receiver
 			nameDiv.classList.add("row","other");
-			nameSpan.innertext=data.empName;
+			nameSpan.innerText=msg.empObj.empName;
 			nameDiv.appendChild(nameSpan);
 			div.classList.add("other");
-			div.appendChild(nameDiv);
-			div.appendChild(msgDiv);
-			div.appendChild(timeDiv);
-		}	
-	})*/
-			if (msg.empId == empId) {
-			//sender가 로그인한 사원
-			/*nameDiv.classList.add("row","me");
-			nameSpan.innertext=data.empName;
-			nameDiv.appendChild(nameSpan);*/
-			div.classList.add("me");
-			/*div.appendChild(nameDiv);*/
-			div.appendChild(timeDiv);
-			div.appendChild(msgDiv);
-		} else {
-			//이외 receiver
-			/*nameDiv.classList.add("row","other");
-			nameSpan.innertext=data.empName;
-			nameDiv.appendChild(nameSpan);*/
-			div.classList.add("other");
 			/*div.appendChild(nameDiv);*/
 			div.appendChild(msgDiv);
 			div.appendChild(timeDiv);
 		}	
 
 
-	
+	document.querySelector(".messageView"+msg.roomNo).appendChild(nameDiv);
 	document.querySelector(".messageView"+msg.roomNo).appendChild(div);
 	document.querySelector(".messageView"+msg.roomNo).scrollTop = document.querySelector(".messageView"+msg.roomNo).scrollHeight;
 }

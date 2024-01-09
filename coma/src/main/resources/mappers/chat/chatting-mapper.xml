@@ -68,7 +68,7 @@
 	</select>
 	
 	<select id="selectEmpByEmpId" parameterType="string" resultMap="emp.empMap">
-		SELECT * FROM EMP JOIN DEPT USING(DEPT_CODE) JOIN JOB USING (JOB_CODE)
+		SELECT * FROM EMP JOIN DEPT USING(DEPT_CODE) JOIN JOB USING (JOB_CODE)WHERE EMP_ID = #{empId}
 	</select>
 	
 	

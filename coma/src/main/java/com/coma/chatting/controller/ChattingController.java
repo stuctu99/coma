@@ -29,14 +29,13 @@ public class ChattingController {
 	private final ChattingService service;
 	
 	
-	/*
-	 * @GetMapping("/{empId}")
-	 * 
-	 * @ResponseBody public Emp selectEmpByEmpId(@PathVariable String empId) {
-	 * return service.selectEmpByEmpId(empId);
-	 * 
-	 * }
-	 */
+	
+	  @GetMapping("/{empId}")
+	  @ResponseBody public Emp selectEmpByEmpId(@PathVariable String empId) {
+	  return service.selectEmpByEmpId(empId);
+	  
+	  }
+	 
 	
 	
 	

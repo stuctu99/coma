@@ -25,7 +25,7 @@ section{
 }
 
 section>div:nth-child(1){
-	max-height: 515px !important;
+	max-height: 500px !important;
 	overflow: auto;
 	background-color: white;
 	margin: 0 auto;
@@ -93,6 +93,7 @@ section>div:nth-child(1){
 }
 
 .me span, .other span{
+	padding-right: 5px;
 	overflow-wrap: break-word;
 }
 

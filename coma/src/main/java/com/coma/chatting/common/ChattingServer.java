@@ -13,6 +13,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.coma.chatting.model.service.ChattingService;
 import com.coma.model.dto.ChattingMessage;
+import com.coma.model.dto.Emp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,8 @@ public class ChattingServer extends TextWebSocketHandler {
 		System.out.println("메세지 받았다.");
 		System.out.println(message.getPayload()); // 클라이언트가 전송한 메세지
 		ChattingMessage msg = mapper.readValue(message.getPayload(), ChattingMessage.class);
+		Emp emp = service.selectEmpByEmpId(msg.getEmpId());
+		msg.setEmpObj(emp);
 		System.out.println("데이터가 어떻게 들어오는거니? "+msg);
 		switch(msg.getType()) {
 			case "open":addClient(session,msg); break;
@@ -86,7 +89,6 @@ public class ChattingServer extends TextWebSocketHandler {
 	
 	private void sendMessage(ChattingMessage msg) {
 //		모든접속자에게 메세지 전송 => 특정 방 접속자에게 보낼 수 있는 로직 구현하기
-		
 		if(msg.getType().equals("msg")) {
 			msgPackages.add(msg);
 			if(msgPackages.size()>=30) {
