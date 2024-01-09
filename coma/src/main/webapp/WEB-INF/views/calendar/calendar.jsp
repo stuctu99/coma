@@ -7,9 +7,7 @@
 <c:set var="loginmember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <head>
     <meta charset='utf-8' />
-    <!-- 
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.8/index.global.min.js'></script>
-    -->
+   
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 </head>
 
@@ -115,16 +113,26 @@ input[type="datetime-local"] {
 .colflex>div>span:first-child,.colflex>div>h3:first-child{
   width:30%;
 }
+
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
     </style>
 </head>
 
 
-<head>
+<!-- <head>
     <meta charset='utf-8' />
  
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 </head>
-
+ -->
 <body>
     <!-- 모달은 메인 영역 밖으로 빼어 놓는게 좋음-->
     <div id="Modal">
@@ -133,16 +141,18 @@ input[type="datetime-local"] {
             <h1>일정 상세페이지</h1>
             <div class="colflex">
             <div>
-             <input type="hidden" id="empId" value="${loginmember.empId}">
+              
+             <input type="hidden" id="id" value="">
              </div>
               <div>
+              <input type="text" id="empId" value=""> 
                 <span>제목</span> <input type="text" id="calTitle" value="">
               </div>
                <div>
               <span>타입</span>
                <select id="calType">
                   <option value="MY">개인</option>
-                  <option value="DEPT">부서별</option>
+                  <option value="DEPT">부서</option>
                   <option value="ALL">전체</option>
                 </select>
               </div>
@@ -171,6 +181,7 @@ input[type="datetime-local"] {
               
               
               <div>
+              
                 <button onclick="fCalAdd()">저장하기</button>
                 <button onclick="fMClose()">취소하기</button>
               </div>
@@ -178,12 +189,16 @@ input[type="datetime-local"] {
         </div>
     </div>
     <!-- 실제 화면을 담을 영역 -->
+    	 <div>              
+                <button onclick="fcDept()">부서별</button>                
+         </div>
     <div id="Wrapper">
         <div id='calendar'>
         </div>
     </div>
     <script>
-
+   	  
+   	   
         const Modal = document.querySelector("#Modal");
         const calendarEl = document.querySelector('#calendar');
         const calStart = document.querySelector("#calStart");
@@ -209,6 +224,7 @@ input[type="datetime-local"] {
             // 맨 위 헤더 지정
             headerToolbar: headerToolbar,
             initialView: 'dayGridMonth',  // default: dayGridMonth 'dayGridWeek', 'timeGridDay', 'listWeek'
+            firstDay: 1,
             locale: 'kr',        // 언어 설정
             selectable: true,    // 영역 선택
             selectMirror: true,  // 오직 TimeGrid view에만 적용됨, default false
@@ -219,63 +235,50 @@ input[type="datetime-local"] {
             eventStartEditable: false,
             eventDurationEditable: true,
             */
-            dayMaxEvents: true,  // Row 높이보다 많으면 +숫자 more 링크 보임!
-            /*
-            views: {
+            dayMaxEvents: true,  // Row 높이보다 많으면 +숫자 more 링크 보임
+            
+            /* views: {
                 dayGridMonth: {
                     dayMaxEventRows: 3
                 }
-            },
-            */
+            }, */
+            
             nowIndicator: true,
-           /*  events:[
-             ], */
+    
              events: {
             	    url: "calendar/calendar.do",
             	    method: "GET",
             	    extraParams: {
             	        dataType: "JSON"
+            	  
             	    },
             	    
             	    success: function(data, xhr) {
             	        var events = [];
             	        $.each(data, function(index, event) {
             	            events.push({
+            	            	id:event.calNo,
             	                title: event.calTitle,
             	                start: event.calStart,
             	                end: event.calEnd,
             	                 backgroundColor: event.calColor,
-            	                 empId: empId.value,// 추가
-            	                 calContent: calContent.value,// 추가
-            	                 calType: calType.value//추가
+            	               extendedProps: {
+            	               	calContent: event.calContent,	// 추가s
+            	                 empId: event.empId,// 추가
+            	                calType: event.calType//추가
+            	               }
             	            });
             	        });
-            	  		console.log(data);
-           		
-            	  		
+            	  		console.log(events);
             	        return events;
-            	    },
+            	  	},
             	    failure: function() {
             	        alert('이벤트를 가져오는 도중 오류가 발생했습니다!');
             	    },
-            	},
-          	 	
-          		/* success: function(data) {
-					console.log(data);
-				},
-				
-          	 	error: function() {
-          	            alert('이벤트를 가져오는 도중 오류가 발생했습니다!');
-          	 	}
-  				
-            },  */
-          
-            
-
-            eventSources:[          
-            	 
-            ] 
-        }
+            	
+            	    }
+            	}
+       
 	
         // 캘린더 생성
         const calendar = new FullCalendar.Calendar(calendarEl, calendarOption);
@@ -283,15 +286,38 @@ input[type="datetime-local"] {
         calendar.render();
 
         // 캘린더 이벤트 등록
-        calendar.on("eventAdd", info => console.log("Add:", info
-        ));
+        calendar.on("eventAdd", info => console.log("Add:", info));
          /*  calendar.on("eventChange", info => console.log("Change:", info));
         calendar.on("eventRemove", info => console.log("Remove:", info)); */
         calendar.on("eventClick", info => {
-            console.log("eClick:", info);
-            console.log('Event: ', info.event.extendedProps);
+        	
+        	console.log("이거이거: ",info.id);
+             console.log("eClick:", info);
+             /*console.log('Event: ', info.event.extendedProps);
             console.log('Coordinates: ', info.jsEvent);
-            console.log('View: ', info.view); 
+            console.log('View: ', info.view);  */
+            console.log('요거요거:',info.event.title);
+            calTitle.value= info.event.title;
+            
+            calContent.value=info.event.extendedProps.calContent; 
+            calType.value=info.event.extendedProps.calType;
+            console.log(info.event.extendedProps.empId); //COMA_1 이렇게 나옴
+            empId.value=info.event.extendedProps.empId[0].empId; //[object Object]이렇게 넘어옴 ;;
+			
+            let dateEnd = new Date(info.event.endStr); 			
+			let localOffsetEnd = dateEnd.getTimezoneOffset() * 60000;
+			let localISOTimeEnd = (new Date(dateEnd - localOffsetEnd)).toISOString().slice(0,16);
+			calEnd.value = localISOTimeEnd;
+                  
+			let date = new Date(info.event.startStr);
+			let localOffset = date.getTimezoneOffset() * 60000;
+			let localISOTime = (new Date(date - localOffset)).toISOString().slice(0,16);
+			calStart.value = localISOTime;
+			
+			calColor.value = info.event.backgroundColor;
+			
+			
+            Modal.style.display = "block"; 
         });
         /* calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
         calendar.on("eventMouseLeave", info => console.log("eLeave:", info)); */ 
@@ -300,23 +326,33 @@ input[type="datetime-local"] {
         	console.log("dateClick:", info.dateStr);
         	calStart.value=info.dateStr+" 09:00:00";
         	calEnd.value=info.dateStr+" 18:00:00";
-        	
-            
-  		}); 
-        calendar.on("select", info => {
-           console.log("select : " , info);          
+        	calTitle.value="";
+            calContent.value="";
+            empId.value="${loginmember.empId}";
+        }); 
+         calendar.on("select", info => {                  
             calStart.value=info.startStr+" 09:00:00";
            var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
            var dateString = endData.toISOString();
            dateString = dateString.split("T")[0] + " 18:00:00";
            calEnd.value=  dateString;
-            console.log("엔드전 : ", info.endStr); 
+          
            info.endStr=calEnd.value; 
-           console.log("엔드스타 : ",info.endStr);
+           info.end=dateString;
+           calTitle.value="";
+           calContent.value="";
+           empId.value="${loginmember.empId}";
             Modal.style.display = "block";         
-        });
-
-        
+        }); 
+         	/* function fcDept(){
+      		$.ajax({
+      			url: "/calendar/calendarDept",
+      			method: "POST",
+      			dataType: "json",
+      			data:{deptCode:loginmember.deptCode};
+      		})
+      	};  */
+ 
         // 일정(이벤트) 추가하기
         function fCalAdd() {
             if (!calTitle.value) {
@@ -325,8 +361,6 @@ input[type="datetime-local"] {
                 return;
                 
             }
-
-            let bColor = calColor.value;
             let event = {
             
                     empId: empId.value, //추가
@@ -337,7 +371,6 @@ input[type="datetime-local"] {
                     calType: calType.value, //추가
                     calColor: calColor.value
             };
-			console.log(event)
             $.ajax({
                 url: "/calendar/calendarInsert",
                 method: "POST",
@@ -345,10 +378,12 @@ input[type="datetime-local"] {
                 data: JSON.stringify(event),
                 contentType: 'application/json',
                 success: function(data){
-		            calendar.addEvent(event);                	
+		           // calendar.addEvent(data); 
+		            location.href='/calendar';
                 },
-                error: function(){
+                error: function(e){
                 	alert('일정등록중 오류가 발생하였습니다 다시 시도하십시오');
+                	console.log(e);
                 }
             })
             

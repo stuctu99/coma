@@ -27,41 +27,51 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	
 	@Override
 	public int insertApprovalDoc(SqlSession session, ApprovalDoc doc) {
-		return session.insert("approval.insertApprovalDoc", doc);
+
+		int result = session.insert("approval.insertApprovalDoc", doc);
+	
+		return result;
 	}
 
 	@Override
 	public int insertLeave(SqlSession session, ApprovalLeave leave) {
+
 		return session.insert("approval.insertLeave", leave);
 	}
 
 	@Override
 	public int insertCash(SqlSession session, ApprovalCash cash) {
+
 		return session.insert("approval.insertCash", cash);
 	}
 
 	@Override
 	public int insertReq(SqlSession session, ApprovalRequest req) {
+
 		return session.insert("approval.insertReq", req);
 	}
 
 	@Override
 	public int insertEtc(SqlSession session, ApprovalEtc etc) {
+
 		return session.insert("approval.insertEtc",etc);
 	}
 
 	@Override
 	public int insertAttach(SqlSession session, ApprovalAttachment file) {
+
 		return session.insert("approval.insertAttach", file);
 	}
 
 	@Override
 	public int insertApprover(SqlSession session, Approver approver) {
+
 		return session.insert("approval.insertApprover", approver);
 	}
 
 	@Override
 	public int insertRefer(SqlSession session, Referrer ref) {
+
 		return session.insert("approval.insertRefer", ref);
 	}
 

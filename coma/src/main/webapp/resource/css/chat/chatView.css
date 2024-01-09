@@ -18,10 +18,15 @@ footer#chatView-footer {
 }
 
 section{
-	padding-top: 125px;
+	padding-top: 110px;
 	padding-bottom: 50px;
 	padding-left: 5px;
 	padding-right: 5px;
+}
+
+section>div:nth-last-child(1){
+	background-color: white;
+	margin: 0 auto;
 }
 
 .messageView{
@@ -88,19 +93,23 @@ section{
 	margin-bottom: 5px;
 }
 
-.me>span{
-	background-color: yellow;
+.me>div{
+	background-color: #f7ef0a;
+	border-radius: 8px;
+	padding:10px 15px;
 }
 
-.other {
+.other{
 	justify-content: flex-start;
 	float: left;
 	margin-bottom: 5px;
 	
 }
 
-.other>span{
+.other>div{
 	background-color: aquamarine;
+	border-radius: 8px;
+	padding:10px 15px;
 }
 
 #bars {
@@ -172,6 +181,11 @@ section{
 
 
 .openMsgContainer{
+	margin:5px auto !important;
+	padding:4px 0px;
+	width: 100%;
 	justify-content: center;
 	margin-bottom:5px;
+	background-color: aliceblue;
+	opacity: 0.9;
 }
