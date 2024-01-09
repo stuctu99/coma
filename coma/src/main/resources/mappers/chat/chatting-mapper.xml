@@ -14,9 +14,11 @@
 	<resultMap type="chattingMessage" id="chattingMessageMap">
 		<id column="CHAT_NO" property="chatNo"/>
 		<result column="CHAT_CONTENT" property="chatContent"/>
-		<result column="chatCreateDate" property="chatCreateDate"/>
-		<association property="empIdObj" resultMap="emp.empMap"/>
-		<association property="roomNoObj" resultMap="chattingRoomMap"/>
+		<result column="CHAT_CREATE_DATE" property="chatCreateDate"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="ROOM_NO" property="roomNo"/>
+		<association property="empObj" resultMap="emp.empMap"/>
+		<association property="roomObj" resultMap="chattingRoomMap"/>
 	</resultMap>
 	
 	<resultMap type="chattingRoomType" id="chattingRoomTypeMap">
@@ -33,7 +35,7 @@
 	
 	<!-- select -->
 	<select id="selectRoomList" resultMap="chattingRoomMap">
-		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE)
+		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE) ORDER BY ROOM_CREATE_DATE DESC 
 	</select>
 	<select id="selectRoomPasswordCheck" parameterType="map" resultMap="chattingRoomMap">
 		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE) WHERE ROOM_NO = #{roomNo} AND ROOM_PASSWORD = #{password}
@@ -57,22 +59,48 @@
 		</where>
 	</select>
 	
+	<select id="selectChatMessageByRoomNo" parameterType="string" resultMap="chattingMessageMap">
+		SELECT * FROM CHAT_MESSAGE JOIN EMP USING(EMP_ID) JOIN CHAT_ROOM USING(ROOM_NO) WHERE ROOM_NO = #{roomNo} ORDER BY CHAT_CREATE_DATE ASC
+	</select>
+	
+	<select id="selectRoomByRoomNo" parameterType="string" resultMap="chattingRoomMap">
+		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE) WHERE ROOM_NO = #{roomNo}	
+	</select>
+	
+	<select id="selectEmpByEmpId" parameterType="string" resultMap="emp.empMap">
+		SELECT * FROM EMP JOIN DEPT USING(DEPT_CODE) JOIN JOB USING (JOB_CODE)
+	</select>
+	
 	
 	<!-- insert -->
 	<insert id="insertCreateRoom" parameterType="chattingRoom">
 		<if test='roomPasswordFlag != null and roomPasswordFlag eq "Y"'>
-			INSERT INTO CHAT_ROOM VALUES('CR_'||SEQ_CHATROOM_NO.NEXTVAL,#{roomName},#{roomTypeObj.roomType},#{roomPasswordFlag},#{roomPassword},DEFAULT)
+			INSERT INTO CHAT_ROOM VALUES('CR_'||SEQ_CHATROOM_NO.NEXTVAL,#{roomName},#{roomTypeObj.roomType},#{roomPasswordFlag},#{roomPassword},SYSTIMESTAMP)
 		</if>
 		<if test='roomPasswordFlag != null and roomPasswordFlag eq "N"'>
-			INSERT INTO CHAT_ROOM VALUES('CR_'||SEQ_CHATROOM_NO.NEXTVAL,#{roomName},#{roomTypeObj.roomType},#{roomPasswordFlag},NULL,DEFAULT)
+			INSERT INTO CHAT_ROOM VALUES('CR_'||SEQ_CHATROOM_NO.NEXTVAL,#{roomName},#{roomTypeObj.roomType},#{roomPasswordFlag},NULL,SYSTIMESTAMP)
 		</if>
 	</insert>
 	
 	<insert id="insertJoinEmp" parameterType="map">
-		INSERT INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES (#{roomNo}, #{empId}) 
-	
+		<choose>
+			<when test='roomNo!=null and roomNo!=""'> 
+				INSERT INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES (#{roomNo}, #{empId}) 
+			</when>
+			<otherwise>
+				INSERT INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES ('CR_'||SEQ_CHATROOM_NO.CURRVAL, #{empId})
+			</otherwise>
+		</choose>
 	</insert>
 	
+	<insert id="insertChattingMessage" parameterType="java.util.List" >
+		<!-- INSERT ALL INTO CHAT_MESSAGE(CHAT_NO,CHAT_CONTENT,CHAT_CREATE_DATE,EMP_ID,ROOM_NO) VALUES -->
+		<!-- ('CM_'||SEQ_CHAT_NO.NEXTVAL,#{chatContent},#{chatCreateDate},#{empId},#{roomNo}) -->
+		<foreach collection="list" item="msg" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL" index="index">
+			INTO CHAT_MESSAGE VALUES ('CM_'||SEQ_CHAT_NO.NEXTVAL||#{index},#{msg.chatContent},#{msg.chatCreateDate},#{msg.empId},#{msg.roomNo})
+		</foreach>	
+		
+	</insert>
 	<!-- update -->
 	
 	<!-- delete -->

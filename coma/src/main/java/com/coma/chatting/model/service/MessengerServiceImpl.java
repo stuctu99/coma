@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.chatting.model.dao.MessengerDao;
 import com.coma.model.dto.ChattingJoin;
@@ -47,21 +48,18 @@ public class MessengerServiceImpl implements MessengerService {
 	
 
 	@Override
+	@Transactional
 	public int insertChattingRoom(ChattingRoom room) {
 		// TODO Auto-generated method stub
 		return dao.insertChattingRoom(session, room);
 	}
 
 	@Override
+	@Transactional
 	public ChattingRoom passwordCheck(Map<String, String> roomInfo) {
 		// TODO Auto-generated method stub
 		return dao.passwordCheck(session, roomInfo);
 	}
-
-	
-
-
-	
 
 
 }
