@@ -66,7 +66,9 @@ ${formattedClockin}  --%>
 				</div>
 			</div>
 			<div class="bigContainer" style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
+				
 				<h1 id="stopwatch" >00:00:00</h1>
+					
 				<div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly;">
 					<c:choose>
 					    <c:when test="${myCommute == null}">
@@ -189,6 +191,7 @@ ${formattedClockin}  --%>
 	</div>
 </div>
  <script>
+ 
 /* 달력 */
  	document.addEventListener('DOMContentLoaded', function() {
 	    const calendarEl = document.getElementById('calendar')
@@ -215,10 +218,12 @@ function getFormatTime(date){
 	return hh + ':'+mm + ':'+ ss ;
 	
 }
-//출근하기 버튼을 눌렀을때
+//출근하기 버튼을 눌렀을 때
 document.getElementById('clockin').addEventListener('click', function() {
     var empId = '${emp.empId}';
     var time = getFormatTime(new Date());
+
+    // Fetch to insert commute record
     fetch('${path}/commute/insertCommute', {
         method: "post",
         headers: { "Content-Type": "application/json" },
@@ -234,14 +239,73 @@ document.getElementById('clockin').addEventListener('click', function() {
     }).then(result => {
         if (result > 0) {
             alert("출근했습니다.");
+
+            // Remove clockin button
             var clockinDiv = document.getElementById('clockin1');
             clockinDiv.remove();
+
+            // Display clock-in time
             document.getElementById('clockInResult').textContent = time;
+
+            // Start stopwatch timer
+            startStopwatch();
         }
     }).catch(e => {
         alert(e);
     });
 });
+window.onload=()=>{
+	 var test='<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH24:mm:ss"/>';
+	   console.log(test);
+	   var value = new Date("<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>");
+	   console.log(value.getHours(),value.getMinutes(),value.getSeconds());
+	   console.log(value.getTime());
+	   console.log(new Date().getTime());
+	   //const hours=new Date()
+	   //분에 대한 것 
+	   console.log((new Date().getTime()-value.getTime())/(60*1000));
+	   //시간에 대한 것 
+	   console.log((new Date().getTime()-value.getTime())/(60*60*1000));
+	   var temp_value = "${myCommute.commuteClockin}";
+	   //현재 시간을 얻습니다.
+		// 현재 시간을 나타내는 Date 객체 생성
+	   var currentDate = new Date();
+	   // value 변수에 저장된 날짜와의 차이를 계산
+	   var timeDifference = currentDate.getTime() - value.getTime();
+	   // 밀리초를 초로 변환
+	   var seconds = Math.floor(timeDifference / 1000);
+	   // 초를 분으로 변환
+	   var minutes = Math.floor(seconds / 60);
+	   seconds %= 60;
+	   // 분을 시간으로 변환
+	   var hours = Math.floor(minutes / 60);
+	   minutes %= 60;
+	   console.log("시간: " + hours + " 시간, 분: " + minutes + " 분, 초: " + seconds + " 초");
+
+
+	
+}
+
+// 스탑워치 로직 
+function startStopwatch() {
+    var stopwatchElement = document.getElementById('stopwatch');
+    var seconds = 0;
+
+    // Update the timer every second
+    var stopwatchInterval = setInterval(function () {
+        seconds++;
+        var formattedTime = getFormatTime(new Date(0, 0, 0, 0, 0, seconds));
+        stopwatchElement.textContent = formattedTime;
+    }, 1000);
+
+    stopwatchElement.intervalId = stopwatchInterval;
+}
+
+// 멈추는 기능 
+function stopStopwatch() {
+    var stopwatchElement = document.getElementById('stopwatch');
+    clearInterval(stopwatchElement.intervalId);
+}
 
 
  //외출시작하기 눌렀을 때

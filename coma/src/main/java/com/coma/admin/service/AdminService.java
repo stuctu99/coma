@@ -26,9 +26,9 @@ public class AdminService {
 		return dao.selectEmpAllByCurrent(session, page);
 	}
 	
-	public List<Commute> selectEmpAllByCommute(){
-		return dao.selectEmpAllByCommute(session);
-	}
+//	public List<Map> selectEmpAllByCommute(){
+//		return dao.selectEmpAllByCommute(session);
+//	}
 	
 	public int countEmp() {
 		return dao.countEmp(session);
@@ -68,7 +68,7 @@ public class AdminService {
 	}
 	
 	//학생관련 서비스
-	public List<Student> selectStudent(Map<String, Integer> page){
+	public List<Map> selectStudent(Map<String, Integer> page){
 		return dao.selectStudent(session, page);
 	}
 	
@@ -76,7 +76,7 @@ public class AdminService {
 		return dao.countStudent(session);
 	}
 	
-	public List<Student> searchStudent(HashMap<String, Object> searchMap){
+	public List<Map> searchStudent(HashMap<String, Object> searchMap){
 		return dao.searchStudent(session, searchMap);
 	}
 	
@@ -98,8 +98,14 @@ public class AdminService {
 	}
 	
 	//chart.js 메소드
-	public List<Map> charStudentData() {
-		return dao.charStudentData(session);
+	public List<Map> charStudentByAtten() {
+		return dao.charStudentByAtten(session);
+	}
+	public List<Map> charStudentByEmp() {
+		return dao.charStudentByEmp(session);
+	}
+	public List<Map> charStudentByCom() {
+		return dao.charStudentByCom(session);
 	}
 
 }
