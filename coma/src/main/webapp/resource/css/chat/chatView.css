@@ -24,7 +24,9 @@ section{
 	padding-right: 5px;
 }
 
-section>div:nth-last-child(1){
+section>div:nth-child(1){
+	max-height: 500px !important;
+	overflow: auto;
 	background-color: white;
 	margin: 0 auto;
 }
@@ -50,10 +52,7 @@ section>div:nth-last-child(1){
 	border-radius: 12px;
 }
 
-.chat-title img#joinList{
-	width: 15px;
-	height: 15px;
-}
+
 
 .profile-list{
 	height: 518px !important;
@@ -93,8 +92,16 @@ section>div:nth-last-child(1){
 	margin-bottom: 5px;
 }
 
-.me>div{
-	background-color: #f7ef0a;
+.me span, .other span{
+	padding-right: 5px;
+	overflow-wrap: break-word;
+}
+
+.me>div.msg-container{
+	color: white;
+	font-weight: 900;	
+	max-width: 300px !important;
+	background-color: #1fb0ff;
 	border-radius: 8px;
 	padding:10px 15px;
 }
@@ -106,10 +113,26 @@ section>div:nth-last-child(1){
 	
 }
 
-.other>div{
-	background-color: aquamarine;
+.other>div.msg-container{
+	color: white;
+	font-weight: 900;
+	max-width: 300px !important;
+	background-color: #15db12;
 	border-radius: 8px;
 	padding:10px 15px;
+}
+.me>div.time-container{
+	padding-right: 5px;
+}
+
+.other>div.time-container{
+	padding-left: 5px;
+}
+
+.time-container{
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
 }
 
 #bars {
