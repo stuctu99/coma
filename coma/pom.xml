@@ -125,10 +125,7 @@
    </dependency>
 
 
-   <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-devtools</artifactId>
-   </dependency>
+   
    
    <!-- itext 라이브러리 -->
    
@@ -158,6 +155,10 @@
    
    <!-- itext 라이브러리 끝 -->
    
+   <dependency>
+   	<groupId>org.springframework.boot</groupId>
+   	<artifactId>spring-boot-devtools</artifactId>
+   </dependency>
    </dependencies>
 
    <build>
