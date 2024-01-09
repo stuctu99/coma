@@ -1,6 +1,7 @@
 package com.coma.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,9 @@ public class BoardServiceImpl implements BoardService {
 	private final SqlSession session;
 	
 	@Override
-	public List<Board> selectBoardByType(int boardType) {
+	public List<Board> selectBoardByType(Map<String, Integer> page,int boardType) {
 		// TODO Auto-generated method stub
-		return dao.selectBoardByType(session, boardType);
+		return dao.selectBoardByType(session, page, boardType);
 	}
 
 
@@ -37,11 +38,25 @@ public class BoardServiceImpl implements BoardService {
 		return dao.insertBoard(session, b);
 	}
 
-
+	 
 	@Override
 	public int selectBoardCount() {
 		// TODO Auto-generated method stub
 		return dao.selectBoardCount(session);
+	}
+
+
+	@Override
+	public int updateBoard(Board b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public int deleteBoard(int boardNo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

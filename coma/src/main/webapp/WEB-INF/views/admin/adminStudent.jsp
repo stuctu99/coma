@@ -217,10 +217,10 @@ const ctx2 = document.getElementById('stuComChart').getContext('2d');
 const myChart2 = new Chart(ctx2, {
     type: 'doughnut',
     data: {
-        labels: ["demo","demo2","demo3"],
+        labels: labelList,
         datasets: [{
             label: '학생 수료율',
-            data: [10,20,30],
+            data: valueList,
             backgroundColor: colorList
         }]
     },
@@ -233,15 +233,15 @@ const ctx3 = document.getElementById('stuEmpChart').getContext('2d');
 const myChart3 = new Chart(ctx3, {
     type: 'doughnut',
     data: {
-        labels: ["demo","demo2","demo3"],
+        labels: labelList,
         datasets: [{
             label: '학생 취업율',
-            data: [10,20,30],
+            data: valueList,
             backgroundColor: colorList
         }]
     },
     option: {
-    		responsive: false
+    	responsive: false
     }
 });
 

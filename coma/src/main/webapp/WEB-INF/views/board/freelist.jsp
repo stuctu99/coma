@@ -46,7 +46,7 @@
 						</td>
 						<td>${free.boardNo }</td>
 	   					<td><a href="/board/freePost?boardNo=${free.boardNo }">${free.boardTitle }</a></td>
-	   					<td>${free.emp.empId }</td>
+	   					<td>${free.emp.empName }</td>
 	   					<td>${free.boardDate }</td>
 	   					<td>${free.boardReadCount }</td>
 					</tr>				

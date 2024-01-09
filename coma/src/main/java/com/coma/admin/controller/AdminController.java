@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.admin.service.AdminService;
 import com.coma.common.pagefactory.PageFactory;
+import com.coma.model.dto.Commute;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Student;
 import com.google.gson.Gson;
@@ -39,11 +40,15 @@ public class AdminController {
 	@GetMapping("/adminEmp")
 	public void selectEmpAllByCurrent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m) {
 		List<Emp> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage));	//전체 사원 데이터 가져오기
+		List<Commute> empCommutes=service.selectEmpAllByCommute();	//사원 근태 형황 데이터 가져오기
+		Map<String, Object> empData= new HashMap<>();	
+		empData.put("emps", emps);	//전체 사원 데이터 Map
+		empData.put("empCommutes",empCommutes);	//사원 근태 현황 Map-
 		int totalData=service.countEmp();	//전체 사원 수
 		List<Map> empCount=service.countEmpByDept();	//각 부서별 인원 수
 		
 		//chart.js 메소드
-		List<Map> chartEmp=service.charEmpData();	//차트에 넣을 사원 근태 데이터
+		//List<Map> chartEmp=service.charEmpData();	//차트에 넣을 사원 근태 데이터
 		Gson gson=new Gson();	//Gson 호출
 		JsonArray jArray=new JsonArray();	//Gson에서 제공하는 Json배열 호출
 		//Iterator<Map> it=chartEmp.iterator();
@@ -60,7 +65,7 @@ public class AdminController {
 		}
 		String jsonString = gson.toJson(jArray);	//JSON형식의 문자열로 생성
 		m.addAttribute("chartEmpData",jsonString);
-		m.addAttribute("emps",emps);
+		m.addAttribute("empData",empData);
 		m.addAttribute("empCount",empCount);
 		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, "/admin/adminEmp"));
 		m.addAttribute("totalEmp",totalData);
@@ -103,7 +108,7 @@ public class AdminController {
 		List<Map> studentCount=service.studentCountByEmpId();
 		
 		//chart.js 메소드
-		List<Map> chartStudent=service.charStudentData();	//전체 학생 출결 데이터 출력
+		//List<Map> chartStudent=service.charStudentData();	//전체 학생 출결 데이터 출력
 		Gson gson=new Gson();	//Gson객체 호출
 		JsonArray jArray=new JsonArray();	//Gson에서 제공하는 Json배열 호출
 		//Iterator<Map> it=chartStudent.iterator();
@@ -131,7 +136,8 @@ public class AdminController {
 	//학생 수료 자동화 기능
 	@Scheduled(cron = "0 0 18 1 ?")
 	public void updateStudentByCom() {
-		int result=service.updateStudentByCom();
+		List student=service.studentByCom();
+		service.updateStudentByCom(student);
 	}
 	
 	//학생 검색 기능

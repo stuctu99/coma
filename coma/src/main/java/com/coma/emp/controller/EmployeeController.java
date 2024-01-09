@@ -3,6 +3,7 @@ package com.coma.emp.controller;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.Authentication;
@@ -46,9 +47,10 @@ public class EmployeeController {
 	
 	
 	@GetMapping("/")
-	public ModelAndView selectMainNotice(@RequestParam(defaultValue="0") int boardType) {
+	public ModelAndView selectMainNotice(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "5") int numPerpage,
+										@RequestParam(defaultValue="0") int boardType) {
 		
-		List<Board> boards = service.selectBoardByType(boardType);
+		List<Board> boards = service.selectBoardByType(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
         List<Board> mainNotice = boards.stream().limit(5).collect(Collectors.toList());
         // ***근태 정보 불러오기 ***
         //로그인한 정보에서 아이디 가져오기 

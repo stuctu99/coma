@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.coma.admin.dao.AdminDao;
+import com.coma.model.dto.Commute;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Student;
 
@@ -23,6 +24,10 @@ public class AdminService {
 	//사원관련 서비스
 	public List<Emp> selectEmpAllByCurrent(Map<String, Integer> page){
 		return dao.selectEmpAllByCurrent(session, page);
+	}
+	
+	public List<Commute> selectEmpAllByCommute(){
+		return dao.selectEmpAllByCommute(session);
 	}
 	
 	public int countEmp() {
@@ -57,6 +62,11 @@ public class AdminService {
 		return dao.countEmpByData(session, searchMap);
 	}
 	
+	//chart.js 메소드
+	public List<Map> charEmpData() {
+		return dao.charEmpData(session);
+	}
+	
 	//학생관련 서비스
 	public List<Student> selectStudent(Map<String, Integer> page){
 		return dao.selectStudent(session, page);
@@ -79,14 +89,15 @@ public class AdminService {
 	}
 	
 	//학생 수료 자동화 기능
-	public int updateStudentByCom() {
-		return dao.updateStudentByCom(session);
+	public List studentByCom() {	//수료 가능한 학생 추리기
+		return dao.studentByCom(session);
+	}
+	
+	public int updateStudentByCom(List student) {	//수료 가능한 학생 수료자로 업데이트
+		return dao.updateStudentByCom(session, student);
 	}
 	
 	//chart.js 메소드
-	public List<Map> charEmpData() {
-		return dao.charEmpData(session);
-	}
 	public List<Map> charStudentData() {
 		return dao.charStudentData(session);
 	}

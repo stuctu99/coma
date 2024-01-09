@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,43 +87,28 @@ public class ApprovalController {
 	}
 	
 	
-	//----------------------String -> LocalDate 변경 메소드-------------------------------
+	//----------------------String -> sqlDate 변경 메소드-------------------------------
 	
-	public LocalDate formatDate(String beforeDate) {
-		
-		
-		if(beforeDate == null || beforeDate.isEmpty()) {
-			System.err.println("날짜 비어있음");
-			return null;
-		}
+	public java.sql.Date formatDate(String beforeDate) { // 프론트에서 MM/dd/yyyy형식으로 넘어옴.
 		
 			SimpleDateFormat leaveStartFormat = new SimpleDateFormat("MM/dd/yyyy");
-			
-			String formattedDateString=""; //초기화 
 			
 			try {
 				
 				//beforeDate 문자열을 SimpleDateFormat을 이용하여 Date 객체로 파싱. ("MM/dd/yyyy")을 받음.
 				Date date = leaveStartFormat.parse(beforeDate);
 		
-				
-				// Date 객체를 다시 문자열로 포맷팅
-				SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-				// 변환된 문자열 formattedDateString에 저장
-				formattedDateString = outputDateFormat.format(date);
-				
+				//java.sql.Date는 내부적으로 날짜를 yyyy-MM-dd 형식으로 가지고있음.
+				//yyyy-MM-dd 형식으로 반환.
+				return new java.sql.Date(date.getTime());
+
 				
 			}catch(ParseException e) {
 				e.printStackTrace();
+				return null;
 			}
 			
-				//DateTieFormatter와 LocalDate.parse를 이용해 "yyyy/MM/dd"형식의 문자열을 LocalDate 객체로 변환.
-			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		        LocalDate localDate = LocalDate.parse(formattedDateString, formatter);
 
-		        System.out.println(localDate);
-	
-		        return localDate;
 	}
 	
 	//-------------------------------------------------------------
@@ -131,15 +117,15 @@ public class ApprovalController {
 	
 	@PostMapping("/insertdoc")
 	public String insertApproval(MultipartFile[] upFile, HttpSession session,
-								String loginMember,
+								String empId,
 								String docType, String title,
 								@RequestParam(name="appr_result[]", required=false) List<String> apprResults,
 								@RequestParam(name="ref_result[]", required=false) List<String> refResults,
 								String editorContent,
 								String leaveType, String leaveStart, String leaveEnd,
-								Integer expense, String cashDate, String reqDate, String etcDate) {
+								Integer expense, String cashDate, String reqDate, String etcDate,
+								Model model) {
 		
-
 		
 		String path = session.getServletContext().getRealPath("/resource/upload/approval");
 		
@@ -170,15 +156,15 @@ public class ApprovalController {
 		List<Approver> approver = new ArrayList<>();
 		List<Referrer> ref = new ArrayList<>();
 		
-		//--------
-		
+
+
 		
 		//공통사항 객체
-	
+
 				doc = ApprovalDoc.builder()
 					.docType(docType)
 					.docTitle(title)
-					.empId(loginMember)
+					.empId(empId)
 					.build();	
 			
 		
@@ -187,8 +173,8 @@ public class ApprovalController {
 			
 				leave = ApprovalLeave.builder()
 							.leaveType(leaveType)
-			                .leaveStart(java.sql.Date.valueOf(formatDate(leaveStart)))
-			                .leaveEnd(java.sql.Date.valueOf(formatDate(leaveEnd)))
+			                .leaveStart(formatDate(leaveStart))
+			                .leaveEnd(formatDate(leaveEnd))
 			                .leaveDetail(editorContent)
 			                .build();
 		        
@@ -201,26 +187,28 @@ public class ApprovalController {
 	
 				cash = ApprovalCash.builder()
 							.cashExpense(expense)
-							.cashDate(java.sql.Date.valueOf(formatDate(cashDate)))
+							.cashDate(formatDate(cashDate))
 							.cashDetail(editorContent)
 							.build();
 		}
 		
 		//품의서 객체 
+		
+		
 		if(formatDate(reqDate)!=null) {
 			
 				req = ApprovalRequest.builder()
 							.reqDetail(editorContent)
-							.reqDate(java.sql.Date.valueOf(formatDate(reqDate)))
+							.reqDate(formatDate(reqDate))
 							.build();
 		}
 		
 		//기타 문서 객체
-		if(formatDate(reqDate)!=null) {
+		if(formatDate(etcDate)!=null) {
 			
 				etc = ApprovalEtc.builder()
 							.etcDetail(editorContent)
-							.etcDate(java.sql.Date.valueOf(formatDate(etcDate)))
+							.etcDate(formatDate(etcDate))
 							.build();
 		}
 		
@@ -262,13 +250,17 @@ public class ApprovalController {
 			String result = apprResults.get(i); // result = 결재자 한 명의 정보
 
 			String[] splitResult = result.split(" "); //띄어쓰기 기준으로 정보 분리.
-		
-			approver.add(
-					Approver.builder() //결재자 한 명
-						.empId(splitResult[0]) //해당 결재자의 id
-						.apprOrder(i) //apprResults 배열 내 순서(결재 순번)
-						.build()
-					);
+
+			
+			if(splitResult[0]!=null && !splitResult[0].equals("")) {
+
+				approver.add(
+						Approver.builder() //결재자 한 명
+							.empId(splitResult[0]) //해당 결재자의 id
+							.apprOrder(i) //apprResults 배열 내 순서(결재 순번)
+							.build()
+						);
+			}
 			
 		}
 		
@@ -278,13 +270,14 @@ public class ApprovalController {
 					String result = refResults.get(i); 
 		
 					String[] splitResult = result.split(" "); 
-				
-					ref.add(
+			if(splitResult[0]!=null && !splitResult[0].equals("")) {
+		
+				ref.add(
 							Referrer.builder() 
 								.empId(splitResult[0]) //해당 참조자의 id
 								.build()
 							);
-					
+			}		
 				}
 		
 		
@@ -296,14 +289,28 @@ public class ApprovalController {
 		doc.setApprover(approver);
 		doc.setRef(ref);
 		
+		System.out.println("controller doc객체 확인"+doc);
 		
-		service.insertApproval(doc);
-		
-		
-		 
+		String msg, loc;
+		try {
+			int result = service.insertApproval(doc);	
 
+			msg="문서 등록 성공";
+			loc="approval/writedoc"; // 결재 문서함 주소로 수정 
+		}catch(RuntimeException e){
+			msg="문서 등록 실패";
+			loc="approval/writedoc";
+			for(ApprovalAttachment a : files) {
+				File delFile = new File(path, a.getAttachReName());
+				delFile.delete();
+			}
+		}
 		
-		return "redirect:/approval/writedoc";
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		
+		
+		return "common/msg";
 	}
 //---------------------------------------------------------------------
 	
