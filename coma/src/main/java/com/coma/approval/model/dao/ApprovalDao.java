@@ -32,4 +32,5 @@ public interface ApprovalDao {
 	int insertRefer(SqlSession session, Referrer ref);
 	
 	
+	ApprovalDoc selectAppDoc(SqlSession session, String docNo);
 }
