@@ -10,7 +10,7 @@
 		<result column="cal_end" property="calEnd"/>
 		<result column="cal_type" property="calType"/>
 		<result column="cal_color" property="calColor"/>
-		<!-- <result column="emp_id" property="empId"/> -->
+		
 		<collection property="empId"  resultMap="emp.empMap"/>
 				
 	</resultMap>
@@ -19,8 +19,8 @@
 	<select id="selectCalendar" resultMap="calendarMap">
 	SELECT * FROM CALENDAR 
 	</select>
-	<insert id="calendarInsert" parameterType="calendar">
-	INSERT INTO CALENDAR VALUES('CAL_'||SEQ_CAL_NO.NEXTVAL,#{calTitle},'TEST2내용',#{calStart},#{calEnd},'ALL',#{calColor},'COMA_1')
-	</insert>
+	<insert id="calendarInsert" parameterType="map">
+      INSERT INTO CALENDAR VALUES('CAL_'||SEQ_CAL_NO.NEXTVAL,#{calTitle},#{calContent},#{calStart},#{calEnd},#{calType},#{calColor},#{empId})
+   </insert>
 <!-- 인서트구문 수정할것 -->
 </mapper>

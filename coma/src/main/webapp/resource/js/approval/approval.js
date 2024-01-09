@@ -36,7 +36,7 @@ function submitForm() { //input type="button"
     editorContentInput.value = markdownContent; //hidden input에 입력 값 넣기
     
     const editorForm = document.getElementById('app_form'); //form태그
-    
+    console.log(editorForm);
     editorForm.submit(); //form submit
 }
 
@@ -93,12 +93,13 @@ searchAppInput.addEventListener("keyup",(()=>{
 		if(requestFunc){
 			clearTimeout(requestFunc);
 		}
+		
 		requestFunc = setTimeout(()=>{
 			fetch("/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
 				
-				$('option').remove();			
+				$('.app_op').remove();			
 				JSON.parse(data).forEach(e=>{
 					/* datalist 옵션태그 만들기 */
 				
@@ -109,13 +110,14 @@ searchAppInput.addEventListener("keyup",(()=>{
 					
 					$("#search_list1").append(search_op);
 				
-				});
+								});
 				
 				
-			});
+					});
 		
-	},800);
-			}
+			},800);
+		}
+
 })());
 
 
@@ -145,7 +147,7 @@ const addDelAppr=(function(){
 			
 	
 			
-			/*적힌 값과 선택한 값 일치하는지 비교*/
+			/*적힌 값과 선택한 값 일치하는지 비교(텍스트 씹히는 경우가 있음..)*/
 				if($('#search_app').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){ //수정 필요
 					
 					/* 중복 결재자 있는지 확인 */
@@ -283,21 +285,20 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			fetch("/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
-				$('option').remove();	
+				$('.ref_op').remove();	
 				
 				JSON.parse(data).forEach(e=>{
 					//datalist 옵션 태그 만들기
-				
-					const search_op = $('<option>');
+					const search_op = $('<option class="ref_op">');
 					search_op.val(e.empId+" "+e.empName+" "+e.dept.deptType+" "+ e.job.jobType);
 					 $('#search_list2').append(search_op);
 						
 
-				});
-			});
+								});
+					});
 		
-	},800);
-			}
+			},800);
+		}
 })());
 
 
@@ -324,7 +325,7 @@ const addDelref=(function(){
 				const emp_dept = emp_arr[2];
 				const emp_job = emp_arr[3];
 			
-			/*적힌 값과 선택한 값 일치하는지 비교*/
+			/*적힌 값과 선택한 값 일치하는지 비교(텍스트 씹히는 경우가 있음..)*/
 				if($('#search_ref').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){ //수정 필요
 					
 					/* 중복 참조자 있는지 확인 */

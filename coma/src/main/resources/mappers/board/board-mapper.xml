@@ -9,7 +9,7 @@
 		<result column="BOARD_READ_COUNT" property="boardReadCount"/>
 		<result column="BOARD_FILE_CHECK" property="boardFileCheck"/>
 		<result column="BOARD_TYPE" property="boardType"/>
-		<association resultMap="emp.empMap" property="empId"/>
+		<association resultMap="emp.empMap" property="emp"/>
 	</resultMap>
 	
 	<select id="selectBoardByType" resultMap="boardMap" parameterType="_int">
@@ -29,5 +29,15 @@
 	    SELECT BOARD_NO, EMP_ID, BOARD_TITLE, BOARD_CONTENT
 	    FROM BOARD
 	    WHERE BOARD_NO=#{boardNo}
+	</select>
+	
+	<insert id="insertBoard" parameterType="board">
+		INSERT INTO BOARD(BOARD_NO, EMP_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_TYPE)
+		VALUES(SEQ_BOD_NO.NEXTVAL, #{emp.empId}, #{boardTitle}, #{boardContent}, SYSDATE, 0)
+	</insert>
+	
+	<select id="selectBoardCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
 	</select>
 </mapper>
