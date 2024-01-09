@@ -13,8 +13,6 @@
       <result column="EMP_PHOTH" property="empPhoto"/>
       <result column="EMP_VACATION" property="empVacation"/>
       <result column="EMP_ACCESS" property="empAccess"/>
-      <result column="EMP_ADDR" property="empAddr"/>
-      <result column="EMP_ADDR_DETAIL" property="empAddrDetail"/>
       <!-- <result column="JOB_CODE" property="jobCode"/>
       <result column="DEPT_CODE" property="deptCode"/> -->
       <association resultMap="dept.deptMap" property="dept" />      
