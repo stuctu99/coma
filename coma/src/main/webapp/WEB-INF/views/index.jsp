@@ -191,82 +191,40 @@ ${formattedClockin}  --%>
 	</div>
 </div>
  <script>
- var stopwatchElement = document.getElementById('stopwatch');
- var commuteClockin = new Date("<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>");
- var commuteStarttime = new Date("<fmt:formatDate value="${myCommute.commuteStarttime}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>");
- var commuteEndtime = new Date("<fmt:formatDate value="${myCommute.commuteEndtime}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>");
- var commuteClockout = new Date("<fmt:formatDate value="${myCommute.commuteClockout}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>");
- console.log(commuteClockin);
- console.log(commuteStarttime);
- console.log(commuteEndtime);
- console.log(commuteClockout);
- /* $(document).ready(function() {
-	    // ${myCommute.commuteClockin} 값을 Date 객체로 변환
-	    var value = commuteClockin !== null ? new Date(commuteClockin) : null;
+ // myCommute 객체에서 시간 값들을 가져옴
 
-	    if (value !== null && !isNaN(value.getTime())) {
-	        console.log(value);
+    
 
-	        // 타이머 갱신 함수 정의
-	        function updateTimer() {
-	            var currentDate = new Date();
-
-	            // commuteClockout이 있으면 해당 시간을 표시
-	            if (commuteClockout !== null) {
-	                var clockoutDifference = commuteClockout.getTime() - commuteClockin.getTime() - (commuteEndtime !== null ? (commuteEndtime.getTime() - commuteStarttime.getTime()) : 0);
-	                var clockoutSeconds = Math.floor(clockoutDifference / 1000);
-	                var clockoutMinutes = Math.floor(clockoutSeconds / 60);
-	                clockoutSeconds %= 60;
-	                var clockoutHours = Math.floor(clockoutMinutes / 60);
-	                clockoutMinutes %= 60;
-
-	                // 시, 분, 초를 2자리 숫자로 포맷팅
-	                var formattedClockoutHours = ('0' + clockoutHours).slice(-2);
-	                var formattedClockoutMinutes = ('0' + clockoutMinutes).slice(-2);
-	                var formattedClockoutSeconds = ('0' + clockoutSeconds).slice(-2);
-
-	                // 타이머 화면에 표시
-	                $("#stopwatch").text(formattedClockoutHours + ':' + formattedClockoutMinutes + ':' + formattedClockoutSeconds);
-	            } else if (commuteStarttime !== null) {
-	                // commuteStarttime이 있으면 해당 시간을 표시
-	                var startDifference = currentDate.getTime() - commuteStarttime.getTime();
-	                var startSeconds = Math.floor(startDifference / 1000);
-	                var startMinutes = Math.floor(startSeconds / 60);
-	                startSeconds %= 60;
-	                var startHours = Math.floor(startMinutes / 60);
-	                startMinutes %= 60;
-
-	                // 시, 분, 초를 2자리 숫자로 포맷팅
-	                var formattedStartHours = ('0' + startHours).slice(-2);
-	                var formattedStartMinutes = ('0' + startMinutes).slice(-2);
-	                var formattedStartSeconds = ('0' + startSeconds).slice(-2);
-
-	                // 타이머 화면에 표시
-	                $("#stopwatch").text(formattedStartHours + ':' + formattedStartMinutes + ':' + formattedStartSeconds);
-	            } else {
-	                // commuteClockout, commuteStarttime이 없으면 이전 로직 진행
-	                var timeDifference = currentDate.getTime() - value.getTime();
-	                var seconds = Math.floor(timeDifference / 1000);
-	                var minutes = Math.floor(seconds / 60);
-	                seconds %= 60;
-	                var hours = Math.floor(minutes / 60);
-	                minutes %= 60;
-
-	                // 시, 분, 초를 2자리 숫자로 포맷팅
-	                var formattedHours = ('0' + hours).slice(-2);
-	                var formattedMinutes = ('0' + minutes).slice(-2);
-	                var formattedSeconds = ('0' + seconds).slice(-2);
-
-	                // 타이머 화면에 표시
-	                $("#stopwatch").text(formattedHours + ':' + formattedMinutes + ':' + formattedSeconds);
-	            }
-	        }
-
-	        // 1초마다 타이머 갱신
-	        setInterval(updateTimer, 1000);
-	    }
-	}); */
  
+//window.onload=()=>{
+ //var test='<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH24:mm:ss"/>';
+   //console.log(test);
+   //var value = new Date("<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>");
+   /* console.log(value.getHours(),value.getMinutes(),value.getSeconds());
+   console.log(value.getTime());
+   console.log(new Date().getTime()); */
+   //const hours=new Date()
+   //분에 대한 것 
+   //console.log((new Date().getTime()-value.getTime())/(60*1000));
+   //시간에 대한 것 
+   //console.log((new Date().getTime()-value.getTime())/(60*60*1000));
+   //var temp_value = "${myCommute.commuteClockin}";
+   //현재 시간을 얻습니다.
+	// 현재 시간을 나타내는 Date 객체 생성
+   //var value = new Date("<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>");
+   //var currentDate = new Date();
+   // value 변수에 저장된 날짜와의 차이를 계산
+   //var timeDifference = currentDate.getTime() - value.getTime();
+   // 밀리초를 초로 변환
+   //var seconds = Math.floor(timeDifference / 1000);
+   // 초를 분으로 변환
+   //var minutes = Math.floor(seconds / 60);
+   //seconds %= 60;
+   // 분을 시간으로 변환
+   //var hours = Math.floor(minutes / 60);
+   //minutes %= 60;
+   //console.log("시간: " + hours + ":" + minutes + ": " + seconds + " ");	
+//} 
 /* 달력 */
  	document.addEventListener('DOMContentLoaded', function() {
 	    const calendarEl = document.getElementById('calendar')
