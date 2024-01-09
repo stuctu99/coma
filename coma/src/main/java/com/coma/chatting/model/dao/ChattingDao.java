@@ -12,4 +12,6 @@ public interface ChattingDao {
 	List<ChattingJoin> selectRoomMemberList(SqlSession session, String roomNo);
 	
 	int insertJoinEmp(SqlSession session, Map<String, String> joinInfo);
+	
+	int deleteChatRoomJoinEmpById(SqlSession session, Map<String,String> data);
 }

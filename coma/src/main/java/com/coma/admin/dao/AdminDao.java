@@ -24,9 +24,9 @@ public class AdminDao {
 		return session.selectList("emp.selectEmpAllByCurrent",null,rb);
 	}
 	
-	public List<Commute> selectEmpAllByCommute(SqlSession session){
-		return session.selectList("emp.selectEmpAllByCommute");
-	}
+//	public List<Map> selectEmpAllByCommute(SqlSession session){
+//		return session.selectList("commute.selectEmpAllByCommute");
+//	}
 	
 	public List<Map> countEmpByDept(SqlSession session) {
 		return session.selectList("emp.countEmpByDept");
@@ -60,7 +60,7 @@ public class AdminDao {
 	
 	
 	//학생관련 Dao
-	public List<Student> selectStudent(SqlSession session, Map<String, Integer> page){
+	public List<Map> selectStudent(SqlSession session, Map<String, Integer> page){
 		int cPage=(Integer)page.get("cPage");
 		int numPerpage=(Integer)page.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
@@ -71,7 +71,7 @@ public class AdminDao {
 		return session.selectOne("student.countStudent");
 	}
 	
-	public List<Student> searchStudent(SqlSession session, Map<String, Object> searchMap){
+	public List<Map> searchStudent(SqlSession session, Map<String, Object> searchMap){
 		int cPage=(int)searchMap.get("cPage");
 		int numPerpage=(Integer)searchMap.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
@@ -104,7 +104,13 @@ public class AdminDao {
 	}
 	
 	//chart.jks 메소드
-	public List<Map> charStudentData(SqlSession session) {
+	public List<Map> charStudentByAtten(SqlSession session) {
+		return session.selectList("studentCommute.charStudentByAtten");
+	}
+	public List<Map> charStudentByEmp(SqlSession session) {
+		return session.selectList("studentCommute.charStudentByEmp");
+	}
+	public List<Map> charStudentByCom(SqlSession session) {
 		return session.selectList("studentCommute.charStudentByCom");
 	}
 }

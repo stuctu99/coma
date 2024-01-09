@@ -31,4 +31,11 @@ public class ChattingDaoImpl implements ChattingDao {
 		return session.insert("chatting.insertJoinEmp",joinInfo);
 	}
 
+	@Override
+	public int deleteChatRoomJoinEmpById(SqlSession session, Map<String, String> data) {
+		// TODO Auto-generated method stub
+		return session.delete("chatting.deleteChatRoomJoinEmpById",data);
+	}
+
+	
 }

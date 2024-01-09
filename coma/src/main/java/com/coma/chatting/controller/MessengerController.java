@@ -7,11 +7,13 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.coma.chatting.model.service.ChattingService;
 import com.coma.chatting.model.service.MessengerService;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.ChattingRoomType;
@@ -25,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessengerController {
 	private final MessengerService service;
-
 	@GetMapping
 	public String MessengerOpen(Model model) {
 		List<Emp> emp = service.selectEmpListAll();
@@ -45,31 +46,30 @@ public class MessengerController {
 	public List<ChattingRoom> chatRoomList() {
 		return service.selectRoomList();
 	}
+	
+	@GetMapping("/roomlist/{type}")
+	@ResponseBody
+	public List<ChattingRoom> chatRoomListByType(@PathVariable String type){
+		return service.selectChatRoomListByType(type);
+	}
 
 	@PostMapping("/createRoom")
 	@ResponseBody
-	public Map<String, String> createRoom(@RequestBody Map<String, String> roomInfo) {
+	public Map<String, Object> createRoom(@RequestBody Map<String, String> roomInfo) {
 		ChattingRoom room = new ChattingRoom();
 		ChattingRoomType roomType = new ChattingRoomType();
-		
 		room.setRoomName(roomInfo.get("roomName"));
 		room.setRoomPassword(roomInfo.get("roomPassword"));
 		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
 
 		roomType.setRoomType(roomInfo.get("roomType"));
 		room.setRoomTypeObj(roomType);
-		
-		System.out.println();
-		
-		if (!room.getRoomPasswordFlag().equals("")) {
-			room.setRoomPasswordFlag("Y");
-		} else {
-			room.setRoomPasswordFlag("N");
-		}
+		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
+		room.setEmpId(roomInfo.get("empId"));
 
 		System.out.println(roomInfo);
 		int result = service.insertChattingRoom(room);
-		Map<String, String> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<>();
 		if(result>0) {
 			data.put("result", "success");
 		}else {
