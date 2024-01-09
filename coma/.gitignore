@@ -39,6 +39,7 @@ log/
 logs/
 .DS_Store
 upload/
+.classpath
 
 ### mapper ###
 src/main/resources/
