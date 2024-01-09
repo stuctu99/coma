@@ -17,8 +17,8 @@
           </div>
 <script>
 	alert("${msg}");
-	/* location.replace("${path}${loc}"); */
-		location.replace("${path}");
+	location.replace("${path}/${loc}"); 
+
 </script>
           <!-- coma content space -->
         </div>

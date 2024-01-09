@@ -87,15 +87,15 @@ public class ApprovalController {
 	}
 	
 	
-	//----------------------String -> LocalDate 변경 메소드-------------------------------
+	//----------------------String -> sqlDate 변경 메소드-------------------------------
 	
-	public LocalDate formatDate(String beforeDate) {
+	public java.sql.Date formatDate(String beforeDate) {
 		
 		
-		if(beforeDate == null || beforeDate.isEmpty()) {
-			System.err.println("날짜 비어있음");
-			return null;
-		}
+		/*
+		 * if(beforeDate == null || beforeDate.isEmpty()) {
+		 * System.err.println("날짜 비어있음"); return null; }
+		 */
 		
 			SimpleDateFormat leaveStartFormat = new SimpleDateFormat("MM/dd/yyyy");
 			
@@ -106,24 +106,25 @@ public class ApprovalController {
 				//beforeDate 문자열을 SimpleDateFormat을 이용하여 Date 객체로 파싱. ("MM/dd/yyyy")을 받음.
 				Date date = leaveStartFormat.parse(beforeDate);
 		
-				
+				return new java.sql.Date(date.getTime());
 				// Date 객체를 다시 문자열로 포맷팅
-				SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				//SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 				// 변환된 문자열 formattedDateString에 저장
-				formattedDateString = outputDateFormat.format(date);
+				//formattedDateString = outputDateFormat.format(date);
 				
 				
 			}catch(ParseException e) {
 				e.printStackTrace();
+				return null;
 			}
 			
 				//DateTieFormatter와 LocalDate.parse를 이용해 "yyyy/MM/dd"형식의 문자열을 LocalDate 객체로 변환.
-			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		        LocalDate localDate = LocalDate.parse(formattedDateString, formatter);
-
-		        System.out.println(localDate);
+//			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+//		        LocalDate localDate = LocalDate.parse(formattedDateString, formatter);
+//
+//		        System.out.println(localDate);
 	
-		        return localDate;
+		        //return localDate;
 	}
 	
 	//-------------------------------------------------------------
@@ -188,8 +189,8 @@ public class ApprovalController {
 			
 				leave = ApprovalLeave.builder()
 							.leaveType(leaveType)
-			                .leaveStart(java.sql.Date.valueOf(formatDate(leaveStart)))
-			                .leaveEnd(java.sql.Date.valueOf(formatDate(leaveEnd)))
+			                .leaveStart(formatDate(leaveStart))
+			                .leaveEnd(formatDate(leaveEnd))
 			                .leaveDetail(editorContent)
 			                .build();
 		        
@@ -202,26 +203,28 @@ public class ApprovalController {
 	
 				cash = ApprovalCash.builder()
 							.cashExpense(expense)
-							.cashDate(java.sql.Date.valueOf(formatDate(cashDate)))
+							.cashDate(formatDate(cashDate))
 							.cashDetail(editorContent)
 							.build();
 		}
 		
 		//품의서 객체 
+		
+		
 		if(formatDate(reqDate)!=null) {
 			
 				req = ApprovalRequest.builder()
 							.reqDetail(editorContent)
-							.reqDate(java.sql.Date.valueOf(formatDate(reqDate)))
+							.reqDate(formatDate(reqDate))
 							.build();
 		}
 		
 		//기타 문서 객체
-		if(formatDate(reqDate)!=null) {
+		if(formatDate(etcDate)!=null) {
 			
 				etc = ApprovalEtc.builder()
 							.etcDetail(editorContent)
-							.etcDate(java.sql.Date.valueOf(formatDate(etcDate)))
+							.etcDate(formatDate(etcDate))
 							.build();
 		}
 		
@@ -258,15 +261,12 @@ public class ApprovalController {
 		
 		//결재자 객체 리스트
 		
-		System.out.println("********결재자 객체 리스트: "+apprResults);
-		
 		for(int i=0; i<apprResults.size(); i++) { //apprResults = 프론트에서 넘어온 String[]
 			
 			String result = apprResults.get(i); // result = 결재자 한 명의 정보
 
 			String[] splitResult = result.split(" "); //띄어쓰기 기준으로 정보 분리.
-		
-			System.out.println("결재자 아이디 확인*****************"+splitResult[0]);
+
 			
 			if(splitResult[0]!=null && !splitResult[0].equals("")) {
 
@@ -310,7 +310,7 @@ public class ApprovalController {
 		String msg, loc;
 		try {
 			int result = service.insertApproval(doc);	
-			System.out.println("controller 305번줄 result확인: " + result);
+
 			msg="문서 등록 성공";
 			loc="approval/writedoc"; // 결재 문서함 주소로 수정 
 		}catch(RuntimeException e){
