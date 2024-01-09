@@ -89,42 +89,26 @@ public class ApprovalController {
 	
 	//----------------------String -> sqlDate 변경 메소드-------------------------------
 	
-	public java.sql.Date formatDate(String beforeDate) {
-		
-		
-		/*
-		 * if(beforeDate == null || beforeDate.isEmpty()) {
-		 * System.err.println("날짜 비어있음"); return null; }
-		 */
+	public java.sql.Date formatDate(String beforeDate) { // 프론트에서 MM/dd/yyyy형식으로 넘어옴.
 		
 			SimpleDateFormat leaveStartFormat = new SimpleDateFormat("MM/dd/yyyy");
-			
-			String formattedDateString=""; //초기화 
 			
 			try {
 				
 				//beforeDate 문자열을 SimpleDateFormat을 이용하여 Date 객체로 파싱. ("MM/dd/yyyy")을 받음.
 				Date date = leaveStartFormat.parse(beforeDate);
 		
+				//java.sql.Date는 내부적으로 날짜를 yyyy-MM-dd 형식으로 가지고있음.
+				//yyyy-MM-dd 형식으로 반환.
 				return new java.sql.Date(date.getTime());
-				// Date 객체를 다시 문자열로 포맷팅
-				//SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-				// 변환된 문자열 formattedDateString에 저장
-				//formattedDateString = outputDateFormat.format(date);
-				
+
 				
 			}catch(ParseException e) {
 				e.printStackTrace();
 				return null;
 			}
 			
-				//DateTieFormatter와 LocalDate.parse를 이용해 "yyyy/MM/dd"형식의 문자열을 LocalDate 객체로 변환.
-//			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-//		        LocalDate localDate = LocalDate.parse(formattedDateString, formatter);
-//
-//		        System.out.println(localDate);
-	
-		        //return localDate;
+
 	}
 	
 	//-------------------------------------------------------------
