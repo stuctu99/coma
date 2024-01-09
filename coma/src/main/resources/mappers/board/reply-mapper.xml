@@ -8,4 +8,10 @@
 		<result column="REPLY_PARENT_NO" property="replyParentNo"/>
 		<association resultMap="board.boardMap" property="board"/>
 	</resultMap>
+	
+	<select id="selectReplyByBoard" resultMap="replyMap" resultType="_int">
+		SELECT *
+		FROM REPLY
+		WHERE BOARD_NO=#{boardNo}
+	</select>
 </mapper>

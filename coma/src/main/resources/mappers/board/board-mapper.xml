@@ -26,18 +26,34 @@
 	</select>
 	
 	<select id="selectBoardByNo" resultMap="boardMap" parameterType="_int">
-	    SELECT BOARD_NO, EMP_ID, BOARD_TITLE, BOARD_CONTENT
+	    SELECT BOARD_NO, EMP_ID, BOARD_TITLE, BOARD_CONTENT, EMP_NAME, BOARD_DATE, BOARD_READ_COUNT, BOARD_TYPE
 	    FROM BOARD
+	    JOIN EMP USING(EMP_ID)
 	    WHERE BOARD_NO=#{boardNo}
 	</select>
+	
+	<select id="selectBoardCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE BOARD_TYPE=#{boardType}
+	</select>
+	
+	
 	
 	<insert id="insertBoard" parameterType="board">
 		INSERT INTO BOARD(BOARD_NO, EMP_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_TYPE)
 		VALUES(SEQ_BOD_NO.NEXTVAL, #{emp.empId}, #{boardTitle}, #{boardContent}, SYSDATE, 0)
 	</insert>
 	
-	<select id="selectBoardCount" resultType="_int">
-		SELECT COUNT(*)
-		FROM BOARD
-	</select>
+	
+    <update id="updateBoard" parameterType="board">
+        UPDATE BOARD
+        SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}
+        WHERE BOARD_NO = #{boardNo}
+    </update>
+
+    <delete id="deleteBoard" parameterType="map">
+        DELETE FROM BOARD
+        WHERE BOARD_NO = #{boardNo} AND BOARD_TYPE = ${boardType}
+    </delete>
 </mapper>

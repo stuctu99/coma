@@ -34,7 +34,9 @@ public class EmployeeController {
 	@PostMapping("/loginsuccess")
 	public String successLogin(Principal data) {
 		log.debug("{}",data);
-
+		System.out.println(data);
+		
+		
 		
 		return "redirect:/";
 	}

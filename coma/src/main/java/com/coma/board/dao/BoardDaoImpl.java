@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.coma.model.dto.Board;
+import com.coma.model.dto.Reply;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -34,9 +35,21 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int selectBoardCount(SqlSession session) {
+	public int selectBoardCount(SqlSession session, int boardType) {
 		// TODO Auto-generated method stub
-		return session.selectOne("board.selectBoardCount");
+		return session.selectOne("board.selectBoardCount", boardType);
+	}
+
+	@Override
+	public int deleteBoard(SqlSession session, Map<String, Integer> board) {
+		// TODO Auto-generated method stub
+		return session.delete("board.deleteBoard",board);
+	}
+
+	@Override
+	public List<Reply> selectReplyByBoard(SqlSession session, int boardNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("reply.selectReplyByBoard", boardNo);
 	}
 
 	

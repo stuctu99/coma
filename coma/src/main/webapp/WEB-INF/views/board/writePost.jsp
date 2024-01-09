@@ -48,13 +48,6 @@
 
 <script>
 const editor = new toastui.Editor({
-	const editorRef = useRef();
-	
-    const onChange = () => {
-	    const data = editorRef.current.getInstance().getHTML();
-	    console.log(data);
-	  };
-	
     el: document.querySelector('.content'),
     initialEditType: 'wysiwyg',
     previewStyle: 'vertical',

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.coma.board.dao.BoardDao;
 import com.coma.model.dto.Board;
+import com.coma.model.dto.Reply;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,9 +41,9 @@ public class BoardServiceImpl implements BoardService {
 
 	 
 	@Override
-	public int selectBoardCount() {
+	public int selectBoardCount(int boardType) {
 		// TODO Auto-generated method stub
-		return dao.selectBoardCount(session);
+		return dao.selectBoardCount(session, boardType);
 	}
 
 
@@ -52,11 +53,17 @@ public class BoardServiceImpl implements BoardService {
 		return 0;
 	}
 
+	@Override
+	public int deleteBoard(Map<String, Integer> board) {
+		// TODO Auto-generated method stub
+		return dao.deleteBoard(session, board);
+	}
+
 
 	@Override
-	public int deleteBoard(int boardNo) {
+	public List<Reply> selectReplyByBoard(int boardNo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.selectReplyByBoard(session, boardNo);
 	}
 	
 	

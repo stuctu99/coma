@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Collection" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
+<c:set var="board" value="${boards}"/>
 
 <div class="coma-container">
 <div class="container-xl">
@@ -40,7 +44,7 @@
 					</tr>
 				</thead>
 				<tbody>
-   					<c:forEach var="boards" items="${boards}">
+   					<c:forEach var="boards" items="${notices}">
 					<tr>
 						<td>
 							<span class="custom-checkbox">
@@ -58,10 +62,20 @@
 					</c:forEach>
 				</tbody>
 			</table>
-		</div>
+			<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+			<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
+				<div class="col-sm-6" style="text-align: right;">
+			      <a href="/writePost" class="btn btn-success"><span>공지작성</span></a>   
+			      <a href="/deletePost" class="btn btn-success"><span>공지삭제</span></a>   
+			  	</div>
+			 	 <div>
+			      ${pageBarNotice }
+			  	</div>
+			</c:if>
 	</div>        
 </div>
 </div>
+
 <%-- <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 	* {

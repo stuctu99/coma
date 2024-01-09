@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.coma.model.dto.Board;
+import com.coma.model.dto.Reply;
 
 public interface BoardService {
 
@@ -13,9 +14,11 @@ public interface BoardService {
 	
 	int insertBoard(Board b);
 	
-	int selectBoardCount();
+	int selectBoardCount(int boardType);
 	
 	int updateBoard(Board b);
 	
-	int deleteBoard(int boardNo);
+	int deleteBoard(Map<String, Integer> board);
+
+	List<Reply> selectReplyByBoard(int boardNo);
 }

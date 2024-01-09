@@ -36,7 +36,7 @@
 					</tr>
 				</thead>
 				<tbody>
-   					<c:forEach var="free" items="${boards}">
+   					<c:forEach var="free" items="${frees}">
 					<tr>
 						<td>
 							<span class="custom-checkbox">
@@ -55,6 +55,9 @@
 			</table>
 			<div class="col-sm-6" style="text-align: right;">
 				<a href="/writePost" class="btn btn-success"><span>글쓰기</span></a>					
+			</div>
+			<div class="">
+						${pageBarFree }
 			</div>
 		</div>
 	</div>        

@@ -15,17 +15,85 @@
 			<div class="table-title">
 				<div class="row">
 					<div class="board-name col-sm-6">
-						<h2>글화면</h2>
+						<c:choose>
+					      <c:when test="${post.boardType eq 0}">
+					          <h2>공지사항</h2>
+					      </c:when>
+					      <c:when test="${post.boardType eq 1}">
+					          <h2>자유게시판</h2>
+					      </c:when>
+					  	</c:choose>
 					</div>
 				</div>
 			</div>
-			<div class="table post-details-flex">
-			  <div class="title">제목 ${post.boardTitle}</div>
-			  <div class="author">글쓴이 ${post.emp.empId}</div>
-			  <div class="content">내용 ${post.boardContent}</div>
+			<div class="table post-details-flex justify-content-center align-items-center">
+			  <div class="container" style="text-align: center;">
+	    	<table class="board_detail">
+				<colgroup>
+					<col width="20%"/>
+					<col width="35%"/>
+					<col width="15%"/>
+					<col width="35%"/>
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>글 번호</th>
+						<td>${post.boardNo }</td>
+						<th>조회수</th>
+						<td>${post.boardReadCount }</td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td>${post.emp.empName}</td>
+						<th>작성일</th>
+						<td>${post.boardDate }</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td colspan="6">
+							<input type="text" class="form-control" id="title" name="title" style="width: 100%" value="${post.boardTitle}"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6" class="view_text">
+							<input type="text" class="form-control" id="contents" name="contents" style="width: 100%" value="${post.boardContent}"/>
+						</td>
+					</tr>
+					<c:if test="${post.boardType eq 1}">
+						<tr>
+					        <th>댓글번호</th>
+					        <th>댓글내용</th>
+					        <th>댓글날짜</th>
+					    </tr>
+					    <c:forEach var="reply" items="${reply}">
+					        <tr>
+					            <td>${reply.replyNo}</td>
+					            <td>${reply.replyContent}</td>
+					            <td>${reply.replyDate}</td>
+					        </tr>
+					    </c:forEach>
+						<th>댓글작성</th>
+						<td colspan="6" class="view_text">
+							<div class="d-flex">
+							<textarea class="form-control" id="contents" name="contents" style="width: 100%" placeholder="^0^"></textarea>
+							<button class="btn btn-success m1-2">확인</button>
+							</div>
+						</td>
+					</tr>
+					</c:if>
+					<tr>
+						<td>
+							<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-success"><span>글삭제</span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
 			</div>
 		</div>
 	</div>        
 </div>
 </div>
+
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
