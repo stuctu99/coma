@@ -19,17 +19,14 @@ import lombok.RequiredArgsConstructor;
 public class ChattingServer extends TextWebSocketHandler {
 	
 	//동일한 아이디는 하나의 Session을 유지하기 위해 Map을 이용
-	
 	//Map<String,Map<String,WebSocketSession>> clients; // room별 분리?
-	private Map<String,Map<String,WebSocketSession>> room = new HashMap<String,Map<String,WebSocketSession>>();
 	private Map<String, WebSocketSession> clients = new HashMap<String, WebSocketSession>();
-	
+	private Map<String,Map<String,WebSocketSession>> room = new HashMap<String,Map<String,WebSocketSession>>();
 	private final ObjectMapper mapper; //Jackson Converter
-
-	
-	
+	private int count = 0;
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		
 		System.out.println("채팅서버 접속!!!");
 	}
 
@@ -52,10 +49,8 @@ public class ChattingServer extends TextWebSocketHandler {
 	}
 	
 	private void addClient(WebSocketSession session, Message msg) {
-		//이미 세션이 연결되어 있는 채팅방 존재 체크
 		boolean roomCheck = room.containsKey(msg.getRoom());
 		
-		//채팅방 존재 시 존재하는 채팅방에 세션정보 추가
 		if(roomCheck) {
 			for(Map.Entry<String,Map<String,WebSocketSession>> chatRoom : room.entrySet()) {
 				System.out.println("현재 세션 유지중인 채팅방 리스트 : "+chatRoom);
@@ -67,7 +62,6 @@ public class ChattingServer extends TextWebSocketHandler {
 			room.put(msg.getRoom(), clients);
 			sendMessage(msg);
 		}else {
-			//채팅방 정보가 없을 때 최초 입장하는 세션을 기준으로 방정보를 session에 먼저 넣기
 			clients.put(msg.getSender(),session);
 			room.put(msg.getRoom(), clients);
 			sendMessage(msg);

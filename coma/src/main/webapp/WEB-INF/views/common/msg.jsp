@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-   <jsp:param name="id" value="mine" />
+	<jsp:param name="id" value="mine" />
 </jsp:include>
     <!-- TEAM COMA SPACE -->
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
@@ -16,12 +16,13 @@
             </div>
           </div>
 <script>
-   alert("${msg}");
-   location.replace("${path}/${loc}"); 
-
+	alert("${msg}");
+	/* location.replace("${path}${loc}"); */
+		location.replace("${path}");
 </script>
           <!-- coma content space -->
         </div>
     </div>
     <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+

@@ -12,6 +12,8 @@
 	<select id="selectReplyByBoard" resultMap="replyMap" resultType="_int">
 		SELECT *
 		FROM REPLY
+		JOIN BOARD USING(BOARD_NO)
+		JOIN EMP USING(EMP_ID)
 		WHERE BOARD_NO=#{boardNo}
 	</select>
 </mapper>

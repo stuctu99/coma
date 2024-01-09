@@ -63,7 +63,6 @@ select:disabled, select[readonly] {
 
 </style>
 <!-- TEAM COMA SPACE -->
-${emp.empAddrDetail}
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->

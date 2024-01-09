@@ -10,6 +10,4 @@ public interface ChattingService {
 	List<ChattingJoin> selectRoomMemberList(String roomNo);
 	
 	int insertJoinEmp(Map<String,String> joinInfo);
-	
-	int deleteChatRoomJoinEmpById(Map<String,String> data);
 }

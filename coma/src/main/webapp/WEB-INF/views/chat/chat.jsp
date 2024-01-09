@@ -103,16 +103,7 @@ div {
          </div>
          <div class="row">
             <div class="col-2" style="display:flex; justify-content:center; align-items:center;">
-               <select class="form-control form-control-sm" id="searchType" onchange="fn_roomListByType();">
-               	<option id="0" value="ALL" selected>전체</option>
-               	<option id="1" value="A">공용</option>
-               	<option id="2" value="P">개인</option>
-               	<option id="3" value="D1">관리부</option>
-               	<option id="4" value="D2">행정부</option>
-               	<option id="5" value="D3">회계부</option>
-               	<option id="6" value="D4">교육부</option>
-               	<option id="7" value="D5">취업부</option>
-               </select>
+               <h3>유형</h3>
             </div>
             <div class="col-8">
                <strong></strong>
@@ -177,7 +168,7 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="checkbox" name="roomPasswordFlag" id="roomPasswordFlag" value="N"/>
+									<input type="checkbox" name="roomPasswordFlag" id="roomPasswordFlag"/>
 									<label for="roomPasswordFlag"><strong>비밀번호</strong></label>
 								</div>
 							</div>
@@ -188,7 +179,7 @@ div {
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
-						<button class="btn btn-primary" onclick="createRoom('${loginmember.empId}');">생성</button>
+						<button class="btn btn-primary" onclick="createRoom();">생성</button>
 					</div>
 					<!-- </form> -->
 				</div>

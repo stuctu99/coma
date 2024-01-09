@@ -38,13 +38,6 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.selectRoomList(session);
 	}
-	
-	@Override
-	public List<ChattingRoom> selectChatRoomListByType(String type) {
-		// TODO Auto-generated method stub
-		return dao.selectChatRoomListByType(session, type);
-	}
-	
 
 	@Override
 	public int insertChattingRoom(ChattingRoom room) {
@@ -57,8 +50,6 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.passwordCheck(session, roomInfo);
 	}
-
-	
 
 
 	

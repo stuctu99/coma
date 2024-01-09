@@ -61,13 +61,13 @@
 					</tr>
 					<c:if test="${post.boardType eq 1}">
 						<tr>
-					        <th>댓글번호</th>
+					        <th>이름</th>
 					        <th>댓글내용</th>
 					        <th>댓글날짜</th>
 					    </tr>
 					    <c:forEach var="reply" items="${reply}">
 					        <tr>
-					            <td>${reply.replyNo}</td>
+					            <td>${reply.board.emp.empName }</td>
 					            <td>${reply.replyContent}</td>
 					            <td>${reply.replyDate}</td>
 					        </tr>

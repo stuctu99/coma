@@ -25,7 +25,7 @@ footer {
 
 div.container{
 	max-width: 1536px !important;
-	overflow: hidden;
+	overflow: auto;
 }
 
 div.container h4{

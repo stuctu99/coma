@@ -93,7 +93,6 @@ searchAppInput.addEventListener("keyup",(()=>{
 		if(requestFunc){
 			clearTimeout(requestFunc);
 		}
-		
 		requestFunc = setTimeout(()=>{
 			fetch("/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
@@ -110,14 +109,13 @@ searchAppInput.addEventListener("keyup",(()=>{
 					
 					$("#search_list1").append(search_op);
 				
-								});
+				});
 				
 				
-					});
+			});
 		
-			},800);
-		}
-
+	},800);
+			}
 })());
 
 
@@ -147,7 +145,7 @@ const addDelAppr=(function(){
 			
 	
 			
-			/*적힌 값과 선택한 값 일치하는지 비교(텍스트 씹히는 경우가 있음..)*/
+			/*적힌 값과 선택한 값 일치하는지 비교*/
 				if($('#search_app').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){ //수정 필요
 					
 					/* 중복 결재자 있는지 확인 */
@@ -294,11 +292,11 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 					 $('#search_list2').append(search_op);
 						
 
-								});
-					});
+				});
+			});
 		
-			},800);
-		}
+	},800);
+			}
 })());
 
 
@@ -325,7 +323,7 @@ const addDelref=(function(){
 				const emp_dept = emp_arr[2];
 				const emp_job = emp_arr[3];
 			
-			/*적힌 값과 선택한 값 일치하는지 비교(텍스트 씹히는 경우가 있음..)*/
+			/*적힌 값과 선택한 값 일치하는지 비교*/
 				if($('#search_ref').val()==emp_id+" "+emp_name+" "+emp_dept+" "+emp_job){ //수정 필요
 					
 					/* 중복 참조자 있는지 확인 */
