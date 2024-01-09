@@ -36,4 +36,10 @@ public class ChattingServiceImpl implements ChattingService {
 		return dao.insertJoinEmp(session, joinInfo);
 	}
 
+	@Override
+	public int deleteChatRoomJoinEmpById(Map<String, String> data) {
+		// TODO Auto-generated method stub
+		return dao.deleteChatRoomJoinEmpById(session, data);
+	}
+
 }

@@ -113,6 +113,16 @@ input[type="datetime-local"] {
 .colflex>div>span:first-child,.colflex>div>h3:first-child{
   width:30%;
 }
+
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
     </style>
 </head>
 
@@ -131,10 +141,11 @@ input[type="datetime-local"] {
             <h1>일정 상세페이지</h1>
             <div class="colflex">
             <div>
-             <input type="hidden" id="empId" value="${loginmember.empId}">
+              
              <input type="hidden" id="id" value="">
              </div>
               <div>
+              <input type="text" id="empId" value=""> 
                 <span>제목</span> <input type="text" id="calTitle" value="">
               </div>
                <div>
@@ -186,7 +197,8 @@ input[type="datetime-local"] {
         </div>
     </div>
     <script>
-   	  var loginmember = ${loginmember.dept}; 
+   	  
+   	   
         const Modal = document.querySelector("#Modal");
         const calendarEl = document.querySelector('#calendar');
         const calStart = document.querySelector("#calStart");
@@ -212,6 +224,7 @@ input[type="datetime-local"] {
             // 맨 위 헤더 지정
             headerToolbar: headerToolbar,
             initialView: 'dayGridMonth',  // default: dayGridMonth 'dayGridWeek', 'timeGridDay', 'listWeek'
+            firstDay: 1,
             locale: 'kr',        // 언어 설정
             selectable: true,    // 영역 선택
             selectMirror: true,  // 오직 TimeGrid view에만 적용됨, default false
@@ -222,17 +235,16 @@ input[type="datetime-local"] {
             eventStartEditable: false,
             eventDurationEditable: true,
             */
-            dayMaxEvents: true,  // Row 높이보다 많으면 +숫자 more 링크 보임!
-            /*
-            views: {
+            dayMaxEvents: true,  // Row 높이보다 많으면 +숫자 more 링크 보임
+            
+            /* views: {
                 dayGridMonth: {
                     dayMaxEventRows: 3
                 }
-            },
-            */
+            }, */
+            
             nowIndicator: true,
-           /*  events:[
-             ], */
+    
              events: {
             	    url: "calendar/calendar.do",
             	    method: "GET",
@@ -263,12 +275,7 @@ input[type="datetime-local"] {
             	    failure: function() {
             	        alert('이벤트를 가져오는 도중 오류가 발생했습니다!');
             	    },
-            	    eventContent: function(arg) { // 이 부분 추가
-            	        var div = document.createElement('div');
-            	        div.innerHTML = 
-	            	    	'<div class="calContent">' + arg.event.extendedProps.calContent + '</div>'; 	      
-            	        return {html: div.outerHTML};
-            	    }
+            	
             	    }
             	}
        
@@ -283,6 +290,7 @@ input[type="datetime-local"] {
          /*  calendar.on("eventChange", info => console.log("Change:", info));
         calendar.on("eventRemove", info => console.log("Remove:", info)); */
         calendar.on("eventClick", info => {
+        	
         	console.log("이거이거: ",info.id);
              console.log("eClick:", info);
              /*console.log('Event: ', info.event.extendedProps);
@@ -293,9 +301,10 @@ input[type="datetime-local"] {
             
             calContent.value=info.event.extendedProps.calContent; 
             calType.value=info.event.extendedProps.calType;
-            
-            empId.value=info.event.extendedProps.empId;
-			let dateEnd = new Date(info.event.endStr); 			
+            console.log(info.event.extendedProps.empId); //COMA_1 이렇게 나옴
+            empId.value=info.event.extendedProps.empId[0].empId; //[object Object]이렇게 넘어옴 ;;
+			
+            let dateEnd = new Date(info.event.endStr); 			
 			let localOffsetEnd = dateEnd.getTimezoneOffset() * 60000;
 			let localISOTimeEnd = (new Date(dateEnd - localOffsetEnd)).toISOString().slice(0,16);
 			calEnd.value = localISOTimeEnd;
@@ -319,7 +328,8 @@ input[type="datetime-local"] {
         	calEnd.value=info.dateStr+" 18:00:00";
         	calTitle.value="";
             calContent.value="";
-  		}); 
+            empId.value="${loginmember.empId}";
+        }); 
          calendar.on("select", info => {                  
             calStart.value=info.startStr+" 09:00:00";
            var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
@@ -331,16 +341,17 @@ input[type="datetime-local"] {
            info.end=dateString;
            calTitle.value="";
            calContent.value="";
+           empId.value="${loginmember.empId}";
             Modal.style.display = "block";         
         }); 
-         	function fcDept(){
+         	/* function fcDept(){
       		$.ajax({
       			url: "/calendar/calendarDept",
       			method: "POST",
       			dataType: "json",
       			data:{deptCode:loginmember.deptCode};
       		})
-      	}; 
+      	};  */
  
         // 일정(이벤트) 추가하기
         function fCalAdd() {

@@ -22,7 +22,7 @@ public class MypageServiceImpl implements MypageService {
 	private final EmpDao empDao;
 	private final SqlSession session;
 	private final DBConnectionProvider authManager;
-	  @Override
+	@Override
 	public int updateEmp(Map<String, Object> emp) {
 		// TODO Auto-generated method stub
 		int result=dao.updateEmp(session, emp);

@@ -1,10 +1,12 @@
 package com.coma.chatting.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,4 +58,19 @@ public class ChattingController {
 		return "chat/chatView";
 	}
 	
+	@DeleteMapping
+	@ResponseBody
+	public Map<String,String> deleteChatRoomJoinEmpById(@RequestBody Map<String,String> data) {
+		Map<String,String> msg = new HashMap<>();
+		int result = service.deleteChatRoomJoinEmpById(data);
+		if(result>0) {
+			msg.put("result", "success");
+			System.out.println("채팅방 리스트에서 삭제!!!");
+		}else {
+			msg.put("result", "fail");
+			System.out.println("채팅방 리스트 삭제 실패!!!");
+		}
+		
+		return msg;
+	}
 }

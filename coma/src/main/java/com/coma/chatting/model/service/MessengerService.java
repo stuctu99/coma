@@ -14,5 +14,6 @@ public interface MessengerService {
 	List<ChattingRoom> selectRoomList();
 	int insertChattingRoom(ChattingRoom room);
 	ChattingRoom passwordCheck(Map<String,String> roomInfo);
+	List<ChattingRoom> selectChatRoomListByType(String type);
 	
 }
