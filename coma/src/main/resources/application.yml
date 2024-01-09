@@ -1,7 +1,11 @@
 spring:
   datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@14.36.141.71:10052:xe
+#    driver-class-name: oracle.jdbc.OracleDriver
+#    url: jdbc:oracle:thin:@14.36.141.71:10052:xe
+
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:oracle:thin:@14.36.141.71:10052:xe
+    
     username: COMA
     password: COMA
     hikari : 
@@ -16,7 +20,7 @@ spring:
 #spring.mvc.view.suffix=.jsp
 
 mybatis: 
-  mapper-locations: classpath:mappers/**/*.xml
+  mapper-locations: classpath:mappers/**/*.xml 
   config-location: classpath:config/mybatis-config.xml
 
 #logging: 
@@ -24,3 +28,22 @@ mybatis:
 #  name: log/springboot.log
 # level:
 #  '[com.coma]' : debug 
+#  '[javax.sql]': info
+#  '[jdbc.resultset]': OFF
+#  '[jdbc.sqlonly]': info
+#  '[jdbc.connection]': OFF
+
+logging:
+  level:
+    '[com.coma]': debug
+    jdbc.sqlonly: off
+    jdbc.resultsettable: off
+    jdbc.audit: OFF
+    jdbc.resultset: off
+    jdbc.connection: error
+    jdbc.sqltiming: debug
+    org.springframework.web: info
+
+
+
+   

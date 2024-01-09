@@ -17,14 +17,10 @@
 	
 
 	<select id="selectCalendar" resultMap="calendarMap">
-		SELECT * FROM CALENDAR 
+	SELECT * FROM CALENDAR 
 	</select>
-	<select id="selectCalendarDept" parameterType="string" resultMap="calendarMap">
-		SELECT * FROM CALENDAR LEFT JOIN EMP USING (EMP_ID) 
-							   LEFT JOIN DEPT USING (DEPT_CODE) WHERE DEPT_CODE=#{deptCode}
-	</select>
-	<insert id="calendarInsert" parameterType="map">
-		INSERT INTO CALENDAR VALUES('CAL_'||SEQ_CAL_NO.NEXTVAL,#{calTitle},#{calContent},#{calStart},#{calEnd},#{calType},#{calColor},#{empId})
+	<insert id="calendarInsert" parameterType="calendar">
+	INSERT INTO CALENDAR VALUES('CAL_'||SEQ_CAL_NO.NEXTVAL,#{calTitle},'TEST2내용',#{calStart},#{calEnd},'ALL',#{calColor},'COMA_1')
 	</insert>
 <!-- 인서트구문 수정할것 -->
 </mapper>
