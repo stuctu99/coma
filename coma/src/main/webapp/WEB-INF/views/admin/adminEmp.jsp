@@ -97,7 +97,9 @@
 		                <th>직책</th>
 		                <th>소속 부서</th>
 		                <th>근태상태</th>
-		                <th></th>
+		                <th>
+		                	<button type="button" class="btn btn-success btn-sm" onclick="fn_empExcelDown();">Excel다운로드</button>
+		                </th>
 		            </tr>
 		        </thead>
 		        <tbody class="list" id="empTable">
@@ -117,7 +119,9 @@
 		           </c:if>
 		        </tbody>
 		    </table>
-		    <div id="pageBar"></div>
+		    <div>
+		    	<div id="pageBar">${pageBar }</div>
+		    </div>
 		</div>
 	</div>
 </div>
@@ -299,45 +303,11 @@ function fn_deleteEmp(e){
 
 }
 
-//Google 차트 js
-/* google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(drawChart);
+//사원 리스트 Excel 다운로드
+function fn_empExcelDown(){
+	location.replace("${path}/admin/excelEmp");
+}
 
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-    ['YEAR', 'BS1', 'BS2', 'BS3','BS4','BS5','BS6'],
-    ['2019', 100, 90, 98, 80, 50, 70],
-    ['2020', 100, 90, 98, 80, 50, 70],
-    ['2021', 100, 90, 98, 80, 50, 70],
-    ['2022', 100, 90, 98, 80, 50, 70],
-    ['2023', 100, 90, 98, 80, 50, 70]
-  ]);
-
-  var options = {
-    chart: {
-      title: 'COMA_EMP',
-      subtitle: 'EMP 사원 년도별 근태 현황',
-    },
-    bars: 'horizontal', // Required for Material Bar Charts.
-    hAxis: {format: 'decimal'},
-    height: 600,
-    colors: ['#1b9e77', '#d95f02', '#7570b3']
-  };
-
-  var chart = new google.charts.Bar(document.getElementById('chart_div'));
-
-  chart.draw(data, google.charts.Bar.convertOptions(options));
-
-  var btns = document.getElementById('btn-group');
-
-  btns.onclick = function (e) {
-
-    if (e.target.tagName === 'BUTTON') {
-      options.hAxis.format = e.target.id === 'none' ? '' : e.target.id;
-      chart.draw(data, google.charts.Bar.convertOptions(options));
-    }
-  }
-} */
 </script>
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
