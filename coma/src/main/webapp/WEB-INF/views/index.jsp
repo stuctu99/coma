@@ -55,9 +55,9 @@
 </style>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
-${myCommute.commuteClockin}
+<%-- ${myCommute.commuteClockin}
 ${myCommute}
-${formattedClockin} 
+${formattedClockin}  --%>
 	<div class="row">
 		<div class=" col-4">
 			<div class="row">
@@ -65,56 +65,55 @@ ${formattedClockin}
 					<h2>근무체크</h2>
 				</div>
 			</div>
-			<div class="bigContainer"
-				style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
-				<h1 class="current-time" id="current-time">09:11:32</h1>
+			<div class="bigContainer" style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
+				<h1 id="stopwatch" >00:00:00</h1>
 				<div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly;">
 					<c:choose>
 					    <c:when test="${myCommute == null}">
 					        <div class=" col-3" id="clockin">
-					        	<div class="btncss"> 
-					            	<i class="ni ni-briefcase-24"></i>
+					        	<div class="btncss" id="clockin1"> 
+					            	<i class="ni ni-briefcase-24"  ></i>
 					            </div>
 					        </div>
 					    </c:when>
 					    <c:otherwise>
-					        <div class="col-3"> </div>
+					        <div class="col-3" id="clockin"> </div>
 					    </c:otherwise>
 					</c:choose>
 					<c:choose>
 					    <c:when test="${myCommute.commuteStarttime == null}">
 					        <div class=" col-3" id="starttime">
-					        	<div class="btncss">
-					            	<i class="ni ni-button-pause"></i>
+					        	<div class="btncss" id="starttime1">
+					            	<i class="ni ni-button-pause" ></i>
 					            </div>
 					        </div>
 					    </c:when>
 					    <c:otherwise>
-					        <div class="col-3"> </div>
+					        <div class="col-3" id="starttime"> </div>
 					    </c:otherwise>
 					</c:choose>
 					<c:choose>
 					    <c:when test="${myCommute.commuteEndtime == null}">
 					        <div class=" col-3" id="endtime">
-					        	<div class="btncss">
+					        	<div class="btncss" id="endtime1">
 					            	<i class="ni ni-button-play"></i>
 					            </div>
 					        </div>
 					    </c:when>
 					    <c:otherwise>
-					        <div class="col-3"> </div>
+					        <div class="col-3" id="endtime"> </div>
 					    </c:otherwise>
 					</c:choose>
 					<c:choose>
 					    <c:when test="${myCommute.commuteClockout == null}">
 					        <div class="col-3" id="clockout">
-					        	<div class="btncss">
+					        	<div class="btncss" id="clockout1">
 					            	<i class="ni ni-spaceship"></i>
 					            </div>
 					        </div>
 					    </c:when>
 					    <c:otherwise>
-					        <div class="col-3"> </div>
+					        <div class="col-3" id="clockout"> </div>
 					    </c:otherwise>
 					</c:choose>
 					
@@ -126,20 +125,15 @@ ${formattedClockin}
 					<label for="clockout" class="form-control-label">퇴근하기</label>
 
 				</div>
-				<div class="row " style="display: flex; flex-direction: row; justify-content: space-evenly;">
-					
-					<c:if test="${myCommute != null}">
-					    <div><fmt:formatDate value="${myCommute.commuteClockin}" pattern="HH:mm:ss" /></div>
-					    <div><fmt:formatDate value="${myCommute.commuteStarttime}" pattern="HH:mm:ss" /></div>
-					    <div><fmt:formatDate value="${myCommute.commuteEndtime}" pattern="HH:mm:ss" /></div>
-					    <div><fmt:formatDate value="${myCommute.commuteClockout}" pattern="HH:mm:ss" /></div>
-					    <%-- <c:out value="${formattedClockin}" /> --%>
-					</c:if>
-					
-					<div id="clockInResult"></div>
-					<div id="starttimeResult"></div>
-					<div id="endtimeResult"></div>
-					<div id="clockoutResult"></div>
+				<div class="row " style="display: flex; flex-direction: row; justify-content: space-evenly;">										
+				    <div id="clockInResult" class="col-3"><fmt:formatDate value="${myCommute.commuteClockin}" pattern="HH:mm:ss" /></div>
+				    <div id="starttimeResult" class="col-3"><fmt:formatDate value="${myCommute.commuteStarttime}" pattern="HH:mm:ss" /></div>
+				    <div id="endtimeResult" class="col-3"><fmt:formatDate value="${myCommute.commuteEndtime}" pattern="HH:mm:ss" /></div>
+				    <div id="clockoutResult" class="col-3"><fmt:formatDate value="${myCommute.commuteClockout}" pattern="HH:mm:ss" /></div>					
+					<!-- <div class="col-3" id="clockInResult"></div>
+					<div class="col-3" id="starttimeResult"></div>
+					<div class="col-3" id="endtimeResult"></div>
+					<div class="col-3" id="clockoutResult"></div> -->
 				</div>
 			</div>
 			<div class="row">
@@ -225,9 +219,6 @@ function getFormatTime(date){
 document.getElementById('clockin').addEventListener('click', function() {
     var empId = '${emp.empId}';
     var time = getFormatTime(new Date());
-    console.log(time);
-    console.log(empId);
-
     fetch('${path}/commute/insertCommute', {
         method: "post",
         headers: { "Content-Type": "application/json" },
@@ -243,6 +234,8 @@ document.getElementById('clockin').addEventListener('click', function() {
     }).then(result => {
         if (result > 0) {
             alert("출근했습니다.");
+            var clockinDiv = document.getElementById('clockin1');
+            clockinDiv.remove();
             document.getElementById('clockInResult').textContent = time;
         }
     }).catch(e => {
@@ -250,13 +243,12 @@ document.getElementById('clockin').addEventListener('click', function() {
     });
 });
 
-//외출시작하기 눌렀을 때
+
+ //외출시작하기 눌렀을 때
  document.getElementById('starttime').addEventListener('click', function() {
     var empId = '${emp.empId}';
     var time = getFormatTime(new Date());
-    console.log(time);
-    console.log(empId);
-    fetch('${path}/commute/updateStarttime', {
+    fetch('${path}/commute/updatestarttime', {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -271,18 +263,18 @@ document.getElementById('clockin').addEventListener('click', function() {
     }).then(result => {
         if (result > 0) {
             alert("외출을 시작합니다.");
+            var clockinDiv = document.getElementById('starttime1');
+            clockinDiv.remove();
             document.getElementById('starttimeResult').textContent = time;
         }
     }).catch(e => {
         alert(e);
     });
 });
-//외출하고 돌아왔을 때  눌렀을 때
+ //외출하고 돌아왔을 때  눌렀을 때
  document.getElementById('endtime').addEventListener('click', function() {
     var empId = '${emp.empId}';
     var time = getFormatTime(new Date());
-    console.log(time);
-    console.log(empId);
     fetch('${path}/commute/updateEndtime', {
         method: "post",
         headers: { "Content-Type": "application/json" },
@@ -298,6 +290,8 @@ document.getElementById('clockin').addEventListener('click', function() {
     }).then(result => {
         if (result > 0) {
             alert("근무를 시작합니다.");
+            var clockinDiv = document.getElementById('endtime1');
+            clockinDiv.remove();
             document.getElementById('endtimeResult').textContent = time;
         }
     }).catch(e => {
@@ -308,8 +302,6 @@ document.getElementById('clockin').addEventListener('click', function() {
  document.getElementById('clockout').addEventListener('click', function() {
     var empId = '${emp.empId}';
     var time = getFormatTime(new Date());
-    console.log(time);
-    console.log(empId);
     fetch('${path}/commute/updateclockout', {
         method: "post",
         headers: { "Content-Type": "application/json" },
@@ -325,6 +317,8 @@ document.getElementById('clockin').addEventListener('click', function() {
     }).then(result => {
         if (result > 0) {
             alert("퇴근합니다.");
+            var clockinDiv = document.getElementById('clockout1');
+            clockinDiv.remove();
             document.getElementById('clockoutResult').textContent = time;
         }
     }).catch(e => {

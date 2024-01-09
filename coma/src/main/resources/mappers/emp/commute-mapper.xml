@@ -23,7 +23,7 @@
 		 UPDATE EMP_COMMUTE SET
 		    EMP_COMMUTE_STARTTIME = SYSDATE,
    			EMP_COMMUTE_STATUS = '외근중'
- 		WHERE EMP_ID= 'COMA_1' AND to_char( EMP_COMMUTE_WORKDATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd'); 
+ 		WHERE EMP_ID= 'COMA_1' AND to_char( EMP_COMMUTE_WORKDATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd') 
 	</update>
 	<update id = "updateEndTime" parameterType="map">
 		UPDATE EMP_COMMUTE SET
