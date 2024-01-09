@@ -234,6 +234,7 @@ const messagePrint = (msg) => {
 
 	
 	document.querySelector(".messageView"+msg.roomNo).appendChild(div);
+	document.querySelector(".messageView"+msg.roomNo).scrollTop = document.querySelector(".messageView"+msg.roomNo).scrollHeight;
 }
 
 const sendMessage = () => {

@@ -97,8 +97,10 @@ section>div:nth-child(1){
 }
 
 .me>div.msg-container{
+	color: white;
+	font-weight: 900;	
 	max-width: 300px !important;
-	background-color: #f7ef0a;
+	background-color: #1fb0ff;
 	border-radius: 8px;
 	padding:10px 15px;
 }
@@ -111,8 +113,10 @@ section>div:nth-child(1){
 }
 
 .other>div.msg-container{
+	color: white;
+	font-weight: 900;
 	max-width: 300px !important;
-	background-color: aquamarine;
+	background-color: #15db12;
 	border-radius: 8px;
 	padding:10px 15px;
 }
