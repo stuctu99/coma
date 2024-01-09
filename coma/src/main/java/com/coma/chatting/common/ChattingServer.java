@@ -95,6 +95,7 @@ public class ChattingServer extends TextWebSocketHandler {
 				
 				if(result>0) { 
 					System.out.println("메세지 저장 완료");
+					msgPackages.clear();
 			  }else {
 				  System.out.println("메세지 저장 실패"); 
 			   } 

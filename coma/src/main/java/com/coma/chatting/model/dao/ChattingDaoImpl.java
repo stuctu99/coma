@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingMessage;
+import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.Emp;
 
 @Repository
 public class ChattingDaoImpl implements ChattingDao {
@@ -30,6 +32,18 @@ public class ChattingDaoImpl implements ChattingDao {
 	public List<ChattingMessage> selectChatMessageByRoomNo(SqlSession session, String roomNo) {
 		// TODO Auto-generated method stub
 		return session.selectList("chatting.selectChatMessageByRoomNo",roomNo);
+	}
+	
+	@Override
+	public ChattingRoom selectRoomByRoomNo(SqlSession session, String roomNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("chatting.selectRoomByRoomNo",roomNo);
+	}
+	
+	@Override
+	public Emp selectEmpByEmpId(SqlSession session, String empId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("chatting.selectEmpByEmpId",empId);
 	}
 
 	@Override

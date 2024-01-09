@@ -58,6 +58,9 @@ div {
 				<div class="col-1" >
 					<button id="back" style="transform:rotate(180deg);">&#10132</button>
 				</div>
+				<div class="col-10">
+					<h4 style="line-height:2.0;">${room.roomName }</h4>
+				</div>
 				<nav id="menu">
 					<ul>
 						<li>
@@ -107,18 +110,28 @@ div {
 				<c:forEach var="msg" items="${chatMsg }">
 					<c:if test="${msg.empId eq loginmember.empId}">
 						<div class="row me">
-							<small><fmt:formatDate value="${msg.chatCreateDate}" pattern="HH:mm"/>&nbsp;&nbsp;</small>
-							<div>
+							<span>나</span>
+						</div>
+						<div class="row me">
+							<div class="time-container">
+								<small><fmt:formatDate value="${msg.chatCreateDate}" pattern="HH:mm"/></small>
+							</div>
+							<div class="msg-container">
 								<span><c:out value="${msg.chatContent }"/></span>
 							</div>
 						</div>
 					</c:if>
 					<c:if test="${msg.empId != loginmember.empId }">
 						<div class="row other">
-							<div>
+							<span>${msg.empObj.empName }</span>
+						</div>
+						<div class="row other">
+							<div class="msg-container">
 								<span><c:out value="${msg.chatContent }"/></span>
 							</div>
-							<small>&nbsp;&nbsp;<fmt:formatDate value="${msg.chatCreateDate}" pattern="HH:mm"/></small>
+							<div class="time-container">
+								<small><fmt:formatDate value="${msg.chatCreateDate}" pattern="HH:mm"/></small>
+							</div>
 						</div>
 					</c:if> 
 				</c:forEach>
@@ -165,6 +178,7 @@ div {
 	});
 	
 	const empName = "${loginmember.empName}";
+	
 </script>
 <script src="${path }/resource/js/chat/chatView.js"></script>
 </html>

@@ -17,8 +17,8 @@
 		<result column="CHAT_CREATE_DATE" property="chatCreateDate"/>
 		<result column="EMP_ID" property="empId"/>
 		<result column="ROOM_NO" property="roomNo"/>
-		<!-- <association property="empIdObj" resultMap="emp.empMap"/>
-		<association property="roomNoObj" resultMap="chattingRoomMap"/> -->
+		<association property="empObj" resultMap="emp.empMap"/>
+		<association property="roomObj" resultMap="chattingRoomMap"/>
 	</resultMap>
 	
 	<resultMap type="chattingRoomType" id="chattingRoomTypeMap">
@@ -60,7 +60,15 @@
 	</select>
 	
 	<select id="selectChatMessageByRoomNo" parameterType="string" resultMap="chattingMessageMap">
-		SELECT * FROM CHAT_MESSAGE WHERE ROOM_NO = #{roomNo} ORDER BY CHAT_CREATE_DATE ASC
+		SELECT * FROM CHAT_MESSAGE JOIN EMP USING(EMP_ID) JOIN CHAT_ROOM USING(ROOM_NO) WHERE ROOM_NO = #{roomNo} ORDER BY CHAT_CREATE_DATE ASC
+	</select>
+	
+	<select id="selectRoomByRoomNo" parameterType="string" resultMap="chattingRoomMap">
+		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE) WHERE ROOM_NO = #{roomNo}	
+	</select>
+	
+	<select id="selectEmpByEmpId" parameterType="string" resultMap="emp.empMap">
+		SELECT * FROM EMP JOIN DEPT USING(DEPT_CODE) JOIN JOB USING (JOB_CODE)
 	</select>
 	
 	

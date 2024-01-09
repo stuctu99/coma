@@ -18,4 +18,6 @@ public class ChattingMessage {
 	private Timestamp chatCreateDate;
 	private String empId; //String empId
 	private String roomNo; //String roomNo
+	private Emp EmpObj;
+	private ChattingRoom roomObj;
 }

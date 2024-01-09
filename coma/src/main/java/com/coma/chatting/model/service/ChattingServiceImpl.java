@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.coma.chatting.model.dao.ChattingDao;
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingMessage;
+import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +38,17 @@ public class ChattingServiceImpl implements ChattingService {
 		return dao.selectChatMessageByRoomNo(session, roomNo);
 	}
 	
+	@Override
+	public ChattingRoom selectRoomByRoomNo(String roomNo) {
+		// TODO Auto-generated method stub
+		return dao.selectRoomByRoomNo(session, roomNo);
+	}
 	
+	@Override
+	public Emp selectEmpByEmpId(String empId) {
+		// TODO Auto-generated method stub
+		return dao.selectEmpByEmpId(session, empId);
+	}
 	
 	@Override
 	@Transactional
@@ -66,7 +78,7 @@ public class ChattingServiceImpl implements ChattingService {
 		// TODO Auto-generated method stub
 		return dao.deleteChatRoomJoinEmpById(session, data);
 	}
-	
+
 	
 
 }
