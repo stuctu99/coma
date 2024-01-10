@@ -11,4 +11,6 @@ public interface ApprovalService {
 	List<Emp> selectEmpByData(String data);
 	
 	int insertApproval(ApprovalDoc all);
+	
+	ApprovalDoc selectAppDoc(String docNo);
 }

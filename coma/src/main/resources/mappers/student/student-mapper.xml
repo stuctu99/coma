@@ -12,21 +12,30 @@
       <result column = "stu_birth" property="stuBirth"/>
       <result column = "stu_profile" property="stuProfile"/>
    </resultMap>
-   <!-- 이규홍 -->
-   <select id="selectStudent" resultMap="studentMap">
-		SELECT * FROM STUDENT
+<!-- 이규홍 -->
+   <select id="selectStudent" resultType="map">
+		SELECT S.*, E.EMP_NAME FROM STUDENT S
+			LEFT JOIN TEACHER_CLASS T ON T.STU_NO=S.STU_NO
+			LEFT JOIN EMP E ON E.EMP_ID=T.EMP_ID
    </select>
    <select id="studentCountByEmpId" resultType="map">
-		SELECT EMP_NAME, COUNT(EMP_ID) AS studentCount FROM STUDENT JOIN EMP USING(EMP_ID) GROUP BY EMP_NAME
+		SELECT EMP_NAME, COUNT(EMP_ID) AS studentCount FROM STUDENT
+			LEFT JOIN TEACHER_CLASS USING(STU_NO)
+			LEFT JOIN EMP USING(EMP_ID)
+		WHERE STU_COM_STATUS='N'
+		GROUP BY EMP_NAME
    </select>
    <select id="countStudent" resultType="_int">
    		SELECT COUNT(*) FROM STUDENT
    </select>
-   <select id="searchStudent" parameterType="map" resultMap="studentMap">
-   		SELECT * FROM STUDENT WHERE STU_NAME like '%'||#{textData}||'%'
+   <select id="searchStudent" parameterType="map" resultType="map">
+		SELECT S.*, E.EMP_NAME FROM STUDENT S
+			LEFT JOIN TEACHER_CLASS T ON T.STU_NO=S.STU_NO
+			LEFT JOIN EMP E ON E.EMP_ID=T.EMP_ID
+   		WHERE S.STU_NAME like '%'||#{textData}||'%'
    </select>
 	<select id="countStudentByData" parameterType="map" resultType="_int">
-   		SELECT STU_COM_STATUS, STU_EMP_STATUS, COUNT(*) FROM STUDENT
+   		SELECT COUNT(*) FROM STUDENT
    		<if test="textData != null">
    			WHERE STU_NAME like '%'||#{textData}||'%'
    		</if>
@@ -41,8 +50,7 @@
    		SELECT COUNT(*) FROM STUDENT WHERE STU_EMP_STATUS='Y'
    </select>
    <update id="updateStudentByCom">
-   		UPDATE STUDENT SET STU_COM_STATUS='Y' WHERE STU_END_DATE==SYSDATE;
+   		UPDATE STUDENT SET STU_COM_STATUS='Y' WHERE STU_END_DATE==SYSDATE
    </update>
    
 </mapper>
-

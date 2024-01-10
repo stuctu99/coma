@@ -7,4 +7,33 @@
       <result column="stu_commute_date" property="stuCommuteDate"/>
       <result column="stu_No" property="stuNo"/>      
    </resultMap>
+   <!-- 규홍 -->
+   <select id="charStudentByAtten" resultType="map">
+   		SELECT E.EMP_ID, E.EMP_NAME, (
+            	SELECT  AVG(FLOOR( COUNT(STU_COMMUTE_STATUS)/1.2))
+                FROM STUDENT_COMMUTE LEFT JOIN STUDENT USING(STU_NO)
+                LEFT JOIN TEACHER_CLASS USING(STU_NO)
+                where EMP_ID=E.EMP_ID AND STU_COMMUTE_STATUS ='Y'
+                AND SYSDATE BETWEEN STU_START_DATE AND STU_END_DATE
+                group by STU_NO
+         	) AS ATTENCE_RATE
+		FROM EMP E
+		WHERE E.JOB_CODE='TT'
+   </select>
+   <select id="charStudentByEmp" resultType="map">
+   		SELECT E.EMP_ID, E.EMP_NAME, (COUNT(STU_EMP_STATUS)/COUNT(S.STU_NO)*100) AS EMP_RATE
+		    FROM STUDENT S
+		    LEFT JOIN TEACHER_CLASS T ON S.STU_NO=T.STU_NO
+		    LEFT JOIN EMP E ON T.EMP_ID=E.EMP_ID
+		    WHERE STU_EMP_STATUS='Y'
+		    GROUP BY E.EMP_ID, E.EMP_NAME
+   </select>
+   <select id="charStudentByCom" resultType="map">
+   		SELECT E.EMP_ID, E.EMP_NAME, (COUNT(STU_COM_STATUS)/COUNT(S.STU_NO)*100) AS COM_RATE
+	    FROM STUDENT S
+	    LEFT JOIN TEACHER_CLASS T ON S.STU_NO=T.STU_NO
+	    LEFT JOIN EMP E ON T.EMP_ID=E.EMP_ID
+	    WHERE STU_COM_STATUS='Y'
+	    GROUP BY E.EMP_ID, E.EMP_NAME
+   </select>
 </mapper>

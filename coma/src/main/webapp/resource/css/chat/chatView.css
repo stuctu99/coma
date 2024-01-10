@@ -18,10 +18,17 @@ footer#chatView-footer {
 }
 
 section{
-	padding-top: 125px;
+	padding-top: 110px;
 	padding-bottom: 50px;
 	padding-left: 5px;
 	padding-right: 5px;
+}
+
+section>div:nth-child(1){
+	max-height: 500px !important;
+	overflow: auto;
+	background-color: white;
+	margin: 0 auto;
 }
 
 .messageView{
@@ -45,10 +52,7 @@ section{
 	border-radius: 12px;
 }
 
-.chat-title img#joinList{
-	width: 15px;
-	height: 15px;
-}
+
 
 .profile-list{
 	height: 518px !important;
@@ -88,19 +92,47 @@ section{
 	margin-bottom: 5px;
 }
 
-.me>span{
-	background-color: yellow;
+.me span, .other span{
+	padding-right: 5px;
+	overflow-wrap: break-word;
 }
 
-.other {
+.me>div.msg-container{
+	color: white;
+	font-weight: 900;	
+	max-width: 300px !important;
+	background-color: #1fb0ff;
+	border-radius: 8px;
+	padding:10px 15px;
+}
+
+.other{
 	justify-content: flex-start;
 	float: left;
 	margin-bottom: 5px;
 	
 }
 
-.other>span{
-	background-color: aquamarine;
+.other>div.msg-container{
+	color: white;
+	font-weight: 900;
+	max-width: 300px !important;
+	background-color: #15db12;
+	border-radius: 8px;
+	padding:10px 15px;
+}
+.me>div.time-container{
+	padding-right: 5px;
+}
+
+.other>div.time-container{
+	padding-left: 5px;
+}
+
+.time-container{
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
 }
 
 #bars {
@@ -172,6 +204,11 @@ section{
 
 
 .openMsgContainer{
+	margin:5px auto !important;
+	padding:4px 0px;
+	width: 100%;
 	justify-content: center;
 	margin-bottom:5px;
+	background-color: aliceblue;
+	opacity: 0.9;
 }

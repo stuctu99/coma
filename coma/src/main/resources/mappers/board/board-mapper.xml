@@ -9,14 +9,31 @@
 		<result column="BOARD_READ_COUNT" property="boardReadCount"/>
 		<result column="BOARD_FILE_CHECK" property="boardFileCheck"/>
 		<result column="BOARD_TYPE" property="boardType"/>
+		<result column="REPLY_COUNT" property="replyCount"/>
 		<association resultMap="emp.empMap" property="emp"/>
 	</resultMap>
 	
-	<select id="selectBoardByType" resultMap="boardMap" parameterType="_int">
+	<select id="selectBoardByType" resultMap="boardMap" parameterType="_int">		
 		SELECT *
 		FROM BOARD
 		JOIN EMP USING(EMP_ID)
 		WHERE BOARD_TYPE=#{boardType}
+		ORDER BY BOARD_DATE DESC
+		
+		<!-- SELECT COUNT(*)
+		FROM REPLY R
+		LEFT JOIN BOARD B ON B.BOARD_NO=R.BOARD_NO
+		GROUP BY B.BOARD_NO -->
+	</select>
+	
+	<select id="selectReplyCount" resultMap="boardMap">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_DATE, E.EMP_NAME, B.BOARD_READ_COUNT, COUNT(R.REPLY_NO) AS REPLY_COUNT
+		FROM BOARD B
+		JOIN EMP E ON B.EMP_ID = E.EMP_ID
+		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
+		WHERE B.BOARD_TYPE = 1
+		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_DATE, E.EMP_NAME, B.BOARD_READ_COUNT
+		ORDER BY B.BOARD_DATE DESC
 	</select>
 	
 	<select id="selectNoticePost" resultMap="boardMap" parameterType="map">
@@ -46,6 +63,12 @@
 	</insert>
 	
 	
+	<update id="updateBoardCount" parameterType="_int">
+		UPDATE BOARD
+		SET BOARD_READ_COUNT = BOARD_READ_COUNT+1
+		WHERE BOARD_NO=#{boardNo}
+	</update>
+	
     <update id="updateBoard" parameterType="board">
         UPDATE BOARD
         SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}
@@ -54,6 +77,6 @@
 
     <delete id="deleteBoard" parameterType="map">
         DELETE FROM BOARD
-        WHERE BOARD_NO = #{boardNo} AND BOARD_TYPE = ${boardType}
+        WHERE BOARD_NO = #{boardNo} AND BOARD_TYPE = #{boardType}
     </delete>
 </mapper>

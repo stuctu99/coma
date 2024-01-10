@@ -28,6 +28,8 @@ $(".emp-list-btn").click(function() {
 	</div>*/
 	
 $(".chatting-list-btn").click(function() {
+	const type = $("#searchType");
+	type.val("ALL").prop("selected",true);
 	$(this).css("backgroundColor", "#edebf0").css("opacity", 0.9);
 	$(this).children().css("width", "45px").css("height", "45px");
 	$(".emp-list-btn").css("backgroundColor", "white").css("cursor", "pointer").css("opacity", 1.0);
@@ -47,6 +49,87 @@ $(".chatting-list-btn").click(function() {
 			/*const $content = $(".chatting-list");*/
 			const $content = $(".content");
 			$content.html("");
+		data.forEach(d=>{
+			const $div = $("<div>").addClass("row");
+			const $div_type = $("<div>").addClass("col-2 chatting-room").css("display","flex").css("justify-content","center").css("align-items","center");
+			const $div_title = $("<div>").addClass("col-7 chatting-room").css("text-align","left");
+			const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top","12px");
+			const $input = $("<input>").attr("name","roomNo").attr("type","hidden").val(d.roomNo);
+			const $strong_type = $("<strong>");
+			const $strong_title = $("<strong>").css("padding-right","3px");
+			/*const $recentMsg = $("<div>").addClass("col-3 chatting-room");*/
+			const $recentMsg = $("<small>").text("테스트");
+			const $i = $("<div>").addClass("col-1 chatting-room");
+			const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
+			/*const $img = $("<img>").attr("src","/resource/img/chat/user.png").attr("id","joinList");*/
+			const $user_i = $("<i>").addClass("fa-solid fa-user");
+			$room_enter.attr("onclick","enter_room('"+d.roomNo+"','"+d.roomPasswordFlag+"');");
+			/*<img id="joinList" src="${path }/resource/img/chat/user.png" alt="joinMember-list" />*/
+			if(d.roomPasswordFlag=='Y'){
+				 $i.append($("<i>").addClass("fa-solid fa-lock"));
+			}else{
+				$i.append($("<i>").addClass("fa-solid fa-lock-open"));
+			}
+			$i.css("padding-top","14px");
+		/*	console.log(d.roomType.roomTypeName);
+			switch(d.roomType.roomTypeName){
+				case 'A' : $strong_type.text('공용'); break;
+				case 'D1' : $strong_type.text('관리부'); break;
+				case 'D2' : $strong_type.text('행정부'); break;
+				case 'D3' : $strong_type.text('회계부'); break;
+				case 'D4' : $strong_type.text('교육부'); break;
+				case 'D5' : $strong_type.text('취업부'); break;
+				
+			}*/
+			
+			$strong_type.text(d.roomTypeObj.roomTypeName);
+			$strong_title.text(d.roomName);
+			$div_type.append($strong_type);
+			$div_title.append($strong_title);
+			/*$div_title.append($i);*/
+			$div_btn.append($room_enter);
+			/*$div_btn.append($input);*/
+			$div.append($div_type);
+			$div.append($div_title);
+			$user_i.text('3');
+			$div_title.append($user_i);
+			$div_title.append($("<br>"));
+			$div_title.append($recentMsg);
+			$div.append($i);
+			$div.append($div_btn);
+			console.log($div);
+			$content.append($div);
+		})
+
+	})
+})
+
+/* 방 유형별 출력 */
+const fn_roomListByType = (e) => {
+	type = $("#searchType").val();
+	$(this).css("backgroundColor", "#edebf0").css("opacity", 0.9);
+	$(this).children().css("width", "45px").css("height", "45px");
+	$(".emp-list-btn").css("backgroundColor", "white").css("cursor", "pointer").css("opacity", 1.0);
+	$(".emp-list-btn").children().css("width", "40px").css("height", "40px");
+	$(".emp-list").css("display", "none");
+	$(".chatting-list").css("display", "block");
+	$("#create-room").css("display", "block");
+	
+	fetch("/messenger/roomlist/"+type)
+	.then(response=>{
+		if(response.status!=200){ 
+			alert("불러오기 실패!!");
+		}
+		console.log(response.ok);
+		console.log(response.status);
+		return response.json();
+	})
+	.then(data=>{
+		console.log(data);
+			/*const $content = $(".chatting-list");*/
+			const $content = $(".content");
+			$content.html("");
+		if(data.length>0){
 		data.forEach(d=>{
 			const $div = $("<div>").addClass("row");
 			const $div_type = $("<div>").addClass("col-2 chatting-room").css("display","flex").css("justify-content","center").css("align-items","center");
@@ -94,34 +177,42 @@ $(".chatting-list-btn").click(function() {
 			console.log($div);
 			$content.append($div);		
 		})
-
+		}else{
+			$content.html($("<h3>").text("생성된 채팅방이 없습니다."));
+			$content.css("text-align","center");
+		}
 	})
-})
+}
 
 /* 방생성 입력 창 패스워드 활성화 */
 
 $("#roomPasswordFlag").click(function() {
-	console.log(this);
 	if ($("#roomPasswordFlag").is(":checked")) {
 		console.log("체크");
+		$(this).val("Y");
 		$("#roomPassword").prop("disabled", false);
 		$("#roomPassword").focus();
 	} else {
 		$("#roomPassword").prop("disabled", true);
+		$(this).val("N");
 	}
+	console.log($(this).val());
 })
 
 /* 방생성 */
-const createRoom = () => {
+const createRoom = (empId) => {
 	const roomName =$("#roomName").val();
 	const roomPassword = $("#roomPassword").val();
 	const roomPasswordFlag = $("#roomPasswordFlag").val();
 	const roomType = $("#roomType").val();
+	console.log("방생성 ID : "+empId);
+	console.log(roomPasswordFlag);
 	const ChattingRoom = {
 		"roomName":roomName,
 		"roomPassword":roomPassword,
 		"roomType":roomType,
-		"roomPasswordFlag":roomPasswordFlag
+		"roomPasswordFlag":roomPasswordFlag,
+		"empId":empId
 	}
 	fetch("/messenger/createRoom",{
 		method:"POST",
@@ -176,13 +267,30 @@ const passwordCheck = () =>{
 	.then(data=>{
 		console.log(data);
 		if(data.flag){
+			$("#passwordCode").val("");
 			enter_chattingRoom(data.room.roomNo);
+			$("#passwordScreen").modal('hide');
 		}else{
 			alert("비밀번호가 틀립니다.");
+			$("#passwordCode").val("");
 		}
 	})
 }
 
+$(function(){
+	$("#passwordCode").on("keyup", (e) => {
+		if (e.key == 'Enter') {
+			passwordCheck();
+		}
+	})
+})
+
+/* modal창 출력 시 input태그 autofocus하는 방법 */
+$(function(){
+	$("#passwordScreen").on("shown.bs.modal",function(){
+		$("#passwordCode").focus();	
+	})
+})
 
 /* 방입장 전 체크 */
 const enter_room = (roomNo,roomPasswordFlag) => {
@@ -224,7 +332,8 @@ const enter_chattingRoom = (roomNo) =>{
 		//ChattingJoin 객체 전달 String roomNo, String empId
 		console.log(data);
 		if(data){
-			location.href="/chatting/room/"+roomNo;
+			/*location.href="/chatting/room/"+roomNo;*/
+			open("/chatting/room/"+roomNo,"_blank","width=600px; height=600px;");
 		}
 	})
 	/*ajax 통신으로 구현 할 수 있지 않을까?*/

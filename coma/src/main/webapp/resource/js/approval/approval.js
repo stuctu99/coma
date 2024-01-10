@@ -36,7 +36,7 @@ function submitForm() { //input type="button"
     editorContentInput.value = markdownContent; //hidden input에 입력 값 넣기
     
     const editorForm = document.getElementById('app_form'); //form태그
-    console.log(editorForm);
+    
     editorForm.submit(); //form submit
 }
 
@@ -98,7 +98,7 @@ searchAppInput.addEventListener("keyup",(()=>{
 			.then(result=>result.text())
 			.then(data=>{
 				
-				$('.app_op').remove();			
+				$('option').remove();			
 				JSON.parse(data).forEach(e=>{
 					/* datalist 옵션태그 만들기 */
 				
@@ -283,11 +283,12 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			fetch("/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
-				$('.ref_op').remove();	
+				$('option').remove();	
 				
 				JSON.parse(data).forEach(e=>{
 					//datalist 옵션 태그 만들기
-					const search_op = $('<option class="ref_op">');
+				
+					const search_op = $('<option>');
 					search_op.val(e.empId+" "+e.empName+" "+e.dept.deptType+" "+ e.job.jobType);
 					 $('#search_list2').append(search_op);
 						
