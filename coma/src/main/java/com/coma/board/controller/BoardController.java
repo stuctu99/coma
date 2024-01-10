@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.boot.web.server.Cookie;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,51 +34,96 @@ public class BoardController {
 	private final BoardService service;
 	private final PageFactory pageFactory;
 	
+	//공지사항리스트
 	//타입으로 분류해서 BoardList model에추가
 	@GetMapping("/noticelist")
 	public void selectBoardNotice(	@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
 								@RequestParam(required = false, defaultValue="0") int boardType, Model m){
-	        List<Board> boards = service.selectBoardByType(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
+		//Type이 0(공지)인 게시글 List타입으로 가져오기+페이징처리
+		List<Board> boards = service.selectBoardByType(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
+	    
+		//Type이 0(공지)인 게시글 총 갯수
+	    int totalData=service.selectBoardCount(boardType);
+	    
+	    
+	    //공지 List로 model에 저장
+	    m.addAttribute("notices", boards);
+	    //공지 페이지바 model에저장
+	    m.addAttribute("pageBarNotice", pageFactory.getPage(cPage, numPerpage, totalData, "noticelist"));
+	    //공지 총글갯수 model에저장
+	    m.addAttribute("totalData", totalData);
 	        
-	        int totalData=service.selectBoardCount(boardType);
-	        
-	        m.addAttribute("notices", boards);
-	        m.addAttribute("pageBarNotice", pageFactory.getPage(cPage, numPerpage, totalData, "noticelist"));
-	        m.addAttribute("totalData", totalData);
 	}
 	
+	//자유게시판리스트
 	@GetMapping("/freelist")
 	public void selectBoardFree(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "5") int numPerpage,
 			@RequestParam(required = false, defaultValue="1") int boardType, Model m){
+		//Type이 1(자유)인 게시글 List타입으로 가져오기+페이징처리
 		List<Board> boards = service.selectBoardByType(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
-				
 		
+		//Type이 1(자유)인 게시글 총 갯수
 		int totalData=service.selectBoardCount(boardType);
 		
+		//board에 달려있는 댓글갯수계산
+		List<Reply> totalReply =service.selectReplyCount();
+		
+		//자유게시글 List로 model에 저장
 		m.addAttribute("frees", boards);
+		//자유 페이지바 model에 저장
 		m.addAttribute("pageBarFree", pageFactory.getPage(cPage, numPerpage, totalData, "freelist"));
+		//자유 총글갯수 model에 저장
 		m.addAttribute("totalData", totalData);
-	}
+		//자유게시글에 연결된 댓글수를 List로 model에 저장
+		m.addAttribute("totalReply", totalReply);
+	}  
 	
-	//글상세화면메소드
+	//글상세화면
 	@GetMapping("/freePost")
 	public void selectPost(@RequestParam int boardNo, Model m) {
-	        Board post = service.selectBoardByNo(boardNo);
-	        List<Reply> reply = service.selectReplyByBoard(boardNo);
+			//조회수
+			service.updateBoardCount(boardNo);
+			//글불러오기
+			Board post = service.selectBoardByNo(boardNo);
+	        //댓글불러오기
+			List<Reply> reply = service.selectReplyByBoard(boardNo);
+			
+	        
 	        m.addAttribute("post", post);
 	        m.addAttribute("reply", reply);
+	        
 	}
-
+	
+	//댓글작성
+	@PostMapping("/writeReply")
+	public String insertReplyByBoard(@RequestParam int boardNo, @RequestParam String replyContent) {
+		
+		System.out.println(boardNo);
+		System.out.println(replyContent);
+		
+		Map<String, Object> reply = new HashMap<>();
+				
+		reply.put("boardNo", boardNo);
+		reply.put("replyContent", replyContent);
+		
+		service.insertReplyByBoard(reply);
+		
+		
+		return "redirect:/board/freePost?boardNo="+boardNo;
+	}
+	
+	//글작성(완료버튼눌렀을때)
 	@PostMapping("/writePost")
-	public String uploadImg(String title, String writer, String contenttest, Model m, MultipartFile upFile, HttpSession session) {
+	public String writePost(String title, String writer, String content, Model m, int boardType) {
 		
 		Board b=    Board.builder().boardTitle(title)
 					.emp(Emp.builder()
 							.empId(writer)
 							.build())
-					.boardContent(contenttest)
+					.boardContent(content)
+					.boardType(boardType)
 					.build();
-		
+			
 		System.out.println(b);
 		
 		int result = service.insertBoard(b);
@@ -93,34 +139,44 @@ public class BoardController {
 		m.addAttribute("msg", msg);
 		m.addAttribute("loc", loc);
 		
+		String path=null;
 		
+		if(b.getBoardType()==0) {
+			path = "redirect:/board/noticelist";
+		}else if(b.getBoardType()==1) {
+			path = "redirect:/board/freelist";
+		}
+		
+		
+		
+		return path;
+	}
+	
+	//글작성-ck에디터이미지업로드
+	@PostMapping("/ckFile")
+	public void ckFile(MultipartFile upload, HttpSession session) {
 		//파일업로드 경로
-		String path = session.getServletContext().getRealPath("/resources/upload/board");
+		String path = session.getServletContext().getRealPath("/resource/upload/board");
 		
-		
-		
-		if(upFile!=null) {
-			if(!upFile.isEmpty()) {
-				String oriName = upFile.getOriginalFilename();
+		if(upload!=null) {
+			if(!upload.isEmpty()) {
+				String oriName = upload.getOriginalFilename();
 				String ext = oriName.substring(oriName.lastIndexOf("."));
 				Date today = new Date(System.currentTimeMillis());
 				int randomNum = (int)(Math.random()*10000)+1;
 				String rename = "COMA"+"_"+ new SimpleDateFormat("yyyyMMddHHmmssSSS")
-								.format(today)+"_"+randomNum+ext;
+						.format(today)+"_"+randomNum+ext;
 				try {
-					upFile.transferTo(new File(path,rename));
+					upload.transferTo(new File(path,rename));
 				}catch(IOException e) {
 					e.printStackTrace();
 				}
 				
 			}
 		}
-		
-		
-		return "redirect:/freelist";
 	}
 	
-	
+	//글수정
 	@PostMapping("/update")
 	public String updatePost(Board b) {
 		
@@ -136,6 +192,7 @@ public class BoardController {
 		return path;
 	}
 	
+	//글삭제
 	@GetMapping("/delete")
 	public String deletePost(int boardNo, int boardType) {
 		String path = null;

@@ -21,4 +21,10 @@ public interface BoardDao {
 	int deleteBoard(SqlSession session, Map<String, Integer> board);
 	
 	List<Reply> selectReplyByBoard(SqlSession session, int boardNo);
+	
+	Board updateBoardCount(SqlSession session, int boardNo);
+	
+	int insertReplyByBoard(SqlSession session, Map<String,Object> reply);
+	
+	List<Reply> selectReplyCount(SqlSession session);
 }

@@ -124,11 +124,11 @@
           </li>
           <li class="nav-item">
             <a class="nav-link ">
-              <i class="ni ni-bullet-list-67 text-red"></i> 테스트1
+              <i class="ni ni-bullet-list-67 text-red"></i> 관리자 페이지
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
-              <li><a href="">인사부</a></li>
-              <li><a href="">인사부</a></li>
+              <li><a href="${path }/admin/adminEmp">사원관리</a></li>
+              <li><a href="${path }/admin/adminStudent">학생관리</a></li>
               <li><a href="">인사부</a></li>
             </ul>
           </li>

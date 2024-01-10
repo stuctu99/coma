@@ -10,7 +10,7 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
 <c:set var="board" value="${boards}"/>
-
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <div class="coma-container">
 <div class="container-xl">
 	<div class="table-responsive">
@@ -30,49 +30,50 @@
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
+						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						<th>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="selectAll">
 								<label for="selectAll"></label>
 							</span>
 						</th>
+						</c:if>
 						<th>작성일</th>
 						<th>제목</th>
 						<th>조회수</th>
-						<th></th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
    					<c:forEach var="boards" items="${notices}">
 					<tr>
+						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						<td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
+						</c:if>
 						<td>${boards.boardDate }</td>
 	   					<td><a href="/board/freePost?boardNo=${boards.boardNo }">
 	   						${boards.boardTitle }</a></td>
 	   					<td>${boards.boardReadCount }</td>
-	   					<td></td>
-	   					<td></td>
 					</tr>				
 					</c:forEach>
 				</tbody>
 			</table>
-			<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+			
 			<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 				<div class="col-sm-6" style="text-align: right;">
 			      <a href="/writePost" class="btn btn-success"><span>공지작성</span></a>   
 			      <a href="/deletePost" class="btn btn-success"><span>공지삭제</span></a>   
 			  	</div>
+			</c:if>
 			 	 <div>
 			      ${pageBarNotice }
 			  	</div>
-			</c:if>
 	</div>        
+</div>
 </div>
 </div>
 

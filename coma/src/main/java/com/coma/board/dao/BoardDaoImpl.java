@@ -52,6 +52,25 @@ public class BoardDaoImpl implements BoardDao {
 		return session.selectList("reply.selectReplyByBoard", boardNo);
 	}
 
+	@Override
+	public Board updateBoardCount(SqlSession session, int boardNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("board.updateBoardCount", boardNo);
+	}
+
+	@Override
+	public int insertReplyByBoard(SqlSession session, Map<String, Object> reply) {
+		// TODO Auto-generated method stub
+		return session.insert("reply.insertReplyByBoard", reply);
+	}
+
+	@Override
+	public List<Reply> selectReplyCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("board.selectReplyCount");
+	}
+	
+	
 	
 	
 

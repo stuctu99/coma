@@ -4,8 +4,11 @@
 	<jsp:param name="id" value="mine" />
 </jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
     <!-- TEAM COMA SPACE -->
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 
 <div class="coma-container">
 <div class="container-xl">
@@ -22,12 +25,14 @@
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
+						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						<th>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="selectAll">
 								<label for="selectAll"></label>
 							</span>
 						</th>
+						</c:if>
 						<th>번호</th>
 						<th>제목</th>
 						<th>작성자</th>
@@ -36,16 +41,20 @@
 					</tr>
 				</thead>
 				<tbody>
-   					<c:forEach var="free" items="${frees}">
+   					<c:forEach var="free" items="${totalReply}">
 					<tr>
+						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						<td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
+						</c:if>
 						<td>${free.boardNo }</td>
-	   					<td><a href="/board/freePost?boardNo=${free.boardNo }">${free.boardTitle }</a></td>
+	   					<td><a href="/board/freePost?boardNo=${free.boardNo }">${free.boardTitle }&emsp;</a>
+	   						<span style="color: red;">${free.replyCount }</span>
+	   					</td>
 	   					<td>${free.emp.empName }</td>
 	   					<td>${free.boardDate }</td>
 	   					<td>${free.boardReadCount }</td>

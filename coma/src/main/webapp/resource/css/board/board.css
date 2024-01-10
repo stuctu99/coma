@@ -154,4 +154,7 @@ table.table .avatar {
 	float: left;
 	margin-top: 10px;
 	font-size: 13px;
-}    
+} 
+.ck-content{
+	height: 500px;
+}

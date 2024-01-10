@@ -9,8 +9,8 @@ spring:
     username: COMA
     password: COMA
     hikari : 
-      maximum-pool-size: 24
-      minimum-idle: 5
+      maximum-pool-size: 1
+      minimum-idle: 1
 
   mvc:
     view: 

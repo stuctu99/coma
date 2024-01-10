@@ -101,25 +101,23 @@
 		            </tr>
 		        </thead>
 		        <tbody class="list" id="empTable">
-		         <c:if test="${not empty empData}">
-		        	<c:forEach var="e" items="${empData }">
+		         <c:if test="${not empty emps}">
+		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
-		        		<td><c:out value="${e.emps.empId }"/></td>
-		        		<td><a href="${path }/mypage/EmployeeDetails?empId=${e.emps.empId }"><c:out value="${e.emps.empName }"/></a></td>
-		        		<td><c:out value="${e.emps.job.jobType }"/></td>
- 		        		<td><c:out value="${e.emps.dept.deptType }"/></td>
- 		        		<c:if test="'${e.emps.empId }' eq '${e.empCommutes.empId}'">
-		        			<td><a href="#"><c:out value="${e.empCommutes.commuteStatus }"/></a></td>
-		        		</c:if>
+		        		<td><c:out value="${e.empId }"/></td>
+		        		<td><a href="${path }/mypage/EmployeeDetails?empId=${e.empId }"><c:out value="${e.empName }"/></a></td>
+		        		<td><c:out value="${e.job.jobType }"/></td>
+ 		        		<td><c:out value="${e.dept.deptType }"/></td>
+		        		<td><a href="#"><c:out value="${e.empCurrent}"/></a></td>
 		        		<td>
-			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.emps.empId }');">삭제</button>
+			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.empId }');">삭제</button>
 		        		</td>
 		        	</tr>
 					 </c:forEach>
 		           </c:if>
 		        </tbody>
 		    </table>
-		    <div id="pageBar">${pageBar }</div>
+		    <div id="pageBar"></div>
 		</div>
 	</div>
 </div>

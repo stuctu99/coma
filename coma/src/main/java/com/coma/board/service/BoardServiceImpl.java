@@ -65,6 +65,27 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return dao.selectReplyByBoard(session, boardNo);
 	}
+
+
+	@Override
+	public Board updateBoardCount(int boardNo) {
+		// TODO Auto-generated method stub
+		return dao.updateBoardCount(session, boardNo);
+	}
+
+
+	@Override
+	public int insertReplyByBoard(Map<String, Object> reply) {
+		// TODO Auto-generated method stub
+		return dao.insertReplyByBoard(session, reply);
+	}
+
+
+	@Override
+	public List<Reply> selectReplyCount() {
+		// TODO Auto-generated method stub
+		return dao.selectReplyCount(session);
+	}
 	
 	
 

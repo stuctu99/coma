@@ -9,11 +9,19 @@
 		<association resultMap="board.boardMap" property="board"/>
 	</resultMap>
 	
-	<select id="selectReplyByBoard" resultMap="replyMap" resultType="_int">
+	
+	<select id="selectReplyByBoard" resultMap="replyMap" parameterType="_int">
 		SELECT *
 		FROM REPLY
 		JOIN BOARD USING(BOARD_NO)
 		JOIN EMP USING(EMP_ID)
 		WHERE BOARD_NO=#{boardNo}
 	</select>
+	
+
+	<insert id="insertReplyByBoard" parameterType="map">
+		INSERT INTO REPLY
+		VALUES(SEQ_RE_NO.NEXTVAL,#{boardNo},#{replyContent},SYSDATE,NULL,1)
+	</insert>
+	
 </mapper>

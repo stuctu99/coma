@@ -51,12 +51,17 @@
 					<tr>
 						<th>제목</th>
 						<td colspan="6">
-							<input type="text" class="form-control" id="title" name="title" style="width: 100%" value="${post.boardTitle}"/>
+							<div class="" id="contents" name="contents" style="">
+								<span>${post.boardTitle}</span>
+							</div>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="6" class="view_text">
-							<input type="text" class="form-control" id="contents" name="contents" style="width: 100%" value="${post.boardContent}"/>
+						<th></th>
+						<td colspan="6" style="height:300px; vertical-align:baseline; text-align: left;">
+							<div class="" id="contents" name="contents" >
+								<span>${post.boardContent}</span>
+							</div>
 						</td>
 					</tr>
 					<c:if test="${post.boardType eq 1}">
@@ -64,26 +69,35 @@
 					        <th>이름</th>
 					        <th>댓글내용</th>
 					        <th>댓글날짜</th>
+					        <th></th>
 					    </tr>
 					    <c:forEach var="reply" items="${reply}">
 					        <tr>
 					            <td>${reply.board.emp.empName }</td>
 					            <td>${reply.replyContent}</td>
 					            <td>${reply.replyDate}</td>
+					            <td></td>
 					        </tr>
 					    </c:forEach>
+					    <tr>
 						<th>댓글작성</th>
 						<td colspan="6" class="view_text">
+							<form action="${path }/board/writeReply" method="post">
 							<div class="d-flex">
-							<textarea class="form-control" id="contents" name="contents" style="width: 100%" placeholder="^0^"></textarea>
-							<button class="btn btn-success m1-2">확인</button>
+								<input type="hidden" name="boardNo" value="${post.boardNo }">
+								<textarea class="form-control" id="contents" name="replyContent" style="width: 100%" placeholder="^0^"></textarea>
+								<button class="btn btn-success m1-2">확인</button>
 							</div>
+							</form>
 						</td>
-					</tr>
+						</tr>
 					</c:if>
 					<tr>
 						<td>
 							<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-success"><span>글삭제</span></a>
+						</td>
+						<td>
+							<a href="${path }/board/freelist" class="btn btn-success"><span>글목록</span></a>
 						</td>
 					</tr>
 				</tbody>

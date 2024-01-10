@@ -8,8 +8,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
-<!-- TOAST UI Editor CDN(JS) -->
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <!-- TOAST UI Editor CDN(CSS) -->
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
@@ -34,20 +32,135 @@
 	        		<input type="hidden" name="writer" value="${loginMember.empId }" >
 	        	</div>
 				<br>
-				<!-- TOAST에디터 적용할 div -->
-			    <div class="content form-group">
-				</div>
-				<input type="text" name="contenttest" id="test1" style="display:none">
+				
+				
+				<!-- 에디터 적용할 div -->
+			    <!-- <div class="content form-group"></div> -->
+				<textarea name="content" id="editor"></textarea>
+				
 				
 			    <button type="submit" class="btn btn-primary">글쓰기</button>
 			  </form>
-			  <button type="button" id="test" class="btn btn-primary" onclick="fn_test();">테스트</button>
 		</div>
 	</div>
 </div>	
-
+<!-- TOAST UI Editor CDN(JS) -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<!-- CKEDITOR5 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
 <script>
-const editor = new toastui.Editor({
+class MyUploadAdapter {
+    constructor( loader ) {
+        // The file loader instance to use during the upload.
+        this.loader = loader;
+    }
+
+    // Starts the upload process.
+    upload() {
+        return this.loader.file
+            .then( file => new Promise( ( resolve, reject ) => {
+                this._initRequest();
+                this._initListeners( resolve, reject, file );
+                this._sendRequest( file );
+            } ) );
+    }
+
+    // Aborts the upload process.
+    abort() {
+        if ( this.xhr ) {
+            this.xhr.abort();
+        }
+    }
+
+    // Initializes the XMLHttpRequest object using the URL passed to the constructor.
+    _initRequest() {
+        const xhr = this.xhr = new XMLHttpRequest();
+
+        // Note that your request may look different. It is up to you and your editor
+        // integration to choose the right communication channel. This example uses
+        // a POST request with JSON as a data structure but your configuration
+        // could be different.
+        xhr.open( 'POST', '${path}/board/ckFile', true );
+        xhr.responseType = 'json';
+    }
+
+    // Initializes XMLHttpRequest listeners.
+    _initListeners( resolve, reject, file ) {
+        const xhr = this.xhr;
+        const loader = this.loader;
+        const genericErrorText = 'Couldnt upload file: ${ file.name }.';
+
+        xhr.addEventListener( 'error', () => reject( genericErrorText ) );
+        xhr.addEventListener( 'abort', () => reject() );
+        xhr.addEventListener( 'load', () => {
+            const response = xhr.response;
+
+            // This example assumes the XHR server's "response" object will come with
+            // an "error" which has its own "message" that can be passed to reject()
+            // in the upload promise.
+            //
+            // Your integration may handle upload errors in a different way so make sure
+            // it is done properly. The reject() function must be called when the upload fails.
+            if ( !response || response.error ) {
+                return reject( response && response.error ? response.error.message : genericErrorText );
+            }
+
+            // If the upload is successful, resolve the upload promise with an object containing
+            // at least the "default" URL, pointing to the image on the server.
+            // This URL will be used to display the image in the content. Learn more in the
+            // UploadAdapter#upload documentation.
+            resolve( {
+                default: response.url
+            } );
+        } );
+
+        // Upload progress when it is supported. The file loader has the #uploadTotal and #uploaded
+        // properties which are used e.g. to display the upload progress bar in the editor
+        // user interface.
+        if ( xhr.upload ) {
+            xhr.upload.addEventListener( 'progress', evt => {
+                if ( evt.lengthComputable ) {
+                    loader.uploadTotal = evt.total;
+                    loader.uploaded = evt.loaded;
+                }
+            } );
+        }
+    }
+
+    // Prepares the data and sends the request.
+    _sendRequest( file ) {
+        // Prepare the form data.
+        const data = new FormData();
+
+        data.append( 'upload', file );
+
+        // Important note: This is the right place to implement security mechanisms
+        // like authentication and CSRF protection. For instance, you can use
+        // XMLHttpRequest.setRequestHeader() to set the request headers containing
+        // the CSRF token generated earlier by your application.
+
+        // Send the request.
+        this.xhr.send( data );
+    }
+}
+
+function MyCustomUploadAdapterPlugin( editor ) {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+        // Configure the URL to the upload script in your back-end here!
+        return new MyUploadAdapter( loader );
+    };
+}
+
+ClassicEditor
+			.create( document.querySelector('#editor'),{
+				extraPlugins: [ MyCustomUploadAdapterPlugin ]
+			});
+			
+
+
+
+
+/* const editor = new toastui.Editor({
     el: document.querySelector('.content'),
     initialEditType: 'wysiwyg',
     previewStyle: 'vertical',
@@ -65,7 +178,7 @@ const editor = new toastui.Editor({
                  * 1. 에디터에 업로드한 이미지를 FormData 객체에 저장
                  *    (이때, 컨트롤러 uploadEditorImage 메서드의 파라미터인 'image'와 formData에 append 하는 key('image')값은 동일해야 함)
                  */
-                const formData = new FormData();
+                /* const formData = new FormData();
                 formData.append('upFile', blob);
 
                 // 2. FileApiController - uploadEditorImage 메서드 호출
@@ -87,7 +200,7 @@ const editor = new toastui.Editor({
             }
         }
     }
-});
+}); */
 
 
 /* const fn_test = () =>{
