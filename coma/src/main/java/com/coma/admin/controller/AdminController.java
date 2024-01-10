@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
 
 import com.coma.admin.service.AdminService;
+import com.coma.common.excelconvert.ExcelConvert;
 import com.coma.common.pagefactory.PageFactory;
-import com.coma.model.dto.Commute;
 import com.coma.model.dto.Emp;
-import com.coma.model.dto.Student;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -95,6 +95,14 @@ public class AdminController {
 		List<Emp> emps=service.searchEmp(searchMap);
 		int totalData=service.countEmpByData(searchMap);
 		return Map.of("emps",emps,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchEmp"));
+	}
+	
+	//사원 데이터 Excel 다운
+	@GetMapping("/excelEmp")
+	public View ExcelDownEmp(Model m) {
+		List<Emp> empList=service.ExcelDownEmp();
+		m.addAttribute("empList",empList);
+		return new ExcelConvert();
 	}
 	
 	/*학생관련 컨트롤러*/

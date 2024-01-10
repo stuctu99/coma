@@ -97,7 +97,9 @@
 		                <th>직책</th>
 		                <th>소속 부서</th>
 		                <th>근태상태</th>
-		                <th></th>
+		                <th>
+		                	<button type="button" class="btn btn-success btn-sm" onclick="fn_empExcelDown();">Excel Down</button>
+		                </th>
 		            </tr>
 		        </thead>
 		        <tbody class="list" id="empTable">
@@ -297,6 +299,11 @@ function fn_deleteEmp(e){
 		alert(e);
 	}); 
 
+}
+
+//사원 데이터 Excel다운 기능
+function fn_empExcelDown(){
+	location.assign("${path}/admin/excelEmp");
 }
 
 //Google 차트 js

@@ -53,6 +53,10 @@ public class AdminDao {
 		return session.selectOne("emp.countEmpByData",searchMap);
 	}
 	
+	public List<Emp> ExcelDownEmp(SqlSession session){
+		return session.selectList("emp.selectEmpAllByCurrent");
+	}
+	
 	//chart.js 메소드
 	public List<Map> charEmpData(SqlSession session) {
 		return session.selectList("coummute.charEmpData");
