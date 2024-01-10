@@ -1,7 +1,6 @@
 package com.coma.approval.pdf;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.springframework.stereotype.Component;
@@ -22,11 +21,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class PdfGenerator {
 
-	public void generateAppr(ApprovalDoc doc, HttpServletResponse response, String fontPath) {//filePath에 저장하지말고 사용자 컴퓨터에
-		
-		try {
-//			PdfWriter.getInstance(document, new FileOutputStream(filePath));
+	public void generateAppr(ApprovalDoc doc, HttpServletResponse response, String fontPath) { 
 
+		try {
+			
 			Document document = new Document();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			PdfWriter.getInstance(document, baos);
@@ -52,13 +50,13 @@ public class PdfGenerator {
 			ServletOutputStream outputStream = response.getOutputStream();
 			baos.writeTo(outputStream);
 			outputStream.flush();
-			
-		}catch(FileNotFoundException | DocumentException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		}catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+
+	
+
 	}
 	
 	private PdfPTable generateTable(ApprovalDoc doc, Font font) {
