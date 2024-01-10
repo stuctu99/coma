@@ -38,9 +38,30 @@ public class CalendarCont {
        
             return test;      
 }
+	@PostMapping("/calendarUpdate")
+	public Map<String,String> calendarUpdate(@RequestBody Map<String,String> event){
+		Map<String, String> cal = new HashMap<>();
+		event.put("calStart", event.get("calStart").replace('T', ' '));
+		event.put("calEnd", event.get("calEnd").replace('T', ' '));
+		System.out.println("업데이트"+event);
+		int result = service.calendarUpdate(event);
+		cal.put("msg"," ");
+		return cal;
+	}
+	@PostMapping("/calendarDelete")
+	public Map<String,String> calendarDelete(@RequestBody Map<String,String> event){
+		System.out.println("밀래 ?"+event.get("calNo"));
+		Map<String,String> cal =new HashMap<>();
+		int result = service.calendarDelete(event);
+		cal.put("msg"," ");
+		return cal;
+	}
+	
 	@PostMapping("/calendarDept")
-	public List<Calendar> selectCalendarDept(@RequestBody String deptCode){
+	public List<Calendar> selectCalendarDept(@RequestBody Map<String,String> deptEvent){
 		System.out.println("안녕2");
-		return service.selectCalendarDept(deptCode);
+		System.out.println(deptEvent.get("empId"));
+		String empId = deptEvent.get("empId");
+		return service.selectCalendarDept(empId);
 	}
 }
