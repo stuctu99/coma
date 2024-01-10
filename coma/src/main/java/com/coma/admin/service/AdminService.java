@@ -22,7 +22,7 @@ public class AdminService {
 	private final SqlSession session;
 	
 	//사원관련 서비스
-	public List<Emp> selectEmpAllByCurrent(Map<String, Integer> page){
+	public List<Map> selectEmpAllByCurrent(Map<String, Integer> page){
 		return dao.selectEmpAllByCurrent(session, page);
 	}
 	
@@ -54,7 +54,7 @@ public class AdminService {
 		return dao.deleteEmp(session, empId);
 	}
 	
-	public List<Emp> searchEmp(Map<String, Object> searchMap){
+	public List<Map> searchEmp(Map<String, Object> searchMap){
 		return dao.searchEmp(session, searchMap);
 	}
 	
@@ -62,9 +62,13 @@ public class AdminService {
 		return dao.countEmpByData(session, searchMap);
 	}
 	
+	public List<Emp> ExcelDownEmp(){
+		return dao.ExcelDownEmp(session);
+	}
+	
 	//chart.js 메소드
-	public List<Map> charEmpData() {
-		return dao.charEmpData(session);
+	public List<Map> charEmpData(Map<String, Integer> monthResult) {
+		return dao.charEmpData(session, monthResult);
 	}
 	
 	//학생관련 서비스

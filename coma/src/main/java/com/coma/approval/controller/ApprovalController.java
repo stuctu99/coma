@@ -62,20 +62,15 @@ public class ApprovalController {
    
    //---------------------------------------------------------------------
    
-   @GetMapping("/test")
-   @ResponseBody
-   public String test(String data) {
-      return data+ "왔어 왔어";
-   }
+//   @GetMapping("/test")
+//   @ResponseBody
+//   public String test(String data) {
+//      return data+ "왔어 왔어";
+//   }
    
    @GetMapping("/writedoc")
    public String writeDoc() {
       return "approval/writedoc";
-   }
-   
-   @GetMapping("/viewdoc")
-   public String viewDoc() {
-      return "approval/viewdoc";
    }
    
    @GetMapping("/sign")
@@ -310,5 +305,22 @@ public class ApprovalController {
       return "common/msg";
    }
 //---------------------------------------------------------------------
+   
+   
+//--------------------------- 문서 상세보기 ------------------------------
+   @GetMapping("/viewdoc")
+   public String viewDoc(String docNo) {
+	   
+	 docNo = "DOC_248"; //테스트용 
+	 ApprovalDoc doc = service.selectAppDoc(docNo); 
+	 
+	 System.out.println("테스트: ***************:"+doc);
+	 
+      return "approval/viewdoc";
+   }
+   
+   
+//---------------------------------------------------------------------
+   
    
 }
