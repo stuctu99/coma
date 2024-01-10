@@ -69,7 +69,7 @@ ${formattedClockin}  --%>
             
             <h1 id="stopwatch" >00:00:00</h1>
                
-            <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly;">
+            <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly; height : 44px">
                <c:choose>
                    <c:when test="${myCommute == null}">
                        <div class=" col-3" id="clockin">
@@ -121,7 +121,7 @@ ${formattedClockin}  --%>
                
             </div>
             <div class="row "  style="display: flex; flex-direction: row; justify-content: space-evenly;">
-               <label for="clockin" class="form-control-label">출근</label>
+               <label for="clockin" class="form-control-label">출근하기</label>
                <label for="starttime" class="form-control-label">외출하기</label>
                <label for="endtime" class="form-control-label">복귀하기</label>
                <label for="clockout" class="form-control-label">퇴근하기</label>
@@ -132,10 +132,6 @@ ${formattedClockin}  --%>
                 <div id="starttimeResult" class="col-3"><fmt:formatDate value="${myCommute.commuteStarttime}" pattern="HH:mm:ss" /></div>
                 <div id="endtimeResult" class="col-3"><fmt:formatDate value="${myCommute.commuteEndtime}" pattern="HH:mm:ss" /></div>
                 <div id="clockoutResult" class="col-3"><fmt:formatDate value="${myCommute.commuteClockout}" pattern="HH:mm:ss" /></div>               
-               <!-- <div class="col-3" id="clockInResult"></div>
-               <div class="col-3" id="starttimeResult"></div>
-               <div class="col-3" id="endtimeResult"></div>
-               <div class="col-3" id="clockoutResult"></div> -->
             </div>
          </div>
          <div class="row">
@@ -494,11 +490,11 @@ document.getElementById('clockin').addEventListener('click', function() {
 });
 
 //휴가 근황 페이지 전환되는 기능 
-/* $(document).ready(function() {
-	$('#vacationButton').click(function() {
-		window.location.href = '${path}/mypage/vacationSituation';
-	});
- }); */
+document.getElementById('vacationButton').addEventListener('click', function() {
+    window.location.href = '/mypage/vacationSituation';
+});
+
+
  /* window.onload=()=>{
  var test='<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH24:mm:ss"/>';
    console.log(test);
