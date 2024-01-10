@@ -341,14 +341,16 @@ public class ApprovalController {
    
    @GetMapping("/pdf")
    
-   public String generatePdf(HttpSession session) {
+   public String generatePdf(HttpSession session, HttpServletResponse response) {
 	   ApprovalDoc doc = new ApprovalDoc();
 	   doc.setDocNo("DOC_248"); //테스트용
 	   
-	   String path = session.getServletContext().getRealPath("/resource/upload/approval/test.pdf");
+	   String path = session.getServletContext().getRealPath("/resource/upload/approval/test2.pdf");
 	   //ㄴ 테스트용. 수정 필요 	
 	   
-	      pdfGen.generateAppr(doc, path);
+	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
+	  
+	      pdfGen.generateAppr(doc, response, fontPath);
 	      
 	      return "approval/viewdoc";
    }

@@ -13,6 +13,7 @@ import com.coma.approval.pdf.PdfGenerator;
 import com.coma.model.dto.ApprovalDoc;
 import com.coma.model.dto.Emp;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -172,8 +173,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public void generatePdf(ApprovalDoc doc, String filePath) {
-		pdfGenerator.generateAppr(doc, filePath);
+	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath) {
+		pdfGenerator.generateAppr(doc, response, fontPath);
 	}
 
 
