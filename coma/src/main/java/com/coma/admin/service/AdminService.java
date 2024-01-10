@@ -62,10 +62,6 @@ public class AdminService {
 		return dao.countEmpByData(session, searchMap);
 	}
 	
-	public List<Emp> downloadEmpExcel(){
-		return dao.downloadEmpExcel(session);
-	}
-	
 	//chart.js 메소드
 	public List<Map> charEmpData() {
 		return dao.charEmpData(session);

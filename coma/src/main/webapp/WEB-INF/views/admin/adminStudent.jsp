@@ -26,7 +26,7 @@
 				<h1>학생 근태 통계</h1>
 			</div>
 			<div>
-				<canvas id="stuCurentChart" style="height:200px; width:400px;"></canvas>
+				<canvas id="stuCurentChart" style="height:200px; width:400px"></canvas>
 			</div>
 		</div>
 		<div class="col-4">
@@ -56,7 +56,7 @@
 				<h1>학생 수료율 통계</h1>
 			</div>
 			<div>
-				<canvas id="stuComChart" style="height:200px; width:400px;"></canvas>
+				<canvas id="stuComChart" style="height:200px; width:400px"></canvas>
 			</div>
 		</div>
 		<div class="col-4">
@@ -311,6 +311,7 @@ function fn_searchStudent(cPage=1,numPerpage=10,url){
 		$trList.forEach($tr => {
 		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
 		});
+		//Array.prototype.forEach.call($tbody.children,e=>e.remove());
 		result.students.forEach((e)=>{
 			const $tr=document.createElement('tr');
 			const $td1=document.createElement('td');
@@ -337,6 +338,47 @@ function fn_searchStudent(cPage=1,numPerpage=10,url){
 		console.log(e);
 	})
 }
+
+
+//Google 차트 js
+/* google.charts.load('current', {'packages':['bar']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['YEAR', 'BS1', 'BS2', 'BS3','BS4','BS5','BS6'],
+    ['2019', 100, 90, 98, 80, 50, 70],
+    ['2020', 100, 90, 98, 80, 50, 70],
+    ['2021', 100, 90, 98, 80, 50, 70],
+    ['2022', 100, 90, 98, 80, 50, 70],
+    ['2023', 100, 90, 98, 80, 50, 70]
+  ]);
+
+  var options = {
+    chart: {
+      title: 'COMA_EMP',
+      subtitle: 'EMP 사원 년도별 근태 현황',
+    },
+    bars: 'horizontal', // Required for Material Bar Charts.
+    hAxis: {format: 'decimal'},
+    height: 600,
+    colors: ['#1b9e77', '#d95f02', '#7570b3']
+  };
+
+  var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+  chart.draw(data, google.charts.Bar.convertOptions(options));
+
+  var btns = document.getElementById('btn-group');
+
+  btns.onclick = function (e) {
+
+    if (e.target.tagName === 'BUTTON') {
+      options.hAxis.format = e.target.id === 'none' ? '' : e.target.id;
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+  }
+} */
 </script>
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

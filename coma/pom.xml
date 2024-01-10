@@ -156,14 +156,6 @@
        <version>5.5.9</version>
    </dependency>
    
-   <!-- Excel -->
-	<dependency>
-	    <groupId>org.apache.poi</groupId>
-	    <artifactId>poi</artifactId>
-	    <version>5.2.5</version>
-	</dependency>
-
-   
    <!-- itext 라이브러리 끝 -->
    
    </dependencies>
