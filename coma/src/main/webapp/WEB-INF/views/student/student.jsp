@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
@@ -31,7 +32,7 @@
 		        </thead>
 		        <tbody class="list" id="studentTable">
 		        	<tr>
-		        		<td><a href="#"><c:out value=""/></a></td>
+		        		<td><c:out value=""/></td>
 		        		<td><c:out value=""/></td>
 		        		<td><c:out value=""/></td>
 		        		<td><c:out value=""/></td>
