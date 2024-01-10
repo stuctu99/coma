@@ -59,6 +59,11 @@ strong:has(div){
 	text-align: center;
 }
 
+.enter-room{
+	width: 74.83px;
+	height: 30px;
+}
+
 .emp-list-btn, .chatting-list-btn{
 	cursor: pointer;
 }

@@ -1,97 +1,37 @@
-/*		 웹소켓 채팅 
-		alert("환영합니다!");
-		function getId(id) {
-			return document.getElementById(id);
-		}
-
-		var data = {};//전송 데이터(JSON)
-
-		var server;
-		var mid = getId('mid');
-		var btnLogin = getId('btnLogin');
-		var btnSend = getId('btnSend');
-		var talk = getId('contents');
-		var msg = getId('msg');
-		$(document).ready(function() {
-			server = new WebSocket("ws://" + location.host + "/chatting");
-
-			server.onmessage = function(msg) {
-				var data = JSON.parse(msg.data);
-				var css;
-
-				console.log(data);
-
-				if (data.mid == "test" mid.value ) {
-					css = 'class=me';
-				} else {
-					css = 'class=other';
-				}
-
-				var item = "<div "+css+"><span><b>"+data.mid+"</b></span>[ "+data.date+" ]<br/><span>"+data.msg+"</span></div>";
-
-				talk.innerHTML += item;
-				talk.scrollTop = talk.scrollHeight;//스크롤바 하단으로 이동
-			}
-		})
-		
-
-		msg.onkeyup = function(ev) {
-			if (ev.keyCode == 13) {
-				send();
-			}
-		}
-
-		btnSend.onclick = function() {
-			send();
-		}
-
-		function send() {
-			if (msg.value.trim() != '') {
-				data.mid = "test" getId('mid').value ;
-				data.msg = msg.value;
-				data.date = new Date().toLocaleString();
-				var temp = JSON.stringify(data);
-				server.send(temp);
-			}
-			msg.value = '';
-
-		}
-*/
-
-
-
 $("#exit-btn").click(function() {
 	if (confirm("채팅방을 완전히 나가겠습니까?")) {
 		const roomNo = $("#roomNo").val();
 		const empId = $("#loginMember").val();
-		fetch("/chatting",{
-			method:"DELETE",
-			headers:{"Content-Type":"application/json"},
-			body:JSON.stringify({"roomNo":roomNo,"empId":empId})
+		console.log(roomNo,empId);
+		fetch("/chatting", {
+			method: "DELETE",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ "roomNo": roomNo, "empId": empId })
 		})
-		.then(response=>{
-			if(response.status!=200){
-				throw new error("관리자에게 문의하세요!!!");
-			}
-			return response.json();
-		})
-		.then(data=>{
-			if(data.result=="success"){
-				location.href="/messenger";
-			}else{
-				alert("관리자에게 문의하세요!");
-			}
-		})
+			.then(response => {
+				if (response.status != 200) {
+					throw new error("관리자에게 문의하세요!!!");
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.result == "success") {
+					location.href = "/messenger";
+				} else {
+					alert("관리자에게 문의하세요!");
+				}
+			})
 	}
 })
 
 $("#back").click(function() {
-	close();
+	window.close();
+	$("#chatting-list-btn").click();
 })
 
-$(function(){
-	
-	$("section>.container").scrollTop($("section>.container")[0].scrollHeight);	
+$(function() {
+
+	$("section>.container").scrollTop($("section>.container")[0].scrollHeight);
 })
 
 
@@ -131,13 +71,13 @@ server.onopen = (response) => {
 		}
 	})*/
 	/*constructor(type,chatNo,chatContent,chatCreateDate,empId,roomNo)*/
-	const msg = new Message("open","","",new Date(Date.now()),empId,roomNo);
+	const msg = new Message("open", "", "", new Date(Date.now()), empId, roomNo);
 	server.send(msg.convert());
 
 }
 
 server.onmessage = (response) => {
-	console.log("response응답데이터 "+response.data);
+	console.log("response응답데이터 " + response.data);
 	const receiveMsg = Message.deconvert(response.data);
 	console.log("asdasd" + receiveMsg.type);
 	switch (receiveMsg.type) {
@@ -166,18 +106,18 @@ const messagePrint = (msg) => {
 	const content = document.createElement("span");
 	const timeDiv = document.createElement("div");
 	const timeTag = document.createElement("small");
-	
+
 	div.classList.add("row"); //메세지 라인 컨테이너
 	timeDiv.classList.add("time-container"); //전송 시간 컨테이너
 	//메세지 전송 시간 출력
-	timeTag.innerText=("0"+new Date(msg.chatCreateDate).getHours()).slice(-2)+":"+("0"+new Date(msg.chatCreateDate).getMinutes()).slice(-2)+"  ";
+	timeTag.innerText = ("0" + new Date(msg.chatCreateDate).getHours()).slice(-2) + ":" + ("0" + new Date(msg.chatCreateDate).getMinutes()).slice(-2) + "  ";
 	timeDiv.appendChild(timeTag);
-	
+
 	//메세지 컨테이너
-	msgDiv.classList.add("msg-container");	
+	msgDiv.classList.add("msg-container");
 	content.innerText = msg.chatContent;
 	msgDiv.appendChild(content);
-	
+
 	/*fetch("/chatting/"+msg.empId,{
 		mehtod:"get",
 		headers:{
@@ -200,58 +140,84 @@ const messagePrint = (msg) => {
 			console.log("상대"+data.empName);
 		}	
 	})*/
-			if (msg.empId == empId) {
-			//sender가 로그인한 사원
-			nameDiv.classList.add("row","me");
-			nameSpan.innerText='나';
-			console.log(nameSpan);
-			nameDiv.appendChild(nameSpan);
-			div.classList.add("me");
-			/*div.appendChild(nameDiv);*/
-			div.appendChild(timeDiv);
-			div.appendChild(msgDiv);
-		} else {
-			//이외 receiver
-			nameDiv.classList.add("row","other");
-			nameSpan.innerText=msg.empObj.empName;
-			nameDiv.appendChild(nameSpan);
-			div.classList.add("other");
-			/*div.appendChild(nameDiv);*/
-			div.appendChild(msgDiv);
-			div.appendChild(timeDiv);
-		}	
+	if (msg.empId == empId) {
+		//sender가 로그인한 사원
+		nameDiv.classList.add("row", "me");
+		nameSpan.innerText = '나';
+		console.log(nameSpan);
+		nameDiv.appendChild(nameSpan);
+		div.classList.add("me");
+		/*div.appendChild(nameDiv);*/
+		div.appendChild(timeDiv);
+		div.appendChild(msgDiv);
+	} else {
+		//이외 receiver
+		nameDiv.classList.add("row", "other");
+		nameSpan.innerText = msg.empObj.empName;
+		nameDiv.appendChild(nameSpan);
+		div.classList.add("other");
+		/*div.appendChild(nameDiv);*/
+		div.appendChild(msgDiv);
+		div.appendChild(timeDiv);
+	}
 
 
-	document.querySelector(".messageView"+msg.roomNo).appendChild(nameDiv);
-	document.querySelector(".messageView"+msg.roomNo).appendChild(div);
-	document.querySelector(".messageView"+msg.roomNo).scrollTop = document.querySelector(".messageView"+msg.roomNo).scrollHeight;
+	document.querySelector(".messageView" + msg.roomNo).appendChild(nameDiv);
+	document.querySelector(".messageView" + msg.roomNo).appendChild(div);
+	document.querySelector(".messageView" + msg.roomNo).scrollTop = document.querySelector(".messageView" + msg.roomNo).scrollHeight;
 }
 
 const sendMessage = () => {
 	const msg = document.querySelector("#msg").value;
 	document.querySelector("#msg").value = "";
 	/*type,chatNo,chatContent,chatCreateDate,empId,roomNo*/
-	server.send(new Message("msg","",msg,new Date(Date.now()),empId,roomNo).convert());
+	server.send(new Message("msg", "", msg, new Date(Date.now()), empId, roomNo).convert());
 }
 
 const openMessage = (msg) => {
-	const container = $("<div>").addClass("row openMsgContainer");
-	const content = $("<h4>").text(`${msg.empId}님이 접속하셨습니다.`);
-	container.append(content);
-	$(".messageView"+msg.roomNo).append(container);
+	/* NEW_JOIN FLAG 여부에 따라 메세지 출력 여부 결정하기*/
+	
+	fetch("/chatting", {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			"roomNo": msg.roomNo,
+			"empId": msg.empId
+
+		})
+	})
+		.then(response => {
+			if (response.status != 200) {
+				alert("fetch함수 실패");
+			}
+			return response.json();
+		})
+		.then(data => {
+			console.log(data);
+			if(data.newJoin==='Y'){
+				const container = $("<div>").addClass("row openMsgContainer");
+				const content = $("<h4>").text(`${data.empObj.empId}님이 접속하셨습니다.`);
+				$(".messageView" + msg.roomNo).append(container);
+				container.append(content);			
+			}
+		})
+
+	
 }
 
 window.onload = () => {
 	const $msg = $("#msg");
-	$msg.focus();	
+	$msg.focus();
 	$msg.on("keyup", (e) => {
 		const $msg = $("#msg").val()
 		if (e.key == 'Enter') {
 			/*sendMessage();*/
-			if($msg.length>0){
+			if ($msg.length > 0) {
 				$("#btnSend").click();
 				$("#msg").val("");
-			}else{
+			} else {
 				alert("채팅을 입력하세요.");
 			}
 		}
@@ -267,13 +233,13 @@ class Message {
 		this.room = room;
 		this.time = time;
 	}*/
-	
-	constructor(type="",chatNo="",chatContent="",chatCreateDate,empId="",roomNo=""){
-		this.type=type;
+
+	constructor(type = "", chatNo = "", chatContent = "", chatCreateDate, empId = "", roomNo = "") {
+		this.type = type;
 		this.chatNo = chatNo;
-		this.chatContent=chatContent;
+		this.chatContent = chatContent;
 		this.chatCreateDate = chatCreateDate;
-		this.empId= empId;
+		this.empId = empId;
 		this.roomNo = roomNo;
 	}
 	convert() {

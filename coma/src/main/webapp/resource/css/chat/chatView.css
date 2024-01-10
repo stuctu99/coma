@@ -25,7 +25,7 @@ section{
 }
 
 section>div:nth-child(1){
-	max-height: 500px !important;
+	max-height: 510px !important;
 	overflow: auto;
 	background-color: white;
 	margin: 0 auto;
