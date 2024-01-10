@@ -90,7 +90,9 @@ hr {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#create-room{
+#create-room,#delete-room{
+	width: 74.83px;
+	height: 30px;
 	display: none;
 }
 

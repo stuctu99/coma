@@ -96,8 +96,8 @@ const fn_roomListByType = (type) => {
 			$strong_type.text(d.roomTypeObj.roomTypeName);
 			$strong_title.text(d.roomName);
 			if(loginId==='COMA_1'){
-				const $input = $("<input>").attr("type","checkbox").val(d.roomNo).css("margin-right","5px");
-				$input.addClass("deleteCheckbox");
+				const $input = $("<input>").attr("type","checkbox").attr("name","deleteRoom[]").val(d.roomNo).css("margin-right","5px");
+				$input.addClass("deleteRoom");
 				$div_type.append($input);
 			}
 			$div_type.append($strong_type);
@@ -242,9 +242,29 @@ $(function(){
 
 });
 
+$(document).on('change','input[class="deleteRoom"]',function(){
+	$("#create-room").after($("button").text("삭제").attr("onclick","fn_deleteRoom();").attr("class","btn btn-danger"));
+	$("#create-room").css("display","none");
+})
+
+
+
+const fn_deleteRoom=()=>{
+	let delRoom = new Array();
+	let cnt = 0;
+	const delCheckbox = $(".deleteRoom");
+	for(i=0; i<delCheckbox.length; i++){
+		if(delCheckbox[i].checked==true){
+			delRoom[cnt]=delCheckbox[i].value;
+			cnt++;
+		}
+	}
+	if(confirm("정말로 삭제하시겠습니까?")){
+		alert("삭제 하기!!!");
+	}
+}
 /* 방입장 전 체크 */
 const enter_room = (roomNo,roomPasswordFlag) => {
-	const pathValue = $("#pathValue").val();
 	if(roomPasswordFlag=='Y'){
 				console.log("방번호 체크 : "+roomNo);
 				$("#check-roomNo").val(roomNo);
