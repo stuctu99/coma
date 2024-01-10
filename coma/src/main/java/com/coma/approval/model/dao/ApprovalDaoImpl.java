@@ -74,6 +74,12 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	}
 
 
+	@Override
+	public ApprovalDoc selectAppDoc(SqlSession session, String docNo) {
+		
+
+		return session.selectOne("approval.selectAppDoc", docNo);
+	}
 	
 
 }

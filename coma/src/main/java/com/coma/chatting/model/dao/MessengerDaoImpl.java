@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingRoom;
@@ -34,17 +35,42 @@ public class MessengerDaoImpl implements MessengerDao {
 	}
 	
 	@Override
+	public List<String> selectMyJoinRoomById(SqlSession session, String loginId) {
+		// TODO Auto-generated method stub
+		return session.selectList("chatting.selectMyJoinRoomById",loginId);
+	}
+	
+	@Override
+	public String selectNowCreateChatRoomNo(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("chatting.selectNowCreateChatRoomNo");
+	}
+
+	@Override
 	public ChattingRoom passwordCheck(SqlSession session, Map<String, String> roomInfo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("chatting.selectRoomPasswordCheck",roomInfo);
 	}
+	
+
+	@Override
+	public List<ChattingRoom> selectChatRoomListByType(SqlSession session, String type) {
+		// TODO Auto-generated method stub
+		return session.selectList("chatting.selectChatRoomListByType",type);
+	}
 
 	// insert
 	@Override
+	@Transactional
 	public int insertChattingRoom(SqlSession session, ChattingRoom room) {
 		// TODO Auto-generated method stub
-		System.out.println(room);
-		return session.insert("chatting.insertCreateRoom", room);
+		int result = session.insert("chatting.insertCreateRoom", room);
+		if(result>0) {
+			Map<String,String> creator = Map.of("empId",room.getEmpId());
+			result = session.insert("chatting.insertJoinEmp",creator);
+			
+		}
+		return result;
 	}
 
 //	update

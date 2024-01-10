@@ -5,10 +5,7 @@
 </jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!-- 
-<link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
-<script src="/resource/js/approval/approval.js"></script> -->
-<!-- 에디터 -->
+
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
   <!-- Editor's Style -->
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
