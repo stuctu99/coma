@@ -243,8 +243,11 @@ $(function(){
 });
 
 $(document).on('change','input[class="deleteRoom"]',function(){
-	$("#create-room").after($("button").text("삭제").attr("onclick","fn_deleteRoom();").attr("class","btn btn-danger"));
-	$("#create-room").css("display","none");
+	if($(".deleteRoom:checked").length==0){
+		$("#delete-room").css("display","none");
+	}else{
+		$("#delete-room").css("display","block");
+	}
 })
 
 
@@ -260,8 +263,28 @@ const fn_deleteRoom=()=>{
 		}
 	}
 	if(confirm("정말로 삭제하시겠습니까?")){
-		alert("삭제 하기!!!");
+		fetch("/messenger",{
+			method:"delete",
+			headers:{"Content-Type":"application/json"},
+			body:JSON.stringify(delRoom)
+		})
+		.then(response=>{
+			if(response.status!=200){
+				alert("접근할 수 없습니다. 관리자에게 문의하세요:");
+			}
+			return response.json(); 
+		})
+		.then(data=>{
+			if(data.result==='success'){
+				alert("삭제가 완료되었습니다.");
+				$(".chatting-list-btn").click();
+			}else{
+				alert("삭제 실패하였습니다. 관리자에게 문의하세요:");
+			}
+		})
+		
 	}
+	console.log(delRoom);
 }
 /* 방입장 전 체크 */
 const enter_room = (roomNo,roomPasswordFlag) => {
@@ -306,4 +329,9 @@ const enter_chattingRoom = (roomNo) =>{
 	})
 }
 
-
+$(document).ready(function(){
+	const server = new WebSocket("ws://"+location.host+"/chattingServer");
+	server.onopen = () =>{
+		
+	} 
+})

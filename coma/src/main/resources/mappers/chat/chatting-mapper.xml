@@ -139,4 +139,24 @@
 		DELETE CHAT_MESSAGE WHERE ROOM_NO = #{roomNo} AND EMP_ID = #{empId}
 	</delete>
 	
+	<delete id="deleteChattingMessage" parameterType="list">
+		DELETE CHAT_MESSAGE WHERE ROOM_NO IN 
+		<foreach collection="list" item="roomNo" separator="," open="(" close=")" >
+			#{roomNo}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteChattingRoomMember" parameterType="list">
+		DELETE CHAT_JOIN WHERE ROOM_NO IN
+		<foreach collection="list" item="roomNo" separator="," open="(" close=")">
+			#{roomNo}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteChattingRoom" parameterType="list">
+		DELETE CHAT_ROOM WHERE ROOM_NO IN
+		<foreach collection="list" item="roomNo" separator="," open="(" close=")">
+			#{roomNo}
+		</foreach>
+	</delete>
 </mapper>

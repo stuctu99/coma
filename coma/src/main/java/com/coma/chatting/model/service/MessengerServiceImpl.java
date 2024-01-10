@@ -73,6 +73,12 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.passwordCheck(session, roomInfo);
 	}
 
+	@Override
+	public int deleteChatRoomInfoByRoomNo(List<String> roomList) {
+		// TODO Auto-generated method stub
+		return dao.deleteChatRoomInfoByRoomNo(session, roomList);
+	}
+
 
 
 
