@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.coma.chatting.model.service.ChattingService;
 import com.coma.chatting.model.service.MessengerService;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.ChattingRoomType;
@@ -27,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessengerController {
 	private final MessengerService service;
+	
 	@GetMapping
 	public String MessengerOpen(Model model) {
 		List<Emp> emp = service.selectEmpListAll();
@@ -41,16 +41,23 @@ public class MessengerController {
 		return "chat/chat";
 	}
 
-	@GetMapping("/roomlist")
-	@ResponseBody
-	public List<ChattingRoom> chatRoomList() {
-		return service.selectRoomList();
-	}
+	/*
+	 * @GetMapping("/roomlist")
+	 * 
+	 * @ResponseBody public List<ChattingRoom> chatRoomList() { return
+	 * service.selectRoomList(); }
+	 */
 	
-	@GetMapping("/roomlist/{type}")
+	@GetMapping("/roomlist/{type}/{loginId}")
 	@ResponseBody
-	public List<ChattingRoom> chatRoomListByType(@PathVariable String type){
-		return service.selectChatRoomListByType(type);
+	public Map<String,Object> chatRoomListByType(@PathVariable String type, @PathVariable String loginId){
+		System.out.println("여기까지오니??????????????????????????????????????????");
+		List<ChattingRoom> roomList = service.selectChatRoomListByType(type);
+		List<String> joinRoom = service.selectMyJoinRoomById(loginId);
+		Map<String,Object> roomInfo = new HashMap<String,Object>();
+		roomInfo.put("roomList",roomList);
+		roomInfo.put("joinRoom", joinRoom); 
+		return roomInfo;
 	}
 
 	@PostMapping("/createRoom")
@@ -72,6 +79,7 @@ public class MessengerController {
 		Map<String, Object> data = new HashMap<>();
 		if(result>0) {
 			data.put("result", "success");
+			data.put("roomNo", service.selectNowCreateChatRoomNo());
 		}else {
 			data.put("result", "fail");
 		}

@@ -34,12 +34,5 @@ public class CalendarController {
 		System.out.println("안녕");
 		return service.selectCalendar();
 	}
-//	@PostMapping("/calendarInsert")
-//	
-//	public String calendarInsert(@RequestBody Calendar data) {
-//		System.out.println(data);
-//       int result= service.calendarInsert(data);
-//            return "insert 완료!";
-//      
-//}
+
 }

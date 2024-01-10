@@ -24,10 +24,20 @@ public class CalendarDaoImpl implements CalendarDao {
 		return session.insert("calendar.calendarInsert",event);
 	}
 	@Override
-	public List<Calendar> selectCalendarDept(SqlSession session, String deptCode) {
+	public List<Calendar> selectCalendarDept(SqlSession session, String empId) {
 		// TODO Auto-generated method stub
-		return session.selectList("calendar.selectCalendar",deptCode);
+		return session.selectList("calendar.selectCalendarDept",empId);
 	}
-
+	@Override
+	public int calendarUpdate(SqlSession session, Map<String, String> event) {
+		// TODO Auto-generated method stub
+		return session.update("calendar.calendarUpdate",event);
+	}
+	@Override
+	public int calendarDelete(SqlSession session, Map<String, String> event) {
+		// TODO Auto-generated method stub
+		return session.delete("calendar.calendarDelete",event);
+	}
+	
 	
 }

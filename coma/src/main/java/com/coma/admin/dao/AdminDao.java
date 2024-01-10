@@ -17,7 +17,7 @@ import com.coma.model.dto.Student;
 public class AdminDao {
 	
 	//사원관련 Dao
-	public List<Emp> selectEmpAllByCurrent(SqlSession session, Map<String, Integer> page){
+	public List<Map> selectEmpAllByCurrent(SqlSession session, Map<String, Integer> page){
 		int cPage=(Integer)page.get("cPage");
 		int numPerpage=(Integer)page.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
@@ -44,7 +44,7 @@ public class AdminDao {
 		return session.update("emp.deleteEmp", empId);
 	}
 	
-	public List<Emp> searchEmp(SqlSession session, Map<String, Object> searchMap){
+	public List<Map> searchEmp(SqlSession session, Map<String, Object> searchMap){
 		System.out.println(searchMap);
 		return session.selectList("emp.searchEmp", searchMap);
 	}
@@ -53,9 +53,13 @@ public class AdminDao {
 		return session.selectOne("emp.countEmpByData",searchMap);
 	}
 	
-	//chart.js 메소드
-	public List<Map> charEmpData(SqlSession session) {
-		return session.selectList("coummute.charEmpData");
+	public List<Emp> ExcelDownEmp(SqlSession session){
+		return session.selectList("emp.selectEmpAllByCurrent");
+	}
+	
+	//사원 Chart Data
+	public List<Map> charEmpData(SqlSession session, Map<String, Integer> monthResult) {
+		return session.selectList("emp.charEmpData", monthResult);
 	}	
 	
 	
@@ -103,7 +107,7 @@ public class AdminDao {
 		return session.update("student.updateStudentByCom", student);
 	}
 	
-	//chart.jks 메소드
+	//학색 Chart Data
 	public List<Map> charStudentByAtten(SqlSession session) {
 		return session.selectList("studentCommute.charStudentByAtten");
 	}
