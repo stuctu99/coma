@@ -1,5 +1,6 @@
 package com.coma.admin.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -34,12 +35,13 @@ public class AdminController {
 	private final AdminService service;
 	private final PageFactory pageFactory;
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	private final LocalDate sysDate= LocalDate.now();
 	
 	/*사원관련 컨트롤러*/
 	//전체 사원 출력
 	@GetMapping("/adminEmp")
 	public void selectEmpAllByCurrent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m) {
-		List<Emp> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage));	//전체 사원 데이터 가져오기
+		List<Map> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage));	//전체 사원 데이터 가져오기
 		//List<Map> empCommutes=service.selectEmpAllByCommute();	//사원 근태 형황 데이터 가져오기
 		Map<String, Object> empData= new HashMap<>();	
 		empData.put("emps", emps);	//전체 사원 데이터 Map
@@ -47,12 +49,20 @@ public class AdminController {
 		int totalData=service.countEmp();	//전체 사원 수
 		List<Map> empCount=service.countEmpByDept();	//각 부서별 인원 수
 		
+		int yearData=sysDate.getYear();
+		int monthData=sysDate.getMonthValue();
+		int relayMonth;
+		if(monthData!=1) {
+			relayMonth=monthData-1;
+		}
+		relayMonth=monthData;
+		int nextMonth=monthData+1;
+		
 		//chart.js 메소드
-		//List<Map> chartEmp=service.charEmpData();	//차트에 넣을 사원 근태 데이터
+		List<Map> chartEmp=service.charEmpData(Map.of("relayMonth",relayMonth,"nextMonth",nextMonth,"yearData",yearData));	//차트에 넣을 사원 근태 데이터
 		Gson gson=new Gson();	//Gson 호출
 		JsonArray jArray=new JsonArray();	//Gson에서 제공하는 Json배열 호출
-		//Iterator<Map> it=chartEmp.iterator();
-		Iterator<Map> it=empCount.iterator();	//사원 데이터를 가져오기 위해 iterator<Map>을 생성
+		Iterator<Map> it=chartEmp.iterator();	//사원 데이터를 가져오기 위해 iterator<Map>을 생성
 		while (it.hasNext()) {	//while 루프를 사용해 hasNext()함수로 데이터가 있는지 확인
 		    Map<String, Object> dataMap = it.next();	//next()함수를 통해 데이터를 Map에 대입
 		    JsonObject jsonObject = new JsonObject();	//Map 데이터를 JSON 형식으로 변환하기 위해 JsonObject 호출
@@ -92,7 +102,8 @@ public class AdminController {
 	//사원 검색
 	@PostMapping("/searchEmp")
 	public @ResponseBody Map<String,Object> searchEmp(@RequestBody HashMap<String, Object> searchMap) {
-		List<Emp> emps=service.searchEmp(searchMap);
+		List<Map> emps=service.searchEmp(searchMap);
+		System.out.println(emps);
 		int totalData=service.countEmpByData(searchMap);
 		return Map.of("emps",emps,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchEmp"));
 	}
@@ -193,17 +204,5 @@ public class AdminController {
 		int totalData=service.countStudentByData(searchMap);
 		return Map.of("students",students,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchStudent"));
 	}
-	
-//	//chart.js 메소드
-//	@PostMapping("/chartEmp")
-//	public @ResponseBody List<Map> charEmpData() {
-//		List<Map> chartEmp=service.charEmpData();
-//		return null;
-//	}
-//	@PostMapping("/chartEmp")
-//	public @ResponseBody List<Map> charStudentData() {
-//		List<Map> chartStudent=service.charStudentData();
-//		return null;
-//	}
 
 }
