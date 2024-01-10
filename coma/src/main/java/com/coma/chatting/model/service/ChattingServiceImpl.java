@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +52,13 @@ public class ChattingServiceImpl implements ChattingService {
 	}
 	
 	@Override
+	public ChattingJoin selectJoinCheckByEmpId(Map<String, String> joinEmp) {
+		// TODO Auto-generated method stub
+		return dao.selectJoinCheckByEmpId(session, joinEmp);
+	}
+	
+	
+	@Override
 	@Transactional
 	public int insertJoinEmp(Map<String, String> joinInfo) {
 		// TODO Auto-generated method stub
@@ -71,13 +79,27 @@ public class ChattingServiceImpl implements ChattingService {
 //	}
 	
 	
+	@Override
+	public int updateChatNewJoin(Map<String, String> newEmpCheck) {
+		// TODO Auto-generated method stub
+		return dao.updateChatNewJoin(session, newEmpCheck);
+	}
+	
+	
 	
 	@Override
 	@Transactional
-	public int deleteChatRoomJoinEmpById(Map<String, String> data) {
+	public int deleteChatRoomJoinEmpById(Map<String, String> exitEmp) {
 		// TODO Auto-generated method stub
-		return dao.deleteChatRoomJoinEmpById(session, data);
+		return dao.deleteChatRoomJoinEmpById(session, exitEmp);
 	}
+
+	@Override
+	public int deleteChattingMsgByRoomNoAndEmpId(Map<String, String> exitEmp) {
+		// TODO Auto-generated method stub
+		return dao.deleteChattingMsgByRoomNoAndEmpId(session,exitEmp);
+	}
+	
 
 	
 

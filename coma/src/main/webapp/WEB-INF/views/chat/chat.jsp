@@ -104,7 +104,7 @@ div {
          </div>
          <div class="row">
             <div class="col-2" style="display:flex; justify-content:center; align-items:center;">
-               <select class="form-control form-control-sm" id="searchType" onchange="fn_roomListByType();">
+               <select class="form-control form-control-sm" id="searchType" onchange="fn_roomType();">
                	<option id="0" value="ALL" selected>전체</option>
                	<option id="1" value="A">공용</option>
                	<option id="2" value="P">개인</option>
@@ -263,5 +263,9 @@ div {
 <!--   Argon JS   -->
 <script src="${path }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script>
+	const loginId = '${loginmember.empId}';
+	console.log("alskdjlkasdjkl;ajdlkasjdlkajdlaskjdklajdlkajdlkasjdk"+loginId);
+</script>
 <script src="${path }/resource/js/chat/chat.js"></script>
 </html>

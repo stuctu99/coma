@@ -9,6 +9,8 @@ import com.coma.model.dto.Calendar;
 public interface CalendarService {
 
 	List<Calendar> selectCalendar();
-	List<Calendar> selectCalendarDept(String deptCode);
+	List<Calendar> selectCalendarDept(String empId);
 	int calendarInsert(Map<String,String> event);
+	int calendarUpdate(Map<String,String> event);
+	int calendarDelete(Map<String,String> event);
 }

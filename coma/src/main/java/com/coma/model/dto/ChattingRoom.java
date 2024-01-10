@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Data
@@ -21,5 +22,6 @@ public class ChattingRoom {
 	private Date roomCreateDate;
 	private ChattingRoomType roomTypeObj;
 	private String empId;
+	private int memberCount;
 	/* private List<ChattingJoin> joinMember; */
 }

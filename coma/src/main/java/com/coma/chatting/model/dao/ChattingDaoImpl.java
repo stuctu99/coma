@@ -47,6 +47,12 @@ public class ChattingDaoImpl implements ChattingDao {
 	}
 
 	@Override
+	public ChattingJoin selectJoinCheckByEmpId(SqlSession session, Map<String, String> joinEmp) {
+		// TODO Auto-generated method stub
+		return session.selectOne("chatting.selectJoinCheckByEmpId",joinEmp);
+	}
+
+	@Override
 	public int insertJoinEmp(SqlSession session, Map<String, String> joinInfo) {
 		// TODO Auto-generated method stub
 		return session.insert("chatting.insertJoinEmp",joinInfo);
@@ -68,12 +74,27 @@ public class ChattingDaoImpl implements ChattingDao {
 //		// TODO Auto-generated method stub
 //		return session.insert("chatting.insertChattingMessage",msg);
 //	}
+	
+	@Override
+	public int updateChatNewJoin(SqlSession session, Map<String, String> newEmpCheck) {
+		// TODO Auto-generated method stub
+		return session.update("chatting.updateChatNewJoin",newEmpCheck);
+	}
+	
 
 	@Override
-	public int deleteChatRoomJoinEmpById(SqlSession session, Map<String, String> data) {
+	public int deleteChatRoomJoinEmpById(SqlSession session, Map<String, String> exitEmp) {
 		// TODO Auto-generated method stub
-		return session.delete("chatting.deleteChatRoomJoinEmpById",data);
+		return session.delete("chatting.deleteChatRoomJoinEmpById",exitEmp);
 	}
+
+	@Override
+	public int deleteChattingMsgByRoomNoAndEmpId(SqlSession session, Map<String, String> exitEmp) {
+		// TODO Auto-generated method stub
+		return session.delete("chatting.deleteChattingMsgByRoomNoAndEmpId",exitEmp);
+	}
+
+	
 
 	
 
