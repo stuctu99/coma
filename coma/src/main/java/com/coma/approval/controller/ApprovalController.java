@@ -10,7 +10,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -309,12 +311,21 @@ public class ApprovalController {
    
 //--------------------------- 문서 상세보기 ------------------------------
    @GetMapping("/viewdoc")
-   public String viewDoc(String docNo) {
+   public String viewDoc(String docNo, String docType) {
 	   
-	 docNo = "DOC_248"; //테스트용 
-	 ApprovalDoc doc = service.selectAppDoc(docNo); 
+	 Map<String, String> data = new HashMap<String, String>();
+	 
+	 docNo = "DOC_248"; //테스트용
+	 docType = "etc"; //테스트용
+	 
+	 data.put("docNo", docNo); 
+	 data.put("docType", docType); 
+	 
+	 ApprovalDoc doc = service.selectAppDoc(data); 
 	 
 	 System.out.println("테스트: ***************:"+doc);
+	 
+
 	 
       return "approval/viewdoc";
    }

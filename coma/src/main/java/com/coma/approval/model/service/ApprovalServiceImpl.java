@@ -1,6 +1,7 @@
 package com.coma.approval.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -158,9 +159,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public ApprovalDoc selectAppDoc(String docNo) {
+	public ApprovalDoc selectAppDoc(Map<String, String> data) {
 		
-		ApprovalDoc doc = dao.selectAppDoc(session, docNo);
+		ApprovalDoc doc = dao.selectAppDoc(session, data);
 		
 		return doc;
 	}

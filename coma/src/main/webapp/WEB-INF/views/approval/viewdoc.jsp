@@ -53,7 +53,7 @@
           </div>
           <div class="row">
             <div class="col-3 line_btn">
-            	<button type="button" class="btn btn-secondary btn-lg">결재선 설정</button>
+            	
             </div>
             <div class="col-3">
             </div>
