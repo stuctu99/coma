@@ -62,7 +62,7 @@ div {
 			<div class="row">
 				<div class="col-12">
 					<input type="hidden" id="empId" value="${loginmember.empId }"/>
-					<h2>사원 리스트${loginmember.empId }</h2>
+					<h2>${loginmember.empName }님 반갑습니다.</h2>
 				</div>
 			</div>
 			<!------------------- 사원 데이터 ----------------------->
@@ -73,7 +73,6 @@ div {
 								<strong><c:out value="${d.deptType}"/>부</strong>
 							</div>
 						</div>
-						
 					<c:forEach var="e" items="${emp}">
 						<c:if test="${e.dept.deptCode eq d.deptCode}">
 						<div class="row">
@@ -83,9 +82,11 @@ div {
 							<div class="col-8">
 								<small><c:out value="${e.empName}"/></small>
 							</div>
+						<c:if test="${e.empId!=loginmember.empId }">
 							<div class="col-2">
 								<button id="chatting-active" class="btn btn-outline-primary">채팅</button>
 							</div>
+						</c:if>
 						</div>
 						</c:if>
 					</c:forEach>
@@ -115,7 +116,6 @@ div {
                </select>
             </div>
             <div class="col-8">
-               <strong></strong>
             </div>
             <div class="col-2">
                <input type="hidden" id="pathValue" value="${path }"/>

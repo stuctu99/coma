@@ -97,27 +97,29 @@
 		                <th>직책</th>
 		                <th>소속 부서</th>
 		                <th>근태상태</th>
-		                <th></th>
+		                <th>
+		                	<button type="button" class="btn btn-success btn-sm" onclick="fn_empExcelDown();">Excel Down</button>
+		                </th>
 		            </tr>
 		        </thead>
 		        <tbody class="list" id="empTable">
 		         <c:if test="${not empty emps}">
 		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
-		        		<td><c:out value="${e.empId }"/></td>
-		        		<td><a href="${path }/mypage/EmployeeDetails?empId=${e.empId }"><c:out value="${e.empName }"/></a></td>
-		        		<td><c:out value="${e.job.jobType }"/></td>
- 		        		<td><c:out value="${e.dept.deptType }"/></td>
-		        		<td><a href="#"><c:out value="${e.empCurrent}"/></a></td>
+		        		<td><c:out value="${e.EMP_ID }"/></td>
+		        		<td><a href="${path }/mypage/EmployeeDetails?empId=${e.EMP_ID }"><c:out value="${e.EMP_NAME }"/></a></td>
+		        		<td><c:out value="${e.JOB_TYPE }"/></td>
+ 		        		<td><c:out value="${e.DEPT_TYPE }"/></td>
+		        		<td><a href="#"><c:out value="${e.EMP_COMMUTE_STATUS!=null?e.EMP_COMMUTE_STATUS:'미출근'}"/></a></td>
 		        		<td>
-			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.empId }');">삭제</button>
+			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.EMP_ID }');">삭제</button>
 		        		</td>
 		        	</tr>
 					 </c:forEach>
 		           </c:if>
 		        </tbody>
 		    </table>
-		    <div id="pageBar"></div>
+		    <div id="pageBar">${pageBar }</div>
 		</div>
 	</div>
 </div>
@@ -136,7 +138,7 @@ var colorList = new Array();
 for(let i=0;i<chartEmpData.length;i++){
 	let e=chartEmpData[i];
 	labelList.push(e.DEPT_TYPE);
-	valueList.push(e.DEPTCOUNT);
+	valueList.push(e.EMPATTA);
 	colorList.push(colorize());
 
 }
@@ -166,7 +168,7 @@ const myChart = new Chart(ctx, {
         	yAxes : [ {
 				ticks : {
 					beginAtZero : true,
-					stepSize: 1
+					stepSize: 10
 				}
 			} ]
 
@@ -200,26 +202,31 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
 		});
 		result.emps.forEach((e)=>{
+			console.log(e);
 			const $tr=document.createElement('tr');
 			const $td1=document.createElement('td');
 			const $a=document.createElement('a');
 			const $a2=document.createElement('a');
-			$td1.innerText=e.empId;
+			$td1.innerText=e.EMP_ID;
 			
 			const $td2=document.createElement('td');
 			$a.setAttribute('href','#');
-			$a.innerText=e.empName;
+			$a.innerText=e.EMP_NAME;
 			$td2.appendChild($a);
 			
 			const $td3=document.createElement('td');
-			$td3.innerText=e.job.jobType;
+			$td3.innerText=e.JOB_TYPE;
 			
 			const $td4=document.createElement('td');
-			$td4.innerText=e.dept.deptType;
+			$td4.innerText=e.DEPT_TYPE;
 			
 			const $td5=document.createElement('td');
 			$a2.setAttribute('href','#');
-			$a2.innerText=e.empCurrent;
+			if(e.EMP_COMMUTE_STATUS!=null){
+				$a2.innerText=e.EMP_COMMUTE_STATUS;
+			}else{
+				$a2.innerText='미출근';
+			}
 			$td5.appendChild($a2);
 			
 			const $td6 = document.createElement('td');
@@ -299,45 +306,11 @@ function fn_deleteEmp(e){
 
 }
 
-//Google 차트 js
-/* google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(drawChart);
+//사원 데이터 Excel다운 기능
+function fn_empExcelDown(){
+	location.assign("${path}/admin/excelEmp");
+}
 
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-    ['YEAR', 'BS1', 'BS2', 'BS3','BS4','BS5','BS6'],
-    ['2019', 100, 90, 98, 80, 50, 70],
-    ['2020', 100, 90, 98, 80, 50, 70],
-    ['2021', 100, 90, 98, 80, 50, 70],
-    ['2022', 100, 90, 98, 80, 50, 70],
-    ['2023', 100, 90, 98, 80, 50, 70]
-  ]);
-
-  var options = {
-    chart: {
-      title: 'COMA_EMP',
-      subtitle: 'EMP 사원 년도별 근태 현황',
-    },
-    bars: 'horizontal', // Required for Material Bar Charts.
-    hAxis: {format: 'decimal'},
-    height: 600,
-    colors: ['#1b9e77', '#d95f02', '#7570b3']
-  };
-
-  var chart = new google.charts.Bar(document.getElementById('chart_div'));
-
-  chart.draw(data, google.charts.Bar.convertOptions(options));
-
-  var btns = document.getElementById('btn-group');
-
-  btns.onclick = function (e) {
-
-    if (e.target.tagName === 'BUTTON') {
-      options.hAxis.format = e.target.id === 'none' ? '' : e.target.id;
-      chart.draw(data, google.charts.Bar.convertOptions(options));
-    }
-  }
-} */
 </script>
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -157,6 +157,14 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return result;
 	}
 
+	@Override
+	public ApprovalDoc selectAppDoc(String docNo) {
+		
+		ApprovalDoc doc = dao.selectAppDoc(session, docNo);
+		
+		return doc;
+	}
+
 
 
 }
