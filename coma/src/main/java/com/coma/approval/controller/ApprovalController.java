@@ -10,8 +10,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.coma.approval.model.service.ApprovalService;
+import com.coma.approval.pdf.PdfGenerator;
 import com.coma.model.dto.ApprovalAttachment;
 import com.coma.model.dto.ApprovalCash;
 import com.coma.model.dto.ApprovalDoc;
@@ -309,16 +313,47 @@ public class ApprovalController {
    
 //--------------------------- 문서 상세보기 ------------------------------
    @GetMapping("/viewdoc")
-   public String viewDoc(String docNo) {
+   public String viewDoc(String docNo, String docType, Model model) {
 	   
-	 docNo = "DOC_248"; //테스트용 
-	 ApprovalDoc doc = service.selectAppDoc(docNo); 
+	 Map<String, String> data = new HashMap<String, String>();
+	 
+	 docNo = "DOC_248"; //테스트용
+	 docType = "etc"; //테스트용
+	 
+	 data.put("docNo", docNo); 
+	 data.put("docType", docType); 
+	 
+	 ApprovalDoc doc = service.selectAppDoc(data); 
 	 
 	 System.out.println("테스트: ***************:"+doc);
+	 
+	 model.addAttribute("doc",doc);
+
+//	 service.pdfGenerator(doc);
 	 
       return "approval/viewdoc";
    }
    
+//---------------------------- PDF -------------------------------------------
+   
+   @Autowired
+   private PdfGenerator pdfGen;
+   
+   @GetMapping("/pdf")
+   
+   public String generatePdf(HttpSession session, HttpServletResponse response) {
+	   ApprovalDoc doc = new ApprovalDoc();
+	   doc.setDocNo("DOC_248"); //테스트용
+	   
+	   String path = session.getServletContext().getRealPath("/resource/upload/approval/test2.pdf");
+	   //ㄴ 테스트용. 수정 필요 	
+	   
+	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
+	  
+	      pdfGen.generateAppr(doc, response, fontPath);
+	      
+	      return "approval/viewdoc";
+   }
    
 //---------------------------------------------------------------------
    
