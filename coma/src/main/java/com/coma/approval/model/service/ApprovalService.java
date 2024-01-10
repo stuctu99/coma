@@ -14,4 +14,7 @@ public interface ApprovalService {
 	int insertApproval(ApprovalDoc all);
 	
 	ApprovalDoc selectAppDoc(Map<String, String> data);
+	
+	void generatePdf(ApprovalDoc doc, String filePath);
+	
 }

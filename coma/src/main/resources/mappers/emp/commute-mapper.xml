@@ -23,20 +23,18 @@
        UPDATE EMP_COMMUTE SET
           EMP_COMMUTE_STARTTIME = SYSDATE,
             EMP_COMMUTE_STATUS = '외근중'
-       WHERE EMP_ID= 'COMA_1' AND to_char( EMP_COMMUTE_WORKDATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd') 
+       WHERE EMP_ID= #{empId} AND to_char( EMP_COMMUTE_WORKDATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')
    </update>
    <update id = "updateEndTime" parameterType="map">
       UPDATE EMP_COMMUTE SET
           EMP_COMMUTE_ENDTIME = SYSDATE,
             EMP_COMMUTE_STATUS = '근무중'
-       WHERE EMP_ID= 'COMA_1' AND to_char( EMP_COMMUTE_WORKDATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')
+       WHERE EMP_ID= #{empId} AND to_char( EMP_COMMUTE_WORKDATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')
    </update>
    <update id = "updateClockout" parameterType="map">
       UPDATE EMP_COMMUTE SET
           EMP_COMMUTE_CLOCKOUT = SYSDATE,
             EMP_COMMUTE_STATUS = '퇴근'
-       WHERE EMP_ID= 'COMA_1' AND to_char( EMP_COMMUTE_WORKDATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')
+       WHERE EMP_ID= #{empId} AND to_char( EMP_COMMUTE_WORKDATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')
    </update>
-
-
 </mapper>

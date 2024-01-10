@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.coma.approval.model.service.ApprovalService;
+import com.coma.approval.pdf.PdfGenerator;
 import com.coma.model.dto.ApprovalAttachment;
 import com.coma.model.dto.ApprovalCash;
 import com.coma.model.dto.ApprovalDoc;
@@ -311,7 +313,7 @@ public class ApprovalController {
    
 //--------------------------- 문서 상세보기 ------------------------------
    @GetMapping("/viewdoc")
-   public String viewDoc(String docNo, String docType) {
+   public String viewDoc(String docNo, String docType, Model model) {
 	   
 	 Map<String, String> data = new HashMap<String, String>();
 	 
@@ -325,11 +327,31 @@ public class ApprovalController {
 	 
 	 System.out.println("테스트: ***************:"+doc);
 	 
+	 model.addAttribute("doc",doc);
 
+//	 service.pdfGenerator(doc);
 	 
       return "approval/viewdoc";
    }
    
+//---------------------------- PDF -------------------------------------------
+   
+   @Autowired
+   private PdfGenerator pdfGen;
+   
+   @GetMapping("/pdf")
+   
+   public String generatePdf(HttpSession session) {
+	   ApprovalDoc doc = new ApprovalDoc();
+	   doc.setDocNo("DOC_248"); //테스트용
+	   
+	   String path = session.getServletContext().getRealPath("/resource/upload/approval/test.pdf");
+	   //ㄴ 테스트용. 수정 필요 	
+	   
+	      pdfGen.generateAppr(doc, path);
+	      
+	      return "approval/viewdoc";
+   }
    
 //---------------------------------------------------------------------
    

@@ -8,7 +8,6 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
 <link href="/resource/css/approval/viewdoc.css" rel="stylesheet" />
-
     <!-- TEAM COMA SPACE -->
 
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
@@ -19,6 +18,7 @@
 			  <div class="row">
 			  	<div class="col-12 line1">
 			  		문서 상세보기 테스트
+			  		${doc }
 			  	</div>
 			  	
 			  </div>      
