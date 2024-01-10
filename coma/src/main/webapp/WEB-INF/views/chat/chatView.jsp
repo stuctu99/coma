@@ -48,7 +48,7 @@ div {
 					<button id="bars">&#9776</button>
 				</div>
 				<div class="col-11 chat-title">
-					<h1>itTalk &nbsp;<img id="joinList" src="${path }/resource/img/chat/user.png" alt="joinMember-list" /></h1>		
+					<h1>itTalk</h1>		
 					<input type="hidden" id="roomNo" value="${roomNo}"/>
 					<input type="hidden" id="loginMember" value="${loginmember.empId }"/>
 				</div>
@@ -57,6 +57,9 @@ div {
 			<div class="row">
 				<div class="col-1" >
 					<button id="back" style="transform:rotate(180deg);">&#10132</button>
+				</div>
+				<div class="col-10">
+					<h4 style="line-height:2.0;">${room.roomName }</h4>
 				</div>
 				<nav id="menu">
 					<ul>
@@ -103,24 +106,45 @@ div {
 	</header>
 	<section>
 		<div class="container messageView${roomNo }">
-			<!-- <div class="row openMsgContainer">
-				<h4>접속하셨습니다.</h4>
-			</div>
-			<div class="row other">
-					<span>하이</span>
-			</div>
-			<div class="row me">
-					<span>하이</span>
-			</div> -->
+			<c:if test="${not empty chatMsg }">
+				<c:forEach var="msg" items="${chatMsg }">
+					<c:if test="${msg.empId eq loginmember.empId}">
+						<div class="row me">
+							<span>나</span>
+						</div>
+						<div class="row me">
+							<div class="time-container">
+								<small><fmt:formatDate value="${msg.chatCreateDate}" pattern="HH:mm"/></small>
+							</div>
+							<div class="msg-container">
+								<span><c:out value="${msg.chatContent }"/></span>
+							</div>
+						</div>
+					</c:if>
+					<c:if test="${msg.empId != loginmember.empId }">
+						<div class="row other">
+							<span>${msg.empObj.empName }</span>
+						</div>
+						<div class="row other">
+							<div class="msg-container">
+								<span><c:out value="${msg.chatContent }"/></span>
+							</div>
+							<div class="time-container">
+								<small><fmt:formatDate value="${msg.chatCreateDate}" pattern="HH:mm"/></small>
+							</div>
+						</div>
+					</c:if> 
+				</c:forEach>
+			</c:if>
 		</div>
 	</section>
 	<footer id="chatView-footer">
 		<div class="container">
 			<div class="row" style="padding: 0px 10px;">
 				<div class="input-group mb-3">
-					<input type="text" id="msg" class="form-control" placeholder="Recipient's username"	aria-label="Recipient's username" aria-describedby="button-addon2">
+					<input type="text" id="msg" class="form-control" placeholder="메세지를 입력하세요!"	aria-label="Recipient's username" aria-describedby="button-addon2">
 					<div class="input-group-append">
-						<button id="btnSend" class="btn btn-outline-primary" type="button" id="button-addon2" style="height: 100%;" onclick="sendMessage();">전송</button>
+						<button id="btnSend" class="btn btn-outline-primary" type="button" id="button-addon2" style="height: 100%;" onclick="sendMessage();" >전송</button>
 					</div>
 				</div>
 			</div>
@@ -145,7 +169,6 @@ div {
 <script src="${path }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script src="${path }/resource/js/chat/chat.js"></script>
-<script src="${path }/resource/js/chat/chatView.js"></script>
 <script>
 	let bars = document.querySelector("#bars");
 	let menu = document.querySelector("#menu");
@@ -153,5 +176,9 @@ div {
 	bars.addEventListener('click', function() {
 		menu.classList.toggle("active");
 	});
+	
+	const empName = "${loginmember.empName}";
+	
 </script>
+<script src="${path }/resource/js/chat/chatView.js"></script>
 </html>
