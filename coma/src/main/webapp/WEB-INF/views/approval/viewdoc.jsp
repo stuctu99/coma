@@ -3,13 +3,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
-<!-- 
-<link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
-<script src="/resource/js/approval/approval.js"></script> -->
-<!-- 에디터 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-  <!-- Editor's Style -->
-  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
 <link href="/resource/css/approval/viewdoc.css" rel="stylesheet" />
 
@@ -22,7 +18,7 @@
           <div class="doc_basic">
 			  <div class="row">
 			  	<div class="col-12 line1">
-			  		작성자
+			  		문서 상세보기 테스트
 			  	</div>
 			  	
 			  </div>      
@@ -244,14 +240,7 @@
 	          </div>
 	     </div>
           
-              
-    <!-- 토스트 에디터 -->
-    <div class="row">
-      <div class="col-12">
-       	  <div id="content"></div>
-      </div>
-    </div>      
-          
+
           <!-- coma content space -->
         </div>
     </div>

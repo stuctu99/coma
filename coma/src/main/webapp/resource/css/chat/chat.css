@@ -25,7 +25,7 @@ footer {
 
 div.container{
 	max-width: 1536px !important;
-	overflow: auto;
+	overflow: hidden;
 }
 
 div.container h4{
@@ -57,6 +57,11 @@ strong:has(div){
 .chatting-list>.row:nth-child(1){
 	margin-top:10px;
 	text-align: center;
+}
+
+.enter-room{
+	width: 74.83px;
+	height: 30px;
 }
 
 .emp-list-btn, .chatting-list-btn{
@@ -151,5 +156,10 @@ hr {
 
 .chatting-list h2{
 	text-align: center;
+}
+
+img#joinList{
+	width: 15px;
+	height: 15px;
 }
 

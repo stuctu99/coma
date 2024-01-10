@@ -101,34 +101,83 @@
        <artifactId>gson</artifactId>
        <version>2.10.1</version>
    </dependency>
-	
-	<!-- 파일업로드 라이브러리 -->
+   
+   <!-- 파일업로드 라이브러리 -->
     <dependency>
-		<groupId>commons-io</groupId>
-		<artifactId>commons-io</artifactId>
-		<version>2.7</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>commons-fileupload</groupId>
-		<artifactId>commons-fileupload</artifactId>
-		<version>1.4</version>
-	</dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.7</version>
+   </dependency>
+   
+   <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.4</version>
+   </dependency>
       
       
    
-	<!--log4j 로그찍기-->
+   <!--log4j 로그찍기-->
+   <dependency>
+       <groupId>org.bgee.log4jdbc-log4j2</groupId>
+       <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+       <version>1.16</version>
+   </dependency>
+
+
+   <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+   </dependency>
+   
+   <!-- itext 라이브러리 -->
+   
+   <dependency>
+         <groupId>com.itextpdf</groupId>
+       <artifactId>itextpdf</artifactId>
+       <version>5.5.13</version>
+   </dependency>
+
+   <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>itext-pdfa</artifactId>
+      <version>5.5.9</version>
+   </dependency>
+
+   <dependency>
+        <groupId>com.itextpdf</groupId>
+        <artifactId>itext-xtra</artifactId>
+        <version>5.5.9</version>
+   </dependency>
+
+   <dependency>
+       <groupId>com.itextpdf.tool</groupId>
+       <artifactId>xmlworker</artifactId>
+       <version>5.5.9</version>
+   </dependency>
+   
+   <!-- Excel -->
 	<dependency>
-	    <groupId>org.bgee.log4jdbc-log4j2</groupId>
-	    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
-	    <version>1.16</version>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi</artifactId>
+	    <version>5.2.5</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi-ooxml</artifactId>
+	    <version>5.2.5</version>
+	</dependency>
+	<dependency>
+	    <groupId>commons-io</groupId>
+	    <artifactId>commons-io</artifactId>
+	    <version>2.15.1</version>
 	</dependency>
 
 
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-devtools</artifactId>
-	</dependency>
+
+   
+   <!-- itext 라이브러리 끝 -->
+   
    </dependencies>
 
    <build>

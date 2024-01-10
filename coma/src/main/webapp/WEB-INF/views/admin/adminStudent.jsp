@@ -26,7 +26,7 @@
 				<h1>학생 근태 통계</h1>
 			</div>
 			<div>
-				<canvas id="stuCurentChart" style="height:250px; width:400px"></canvas>
+				<canvas id="stuCurentChart" style="height:200px; width:400px"></canvas>
 			</div>
 		</div>
 		<div class="col-4">
@@ -37,8 +37,8 @@
 						<thead class="list">
 							<c:forEach var="s" items="${studentCount }">
 								<tr>
-									<th><c:out value="${s.EMP_NAME }"/></th>
-									<td><c:out value="${s.STUDENTCOUNT }"/></td>
+									<td><c:out value="${s.EMP_NAME }"/></td>
+									<td><c:out value="${s.STUDENTCOUNT }"/>명</td>
 								</tr>
 							</c:forEach>
 						</thead>
@@ -65,18 +65,12 @@
 					<h1>학생 수료율 수치</h1>
 					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 						<thead class="list">
-							<tr>
-								<th>재적 학생 수</th>
-								<td><c:out value="${totalStudent }"/></td>
-							</tr>
-							<tr>
-								<th>수료생 수</th>
-								<td><c:out value="${studentComStatusData }"/></td>
-							</tr>
-							<tr>
-								<th>수료생 퍼센트</th>
-								<td><c:out value="${studentComStatusData }"/>%</td>
-							</tr>
+							<c:forEach var="sbc" items="${studentByComTable}">
+				                <tr>
+				                    <td><c:out value="${sbc.EMP_NAME}"/></td>
+				                    <td><c:out value="${sbc.COM_RATE}"/>%</td>
+				                </tr>
+				            </c:forEach>
 						</thead>
 					</table>
 				</div>
@@ -101,18 +95,12 @@
 					<h1>학생 취업율 수치</h1>
 					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 						<thead class="list">
-							<tr>
-								<th>재적 학생 수</th>
-								<td><c:out value="${totalStudent }"/></td>
-							</tr>
-							<tr>
-								<th>취업생 수</th>
-								<td><c:out value="${studentEmpStatusData }"/></td>
-							</tr>
-							<tr>
-								<th>취업생 퍼센트</th>
-								<td><c:out value="${studentEmpStatusData }"/>%</td>
-							</tr>
+							<c:forEach var="sbe" items="${studentByEmpTable}">
+				                <tr>
+				                    <td><c:out value="${sbe.EMP_NAME}"/></td>
+				                    <td><c:out value="${sbe.EMP_RATE}"/>%</td>
+				                </tr>
+				            </c:forEach>
 						</thead>
 					</table>
 				</div>
@@ -136,7 +124,7 @@
 		</div>
 	</div>
 	<div class="table-responsive" style="padding: 0px 115px 0px 115px;">
-		<div class="col">
+		<div>
 		    <table class="table align-items-center" style="text-align: center;">
 		        <thead class="thead-light">
 		            <tr>
@@ -149,37 +137,30 @@
 		        <tbody class="list" id="studentTable">
 		        <c:forEach var="s" items="${students }">
 		        	<tr>
-		        		<td><a href="#"><c:out value="${s.stuName }"/></a></td>
-		        		<td><c:out value="${s.empId }"/></td>
-		        		<td><c:out value="${s.stuComStatus }"/></td>
-		        		<td><c:out value="${s.stuEmpStatus }"/></td>
+		        		<td><a href="#"><c:out value="${s.STU_NAME }"/></a></td>
+		        		<td><c:out value="${s.EMP_NAME }"/></td>
+		        		<td><c:out value="${s.STU_COM_STATUS }"/></td>
+		        		<td><c:out value="${s.STU_EMP_STATUS }"/></td>
 		        	</tr>
 		        </c:forEach>
 		        </tbody>
 		    </table>
-		    <div id="pageBar">${pageBar }</div>
+		    <div id="pageBar">${pageBar}</div>
 		</div>
 	</div>
 </div>
 <script>
 //chart.js 
-const chartData=${chartStudentData}	//응답받은 차트데이터 변수에 저장
-const chartObject=JSON.stringify(chartData);	//JSON형식으로 데이터 형변환
-const chartStudentData=JSON.parse(chartObject);	//JSON 형식의 문자열을 다시 JavaScript 객체로 변환
+//학생 근태 차트 데이터
+const satd=${studentAttence}	//응답받은 차트데이터 변수에 저장
+const sado=JSON.stringify(satd);	//JSON형식으로 데이터 형변환
+const satdoc=JSON.parse(sado);	//JSON 형식의 문자열을 다시 JavaScript 객체로 변환
 
 //JSON형식으로 변환한 값을 저장하기 배열 생성
 var labelList = new Array();
 var valueList = new Array();
 var colorList = new Array();
 
-//JSON형식으로 변환한 chartEmpData 데이터 값만큼 반복문 실행하면 배열 변수에 각각의 값을 대입 
-for(let i=0;i<chartStudentData.length;i++){
-	let e=chartStudentData[i];
-	labelList.push(e.EMP_NAME);
-	valueList.push(e.STUDENTCOUNT);
-	colorList.push(colorize());
-
-}
 //차트 색상 랜덤 설정
 function colorize() {
 	var r = Math.floor(Math.random()*200);
@@ -189,6 +170,13 @@ function colorize() {
 	return color;
 }
 
+//JSON형식으로 변환한 chartEmpData 데이터 값만큼 반복문 실행하면 배열 변수에 각각의 값을 대입 
+for(let i=0;i<satdoc.length;i++){
+	let e=satdoc[i];
+	labelList.push(e.EMP_NAME);
+	valueList.push(e.ATTENCE_RATE);
+	colorList.push(colorize());
+}
 
 const ctx = document.getElementById('stuCurentChart').getContext('2d');
 const myChart = new Chart(ctx, {
@@ -205,50 +193,102 @@ const myChart = new Chart(ctx, {
         scales: {
         	yAxes : [ {
 				ticks : {
+					suggestedMax: 100,
 					beginAtZero : true,
-					//stepSize: 0.5
 				}
 			} ]
         }
     }
 });
 
+//학생 수료율 차트 데이터
+const sbc=${studentByCom}
+const sbco=JSON.stringify(sbc);
+const sbcoc=JSON.parse(sbco);
+
+//JSON형식으로 변환한 값을 저장하기 배열 생성
+var labelList3 = new Array();
+var valueList3 = new Array();
+var colorList3 = new Array();
+
+//차트 색상 랜덤 설정
+function colorize() {
+	var r = Math.floor(Math.random()*200);
+	var g = Math.floor(Math.random()*200);
+	var b = Math.floor(Math.random()*200);
+	var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.2)';
+	return color;
+}
+
+for(let i=0;i<sbcoc.length;i++){
+	let e=sbcoc[i];
+	labelList3.push(e.EMP_NAME);
+	valueList3.push(e.COM_RATE);
+	colorList3.push(colorize());
+}
 const ctx2 = document.getElementById('stuComChart').getContext('2d');
 const myChart2 = new Chart(ctx2, {
-    type: 'doughnut',
+    type: 'bar',
     data: {
-        labels: labelList,
+        labels: labelList3,
         datasets: [{
             label: '학생 수료율',
-            data: valueList,
-            backgroundColor: colorList
+            data: valueList3,
+            backgroundColor: colorList3
         }]
     },
-    option: {
-		responsive: false
-	}
+    options: {
+        scales: {
+        	yAxes : [ {
+				ticks : {
+					suggestedMax: 100,
+					beginAtZero : true,
+				}
+			} ]
+        }
+    }
 });
+//학생 취업율 차트 데이터
+const sbe=${studentByEmp}
+const sbeo=JSON.stringify(sbe);
+const sbeoc=JSON.parse(sbeo);
 
+var labelList4 = new Array();
+var valueList4 = new Array();
+var colorList4 = new Array();
+
+for(let i=0;i<sbeoc.length;i++){
+	let e=sbeoc[i];
+	labelList4.push(e.EMP_NAME);
+	valueList4.push(e.EMP_RATE);
+	colorList4.push(colorize());
+}
 const ctx3 = document.getElementById('stuEmpChart').getContext('2d');
 const myChart3 = new Chart(ctx3, {
-    type: 'doughnut',
+    type: 'bar',
     data: {
-        labels: labelList,
+        labels: labelList4,
         datasets: [{
             label: '학생 취업율',
-            data: valueList,
-            backgroundColor: colorList
+            data: valueList4,
+            backgroundColor: colorList4
         }]
     },
-    option: {
-    	responsive: false
+    options: {
+        scales: {
+        	yAxes : [ {
+				ticks : {
+					suggestedMax: 100,
+					beginAtZero : true,
+				}
+			} ]
+        }
     }
 });
 
 
-
+//학생 검색 기능
 function fn_searchStudent(cPage=1,numPerpage=10,url){
-	//const searchData=document.getElementById("searchData").value;
 	const textData=document.getElementById("textData").value;
 	console.log(textData);
 	fetch(url?'${path}'+url:"/admin/searchStudent",{
@@ -277,14 +317,14 @@ function fn_searchStudent(cPage=1,numPerpage=10,url){
 			const $td1=document.createElement('td');
 			const $a=document.createElement('a');
 			$a.setAttribute('href','#');
-			$a.innerText=e.stuName;
+			$a.innerText=e.STU_NAME;
 			$td1.appendChild($a);
 			const $td2=document.createElement('td');
-			$td2.innerText=e.empId;
+			$td2.innerText=e.EMP_NAME;
 			const $td3=document.createElement('td');
-			$td3.innerText=e.stuComStatus;
+			$td3.innerText=e.STU_COM_STATUS;
 			const $td4=document.createElement('td');
-			$td4.innerText=e.stuEmpStatus;
+			$td4.innerText=e.STU_EMP_STATUS;
 			$tr.appendChild($td1);
 			$tr.appendChild($td2);
 			$tr.appendChild($td3);
@@ -298,47 +338,6 @@ function fn_searchStudent(cPage=1,numPerpage=10,url){
 		console.log(e);
 	})
 }
-
-
-//Google 차트 js
-/* google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(drawChart);
-
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-    ['YEAR', 'BS1', 'BS2', 'BS3','BS4','BS5','BS6'],
-    ['2019', 100, 90, 98, 80, 50, 70],
-    ['2020', 100, 90, 98, 80, 50, 70],
-    ['2021', 100, 90, 98, 80, 50, 70],
-    ['2022', 100, 90, 98, 80, 50, 70],
-    ['2023', 100, 90, 98, 80, 50, 70]
-  ]);
-
-  var options = {
-    chart: {
-      title: 'COMA_EMP',
-      subtitle: 'EMP 사원 년도별 근태 현황',
-    },
-    bars: 'horizontal', // Required for Material Bar Charts.
-    hAxis: {format: 'decimal'},
-    height: 600,
-    colors: ['#1b9e77', '#d95f02', '#7570b3']
-  };
-
-  var chart = new google.charts.Bar(document.getElementById('chart_div'));
-
-  chart.draw(data, google.charts.Bar.convertOptions(options));
-
-  var btns = document.getElementById('btn-group');
-
-  btns.onclick = function (e) {
-
-    if (e.target.tagName === 'BUTTON') {
-      options.hAxis.format = e.target.id === 'none' ? '' : e.target.id;
-      chart.draw(data, google.charts.Bar.convertOptions(options));
-    }
-  }
-} */
 </script>
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
