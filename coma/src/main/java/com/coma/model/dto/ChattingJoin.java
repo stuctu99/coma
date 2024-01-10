@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class ChattingJoin {  
 	private ChattingRoom roomObj;
 	private Emp empObj;
+	private String newJoin;
 }

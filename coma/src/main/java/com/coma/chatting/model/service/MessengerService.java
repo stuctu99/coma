@@ -12,6 +12,9 @@ public interface MessengerService {
 	List<Emp> selectEmpListAll();
 	List<Dept> selectDept();
 	List<ChattingRoom> selectRoomList();
+	List<String> selectMyJoinRoomById(String loginId);
+	String selectNowCreateChatRoomNo();
+	
 	int insertChattingRoom(ChattingRoom room);
 	ChattingRoom passwordCheck(Map<String,String> roomInfo);
 	List<ChattingRoom> selectChatRoomListByType(String type);

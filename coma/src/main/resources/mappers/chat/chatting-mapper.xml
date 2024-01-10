@@ -8,6 +8,7 @@
 		<result column="ROOM_PASSWORD_FLAG" property="roomPasswordFlag"/>
 		<result column="ROOM_PASSWORD" property="roomPassword"/>
 		<result column="ROOM_CREATE_DATE" property="roomCreateDate"/>		
+		<result column="MEMBER_COUNT" property="memberCount"/>
 		<association property="roomTypeObj" resultMap="chattingRoomTypeMap"/>
 	</resultMap>
 	
@@ -27,15 +28,20 @@
 	</resultMap>
 	
 	<resultMap type="chattingJoin" id="chattingJoinMap">
+		<result column="NEW_JOIN" property="newJoin"/>
 		<association property="roomObj" resultMap="chattingRoomMap"/>
 		<association property="empObj" resultMap="emp.empMap"/>
 	</resultMap>
 	
 	
 	
-	<!-- select -->
+	<!-- select --> 
+	
+	
 	<select id="selectRoomList" resultMap="chattingRoomMap">
-		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE) ORDER BY ROOM_CREATE_DATE DESC 
+		SELECT R.*, T.*, (SELECT COUNT(*) FROM CHAT_JOIN J GROUP BY ROOM_NO HAVING R.ROOM_NO = J.ROOM_NO) AS MEMBER_COUNT
+		FROM CHAT_ROOM R LEFT JOIN CHAT_ROOM_TYPE T ON R.ROOM_TYPE = T.ROOM_TYPE 
+		ORDER BY ROOM_CREATE_DATE DESC 
 	</select>
 	<select id="selectRoomPasswordCheck" parameterType="map" resultMap="chattingRoomMap">
 		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE) WHERE ROOM_NO = #{roomNo} AND ROOM_PASSWORD = #{password}
@@ -51,12 +57,19 @@
 	</select>
 	
 	<select id="selectChatRoomListByType" parameterType="string" resultMap="chattingRoomMap">
-		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE)
+		SELECT R.*, T.*, (SELECT COUNT(*) FROM CHAT_JOIN J GROUP BY ROOM_NO HAVING R.ROOM_NO = J.ROOM_NO) AS MEMBER_COUNT 
+		FROM CHAT_ROOM R LEFT JOIN CHAT_ROOM_TYPE T ON R.ROOM_TYPE = T.ROOM_TYPE  
+		
 		<where>
 			<if test="type!=null and type!='ALL'">
-				ROOM_TYPE = #{type}
+				T.ROOM_TYPE = #{type}
 			</if>
 		</where>
+		ORDER BY ROOM_CREATE_DATE DESC 
+	</select>
+	
+	<select id="selectMyJoinRoomById" parameterType="string" resultType="string">
+		SELECT ROOM_NO FROM CHAT_JOIN WHERE EMP_ID = #{loginId}
 	</select>
 	
 	<select id="selectChatMessageByRoomNo" parameterType="string" resultMap="chattingMessageMap">
@@ -71,6 +84,14 @@
 		SELECT * FROM EMP JOIN DEPT USING(DEPT_CODE) JOIN JOB USING (JOB_CODE)WHERE EMP_ID = #{empId}
 	</select>
 	
+	<select id="selectJoinCheckByEmpId" parameterType="map" resultMap="chattingJoinMap">
+		SELECT * FROM EMP JOIN CHAT_JOIN USING(EMP_ID) WHERE ROOM_NO = #{roomNo} AND EMP_ID = #{empId}
+	
+	</select>
+	
+	<select id="selectNowCreateChatRoomNo" resultType="string">
+		SELECT 'CR_'||SEQ_CHATROOM_NO.CURRVAL FROM DUAL
+	</select>
 	
 	<!-- insert -->
 	<insert id="insertCreateRoom" parameterType="chattingRoom">
@@ -102,11 +123,20 @@
 		
 	</insert>
 	<!-- update -->
+	<update id="updateChatNewJoin" parameterType="map">
+		UPDATE CHAT_JOIN SET NEW_JOIN = 'N' WHERE ROOM_NO = #{roomNo} AND EMP_ID = #{empId}  
+	
+	</update>
+	
 	
 	<!-- delete -->
 	
 	<delete id="deleteChatRoomJoinEmpById" parameterType="map">
 		DELETE CHAT_JOIN WHERE ROOM_NO = #{roomNo} and EMP_ID = #{empId}
+	</delete>
+	
+	<delete id="deleteChattingMsgByRoomNoAndEmpId" parameterType="map">
+		DELETE CHAT_MESSAGE WHERE ROOM_NO = #{roomNo} AND EMP_ID = #{empId}
 	</delete>
 	
 </mapper>

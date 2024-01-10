@@ -46,6 +46,18 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.selectChatRoomListByType(session, type);
 	}
 	
+	@Override
+	public List<String> selectMyJoinRoomById(String loginId) {
+		// TODO Auto-generated method stub
+		return dao.selectMyJoinRoomById(session, loginId);
+	}
+	
+	@Override
+	public String selectNowCreateChatRoomNo() {
+		// TODO Auto-generated method stub
+		return dao.selectNowCreateChatRoomNo(session);
+	}
+	
 
 	@Override
 	@Transactional
@@ -60,6 +72,11 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.passwordCheck(session, roomInfo);
 	}
+
+
+
+
+
 
 
 }

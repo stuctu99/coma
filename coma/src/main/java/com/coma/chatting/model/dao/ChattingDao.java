@@ -16,11 +16,16 @@ public interface ChattingDao {
 	List<ChattingMessage> selectChatMessageByRoomNo(SqlSession session, String roomNo);
 	ChattingRoom selectRoomByRoomNo(SqlSession session, String roomNo);
 	Emp selectEmpByEmpId(SqlSession session, String empId);
+	ChattingJoin selectJoinCheckByEmpId(SqlSession session, Map<String,String> joinEmp);
 	
 	int insertJoinEmp(SqlSession session, Map<String, String> joinInfo);
 	
 	int insertChattingMessage(SqlSession session, List<ChattingMessage> msgPackages);
 	 
+	
+	int updateChatNewJoin(SqlSession session, Map<String,String> newEmpCheck);
+	
 	/* int insertChattingMessage(SqlSession session, ChattingMessage msg); */
-	int deleteChatRoomJoinEmpById(SqlSession session, Map<String,String> data);
+	int deleteChatRoomJoinEmpById(SqlSession session, Map<String,String> exitEmp);
+	int deleteChattingMsgByRoomNoAndEmpId(SqlSession session, Map<String,String> exitEmp);
 }

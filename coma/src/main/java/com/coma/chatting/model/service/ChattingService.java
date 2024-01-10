@@ -14,12 +14,15 @@ public interface ChattingService {
 	List<ChattingMessage> selectChatMessageByRoomNo(String roomNo);
 	ChattingRoom selectRoomByRoomNo(String roomNo);
 	Emp selectEmpByEmpId(String empId);
+	ChattingJoin selectJoinCheckByEmpId(Map<String,String> joinEmp);
 	
 	int insertJoinEmp(Map<String,String> joinInfo);
 	int insertChattingMessage(List<ChattingMessage> msgPackages); 
 	/* int insertChattingMessage(ChattingMessage msg); */
 	
+	int updateChatNewJoin(Map<String,String> newEmpCheck);
 	 
-	int deleteChatRoomJoinEmpById(Map<String,String> data);
+	int deleteChatRoomJoinEmpById(Map<String,String> exitEmp);
+	int deleteChattingMsgByRoomNoAndEmpId(Map<String,String> exitEmp);
 	
 }
