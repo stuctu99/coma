@@ -54,6 +54,10 @@ public class PdfGenerator {
 			
 			document.add(generateTable3(doc, font, document, writer));
 			
+			document.add(new Paragraph("테스트",font));
+			
+			document.add(generateTable4(doc, font, document, writer));
+			
 			document.close();
 			
 			//다운로드할 파일 이름 설정
@@ -143,8 +147,7 @@ public class PdfGenerator {
 				
 				// 참조자 label
 				
-				PdfPCell t2_label = new PdfPCell();
-				t2_label = new PdfPCell(new Phrase("참조자",font));
+				PdfPCell t2_label = new PdfPCell(new Phrase("참조자",font));
 				t2_label.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table2.addCell(t2_label);
 				
@@ -157,24 +160,47 @@ public class PdfGenerator {
 				
 				return table2;
 			}
-	
-	
-	private PdfPTable generateTable3(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
+
+			
+private PdfPTable generateTable3(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
 		
 		PdfPTable table3 = new PdfPTable(1);
 		
 		table3.setTotalWidth(500f);
 		
-		PdfPCell t3_cells = new PdfPCell();
-		t3_cells = new PdfPCell(new Phrase("테스트",font));
-		t3_cells.setFixedHeight(550f);
+		PdfPCell t3_cells = new PdfPCell(new Phrase("테스트",font));
+		t3_cells.setFixedHeight(100f);
 		t3_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
+		t3_cells.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		table3.addCell(t3_cells);
 		
 		
 		
 		return table3;
 	}
+
+
+
+	private PdfPTable generateTable4(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
+		
+		PdfPTable table4 = new PdfPTable(1);
+		
+		table4.setTotalWidth(500f);
+		
+		// 상세 내용 label
+		PdfPCell t4_label = new PdfPCell(new Phrase("상세 내용", font));
+		t4_label.setHorizontalAlignment(Element.ALIGN_CENTER);
+		t4_label.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table4.addCell(t4_label);
+		
+		// 상세 내용 content
+		PdfPCell t4_cells = new PdfPCell(new Phrase("테스트",font));
+		t4_cells.setFixedHeight(400f);
+		t4_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
+		t4_cells.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table4.addCell(t4_cells);
+		
+		return table4;
+	}
 			
-	
 }
