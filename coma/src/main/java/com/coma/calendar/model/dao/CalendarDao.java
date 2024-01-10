@@ -11,6 +11,8 @@ import com.coma.model.dto.Calendar;
 public interface CalendarDao {
 
 	List<Calendar> selectCalendar(SqlSession session);
-	List<Calendar> selectCalendarDept(SqlSession session,String deptCode);
+	List<Calendar> selectCalendarDept(SqlSession session,String empId);
 	int calendarInsert(SqlSession session,Map<String,String> event);
+	int calendarUpdate(SqlSession session,Map<String,String> event);
+	int calendarDelete(SqlSession session,Map<String,String> event);
 }
