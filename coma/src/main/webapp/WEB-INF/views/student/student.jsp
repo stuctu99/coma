@@ -123,7 +123,7 @@
 	    $.each(e.target.files, (i, f) => {
 	        const filereader = new FileReader();
 	        filereader.readAsDataURL(f);
-	        filereader.onload = (e) => {
+	        filereader.onload = (e) => {s
 	            console.log(e.target.result);
 	            $(".file-btn").attr("display", "none");
 	            const path = e.target.result;
@@ -134,4 +134,4 @@
 	});
 </script>
 <!-- TEAM COMA SPACE -->
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>s
