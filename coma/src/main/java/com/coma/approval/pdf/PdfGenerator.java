@@ -43,23 +43,32 @@ public class PdfGenerator {
 			float marginRight = 36;
 			document.setMargins(marginLeft, marginRight, 0, 0);
 			
-			Font fontTitle = new Font(objBaseFont, 24);
-			document.add(new Paragraph("휴가신청서",fontTitle));
-					
+			font.setSize(32);
+			document.add(new Paragraph("휴가신청서",font));
+			font.setSize(12);
+			
+			Paragraph emptySpace = new Paragraph(" ");
+			
 			  // table #1
 	         document.add(generateTable(doc, font, document, writer)); 
+	         document.add(emptySpace);
 	         
-	         document.add(new Paragraph(" "));
-	         
+	         // table #2
 	         document.add(generateTable2(doc, font, document, writer));
-	         
-	         document.add(new Paragraph(" "));
-	         
+	         document.add(emptySpace);
+	        
+	         // table #3
 	         document.add(generateTable3(doc, font, document, writer));
+	         document.add(emptySpace);
 	         
-	         document.add(new Paragraph(" "));
-	         
-	         document.add( generateTable4(doc, font, document, writer));
+	         // table #4
+	         document.add(generateTable4(doc, font, document, writer));
+	         document.add(emptySpace);
+	  
+	         // 끝 문구
+	         Paragraph endLine = new Paragraph("위와 같이 휴가를 신청합니다.",font);
+	         endLine.setAlignment(Paragraph.ALIGN_CENTER);
+	         document.add(endLine);
 	         
 	         document.close();
 
@@ -96,13 +105,10 @@ public class PdfGenerator {
 
 	}
 	
-
+	//------------------------- 결재선 테이블 -------------------------
 	   private PdfPTable generateTable(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
 	      
 	      
-	//------------------------- 결재선 테이블 -------------------------
-	   //  t2_label.setBorder(Rectangle.NO_BORDER);
-		   
 	      PdfPTable table1 = new PdfPTable(6);
 	      
 	      table1.setTotalWidth(400f);
@@ -142,7 +148,7 @@ public class PdfGenerator {
 	      return table1;
 	   }
 
-	   //------------------------- 결재선 테이블 -------------------------	   
+	   //------------------------- 참조자 테이블 -------------------------	   
 	   private PdfPTable generateTable2(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
 	      
 	        
@@ -170,16 +176,16 @@ public class PdfGenerator {
 	         }
 	   
 	   
-	   //공통사항 테이블
+	   //------------------------- 휴가신청 테이블 -------------------------	 
 	   private PdfPTable generateTable3(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
 	      
 	      PdfPTable table3 = new PdfPTable(1);
 	      
-	      table3.setTotalWidth(500f);
+	      table3.setTotalWidth(450f);
 	      
 	      PdfPCell t3_cells = new PdfPCell();
 	      t3_cells = new PdfPCell(new Phrase("테스트",font));
-	      t3_cells.setFixedHeight(200f);
+	      t3_cells.setFixedHeight(150f);
 	      t3_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
 	      table3.addCell(t3_cells);
 	      
@@ -190,12 +196,12 @@ public class PdfGenerator {
 
 
 
-	//상세 내용 테이블
+    //------------------------- 상세 내용 테이블 -------------------------	 
 	private PdfPTable generateTable4(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
 		
 		PdfPTable table4 = new PdfPTable(1);
 		
-		table4.setTotalWidth(150f);
+		table4.setTotalWidth(450f);
 		
 		// 상세 내용 label
 		PdfPCell t4_label = new PdfPCell(new Phrase("상세 내용", font));
@@ -205,7 +211,7 @@ public class PdfGenerator {
 		
 		// 상세 내용 content
 		PdfPCell t4_cells = new PdfPCell(new Phrase("테스트",font));
-		t4_cells.setFixedHeight(300f);
+		t4_cells.setFixedHeight(200f);
 		t4_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
 		t4_cells.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		table4.addCell(t4_cells);
