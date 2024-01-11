@@ -291,7 +291,7 @@ public class PdfGenerator {
 		table6.addCell(t6_label);
 		
 		// 상세 내용 content
-		PdfPCell t6_cells = new PdfPCell(new Phrase("테스트",font));
+		PdfPCell t6_cells = new PdfPCell(new Phrase(doc.getLeave().getLeaveDetail(),font));
 		t6_cells.setFixedHeight(200f);
 		t6_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
 		t6_cells.setVerticalAlignment(Element.ALIGN_MIDDLE);
