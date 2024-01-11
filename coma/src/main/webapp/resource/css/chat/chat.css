@@ -18,6 +18,11 @@ footer {
   background-color:white;
 }
 
+.col-1,.col-2{
+	display: flex;
+	justify-content: center;
+}
+
 .btn{
 	padding:4px 15px !important;
 	height: 30px;
@@ -91,6 +96,16 @@ hr {
 }
 
 #create-room{
+	width: 74.83px;
+	height: 30px;
+	display: none;
+}
+
+#delete-room{
+	padding: 0px !important;
+	text-align: center;
+	width:52px;
+	height: 30px;
 	display: none;
 }
 
@@ -104,6 +119,7 @@ hr {
 
 .emp-list, .chatting-list{
 	margin-top:5px;
+	padding: 0px 5px !important;
 	text-align: left;
 }
 

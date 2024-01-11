@@ -30,7 +30,7 @@ Latest compiled JavaScript
 <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 <style>
 div {
-   /* border: 1px solid red; */
+   border: 1px solid red;
    
 }
 </style>
@@ -115,7 +115,10 @@ div {
                	<option id="7" value="D5">취업부</option>
                </select>
             </div>
-            <div class="col-8">
+            <div class="col-7">
+            </div>
+            <div class="col-1" style="padding:0px;">
+            	<button id="delete-room" class="btn btn-danger" onclick="fn_deleteRoom();">삭제</button>
             </div>
             <div class="col-2">
                <input type="hidden" id="pathValue" value="${path }"/>
