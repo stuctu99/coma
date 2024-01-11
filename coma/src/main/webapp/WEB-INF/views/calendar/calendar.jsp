@@ -230,6 +230,7 @@ input[type="datetime-local"] {
         const calContent = document.querySelector("#calContent");
         const calType = document.querySelector("#calType");
 		const empId = document.querySelector("#empId");
+		
 		const calId =document.querySelector("#calId");
 		const eventSources = getEventSources(calId);
         //캘린더 헤더 옵션
@@ -325,6 +326,7 @@ input[type="datetime-local"] {
         
         // 캘린더 생성 옵션(참고)
         const calendarOption = {
+        		//일정우선순위 옵션 찾기
         		  eventSources: eventSources,
             height: '700px', // calendar 높이 설정
             expandRows: true, // 화면에 맞게 높이 재설정
@@ -386,7 +388,7 @@ input[type="datetime-local"] {
             let dateEnd = new Date(info.event.endStr); 			
 			let localOffsetEnd = dateEnd.getTimezoneOffset() * 60000;
 			let localISOTimeEnd = (new Date(dateEnd - localOffsetEnd)).toISOString().slice(0,16);
-			calEnd.value = localISOTimeEnd;
+			calEnd.value =  localISOTimeEnd; //여기서 형변환 시도 해볼까 ?
                   
 			let date = new Date(info.event.startStr);
 			let localOffset = date.getTimezoneOffset() * 60000;

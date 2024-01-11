@@ -161,9 +161,9 @@
 	    <artifactId>itext-asian</artifactId>
 	    <version>5.2.0</version>
 	</dependency>
-   <!-- itext 라이브러리 끝 -->
+<!--    itext 라이브러리 끝 -->
    
-   <!-- Excel -->
+   <!--<!— Excel —>-->
 	<dependency>
 	    <groupId>org.apache.poi</groupId>
 	    <artifactId>poi</artifactId>
