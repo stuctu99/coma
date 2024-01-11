@@ -19,10 +19,11 @@ public class ExcelConvert extends AbstractXlsView{
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		List<Emp> empList=(List<Emp>)model.get("empList");
-		
 		final Sheet sheet1=workbook.createSheet();
 		addheader(sheet1,List.of("이름","직책","부서","아이디","성별","생년월일","연락처","주소","입사일"));
-		empList.forEach(e->{addContent(sheet1, e);});
+		empList.forEach(e->{
+			addContent(sheet1, e);
+		});
 		
 	}
 	

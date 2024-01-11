@@ -317,8 +317,8 @@ public class ApprovalController {
 	   
 	 Map<String, String> data = new HashMap<String, String>();
 	 
-	 docNo = "DOC_248"; //테스트용
-	 docType = "etc"; //테스트용
+	 docNo = "DOC_110"; //테스트용
+	 docType = "leave"; //테스트용
 	 
 	 data.put("docNo", docNo); 
 	 data.put("docType", docType); 
@@ -340,19 +340,37 @@ public class ApprovalController {
    private PdfGenerator pdfGen;
    
    @GetMapping("/pdf")
-   
-   public String generatePdf(HttpSession session, HttpServletResponse response) {
-	   ApprovalDoc doc = new ApprovalDoc();
-	   doc.setDocNo("DOC_248"); //테스트용
+   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, String docType, String empId) {
+	   
+	   empId = "COMA_1"; //테스트용
+	   
+	   Emp writer = service.selectEmpById(empId);
+	   
+	   //-----해당 문서 정보
+	   docNo = "DOC_110"; //테스트용
+	   docType = "leave";
+	   Map<String, String> data = new HashMap<String, String>();
+	   data.put("docNo", docNo); 
+	   data.put("docType", docType); 
+	   
+	   ApprovalDoc doc = service.selectAppDoc(data); 
+	   
+	   System.out.println("controller 354번줄 확인: " + doc);
+	   //--------------
 	   
 	   String path = session.getServletContext().getRealPath("/resource/upload/approval/test2.pdf");
-	   //ㄴ 테스트용. 수정 필요 	
+	   //ㄴ 테스트용. 수정 필요**
 	   
 	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
+
+	
 	  
-	      pdfGen.generateAppr(doc, response, fontPath);
+	   
+	   pdfGen.generateAppr(doc, response, fontPath, writer);
 	      
-	      return "approval/viewdoc";
+	   //return "approval/viewdoc"; ㄴㄴ
+	   //return을 하면 outputStream이 또 호출됨
+	   
    }
    
 //---------------------------------------------------------------------

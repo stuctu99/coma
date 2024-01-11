@@ -26,8 +26,9 @@
 	<form action="${pageContext.request.contextPath }/approval/insertdoc" method="post"
 					enctype="multipart/form-data" id="app_form">
 					
-	<input type="hidden" name="empId" value="${loginMember.empId }">	
-				
+	<input type="hidden" name="empId" value="${loginMember.empId }">
+	
+	
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
           <!-- coma content space -->

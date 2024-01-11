@@ -61,9 +61,9 @@
 		<div class="col-1" style="margin-left:15px;">
 			<select class="form-control form-control-sm" id="searchData">
 			  <option value="all">전체</option>
-			  <option value="EMP_NAME">이름</option>
-			  <option value="DEPT_TYPE">부서</option>
-			  <option value="JOB_TYPE">직책</option>
+			  <option value="E.EMP_NAME">이름</option>
+			  <option value="D.DEPT_TYPE">부서</option>
+			  <option value="J.JOB_TYPE">직책</option>
 			</select>
 		</div>
 		<div class="col-2" style="padding-left:0px;">
@@ -71,18 +71,17 @@
 		</div>
 		<div class="col-5" style="padding-left:0px;">
 			<button type="button" class="btn btn-secondary btn-sm" style="width:50px;" onclick="fn_searchEmp();">검색</button>
+			<button type="button" class="btn btn-secondary btn-sm" style="" onclick="fn_resetEmp();">전체 보기</button>
 		</div>
 		<div class="col-2">
 			<div class="row">
 				<div class="col-8" style="padding-right:0px;">
-					<form>
 					<input class="form-control form-control-sm" id="empName" type="text" placeholder="추가할 사원 이름" required>
 				</div>
 				<div class="col-2">
 					<button type=submit class="btn btn-primary btn-sm" onclick="fn_addEmp();">
 						<span>사원 추가</span>
 					</button>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -167,6 +166,7 @@ const myChart = new Chart(ctx, {
         scales: {
         	yAxes : [ {
 				ticks : {
+					suggestedMax: 100,
 					beginAtZero : true,
 					stepSize: 10
 				}
@@ -177,6 +177,7 @@ const myChart = new Chart(ctx, {
 });
 
 //사원 부서별, 직책별 검색
+
 function fn_searchEmp(cPage=1,numPerpage=10,url){
 	const searchData=document.getElementById("searchData").value;
 	const textData=document.getElementById("textData").value;
@@ -199,10 +200,9 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 		const $div=document.getElementById("pageBar");
 		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
 		$trList.forEach($tr => {
-		    $tbody.removeChild($tr); //각 $tr 요소를 $tbody에서 제거합니다.
+		    $tr.remove(); //각 $tr 요소를 $tbody에서 제거합니다.
 		});
 		result.emps.forEach((e)=>{
-			console.log(e);
 			const $tr=document.createElement('tr');
 			const $td1=document.createElement('td');
 			const $a=document.createElement('a');
@@ -247,6 +247,7 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 		})
 		$div.innerText="";
 		$div.innerHTML=result.pageBar;
+		document.getElementById("textData").value="";
 	}).catch(e=>{
 		console.log(e);
 	})
@@ -257,27 +258,31 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 function fn_addEmp(){
 	const empName=document.getElementById("empName").value;
 	console.log(empName);
-	fetch("${path}/admin/insertEmp",{
-		method:"post",
-		headers:{"Content-Type":"application/json"},
-		body:JSON.stringify({
-			empName:empName
-			})
-	})
-	.then(response=>{
-		console.log(response);
-		if(response.status!=200){
-			throw new Error("");
-		}
-		return response.json();
-	}).then(result=>{
-		if(result>0){
-			alert("신규 아이디가 등록 되었습니다.");
-			window.location.href = "${path}/admin/adminEmp";
-		}
-	}).catch(e=>{
-		alert(e);
-	});
+	if(empName!=''){
+		fetch("${path}/admin/insertEmp",{
+			method:"post",
+			headers:{"Content-Type":"application/json"},
+			body:JSON.stringify({
+				empName:empName
+				})
+		})
+		.then(response=>{
+			console.log(response);
+			if(response.status!=200){
+				throw new Error("");
+			}
+			return response.json();
+		}).then(result=>{
+			if(result>0){
+				alert("신규 아이디가 등록 되었습니다.");
+				window.location.href = "${path}/admin/adminEmp";
+			}
+		}).catch(e=>{
+			alert(e);
+		});
+	}else{
+		alert("신규 사원의 이름을 입력해주세요");
+	}
 } 
 
 //사원 퇴사후 아이디 비활성화
@@ -304,6 +309,10 @@ function fn_deleteEmp(e){
 		alert(e);
 	}); 
 
+}
+
+function fn_resetEmp(){
+	location.replace("${path}/admin/adminEmp");
 }
 
 //사원 데이터 Excel다운 기능

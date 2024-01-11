@@ -34,4 +34,6 @@ public interface ApprovalDao {
 	
 	
 	ApprovalDoc selectAppDoc(SqlSession session, Map<String, String> data);
+	
+	Emp selectEmpById(SqlSession session, String empId);
 }
