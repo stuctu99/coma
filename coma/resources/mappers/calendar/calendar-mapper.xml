@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="calendar">
+	
+	<resultMap id="calendarMap"  type="calendar">
+		<id column="cal_No" property="calNo"/>
+		<result column="cal_title" property="calTitle"/>
+		<result column="cal_content" property="calContent"/>
+		<result column="cal_start" property="calStart"/>
+		<result column="cal_end" property="calEnd"/>
+		<result column="cal_type" property="calType"/>
+		<result column="cal_color" property="calColor"/>
+		<!-- <result column="emp_id" property="empId"/> -->
+		<collection property="empId"  resultMap="emp.empMap"/>
+				
+	</resultMap>
+	
+
+	<select id="selectCalendar" resultMap="calendarMap">
+	SELECT * FROM CALENDAR 
+	</select>
+	<select id="selectCalendarDept" parameterType="string" resultMap="calendarMap">
+		SELECT * FROM CALENDAR LEFT JOIN EMP USING (EMP_ID) 
+							   LEFT JOIN DEPT USING (DEPT_CODE)
+				 WHERE DEPT_CODE=(SELECT DEPT_CODE FROM EMP LEFT JOIN DEPT USING(DEPT_CODE) WHERE EMP_ID=#{empId})
+	</select>
+	<insert id="calendarInsert" parameterType="map">
+		INSERT INTO CALENDAR VALUES('CAL_'||SEQ_CAL_NO.NEXTVAL,#{calTitle},#{calContent},#{calStart},#{calEnd},#{calType},#{calColor},#{empId})
+	</insert>
+	<update id="calendarUpdate" parameterType="map">
+		UPDATE CALENDAR 
+		SET CAL_TITLE=#{calTitle},CAL_CONTENT=#{calContent},CAL_START=#{calStart},
+		CAL_END=#{calEnd},CAL_TYPE=#{calType},CAL_COLOR=#{calColor},EMP_ID=#{empId}
+		WHERE CAL_NO=#{calNo}
+	</update>
+	<delete id="calendarDelete" parameterType="map">
+		DELETE FROM CALENDAR WHERE CAL_NO=#{calNo}
+	</delete>
+</mapper>
