@@ -178,13 +178,19 @@ public class PdfGenerator {
 	   
 	   //------------------------- 휴가신청 테이블 -------------------------	 
 	   private PdfPTable generateTable3(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
-	      
-	      PdfPTable table3 = new PdfPTable(1);
-	      
-	      table3.setTotalWidth(450f);
+	     
+		   
+		  //수정 필요*****
+		  float[] cellWidth = {75,150,75,150};
+		   
+	      PdfPTable table3 = new PdfPTable(cellWidth);
+
+	       table3.setTotalWidth(400f);
+           table3.setLockedWidth(true);
 	      
 	      PdfPCell t3_cells = new PdfPCell();
 	      t3_cells = new PdfPCell(new Phrase("테스트",font));
+	      t3_cells.setColspan(4);
 	      t3_cells.setFixedHeight(150f);
 	      t3_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
 	      table3.addCell(t3_cells);
