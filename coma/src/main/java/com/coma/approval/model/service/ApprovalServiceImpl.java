@@ -178,8 +178,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public Emp selectWriterByEmpId(String empId) {
-		return dao.selectWriterByEmpId(session, empId);
+	public Emp selectEmpById(String empId) {
+		return dao.selectEmpById(session, empId);
 	}
 
 	

@@ -83,8 +83,8 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	}
 
 	@Override
-	public Emp selectWriterByEmpId(SqlSession session, String empId) {
-		return session.selectOne("emp.selectWriterByEmpId", empId);
+	public Emp selectEmpById(SqlSession session, String empId) {
+		return session.selectOne("emp.selectEmpById", empId);
 	}
 	
 	

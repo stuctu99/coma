@@ -6,8 +6,10 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.coma.approval.model.service.ApprovalService;
 import com.coma.model.dto.ApprovalDoc;
 import com.coma.model.dto.Emp;
+import com.coma.model.dto.Referrer;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -22,6 +24,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Component
 public class PdfGenerator {
@@ -35,6 +38,11 @@ public class PdfGenerator {
 	@Autowired
 	private EtcPdf etcPdf;
 	
+	private ApprovalService service;
+//	
+//	public PdfGenerator(ApprovalService service) {
+//		this.service = service;
+//	}
 	
 	public void generateAppr(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writerInfo) { 
 		
@@ -54,40 +62,63 @@ public class PdfGenerator {
 			float marginLeft = 36;
 			float marginRight = 36;
 			document.setMargins(marginLeft, marginRight, 0, 0);
-			
+	    
+		  // ---------------------------- 문서 종류 ------------------------------
+		
 			font.setSize(32);
 			document.add(new Paragraph("휴가신청서",font));
 			font.setSize(12);
 			
 			Paragraph emptySpace = new Paragraph(" ");
 			
-			  // table #1
+		  // ------------------------------ 결재자 ------------------------------
+			// table #1
 	         document.add(generateTable(doc, font, document, writer)); 
 	         document.add(emptySpace);
 	         
-	         // table #2
+	      // ------------------------------ 참조자 -------------------------------
+	        // table #2 
 	         document.add(generateTable2(doc, font, document, writer));
 	         document.add(emptySpace);
 	       
 	      // -----------------------------   휴가신청서 -----------------------------   
-	         // table #3 (휴가신청서1)
+	         // table #3 (부서, 직급)
 	         document.add(leavePdf.generateTable3(doc, font, document, writer,"부서",writerInfo.getDept().getDeptType(),"직급",writerInfo.getJob().getJobType()));
 	         
-	         // table #4 (휴가신청서1-1)
+	         // table #3 (성명)
 	         document.add(leavePdf.generateTable3(doc, font, document, writer,"성명", writerInfo.getEmpName(),"",""));
 	  
-	         // table #5 (휴가신청서2)
-	         document.add(leavePdf.generateTable4(doc, font, document, writer, "구분", " "));
 	         
-	      // table #5 (휴가신청서2-1)
-	         document.add(leavePdf.generateTable4(doc, font, document, writer, "휴가 기간", " "));
+	         // table #4 (제목)
+	         document.add(leavePdf.generateTable4(doc, font, document, writer, "제목", doc.getDocTitle()));
+	         
+	         // table #4 (구분)
+	         document.add(leavePdf.generateTable4(doc, font, document, writer, "구분", doc.getLeave().getLeaveType()));
+	         
+	         // table #4 (휴가기간)
+	         document.add(leavePdf.generateTable4(doc, font, document, writer, "휴가 기간", doc.getLeave().getLeaveStart() +
+	        		 														(doc.getLeave().getLeaveEnd()!=null?"  ~  "+ doc.getLeave().getLeaveEnd():"")));
 	         document.add(emptySpace);
 
 	      // -----------------------------  지출 결의서 -----------------------------     
+	      
 	         
+	         
+		  // -----------------------------  품의서 -----------------------------     
+	 	   
+	         
+		  // -----------------------------  기타 문서 -----------------------------     
+	 	  
+	         
+	         
+	     // -----------------------------  상세 내용 -----------------------------     
+	 	        
 	         // table #6 (상세내용)
 	         document.add(generateTable6(doc, font, document, writer));
 	         document.add(emptySpace);
+	   
+		 // -----------------------------  footer -----------------------------     
+	 	         
 	         
 	         // 끝 문구
 	         Paragraph endLine = new Paragraph("위와 같이 휴가를 신청합니다.",font);
@@ -196,16 +227,29 @@ public class PdfGenerator {
 	            
 	            // 참조자 label
 	            
-	            PdfPCell t2_label = new PdfPCell();
-	            t2_label = new PdfPCell(new Phrase("참조자",font));
+	            PdfPCell t2_label = new PdfPCell(
+	            						new Phrase("참조자",font));
 	            t2_label.setHorizontalAlignment(Element.ALIGN_CENTER);
 	            
 	            table2.addCell(t2_label);
 	            
 	            
 	            // 참조자 이름
-	            PdfPCell t2_ref = new PdfPCell();
+	            String refer = "";
+	            for(Referrer r : doc.getRef()) {
+	            	String empId = r.getEmpId();
+	            	System.out.println(empId);
+//	            	Emp emp = service.selectEmpById(empId);
+//	            	refer +=emp.getEmpName() + ", ";
+	            	
+	            	//컨트롤러 가서 가져오기....
+	            }
+	            
+	            
+	            PdfPCell t2_ref = new PdfPCell(
+	            						new Phrase(refer));
 	            t2_ref.setColspan(5);
+	            
 	            table2.addCell(t2_ref);
 
 	            

@@ -344,7 +344,7 @@ public class ApprovalController {
 	   
 	   empId = "COMA_1"; //테스트용
 	   
-	   Emp writer = service.selectWriterByEmpId(empId);
+	   Emp writer = service.selectEmpById(empId);
 	   
 	   //-----해당 문서 정보
 	   docNo = "DOC_110"; //테스트용

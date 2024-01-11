@@ -19,6 +19,6 @@ public interface ApprovalService {
 	
 	void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writer);
 	
-	Emp selectWriterByEmpId(String empId);
+	Emp selectEmpById(String empId);
 	
 }

@@ -25,7 +25,7 @@ public class LeavePdf{
        table3.setLockedWidth(true);
        
        // label #1
-
+       
        PdfPCell t3_cells1 = new PdfPCell();
        t3_cells1 = new PdfPCell(new Phrase(label1,font));
        t3_cells1.setHorizontalAlignment(Element.ALIGN_CENTER);
