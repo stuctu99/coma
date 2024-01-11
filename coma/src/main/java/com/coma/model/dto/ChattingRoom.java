@@ -22,6 +22,7 @@ public class ChattingRoom {
 	private Date roomCreateDate;
 	private ChattingRoomType roomTypeObj;
 	private String empId;
+	private String targetId;
 	private int memberCount;
 	/* private List<ChattingJoin> joinMember; */
 }

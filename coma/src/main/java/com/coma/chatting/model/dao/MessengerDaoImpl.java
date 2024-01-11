@@ -1,5 +1,7 @@
 package com.coma.chatting.model.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
@@ -65,6 +66,10 @@ public class MessengerDaoImpl implements MessengerDao {
 		int result = session.insert("chatting.insertCreateRoom", room);
 		if (result > 0) {
 			Map<String, String> creator = Map.of("empId", room.getEmpId());
+			/*
+			 * Collection<String> values =creator.values(); List<String> idList = new
+			 * ArrayList<>(values);
+			 */
 			result = session.insert("chatting.insertJoinEmp", creator);
 
 		}

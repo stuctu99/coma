@@ -1,6 +1,5 @@
 package com.coma.chatting.controller;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +53,6 @@ public class MessengerController {
 	@GetMapping("/roomlist/{type}/{loginId}")
 	@ResponseBody
 	public Map<String,Object> chatRoomListByType(@PathVariable String type, @PathVariable String loginId){
-		System.out.println("여기까지오니??????????????????????????????????????????");
 		List<ChattingRoom> roomList = service.selectChatRoomListByType(type);
 		List<String> joinRoom = service.selectMyJoinRoomById(loginId);
 		Map<String,Object> roomInfo = new HashMap<String,Object>();
@@ -76,7 +74,9 @@ public class MessengerController {
 		room.setRoomTypeObj(roomType);
 		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
 		room.setEmpId(roomInfo.get("empId"));
-
+		if(roomInfo.get("targetId")!=null) {
+			room.setTargetId(roomInfo.get("targetId"));
+		}
 		System.out.println(roomInfo);
 		int result = service.insertChattingRoom(room);
 		Map<String, Object> data = new HashMap<>();

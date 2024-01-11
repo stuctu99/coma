@@ -30,7 +30,7 @@ Latest compiled JavaScript
 <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 <style>
 div {
-   border: 1px solid red;
+   /* border: 1px solid red; */
    
 }
 </style>
@@ -84,7 +84,7 @@ div {
 							</div>
 						<c:if test="${e.empId!=loginmember.empId }">
 							<div class="col-2">
-								<button id="chatting-active" class="btn btn-outline-primary">채팅</button>
+								<button id="chatting-active" class="btn btn-outline-primary" onclick="privateChatting('${e.empId}');">대화</button>
 							</div>
 						</c:if>
 						</div>
@@ -123,7 +123,7 @@ div {
             <div class="col-2">
                <input type="hidden" id="pathValue" value="${path }"/>
                <button id="create-room" type="button" class="btn btn-primary" data-toggle="modal"
-                  data-target="#exampleModal">방생성</button>
+                  data-target="#createRoom">방생성</button>
             </div>
          </div>
          <div class="container content">
@@ -131,7 +131,7 @@ div {
          </div>
       </div>
 		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		<div class="modal fade" id="createRoom" tabindex="-1" role="dialog"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
