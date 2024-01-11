@@ -14,7 +14,12 @@ public interface MessengerDao {
 	List<Emp> selectEmpListAll(SqlSession session);
 	List<Dept> selectDept(SqlSession session);
 	List<ChattingRoom> selectRoomList(SqlSession session);
-	int insertChattingRoom(SqlSession session, ChattingRoom room);
-	ChattingRoom passwordCheck(SqlSession session, Map<String,String> roomInfo);
+	List<String> selectMyJoinRoomById(SqlSession session, String loginId);
+	String selectNowCreateChatRoomNo(SqlSession session);
 	List<ChattingRoom> selectChatRoomListByType(SqlSession session, String type);
+	
+	ChattingRoom passwordCheck(SqlSession session, Map<String,String> roomInfo);
+	int insertChattingRoom(SqlSession session, ChattingRoom room);
+	
+	int deleteChatRoomInfoByRoomNo(SqlSession session, List<String> roomList);
 }

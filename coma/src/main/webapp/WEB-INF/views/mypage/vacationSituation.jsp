@@ -1,122 +1,154 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
 <style>
-	div{
-		border: 2px solid red;
-	}
-</style>
+div {
+	/*  border: 2px solid red; */
+	
+}
 
-<div class="coma-container" style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
-	<div class="row">
-		<div class=" col-4">
+.bigbax {
+	/* border: 2px solid blue; */
+	margin: 15px;
+	/* border: 2px solid lightgrey */;
+	border-radius: 20px;
+	background-color: #f1edff;
+	padding: 20px 10px 20px 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.containerbig {
+	margin: 50px;
+	/* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+	text-align: center;
+	/* padding: 50px 50px 50px 70px; */
+	padding: 20px;
+	/* background-color : white; */
+	/*background-color: #f1edff; */
+	border-radius: 20px;
+}
+
+.smallbox {
+	border: 2px solid blue;
+}
+
+/* You may need to adjust the styling based on your specific requirements */
+</style>
+<div class="coma-container containerbig">
+	<div class="row" style="text-align: center;">
+		<div class="col-1"></div>
+		<div class="col-10  bigbax">
 			<div class="row">
-				<div class="col-12">
-					<h2>근무체크</h2>
-				</div>
-			</div>
-			<div class="bigContainer"
-				style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
-				<h1 class="current-time" id="current-time">09:11:32</h1>
-				<div class="row" class="row"
-					style="display: flex; flex-direction: row; justify-content: space-evenly;">
-					<div>
-						<i class="ni ni-briefcase-24"></i>
-					</div>
-					<div>
-						<i class="ni ni-button-pause"></i>
-					</div>
-					<div>
-						<i class="ni ni-button-play"></i>
-					</div>
-					<div>
-						<i class="ni ni-spaceship"></i>
-					</div>
-				</div>
-				<div class="row " 
-					style="display: flex; flex-direction: row; justify-content: space-evenly;">
-					<div>출근하기</div>
-					<div>외출하기</div>
-					<div>복귀하기</div>
-					<div>퇴근하기</div>
-				</div>
-				<div class="row "
-					style="display: flex; flex-direction: row; justify-content: space-evenly;">
-					<div>08:51</div>
-					<div>11:50</div>
-					<div>15:23</div>
-					<div>18:01</div>
-				</div>
+				<h2 class="col-8">휴가 정보</h2>
+				<button type="button" class="btn btn-primary">휴가 신청하기</button>
 			</div>
 			<div class="row">
-				<div class="col-12">
-					<h2>휴가현황</h2>
+				<div class="col-3 smallbox">
+					<div class="">
+						<h3 class="">지각</h3>
+					</div>
+					<div class="row">
+						<p>1회</p>
+					</div>
 				</div>
-			</div>
-			<div class="bigContainer"
-				style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
-				<h5>잔여 휴가 18일 남았습니다.</h5>
-				<button type="button" class="btn btn-primary">휴가 신청</button>
-				<button type="button" class="btn btn-primary">휴가 신청</button>
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<h2>내 일정</h2>
+				<div class=" col-3 smallbox">
+					<div class=" ">
+						<h3 class="">조기퇴근</h3>
+					</div>
+					<div class="row">
+						<p>1회</p>
+					</div>
 				</div>
-			</div>
-			<div class="bigContainer2">
-				<div id='calendar'></div>
+				<div class=" col-3 smallbox">
+					<div class="">
+						<h3 class="">퇴근미체크</h3>
+					</div>
+					<div class="row">
+						<p>0회</p>
+					</div>
+				</div>
+				<div class=" col-3 smallbox">
+					<div class="">
+						<h3 class="">결근</h3>
+					</div>
+					<div class="row">
+						<p>0회</p>
+					</div>
+				</div>
 			</div>
 		</div>
-		
-		<div class=" col-8">
-			<div class="bigContainer"  >
-				<div class = "row">
-					<div class= col-12 style="text-align: center;">
-						<h1 style="text-align: center; margin : 150px;"> <i class="ni ni-world"></i>인사과 user1님, 환영합니다. </h1>
+		<div class="col-1"></div>
+	</div>
+	<div class="row">
+		<div class=col-1></div>
+		<div class="col-3 bigbax" style="text-align: center;">
+			<div class="">
+				<h3 class="">근무 요약</h3>
+			</div>
+			<div class="">
+				<div class="">
+					<div>
+						<p class="">근무일수</p>
+						<p>1일</p>
+					</div>
+					<div>
+						<p class="">총근무시간</p>
+						<p>17분</p>
 					</div>
 				</div>
-				<div class = "row" style="padding:30px;">
-					<div class= col-12>
-						<h1><i class="ni ni-check-bold"></i>공지사항 </h1>
+			</div>
+		</div>
+		<div class="col-3 bigbax" style="text-align: center;">
+			<div class="">
+				<h3 class="">근무 시간</h3>
+			</div>
+			<div class="">
+				<div class="">
+					<div class="">
+						<p>09:17</p>
+						<p class="mt-2">출근</p>
+					</div>
+					<div class="text-center">
+						<p>09:17</p>
+						<p class="mt-2">퇴근</p>
 					</div>
 				</div>
-				<div class = "row" style="padding:30px;">
-					<div class= col-12>
-						<table >
-							<tr>
-								<td>김코마</td>
-								<td>새해가 밝았습니다</td>
-								<td>2023.12.29</td>
-							</tr>
-							<tr>
-								<td>김사장</td>
-								<td>COMA에 산타가 나타났다! 이벤트</td>
-								<td>2023.12.15</td>
-							</tr>
-							<tr>
-								<td>김코마</td>
-								<td>방역시간 안내공지</td>
-								<td>2023.12.5</td>
-							</tr>
-							<tr>
-								<td>김코마</td>
-								<td>컴퓨터 설치 안내공지</td>
-								<td>2023.11.20</td>
-							</tr>
-							<tr>
-								<td>김코마</td>
-								<td>간식이 간다 이벤트</td>
-								<td>2023.11.5</td>
-							</tr>
-						</table>
+				<button class="">근무시간 수정</button>
+			</div>
+		</div>
+		<div class="col-3 bigbax" style="text-align: center;">
+			<div class="">
+				<h3 class="">근무 현황</h3>
+			</div>
+			<div class="">
+				<div class="">
+					<div>
+						<p class="">근무일수</p>
+						<p>1일</p>
+					</div>
+					<div>
+						<p class="">총근무시간</p>
+						<p>17분</p>
+					</div>
+					<div>
+						<p class="">보정시간</p>
+						<p>17분</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-    <!-- TEAM COMA SPACE -->
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<div class="coma-container">
+	<div class="row">
+		<!-- 총 12칸 -->
+		<div class="col-4">1</div>
+		<div class="col-4">2</div>
+		<div class="col-4">3</div>
+	</div>
+</div>
+
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />

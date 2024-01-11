@@ -1,6 +1,7 @@
 package com.coma.approval.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -76,6 +77,11 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	}
 
 
+	@Override
+	public ApprovalDoc selectAppDoc(SqlSession session, Map<String, String> data) {
+		return session.selectOne("approval.selectAppDoc", data);
+	}
+	
 	
 
 }

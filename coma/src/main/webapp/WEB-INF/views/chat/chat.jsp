@@ -30,7 +30,7 @@ Latest compiled JavaScript
 <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 <style>
 div {
-   /* border: 1px solid red; */
+   border: 1px solid red;
    
 }
 </style>
@@ -62,7 +62,7 @@ div {
 			<div class="row">
 				<div class="col-12">
 					<input type="hidden" id="empId" value="${loginmember.empId }"/>
-					<h2>사원 리스트${loginmember.empId }</h2>
+					<h2>${loginmember.empName }님 반갑습니다.</h2>
 				</div>
 			</div>
 			<!------------------- 사원 데이터 ----------------------->
@@ -73,7 +73,6 @@ div {
 								<strong><c:out value="${d.deptType}"/>부</strong>
 							</div>
 						</div>
-						
 					<c:forEach var="e" items="${emp}">
 						<c:if test="${e.dept.deptCode eq d.deptCode}">
 						<div class="row">
@@ -83,9 +82,11 @@ div {
 							<div class="col-8">
 								<small><c:out value="${e.empName}"/></small>
 							</div>
+						<c:if test="${e.empId!=loginmember.empId }">
 							<div class="col-2">
 								<button id="chatting-active" class="btn btn-outline-primary">채팅</button>
 							</div>
+						</c:if>
 						</div>
 						</c:if>
 					</c:forEach>
@@ -103,7 +104,7 @@ div {
          </div>
          <div class="row">
             <div class="col-2" style="display:flex; justify-content:center; align-items:center;">
-               <select class="form-control form-control-sm" id="searchType" onchange="fn_roomListByType();">
+               <select class="form-control form-control-sm" id="searchType" onchange="fn_roomType();">
                	<option id="0" value="ALL" selected>전체</option>
                	<option id="1" value="A">공용</option>
                	<option id="2" value="P">개인</option>
@@ -114,8 +115,10 @@ div {
                	<option id="7" value="D5">취업부</option>
                </select>
             </div>
-            <div class="col-8">
-               <strong></strong>
+            <div class="col-7">
+            </div>
+            <div class="col-1" style="padding:0px;">
+            	<button id="delete-room" class="btn btn-danger" onclick="fn_deleteRoom();">삭제</button>
             </div>
             <div class="col-2">
                <input type="hidden" id="pathValue" value="${path }"/>
@@ -263,5 +266,9 @@ div {
 <!--   Argon JS   -->
 <script src="${path }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script>
+	const loginId = '${loginmember.empId}';
+	console.log("alskdjlkasdjkl;ajdlkasjdlkajdlaskjdklajdlkajdlkasjdk"+loginId);
+</script>
 <script src="${path }/resource/js/chat/chat.js"></script>
 </html>

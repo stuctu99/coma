@@ -17,16 +17,16 @@ import com.coma.model.dto.Student;
 public class AdminDao {
 	
 	//사원관련 Dao
-	public List<Emp> selectEmpAllByCurrent(SqlSession session, Map<String, Integer> page){
+	public List<Map> selectEmpAllByCurrent(SqlSession session, Map<String, Integer> page){
 		int cPage=(Integer)page.get("cPage");
 		int numPerpage=(Integer)page.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
 		return session.selectList("emp.selectEmpAllByCurrent",null,rb);
 	}
 	
-	public List<Commute> selectEmpAllByCommute(SqlSession session){
-		return session.selectList("emp.selectEmpAllByCommute");
-	}
+//	public List<Map> selectEmpAllByCommute(SqlSession session){
+//		return session.selectList("commute.selectEmpAllByCommute");
+//	}
 	
 	public List<Map> countEmpByDept(SqlSession session) {
 		return session.selectList("emp.countEmpByDept");
@@ -44,7 +44,7 @@ public class AdminDao {
 		return session.update("emp.deleteEmp", empId);
 	}
 	
-	public List<Emp> searchEmp(SqlSession session, Map<String, Object> searchMap){
+	public List<Map> searchEmp(SqlSession session, Map<String, Object> searchMap){
 		System.out.println(searchMap);
 		return session.selectList("emp.searchEmp", searchMap);
 	}
@@ -53,14 +53,18 @@ public class AdminDao {
 		return session.selectOne("emp.countEmpByData",searchMap);
 	}
 	
-	//chart.js 메소드
-	public List<Map> charEmpData(SqlSession session) {
-		return session.selectList("coummute.charEmpData");
+	public List<Emp> ExcelDownEmp(SqlSession session){
+		return session.selectList("emp.selectEmpAllByCurrent");
+	}
+	
+	//사원 Chart Data
+	public List<Map> charEmpData(SqlSession session, Map<String, Integer> monthResult) {
+		return session.selectList("emp.charEmpData", monthResult);
 	}	
 	
 	
 	//학생관련 Dao
-	public List<Student> selectStudent(SqlSession session, Map<String, Integer> page){
+	public List<Map> selectStudent(SqlSession session, Map<String, Integer> page){
 		int cPage=(Integer)page.get("cPage");
 		int numPerpage=(Integer)page.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
@@ -71,7 +75,7 @@ public class AdminDao {
 		return session.selectOne("student.countStudent");
 	}
 	
-	public List<Student> searchStudent(SqlSession session, Map<String, Object> searchMap){
+	public List<Map> searchStudent(SqlSession session, Map<String, Object> searchMap){
 		int cPage=(int)searchMap.get("cPage");
 		int numPerpage=(Integer)searchMap.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
@@ -103,8 +107,14 @@ public class AdminDao {
 		return session.update("student.updateStudentByCom", student);
 	}
 	
-	//chart.jks 메소드
-	public List<Map> charStudentData(SqlSession session) {
+	//학색 Chart Data
+	public List<Map> charStudentByAtten(SqlSession session) {
+		return session.selectList("studentCommute.charStudentByAtten");
+	}
+	public List<Map> charStudentByEmp(SqlSession session) {
+		return session.selectList("studentCommute.charStudentByEmp");
+	}
+	public List<Map> charStudentByCom(SqlSession session) {
 		return session.selectList("studentCommute.charStudentByCom");
 	}
 }

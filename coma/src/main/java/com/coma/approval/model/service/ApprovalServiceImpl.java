@@ -1,15 +1,19 @@
 package com.coma.approval.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.approval.model.dao.ApprovalDao;
+import com.coma.approval.pdf.PdfGenerator;
 import com.coma.model.dto.ApprovalDoc;
 import com.coma.model.dto.Emp;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,6 +30,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.selectEmpByData(session, data);
 		
 	}
+	
+	@Autowired
+	private PdfGenerator pdfGenerator;
 
 	
 	@Override
@@ -155,6 +162,19 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 		
 		return result;
+	}
+
+	@Override
+	public ApprovalDoc selectAppDoc(Map<String, String> data) {
+		
+		ApprovalDoc doc = dao.selectAppDoc(session, data);
+		
+		return doc;
+	}
+
+	@Override
+	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath) {
+		pdfGenerator.generateAppr(doc, response, fontPath);
 	}
 
 
