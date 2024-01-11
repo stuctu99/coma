@@ -1,11 +1,14 @@
 package com.coma.chatting.controller;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -107,6 +110,23 @@ public class MessengerController {
 		System.out.println(room);
 
 		return data;
+	}
+	
+	@DeleteMapping
+	@ResponseBody
+	public Map<String,String> deleteChatRoomInfoByRoomNo(@RequestBody String[] roomNo){
+		System.out.println(roomNo);
+		Map<String,String> result = new HashMap<>();
+		List<String> delRoomList = Arrays.asList(roomNo);
+		int delResult = service.deleteChatRoomInfoByRoomNo(delRoomList);
+		if(delResult>0) {
+			result.put("result", "success");
+		}else {
+			result.put("result","fail");
+		}
+		
+		return result;
+		
 	}
 
 }

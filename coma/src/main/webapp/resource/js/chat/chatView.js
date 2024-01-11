@@ -16,6 +16,7 @@ $("#exit-btn").click(function() {
 			})
 			.then(data => {
 				if (data.result == "success") {
+				
 					location.href = "/messenger";
 				} else {
 					alert("관리자에게 문의하세요!");

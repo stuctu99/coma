@@ -7,12 +7,13 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
- 	div{
+/*  	div{
       border: 2px solid red;
-    }
+    } */
 </style>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row">
@@ -21,31 +22,48 @@
 			<h1 style="">학생 리스트</h1>
 			<div>
 		    <table class="table align-items-center" style="text-align: center;">
-		        <thead class="thead-light">
+		        <thead class="">
 		            <tr>
+		                <th>학생 번호</th>
 		                <th>학생 이름</th>
 		                <th>담당 강사</th>
-		                <th>수료 여부</th>
-		                <th>취업 여부</th>
+		                <th>
+		                	<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="customCheck1">
+							  <label class="custom-control-label" for="customCheck1">출석 여부</label>
+							</div>
+		               </th>
+		                <th>
+		                	<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="customCheck2">
+							  <label class="custom-control-label" for="customCheck2">퇴실 여부</label>
+							</div>
+		                </th>
 		            </tr>
 		        </thead>
 		        <tbody class="list" id="studentTable">
-		        	<tr>
-		        		<td><a href="#"><c:out value=""/></a></td>
-		        		<td><c:out value=""/></td>
-		        		<td><c:out value=""/></td>
-		        		<td><c:out value=""/></td>
-		        	</tr>
+			        <c:forEach var="s" items="${students }">
+			        	<tr>
+			        		<td><c:out value="${s.STU_NO }"/></td>
+			        		<td><c:out value="${s.STU_NAME }"/></td>
+			        		<td><c:out value="${s.EMP_NAME }"/></td>
+			        		<td>
+								<input type="checkbox" class="" id="" value="${s.STU_NO }">
+			        		</td>
+			        		<td>
+			        			<input type="checkbox" class="" id="" value="${s.STU_NO }">
+			        		</td>
+			        	</tr>
+			        </c:forEach>
 		        </tbody>
 		    </table>
 		    <div class="row">
 		    	<div class="col-1"></div>
 		    	<div class="col-5"></div>
-		    	<div class="col-5">
-		    		<button type="button" class="btn btn-default">선택 취소</button>
-					<button type="button" class="btn btn-primary">입력 완료</button>
+		    	<div class="col-6" style="display: flex; justify-content: flex-end;">
+		    		<button type="button" class="btn btn-default btn-sm">선택 취소</button>
+					<button type="button" class="btn btn-primary btn-sm">입력 완료</button>
 		    	</div>
-		    	<div class="col-1"></div>
 		    </div>
 		</div>
 		</div>

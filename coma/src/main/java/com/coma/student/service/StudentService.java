@@ -1,5 +1,8 @@
 package com.coma.student.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +15,8 @@ import lombok.RequiredArgsConstructor;
 public class StudentService {
 	private final StudentDao dao;
 	private final SqlSession session;
+	
+	public List<Map> selectStudentByEmpId(String loginId){
+		return dao.selectStudentByEmpId(session, loginId);
+	}
 }

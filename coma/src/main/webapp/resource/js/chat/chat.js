@@ -96,8 +96,8 @@ const fn_roomListByType = (type) => {
 			$strong_type.text(d.roomTypeObj.roomTypeName);
 			$strong_title.text(d.roomName);
 			if(loginId==='COMA_1'){
-				const $input = $("<input>").attr("type","checkbox").val(d.roomNo).css("margin-right","5px");
-				$input.addClass("deleteCheckbox");
+				const $input = $("<input>").attr("type","checkbox").attr("name","deleteRoom[]").val(d.roomNo).css("margin-right","5px");
+				$input.addClass("deleteRoom");
 				$div_type.append($input);
 			}
 			$div_type.append($strong_type);
@@ -242,9 +242,52 @@ $(function(){
 
 });
 
+$(document).on('change','input[class="deleteRoom"]',function(){
+	if($(".deleteRoom:checked").length==0){
+		$("#delete-room").css("display","none");
+	}else{
+		$("#delete-room").css("display","block");
+	}
+})
+
+
+
+const fn_deleteRoom=()=>{
+	let delRoom = new Array();
+	let cnt = 0;
+	const delCheckbox = $(".deleteRoom");
+	for(i=0; i<delCheckbox.length; i++){
+		if(delCheckbox[i].checked==true){
+			delRoom[cnt]=delCheckbox[i].value;
+			cnt++;
+		}
+	}
+	if(confirm("정말로 삭제하시겠습니까?")){
+		fetch("/messenger",{
+			method:"delete",
+			headers:{"Content-Type":"application/json"},
+			body:JSON.stringify(delRoom)
+		})
+		.then(response=>{
+			if(response.status!=200){
+				alert("접근할 수 없습니다. 관리자에게 문의하세요:");
+			}
+			return response.json(); 
+		})
+		.then(data=>{
+			if(data.result==='success'){
+				alert("삭제가 완료되었습니다.");
+				$(".chatting-list-btn").click();
+			}else{
+				alert("삭제 실패하였습니다. 관리자에게 문의하세요:");
+			}
+		})
+		
+	}
+	console.log(delRoom);
+}
 /* 방입장 전 체크 */
 const enter_room = (roomNo,roomPasswordFlag) => {
-	const pathValue = $("#pathValue").val();
 	if(roomPasswordFlag=='Y'){
 				console.log("방번호 체크 : "+roomNo);
 				$("#check-roomNo").val(roomNo);
@@ -286,4 +329,9 @@ const enter_chattingRoom = (roomNo) =>{
 	})
 }
 
-
+$(document).ready(function(){
+	const server = new WebSocket("ws://"+location.host+"/chattingServer");
+	server.onopen = () =>{
+		
+	} 
+})
