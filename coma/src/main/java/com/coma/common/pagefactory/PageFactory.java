@@ -62,8 +62,7 @@ public class PageFactory {
 	   }
 
 	   
-	   public String pageAjax(int cPage, int numPerpage, int totalData,
-		         String url) {
+	   public String pageAjax(int cPage, int numPerpage, int totalData, String url) {
 		   
 		   	  StringBuffer pageBar=new StringBuffer();
 		   
