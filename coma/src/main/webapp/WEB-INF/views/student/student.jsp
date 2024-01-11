@@ -11,9 +11,9 @@
 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
-/*  	div{
+/*   	div{
       border: 2px solid red;
-    } */
+    }  */
 </style>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row">
@@ -29,14 +29,14 @@
 		                <th>담당 강사</th>
 		                <th>
 		                	<div class="custom-control custom-checkbox">
-							  <input type="checkbox" class="custom-control-input" id="customCheck1">
-							  <label class="custom-control-label" for="customCheck1">출석 여부</label>
+							  <input type="checkbox" class="custom-control-input" name="attendance" id="attendance">
+							  <label class="custom-control-label" for="attendance">출석 여부</label>
 							</div>
 		               </th>
 		                <th>
 		                	<div class="custom-control custom-checkbox">
-							  <input type="checkbox" class="custom-control-input" id="customCheck2">
-							  <label class="custom-control-label" for="customCheck2">퇴실 여부</label>
+							  <input type="checkbox" class="custom-control-input" name="checkOut" id="checkOut">
+							  <label class="custom-control-label" for="checkOut">퇴실 여부</label>
 							</div>
 		                </th>
 		            </tr>
@@ -48,10 +48,10 @@
 			        		<td><c:out value="${s.STU_NAME }"/></td>
 			        		<td><c:out value="${s.EMP_NAME }"/></td>
 			        		<td>
-								<input type="checkbox" class="" id="" value="${s.STU_NO }">
+								<input type="checkbox" name="attendance"  id="attendance" value="${s.STU_NO }">
 			        		</td>
 			        		<td>
-			        			<input type="checkbox" class="" id="" value="${s.STU_NO }">
+			        			<input type="checkbox" name="checkOut" id="checkOut" value="${s.STU_NO }">
 			        		</td>
 			        	</tr>
 			        </c:forEach>
@@ -61,49 +61,67 @@
 		    	<div class="col-1"></div>
 		    	<div class="col-5"></div>
 		    	<div class="col-6" style="display: flex; justify-content: flex-end;">
-		    		<button type="button" class="btn btn-default btn-sm">선택 취소</button>
-					<button type="button" class="btn btn-primary btn-sm">입력 완료</button>
+		    		<button type="reset" class="btn btn-default btn-sm">선택 취소</button>
+					<button type="submit" class="btn btn-primary btn-sm">입력 완료</button>
 		    	</div>
 		    </div>
 		</div>
 		</div>
 		<div class="col-5" style="text-align:center;">
 			<h1 style="">학생 정보창</h1>
-			<form>
-				<div class="row">
-					<div class="col-6">
-						<input type="file" id="accompany-file" name="studentPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
-						<div class="file-btn" onclick="openFileDialog();" style="cursor: pointer; margin-top:50px;">
-							  <%-- 프로필 이미지 가 없으면 기본이미지 --%>
-							 <c:if test="${emp.empPhoto == null}" >
-							 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 300px; height: 300px;">
-		                     </c:if>
-							 <%-- 프로필 이미지 가 있으면 이미지 --%>
-		                      <c:if test="${emp.empPhoto != null}" >
-									<img src="${pageContext.request.contextPath}/resource/upload/profile/${emp.empPhoto}" alt="Profile Image" id="profileImage"style="width: 300px; height: 300px;">
-		                      </c:if>
-						</div>
-					</div>
-					<div class="col-6">
-					    <div class="form-group">
-					        <label for="example-text-input" class="form-control-label">이름</label>
-					        <input class="form-control" type="text" value="학생 이름" id="example-text-input">
-					    </div>
-					    <div class="form-group">
-					        <label for="example-search-input" class="form-control-label">강의 시작일</label>
-					        <input class="form-control" type="date" value="2018-11-23" id="example-search-input">
-					    </div>
-					    <div class="form-group">
-					        <label for="example-email-input" class="form-control-label">수료일</label>
-					        <input class="form-control" type="date" value="2018-11-23" id="example-email-input">
-					    </div>
-					    <div class="form-group">
-					        <label for="example-datetime-local-input" class="form-control-label">생일</label>
-					        <input class="form-control" type="date" value="2018-11-23" id="example-datetime-local-input">
-					    </div>
+			<div class="row">
+				<div class="col-6">
+					<input type="file" id="accompany-file" name="studentPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
+					<div class="file-btn" onclick="openFileDialog();" style="cursor: pointer; margin-top:50px;">
+						  <%-- 프로필 이미지 가 없으면 기본이미지 --%>
+						 <c:if test="${emp.empPhoto == null}" >
+						 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 300px; height: 300px;">
+	                     </c:if>
+						 <%-- 프로필 이미지 가 있으면 이미지 --%>
+	                      <c:if test="${emp.empPhoto != null}" >
+								<img src="${pageContext.request.contextPath}/resource/upload/profile/${emp.empPhoto}" alt="Profile Image" id="profileImage"style="width: 300px; height: 300px;">
+	                      </c:if>
 					</div>
 				</div>
-			</form>
+				<div class="col-6">
+				    <div class="form-group">
+				        <label for="example-text-input" class="form-control-label">이름</label>
+				        <input class="form-control" type="text" value="학생 이름" id="example-text-input">
+				    </div>
+				    <div class="form-group">
+				        <label for="example-search-input" class="form-control-label">강의 시작일</label>
+				        <input class="form-control" type="date" value="2018-11-23" id="example-search-input">
+				    </div>
+				    <div class="form-group">
+				        <label for="example-email-input" class="form-control-label">수료일</label>
+				        <input class="form-control" type="date" value="2018-11-23" id="example-email-input">
+				    </div>
+				    <div class="form-group">
+				        <label for="example-datetime-local-input" class="form-control-label">생일</label>
+				        <input class="form-control" type="date" value="2018-11-23" id="example-datetime-local-input">
+				    </div>
+				</div>
+			</div>
+			<h1>출석 현황</h1>
+			<div class="row">
+				<div class="4">
+			        <label for="example-text-input" class="form-control-label">총 출석 수</label>
+			        <input class="form-control" type="text" value="0/120" id="example-text-input" style="text-align:center;">
+				</div>
+				<div class="8">
+			        <div style="width:470px; margin-left: 10px;">
+					  <div class="progress-info" style="margin-top: 3px;">
+					    <label for="example-text-input" class="form-control-label">출석일 수/총 수업일 수</label>
+					    <div class="progress-percentage">
+					      <span>80%</span>
+					    </div>
+					  </div>
+					  <div class="progress" style="margin-top: 15px;">
+					    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
+					  </div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="col-1"></div>
 	</div>
