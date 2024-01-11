@@ -17,6 +17,8 @@ public interface ApprovalService {
 	
 	ApprovalDoc selectAppDoc(Map<String, String> data);
 	
-	void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath);
+	void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writer);
+	
+	Emp selectWriterByEmpId(String empId);
 	
 }

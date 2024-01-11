@@ -340,7 +340,11 @@ public class ApprovalController {
    private PdfGenerator pdfGen;
    
    @GetMapping("/pdf")
-   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, String docType) {
+   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, String docType, String empId) {
+	   
+	   empId = "COMA_1"; //테스트용
+	   
+	   Emp writer = service.selectWriterByEmpId(empId);
 	   
 	   //-----해당 문서 정보
 	   docNo = "DOC_110"; //테스트용
@@ -362,10 +366,11 @@ public class ApprovalController {
 	
 	  
 	   
-	   pdfGen.generateAppr(doc, response, fontPath);
+	   pdfGen.generateAppr(doc, response, fontPath, writer);
 	      
 	   //return "approval/viewdoc"; ㄴㄴ
 	   //return을 하면 outputStream이 또 호출됨
+	   
    }
    
 //---------------------------------------------------------------------

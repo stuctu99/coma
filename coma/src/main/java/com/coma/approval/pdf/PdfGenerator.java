@@ -3,9 +3,11 @@ package com.coma.approval.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.Emp;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -24,7 +26,17 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class PdfGenerator {
 
-	public void generateAppr(ApprovalDoc doc, HttpServletResponse response, String fontPath) { 
+	@Autowired
+	private LeavePdf leavePdf;
+	@Autowired
+	private CashPdf cashPdf;
+	@Autowired 
+	private ReqPdf reqPdf;
+	@Autowired
+	private EtcPdf etcPdf;
+	
+	
+	public void generateAppr(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writerInfo) { 
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
@@ -56,20 +68,23 @@ public class PdfGenerator {
 	         // table #2
 	         document.add(generateTable2(doc, font, document, writer));
 	         document.add(emptySpace);
-	        
+	       
+	      // -----------------------------   휴가신청서 -----------------------------   
 	         // table #3 (휴가신청서1)
-	         document.add(generateTable3(doc, font, document, writer,"부서","직급"));
+	         document.add(leavePdf.generateTable3(doc, font, document, writer,"부서",writerInfo.getDept().getDeptType(),"직급",writerInfo.getJob().getJobType()));
 	         
 	         // table #4 (휴가신청서1-1)
-	         document.add(generateTable3(doc, font, document, writer,"성명", " "));
+	         document.add(leavePdf.generateTable3(doc, font, document, writer,"성명", writerInfo.getEmpName(),"",""));
 	  
 	         // table #5 (휴가신청서2)
-	         document.add(generateTable4(doc, font, document, writer, "구분", " "));
+	         document.add(leavePdf.generateTable4(doc, font, document, writer, "구분", " "));
 	         
 	      // table #5 (휴가신청서2-1)
-	         document.add(generateTable4(doc, font, document, writer, "휴가 기간", " "));
+	         document.add(leavePdf.generateTable4(doc, font, document, writer, "휴가 기간", " "));
 	         document.add(emptySpace);
 
+	      // -----------------------------  지출 결의서 -----------------------------     
+	         
 	         // table #6 (상세내용)
 	         document.add(generateTable6(doc, font, document, writer));
 	         document.add(emptySpace);
@@ -81,13 +96,13 @@ public class PdfGenerator {
 	         document.add(emptySpace);
 	         
 	         // 날짜
-	         Paragraph date = new Paragraph("2024년 1월 11일",font);
+	         Paragraph date = new Paragraph("날짜 파싱하기",font);
 	         date.setAlignment(Paragraph.ALIGN_CENTER);
 	         document.add(date);
 	         document.add(emptySpace);
 	         
 	      // 신청인
-	         Paragraph docWriter = new Paragraph("신청인 이보연",font);
+	         Paragraph docWriter = new Paragraph("신청인 " +writerInfo.getEmpName(),font);
 	         docWriter.setAlignment(Paragraph.ALIGN_RIGHT);
 	         document.add(docWriter);
 	         document.add(emptySpace);
@@ -198,82 +213,7 @@ public class PdfGenerator {
 	         }
 	   
 	   
-	   //------------------------- 휴가신청 테이블 -------------------------	 
-	   private PdfPTable generateTable3(ApprovalDoc doc, Font font, Document document, PdfWriter writer,
-			   							String label1, String label2) {
-
-
-          PdfPTable table3 = new PdfPTable(6);
-          
-          table3.setTotalWidth(450f);
-          table3.setLockedWidth(true);
-          
-          // label #1
-   
-          PdfPCell t3_cells1 = new PdfPCell();
-          t3_cells1 = new PdfPCell(new Phrase(label1,font));
-          t3_cells1.setHorizontalAlignment(Element.ALIGN_CENTER);
-          t3_cells1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-          
-          table3.addCell(t3_cells1);
-          
-          
-          // 데이터 #1
-          PdfPCell t3_cells2 = new PdfPCell();
-          t3_cells2 = new PdfPCell(new Phrase(label2,font));
-          t3_cells2.setHorizontalAlignment(Element.ALIGN_CENTER);
-          t3_cells2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-          t3_cells2.setColspan(2);
-          t3_cells2.setFixedHeight(40f);
-          table3.addCell(t3_cells2);
-	                
-          // lable #2
-          PdfPCell t3_cells3 = new PdfPCell();
-          t3_cells3 = new PdfPCell(new Phrase("이름",font));
-          t3_cells3.setHorizontalAlignment(Element.ALIGN_CENTER);
-          t3_cells3.setVerticalAlignment(Element.ALIGN_MIDDLE);
-          
-          table3.addCell(t3_cells3);
-          
-          // 데이터 #2
-          PdfPCell t3_cells4 = new PdfPCell();
-          t3_cells4 = new PdfPCell(new Phrase("테스트2",font));
-          t3_cells4.setHorizontalAlignment(Element.ALIGN_CENTER);
-          t3_cells4.setVerticalAlignment(Element.ALIGN_MIDDLE);
-          t3_cells4.setColspan(2);
-          table3.addCell(t3_cells4);
-	      
-	      
-	      return table3;
-	   }
-	   
-
-	   private PdfPTable generateTable4(ApprovalDoc doc, Font font, Document document, PdfWriter writer,
-			   							String label1, String label2) {
-		   
-		  PdfPTable table4 = new PdfPTable(6);
-	          
-          table4.setTotalWidth(450f);
-          table4.setLockedWidth(true);
-		   
-          PdfPCell t4_cells1 = new PdfPCell();
-          t4_cells1 = new PdfPCell(new Phrase(label1,font));
-          t4_cells1.setHorizontalAlignment(Element.ALIGN_CENTER);
-          t4_cells1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-          t4_cells1.setFixedHeight(40f);
-          table4.addCell(t4_cells1);
-          
-          PdfPCell t4_cells2 = new PdfPCell();
-          t4_cells2 = new PdfPCell(new Phrase(label2,font));
-          t4_cells2.setHorizontalAlignment(Element.ALIGN_CENTER);
-          t4_cells2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-          t4_cells2.setFixedHeight(40f);
-          t4_cells2.setColspan(5);    
-          table4.addCell(t4_cells2);
-          
-		   return table4;
-	   }
-		   
+	 
 
 
     //------------------------- 상세 내용 테이블 -------------------------	 

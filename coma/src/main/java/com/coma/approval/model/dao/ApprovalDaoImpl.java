@@ -81,6 +81,12 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public ApprovalDoc selectAppDoc(SqlSession session, Map<String, String> data) {
 		return session.selectOne("approval.selectAppDoc", data);
 	}
+
+	@Override
+	public Emp selectWriterByEmpId(SqlSession session, String empId) {
+		return session.selectOne("emp.selectWriterByEmpId", empId);
+	}
+	
 	
 	
 
