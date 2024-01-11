@@ -173,10 +173,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath) {
-		pdfGenerator.generateAppr(doc, response, fontPath);
+	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writer) {
+		pdfGenerator.generateAppr(doc, response, fontPath, writer);
 	}
 
+	@Override
+	public Emp selectEmpById(String empId) {
+		return dao.selectEmpById(session, empId);
+	}
+
+	
 
 
 }
