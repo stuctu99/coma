@@ -12,6 +12,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -24,12 +25,14 @@ import jakarta.servlet.http.HttpServletResponse;
 public class PdfGenerator {
 
 	public void generateAppr(ApprovalDoc doc, HttpServletResponse response, String fontPath) { 
-
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
 		try {
 			
 			Document document = new Document();
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			PdfWriter writer = PdfWriter.getInstance(document, baos);
+			
+			PdfWriter writer = PdfWriter.getInstance(document, baos); //document를 baos에 보냄
 			
 			document.open();
 			
@@ -42,23 +45,24 @@ public class PdfGenerator {
 			
 			Font fontTitle = new Font(objBaseFont, 24);
 			document.add(new Paragraph("휴가신청서",fontTitle));
-			
-			// table #1
-			document.add(generateTable(doc, font, document, writer)); 
-			
-			document.add(new Paragraph("테스트",font));
-			
-			document.add(generateTable2(doc, font, document, writer));
-			
-			document.add(new Paragraph("테스트",font));
-			
-			document.add(generateTable3(doc, font, document, writer));
-			
-			document.add(new Paragraph("테스트",font));
-			
-			document.add(generateTable4(doc, font, document, writer));
-			
-			document.close();
+					
+			  // table #1
+	         document.add(generateTable(doc, font, document, writer)); 
+	         
+	         document.add(new Paragraph(" "));
+	         
+	         document.add(generateTable2(doc, font, document, writer));
+	         
+	         document.add(new Paragraph(" "));
+	         
+	         document.add(generateTable3(doc, font, document, writer));
+	         
+	         document.add(new Paragraph(" "));
+	         
+	         document.add( generateTable4(doc, font, document, writer));
+	         
+	         document.close();
+
 			
 			//다운로드할 파일 이름 설정
 			String fileName = "approval.document.pdf";
@@ -70,122 +74,128 @@ public class PdfGenerator {
 			
 			// PDF 데이터를 사용자에게 전송
 			ServletOutputStream outputStream = response.getOutputStream();
-			baos.writeTo(outputStream);
+			baos.writeTo(outputStream); //baos를 원격으로 클라이언트한테 보냄
 			outputStream.flush();
+		
 		
 		}catch (DocumentException | IOException e) {
             e.printStackTrace();
-        }
+     
+		}
+//		finally { //output
+//        	
+//        	try {
+//				baos.close();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//        }
 
 	
 
 	}
 	
-	private PdfPTable generateTable(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
-		
-		
-//------------------------- 결재선 테이블 -------------------------
-	
-		PdfPTable table1 = new PdfPTable(3);
-		
-		table1.setTotalWidth(200f);
-		table1.setLockedWidth(true);
-		
-		
-		//row #1
-		PdfPCell[] t1_cells = new PdfPCell[3];
-		
-	
-		for(int i=0; i < t1_cells.length; i++) {
-			t1_cells[i] = new PdfPCell(new Phrase((i + 1) + "번 셀", font));
-			t1_cells[i].setHorizontalAlignment(Element.ALIGN_CENTER);
-			table1.addCell(t1_cells[i]);
-		}
-		
-		table1.completeRow();
-		
-		
-		//row #2
-		PdfPCell[] t1_cells2 = new PdfPCell[3];
 
-		for(int i=0; i < t1_cells2.length; i++) {
-			t1_cells2[i] = new PdfPCell(new Phrase((i + 1) + "번 셀", font));
-			t1_cells2[i].setFixedHeight(50f);
-			t1_cells2[i].setHorizontalAlignment(Element.ALIGN_CENTER);
-			t1_cells2[i].setVerticalAlignment(Element.ALIGN_MIDDLE);
-			table1.addCell(t1_cells2[i]);
-		}
-		
-		table1.completeRow();
-		
-		//row #3
-		PdfPCell[] t1_cells3 = new PdfPCell[3];
-		
+	   private PdfPTable generateTable(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
+	      
+	      
+	//------------------------- 결재선 테이블 -------------------------
+	   //  t2_label.setBorder(Rectangle.NO_BORDER);
+		   
+	      PdfPTable table1 = new PdfPTable(6);
+	      
+	      table1.setTotalWidth(400f);
+	      table1.setLockedWidth(true);
+	      
+	      //row #1
+	      
+          //-------hidden
+	      
+          PdfPCell t1_hiddenCell1 = new PdfPCell();
+          PdfPCell t1_hiddenCell2 = new PdfPCell();
+          PdfPCell t1_hiddenCell3 = new PdfPCell();
+        
+          //첫 번째 줄
+          t1_hiddenCell1 = new PdfPCell(new Phrase(" ", font));
+          t1_hiddenCell1.setColspan(3);
+          t1_hiddenCell1.setBorder(Rectangle.NO_BORDER);
+          table1.addCell(t1_hiddenCell1);
+          table1.completeRow();
+          
+          //두 번째 줄
+          t1_hiddenCell2.setFixedHeight(50f);
+          t1_hiddenCell2.setColspan(3);
+          t1_hiddenCell2.setBorder(Rectangle.NO_BORDER);
+          table1.addCell(t1_hiddenCell2);
+          table1.completeRow();
+          
+          //세 번째 줄
+          t1_hiddenCell3 = new PdfPCell(new Phrase(" ", font));
+          t1_hiddenCell3.setColspan(3);
+          t1_hiddenCell3.setBorder(Rectangle.NO_BORDER);
+          table1.addCell(t1_hiddenCell3);
+          table1.completeRow();
+	      
 
-		for(int i=0; i < t1_cells3.length; i++) {
-			t1_cells3[i] = new PdfPCell(new Phrase((i + 1) + "번 셀", font));
-			t1_cells3[i].setHorizontalAlignment(Element.ALIGN_CENTER);
-			table1.addCell(t1_cells3[i]);
-		}
-		
-		table1.completeRow();
+	      
+	      return table1;
+	   }
 
-		
-		return table1;
-	}
+	   //------------------------- 결재선 테이블 -------------------------	   
+	   private PdfPTable generateTable2(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
+	      
+	        
+	            PdfPTable table2 = new PdfPTable(5);
+	            
+	            table2.setTotalWidth(400f);
+	            table2.setLockedWidth(true);
+	            
+	            // 참조자 label
+	            
+	            PdfPCell t2_label = new PdfPCell();
+	            t2_label = new PdfPCell(new Phrase("참조자",font));
+	            t2_label.setHorizontalAlignment(Element.ALIGN_CENTER);
+	            
+	            table2.addCell(t2_label);
+	            
+	            
+	            // 참조자 이름
+	            PdfPCell t2_ref = new PdfPCell();
+	            t2_ref.setColspan(4);
+	            table2.addCell(t2_ref);
 
-	
-	private PdfPTable generateTable2(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
-		
-		
-		//------------------------- 결재선 테이블 -------------------------
-			
-				PdfPTable table2 = new PdfPTable(4);
-				
-				table2.setTotalWidth(250f);
-				table2.setLockedWidth(true);
-				
-				// 참조자 label
-				
-				PdfPCell t2_label = new PdfPCell(new Phrase("참조자",font));
-				t2_label.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table2.addCell(t2_label);
-				
-				
-				// 참조자 이름
-				PdfPCell t2_ref = new PdfPCell();
-				t2_ref.setColspan(3);
-				table2.addCell(t2_ref);
-
-				
-				return table2;
-			}
-
-			
-private PdfPTable generateTable3(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
-		
-		PdfPTable table3 = new PdfPTable(1);
-		
-		table3.setTotalWidth(500f);
-		
-		PdfPCell t3_cells = new PdfPCell(new Phrase("테스트",font));
-		t3_cells.setFixedHeight(100f);
-		t3_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
-		t3_cells.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		table3.addCell(t3_cells);
-		
-		
-		
-		return table3;
-	}
+	            
+	            return table2;
+	         }
+	   
+	   
+	   //공통사항 테이블
+	   private PdfPTable generateTable3(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
+	      
+	      PdfPTable table3 = new PdfPTable(1);
+	      
+	      table3.setTotalWidth(500f);
+	      
+	      PdfPCell t3_cells = new PdfPCell();
+	      t3_cells = new PdfPCell(new Phrase("테스트",font));
+	      t3_cells.setFixedHeight(200f);
+	      t3_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
+	      table3.addCell(t3_cells);
+	      
+	      
+	      
+	      return table3;
+	   }
 
 
 
+	//상세 내용 테이블
 	private PdfPTable generateTable4(ApprovalDoc doc, Font font, Document document, PdfWriter writer ) {
 		
 		PdfPTable table4 = new PdfPTable(1);
 		
-		table4.setTotalWidth(500f);
+		table4.setTotalWidth(150f);
 		
 		// 상세 내용 label
 		PdfPCell t4_label = new PdfPCell(new Phrase("상세 내용", font));
@@ -195,7 +205,7 @@ private PdfPTable generateTable3(ApprovalDoc doc, Font font, Document document, 
 		
 		// 상세 내용 content
 		PdfPCell t4_cells = new PdfPCell(new Phrase("테스트",font));
-		t4_cells.setFixedHeight(400f);
+		t4_cells.setFixedHeight(300f);
 		t4_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
 		t4_cells.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		table4.addCell(t4_cells);
