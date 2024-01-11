@@ -1,5 +1,13 @@
 /*const contextPath=location.hostname;*/
 
+$(function(){
+const mserver = new WebSocket("ws://"+location.host+"/messengerServer");
+mserver.onopen=()=>{
+	
+}
+	
+})
+
 $(".emp-list-btn").click(function() {
 	target = this;
 	empListDisplay(this);
@@ -69,6 +77,7 @@ const fn_roomListByType = (type) => {
 			console.log(data);
 			/*const $content = $(".chatting-list");*/
 			const $content = $(".content");
+			$content.attr("id");
 			$content.html("");
 			if (data != null) {
 				data.roomList.forEach(d => {
@@ -78,45 +87,46 @@ const fn_roomListByType = (type) => {
 					const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top", "12px");
 					const $strong_type = $("<strong>");
 					const $strong_title = $("<strong>").css("padding-right", "3px");
-					/*const $recentMsg = $("<div>").addClass("col-3 chatting-room");*/
 					const $recentMsg = $("<small>").text();
 					const $i = $("<div>").addClass("col-1 chatting-room");
 					const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
-					/*const $img = $("<img>").attr("src","/resource/img/chat/user.png").attr("id","joinList");*/
 					const $user_count = $("<span>");
 					$room_enter.attr("onclick", "enter_room('" + d.roomNo + "','" + d.roomPasswordFlag + "');").attr("id", d.roomNo);
+					if (d.roomTypeObj.roomType != 'P') {
+						if (d.roomPasswordFlag == 'Y') {
+							$i.append($("<i>").addClass("fa-solid fa-lock"));
+						} else {
+							$i.append($("<i>").addClass("fa-solid fa-lock-open"));
+						}
 
-					if (d.roomPasswordFlag == 'Y') {
-						$i.append($("<i>").addClass("fa-solid fa-lock"));
-					} else {
-						$i.append($("<i>").addClass("fa-solid fa-lock-open"));
+						if (loginId === 'COMA_1') {
+							const $input = $("<input>").attr("type", "checkbox").attr("name", "deleteRoom[]").val(d.roomNo).css("margin-right", "5px");
+							$input.addClass("deleteRoom");
+							$div_type.append($input);
+						}
+
+						$i.css("padding-top", "14px");
+						$strong_type.text(d.roomTypeObj.roomTypeName);
+						$strong_title.text(d.roomName);
+						$div_type.append($strong_type);
+						$div_title.append($strong_title);
+						$div_btn.append($room_enter);
+						$div.append($div_type);
+						$div.append($div_title);
+						$user_count.text('(' + d.memberCount + ')');
+						$div_title.append($user_count);
+						$div_title.append($("<br>"));
+						$div_title.append($recentMsg);
+						$div.append($i);
+						$div.append($div_btn);
+						console.log($div);
+						$content.append($div);
+						data.joinRoom.shift();
+						console.log(data.joinRoom);
 					}
-
-					$i.css("padding-top", "14px");
-
-					$strong_type.text(d.roomTypeObj.roomTypeName);
-					$strong_title.text(d.roomName);
-					if (loginId === 'COMA_1') {
-						const $input = $("<input>").attr("type", "checkbox").attr("name", "deleteRoom[]").val(d.roomNo).css("margin-right", "5px");
-						$input.addClass("deleteRoom");
-						$div_type.append($input);
-					}
-					$div_type.append($strong_type);
-					$div_title.append($strong_title);
-					/*$div_title.append($i);*/
-					$div_btn.append($room_enter);
-					/*$div_btn.append($input);*/
-					$div.append($div_type);
-					$div.append($div_title);
-					$user_count.text('(' + d.memberCount + ')');
-					$div_title.append($user_count);
-					$div_title.append($("<br>"));
-					$div_title.append($recentMsg);
-					$div.append($i);
-					$div.append($div_btn);
-					console.log($div);
-					$content.append($div);
 				})
+				console.log(data.joinRoom[0]);
+				
 			} else {
 				const $div = $("div").addClass("row");
 				$div.append($("div").addClass("col-12").html("<h3>참여중인 채팅방이 없습니다.</h3>"));
@@ -144,10 +154,10 @@ $("#roomPasswordFlag").click(function() {
 	console.log($(this).val());
 })
 /* 1:1 채팅 */
-/*const privateChatting = (targetId) => {
-	console.log(targetId);
+const privateChatting = (targetId, empId) => {
+	console.log(targetId, empId);
 	const privateChat = {
-		"roomName": targetId,
+		"roomName": targetId + ", " + empId + " 대화방",
 		"roomType": "P",
 		"roomPassword": "",
 		"roomPasswordFlag": "N",
@@ -172,7 +182,6 @@ $("#roomPasswordFlag").click(function() {
 		})
 		.then(data => {
 			if (data.result == "success") {
-				messengerAction("create");
 				console.log("방생성 성공");
 				$("#createRoom").modal('hide');
 				if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
@@ -184,7 +193,7 @@ $("#roomPasswordFlag").click(function() {
 				console.log("방생성 실패");
 			}
 		})
-}*/
+}
 
 /* 방생성 */
 const createRoom = (empId) => {
@@ -288,7 +297,7 @@ $(function() {
 	$("#passwordScreen").on("shown.bs.modal", function() {
 		$("#passwordCode").focus();
 	});
-
+	
 });
 
 $(document).on('change', 'input[class="deleteRoom"]', function() {

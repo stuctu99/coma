@@ -84,7 +84,7 @@ div {
 							</div>
 						<c:if test="${e.empId!=loginmember.empId }">
 							<div class="col-2">
-								<button id="chatting-active" class="btn btn-outline-primary" onclick="privateChatting('${e.empId}');">대화</button>
+								<button id="chatting-active" class="btn btn-outline-primary" onclick="privateChatting('${e.empId}','${loginmember.empId }');">대화</button>
 							</div>
 						</c:if>
 						</div>
@@ -270,5 +270,6 @@ div {
 	const loginId = '${loginmember.empId}';
 	console.log("alskdjlkasdjkl;ajdlkasjdlkajdlaskjdklajdlkajdlkasjdk"+loginId);
 </script>
+<script src="${path }/resource/js/chat/chatView.js"></script>
 <script src="${path }/resource/js/chat/chat.js"></script>
 </html>

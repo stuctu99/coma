@@ -58,7 +58,7 @@
 	
 	<select id="selectChatRoomListByType" parameterType="string" resultMap="chattingRoomMap">
 		SELECT R.*, T.*, (SELECT COUNT(*) FROM CHAT_JOIN J GROUP BY ROOM_NO HAVING R.ROOM_NO = J.ROOM_NO) AS MEMBER_COUNT 
-		FROM CHAT_ROOM R LEFT JOIN CHAT_ROOM_TYPE T ON R.ROOM_TYPE = T.ROOM_TYPE  
+		FROM CHAT_ROOM R LEFT JOIN CHAT_ROOM_TYPE T ON R.ROOM_TYPE = T.ROOM_TYPE
 		
 		<where>
 			<if test="type!=null and type!='ALL'">
@@ -109,10 +109,10 @@
 				INSERT INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES (#{roomNo}, #{empId}) 
 			</when>
 			<otherwise>
-				<!-- <foreach collection="_parameter.entrySet()" item="id" index="key" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
-					INTO CHAT_JOIN VALUES('CR_'||SEQ_CHATROOM_NO.CURRVAL,#{id})
-				</foreach> -->
-				INSERT INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES ('CR_'||SEQ_CHATROOM_NO.CURRVAL, #{empId})
+				<foreach collection="_parameter.entrySet()" item="id" index="key" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+					INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES('CR_'||SEQ_CHATROOM_NO.CURRVAL,#{id})
+				</foreach>
+				<!-- INSERT INTO CHAT_JOIN(ROOM_NO,EMP_ID) VALUES ('CR_'||SEQ_CHATROOM_NO.CURRVAL, #{empId}) -->
 			</otherwise>
 		</choose>
 	</insert>

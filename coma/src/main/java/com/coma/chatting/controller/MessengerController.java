@@ -21,6 +21,7 @@ import com.coma.model.dto.ChattingRoomType;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -57,13 +58,15 @@ public class MessengerController {
 		List<String> joinRoom = service.selectMyJoinRoomById(loginId);
 		Map<String,Object> roomInfo = new HashMap<String,Object>();
 		roomInfo.put("roomList",roomList);
-		roomInfo.put("joinRoom", joinRoom); 
+		roomInfo.put("joinRoom", joinRoom);
+		System.out.println("원하는 데이터 출력 "+joinRoom);
 		return roomInfo;
 	}
 
 	@PostMapping("/createRoom")
 	@ResponseBody
 	public Map<String, Object> createRoom(@RequestBody Map<String, String> roomInfo) {
+		
 		ChattingRoom room = new ChattingRoom();
 		ChattingRoomType roomType = new ChattingRoomType();
 		room.setRoomName(roomInfo.get("roomName"));
@@ -73,10 +76,7 @@ public class MessengerController {
 		roomType.setRoomType(roomInfo.get("roomType"));
 		room.setRoomTypeObj(roomType);
 		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
-		room.setEmpId(roomInfo.get("empId"));
-		if(roomInfo.get("targetId")!=null) {
-			room.setTargetId(roomInfo.get("targetId"));
-		}
+		room.setIdList(Map.of("empId",roomInfo.get("empId"),"targetId",roomInfo.get("targetId")));
 		System.out.println(roomInfo);
 		int result = service.insertChattingRoom(room);
 		Map<String, Object> data = new HashMap<>();

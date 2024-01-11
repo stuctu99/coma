@@ -65,7 +65,7 @@ public class MessengerDaoImpl implements MessengerDao {
 		// TODO Auto-generated method stub
 		int result = session.insert("chatting.insertCreateRoom", room);
 		if (result > 0) {
-			Map<String, String> creator = Map.of("empId", room.getEmpId());
+			Map<String, String> creator = room.getIdList();
 			/*
 			 * Collection<String> values =creator.values(); List<String> idList = new
 			 * ArrayList<>(values);
