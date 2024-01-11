@@ -65,10 +65,8 @@ ${formattedClockin}  --%>
                <h2>근무체크</h2>
             </div>
          </div>
-         <div class="bigContainer" style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
-            
-            <h1 id="stopwatch" >00:00:00</h1>
-               
+         <div class="bigContainer" style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">        
+            <h1 id="stopwatch" >00:00:00</h1>               
             <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly; height : 44px">
                <c:choose>
                    <c:when test="${myCommute == null}">
@@ -136,14 +134,14 @@ ${formattedClockin}  --%>
          </div>
          <div class="row">
             <div class="col-12">
-               <h2>휴가현황</h2>
+               <h2>Work Life </h2>
             </div>
          </div>
          <div class="bigContainer"
             style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
             <h4>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
-            <button type="button" class="btn btn-primary">휴가 신청</button>
-            <button type="button" class="btn btn-primary" id="vacationButton">휴가 근황</button>
+            <button type="button" class="btn btn-primary">근태 정보</button>
+            <button type="button" class="btn btn-primary" id="vacationButton">휴가 정보</button>
          </div>
          <div class="row">
             <div class="col-12">
