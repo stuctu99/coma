@@ -1,4 +1,10 @@
 @charset "UTF-8";
+
+/**{
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+*/
+
 html{
 	margin:0 auto;
 }

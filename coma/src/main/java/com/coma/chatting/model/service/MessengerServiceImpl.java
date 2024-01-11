@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.chatting.model.dao.MessengerDao;
-import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.CommunicationCheck;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
@@ -58,7 +58,13 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.selectNowCreateChatRoomNo(session);
 	}
 	
-
+	@Override
+	public List<CommunicationCheck> selectPrivateChatJoinInfo(String loginId) {
+		// TODO Auto-generated method stub
+		return dao.selectPrivateChatJoinInfo(session, loginId);
+	}
+	
+	
 	@Override
 	@Transactional
 	public int insertChattingRoom(ChattingRoom room) {
@@ -78,6 +84,8 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.deleteChatRoomInfoByRoomNo(session, roomList);
 	}
+
+
 
 
 

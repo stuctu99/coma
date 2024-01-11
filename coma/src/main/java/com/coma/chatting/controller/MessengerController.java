@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.coma.chatting.model.service.MessengerService;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.ChattingRoomType;
+import com.coma.model.dto.CommunicationCheck;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -42,6 +42,17 @@ public class MessengerController {
 		 *System.out.println(dept);
 		*/
 		return "chat/chat";
+	}
+	
+	
+	//변수명 수정하기
+	@GetMapping("/init/{loginId}")
+	@ResponseBody
+	public Map<String,Object> initButton(@PathVariable String loginId){
+		Map<String,Object> test = new HashMap<>();
+		List<CommunicationCheck> data = service.selectPrivateChatJoinInfo(loginId);
+		test.put("test", data);
+		return test;
 	}
 
 	/*
@@ -76,8 +87,14 @@ public class MessengerController {
 		roomType.setRoomType(roomInfo.get("roomType"));
 		room.setRoomTypeObj(roomType);
 		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
-		room.setIdList(Map.of("empId",roomInfo.get("empId"),"targetId",roomInfo.get("targetId")));
+		if(roomInfo.get("targetId").equals("")) {
+			room.setIdList(Map.of("empId",roomInfo.get("empId")));
+		}else {
+			room.setIdList(Map.of("empId",roomInfo.get("empId"),"targetId",roomInfo.get("targetId")));
+			
+		}
 		System.out.println(roomInfo);
+//		int alreadyExistFlag = service.selectCountPrivateRoomCheck();
 		int result = service.insertChattingRoom(room);
 		Map<String, Object> data = new HashMap<>();
 		if(result>0) {

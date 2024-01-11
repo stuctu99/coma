@@ -84,7 +84,7 @@ div {
 							</div>
 						<c:if test="${e.empId!=loginmember.empId }">
 							<div class="col-2">
-								<button id="chatting-active" class="btn btn-outline-primary" onclick="privateChatting('${e.empId}','${loginmember.empId }');">대화</button>
+								<button id="chatting-active" class="${e.empId } btn btn-outline-primary" onclick="privateChatting('${e.empId}','${loginmember.empId }');">대화</button>
 							</div>
 						</c:if>
 						</div>
@@ -126,7 +126,7 @@ div {
                   data-target="#createRoom">방생성</button>
             </div>
          </div>
-         <div class="container content">
+         <div class="container content" id="chattingList">
          
          </div>
       </div>
@@ -268,8 +268,6 @@ div {
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script>
 	const loginId = '${loginmember.empId}';
-	console.log("alskdjlkasdjkl;ajdlkasjdlkajdlaskjdklajdlkajdlkasjdk"+loginId);
 </script>
-<script src="${path }/resource/js/chat/chatView.js"></script>
 <script src="${path }/resource/js/chat/chat.js"></script>
 </html>

@@ -33,6 +33,11 @@
 		<association property="empObj" resultMap="emp.empMap"/>
 	</resultMap>
 	
+	<resultMap type="communicationCheck" id="communicationCheckMap">
+		<result column="EMP_ID" property="empId"/>
+		<result column="ROOM_NO" property="roomNo"/>
+		<result column="TARGET" property="target"/>
+	</resultMap>
 	
 	
 	<!-- select --> 
@@ -43,6 +48,11 @@
 		FROM CHAT_ROOM R LEFT JOIN CHAT_ROOM_TYPE T ON R.ROOM_TYPE = T.ROOM_TYPE 
 		ORDER BY ROOM_CREATE_DATE DESC 
 	</select>
+	
+	<select id="selectPrivateChatJoinInfo" parameterType="string" resultMap="communicationCheckMap">
+		SELECT m.emp_Id, m.room_no, y.emp_id AS target  FROM chat_join m JOIN chat_join y ON m.ROOM_NO = y.ROOM_NO WHERE m.emp_id = #{loginId} AND y.emp_id != #{loginId}
+	</select>
+	
 	<select id="selectRoomPasswordCheck" parameterType="map" resultMap="chattingRoomMap">
 		SELECT * FROM CHAT_ROOM LEFT JOIN CHAT_ROOM_TYPE USING (ROOM_TYPE) WHERE ROOM_NO = #{roomNo} AND ROOM_PASSWORD = #{password}
 	</select>
@@ -92,6 +102,11 @@
 	<select id="selectNowCreateChatRoomNo" resultType="string">
 		SELECT 'CR_'||SEQ_CHATROOM_NO.CURRVAL FROM DUAL
 	</select>
+	
+	<select id="selectCountPrivateRoomCheck" parameterType="map">
+		SELECT COUNT(*) FROM CHAT_JOIN WHERE ROOM_TYPE = 'P' AND EMP_ID IN (#{empId},#{targetId})
+	</select>
+	
 	
 	<!-- insert -->
 	<insert id="insertCreateRoom" parameterType="chattingRoom">
