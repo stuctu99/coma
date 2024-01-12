@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.CommunicationCheck;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
@@ -17,6 +17,8 @@ public interface MessengerDao {
 	List<String> selectMyJoinRoomById(SqlSession session, String loginId);
 	String selectNowCreateChatRoomNo(SqlSession session);
 	List<ChattingRoom> selectChatRoomListByType(SqlSession session, String type);
+	List<CommunicationCheck> selectPrivateChatJoinInfo(SqlSession session, String loginId);
+	
 	
 	ChattingRoom passwordCheck(SqlSession session, Map<String,String> roomInfo);
 	int insertChattingRoom(SqlSession session, ChattingRoom room);

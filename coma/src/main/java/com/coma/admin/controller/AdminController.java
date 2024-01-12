@@ -1,6 +1,7 @@
 package com.coma.admin.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -41,7 +42,10 @@ public class AdminController {
 	//전체 사원 출력
 	@GetMapping("/adminEmp")
 	public void selectEmpAllByCurrent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m) {
-		List<Map> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage));	//전체 사원 데이터 가져오기
+		int year=sysDate.getYear();
+		int month=sysDate.getMonthValue();
+		int day=sysDate.getDayOfMonth();
+		List<Map> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage,"year", year,"month", month,"day", day));	//전체 사원 데이터 가져오기
 		//List<Map> empCommutes=service.selectEmpAllByCommute();	//사원 근태 형황 데이터 가져오기
 		Map<String, Object> empData= new HashMap<>();	
 		empData.put("emps", emps);	//전체 사원 데이터 Map
@@ -54,8 +58,9 @@ public class AdminController {
 		int relayMonth;
 		if(monthData!=1) {
 			relayMonth=monthData-1;
+		}else {
+			relayMonth=monthData;
 		}
-		relayMonth=monthData;
 		int nextMonth=monthData+1;
 		
 		//chart.js 메소드
@@ -68,12 +73,14 @@ public class AdminController {
 		    JsonObject jsonObject = new JsonObject();	//Map 데이터를 JSON 형식으로 변환하기 위해 JsonObject 호출
 
 		    for (Map.Entry<String, Object> entry : dataMap.entrySet()) {	//반복문을 통해 JSON 객체에 속성값 추가
-		        jsonObject.addProperty(entry.getKey(), entry.getValue().toString());
+		    	String value = entry.getValue() != null ? entry.getValue().toString() : "";	// null 체크를 추가하여 null이면 빈 문자열로 대체
+		        jsonObject.addProperty(entry.getKey(), value);
 		    }
 
 		    jArray.add(jsonObject);	//변환된 JSON객체를 jArray 배열에 추가
 		}
 		String jsonString = gson.toJson(jArray);	//JSON형식의 문자열로 생성
+		System.out.println(jsonString);
 		m.addAttribute("chartEmpData",jsonString);
 		m.addAttribute("emps",emps);
 		m.addAttribute("empCount",empCount);
@@ -102,8 +109,13 @@ public class AdminController {
 	//사원 검색
 	@PostMapping("/searchEmp")
 	public @ResponseBody Map<String,Object> searchEmp(@RequestBody HashMap<String, Object> searchMap) {
+		int year=sysDate.getYear();
+		int month=sysDate.getMonthValue();
+		int day=sysDate.getDayOfMonth();
+		searchMap.put("year", year);
+		searchMap.put("month", month);
+		searchMap.put("day", day);
 		List<Map> emps=service.searchEmp(searchMap);
-		System.out.println(emps);
 		int totalData=service.countEmpByData(searchMap);
 		return Map.of("emps",emps,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchEmp"));
 	}

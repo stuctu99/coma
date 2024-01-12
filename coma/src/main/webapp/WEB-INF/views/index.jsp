@@ -6,6 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
    <jsp:param name="id" value="mine" />
 </jsp:include>
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
 <!-- TEAM COMA SPACE -->
@@ -53,11 +54,9 @@
 }
 
 </style>
-<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+
 <div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
-<%-- ${myCommute.commuteClockin}
-${myCommute}
-${formattedClockin}  --%>
+<%-- ${myCommute} --%>
    <div class="row">
       <div class=" col-4">
          <div class="row">
@@ -186,6 +185,7 @@ ${formattedClockin}  --%>
 </div>
  <script>
 	 // myCommute 객체에서 시간 값들을 가져옴
+	 var ex = new Date('${myCommute.commuteClockin}').getTime();
 	 var commuteClockin = new Date("<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>").getTime();
 	 var commuteStarttime = new Date("<fmt:formatDate value="${myCommute.commuteStarttime}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>").getTime();
 	 var commuteEndtime = new Date("<fmt:formatDate value="${myCommute.commuteEndtime}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>").getTime();
@@ -201,6 +201,7 @@ ${formattedClockin}  --%>
 	 //값이 있으면 false
 	 console.log(!commuteStarttime);
 	 console.log(!commuteEndtime);	 
+	 
 	 // 시간을 HH:mm:ss 형식으로 변환
 	 function formatTime(milliseconds) {
 	             var seconds = Math.floor(milliseconds / 1000);
@@ -215,6 +216,18 @@ ${formattedClockin}  --%>
 	 function pad(number) {
          return (number < 10 ? '0' : '') + number;
      }
+	 
+	 function getFormatTime(date){
+		   var hh=date.getHours();
+		   hh = hh >= 10 ? hh : '0' +hh;
+		   var mm =date.getMinutes();
+		   mm = mm >= 10 ? mm : '0' +mm;
+		   var ss =date.getSeconds();
+		   ss = ss >= 10 ? ss : '0' +ss;
+		   return hh + ':'+mm + ':'+ ss ;
+		   
+		}
+	 
 	 //setInterval 변수로 지정해주기 => 타이머 중지때문에 
 	 var interval;
 	 function generatePattern(milliseconds) {	
@@ -228,7 +241,8 @@ ${formattedClockin}  --%>
 		 }
 	    // 1초마다 updatePattern 함수 진행
 	     interval = setInterval(updatePattern, 1000);
-	}	 
+	}
+	 
 	// 값이 있는 경우에만 타이머 작동
 	if (commuteClockin) {
 	 	// 외출시간이 있다면
@@ -286,16 +300,7 @@ ${formattedClockin}  --%>
            calendar.render();
     });
 
-function getFormatTime(date){
-   var hh=date.getHours();
-   hh = hh >= 10 ? hh : '0' +hh;
-   var mm =date.getMinutes();
-   mm = mm >= 10 ? mm : '0' +mm;
-   var ss =date.getSeconds();
-   ss = ss >= 10 ? ss : '0' +ss;
-   return hh + ':'+mm + ':'+ ss ;
-   
-}
+
 let clockIn, clockout,endtime, starttime;
 //출근하기 버튼을 눌렀을 때
 document.getElementById('clockin').addEventListener('click', function() {
@@ -324,7 +329,7 @@ document.getElementById('clockin').addEventListener('click', function() {
             // Display clock-in time
             document.getElementById('clockInResult').textContent = getFormatTime(new Date());
             //출근 누르면 타이머 시작!
-            generatePattern(3000);
+            generatePattern(2000);
         }
     }).catch(e => {
         alert(e);
@@ -359,7 +364,7 @@ document.getElementById('clockin').addEventListener('click', function() {
             if(commuteClockin){
             	//commuteClockin 지금 새로고침해서 commuteClockin시간이 있다 !
             	var now=  new Date().getTime()-commuteClockin;
-                document.getElementById("stopwatch").innerText = formatTime(now);
+                document.getElementById("stopwatch").innerText = formatTime(now-2000);
             }else {
             	//지금 이시간 업성? 
             	var now=  new Date().getTime()-clockIn;
@@ -489,7 +494,7 @@ document.getElementById('clockin').addEventListener('click', function() {
 
 //휴가 근황 페이지 전환되는 기능 
 document.getElementById('vacationButton').addEventListener('click', function() {
-    window.location.href = '/mypage/vacationSituation';
+    window.location.href = '/mypage/MyvacationInfo';
 });
 
 

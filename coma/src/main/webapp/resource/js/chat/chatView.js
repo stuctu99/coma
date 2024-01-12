@@ -45,8 +45,6 @@ const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
 const connectCheck = $("div#" + empId);
 console.log(roomNo, empId);
-
-console.log(empName);
 server.onopen = (response) => {
 	connectCheck.parent().css("backgroundColor", "").css("opacity", 0.8);
 	connectCheck.css("color", "lime");

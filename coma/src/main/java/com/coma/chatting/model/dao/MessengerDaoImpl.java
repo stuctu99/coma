@@ -7,8 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.CommunicationCheck;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
@@ -56,6 +56,15 @@ public class MessengerDaoImpl implements MessengerDao {
 		// TODO Auto-generated method stub
 		return session.selectList("chatting.selectChatRoomListByType", type);
 	}
+	
+	@Override
+	public List<CommunicationCheck> selectPrivateChatJoinInfo(SqlSession session, String loginId) {
+		// TODO Auto-generated method stub
+		return session.selectList("chatting.selectPrivateChatJoinInfo",loginId);
+	}
+	
+	
+	
 
 	// insert
 	@Override
@@ -64,22 +73,28 @@ public class MessengerDaoImpl implements MessengerDao {
 		// TODO Auto-generated method stub
 		int result = session.insert("chatting.insertCreateRoom", room);
 		if (result > 0) {
-			Map<String, String> creator = Map.of("empId", room.getEmpId());
-			result = session.insert("chatting.insertJoinEmp", creator);
+			Map<String, String> joiner = room.getIdList();
+			/*
+			 * Collection<String> values =creator.values(); List<String> idList = new
+			 * ArrayList<>(values);
+			 */
+			result = session.insert("chatting.insertJoinEmp", joiner);
 
 		}
 		return result;
 	}
-	//	update
-	
-	//	delete
+	// update
+
+	// delete
 	@Override
 	public int deleteChatRoomInfoByRoomNo(SqlSession session, List<String> roomList) {
-		
-		session.delete("chatting.deleteChattingMessage",roomList);
-		session.delete("chatting.deleteChattingRoomMember",roomList);
-			
-		return session.delete("chatting.deleteChattingRoom",roomList);
+
+		session.delete("chatting.deleteChattingMessage", roomList);
+		session.delete("chatting.deleteChattingRoomMember", roomList);
+
+		return session.delete("chatting.deleteChattingRoom", roomList);
 	}
+
+	
 
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.coma.common.pagefactory.PageFactory;
 import com.coma.emp.service.EmpServiceImpl;
 import com.coma.model.dto.Emp;
 import com.coma.mypage.model.service.MypageService;
@@ -36,6 +38,7 @@ public class MypageController {
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	private final EmpServiceImpl  empService;
 	private final Logger logger = LoggerFactory.getLogger(MypageController.class);
+	private final PageFactory pageFactory;
 	
 	//나의 상세보기로 화면 전환하는 메소드
 	@GetMapping("/mypageDetails")
@@ -140,10 +143,20 @@ public class MypageController {
 	}
 	
 	//휴가근황보는 메소드 
-	@GetMapping("/vacationSituation")
-	public void vacation() {
+	@GetMapping("/MyvacationInfo")
+	public void MyvacationInfo(@RequestParam(defaultValue="1") int cPage,
+								@RequestParam(defaultValue="10") int numPerpage,
+								Principal pri, Model m) {
+		//휴가 결재 리스트 가져오기 
+		String loginId=pri.getName();
+		List<Map> vacationList= service.selectVacationInfo(Map.of("cPage",cPage,"numPerpage",numPerpage,"loginId",loginId));		
+		int count=service.countVacation(loginId);
+		m.addAttribute("vacation",vacationList);
+		m.addAttribute("count",count);
+		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/mypage/MyvacationInfo"));
 		
 	}
+	
 	
 	
 
