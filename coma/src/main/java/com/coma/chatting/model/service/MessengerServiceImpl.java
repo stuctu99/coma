@@ -41,9 +41,9 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 	
 	@Override
-	public List<ChattingRoom> selectChatRoomListByType(String type) {
+	public List<ChattingRoom> selectChatRoomListByType(Map<String,String> searchInfo) {
 		// TODO Auto-generated method stub
-		return dao.selectChatRoomListByType(session, type);
+		return dao.selectChatRoomListByType(session, searchInfo);
 	}
 	
 	@Override

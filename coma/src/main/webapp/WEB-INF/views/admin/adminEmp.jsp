@@ -71,7 +71,6 @@
 		</div>
 		<div class="col-5" style="padding-left:0px;">
 			<button type="button" class="btn btn-secondary btn-sm" style="width:50px;" onclick="fn_searchEmp();">검색</button>
-			<button type="button" class="btn btn-secondary btn-sm" style="" onclick="fn_resetEmp();">전체 보기</button>
 		</div>
 		<div class="col-2">
 			<div class="row">
@@ -189,7 +188,9 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 			cPage:cPage,
 			numPerpage:numPerpage,
 			searchData:searchData,
-			textData:textData
+			textData:textData,
+			jsName:"fn_searchEmp"
+			
 		})
 	}).then(response=>{
 		if(response.status!=200) throw new Error(repsonse.status);

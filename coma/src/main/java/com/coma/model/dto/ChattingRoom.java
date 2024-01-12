@@ -1,6 +1,7 @@
 package com.coma.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
