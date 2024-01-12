@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.chatting.model.dao.MessengerDao;
 import com.coma.model.dto.ChattingRoom;
-import com.coma.model.dto.CommunicationCheck;
+import com.coma.model.dto.ChattingPrivateRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
@@ -41,9 +41,9 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 	
 	@Override
-	public List<ChattingRoom> selectChatRoomListByType(String type) {
+	public List<ChattingRoom> selectChatRoomListByType(Map<String,String> searchInfo) {
 		// TODO Auto-generated method stub
-		return dao.selectChatRoomListByType(session, type);
+		return dao.selectChatRoomListByType(session, searchInfo);
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 	
 	@Override
-	public List<CommunicationCheck> selectPrivateChatJoinInfo(String loginId) {
+	public List<ChattingPrivateRoom> selectPrivateChatJoinInfo(String loginId) {
 		// TODO Auto-generated method stub
 		return dao.selectPrivateChatJoinInfo(session, loginId);
 	}

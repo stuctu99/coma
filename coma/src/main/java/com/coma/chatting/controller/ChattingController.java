@@ -96,6 +96,7 @@ public class ChattingController {
 	}
 
 //	채팅방 완전 가갔을 때 정보 삭제
+//	채팅방 인원 1명이 나갔을 때 채팅방 삭제하기 구현해야한다.
 	@DeleteMapping
 	@ResponseBody
 	public Map<String, String> deleteChatRoomJoinEmpById(@RequestBody Map<String, String> exitEmp) {

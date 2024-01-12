@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.coma.chatting.model.service.MessengerService;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.ChattingRoomType;
-import com.coma.model.dto.CommunicationCheck;
+import com.coma.model.dto.ChattingPrivateRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
@@ -50,7 +50,7 @@ public class MessengerController {
 	@ResponseBody
 	public Map<String,Object> initButton(@PathVariable String loginId){
 		Map<String,Object> test = new HashMap<>();
-		List<CommunicationCheck> data = service.selectPrivateChatJoinInfo(loginId);
+		List<ChattingPrivateRoom> data = service.selectPrivateChatJoinInfo(loginId);
 		test.put("test", data);
 		return test;
 	}
@@ -65,11 +65,16 @@ public class MessengerController {
 	@GetMapping("/roomlist/{type}/{loginId}")
 	@ResponseBody
 	public Map<String,Object> chatRoomListByType(@PathVariable String type, @PathVariable String loginId){
-		List<ChattingRoom> roomList = service.selectChatRoomListByType(type);
+		Map<String,String> searchInfo = Map.of("type",type,"loginId",loginId);
+		List<ChattingRoom> roomList = service.selectChatRoomListByType(searchInfo);
 		List<String> joinRoom = service.selectMyJoinRoomById(loginId);
+		//변수명 수정 필요
+		List<ChattingPrivateRoom> privateRoomList = service.selectPrivateChatJoinInfo(loginId);
 		Map<String,Object> roomInfo = new HashMap<String,Object>();
+		
 		roomInfo.put("roomList",roomList);
 		roomInfo.put("joinRoom", joinRoom);
+		roomInfo.put("privateRoom", privateRoomList);
 		System.out.println("원하는 데이터 출력 "+joinRoom);
 		return roomInfo;
 	}

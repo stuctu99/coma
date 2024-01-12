@@ -2,7 +2,7 @@ $("#exit-btn").click(function() {
 	if (confirm("채팅방을 완전히 나가겠습니까?")) {
 		const roomNo = $("#roomNo").val();
 		const empId = $("#loginMember").val();
-		console.log(roomNo,empId);
+		console.log(roomNo, empId);
 		fetch("/chatting", {
 			method: "DELETE",
 			headers: { "Content-Type": "application/json" },
@@ -16,8 +16,8 @@ $("#exit-btn").click(function() {
 			})
 			.then(data => {
 				if (data.result == "success") {
-				
-					location.href = "/messenger";
+					$(opener.document).find(".chatting-list-btn").click();
+					close();
 				} else {
 					alert("관리자에게 문의하세요!");
 				}
@@ -170,12 +170,13 @@ const sendMessage = () => {
 	const msg = document.querySelector("#msg").value;
 	document.querySelector("#msg").value = "";
 	/*type,chatNo,chatContent,chatCreateDate,empId,roomNo*/
+	$("#btnSend").prop("disabled", true);
 	server.send(new Message("msg", "", msg, new Date(Date.now()), empId, roomNo).convert());
 }
 
 const openMessage = (msg) => {
 	/* NEW_JOIN FLAG 여부에 따라 메세지 출력 여부 결정하기*/
-	
+
 	fetch("/chatting", {
 		method: "PUT",
 		headers: {
@@ -195,32 +196,38 @@ const openMessage = (msg) => {
 		})
 		.then(data => {
 			console.log(data);
-			if(data.newJoin==='Y'){
+			if (data.newJoin === 'Y') {
 				const container = $("<div>").addClass("row openMsgContainer");
 				const content = $("<h4>").text(`${data.empObj.empId}님이 접속하셨습니다.`);
 				$(".messageView" + msg.roomNo).append(container);
-				container.append(content);			
+				container.append(content);
 			}
 		})
 
-	
+
 }
 
 window.onload = () => {
 	const $msg = $("#msg");
+	const $btn = $("#btnSend");
 	$msg.focus();
 	$msg.on("keyup", (e) => {
-		const $msg = $("#msg").val()
-		if (e.key == 'Enter') {
-			/*sendMessage();*/
-			if ($msg.length > 0) {
-				$("#btnSend").click();
+		$btn.prop("disabled", false);
+		const $msgVal = $msg.val();
+		if ($msgVal.length > 0) {
+			if (e.key == 'Enter') {
+				sendMessage();
 				$("#msg").val("");
-			} else {
-				alert("채팅을 입력하세요.");
+				$btn.prop("disabled", true);
+			}else if($msgVal.length==0){
+				$btn.prop("disabled", true);
+				
 			}
+		}else{
+			$btn.prop("disabled", true);
 		}
-	})
+
+		})
 }
 
 class Message {

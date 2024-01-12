@@ -48,32 +48,38 @@ class MessageHandler {
 function openEvent(data) {
 	const loginId = data.loginId;
 	console.log(loginId);
-	fetch("/messenger/init/"+loginId)
-	.then(response=>{
-		console.log(response);
-		if(response.status!=200){
-			alert("못잔다...");
-		}
-		return response.json();
-	})
-	.then(data=>{
-		data.test.forEach(d=>{
-			$("."+d.target).attr("onclick","enter_chattingRoom('"+d.roomNo+"');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
+	fetch("/messenger/init/" + loginId)
+		.then(response => {
+			console.log(response);
+			if (response.status != 200) {
+				alert("못잔다...");
+			}
+			return response.json();
 		})
-	})
-	
+		.then(data => {
+			data.test.forEach(d => {
+				$("." + d.target).attr("onclick", "enter_chattingRoom('" + d.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
+			})
+		})
+
 }
 
 function newRoom(data) {
-	console.log("새로 생성된 채팅방"+data.roomNo);
+	console.log("새로 생성된 채팅방" + data.roomNo);
+	intiCreateModalInput();
 	$(".chatting-list-btn").click();
 }
 
-function privateNewRoom(data){
-	console.log("[웹소켓 메세지-1:1채팅방]:"+data.msg,data.loginId, data.targetId);
+function privateNewRoom(data) {
+	console.log("[웹소켓 메세지-1:1채팅방]:" + data.msg, data.loginId, data.targetId);
 	$(".chatting-list-btn").click();
 }
 /*=============================================================================*/
+function intiCreateModalInput(){
+	$("#roomName").val("");
+	$("#roomPassword").val("");
+}
+
 
 /* 방생성 */
 
@@ -90,7 +96,7 @@ const createRoom = (empId) => {
 		"roomType": roomType,
 		"roomPasswordFlag": roomPasswordFlag,
 		"empId": empId,
-		"targetId":""
+		"targetId": ""
 	}
 
 
@@ -116,9 +122,10 @@ const createRoom = (empId) => {
 				mserver.send(msg.convert());
 				$("#createRoom").modal('hide');
 				if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
+					intiCreateModalInput();
 					enter_chattingRoom(data.roomNo);
 				} else {
-					$(".emp-list-btn").click();
+					newRoom();
 				}
 			} else {
 				console.log("방생성 실패");
@@ -157,10 +164,11 @@ const privateChatting = (targetId, empId) => {
 		.then(data => {
 			if (data.result == "success") {
 				console.log("방생성 성공");
-				const msg = new MessageHandler("privateNew",empId,targetId,"","");
+				const msg = new MessageHandler("privateNew", empId, targetId, "", "");
 				mserver.send(msg.convert());
 				$("#createRoom").modal('hide');
 				if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
+					intiCreateModalInput();
 					enter_chattingRoom(data.roomNo);
 				} else {
 					newRoom();
@@ -214,7 +222,7 @@ $(".emp-list-btn").click(function() {
 $(".chatting-list-btn").click(function() {
 	target = this;
 	const type = $("#searchType");
-	type.val("ALL").prop("selected", true);
+	type.val("engagement").prop("selected", true);
 
 	empListHidden();
 	chatListDisplay(target);
@@ -243,49 +251,48 @@ const fn_roomListByType = (type) => {
 			$content.attr("id");
 			$content.html("");
 			if (data != null) {
-				data.roomList.forEach(d => {
-					const $div = $("<div>").addClass("row");
-					const $div_type = $("<div>").addClass("col-2 chatting-room").css("display", "flex").css("justify-content", "center").css("align-items", "center");
-					const $div_title = $("<div>").addClass("col-7 chatting-room").css("text-align", "left");
-					const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top", "12px");
-					const $strong_type = $("<strong>");
-					const $strong_title = $("<strong>").css("padding-right", "3px");
-					const $recentMsg = $("<small>").text();
-					const $i = $("<div>").addClass("col-1 chatting-room");
-					const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
-					const $user_count = $("<span>");
-					$room_enter.attr("onclick", "enter_room('" + d.roomNo + "','" + d.roomPasswordFlag + "');").attr("id", "btn-"+d.roomNo);
-					
-					if (d.roomPasswordFlag == 'Y') {
-						$i.append($("<i>").addClass("fa-solid fa-lock"));
-					} else {
-						$i.append($("<i>").addClass("fa-solid fa-lock-open"));
-					}
+				data.roomList.forEach(d => {						
+						const $div = $("<div>").addClass("row");
+						const $div_type = $("<div>").addClass("col-2 chatting-room").css("display", "flex").css("justify-content", "center").css("align-items", "center");
+						const $div_title = $("<div>").addClass("col-7 chatting-room").css("text-align", "left");
+						const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top", "12px");
+						const $strong_type = $("<strong>");
+						const $strong_title = $("<strong>").css("padding-right", "3px");
+						const $recentMsg = $("<small>").text();
+						const $i = $("<div>").addClass("col-1 chatting-room");
+						const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
+						const $user_count = $("<span>");
+						$room_enter.attr("onclick", "enter_room('" + d.roomNo + "','" + d.roomPasswordFlag + "');").attr("id", "btn-" + d.roomNo);
 
-					if (loginId === 'COMA_1') {
-						const $input = $("<input>").attr("type", "checkbox").attr("name", "deleteRoom[]").val(d.roomNo).css("margin-right", "5px");
-						$input.addClass("deleteRoom");
-						$div_type.append($input);
-					}
+						if (d.roomPasswordFlag == 'Y') {
+							$i.append($("<i>").addClass("fa-solid fa-lock"));
+						} else {
+							$i.append($("<i>").addClass("fa-solid fa-lock-open"));
+						}
 
-					$i.css("padding-top", "14px");
-					$strong_type.text(d.roomTypeObj.roomTypeName);
-					$strong_title.text(d.roomName);
-					$div_type.append($strong_type);
-					$div_title.attr("id",d.roomNo);
-					$div_title.append($strong_title);
-					$div_btn.append($room_enter);
-					$div.append($div_type);
-					$div.append($div_title);
-					$user_count.text('(' + d.memberCount + ')');
-					$div_title.append($user_count);
-					$div_title.append($("<br>"));
-					$div_title.append($recentMsg);
-					$div.append($i);
-					$div.append($div_btn);
-					console.log($div);
-					$content.append($div);
+						if (loginId === 'COMA_1') {
+							const $input = $("<input>").attr("type", "checkbox").attr("name", "deleteRoom[]").val(d.roomNo).css("margin-right", "5px");
+							$input.addClass("deleteRoom");
+							$div_type.append($input);
+						}
 
+						$i.css("padding-top", "14px");
+						$strong_type.text(d.roomTypeObj.roomTypeName);
+						$strong_title.text(d.roomName);
+						$div_type.append($strong_type);
+						$div_title.attr("id", d.roomNo);
+						$div_title.append($strong_title);
+						$div_btn.append($room_enter);
+						$div.append($div_type);
+						$div.append($div_title);
+						$user_count.text('(' + d.memberCount + ')');
+						$div_title.append($user_count);
+						$div_title.append($("<br>"));
+						$div_title.append($recentMsg);
+						$div.append($i);
+						$div.append($div_btn);
+						console.log($div);
+						$content.append($div);
 				})
 
 			} else {
@@ -293,7 +300,7 @@ const fn_roomListByType = (type) => {
 				$div.append($("div").addClass("col-12").html("<h3>참여중인 채팅방이 없습니다.</h3>"));
 				content.appned($div);
 			}
-			
+
 			data.joinRoom.forEach(r => {
 				$("#btn-" + r).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
 			})
@@ -415,7 +422,7 @@ const fn_deleteRoom = () => {
 			.then(data => {
 				if (data.result === 'success') {
 					alert("삭제가 완료되었습니다.");
-					const msg = new MessageHandler("delete",loginId);
+					const msg = new MessageHandler("delete", loginId);
 					mserver.send(msg);
 					$(".chatting-list-btn").click();
 				} else {
@@ -464,6 +471,7 @@ const enter_chattingRoom = (roomNo) => {
 			console.log(data);
 			if (data) {
 				/*location.href="/chatting/room/"+roomNo;*/
+				$("#btn-" + roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
 				open("/chatting/room/" + roomNo, "_blank", "width=600px; height=600px;");
 			}
 		})

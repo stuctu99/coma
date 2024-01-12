@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommunicationCheck {
+public class ChattingPrivateRoom {
 	private String empId;
 	private String roomNo;
 	private String target;

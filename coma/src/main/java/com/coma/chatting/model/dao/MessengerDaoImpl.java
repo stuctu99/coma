@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.model.dto.ChattingRoom;
-import com.coma.model.dto.CommunicationCheck;
+import com.coma.model.dto.ChattingPrivateRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
@@ -52,13 +52,13 @@ public class MessengerDaoImpl implements MessengerDao {
 	}
 
 	@Override
-	public List<ChattingRoom> selectChatRoomListByType(SqlSession session, String type) {
+	public List<ChattingRoom> selectChatRoomListByType(SqlSession session, Map<String,String> searchInfo) {
 		// TODO Auto-generated method stub
-		return session.selectList("chatting.selectChatRoomListByType", type);
+		return session.selectList("chatting.selectChatRoomListByType", searchInfo);
 	}
 	
 	@Override
-	public List<CommunicationCheck> selectPrivateChatJoinInfo(SqlSession session, String loginId) {
+	public List<ChattingPrivateRoom> selectPrivateChatJoinInfo(SqlSession session, String loginId) {
 		// TODO Auto-generated method stub
 		return session.selectList("chatting.selectPrivateChatJoinInfo",loginId);
 	}
