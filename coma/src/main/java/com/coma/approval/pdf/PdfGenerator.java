@@ -84,32 +84,46 @@ public class PdfGenerator {
 	         document.add(emptySpace);
 	       
 	      // -----------------------------   휴가신청서 -----------------------------   
-	         // table #3 (부서, 직급)
-	         document.add(leavePdf.generateTable3(doc, font, document, writer,"부서",writerInfo.getDept().getDeptType(),"직급",writerInfo.getJob().getJobType()));
+	         if(doc.getDocType().equals("leave")) { 
 	         
-	         // table #3 (성명)
-	         document.add(leavePdf.generateTable3(doc, font, document, writer,"성명", writerInfo.getEmpName(),"",""));
-	  
-	         
-	         // table #4 (제목)
-	         document.add(leavePdf.generateTable4(doc, font, document, writer, "제목", doc.getDocTitle()));
-	         
-	         // table #4 (구분)
-	         document.add(leavePdf.generateTable4(doc, font, document, writer, "구분", doc.getLeave().getLeaveType()));
-	         
-	         // table #4 (휴가기간)
-	         document.add(leavePdf.generateTable4(doc, font, document, writer, "휴가 기간", doc.getLeave().getLeaveStart() +
-	        		 														(doc.getLeave().getLeaveEnd()!=null?"  ~  "+ doc.getLeave().getLeaveEnd():"")));
-	         document.add(emptySpace);
+		         // table #3 (부서, 직급)
+		         document.add(leavePdf.generateTable3(doc, font, document, writer,"부서",writerInfo.getDept().getDeptType(),"직급",writerInfo.getJob().getJobType()));
+		         
+		         // table #3 (성명)
+		         document.add(leavePdf.generateTable3(doc, font, document, writer,"성명", writerInfo.getEmpName(),"",""));
+		  
+		         
+		         // table #4 (제목)
+		         document.add(leavePdf.generateTable4(doc, font, document, writer, "제목", doc.getDocTitle()));
+		         
+		         // table #4 (구분)
+		         document.add(leavePdf.generateTable4(doc, font, document, writer, "구분", doc.getLeave().getLeaveType()));
+		         
+		         // table #4 (휴가기간)
+		         document.add(leavePdf.generateTable4(doc, font, document, writer, "휴가 기간", doc.getLeave().getLeaveStart() +
+		        		 														(doc.getLeave().getLeaveEnd()!=null?"  ~  "+ doc.getLeave().getLeaveEnd():"")));
+		         document.add(emptySpace);
 
-	      // -----------------------------  지출 결의서 -----------------------------     
-	      
+		         // -----------------------------  지출 결의서 -----------------------------     
+	         }else if(doc.getDocType().equals("cash")) {
+	        	 
+	        	 // table #1
+	        	document.add(cashPdf.generateTable1(doc, font, document, writer, "비용", "데이터"));
+	     
+	        	// table #2
+	        	document.add(cashPdf.generateTable1(doc, font, document, writer, "지출 날짜", "데이터"));
+	        	document.add(emptySpace);
+	        	
+	        	
 	         
-	         
-		  // -----------------------------  품의서 -----------------------------     
+	        	 // -----------------------------  품의서 -----------------------------     
+	         }else if(doc.getDocType().equals("req")) {
 	 	   
-	         
-		  // -----------------------------  기타 문서 -----------------------------     
+	        
+	        	 // -----------------------------  기타 문서 -----------------------------     
+	         }else if(doc.getDocType().equals("etc")) {
+	        	 
+	         }
 	 	  
 	         
 	         
