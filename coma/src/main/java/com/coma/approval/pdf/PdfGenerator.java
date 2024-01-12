@@ -288,9 +288,9 @@ public class PdfGenerator {
 	            // 참조자 이름
 	            String refer = "";
 
-	            ApprovalDoc refList = service.selectRefByDocNo(doc.getDocNo()); //참조자 리스트
+	            List<Referrer> refList = service.selectRefByDocNo(doc.getDocNo()); //참조자 리스트
 	            
-	            for(Referrer r : refList.getRef()){ //참조자 한 명씩 빼오기
+	            for(Referrer r : refList){ //참조자 한 명씩 빼오기
 	            	String refId = r.getEmpId(); //참조자 id
 	            	Emp emp = service.selectEmpById(refId);
 	            	refer += emp.getDept().getDeptType()+ " "+emp.getJob().getJobType() 
