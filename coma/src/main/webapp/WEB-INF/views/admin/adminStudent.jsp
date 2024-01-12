@@ -180,25 +180,25 @@ for(let i=0;i<satdoc.length;i++){
 
 const ctx = document.getElementById('stuCurentChart').getContext('2d');
 const myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: labelList,
-        datasets: [{
-        	 label: '사원 근태 통계',
-             data: valueList,
-            backgroundColor: colorList
-        }]
-    },
-    options: {
-        scales: {
-        	yAxes : [ {
+  type: 'bar',
+  data: {
+      labels: labelList,
+      datasets: [{
+      	 label: '사원 근태 통계',
+           data: valueList,
+          backgroundColor: colorList
+      }]
+  },
+  options: {
+      scales: {
+      	yAxes : [ {
 				ticks : {
 					suggestedMax: 100,
 					beginAtZero : true,
 				}
 			} ]
-        }
-    }
+      }
+  }
 });
 
 //학생 수료율 차트 데이터
@@ -228,25 +228,25 @@ for(let i=0;i<sbcoc.length;i++){
 }
 const ctx2 = document.getElementById('stuComChart').getContext('2d');
 const myChart2 = new Chart(ctx2, {
-    type: 'bar',
-    data: {
-        labels: labelList3,
-        datasets: [{
-            label: '학생 수료율',
-            data: valueList3,
-            backgroundColor: colorList3
-        }]
-    },
-    options: {
-        scales: {
-        	yAxes : [ {
+  type: 'bar',
+  data: {
+      labels: labelList3,
+      datasets: [{
+          label: '학생 수료율',
+          data: valueList3,
+          backgroundColor: colorList3
+      }]
+  },
+  options: {
+      scales: {
+      	yAxes : [ {
 				ticks : {
 					suggestedMax: 100,
 					beginAtZero : true,
 				}
 			} ]
-        }
-    }
+      }
+  }
 });
 //학생 취업율 차트 데이터
 const sbe=${studentByEmp}
@@ -265,39 +265,39 @@ for(let i=0;i<sbeoc.length;i++){
 }
 const ctx3 = document.getElementById('stuEmpChart').getContext('2d');
 const myChart3 = new Chart(ctx3, {
-    type: 'bar',
-    data: {
-        labels: labelList4,
-        datasets: [{
-            label: '학생 취업율',
-            data: valueList4,
-            backgroundColor: colorList4
-        }]
-    },
-    options: {
-        scales: {
-        	yAxes : [ {
+  type: 'bar',
+  data: {
+      labels: labelList4,
+      datasets: [{
+          label: '학생 취업율',
+          data: valueList4,
+          backgroundColor: colorList4
+      }]
+  },
+  options: {
+      scales: {
+      	yAxes : [ {
 				ticks : {
 					suggestedMax: 100,
 					beginAtZero : true,
 				}
 			} ]
-        }
-    }
+      }
+  }
 });
 
 
 //학생 검색 기능
 function fn_searchStudent(cPage=1,numPerpage=10,url){
 	const textData=document.getElementById("textData").value;
-	console.log(textData);
 	fetch(url?'${path}'+url:"/admin/searchStudent",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify({
 			cPage:cPage,
 			numPerpage:numPerpage,
-			textData:textData
+			textData:textData,
+			jsName:"fn_searchStudent"
 		})
 	}).then(response=>{
 		if(response.status!=200) throw new Error(repsonse.status);
