@@ -327,7 +327,7 @@ input[type="datetime-local"] {
         // 캘린더 생성 옵션(참고)
         const calendarOption = {
         		//일정우선순위 옵션 찾기
-        		  eventSources: eventSources,
+            eventSources: eventSources,
             height: '700px', // calendar 높이 설정
             expandRows: true, // 화면에 맞게 높이 재설정
             slotMinTime: '09:00', // Day 캘린더 시작 시간
@@ -359,21 +359,30 @@ input[type="datetime-local"] {
             	    
             	}
        
-	
+		
         // 캘린더 생성
         let calendar;
         calendar = new FullCalendar.Calendar(calendarEl, calendarOption);
   
         calendar.render();
-
+		
         // 캘린더 이벤트 등록
-        calendar.on("eventAdd", info => console.log("Add:", info));
+        function handleEventAdd(info) {
+    console.log("Add:", info);
+}
+        calendar.on("eventAdd", handleEventAdd);        
+    /*     calendar.on("eventAdd", info => console.log("Add:", info)); */
          /*  calendar.on("eventChange", info => console.log("Change:", info));
         calendar.on("eventRemove", info => console.log("Remove:", info)); */
+          
+   
+        function handleEventClick(info){
+        	console.log(info);
+       /*  }
         calendar.on("eventClick", info => {
-        	
+        	 */
         	console.log("이거이거: ",info.id);
-             console.log("eClick:", info);
+            // console.log("eClick:", info);
              /*console.log('Event: ', info.event.extendedProps);
             console.log('Coordinates: ', info.jsEvent);
             console.log('View: ', info.view);  */
@@ -406,10 +415,14 @@ input[type="datetime-local"] {
 		delBtn.style.display="none";	
 			};
             Modal.style.display = "block"; 
-        });
+        };
+        
+        calendar.on("eventClick",handleEventClick);
         /* calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
         calendar.on("eventMouseLeave", info => console.log("eLeave:", info)); */ 
-        calendar.on("dateClick", info => {
+        function handleDateClick(info){        	
+       /*  }
+        calendar.on("dateClick", info => { */
         	console.log("dateClick: "+info);
         	console.log("dateClick:", info.dateStr);
      delBtn.style.display="none";
@@ -417,13 +430,16 @@ input[type="datetime-local"] {
         	calEnd.value=info.dateStr+" 18:00:00";
         	calTitle.value="";
        $(".modalV").removeAttr("readonly");
-
+			
             calContent.value="";
             calNo.value="";
-            empId.value="${loginmember.empId}";
-      
-        }); 
-         calendar.on("select", info => {            
+            empId.value="${loginmember.empId}";    
+        }; 
+        calendar.on("dateClick",handleDateClick);
+        
+        function handleSelect(info){       	
+      /*   }
+         calendar.on("select", info => {   */          
   	delBtn.style.display="none";
             calStart.value=info.startStr+" 09:00:00";
            var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
@@ -437,13 +453,15 @@ input[type="datetime-local"] {
            calContent.value="";
            empId.value="${loginmember.empId}";
             Modal.style.display = "block";         
-        });
+        };
+        calendar.on("select",handleSelect);
+        
          //부서일정으로 ㄱㄱ
          function fcDept() {
         	    console.log(calId);
         	    calId.value = "DEPT";
-        	    console.log("dlrj", calId);
-
+        	    console.log("dlrj", calId);  	    
+        	    
         	    // 캘린더를 제거합니다.
         	    calendar.destroy();
         	    // 새로운 이벤트 소스를 가져옵니다.
@@ -455,78 +473,12 @@ input[type="datetime-local"] {
         	    // 캘린더를 다시 생성합니다.
         	    calendar = new FullCalendar.Calendar(calendarEl, calendarOption);
         	    calendar.render();
-        	    calendar.on("eventAdd", info => console.log("Add:", info));
-                /*  calendar.on("eventChange", info => console.log("Change:", info));
-               calendar.on("eventRemove", info => console.log("Remove:", info)); */
-               calendar.on("eventClick", info => {
-               	
-               	console.log("이거이거: ",info.id);
-                    console.log("eClick:", info);
-                    /*console.log('Event: ', info.event.extendedProps);
-                   console.log('Coordinates: ', info.jsEvent);
-                   console.log('View: ', info.view);  */
-                   console.log('요거요거:',info.event.title);
-                   calTitle.value= info.event.title;
-                   calNo.value= info.event.extendedProps.calNo;
-                   calContent.value=info.event.extendedProps.calContent; 
-                   calType.value=info.event.extendedProps.calType;
-                   console.log(info.event.extendedProps.empId); //COMA_1 이렇게 나옴
-                   empId.value=info.event.extendedProps.empId[0].empId; //[object Object]이렇게 넘어옴 ;;
-       			
-                   let dateEnd = new Date(info.event.endStr); 			
-       			let localOffsetEnd = dateEnd.getTimezoneOffset() * 60000;
-       			let localISOTimeEnd = (new Date(dateEnd - localOffsetEnd)).toISOString().slice(0,16);
-       			calEnd.value = localISOTimeEnd;
-                         
-       			let date = new Date(info.event.startStr);
-       			let localOffset = date.getTimezoneOffset() * 60000;
-       			let localISOTime = (new Date(date - localOffset)).toISOString().slice(0,16);
-       			calStart.value = localISOTime;
-       	
-       			calColor.value = info.event.backgroundColor;
-       	
-
-       			if(loginmemberEmpId===empId.value){			
-       		$(".modalV").removeAttr("readonly");
-       		delBtn.style.display="block";	
-       			}else{
-       		$(".modalV").attr("readonly",true);	
-       		delBtn.style.display="none";	
-       			};
-                   Modal.style.display = "block"; 
-               });
-               /* calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
-               calendar.on("eventMouseLeave", info => console.log("eLeave:", info)); */ 
-               calendar.on("dateClick", info => {
-               	console.log("dateClick: "+info);
-               	console.log("dateClick:", info.dateStr);
-            delBtn.style.display="none";
-               	calStart.value=info.dateStr+" 09:00:00";
-               	calEnd.value=info.dateStr+" 18:00:00";
-               	calTitle.value="";
-              $(".modalV").removeAttr("readonly");
-
-                   calContent.value="";
-                   calNo.value="";
-                   empId.value="${loginmember.empId}";
-             
-               }); 
-                calendar.on("select", info => {            
-         	delBtn.style.display="none";
-                   calStart.value=info.startStr+" 09:00:00";
-                  var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
-                  var dateString = endData.toISOString();
-                  dateString = dateString.split("T")[0] + " 18:00:00";
-                  calEnd.value=  dateString;
-              $(".modalV").removeAttr("readonly");
-                  info.endStr=calEnd.value; 
-                  info.end=dateString;
-                  calTitle.value="";
-                  calContent.value="";
-                  empId.value="${loginmember.empId}";
-                   Modal.style.display = "block";         
-               });
-        	}
+        	    
+        	    calendar.on("eventClick",handleEventClick);
+        	    calendar.on("dateClick",handleDateClick);
+        	    calendar.on("select",handleSelect);
+         }
+         
         // 일정(이벤트) 추가하기
         function fCalAdd() {
             if (!calTitle.value) {
