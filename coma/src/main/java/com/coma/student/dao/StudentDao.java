@@ -12,4 +12,8 @@ public class StudentDao {
 	public List<Map> selectStudentByEmpId(SqlSession session, String loginId){
 		return session.selectList("student.selectStudentByEmpId",loginId);
 	}
+	
+	public List<Map> selectStudentByInfo(SqlSession session, String stuNo){
+		return session.selectList("student.selectStudentByInfo", stuNo);
+	}
 }

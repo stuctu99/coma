@@ -117,7 +117,7 @@ public class AdminController {
 		searchMap.put("day", day);
 		List<Map> emps=service.searchEmp(searchMap);
 		int totalData=service.countEmpByData(searchMap);
-		return Map.of("emps",emps,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchEmp"));
+		return Map.of("emps",emps,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchEmp",(String)searchMap.get("jsName")));
 	}
 	
 	//사원 데이터 Excel 다운
@@ -214,7 +214,7 @@ public class AdminController {
 	public @ResponseBody Map<String,Object> searchStudent(@RequestBody HashMap<String, Object> searchMap){
 		List<Map> students=service.searchStudent(searchMap);
 		int totalData=service.countStudentByData(searchMap);
-		return Map.of("students",students,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchStudent"));
+		return Map.of("students",students,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchStudent",(String)searchMap.get("jsName")));
 	}
 
 }
