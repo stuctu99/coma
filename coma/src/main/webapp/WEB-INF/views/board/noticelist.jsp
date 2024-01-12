@@ -65,13 +65,17 @@
 			
 			<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 				<div class="col-sm-6" style="text-align: right;">
-			      <a href="/writePost" class="btn btn-success"><span>공지작성</span></a>   
+			      <a href="${path }/board/writeView?boardType=0" class="btn btn-success"><span>공지작성</span></a>   
 			      <a href="/deletePost" class="btn btn-success"><span>공지삭제</span></a>   
 			  	</div>
 			</c:if>
 			 	 <div>
 			      ${pageBarNotice }
 			  	</div>
+			  	<div class="search-container">
+				    <input type="text" id="searchInput" placeholder="제목+내용">
+				    <button type="button" class="btn btn-success" onclick="searchFunction()">검색</button>
+				</div>
 	</div>        
 </div>
 </div>

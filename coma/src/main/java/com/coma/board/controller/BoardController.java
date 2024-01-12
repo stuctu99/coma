@@ -8,13 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.boot.web.server.Cookie;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.coma.board.service.BoardService;
@@ -37,8 +40,9 @@ public class BoardController {
 	//공지사항리스트
 	//타입으로 분류해서 BoardList model에추가
 	@GetMapping("/noticelist")
-	public void selectBoardNotice(	@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
-								@RequestParam(required = false, defaultValue="0") int boardType, Model m){
+	public void selectBoardNotice(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+								  @RequestParam(required = false, defaultValue="0") int boardType, Model m){
+		
 		//Type이 0(공지)인 게시글 List타입으로 가져오기+페이징처리
 		List<Board> boards = service.selectBoardByType(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
 	    
@@ -57,8 +61,9 @@ public class BoardController {
 	
 	//자유게시판리스트
 	@GetMapping("/freelist")
-	public void selectBoardFree(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "5") int numPerpage,
-			@RequestParam(required = false, defaultValue="1") int boardType, Model m){
+	public void selectBoardFree(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+								@RequestParam(required = false, defaultValue="1") int boardType, Model m){
+		
 		//Type이 1(자유)인 게시글 List타입으로 가져오기+페이징처리
 		List<Board> boards = service.selectBoardByType(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
 		
@@ -81,6 +86,7 @@ public class BoardController {
 	//글상세화면
 	@GetMapping("/freePost")
 	public void selectPost(@RequestParam int boardNo, Model m) {
+		
 			//조회수
 			service.updateBoardCount(boardNo);
 			//글불러오기
@@ -97,10 +103,7 @@ public class BoardController {
 	//댓글작성
 	@PostMapping("/writeReply")
 	public String insertReplyByBoard(@RequestParam int boardNo, @RequestParam String replyContent) {
-		
-		System.out.println(boardNo);
-		System.out.println(replyContent);
-		
+	
 		Map<String, Object> reply = new HashMap<>();
 				
 		reply.put("boardNo", boardNo);
@@ -108,15 +111,25 @@ public class BoardController {
 		
 		service.insertReplyByBoard(reply);
 		
-		
+
 		return "redirect:/board/freePost?boardNo="+boardNo;
 	}
+
+	@GetMapping("/writeView")
+	public String WriteView(int boardType, Model m) {
+		
+		m.addAttribute("boardType", boardType);
+		
+		return "board/writePost";
+	}
+	
 	
 	//글작성(완료버튼눌렀을때)
 	@PostMapping("/writePost")
-	public String writePost(String title, String writer, String content, Model m, int boardType) {
+	public String writePost(String title, String writer, String content, int boardType, Model m) {
 		
-		Board b=    Board.builder().boardTitle(title)
+		   
+		Board b =	Board.builder().boardTitle(title)
 					.emp(Emp.builder()
 							.empId(writer)
 							.build())
@@ -154,10 +167,11 @@ public class BoardController {
 	
 	//글작성-ck에디터이미지업로드
 	@PostMapping("/ckFile")
-	public void ckFile(MultipartFile upload, HttpSession session) {
+	@ResponseBody
+	public ResponseEntity<Map> ckFile(MultipartFile upload, HttpSession session) {
+		
 		//파일업로드 경로
 		String path = session.getServletContext().getRealPath("/resource/upload/board");
-		
 		if(upload!=null) {
 			if(!upload.isEmpty()) {
 				String oriName = upload.getOriginalFilename();
@@ -168,27 +182,46 @@ public class BoardController {
 						.format(today)+"_"+randomNum+ext;
 				try {
 					upload.transferTo(new File(path,rename));
+					return ResponseEntity.status(HttpStatus.OK).body(Map.of("url","/resource/upload/board/"+rename));
 				}catch(IOException e) {
 					e.printStackTrace();
 				}
 				
 			}
 		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error","파일업로드실패"));
+	}
+	
+	//글수정이동
+	@GetMapping("/updatePost")
+	public String updatePost(int boardNo, Model m) {
+		
+		Board post = service.selectBoardByNo(boardNo);
+		
+		System.out.println(post);
+		
+		m.addAttribute("post", post);
+		
+		return "board/updatePost";
 	}
 	
 	//글수정
 	@PostMapping("/update")
-	public String updatePost(Board b) {
+	public String updatePost(int boardNo, String title, String content) {
 		
-		int result = service.updateBoard(b);
+		Map<String, Object> board = new HashMap<>();
+		board.put("boardTitle", title);
+		board.put("boardContent", content);
+		board.put("boardNo", boardNo);
+		
+		System.out.println(board);
+		
+		service.updateBoard(board);
+		
 		String path = null;
 		
-		if(b.getBoardType()==0) {
-			path = "redirect:/noticelist";
-		}else if(b.getBoardType()==1) {
-			path = "redirect:/freelist";
-		}
-		
+		path = "redirect:/board/freePost?boardNo="+boardNo;
+
 		return path;
 	}
 	
@@ -213,6 +246,19 @@ public class BoardController {
 		
 	}
 	
+	//글검색
+	@GetMapping("/search")
+	public String searchPost(int boardType) {
+		String path = null;
+		
+		if(boardType==0) {
+			 path = "redirect:/board/noticelist";
+		}else if(boardType==1) {
+			 path = "redirect:/board/freelist";
+		}
+		
+		return path;
+	}
 	
 	
 	
@@ -222,6 +268,7 @@ public class BoardController {
 	
 	
 	
+// *메소드무덤*
 	
 //	@GetMapping("/noticePost")
 //	public void detailBoard(@RequestParam("boardType") String boardType, @RequestParam("boardNo") int boardNo, Model model) {

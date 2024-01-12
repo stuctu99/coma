@@ -6,6 +6,5 @@
 		<result column="BOARD_FILE_ORINAME" property="boardFileOriname"/>
 		<result column="BOARD_FILE_RENAME" property="boardFileRename"/>
 		<result column="BOARD_FILE_DATE" property="boardFileDate"/>
-		<association resultMap="board.boardMap" property="board"/>
 	</resultMap>
 </mapper>

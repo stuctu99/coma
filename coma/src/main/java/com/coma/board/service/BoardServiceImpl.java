@@ -48,9 +48,9 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public int updateBoard(Board b) {
+	public int updateBoard(Map<String, Object> board) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.updateBoard(session, board);
 	}
 
 	@Override

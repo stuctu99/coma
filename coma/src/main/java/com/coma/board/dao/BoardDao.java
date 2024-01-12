@@ -27,4 +27,6 @@ public interface BoardDao {
 	int insertReplyByBoard(SqlSession session, Map<String,Object> reply);
 	
 	List<Reply> selectReplyCount(SqlSession session);
+
+	int updateBoard(SqlSession session, Map<String, Object> board);
 }

@@ -16,7 +16,7 @@ public interface BoardService {
 	
 	int selectBoardCount(int boardType);
 	
-	int updateBoard(Board b);
+	int updateBoard(Map<String, Object> board);
 	
 	int deleteBoard(Map<String, Integer> board);
 

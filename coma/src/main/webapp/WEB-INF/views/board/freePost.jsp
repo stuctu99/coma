@@ -8,6 +8,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
 <c:set var="post" value="${post }"/>
+<c:set var="e" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <div class="coma-container">
 <div class="container-xl">
 	<div class="table-responsive">
@@ -94,12 +95,26 @@
 					</c:if>
 					<tr>
 						<td>
-							<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-success"><span>글삭제</span></a>
-						</td>
-						<td>
-							<a href="${path }/board/freelist" class="btn btn-success"><span>글목록</span></a>
+							 <c:choose>
+							     <c:when test="${post.boardType eq 0}">
+							         <a href="${path}/board/noticelist" class="btn btn-success"><span>글목록</span></a>
+							     </c:when>
+							     <c:otherwise>
+							         <a href="${path}/board/freelist" class="btn btn-success"><span>글목록</span></a>
+							     </c:otherwise>
+							 </c:choose>
 						</td>
 					</tr>
+					<c:if test="${post.emp.empId eq e.empId }">
+					<tr>
+						<td>
+							<a href="${path }/board/updatePost?boardNo=${post.boardNo }" class="btn btn-success"><span>글수정</span></a>
+						</td>
+						<td>
+							<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-success"><span>글삭제</span></a>
+						</td>
+					</tr>
+					</c:if>
 				</tbody>
 			</table>
 	</div>

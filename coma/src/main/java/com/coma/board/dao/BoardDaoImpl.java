@@ -69,6 +69,14 @@ public class BoardDaoImpl implements BoardDao {
 		// TODO Auto-generated method stub
 		return session.selectList("board.selectReplyCount");
 	}
+
+	@Override
+	public int updateBoard(SqlSession session, Map<String, Object> board) {
+		// TODO Auto-generated method stub
+		return session.update("board.updateBoard",board);
+	}
+	
+	
 	
 	
 	

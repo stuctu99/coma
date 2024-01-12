@@ -8,9 +8,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
-<!-- TOAST UI Editor CDN(CSS) -->
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
+<c:set var="boardType" value="${boardType }"/>
 
 <div class="container" style="margin-top:30px">
 	<div class="row">
@@ -23,7 +22,8 @@
 					
 				</div>
 			</div>
-	        <form action="${path }/board/writePost" method="POST" enctype="multipart/form-data">
+	        <form name="boardForm" action="${path }/board/writePost" method="POST" enctype="multipart/form-data">	
+	        	<input type="hidden" name="boardType" value="${boardType }">
 				<div class="form-group">
 				  <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요">
 				</div>
@@ -39,16 +39,23 @@
 				<textarea name="content" id="editor"></textarea>
 				
 				
-			    <button type="submit" class="btn btn-primary">글쓰기</button>
+			    <button type="button" class="btn btn-primary" onclick="insertBoard();">글쓰기</button>
 			  </form>
 		</div>
 	</div>
-</div>	
+</div>
 <!-- TOAST UI Editor CDN(JS) -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <!-- CKEDITOR5 -->
 <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
 <script>
+
+function insertBoard(){
+	console.log(ckeditor.getData());
+	document.querySelector("#editor").innerText=ckeditor.getData();
+	boardForm.submit();
+}
+
 class MyUploadAdapter {
     constructor( loader ) {
         // The file loader instance to use during the upload.
@@ -57,6 +64,7 @@ class MyUploadAdapter {
 
     // Starts the upload process.
     upload() {
+    	const reader=new FileReader();
         return this.loader.file
             .then( file => new Promise( ( resolve, reject ) => {
                 this._initRequest();
@@ -82,13 +90,16 @@ class MyUploadAdapter {
         // could be different.
         xhr.open( 'POST', '${path}/board/ckFile', true );
         xhr.responseType = 'json';
+        
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
     }
 
     // Initializes XMLHttpRequest listeners.
     _initListeners( resolve, reject, file ) {
         const xhr = this.xhr;
         const loader = this.loader;
-        const genericErrorText = 'Couldnt upload file: ${ file.name }.';
+        const genericErrorText = `Couldn't upload file: ${ file.name }.`;
 
         xhr.addEventListener( 'error', () => reject( genericErrorText ) );
         xhr.addEventListener( 'abort', () => reject() );
@@ -102,7 +113,7 @@ class MyUploadAdapter {
             // Your integration may handle upload errors in a different way so make sure
             // it is done properly. The reject() function must be called when the upload fails.
             if ( !response || response.error ) {
-                return reject( response && response.error ? response.error.message : genericErrorText );
+                return reject( response && response.error ? response.error : genericErrorText );
             }
 
             // If the upload is successful, resolve the upload promise with an object containing
@@ -110,7 +121,7 @@ class MyUploadAdapter {
             // This URL will be used to display the image in the content. Learn more in the
             // UploadAdapter#upload documentation.
             resolve( {
-                default: response.url
+                default: '${path}'+response.url
             } );
         } );
 
@@ -131,15 +142,11 @@ class MyUploadAdapter {
     _sendRequest( file ) {
         // Prepare the form data.
         const data = new FormData();
-
+		console.log(file);
         data.append( 'upload', file );
-
-        // Important note: This is the right place to implement security mechanisms
-        // like authentication and CSRF protection. For instance, you can use
-        // XMLHttpRequest.setRequestHeader() to set the request headers containing
-        // the CSRF token generated earlier by your application.
-
-        // Send the request.
+		
+        data.append( 'resize', true );
+        
         this.xhr.send( data );
     }
 }
@@ -151,10 +158,12 @@ function MyCustomUploadAdapterPlugin( editor ) {
     };
 }
 
+let ckeditor;
 ClassicEditor
-			.create( document.querySelector('#editor'),{
-				extraPlugins: [ MyCustomUploadAdapterPlugin ]
-			});
+.create( document.querySelector('#editor'),{
+	extraPlugins: [MyCustomUploadAdapterPlugin]
+}).then(editor=>ckeditor=editor);
+
 			
 
 

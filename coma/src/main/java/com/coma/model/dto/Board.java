@@ -21,4 +21,5 @@ public class Board {
 	private String boardFileCheck;
 	private int boardType;
 	private int replyCount;
+	private BoardFile boardFile;
 }
