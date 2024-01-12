@@ -46,7 +46,7 @@
 			        <c:forEach var="s" items="${students }">
 			        	<tr>
 			        		<td><c:out value="${s.STU_NO }"/></td>
-			        		<td><button type="button" class="btn btn-secondary btn-sm" onclick="fn_stuInfo('${s.STU_NO }');" id="stuName"><c:out value="${s.STU_NAME }"/></button></td>
+			        		<td><button type="button" class="btn btn-secondary btn-sm" onclick="fn_stuInfo('${s.STU_NO }');"><c:out value="${s.STU_NAME }"/></button></td>
 			        		<td><c:out value="${s.EMP_NAME }"/></td>
 			        		<td>
 								<input type="checkbox" name="attendance" value="${s.STU_NO }">
@@ -136,7 +136,12 @@
 	function fn_stuInfo(stuNo) {
 		console.log(stuNo);
 		fetch("${path}/student/infoStudent",{
-			stuNo=stuNo
+			method:"post",
+			headers:{"Content-Type":"application/json"},
+			body:JSON.stringify({
+				stuNo:stuNo
+				
+			})
 		}).then(response=>{
 			if(response.status!=200) throw new Error(repsonse.status);
 			return response.json();
