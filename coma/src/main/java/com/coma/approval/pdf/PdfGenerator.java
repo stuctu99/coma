@@ -31,13 +31,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class PdfGenerator {
 
 	@Autowired
-	private LeavePdf leavePdf;
-	@Autowired
-	private CashPdf cashPdf;
-	@Autowired 
-	private ReqPdf reqPdf;
-	@Autowired
-	private EtcPdf etcPdf;
+	private PdfType pdfType;
+	
 	@Autowired
 	private ApprovalService service;
 
@@ -67,8 +62,17 @@ public class PdfGenerator {
 	    
 		  // ---------------------------- 문서 종류 ------------------------------
 		
+			String docType = "";
+			switch(doc.getDocType()) {
+				case "leave": docType = "휴가 신청서"; break;
+				case "cash" : docType = "지출 결의서";  break;
+				case "req" : docType = "품의서"; break;
+				case "etc" : docType = "기타 문서"; break;
+			}
+			
+			
 			font.setSize(32);
-			document.add(new Paragraph("휴가신청서",font));
+			document.add(new Paragraph(docType,font));
 			font.setSize(12);
 			
 			Paragraph emptySpace = new Paragraph(" ");
@@ -87,20 +91,20 @@ public class PdfGenerator {
 	         if(doc.getDocType().equals("leave")) { 
 	         
 		         // table #3 (부서, 직급)
-		         document.add(leavePdf.generateTable3(doc, font, document, writer,"부서",writerInfo.getDept().getDeptType(),"직급",writerInfo.getJob().getJobType()));
+		         document.add(pdfType.generateTable3(doc, font, document, writer,"부서",writerInfo.getDept().getDeptType(),"직급",writerInfo.getJob().getJobType()));
 		         
 		         // table #3 (성명)
-		         document.add(leavePdf.generateTable3(doc, font, document, writer,"성명", writerInfo.getEmpName(),"",""));
+		         document.add(pdfType.generateTable3(doc, font, document, writer,"성명", writerInfo.getEmpName(),"",""));
 		  
 		         
 		         // table #4 (제목)
-		         document.add(leavePdf.generateTable4(doc, font, document, writer, "제목", doc.getDocTitle()));
+		         document.add(pdfType.generateTable4(doc, font, document, writer, "제목", doc.getDocTitle()));
 		         
 		         // table #4 (구분)
-		         document.add(leavePdf.generateTable4(doc, font, document, writer, "구분", doc.getLeave().getLeaveType()));
+		         document.add(pdfType.generateTable4(doc, font, document, writer, "구분", doc.getLeave().getLeaveType()));
 		         
 		         // table #4 (휴가기간)
-		         document.add(leavePdf.generateTable4(doc, font, document, writer, "휴가 기간", doc.getLeave().getLeaveStart() +
+		         document.add(pdfType.generateTable4(doc, font, document, writer, "휴가 기간", doc.getLeave().getLeaveStart() +
 		        		 														(doc.getLeave().getLeaveEnd()!=null?"  ~  "+ doc.getLeave().getLeaveEnd():"")));
 		         document.add(emptySpace);
 
@@ -108,21 +112,29 @@ public class PdfGenerator {
 	         }else if(doc.getDocType().equals("cash")) {
 	        	 
 	        	 // table #1
-	        	document.add(cashPdf.generateTable1(doc, font, document, writer, "비용", "데이터"));
+	        	document.add(pdfType.generateTable4(doc, font, document, writer, "비용", doc.getCash().getCashExpense()+" ￦"));
 	     
 	        	// table #2
-	        	document.add(cashPdf.generateTable1(doc, font, document, writer, "지출 날짜", "데이터"));
+	        	document.add(pdfType.generateTable4(doc, font, document, writer, "지출 날짜", doc.getCash().getCashDate()+" "));
 	        	document.add(emptySpace);
 	        	
 	        	
 	         
 	        	 // -----------------------------  품의서 -----------------------------     
 	         }else if(doc.getDocType().equals("req")) {
-	 	   
+	        	 
+	        	 // table #1
+//	        	
+	        	document.add(pdfType.generateTable4(doc, font, document, writer, "기안 날짜", doc.getReq().getReqDate()+" "));
+	        	
+	        	document.add(emptySpace);
 	        
 	        	 // -----------------------------  기타 문서 -----------------------------     
 	         }else if(doc.getDocType().equals("etc")) {
 	        	 
+	        	 // table #1
+		        	document.add(pdfType.generateTable4(doc, font, document, writer, "기안 날짜", doc.getEtc().getEtcDate()+" "));
+		        	document.add(emptySpace);
 	         }
 	 	  
 	         
@@ -143,12 +155,16 @@ public class PdfGenerator {
 	         document.add(emptySpace);
 	         
 	         // 날짜
-	         Paragraph date = new Paragraph("날짜 파싱하기",font);
+	         
+	         String fullDate = doc.getDocDate()+" ";
+	         String docDate = fullDate.substring(0,10); //시간 잘라내기
+	         
+	         Paragraph date = new Paragraph(docDate,font);
 	         date.setAlignment(Paragraph.ALIGN_CENTER);
 	         document.add(date);
 	         document.add(emptySpace);
 	         
-	      // 신청인
+	         // 신청인
 	         Paragraph docWriter = new Paragraph("신청인 " +writerInfo.getEmpName(),font);
 	         docWriter.setAlignment(Paragraph.ALIGN_RIGHT);
 	         document.add(docWriter);
@@ -158,11 +174,11 @@ public class PdfGenerator {
 
 			
 			//다운로드할 파일 이름 설정
-			String fileName = "approval.document.pdf";
+			String fileName = doc.getDocNo()+".pdf";
 		
 			// HTTP 응답 헤더 설정
 			response.setContentType("application/pdf");
-			response.setHeader("Content-Disposition", "attachment; filename" + fileName);
+			response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 			response.setContentLength(baos.size());
 			
 			// PDF 데이터를 사용자에게 전송
@@ -175,15 +191,15 @@ public class PdfGenerator {
             e.printStackTrace();
      
 		}
-//		finally { //output
-//        	
-//        	try {
-//				baos.close();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//        }
+		finally { //output
+        	
+        	try {
+				baos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
 
 	
 
@@ -295,7 +311,8 @@ public class PdfGenerator {
 	            PdfPCell t2_label = new PdfPCell(
 	            						new Phrase("참조자",font));
 	            t2_label.setHorizontalAlignment(Element.ALIGN_CENTER);
-	            
+	            t2_label.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	            t2_label.setFixedHeight(25f);
 	            table2.addCell(t2_label);
 	            
 	            
@@ -314,7 +331,7 @@ public class PdfGenerator {
 	            PdfPCell t2_ref = new PdfPCell(
 	            						new Phrase(refer.replaceAll(", $", ""), font));
 	            t2_ref.setColspan(5);
-	            
+	            t2_ref.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	            table2.addCell(t2_ref);
 
 	            

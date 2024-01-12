@@ -355,17 +355,14 @@ public class ApprovalController {
 	   
 	   ApprovalDoc doc = service.selectAppDoc(data); 
 	   
-	   System.out.println("controller 354번줄 확인: " + doc);
 	   //--------------
 	   
-	   String path = session.getServletContext().getRealPath("/resource/upload/approval/test2.pdf");
-	   //ㄴ 테스트용. 수정 필요**
+//	   String path = session.getServletContext().getRealPath("/resource/upload/approval/"+doc.getDocNo()+".pdf");
+	  
 	   
 	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
 
-	
-	  
-	   
+  
 	   pdfGen.generateAppr(doc, response, fontPath, writer);
 	      
 	   //return "approval/viewdoc"; ㄴㄴ
