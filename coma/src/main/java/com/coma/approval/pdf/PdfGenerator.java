@@ -293,7 +293,7 @@ public class PdfGenerator {
 	            for(Referrer r : refList.getRef()){ //참조자 한 명씩 빼오기
 	            	String refId = r.getEmpId(); //참조자 id
 	            	Emp emp = service.selectEmpById(refId);
-	            	refer += emp.getJob().getJobType() +" " +emp.getDept().getDeptType()
+	            	refer += emp.getDept().getDeptType()+ " "+emp.getJob().getJobType() 
 							+" " + emp.getEmpName() + ", ";
 	            }
 	            
