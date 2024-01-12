@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,5 +21,8 @@ public interface ApprovalService {
 	void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writer);
 	
 	Emp selectEmpById(String empId);
-	
+
+	ApprovalDoc selectRefByDocNo(String docNo);
+
+	List<Approver> selectApprByDocNo(String docNo);
 }

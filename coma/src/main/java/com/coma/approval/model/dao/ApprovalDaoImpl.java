@@ -86,6 +86,18 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public Emp selectEmpById(SqlSession session, String empId) {
 		return session.selectOne("emp.selectEmpById", empId);
 	}
+
+	@Override
+	public ApprovalDoc selectRefByDocNo(SqlSession session, String docNo) {
+		return session.selectOne("approval.selectRefByDocNo", docNo);
+	}
+
+	@Override
+	public List<Approver> selectApprByDocNo(SqlSession session, String docNo) {
+		return session.selectList("approval.selectApprByDocNo", docNo);
+	}
+
+	
 	
 	
 	
