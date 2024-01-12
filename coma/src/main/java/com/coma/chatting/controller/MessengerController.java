@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.coma.chatting.model.service.MessengerService;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.ChattingRoomType;
-import com.coma.model.dto.CommunicationCheck;
+import com.coma.model.dto.ChattingPrivateRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
@@ -50,7 +50,7 @@ public class MessengerController {
 	@ResponseBody
 	public Map<String,Object> initButton(@PathVariable String loginId){
 		Map<String,Object> test = new HashMap<>();
-		List<CommunicationCheck> data = service.selectPrivateChatJoinInfo(loginId);
+		List<ChattingPrivateRoom> data = service.selectPrivateChatJoinInfo(loginId);
 		test.put("test", data);
 		return test;
 	}

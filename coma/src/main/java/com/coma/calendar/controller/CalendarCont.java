@@ -64,4 +64,14 @@ public class CalendarCont {
 		String empId = deptEvent.get("empId");
 		return service.selectCalendarDept(empId);
 	}
+	@PostMapping("/calendarMy")
+	public List<Calendar> selectCalendarMy(@RequestBody Map<String,String> deptEvent){
+		String empId = deptEvent.get("empId");
+		return service.selectCalendarMy(empId);
+	}
+	@PostMapping("/calendarAll")
+	public List<Calendar> selectCalendarAll(@RequestBody Map<String,String> deptEvent){
+		String empId = deptEvent.get("empId");
+		return service.selectCalendarAll(empId);
+	}
 }
