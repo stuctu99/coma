@@ -10,7 +10,10 @@ public interface CalendarService {
 
 	List<Calendar> selectCalendar();
 	List<Calendar> selectCalendarDept(String empId);
+	List<Calendar> selectCalendarMy(String empId);
+	List<Calendar> selectCalendarAll(String empId);
 	int calendarInsert(Map<String,String> event);
 	int calendarUpdate(Map<String,String> event);
 	int calendarDelete(Map<String,String> event);
+	
 }

@@ -19,4 +19,8 @@ public class StudentService {
 	public List<Map> selectStudentByEmpId(String loginId){
 		return dao.selectStudentByEmpId(session, loginId);
 	}
+	
+	public List<Map> selectStudentByInfo(String stuNo){
+		return dao.selectStudentByInfo(session, stuNo);
+	}
 }
