@@ -78,7 +78,7 @@
 					 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 300px; height: 300px;">
 					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-6" id="stu_viewDetails">
 				    <div class="form-group">
 				        <label for="example-text-input" class="form-control-label">이름</label>
 				        <input class="form-control" type="text" value="학생 이름" id="example-text-input">
@@ -98,12 +98,12 @@
 				</div>
 			</div>
 			<h1>출석 현황</h1>
-			<div class="row">
-				<div class="4">
+			<div class="row" id="stu_regulatoryStatus">
+				<div class="col-4">
 			        <label for="example-text-input" class="form-control-label">총 출석 수</label>
 			        <input class="form-control" type="text" value="0/120" id="example-text-input" style="text-align:center;">
 				</div>
-				<div class="8">
+				<div class="col-8">
 			        <div style="width:470px; margin-left: 10px;">
 					  <div class="progress-info" style="margin-top: 3px;">
 					    <label for="example-text-input" class="form-control-label">출석일 수/총 수업일 수</label>
@@ -145,79 +145,146 @@
 		}).then(response=>{
 			if(response.status!=200) throw new Error(repsonse.status);
 			return response.json();
-		}).then(result=>{
-			//이름
-			const $div1=document.createElement("div");
-			const $input1=documnet.createElement("input");
-			const $label1=documnet.createElement("label");
-			//강의 시작일
-			const $div2=document.createElement("div");
-			const $input2=documnet.createElement("input");
-			const $label2=documnet.createElement("label");
-			//수료일
-			const $div3=document.createElement("div");
-			const $input3=documnet.createElement("input");
-			const $label3=documnet.createElement("label");
-			//생일
-			const $div4=document.createElement("div");
-			const $input4=documnet.createElement("input");
-			const $label4=documnet.createElement("label");
-			//총 출석수
-			const $div5=document.createElement("div");
-			const $input5=documnet.createElement("input");
-			const $label5=documnet.createElement("label");
-			
-			//개인 출석율
-			const $div6=document.createElement("div");
-			const $div7=document.createElement("div");
-			const $div8=document.createElement("div");
-			const $label6=documnet.createElement("label");
-			const $div9=document.createElement("div");
-			const $span=document.createElement("span");
-			const $div10=document.createElement("div");
-			const $div11=document.createElement("div");
+		}).then(student=>{
+			console.log(student);
+			const $divStuInfo = document.getElementById("stu_viewDetails");
+			const $divStuRegulatoryStatus = document.getElementById("stu_regulatoryStatus");
+			student.forEach(student=>{
+				//이름
+				const $div1=document.createElement("div");
+				$div1.className = "form-group";
+				const $input1=document.createElement("input");
+				$input1.className = "form-control";
+				$input1.type = "text";
+				$input1.value = student.STU_NAME;
+				$input1.id = "example-text-input";
+				const $label1=document.createElement("label");
+				$label1.className = "form-control-label";
+				$label1.htmlFor = "example-text-input";
+				$label1.textContent = "이름";
+				$div1.appendChild($label1);
+				$div1.appendChild($input1);
+	
+				//강의 시작일
+				const $div2=document.createElement("div");
+				$div2.className = "form-group";
+				const $input2=document.createElement("input");
+				$input2.className = "form-control";
+				$input2.type = "date";
+				const stuStart = student.STU_START_DATE.slice(0, 10);
+				$input2.value = stuStart;
+				$input2.id = "example-search-input";
+				const $label2=document.createElement("label");
+				$label2.className = "form-control-label";
+				$label2.htmlFor = "example-datetime-local-input";
+				$label2.textContent = "강의 시작일";
+				$div2.appendChild($label2);
+				$div2.appendChild($input2);
 				
+				//수료일
+				const $div3=document.createElement("div");
+				$div3.className = "form-group";
+				const $input3=document.createElement("input");
+				$input3.className = "form-control";
+				$input3.type = "date";
+				const stuEnd = student.STU_END_DATE.slice(0, 10);
+				$input3.value = stuEnd;
+				$input3.id = "example-email-input";
+				const $label3=document.createElement("label");
+				$label3.className = "form-control-label";
+				$label3.htmlFor = "example-datetime-local-input";
+				$label3.textContent = "수료일";
+				$div3.appendChild($label3);
+				$div3.appendChild($input3);
+				
+				//생일
+				const $div4=document.createElement("div");
+				$div4.className = "form-group";
+				const $input4=document.createElement("input");
+				$input4.className = "form-control";
+				$input4.type = "date";
+				const stuBirth = student.STU_BIRTH.slice(0, 10);
+				$input4.value = stuBirth;
+				$input4.id = "example-email-input";
+				const $label4=document.createElement("label");
+				$label4.className = "form-control-label";
+				$label4.htmlFor = "example-datetime-local-input";
+				$label4.textContent = "생일";
+				$div4.appendChild($label4);
+				$div4.appendChild($input4);
+				
+				while ($divStuInfo.firstChild) {
+				    $divStuInfo.removeChild($divStuInfo.firstChild);
+				};
+				
+				$divStuInfo.appendChild($div1);
+				$divStuInfo.appendChild($div2);
+				$divStuInfo.appendChild($div3);
+				$divStuInfo.appendChild($div4);
+				
+				//총 출석수
+				const $div5=document.createElement("div");
+				$div5.className = "col-4";
+				const $input5=document.createElement("input");
+				$input5.className = "form-control";
+				$input5.type = "text";
+				$input5.value = student.COUNTATTENDANCE+"/120";
+				$input5.id = "example-text-input";
+				$input5.style.textAlign = "center";
+				const $label5=document.createElement("label");
+				$label5.className = "form-control-label";
+				$label5.htmlFor = "example-text-input";
+				$label5.textContent = "총 출석 수";
+				$div5.appendChild($label5);
+				$div5.appendChild($input5);
+				
+				
+				//개인 출석율
+				const $div6=document.createElement("div");
+				$div6.className = "col-8";
+				const $div7=document.createElement("div");
+				$div7.style.width = "470px";
+				$div7.style.marginLeft = "10px";
+				const $div8=document.createElement("div");
+				$div8.className = "progress-info";
+				const $label6=document.createElement("label");
+				$label6.className = "form-control-label";
+				$label6.htmlFor = "example-text-input";
+				$label6.textContent = "출석일 수/총 수업일 수";
+				const $div9=document.createElement("div");
+				$div9.className = "progress-percentage";
+				const $span=document.createElement("span");
+				$span.textContent = student.AVGATTENDANCE+"%";
+				const $div10=document.createElement("div");
+				$div10.className = "progress";
+				$div10.style.marginTop = "15px";
+				const $div11=document.createElement("div");
+				$div11.className = "progress-bar bg-primary";
+				$div11.role = "progressbar";
+				$div11.ariaValuenow = "0";
+				$div11.ariaValuemin = "0";
+				$div11.ariaValuemax = "100";
+				$div11.style.width = student.AVGATTENDANCE+"%";
+				
+				$div8.appendChild($label6);
+				$div8.appendChild($div9);
+				$div9.appendChild($span);
+				$div10.appendChild($div11);
+				$div7.appendChild($div8);
+				$div7.appendChild($div10);
+				$div6.appendChild($div7);
+				
+				while ($divStuRegulatoryStatus.firstChild) {
+				    $divStuRegulatoryStatus.removeChild($divStuRegulatoryStatus.firstChild);
+				};
+				
+				$divStuRegulatoryStatus.appendChild($div5);
+				$divStuRegulatoryStatus.appendChild($div6);
+			})
 		}).catch(e=>{
 			console.log(e);
 		})
 	}
-
-//FRTCH()함수 참조 태그
-/*  <div class="form-group">
-     <label for="example-text-input" class="form-control-label">이름</label>
-     <input class="form-control" type="text" value="학생 이름" id="example-text-input">
- </div>
- <div class="form-group">
-     <label for="example-datetime-local-input" class="form-control-label">강의 시작일</label>
-     <input class="form-control" type="date" value="2018-11-23" id="example-search-input">
- </div>
- <div class="form-group">
-     <label for="example-datetime-local-input" class="form-control-label">수료일</label>
-     <input class="form-control" type="date" value="2018-11-23" id="example-email-input">
- </div>
- <div class="form-group">
-     <label for="example-datetime-local-input" class="form-control-label">생일</label>
-     <input class="form-control" type="date" value="2018-11-23" id="example-datetime-local-input">
- </div>
-
-	
-<div class="4">
-    <label for="example-text-input" class="form-control-label">총 출석 수</label>
-    <input class="form-control" type="text" value="0/120" id="example-text-input" style="text-align:center;">
-</div>
-<div class="8">
-    <div style="width:470px; margin-left: 10px;">
-	  <div class="progress-info" style="margin-top: 3px;">
-	    <label for="example-text-input" class="form-control-label">출석일 수/총 수업일 수</label>
-	    <div class="progress-percentage">
-	      <span>80%</span>
-	    </div>
-	  </div>
-	  <div class="progress" style="margin-top: 15px;">
-	    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
-	  </div>
-	</div>
-</div> */
 </script>
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>s
