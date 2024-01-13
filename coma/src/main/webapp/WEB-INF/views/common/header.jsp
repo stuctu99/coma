@@ -129,7 +129,7 @@
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
               <li><a href="${path }/admin/adminEmp">사원관리</a></li>
               <li><a href="${path }/admin/adminStudent">학생관리</a></li>
-              <li><a href="">인사부</a></li>
+              <li><a href="${path }/student/student">학생 페이지</a></li>
             </ul>
           </li>
           <li class="nav-item">
