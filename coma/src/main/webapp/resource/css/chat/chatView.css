@@ -41,6 +41,10 @@ section>div:nth-child(1){
 	overflow: hidden !important;
 }
 
+.chat-title{
+	padding-right: 65px !important;
+}
+
 .emp-info{
 	padding: 0px 5px !important;
 	line-height: 1.7 !important;

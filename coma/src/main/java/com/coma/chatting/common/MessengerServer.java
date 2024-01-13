@@ -25,7 +25,7 @@ public class MessengerServer extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("[MessengerServer]: 접속");
+		System.out.println("[MessengerServer] : 접속");
 	}
 
 	@Override
@@ -49,13 +49,13 @@ public class MessengerServer extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println("접속 유지중인 세션" + clients);
-		System.out.println("[MessengerServer]: 종료");
+		System.out.println("[MessengerServer] : 접속 유지중인 세션" + clients);
+		System.out.println("[MessengerServer] : 종료");
 	}
 
 	private void addClient(MessengerMessage msg, WebSocketSession session) {
 		clients.put(msg.getLoginId(), session);
-		System.out.println("메신저 접속 세션" + clients);
+		System.out.println("[MessengerServer] : 메신저 접속 세션" + clients);
 		try {
 			session.sendMessage(messageConverter(msg));
 		} catch (Exception e) {

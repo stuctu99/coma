@@ -19,6 +19,12 @@ $(".sub-menu li a").mouseenter(function (e) {
 */
   
 const messenger_active = (path) => {
-	open(path+"/messenger","_blank","width=600px; height=600px; left=0px; top=0px;");
+	const url = path+"/messenger";
+	const windowName = "messenger";
+	const options = "width=600, height=600, top=10,scrollbars=yes";
+	
+	window.open(url,windowName,options);
+	/*open(path+"/messenger","_blank","width=600px; height=600px; left=0px; top=0px;");*/
+	
 }
     

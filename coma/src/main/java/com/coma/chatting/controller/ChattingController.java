@@ -103,14 +103,19 @@ public class ChattingController {
 		Map<String, String> msg = new HashMap<>();
 		int deleteEmpCheck = service.deleteChatRoomJoinEmpById(exitEmp);
 		if (deleteEmpCheck > 0) {
-			int result = service.deleteChattingMsgByRoomNoAndEmpId(exitEmp);
-			if (deleteEmpCheck+result > 0) {
-				msg.put("result", "success");
-				System.out.println("채팅방 리스트에서 삭제!!!");
-			} else {
-				msg.put("result", "fail");
-				System.out.println("채팅방 리스트 삭제 실패!!!");
+			int roomMeberCount = service.selectMemberCountInRoom(exitEmp.get("roomNo"));
+			if (roomMeberCount == 0) {
+				int result = service.deleteChattingMsgByRoomNo(exitEmp);
+				if (result > 0) {
+					System.out.println(exitEmp.get("roomNo") + "채탕방 완전 삭제");
+				}
 			}
+
+			msg.put("result", "success");
+			System.out.println("채팅방 리스트에서 삭제!!!");
+		} else {
+			msg.put("result", "fail");
+			System.out.println("채팅방 리스트 삭제 실패!!!");
 		}
 
 		return msg;
