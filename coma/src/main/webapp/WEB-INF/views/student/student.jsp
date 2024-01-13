@@ -42,7 +42,7 @@
 			      </tr>
 		        </thead>
 		        <tbody class="list" id="studentTable">
-		        	<form action="" method="post">
+		        	<form action="/student/updateStudent" method="post">
 			        <c:forEach var="s" items="${students }">
 			        	<tr>
 			        		<td><c:out value="${s.STU_NO }"/></td>
@@ -124,13 +124,41 @@
 <script>
 	//체크 박스 전체 선택
     function fn_Checkboxes(checkboxName) {
-	      const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]');
-	      const masterCheckbox = document.getElementById(checkboxName + 'Toggle');
+        const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]');
+        const masterCheckbox = document.getElementById(checkboxName + 'Toggle');
 
-	      checkboxes.forEach(function(checkbox) {
-	        checkbox.checked = masterCheckbox.checked;
-	      });
-	}
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = masterCheckbox.checked;
+        });
+    }
+
+    function getCheckedCheckboxValues(checkboxName) {
+        const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked');
+        const values = Array.from(checkboxes).map(checkbox => checkbox.value);
+        return values;
+    }
+
+    function submitForm() {
+        const attendanceValues = getCheckedCheckboxValues('attendance');
+        const checkOutValues = getCheckedCheckboxValues('checkOut');
+
+        // 여기서 필요한 작업을 수행하고 서버로 전송
+        sendFormDataToServer(attendanceValues, checkOutValues);
+    }
+
+    function sendFormDataToServer(attendanceValues, checkOutValues) {
+        // Ajax 또는 다른 방식으로 서버로 데이터를 전송
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', '/student/updateStudent', true);
+		xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+
+        const data = {
+            attendance: attendanceValues,
+            checkOut: checkOutValues
+        };
+
+        xhr.send(JSON.stringify(data));
+    }
 	
 	//학생 정보 출력
 	function fn_stuInfo(stuNo) {
