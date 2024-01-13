@@ -326,8 +326,8 @@ input[type="datetime-local"] {
         // 캘린더 생성 옵션(참고)
         const calendarOption = {
         		  eventSources: eventSources,
-            height: '700px', // calendar 높이 설정
-            expandRows: true, // 화면에 맞게 높이 재설정
+            height: '10000px', // calendar 높이 설정
+         //   expandRows: true, // 화면에 맞게 높이 재설정
             slotMinTime: '09:00', // Day 캘린더 시작 시간
             slotMaxTime: '18:00', // Day 캘린더 종료 시간
             // 맨 위 헤더 지정

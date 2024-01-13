@@ -1,11 +1,13 @@
 package com.coma.commute.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.coma.model.dto.Calendar;
 import com.coma.model.dto.Commute;
 import com.coma.model.dto.Emp;
 
@@ -21,4 +23,6 @@ public interface CommuteDao {
 	int updateEndTime(SqlSession session, Map <String, Object> emp);
 	
 	Commute selectCommute(SqlSession session, String empId);
+	
+	List<Map> selectCommuteAll (SqlSession session, String loginId);
 }

@@ -57,6 +57,7 @@
 
 <div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
 <%-- ${myCommute} --%>
+${mainNotice}
    <div class="row">
       <div class=" col-4">
          <div class="row">
@@ -139,7 +140,7 @@
          <div class="bigContainer"
             style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
             <h4>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
-            <button type="button" class="btn btn-primary">근태 정보</button>
+            <button type="button" class="btn btn-primary" id="myCommuteBtn">근태 정보</button>
             <button type="button" class="btn btn-primary" id="vacationButton">휴가 정보</button>
          </div>
          <div class="row">
@@ -224,8 +225,7 @@
 		   mm = mm >= 10 ? mm : '0' +mm;
 		   var ss =date.getSeconds();
 		   ss = ss >= 10 ? ss : '0' +ss;
-		   return hh + ':'+mm + ':'+ ss ;
-		   
+		   return hh + ':'+mm + ':'+ ss ;   
 		}
 	 
 	 //setInterval 변수로 지정해주기 => 타이머 중지때문에 
@@ -497,7 +497,9 @@ document.getElementById('vacationButton').addEventListener('click', function() {
     window.location.href = '/mypage/MyvacationInfo';
 });
 
-
+document.getElementById('myCommuteBtn').addEventListener('click', function() {
+    window.location.href = '/commute/MyCommuteInfo2';
+});
  /* window.onload=()=>{
  var test='<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH24:mm:ss"/>';
    console.log(test);
@@ -527,7 +529,6 @@ document.getElementById('vacationButton').addEventListener('click', function() {
    console.log("시간: " + hours + " 시간, 분: " + minutes + " 분, 초: " + seconds + " 초");
 
 } */
-
 </script>
 
 <!-- TEAM COMA SPACE -->
