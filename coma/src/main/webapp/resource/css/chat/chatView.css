@@ -1,4 +1,10 @@
 @charset "UTF-8";
+
+/**{
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+*/
+
 html{
 	margin:0 auto;
 }
@@ -140,7 +146,7 @@ section>div:nth-child(1){
 	top: 0px;
 	left: 0px;*/
 	width: 100%;
-	background-color: #a24ff0;
+	background-color: #5e72e4;
 	padding: 12px 15px;
 	border: 0;
 	outline: 0;
@@ -159,7 +165,7 @@ section>div:nth-child(1){
 	border: 0;
 	outline: 0;
 	cursor: pointer;
-	color: #a24ff0;
+	color: #5e72e4;
 	font-size: 22px;
 }
 

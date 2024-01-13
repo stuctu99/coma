@@ -48,7 +48,7 @@ div {
 					<button id="bars">&#9776</button>
 				</div>
 				<div class="col-11 chat-title">
-					<h1>itTalk</h1>		
+					<h1>COMA MESSENGER</h1>		
 					<input type="hidden" id="roomNo" value="${roomNo}"/>
 					<input type="hidden" id="loginMember" value="${loginmember.empId }"/>
 				</div>
@@ -144,7 +144,7 @@ div {
 				<div class="input-group mb-3">
 					<input type="text" id="msg" class="form-control" placeholder="메세지를 입력하세요!"	aria-label="Recipient's username" aria-describedby="button-addon2">
 					<div class="input-group-append">
-						<button id="btnSend" class="btn btn-outline-primary" type="button" id="button-addon2" style="height: 100%;" onclick="sendMessage();" >전송</button>
+						<button id="btnSend" class="btn btn-outline-primary" type="button" id="button-addon2" style="height:46px;" onclick="sendMessage();" disabled="disabled" >전송</button>
 					</div>
 				</div>
 			</div>
@@ -168,7 +168,7 @@ div {
 <!--   Argon JS   -->
 <script src="${path }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-<script src="${path }/resource/js/chat/chat.js"></script>
+<%-- <script src="${path }/resource/js/chat/chat.js"></script> --%>
 <script>
 	let bars = document.querySelector("#bars");
 	let menu = document.querySelector("#menu");

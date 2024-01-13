@@ -30,7 +30,7 @@ Latest compiled JavaScript
 <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 <style>
 div {
-   border: 1px solid red;
+   /* border: 1px solid red; */
    
 }
 </style>
@@ -41,7 +41,7 @@ div {
 			<div class="row">
 				<hr>
 				<div class="col-12 chat-title">
-					<h1>itTalk</h1>
+					<h1>COMA MESSENGER</h1>
 				</div>
 			</div>
 			<hr style="margin: 2px 0;">
@@ -80,11 +80,11 @@ div {
 								<small><c:out value="${e.job.jobType }"/></small>
 							</div>
 							<div class="col-8">
-								<small><c:out value="${e.empName}"/></small>
+								<img src=""/><strong><c:out value="${e.empName}"/></strong>
 							</div>
 						<c:if test="${e.empId!=loginmember.empId }">
 							<div class="col-2">
-								<button id="chatting-active" class="btn btn-outline-primary">채팅</button>
+								<button id="chatting-active" class="${e.empId } btn btn-outline-primary" onclick="privateChatting('${e.empId}','${loginmember.empId }');">대화</button>
 							</div>
 						</c:if>
 						</div>
@@ -105,14 +105,8 @@ div {
          <div class="row">
             <div class="col-2" style="display:flex; justify-content:center; align-items:center;">
                <select class="form-control form-control-sm" id="searchType" onchange="fn_roomType();">
-               	<option id="0" value="ALL" selected>전체</option>
-               	<option id="1" value="A">공용</option>
-               	<option id="2" value="P">개인</option>
-               	<option id="3" value="D1">관리부</option>
-               	<option id="4" value="D2">행정부</option>
-               	<option id="5" value="D3">회계부</option>
-               	<option id="6" value="D4">교육부</option>
-               	<option id="7" value="D5">취업부</option>
+               	<option id="0" value="engagement">참여중</option>
+               	<option id="1" value="unengaged">미참여</option>
                </select>
             </div>
             <div class="col-7">
@@ -123,15 +117,15 @@ div {
             <div class="col-2">
                <input type="hidden" id="pathValue" value="${path }"/>
                <button id="create-room" type="button" class="btn btn-primary" data-toggle="modal"
-                  data-target="#exampleModal">방생성</button>
+                  data-target="#createRoom">방생성</button>
             </div>
          </div>
-         <div class="container content">
+         <div class="container content" id="chattingList">
          
          </div>
       </div>
 		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		<div class="modal fade" id="createRoom" tabindex="-1" role="dialog"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
@@ -155,7 +149,7 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="text" name="roomName" id="roomName"/>
+									<input type="text" name="roomName" id="roomName" value=""/>
 								</div>
 								<div class="col-6">
 									<select name="roomType" id="roomType">
@@ -175,7 +169,7 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="password" name="roomPassword" id="roomPassword" disabled/>
+									<input type="password" name="roomPassword" id="roomPassword" value="" disabled/>
 								</div>
 							</div>
 							<div class="row">
@@ -268,7 +262,6 @@ div {
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script>
 	const loginId = '${loginmember.empId}';
-	console.log("alskdjlkasdjkl;ajdlkasjdlkajdlaskjdklajdlkajdlkasjdk"+loginId);
 </script>
 <script src="${path }/resource/js/chat/chat.js"></script>
 </html>

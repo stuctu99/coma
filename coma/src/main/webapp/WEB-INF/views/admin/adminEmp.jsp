@@ -71,7 +71,6 @@
 		</div>
 		<div class="col-5" style="padding-left:0px;">
 			<button type="button" class="btn btn-secondary btn-sm" style="width:50px;" onclick="fn_searchEmp();">검색</button>
-			<button type="button" class="btn btn-secondary btn-sm" style="" onclick="fn_resetEmp();">전체 보기</button>
 		</div>
 		<div class="col-2">
 			<div class="row">
@@ -182,6 +181,7 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 	const searchData=document.getElementById("searchData").value;
 	const textData=document.getElementById("textData").value;
 	console.log(searchData,textData);
+<<<<<<< HEAD
 	if(textData!=""){
 		fetch(url?'${path}'+url:"/admin/searchEmp",{
 			method:"post",
@@ -251,6 +251,18 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 			document.getElementById("textData").value="";
 		}).catch(e=>{
 			console.log(e);
+=======
+	fetch(url?'${path}'+url:"/admin/searchEmp",{
+		method:"post",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify({
+			cPage:cPage,
+			numPerpage:numPerpage,
+			searchData:searchData,
+			textData:textData,
+			jsName:"fn_searchEmp"
+			
+>>>>>>> branch 'master' of https://github.com/stuctu99/coma.git
 		})
 	}else{
 		alert("검색어를 입력해주세요");

@@ -28,11 +28,6 @@ public class CalendarController {
 		
 		return "calendar/calendar";
 	}
-	@GetMapping("/calendar.do")
-	@ResponseBody
-	public List<Calendar> selectCalendar(){
-		System.out.println("안녕");
-		return service.selectCalendar();
-	}
+
 
 }

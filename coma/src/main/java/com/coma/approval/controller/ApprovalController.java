@@ -340,7 +340,11 @@ public class ApprovalController {
    private PdfGenerator pdfGen;
    
    @GetMapping("/pdf")
-   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, String docType) {
+   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, String docType, String empId) {
+	   
+	   empId = "COMA_1"; //테스트용
+	   
+	   Emp writer = service.selectEmpById(empId);
 	   
 	   //-----해당 문서 정보
 	   docNo = "DOC_110"; //테스트용
@@ -351,21 +355,19 @@ public class ApprovalController {
 	   
 	   ApprovalDoc doc = service.selectAppDoc(data); 
 	   
-	   System.out.println("controller 354번줄 확인: " + doc);
 	   //--------------
 	   
-	   String path = session.getServletContext().getRealPath("/resource/upload/approval/test2.pdf");
-	   //ㄴ 테스트용. 수정 필요**
+//	   String path = session.getServletContext().getRealPath("/resource/upload/approval/"+doc.getDocNo()+".pdf");
+	  
 	   
 	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
 
-	
-	  
-	   
-	   pdfGen.generateAppr(doc, response, fontPath);
+  
+	   pdfGen.generateAppr(doc, response, fontPath, writer);
 	      
 	   //return "approval/viewdoc"; ㄴㄴ
 	   //return을 하면 outputStream이 또 호출됨
+	   
    }
    
 //---------------------------------------------------------------------
