@@ -84,10 +84,11 @@ public class CommuteController {
 	}
 	
 	  @GetMapping("/commuteDetail")
-	  public String commuteDetail() {
-	  
-	  
-	  
+	  public String commuteDetail(Principal pri, Model m) {
+		  String loginId=pri.getName();
+		  List<Map> commute= service.selectCommuteAll(loginId);
+		  int count =service.countCommute(loginId);
+		  m.addAttribute("commute",commute);	  
 		  return "mypage/commuteDetail";
 	  }
 	 

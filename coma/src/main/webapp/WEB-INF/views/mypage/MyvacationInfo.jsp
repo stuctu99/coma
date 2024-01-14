@@ -44,6 +44,7 @@ div {
 
 /* You may need to adjust the styling based on your specific requirements */
 </style>
+${vacation }
 <div class="coma-container containerbig">
 	<div class="row">
 				<div class="col-1" ></div>
