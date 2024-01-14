@@ -93,12 +93,19 @@ public class ChattingServiceImpl implements ChattingService {
 		// TODO Auto-generated method stub
 		return dao.deleteChatRoomJoinEmpById(session, exitEmp);
 	}
+	
+	@Override
+	public int selectMemberCountInRoom(String roomNo) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberCountInRoom(session, roomNo);
+	}	
 
 	@Override
-	public int deleteChattingMsgByRoomNoAndEmpId(Map<String, String> exitEmp) {
+	public int deleteChattingMsgByRoomNo(Map<String, String> exitEmp) {
 		// TODO Auto-generated method stub
-		return dao.deleteChattingMsgByRoomNoAndEmpId(session,exitEmp);
+		return dao.deleteChattingMsgByRoomNo(session,exitEmp);
 	}
+	
 	
 
 	

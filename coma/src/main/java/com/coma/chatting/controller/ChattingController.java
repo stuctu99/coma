@@ -96,20 +96,26 @@ public class ChattingController {
 	}
 
 //	채팅방 완전 가갔을 때 정보 삭제
+//	채팅방 인원 1명이 나갔을 때 채팅방 삭제하기 구현해야한다.
 	@DeleteMapping
 	@ResponseBody
 	public Map<String, String> deleteChatRoomJoinEmpById(@RequestBody Map<String, String> exitEmp) {
 		Map<String, String> msg = new HashMap<>();
 		int deleteEmpCheck = service.deleteChatRoomJoinEmpById(exitEmp);
 		if (deleteEmpCheck > 0) {
-			int result = service.deleteChattingMsgByRoomNoAndEmpId(exitEmp);
-			if (deleteEmpCheck+result > 0) {
-				msg.put("result", "success");
-				System.out.println("채팅방 리스트에서 삭제!!!");
-			} else {
-				msg.put("result", "fail");
-				System.out.println("채팅방 리스트 삭제 실패!!!");
+			int roomMeberCount = service.selectMemberCountInRoom(exitEmp.get("roomNo"));
+			if (roomMeberCount == 0) {
+				int result = service.deleteChattingMsgByRoomNo(exitEmp);
+				if (result > 0) {
+					System.out.println(exitEmp.get("roomNo") + "채탕방 완전 삭제");
+				}
 			}
+
+			msg.put("result", "success");
+			System.out.println("채팅방 리스트에서 삭제!!!");
+		} else {
+			msg.put("result", "fail");
+			System.out.println("채팅방 리스트 삭제 실패!!!");
 		}
 
 		return msg;

@@ -16,10 +16,6 @@
 	
 	<!-- path.. -->
 	<input type="hidden" id="pathValue" value="${pageContext.request.contextPath}"/> 
-	
-
-
-
 
 
     <!-- TEAM COMA SPACE -->

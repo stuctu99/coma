@@ -12,9 +12,9 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 @Component
-public class LeavePdf{
+public class PdfType{
 
-	  //------------------------- 휴가신청 테이블 -------------------------	 
+	  //------------------------- 4칸짜리 -------------------------	 
 	   public PdfPTable generateTable3(ApprovalDoc doc, Font font, Document document, PdfWriter writer,
 			   							String label1, String data1, String label2, String data2) {
 
@@ -63,9 +63,10 @@ public class LeavePdf{
 	      return table3;
 	   }
 	   
+	   //------------------------- 2칸짜리 -------------------------	 
 
 	   public PdfPTable generateTable4(ApprovalDoc doc, Font font, Document document, PdfWriter writer,
-			   							String label1, String label2) {
+			   							String label1, String data) {
 		   
 		  PdfPTable table4 = new PdfPTable(6);
 	          
@@ -80,7 +81,7 @@ public class LeavePdf{
        table4.addCell(t4_cells1);
        
        PdfPCell t4_cells2 = new PdfPCell();
-       t4_cells2 = new PdfPCell(new Phrase(label2,font));
+       t4_cells2 = new PdfPCell(new Phrase((String)data,font));
        t4_cells2.setHorizontalAlignment(Element.ALIGN_CENTER);
        t4_cells2.setVerticalAlignment(Element.ALIGN_MIDDLE);
        t4_cells2.setFixedHeight(40f);

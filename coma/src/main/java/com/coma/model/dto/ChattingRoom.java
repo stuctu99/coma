@@ -1,12 +1,13 @@
 package com.coma.model.dto;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 
 @Data
@@ -21,7 +22,7 @@ public class ChattingRoom {
 	private String roomPassword;
 	private Date roomCreateDate;
 	private ChattingRoomType roomTypeObj;
-	private String empId;
+	private Map<String,String> idList;
 	private int memberCount;
 	/* private List<ChattingJoin> joinMember; */
 }

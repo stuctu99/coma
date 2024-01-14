@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.coma.approval.model.dao.ApprovalDao;
 import com.coma.approval.pdf.PdfGenerator;
 import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
+import com.coma.model.dto.Referrer;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +33,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 	}
 	
-	@Autowired
-	private PdfGenerator pdfGenerator;
+	//@Autowired
+	//private PdfGenerator pdfGenerator;
 
 	
 	@Override
@@ -174,6 +176,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 	@Override
 	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writer) {
+		PdfGenerator pdfGenerator=new PdfGenerator();
 		pdfGenerator.generateAppr(doc, response, fontPath, writer);
 	}
 
@@ -181,6 +184,24 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public Emp selectEmpById(String empId) {
 		return dao.selectEmpById(session, empId);
 	}
+
+//	@Override
+//	public ApprovalDoc selectRefByDocNo(String docNo) {
+//		return dao.selectRefByDocNo(session, docNo);
+//	}
+
+	@Override
+	public List<Approver> selectApprByDocNo(String docNo) {
+		return dao.selectApprByDocNo(session, docNo);
+	}
+
+	@Override
+	public List<Referrer> selectRefByDocNo(String docNo) {
+		return dao.selectRefByDocNo(session, docNo);
+	}
+
+	
+	
 
 	
 

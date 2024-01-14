@@ -12,6 +12,8 @@ public interface CalendarDao {
 
 	List<Calendar> selectCalendar(SqlSession session);
 	List<Calendar> selectCalendarDept(SqlSession session,String empId);
+	List<Calendar> selectCalendarMy(SqlSession session,String empId);
+	List<Calendar> selectCalendarAll(SqlSession session,String empId);
 	int calendarInsert(SqlSession session,Map<String,String> event);
 	int calendarUpdate(SqlSession session,Map<String,String> event);
 	int calendarDelete(SqlSession session,Map<String,String> event);
