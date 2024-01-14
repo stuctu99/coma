@@ -61,27 +61,6 @@ public class EmployeeController {
         Commute myCommute = commuteService.selectCommute(empId);
         //System.out.println(myCommute);
         //type이 date이면 날짜빼고 시분초 변경해주기 
-//        if (myCommute != null) {
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-//            String formattedClockin = myCommute.getCommuteClockin() != null ? dateFormat.format(myCommute.getCommuteClockin()) : null;
-//            String formattedStarttime = myCommute.getCommuteStarttime() != null ? dateFormat.format(myCommute.getCommuteStarttime()) : null;
-//            String formattedEndtime = myCommute.getCommuteEndtime() != null ? dateFormat.format(myCommute.getCommuteEndtime()) : null;
-//            String formattedClockout = myCommute.getCommuteClockout() != null ? dateFormat.format(myCommute.getCommuteClockout()) : null;
-//
-//            ModelAndView modelAndView = new ModelAndView("index");
-//            modelAndView.addObject("mainNotice", mainNotice);
-//            modelAndView.addObject("myCommute", myCommute);
-//            modelAndView.addObject("formattedClockin", formattedClockin);
-//            modelAndView.addObject("formattedStarttime", formattedStarttime);
-//            modelAndView.addObject("formattedEndtime", formattedEndtime);
-//            modelAndView.addObject("formattedClockout", formattedClockout);
-//            return modelAndView;
-//            
-//        }else {
-//        	ModelAndView modelAndView = new ModelAndView("index");
-//            modelAndView.addObject("mainNotice", mainNotice);
-//            return modelAndView;
-//        }
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("mainNotice", mainNotice);
         modelAndView.addObject("myCommute", myCommute);

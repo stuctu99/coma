@@ -317,21 +317,38 @@ public class ApprovalController {
 	   
 	 Map<String, String> data = new HashMap<String, String>();
 	 
-	 docNo = "DOC_110"; //테스트용
-	 docType = "leave"; //테스트용
+	 docNo = "DOC_284"; //테스트용
+	 docType = "cash"; //테스트용
 	 
 	 data.put("docNo", docNo); 
 	 data.put("docType", docType); 
 	 
 	 ApprovalDoc doc = service.selectAppDoc(data); 
 	 
-	 System.out.println("테스트: ***************:"+doc);
+	 	model.addAttribute("doc",doc);
 	 
-	 model.addAttribute("doc",doc);
-
-//	 service.pdfGenerator(doc);
+	 String fullDate = doc.getDocDate()+" ";
+     String onlyDate = fullDate.substring(0,10); //시간 잘라내기
 	 
-      return "approval/viewdoc";
+     	model.addAttribute("onlyDate", onlyDate);
+	 
+	 String typeKor = "";
+	 
+	 switch(doc.getDocType()) {
+		case "leave" : typeKor = "휴가 신청서"; break;
+		case "cash" : typeKor = "지출 결의서"; break;
+		case "req" : typeKor = "품의서"; break;
+		case "etc" : typeKor = "기타 문서"; break;
+	 }
+	 
+	 	model.addAttribute("typeKor", typeKor);
+	
+	 Emp writer = service.selectEmpById(doc.getEmpId());
+	 	
+	 	model.addAttribute("writer", writer);
+	 	
+     
+	 return "approval/viewdoc";
    }
    
 //---------------------------- PDF -------------------------------------------
@@ -342,13 +359,13 @@ public class ApprovalController {
    @GetMapping("/pdf")
    public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, String docType, String empId) {
 	   
-	   empId = "COMA_1"; //테스트용
+	   empId = "COMA_2"; //테스트용
 	   
 	   Emp writer = service.selectEmpById(empId);
 	   
 	   //-----해당 문서 정보
-	   docNo = "DOC_110"; //테스트용
-	   docType = "leave";
+	   docNo = "DOC_284"; //테스트용
+	   docType = "cash";
 	   Map<String, String> data = new HashMap<String, String>();
 	   data.put("docNo", docNo); 
 	   data.put("docType", docType); 
