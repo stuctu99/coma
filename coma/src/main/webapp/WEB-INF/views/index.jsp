@@ -57,7 +57,7 @@
 
 <div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
 <%-- ${myCommute} --%>
-${mainNotice}
+<%-- ${mainNotice} --%>
    <div class="row">
       <div class=" col-4">
          <div class="row">
@@ -200,8 +200,8 @@ ${mainNotice}
 	 var totalwork2 = commuteClockout-commuteClockin;
 	 var time3 = time2 + (nowTime -commuteEndtime);	
 	 //값이 있으면 false
-	 console.log(!commuteStarttime);
-	 console.log(!commuteEndtime);	 
+	 //console.log(!commuteStarttime);
+	 //console.log(!commuteEndtime);	 
 	 
 	 // 시간을 HH:mm:ss 형식으로 변환
 	 function formatTime(milliseconds) {
@@ -498,7 +498,7 @@ document.getElementById('vacationButton').addEventListener('click', function() {
 });
 
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
-    window.location.href = '/commute/MyCommuteInfo2';
+    window.location.href = '/commute/MyCommuteInfo';
 });
  /* window.onload=()=>{
  var test='<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH24:mm:ss"/>';

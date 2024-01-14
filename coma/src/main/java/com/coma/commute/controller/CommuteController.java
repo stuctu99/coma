@@ -69,24 +69,28 @@ public class CommuteController {
 	    return result;
 	    
 	}
-	@GetMapping("/MyCommuteInfo2")
+	@GetMapping("/MyCommuteInfo")
 	public ModelAndView selectCommuteAll(Principal pri) {
 		String loginId=pri.getName();
-		System.out.println("아아아 달력에 넣을 정보 "+service.selectCommuteAll(loginId));
+		//System.out.println("아아아 달력에 넣을 정보 "+service.selectCommuteAll(loginId));
 		List<Map> commute= service.selectCommuteAll(loginId);
-		ModelAndView modelAndView = new ModelAndView("mypage/MyCommuteInfo2");
+		int count =service.countCommute(loginId);
+		
+		ModelAndView modelAndView = new ModelAndView("mypage/MyCommuteInfo");
+		modelAndView.addObject("count",count);
 		modelAndView.addObject("commute",commute);
 		return modelAndView;
 		
 	}
-	/*
-	 * @GetMapping("/") public void myCommuteInfo2() {
-	 * 
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
+	
+	  @GetMapping("/commuteDetail")
+	  public String commuteDetail() {
+	  
+	  
+	  
+		  return "mypage/commuteDetail";
+	  }
+	 
 
 
 	

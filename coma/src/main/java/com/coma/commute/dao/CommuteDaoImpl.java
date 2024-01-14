@@ -50,6 +50,12 @@ public class CommuteDaoImpl implements CommuteDao {
 		return session.selectList("commute.selectCommuteAll",loginId);
 	}
 
+	@Override
+	public int countCommute(SqlSession session, String loginId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("commute.countCommute",loginId);
+	}
+
 
 
 }

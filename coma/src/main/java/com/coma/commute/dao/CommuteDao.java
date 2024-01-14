@@ -25,4 +25,6 @@ public interface CommuteDao {
 	Commute selectCommute(SqlSession session, String empId);
 	
 	List<Map> selectCommuteAll (SqlSession session, String loginId);
+	
+	int countCommute(SqlSession session,String loginId);
 }

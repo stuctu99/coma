@@ -58,6 +58,12 @@ public class CommuteServiceImpl implements CommuteService {
 		return dao.selectCommuteAll(session, loginId);
 	}
 
+	@Override
+	public int countCommute(String loginId) {
+		// TODO Auto-generated method stub
+		return dao.countCommute(session, loginId);
+	}
+
 
 
 }

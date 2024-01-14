@@ -22,4 +22,5 @@ public interface CommuteService {
 	Commute selectCommute(String empId);
 	//한달동안 나의 근태를 보여줌
 	List<Map> selectCommuteAll (String loginId);
+	int countCommute(String loginId);
 }
