@@ -50,26 +50,7 @@ server.onopen = (response) => {
 	connectCheck.css("color", "lime");
 	console.log(empId);
 	console.log(response);
-	/*fetch("/chatting",{
-		method:"post",
-		headers:{"Content-Type":"application/json"},
-		body: JSON.stringify({"roomNo":roomNo,"empId":empId})
-	})
-	.then(response=>{
-		if(response.status!=200){
-			alert("접근할 수 없습니다. 관리자에게 문의하세요. ERROR CODE : "+response.status);
-		}
-		return response.json();
-	})
-	.then(data=>{
-		if(!data){
-			msg = new Message("open",empId,"","",roomNo);				
-			server.send(msg.convert());
-		}else{
-			console.log("이미존재!!");
-		}
-	})*/
-	/*constructor(type,chatNo,chatContent,chatCreateDate,empId,roomNo)*/
+	
 	const msg = new Message("open", "", "", new Date(Date.now()), empId, roomNo);
 	server.send(msg.convert());
 
@@ -117,28 +98,6 @@ const messagePrint = (msg) => {
 	content.innerText = msg.chatContent;
 	msgDiv.appendChild(content);
 
-	/*fetch("/chatting/"+msg.empId,{
-		mehtod:"get",
-		headers:{
-			"Conatent-Type":"application/json"
-		}
-	})
-	.then(response=>{
-		if(response.status!=200){
-			alert("관리자에게 문의하세요!");
-		}
-		return response.json();
-	})
-	.then(data=>{
-		console.log(data);
-		if (msg.empId == empId) {
-			//sender가 로그인한 사원
-			console.log("나"+data.empName);
-		} else {
-			//이외 receiver
-			console.log("상대"+data.empName);
-		}	
-	})*/
 	if (msg.empId == empId) {
 		//sender가 로그인한 사원
 		nameDiv.classList.add("row", "me");
@@ -195,13 +154,13 @@ const openMessage = (msg) => {
 			return response.json();
 		})
 		.then(data => {
-			console.log(data);
-			if (data.newJoin === 'Y') {
+			if (data.joinEmp!=null && data.joinEmp.newJoin === 'Y') {
 				const container = $("<div>").addClass("row openMsgContainer");
-				const content = $("<h4>").text(`${data.empObj.empId}님이 접속하셨습니다.`);
+				const content = $("<h4>").text(`${data.joinEmp.empObj.empId}님이 접속하셨습니다.`);
 				$(".messageView" + msg.roomNo).append(container);
 				container.append(content);
 			}
+			
 		})
 
 
@@ -255,3 +214,45 @@ class Message {
 		return JSON.parse(data);
 	}
 }
+
+
+/*
+$("#bars").click(function(){
+	const roomNo = $("#roomNo").val();
+	memberList(roomNo);
+})
+
+const memberList = (roomNo) => {
+	const $profileListDiv = $(".profile-list");
+	fetch("/chatting/memberlist/"+roomNo)
+	.then(response=>{
+		return response.json();
+	})
+	.then(data=>{
+		data.roomMemberList.forEach(d=>{
+			console.log(d);
+			const $div = $("<div>").addClass("row "+d.empId);
+			const $div_col2 = $("<div>").addClass("col-2 profile");
+			const $div_col8 = $("<div>").addClass("col-8 emp-info");
+			const $div_col1 = $("<div>").addClass("col-1 connectView").text("&#9900");
+			const $img = $("<img>").attr("id","profile-img");
+			
+			$div_col8.append($("<strong>").text(d.empName));
+			
+			if(d.emp_gender=='M'){
+				$img.attr("src",location.host+"/resource/img/chat/profile_m.png");
+			}else{
+				$img.attr("src",location.host+"/resource/img/chat/profile_f.png");
+			}
+			
+			$div_col2.append($img);
+			
+			$div.append($div_col2);
+			$div.append($div_col8);
+			$div.append($div_col1);
+			
+			$profileListDiv.append($div);
+			
+		})
+	})
+}*/

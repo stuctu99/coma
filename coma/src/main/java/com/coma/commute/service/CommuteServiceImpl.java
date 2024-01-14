@@ -1,6 +1,7 @@
 package com.coma.commute.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.coma.commute.dao.CommuteDao;
+import com.coma.model.dto.Calendar;
 import com.coma.model.dto.Commute;
 
 import lombok.RequiredArgsConstructor;
@@ -48,6 +50,18 @@ public class CommuteServiceImpl implements CommuteService {
 	public int updateEndTime(Map<String, Object> empId) {
 		// TODO Auto-generated method stub
 		return dao.updateEndTime(session,empId);
+	}
+
+	@Override
+	public List<Map> selectCommuteAll(String loginId) {
+		// TODO Auto-generated method stub
+		return dao.selectCommuteAll(session, loginId);
+	}
+
+	@Override
+	public int countCommute(String loginId) {
+		// TODO Auto-generated method stub
+		return dao.countCommute(session, loginId);
 	}
 
 
