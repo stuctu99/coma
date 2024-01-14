@@ -347,8 +347,8 @@ public class ApprovalController {
 	   Emp writer = service.selectEmpById(empId);
 	   
 	   //-----해당 문서 정보
-	   docNo = "DOC_110"; //테스트용
-	   docType = "leave";
+	   docNo = "DOC_284"; //테스트용
+	   docType = "cash";
 	   Map<String, String> data = new HashMap<String, String>();
 	   data.put("docNo", docNo); 
 	   data.put("docType", docType); 
