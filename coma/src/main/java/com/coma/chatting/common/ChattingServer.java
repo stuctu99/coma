@@ -105,7 +105,6 @@ public class ChattingServer extends TextWebSocketHandler {
 				saveChattingMessage();
 			}
 		}
-		System.out.println("Message정보출력 ======= " + msg);
 		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
 			if (chatRoom.getKey().equals(msg.getRoomNo())) {
 				for (Map.Entry<String, WebSocketSession> client : chatRoom.getValue().entrySet()) {

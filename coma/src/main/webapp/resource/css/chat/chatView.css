@@ -65,16 +65,24 @@ section>div:nth-child(1){
 
 
 .profile-list{
+	width: 180rpx !important;
 	height: 518px !important;
 	padding-top: 15px;
 	margin-bottom: 15px;
 }
 
 .profile-list > .row{
+	padding-left:30px;
 	margin-bottom: 4px;
+	display: flex;
+	justify-content: end;
 }
 
-.profile-list > .row>div:nth-last-child(1){
+.profile-list > .row>div{
+	padding-left : 10px !important;
+}
+
+.profile-list > .row>div:nth-child(1){
 	text-align: left;
 }
 
