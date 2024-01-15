@@ -253,9 +253,7 @@ public class PdfGenerator {
           
           
           for(Approver appr : apprList) {
-        	
-	      
-        	  
+
         	  String apprId = appr.getEmpId();
         	  Emp appEmp = service.selectEmpById(apprId); //appEMp null
         	  
@@ -290,7 +288,7 @@ public class PdfGenerator {
 	          
 	          
 	          //서명 
-        	  t1_cell2 = new PdfPCell(image);
+        	  t1_cell2 = new PdfPCell();
         	  t1_cell2.setFixedHeight(50f);
         	  t1_cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
         	  t1_cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);

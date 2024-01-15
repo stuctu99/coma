@@ -9,6 +9,7 @@
 <script src="/resource/js/jquery-3.7.0.js"></script>
 
 <link href="/resource/css/approval/viewdoc.css" rel="stylesheet" />
+<c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
     <!-- TEAM COMA SPACE -->
 
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
@@ -17,6 +18,8 @@
     
           <div class="doc_basic">
             <form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/approval/getSignImg">    
+          	  <input type="hidden" name="empId" value="${loginMember.empId }">
+          	  
           	   <div class="row">
           	   		<div class="col-4">
           	   		</div>
@@ -66,7 +69,7 @@ const openSign=()=>{
 	var _left = Math.max(0, Math.floor((window.screen.width - parseInt(_width)) / 2));
 	var _top = Math.max(0, Math.floor((window.screen.height - parseInt(_height)) / 2));
 
-	window.open('${path}/approval/newSign', 'popup-test', 'width=' + _width + ', height=' + _height + ', left=' + _left + ', top=' + _top);
+	window.open('${path}/approval/signCanvas', 'popup-test', 'width=' + _width + ', height=' + _height + ', left=' + _left + ', top=' + _top);
 
 
 }
