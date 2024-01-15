@@ -126,7 +126,7 @@
 					 </div>		
 				 </c:when>
 		</c:choose>
-          <!-- coma content space -->
+         
            <div class="row">
 			 	<div class="col-12">
 			 		<table class="table table-bordered">
@@ -141,7 +141,7 @@
 			 		</table>
 			 	</div>
 		   </div>		
-          
+          <!-- coma content space -->
           
         </div>
     </div>

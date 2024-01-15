@@ -351,11 +351,14 @@ public class ApprovalController {
    
 //---------------------------- PDF -------------------------------------------
    
+   
+   
    @Autowired
    private PdfGenerator pdfGen;
 
    @GetMapping("/downloadPdf")
-   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, String docType, String empId) {
+   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, 
+		   						String docType, String empId, String imgName) {
 	   
 //	   docNo="DOC_304";
 //	   docType="leave";
@@ -380,15 +383,66 @@ public class ApprovalController {
 	   
 	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
 
+	   //String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/image (6).png");
+	   String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/"+imgName);
+
+	   
   
-	   pdfGen.generateAppr(doc, response, fontPath, writer);
+	   pdfGen.generateAppr(doc, response, fontPath, writer, imgPath);
 	      
 	   //return "approval/viewdoc"; ㄴㄴ
 	   //return을 하면 outputStream이 또 호출됨
 	   
    }
    
-//---------------------------------------------------------------------
+//------------------------------- 서명 추가 --------------------------------------
+ 
+   @GetMapping("/approver")
+   public String approver() {
+      return "approval/approver";
+   }
    
+   @GetMapping("/newSign")
+   public String newSign() {
+      return "approval/newSign";
+   }
+   
+
+   @PostMapping("/getSignImg")
+   public String getSignImg(@RequestParam MultipartFile imgFile, HttpSession session)
+   											throws IOException{
+	   System.out.println("############################ ");
+	   
+	   String path = session.getServletContext().getRealPath("/resource/upload/approval/");
+	   
+	   if(imgFile!=null) {
+	               String oriName = imgFile.getOriginalFilename();
+	               String ext = oriName.substring(oriName.lastIndexOf("."));
+	               Date today = new Date(System.currentTimeMillis());
+	               int randomNum = (int)(Math.random()*10000)+1;
+	               String rename = "appr_" + new SimpleDateFormat("yyyyMMddHHmmssSSS")
+	                           .format(today)+"_"+randomNum+ext;
+	               
+	               
+	               try {
+	            	   imgFile.transferTo(new File(path, oriName));
+	                  
+	                  //첨부파일 객체 리스트 
+//	                  files.add(      
+//	                        ApprovalAttachment.builder()
+//	                              .attachOriName(oriName)
+//	                              .attachReName(rename)
+//	                              .build()
+//	                        );
+	               }catch(IOException e) {
+	                  e.printStackTrace();
+	               }
+	            }
+	         
+	  
+
+	      
+	   return "approval/approver";
+   }
    
 }

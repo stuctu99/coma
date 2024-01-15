@@ -72,6 +72,7 @@ const addDelFunction=(function(){
 const fn_addFileForm=addDelFunction[0];
 const fn_deleteFileForm=addDelFunction[1];
 
+//파일이름
 
 $(document).on("change",".custom-file-input",(e=>{
 	

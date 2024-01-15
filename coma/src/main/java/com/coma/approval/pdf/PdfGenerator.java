@@ -16,6 +16,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
@@ -41,7 +42,7 @@ public class PdfGenerator {
 //		this.service = service;
 //	}
 	
-	public void generateAppr(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writerInfo) { 
+	public void generateAppr(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writerInfo, String imgPath) { 
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
@@ -52,6 +53,20 @@ public class PdfGenerator {
 			PdfWriter writer = PdfWriter.getInstance(document, baos); //document를 baos에 보냄
 			
 			document.open();
+			
+			
+			
+		     //##############################
+	          
+			//서명 매번 추가, 바로 프로젝트 저장
+			//매개변수로 받아오기
+	          Image image = Image.getInstance(imgPath);
+	         // document.add(image);
+	          System.out.println("서명 생성 완료");
+	          System.out.println("**************"+image);
+	          
+	          //################################
+			
 			
 			BaseFont objBaseFont = BaseFont.createFont(fontPath,BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 			Font font = new Font(objBaseFont, 12);
@@ -79,7 +94,7 @@ public class PdfGenerator {
 			
 		  // ------------------------------ 결재자 ------------------------------
 			// table #1
-	         document.add(generateTable(doc, font, document, writer)); 
+	         document.add(generateTable(doc, font, document, writer, image)); 
 	         document.add(emptySpace);
 	         
 	      // ------------------------------ 참조자 -------------------------------
@@ -210,7 +225,7 @@ public class PdfGenerator {
 	}
 	
 	//------------------------- 결재선 테이블 -------------------------
-	   private PdfPTable generateTable(ApprovalDoc doc, Font font, Document document, PdfWriter writer) {
+	   private PdfPTable generateTable(ApprovalDoc doc, Font font, Document document, PdfWriter writer, Image image) {
 	      
 	      
 	      PdfPTable table1 = new PdfPTable(6);
@@ -271,7 +286,11 @@ public class PdfGenerator {
 	          t1_hiddenCell2.setBorder(Rectangle.NO_BORDER);
 	          table1.addCell(t1_hiddenCell2);
 
-        	  t1_cell2 = new PdfPCell(new Phrase(" ", font));
+	     
+	          
+	          
+	          //서명 
+        	  t1_cell2 = new PdfPCell(image);
         	  t1_cell2.setFixedHeight(50f);
         	  t1_cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
         	  t1_cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -285,6 +304,7 @@ public class PdfGenerator {
 	          t1_hiddenCell3.setBorder(Rectangle.NO_BORDER);
 	          table1.addCell(t1_hiddenCell3);
 	          
+	          //결재자 이름
 	          for(int j=0; j<appName.length; j++) {
 
 	        	  t1_cell3 = new PdfPCell(new Phrase(appName[j], font));
