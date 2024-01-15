@@ -64,6 +64,18 @@ public class CommuteServiceImpl implements CommuteService {
 		return dao.countCommute(session, loginId);
 	}
 
+	@Override
+	public int countSearchCommute(Map <String, Object> commute) {
+		// TODO Auto-generated method stub
+		return dao.countSearchCommute(session, commute);
+	}
+
+	@Override
+	public List<Commute> searchCommute(Map<String, Object> commute) {
+		// TODO Auto-generated method stub
+		return dao.searchCommute(session,commute);
+	}
+
 
 
 }
