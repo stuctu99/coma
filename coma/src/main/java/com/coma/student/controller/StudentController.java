@@ -30,9 +30,17 @@ public class StudentController {
 	}
 	
 	@PostMapping("/infoStudent")
-	public @ResponseBody List<Map> selectStudentByInfo(@RequestBody String stuNo ){
+	public @ResponseBody List<Map> selectStudentByInfo(@RequestBody Map<String, Object> stuNo){
+		System.out.println(stuNo);
 		List<Map> stuInfo=service.selectStudentByInfo(stuNo);
 		return stuInfo;
+	}
+	
+	@PostMapping("/insertStudent")
+	public String insertStudentByAttend(String[] attendance) {
+		int result=service.insertStudentByAttend(attendance);
+		return "redirect:/student/student";
+		
 	}
 	
 }

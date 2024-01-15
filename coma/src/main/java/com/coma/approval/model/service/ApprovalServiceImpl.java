@@ -174,11 +174,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return doc;
 	}
 
-	@Override
-	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writer) {
-		PdfGenerator pdfGenerator=new PdfGenerator();
-		pdfGenerator.generateAppr(doc, response, fontPath, writer);
-	}
+//	@Override
+//	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writer, String imgPath) {
+//		PdfGenerator pdfGenerator=new PdfGenerator();
+//		pdfGenerator.generatePdf(doc, response, fontPath, writer, imgPath);
+//	}
 
 	@Override
 	public Emp selectEmpById(String empId) {
@@ -198,6 +198,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public List<Referrer> selectRefByDocNo(String docNo) {
 		return dao.selectRefByDocNo(session, docNo);
+	}
+
+	@Override
+	public int updateSign(Map<String, String> data) {
+		return dao.updateSign(session, data);
 	}
 
 	

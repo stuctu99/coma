@@ -1,5 +1,6 @@
 package com.coma.chatting.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +20,11 @@ public class ChattingDaoImpl implements ChattingDao {
 	public ChattingJoin selectCheckJoin(SqlSession session, Map<String, String> joinInfo) {
 		// TODO Auto-generated method stub
 		ChattingJoin data = session.selectOne("chatting.selectCheckJoin",joinInfo);
-		System.out.println("DAO 데이터 확인 : "+data);
 		return data;
 	}
 	
 	@Override
-	public List<ChattingJoin> selectRoomMemberList(SqlSession session, String roomNo) {
-		// TODO Auto-generated method stub
+	public List<Emp> selectRoomMemberList(SqlSession session, String roomNo) {
 		return session.selectList("chatting.selectRoomMemberList",roomNo);
 	}
 	

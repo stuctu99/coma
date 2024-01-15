@@ -12,7 +12,7 @@ import com.coma.model.dto.Emp;
 
 public interface ChattingDao {
 	ChattingJoin selectCheckJoin(SqlSession session, Map<String, String> joinInfo);
-	List<ChattingJoin> selectRoomMemberList(SqlSession session, String roomNo);
+	List<Emp> selectRoomMemberList(SqlSession session, String roomNo);
 	List<ChattingMessage> selectChatMessageByRoomNo(SqlSession session, String roomNo);
 	ChattingRoom selectRoomByRoomNo(SqlSession session, String roomNo);
 	Emp selectEmpByEmpId(SqlSession session, String empId);

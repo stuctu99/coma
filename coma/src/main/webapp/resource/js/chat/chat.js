@@ -72,8 +72,8 @@ function newRoom(data) {
 }
 
 function privateNewRoom(data) {
-	console.log("[웹소켓 메세지-1:1채팅방]:" + data.msg, data.loginId, data.targetId);
-	
+	$("." + data.targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
+	$("." + data.loginId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 }
 /*=============================================================================*/
 function intiCreateModalInput() {
@@ -126,7 +126,7 @@ const createRoom = (empId) => {
 					intiCreateModalInput();
 					enter_chattingRoom(data.roomNo);
 				} else {
-					newRoom();
+					
 				}
 			} else {
 				console.log("방생성 실패");
@@ -173,6 +173,7 @@ const privateChatting = (targetId, empId) => {
 					enter_chattingRoom(data.roomNo);
 				} else {
 					newRoom();
+					$("." + targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 				}
 			} else {
 				console.log("방생성 실패");
@@ -375,7 +376,6 @@ $(document).ready(function() {
 		}
 	})
 	$(".deleteCheckbox").change(function() {
-		alert("제발!!!");
 	})
 
 })
@@ -423,6 +423,7 @@ const fn_deleteRoom = () => {
 			.then(data => {
 				if (data.result === 'success') {
 					alert("삭제가 완료되었습니다.");
+					$("#delete-room").css("display", "none");
 					const msg = new MessageHandler("delete", loginId);
 					mserver.send(msg);
 					$(".chatting-list-btn").click();
@@ -476,6 +477,7 @@ const enter_chattingRoom = (roomNo) => {
 					const windowName = "chattingRoom " + roomNo;
 					const options = "width=600, height=600, scrollbars=yes"
 					$("#btn-" + roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
+					$(".chatting-list-btn").click();
 					window.open(url, windowName, options);
 
 				/*if (!chattingView || chattingView.closed) {

@@ -28,7 +28,7 @@ public class ChattingServiceImpl implements ChattingService {
 		return dao.selectCheckJoin(session, joinInfo);
 	}
 	@Override
-	public List<ChattingJoin> selectRoomMemberList(String roomNo) {
+	public List<Emp> selectRoomMemberList(String roomNo) {
 		// TODO Auto-generated method stub
 		return dao.selectRoomMemberList(session, roomNo);
 	}

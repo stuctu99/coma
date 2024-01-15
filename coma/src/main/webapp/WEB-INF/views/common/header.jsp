@@ -103,6 +103,7 @@
               <i class="ni ni-planet text-blue"></i> 전자결재
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
+              <li><a href="${pageContext.request.contextPath}/approval/addsign">서명 등록</a></li>
               <li><a href="${pageContext.request.contextPath}/approval/writedoc">결재신청</a></li>
               <li><a href="">결재문서함</a></li>
               <li><a href="">?</a></li>
@@ -129,7 +130,7 @@
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
               <li><a href="${path }/admin/adminEmp">사원관리</a></li>
               <li><a href="${path }/admin/adminStudent">학생관리</a></li>
-              <li><a href="">인사부</a></li>
+              <li><a href="${path }/student/student">학생 페이지</a></li>
             </ul>
           </li>
           <li class="nav-item">
