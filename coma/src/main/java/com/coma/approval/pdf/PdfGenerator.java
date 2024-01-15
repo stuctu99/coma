@@ -42,7 +42,7 @@ public class PdfGenerator {
 //		this.service = service;
 //	}
 	
-	public void generateAppr(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writerInfo, String imgPath) { 
+	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writerInfo, String imgPath) { 
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		

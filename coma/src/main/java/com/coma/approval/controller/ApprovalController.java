@@ -387,8 +387,8 @@ public class ApprovalController {
 	   String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/"+imgName);
 
 	   
-  
-	   pdfGen.generateAppr(doc, response, fontPath, writer, imgPath);
+	   //pdfGen이 service 역할
+	   pdfGen.generatePdf(doc, response, fontPath, writer, imgPath);
 	      
 	   //return "approval/viewdoc"; ㄴㄴ
 	   //return을 하면 outputStream이 또 호출됨
