@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.calendar.model.dao.CalendarDao;
+import com.coma.model.dto.ApprovalLeave;
 import com.coma.model.dto.Calendar;
 
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,11 @@ public class CalendarServiceImpl implements CalendarService {
 	public List<Calendar> selectCalendarAll(String empId) {
 		// TODO Auto-generated method stub
 		return dao.selectCalendarAll(session,empId);
+	}
+	@Override
+	public List<ApprovalLeave> selectCalendarApproval(String empId) {
+		// TODO Auto-generated method stub
+		return dao.selectCalendarApproval(session,empId);
 	}
 
 

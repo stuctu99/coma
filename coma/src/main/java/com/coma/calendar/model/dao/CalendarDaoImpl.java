@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.coma.model.dto.ApprovalLeave;
 import com.coma.model.dto.Calendar;
 
 
@@ -47,6 +48,11 @@ public class CalendarDaoImpl implements CalendarDao {
 	public List<Calendar> selectCalendarAll(SqlSession session, String empId) {
 		// TODO Auto-generated method stub
 		return session.selectList("calendar.selectCalendarAll",empId);
+	}
+	@Override
+	public List<ApprovalLeave> selectCalendarApproval(SqlSession session, String empId) {
+		// TODO Auto-generated method stub
+		return session.selectList("calendar.selectCalendarApproval",empId);
 	}
 	
 	
