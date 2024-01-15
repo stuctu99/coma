@@ -67,11 +67,12 @@ div {
 						<li>
 							<div class="col-12 profile">&nbsp;</div>
 						</li>
+						
 					</ul>
 					<div class="container profile-list" style="height: 499px;">
 						<c:if test="${not empty roomMemberList}">
 							<c:forEach var="emp" items="${roomMemberList }">
-								<div class="row">
+								<div class="row ${emp.empId }">
 									<div class="col-2 profile">
 										<c:if test="${emp.empGender eq 'M' }">
 											<img id="profile-img"

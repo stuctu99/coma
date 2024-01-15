@@ -42,7 +42,7 @@ public class ChattingServer extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println("[ChattingServer] : 메세지 받았다.");
-		System.out.println(message.getPayload()); // 클라이언트가 전송한 메세지
+		System.err.println("[전송메세지 정보] :"+message.getPayload()); // 클라이언트가 전송한 메세지
 		ChattingMessage msg = mapper.readValue(message.getPayload(), ChattingMessage.class);
 		Emp emp = service.selectEmpByEmpId(msg.getEmpId());
 		msg.setEmpObj(emp);
@@ -54,15 +54,30 @@ public class ChattingServer extends TextWebSocketHandler {
 		case "msg":
 			sendMessage(msg);
 			break;
+		case "rest":
+			clientOut(msg);
+			break;
+		case "out":
+			clientOut(msg);
 		}
 
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		if(msgPackages.size()>0) {
+		String roomNo = "";
+		String empId = "";
+		if (msgPackages.size() > 0) {
 			saveChattingMessage();
 		}
+		/*
+		 * for(Map.Entry<String, Map<String,WebSocketSession>> chatRoom :
+		 * room.entrySet()){ for(Map.Entry<String, WebSocketSession> client :
+		 * chatRoom.getValue().entrySet()) { if(client.getValue().equals(session)) {
+		 * empId = client.getKey(); roomNo = chatRoom.getKey(); break; } } }
+		 * List<String> list = controller.roomMember.get(roomNo); list.remove(empId);
+		 */
+
 		System.out.println("[ChattingServer] : 채팅서버 나갔다!!!");
 	}
 
@@ -73,9 +88,10 @@ public class ChattingServer extends TextWebSocketHandler {
 		// 채팅방 존재 시 존재하는 채팅방에 세션정보 추가
 		if (roomCheck) {
 			for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
-				System.out.println("[ChattingServer] : 현재 세션 유지중인 채팅방 리스트 : " + chatRoom);
+				System.err.println("[ChattingServer] : 현재 세션 유지중인 채팅방 리스트 : " + chatRoom);
 				if (chatRoom.getKey().equals(msg.getRoomNo())) {
-					clients.put(msg.getEmpId(), session);
+					/* clients.put(msg.getEmpId(), session); */
+					chatRoom.getValue().put(msg.getEmpId(), session);
 
 				}
 			}
@@ -91,11 +107,13 @@ public class ChattingServer extends TextWebSocketHandler {
 			sendMessage(msg);
 		} else {
 			// 채팅방 정보가 없을 때 최초 입장하는 세션을 기준으로 방정보를 session에 먼저 넣기
+			System.err.println("최초입장");
+			clients = new HashMap<String, WebSocketSession>();
 			clients.put(msg.getEmpId(), session);
 			room.put(msg.getRoomNo(), clients);
 			sendMessage(msg);
 		}
-		System.out.println("[ChattingServer] : 채팅방에 존재하는 세션정보: " + room.get(msg.getRoomNo()));
+		System.err.println("[ChattingServer] : 채팅방에 존재하는 세션정보: " + room.get(msg.getRoomNo()));
 
 	}
 
@@ -110,11 +128,15 @@ public class ChattingServer extends TextWebSocketHandler {
 		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
 			if (chatRoom.getKey().equals(msg.getRoomNo())) {
 				for (Map.Entry<String, WebSocketSession> client : chatRoom.getValue().entrySet()) {
+					System.err.println(chatRoom.getKey()+"session INFO : " + client);
 					WebSocketSession session = client.getValue();
-					System.out.println("session INFO : " + session);
+					/*
+					 * if(msg.getType().equals("rest")) {
+					 * chatRoom.getValue().remove(msg.getEmpId()); }
+					 */
 					try {
 						String message = mapper.writeValueAsString(msg);
-						session.sendMessage(new TextMessage(message));
+						session.sendMessage(new TextMessage(message)); 
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -123,15 +145,31 @@ public class ChattingServer extends TextWebSocketHandler {
 		}
 	}
 
+	private void clientOut(ChattingMessage msg) {
+		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
+			if (chatRoom.getKey().equals(msg.getRoomNo())) {
+				for (Map.Entry<String, WebSocketSession> client : chatRoom.getValue().entrySet()) {
+					System.err.println("out lkasjdlkasjdlkasjdlaksdjalskdjalksdjaskldj" + client);
+						if(client.getKey().equals(msg.getEmpId())) {
+							chatRoom.getValue().remove(msg.getEmpId());
+							System.err.println(chatRoom.getKey()+"세션 확인한번 해보자"+chatRoom.getValue());
+						}
+
+				}
+			}
+		}
+		sendMessage(msg);
+	}
+
 //	채팅메시지 DB저장 (현재 30개 기준)
 	private void saveChattingMessage() {
-			int result = service.insertChattingMessage(msgPackages);
-			if (result > 0) {
-				System.out.println("[ChattingServer] : 메세지 저장 완료");
-				msgPackages.clear();
-			} else {
-				System.out.println("[ChattingServer] : 메세지 저장 실패");
-			}
+		int result = service.insertChattingMessage(msgPackages);
+		if (result > 0) {
+			System.out.println("[ChattingServer] : 메세지 저장 완료");
+			msgPackages.clear();
+		} else {
+			System.out.println("[ChattingServer] : 메세지 저장 실패");
+		}
 	}
 
 	/*
