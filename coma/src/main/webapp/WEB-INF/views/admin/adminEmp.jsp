@@ -108,7 +108,7 @@
 		        		<td><a href="${path }/mypage/EmployeeDetails?empId=${e.EMP_ID }"><c:out value="${e.EMP_NAME }"/></a></td>
 		        		<td><c:out value="${e.JOB_TYPE }"/></td>
  		        		<td><c:out value="${e.DEPT_TYPE }"/></td>
-		        		<td><a href="#"><c:out value="${e.EMP_COMMUTE_STATUS!=null?e.EMP_COMMUTE_STATUS:'미출근'}"/></a></td>
+		        		<td><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModal"><c:out value="${e.EMP_COMMUTE_STATUS!=null?e.EMP_COMMUTE_STATUS:'미출근'}"/></button></td>
 		        		<td>
 			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.EMP_ID }');">삭제</button>
 		        		</td>
@@ -118,6 +118,26 @@
 		        </tbody>
 		    </table>
 		    <div id="pageBar">${pageBar }</div>
+		    <!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">근태 현황</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        ...
+			      </div>
+			      <div class="modal-footer">
+			      	<button type="button" class="btn btn-primary btn-sm">변경</button>
+			        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -181,7 +201,6 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 	const searchData=document.getElementById("searchData").value;
 	const textData=document.getElementById("textData").value;
 	console.log(searchData,textData);
-<<<<<<< HEAD
 	if(textData!=""){
 		fetch(url?'${path}'+url:"/admin/searchEmp",{
 			method:"post",
@@ -190,7 +209,8 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 				cPage:cPage,
 				numPerpage:numPerpage,
 				searchData:searchData,
-				textData:textData
+				textData:textData,
+				jsName:"fn_searchEmp"
 			})
 		}).then(response=>{
 			if(response.status!=200) throw new Error(repsonse.status);
@@ -251,18 +271,6 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 			document.getElementById("textData").value="";
 		}).catch(e=>{
 			console.log(e);
-=======
-	fetch(url?'${path}'+url:"/admin/searchEmp",{
-		method:"post",
-		headers:{"Content-Type":"application/json"},
-		body:JSON.stringify({
-			cPage:cPage,
-			numPerpage:numPerpage,
-			searchData:searchData,
-			textData:textData,
-			jsName:"fn_searchEmp"
-			
->>>>>>> branch 'master' of https://github.com/stuctu99/coma.git
 		})
 	}else{
 		alert("검색어를 입력해주세요");
