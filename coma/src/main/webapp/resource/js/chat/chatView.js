@@ -26,12 +26,32 @@ $("#exit-btn").click(function() {
 })
 
 $("#back").click(function() {
-	window.close();
-	$("#chatting-list-btn").click();
+	const roomNo = $("#roomNo").val();
+	const empId = loginId;
+	/*$connect.css("color","black");*/
+	fetch("/chatting/back",{
+		method:"delete",
+		headers:{
+			"Content-Type":"application/json"
+		},
+		body:JSON.stringify({
+			"roomNo":roomNo,
+			"empId":empId
+		})
+	})
+	.then(response=>{
+		return response.json();
+	})
+	.then(data=>{
+		if(data.result=='success'){
+			console.log("나가기 성공");
+			window.close();
+			$("#chatting-list-btn").click();
+		}
+	})
 })
 
 $(function() {
-
 	$("section>.container").scrollTop($("section>.container")[0].scrollHeight);
 })
 
@@ -39,15 +59,11 @@ $(function() {
 
 
 /* 채팅구현 */
-
 const server = new WebSocket("ws://" + location.host + "/chattingServer");
 const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
-const connectCheck = $("div#" + empId);
 console.log(roomNo, empId);
 server.onopen = (response) => {
-	connectCheck.parent().css("backgroundColor", "").css("opacity", 0.8);
-	connectCheck.css("color", "lime");
 	console.log(empId);
 	console.log(response);
 	
@@ -135,7 +151,8 @@ const sendMessage = () => {
 
 const openMessage = (msg) => {
 	/* NEW_JOIN FLAG 여부에 따라 메세지 출력 여부 결정하기*/
-
+	const $connect = $("#"+msg.empId);
+	$connect.css("color","lime");
 	fetch("/chatting", {
 		method: "PUT",
 		headers: {
@@ -211,6 +228,8 @@ class Message {
 		return JSON.stringify(this);
 	}
 	static deconvert(data) {
+		console.log("비교1"+data);
+		console.log("비교2"+JSON.parse(data));
 		return JSON.parse(data);
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.coma.chatting.controller.ChattingController;
 import com.coma.chatting.model.service.ChattingService;
 import com.coma.model.dto.ChattingMessage;
 import com.coma.model.dto.Emp;
@@ -31,6 +32,7 @@ public class ChattingServer extends TextWebSocketHandler {
 
 	private final ObjectMapper mapper; // Jackson Converter
 	private final ChattingService service;
+	private final ChattingController controller;
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
