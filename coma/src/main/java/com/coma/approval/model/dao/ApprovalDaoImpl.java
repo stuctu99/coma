@@ -102,6 +102,11 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return session.selectList("approval.selectRefByDocNo", docNo);
 	}
 
+	@Override
+	public int updateSign(SqlSession session, Map<String, String> data) {
+		return session.update("emp.updateSign", data);
+	}
+
 	
 	
 	

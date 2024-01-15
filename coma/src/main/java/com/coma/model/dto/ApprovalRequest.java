@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class ApprovalRequest {
 
 	private String reqNo;
-	private String reqDetail;
 	private Date reqDate;
 	private String docNo;
 }
