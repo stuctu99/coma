@@ -1,15 +1,11 @@
 package com.coma.student.service;
 
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Map;
 
-import com.coma.student.dao.StudentDao;
-
-import lombok.RequiredArgsConstructor;
-
-@Service
-@RequiredArgsConstructor
-public class StudentService {
-	private final StudentDao dao;
-	private final SqlSession session;
+public interface StudentService {
+	
+	List<Map> selectStudentByEmpId(String loginId);
+	List<Map> selectStudentByInfo(Map<String, Object> stuNo);
+	int insertStudentByAttend(String[] attendance);
 }

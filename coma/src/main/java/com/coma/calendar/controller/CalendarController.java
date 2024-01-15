@@ -28,18 +28,6 @@ public class CalendarController {
 		
 		return "calendar/calendar";
 	}
-	@GetMapping("/calendar.do")
-	@ResponseBody
-	public List<Calendar> selectCalendar(){
-		System.out.println("안녕");
-		return service.selectCalendar();
-	}
-//	@PostMapping("/calendarInsert")
-//	
-//	public String calendarInsert(@RequestBody Calendar data) {
-//		System.out.println(data);
-//       int result= service.calendarInsert(data);
-//            return "insert 완료!";
-//      
-//}
+
+
 }

@@ -10,10 +10,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.coma.approval.model.service.ApprovalService;
+import com.coma.approval.pdf.PdfGenerator;
 import com.coma.model.dto.ApprovalAttachment;
 import com.coma.model.dto.ApprovalCash;
 import com.coma.model.dto.ApprovalDoc;
@@ -157,6 +162,7 @@ public class ApprovalController {
            .docType(docType)
            .docTitle(title)
            .empId(empId)
+           .docDetail(editorContent)
            .build();   
          
       
@@ -168,7 +174,6 @@ public class ApprovalController {
                      .leaveType(leaveType)
                          .leaveStart(formatDate(leaveStart))
                          .leaveEnd(formatDate(leaveEnd))
-                         .leaveDetail(editorContent)
                          .build();
               
       }
@@ -181,7 +186,6 @@ public class ApprovalController {
             cash = ApprovalCash.builder()
                      .cashExpense(expense)
                      .cashDate(formatDate(cashDate))
-                     .cashDetail(editorContent)
                      .build();
       }
       
@@ -190,7 +194,6 @@ public class ApprovalController {
       if(reqDate!=null && !reqDate.equals("")) {
          
             req = ApprovalRequest.builder()
-                     .reqDetail(editorContent)
                      .reqDate(formatDate(reqDate))
                      .build();
       }
@@ -199,7 +202,6 @@ public class ApprovalController {
       if(etcDate!=null && !etcDate.equals("")) {
          
             etc = ApprovalEtc.builder()
-                     .etcDetail(editorContent)
                      .etcDate(formatDate(etcDate))
                      .build();
       }
@@ -309,17 +311,140 @@ public class ApprovalController {
    
 //--------------------------- 문서 상세보기 ------------------------------
    @GetMapping("/viewdoc")
-   public String viewDoc(String docNo) {
+   public String viewDoc(String docNo, String docType, Model model) {
 	   
-	 ApprovalDoc doc = service.selectAppDoc(docNo); 
+	 Map<String, String> data = new HashMap<String, String>();
 	 
-	 System.out.println("테스트: ***************:"+doc);
+	 docNo = "DOC_325"; //테스트용
+	 docType = "etc"; //테스트용
 	 
-      return "approval/viewdoc";
+	 data.put("docNo", docNo); 
+	 data.put("docType", docType); 
+	 
+	 ApprovalDoc doc = service.selectAppDoc(data); 
+	 
+	 	model.addAttribute("doc",doc);
+	 
+	 String fullDate = doc.getDocDate()+" ";
+     String onlyDate = fullDate.substring(0,10); //시간 잘라내기
+	 
+     	model.addAttribute("onlyDate", onlyDate);
+	 
+	 String typeKor = "";
+	 
+	 switch(doc.getDocType()) {
+		case "leave" : typeKor = "휴가 신청서"; break;
+		case "cash" : typeKor = "지출 결의서"; break;
+		case "req" : typeKor = "품의서"; break;
+		case "etc" : typeKor = "기타 문서"; break;
+	 }
+	 
+	 	model.addAttribute("typeKor", typeKor);
+	
+	 Emp writer = service.selectEmpById(doc.getEmpId());
+	 	
+	 	model.addAttribute("writer", writer);
+	 	
+     
+	 return "approval/viewdoc";
    }
    
+//---------------------------- PDF -------------------------------------------
    
-//---------------------------------------------------------------------
    
+   
+   @Autowired
+   private PdfGenerator pdfGen;
+
+   @GetMapping("/downloadPdf")
+   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, 
+		   						String docType, String empId, String imgName) {
+	   
+//	   docNo="DOC_304";
+//	   docType="leave";
+//	   empId="COMA_1";
+	   
+	   
+	   Emp writer = service.selectEmpById(empId);
+	   
+	   //-----해당 문서 정보
+	   
+	   Map<String, String> data = new HashMap<String, String>();
+	   data.put("docNo", docNo); 
+	   data.put("docType", docType); 
+	   
+	   ApprovalDoc doc = service.selectAppDoc(data); 
+
+	   
+	   //--------------
+	   
+//	   String path = session.getServletContext().getRealPath("/resource/upload/approval/"+doc.getDocNo()+".pdf");
+	  
+	   
+	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
+
+	   //String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/image (6).png");
+	   String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/"+imgName);
+
+	   
+	   //pdfGen이 service 역할
+	   pdfGen.generatePdf(doc, response, fontPath, writer, imgPath);
+	      
+	   //return "approval/viewdoc"; ㄴㄴ
+	   //return을 하면 outputStream이 또 호출됨
+	   
+   }
+   
+//------------------------------- 서명 추가 --------------------------------------
+ 
+   @GetMapping("/addsign")
+   public String approver() {
+      return "approval/addsign";
+   }
+   
+   @GetMapping("/signCanvas")
+   public String newSign() {
+      return "approval/signCanvas";
+   }
+   
+
+   @PostMapping("/getSignImg")
+   public String getSignImg(@RequestParam MultipartFile imgFile, HttpSession session, String empId)
+   											throws IOException{
+	   System.out.println("############################ ");
+	   Map<String, String> data = new HashMap<String, String>();
+	   
+	   
+	   String path = session.getServletContext().getRealPath("/resource/upload/sign");
+	   
+	   if(imgFile!=null) {
+	               String oriName = imgFile.getOriginalFilename();
+	               String ext = oriName.substring(oriName.lastIndexOf("."));
+	               Date today = new Date(System.currentTimeMillis());
+	               String rename = "sign_" + empId + ext;
+	              // 서명 다시 등록할 경우 파일 덮어쓰기됨.
+	               
+	               data.put("sign", rename); 
+	               data.put("empId", empId); 
+	               
+	               try {
+	            	   imgFile.transferTo(new File(path, rename));
+	                  
+	               }catch(IOException e) {
+	                  e.printStackTrace();
+	               }
+	            }
+	   
+	   
+		   // sign 파일 이름 DB에 추가
+		 service.updateSign(data);
+	  
+
+	   
+	   
+	      
+	   return "redirect:/";
+	   	
+   }
    
 }

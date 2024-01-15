@@ -62,8 +62,7 @@ public class PageFactory {
 	   }
 
 	   
-	   public String pageAjax(int cPage, int numPerpage, int totalData,
-		         String url) {
+	   public String pageAjax(int cPage, int numPerpage, int totalData, String url, String jsName) {
 		   
 		   	  StringBuffer pageBar=new StringBuffer();
 		   
@@ -80,7 +79,7 @@ public class PageFactory {
 		         pageBar.append("</li>");
 		      }else {
 		         pageBar.append("<li class='page-item'>");
-		         pageBar.append("<a class='page-link' href='javascript:fn_searchStudent("+(pageNo-1)+","+numPerpage+",\""+url+"\")'><</a>");
+		         pageBar.append("<a class='page-link' href='javascript:"+jsName+"("+(pageNo-1)+","+numPerpage+",\""+url+"\")'><</a>");
 		         pageBar.append("</li>");
 		      }
 
@@ -91,7 +90,7 @@ public class PageFactory {
 		            pageBar.append("</li>");
 		         }else {
 		            pageBar.append("<li class='page-item'>");
-		            pageBar.append("<a class='page-link' href='javascript:fn_searchStudent("+(pageNo)+","+numPerpage+",\""+url+"\")'>"+pageNo+"</a>");
+		            pageBar.append("<a class='page-link' href='javascript:"+jsName+"("+(pageNo)+","+numPerpage+",\""+url+"\")'>"+pageNo+"</a>");
 		            pageBar.append("</li>");
 		         }
 		         pageNo++;

@@ -1,58 +1,25 @@
 .row{
-	  /*   border: 1px solid #444444;*/
-	     background-color: lavenderblush;
+/*	     border: 1px solid #444444;*/
 	     width: 100%;
+	     margin: 40px;
 	  
-  }
- 
- .appr_table{
-    width: 700px;
-    height: 150px;
-    border: 1px solid rgb(192, 192, 192);
-    background-color: rgb(255, 255, 255);
- 
-    
-  }
-  
-  .sign_td{
-	  width: 100px;
-	  height: 100px;
-	  
-  }
-  .ref_name{
-	  text-align: left;
-
-  }
-  
- .ref_table{
-  	width: 700px;
-  	height: 30px;
-    border: 1px solid rgb(192, 192, 192);
-  }
-  th, td, th {
-    border: 1px solid rgb(192, 192, 192);
-  }
-  .nav-item{
-  	margin: 5px;
   }
 
-  .doc_basic{
-	  
-	width: 100%;
+.mylabel{
+	background-color: rgb(215, 221, 245) !important;;
+ 	width : 20%;	
+ 	}
 	
-	
-  }
-  .line_btn{
-	  text-align: left;
-	  margin: 5px;
-  }
+.table th{
+	border:1px solid rgb(170, 173, 199) !important;
+	font-size: 15px;
+}	
 
-  
-  .line1{
-	  height: 50px;
-	  text-align: right;
-  }
-  .line3{
-	  height: 50px;
-  }
-  
+.table td{
+	border:1px solid rgb(170, 173, 199) !important;
+	font-size: 15px;
+	width : 30%;
+}
+	
+
+

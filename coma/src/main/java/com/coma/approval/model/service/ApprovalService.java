@@ -1,9 +1,16 @@
 package com.coma.approval.model.service;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
 
 import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
+import com.coma.model.dto.Referrer;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 public interface ApprovalService {
 
@@ -12,5 +19,15 @@ public interface ApprovalService {
 	
 	int insertApproval(ApprovalDoc all);
 	
-	ApprovalDoc selectAppDoc(String docNo);
+	ApprovalDoc selectAppDoc(Map<String, String> data);
+	
+	Emp selectEmpById(String empId);
+
+	//ApprovalDoc selectRefByDocNo(String docNo);
+
+	List<Approver> selectApprByDocNo(String docNo);
+	
+	List<Referrer> selectRefByDocNo(String docNo);
+	
+	int updateSign(Map<String, String> data);
 }

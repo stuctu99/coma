@@ -18,7 +18,6 @@ public class ApprovalLeave {
 	private Date leaveStart;
 	private Date leaveEnd;
 	private String leaveHalf;
-	private String leaveDetail;
 	private String docNo;
 
 }

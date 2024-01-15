@@ -1,15 +1,21 @@
 package com.coma.approval.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.approval.model.dao.ApprovalDao;
+import com.coma.approval.pdf.PdfGenerator;
 import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
+import com.coma.model.dto.Referrer;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,6 +32,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.selectEmpByData(session, data);
 		
 	}
+	
+	//@Autowired
+	//private PdfGenerator pdfGenerator;
 
 	
 	@Override
@@ -158,13 +167,48 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public ApprovalDoc selectAppDoc(String docNo) {
+	public ApprovalDoc selectAppDoc(Map<String, String> data) {
 		
-		ApprovalDoc doc = dao.selectAppDoc(session, docNo);
+		ApprovalDoc doc = dao.selectAppDoc(session, data);
 		
 		return doc;
 	}
 
+//	@Override
+//	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writer, String imgPath) {
+//		PdfGenerator pdfGenerator=new PdfGenerator();
+//		pdfGenerator.generatePdf(doc, response, fontPath, writer, imgPath);
+//	}
+
+	@Override
+	public Emp selectEmpById(String empId) {
+		return dao.selectEmpById(session, empId);
+	}
+
+//	@Override
+//	public ApprovalDoc selectRefByDocNo(String docNo) {
+//		return dao.selectRefByDocNo(session, docNo);
+//	}
+
+	@Override
+	public List<Approver> selectApprByDocNo(String docNo) {
+		return dao.selectApprByDocNo(session, docNo);
+	}
+
+	@Override
+	public List<Referrer> selectRefByDocNo(String docNo) {
+		return dao.selectRefByDocNo(session, docNo);
+	}
+
+	@Override
+	public int updateSign(Map<String, String> data) {
+		return dao.updateSign(session, data);
+	}
+
+	
+	
+
+	
 
 
 }

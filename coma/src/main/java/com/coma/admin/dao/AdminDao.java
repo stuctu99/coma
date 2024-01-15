@@ -21,7 +21,7 @@ public class AdminDao {
 		int cPage=(Integer)page.get("cPage");
 		int numPerpage=(Integer)page.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
-		return session.selectList("emp.selectEmpAllByCurrent",null,rb);
+		return session.selectList("emp.selectEmpAllByCurrent",page,rb);
 	}
 	
 //	public List<Map> selectEmpAllByCommute(SqlSession session){
@@ -45,8 +45,10 @@ public class AdminDao {
 	}
 	
 	public List<Map> searchEmp(SqlSession session, Map<String, Object> searchMap){
-		System.out.println(searchMap);
-		return session.selectList("emp.searchEmp", searchMap);
+		int cPage=(Integer)searchMap.get("cPage");
+		int numPerpage=(Integer)searchMap.get("numPerpage");
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
+		return session.selectList("emp.searchEmp", searchMap,rb);
 	}
 	
 	public int countEmpByData(SqlSession session, Map<String, Object> searchMap) {
@@ -54,7 +56,7 @@ public class AdminDao {
 	}
 	
 	public List<Emp> ExcelDownEmp(SqlSession session){
-		return session.selectList("emp.selectEmpAllByCurrent");
+		return session.selectList("emp.ExcelDownEmp");
 	}
 	
 	//사원 Chart Data

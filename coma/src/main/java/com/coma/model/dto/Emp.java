@@ -52,6 +52,7 @@ public class Emp implements UserDetails, Serializable{
    private Job job;
    private String empAddr ;
    private String empAddrDetail ;
+   private String sign;
    
    
    @Override

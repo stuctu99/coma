@@ -1,12 +1,14 @@
 package com.coma.commute.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.coma.model.dto.Calendar;
 import com.coma.model.dto.Commute;
 @Repository
 public class CommuteDaoImpl implements CommuteDao {
@@ -41,6 +43,18 @@ public class CommuteDaoImpl implements CommuteDao {
       // TODO Auto-generated method stub
       return session.update("commute.updateEndTime",empId);
    }
+
+	@Override
+	public List<Map> selectCommuteAll(SqlSession session, String loginId) {
+		// TODO Auto-generated method stub
+		return session.selectList("commute.selectCommuteAll",loginId);
+	}
+
+	@Override
+	public int countCommute(SqlSession session, String loginId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("commute.countCommute",loginId);
+	}
 
 
 

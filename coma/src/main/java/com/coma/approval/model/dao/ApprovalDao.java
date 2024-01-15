@@ -1,6 +1,7 @@
 package com.coma.approval.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -32,5 +33,16 @@ public interface ApprovalDao {
 	int insertRefer(SqlSession session, Referrer ref);
 	
 	
-	ApprovalDoc selectAppDoc(SqlSession session, String docNo);
+	ApprovalDoc selectAppDoc(SqlSession session, Map<String, String> data);
+	
+	Emp selectEmpById(SqlSession session, String empId);
+	
+//	ApprovalDoc selectRefByDocNo(SqlSession session, String docNo);
+	
+	List<Approver> selectApprByDocNo(SqlSession session, String docNo);
+	
+	List<Referrer> selectRefByDocNo(SqlSession session, String docNo);
+	
+	int updateSign(SqlSession session, Map<String, String> data);
+	
 }

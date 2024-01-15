@@ -1,10 +1,15 @@
 package com.coma.mypage.controller;
 
+
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -19,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.coma.common.pagefactory.PageFactory;
 import com.coma.emp.service.EmpServiceImpl;
 import com.coma.model.dto.Emp;
 import com.coma.mypage.model.service.MypageService;
@@ -36,7 +41,7 @@ public class MypageController {
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	private final EmpServiceImpl  empService;
 	private final Logger logger = LoggerFactory.getLogger(MypageController.class);
-	
+	private final PageFactory pageFactory;
 	//나의 상세보기로 화면 전환하는 메소드
 	@GetMapping("/mypageDetails")
 	public void test() {
@@ -47,7 +52,7 @@ public class MypageController {
 	@PostMapping("/updatemypage")
 	public String  updateEmployee(@RequestParam Map<String, Object> emp,
 			@RequestParam("empPhoto") MultipartFile file,
-			HttpSession session //, Model model 
+			HttpSession session , Model model 
 			)throws IOException {	  				
 		// 프로필 사진 업로드하기 
 		//파일 경로 
@@ -71,19 +76,18 @@ public class MypageController {
 		int result = service.updateEmp(emp);
 		System.out.println(result);
 		
-//		//result 결과에 따라서 메세지 출력 
-//		String msg, loc;		
-//		if(result>0) {
-//			msg="입력성공";
-//			loc="index";
-//		}else {
-//			msg="입력실패";
-//			loc = "mypage/mypageDetails";			
-//		}
-//		model.addAttribute("msg",msg);
-//		model.addAttribute("loc",loc);
-//		return "common/msg";
-		return "redirect:/";
+		//result 결과에 따라서 메세지 출력 
+		String msg, loc;		
+		if(result>0) {
+			msg="정보 수정이 완료되었습니다.";
+			loc="mypage/mypageDetails";
+		}else {
+			msg="정보 수정이 실패되었습니다.";
+			loc = "mypage/mypageDetails";			
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		return "common/msg";
 	}
 	
 	
@@ -140,10 +144,45 @@ public class MypageController {
 	}
 	
 	//휴가근황보는 메소드 
-	@GetMapping("/vacationSituation")
-	public void vacation() {
-		
+	@GetMapping("/MyvacationInfo")
+	public void MyvacationInfo(@RequestParam(defaultValue="1") int cPage,
+								@RequestParam(defaultValue="10") int numPerpage,
+								Principal pri, Model m) {
+		//휴가 결재 리스트 가져오기 
+		String loginId=pri.getName();
+		List<Map> vacationList= service.selectVacationInfo(Map.of("cPage",cPage,"numPerpage",numPerpage,"loginId",loginId));		
+		System.out.println(vacationList);		
+		Iterator<Map> iterator = vacationList.iterator();
+		//결재가 진행중인 문서 수
+		int waitCount = 0;
+		//결재가 완료된 문서 수 
+		int finishCount = 0;
+		while (iterator.hasNext()) {
+		    Map<Object, Object> vacation = iterator.next();
+		    if (!("완료".equals("DOC_PROGRESS") || "반려".equals("DOC_PROGRESS"))) {
+		        waitCount++;
+		        System.out.println("들어왔니 ?");
+		    }		    
+		    if ("완료".equals("DOC_PROGRESS")){
+		    	finishCount++;
+		    	System.out.println("들어왔니 ?");
+		    }
+		    
+		}		
+		//System.out.println(waitCount);
+		int count=service.countVacation(loginId);
+		m.addAttribute("waitCount",waitCount);
+		m.addAttribute("finishCount",finishCount);
+		m.addAttribute("vacation",vacationList);
+		m.addAttribute("count",count);
+		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/mypage/MyvacationInfo"));
 	}
+	
+	//@PostMapping("MyCommuteInfo")
+	//public void myCommuteInfo() { 	}
+
+
+
 	
 	
 

@@ -1,5 +1,6 @@
 package com.coma.mypage.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -36,6 +37,16 @@ public class MypageServiceImpl implements MypageService {
 	public int updateEmployeeDetail(Map<String, Object> emp) {
 		int result=dao.updateEmployeeDetail(session, emp);
 		return result;
+	}
+	@Override
+	public int countVacation(String loginId) {
+		// TODO Auto-generated method stub
+		return dao.countVacation(session,loginId);
+	}
+	@Override
+	public List<Map> selectVacationInfo(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.selectVacationInfo(session, map);
 	}
 	 
 

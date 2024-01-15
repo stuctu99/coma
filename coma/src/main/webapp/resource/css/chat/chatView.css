@@ -1,10 +1,17 @@
 @charset "UTF-8";
+
+/**{
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+*/
+
 html{
 	margin:0 auto;
 }
 
 header>div.container{
-	height: 125px;
+	z-index: -99;
+	height: 85px !important;
 }
 
 footer#chatView-footer {
@@ -35,6 +42,10 @@ section>div:nth-child(1){
 	overflow: hidden !important;
 }
 
+.chat-title{
+	padding-right: 65px !important;
+}
+
 .emp-info{
 	padding: 0px 5px !important;
 	line-height: 1.7 !important;
@@ -55,16 +66,26 @@ section>div:nth-child(1){
 
 
 .profile-list{
+	width: 180px !important;
 	height: 518px !important;
 	padding-top: 15px;
-	margin-bottom: 15px;
+	margin-bottom: 15px; 
+	opacity: 1.5;
 }
 
 .profile-list > .row{
+	padding-top:10px;
+	padding-left:30px;
 	margin-bottom: 4px;
+	display: flex;
+	justify-content: end;
 }
 
-.profile-list > .row>div:nth-last-child(1){
+.profile-list > .row>div{
+	padding-left : 10px !important;
+}
+
+.profile-list > .row>div:nth-child(1){
 	text-align: left;
 }
 
@@ -140,7 +161,7 @@ section>div:nth-child(1){
 	top: 0px;
 	left: 0px;*/
 	width: 100%;
-	background-color: #a24ff0;
+	background-color: #5e72e4;
 	padding: 12px 15px;
 	border: 0;
 	outline: 0;
@@ -149,6 +170,7 @@ section>div:nth-child(1){
 	font-size: 22px;
 }
 #back {
+	
 /*	position: fixed;
 	top: 0px;
 	left: 0px;*/
@@ -159,7 +181,7 @@ section>div:nth-child(1){
 	border: 0;
 	outline: 0;
 	cursor: pointer;
-	color: #a24ff0;
+	color: #5e72e4;
 	font-size: 22px;
 }
 
@@ -177,6 +199,7 @@ section>div:nth-child(1){
 	top: 0;
 	right: 0;
 	background-color: white;
+	opacity: 0.9;
 	height: 100%;
 	padding: 10px 10px;
 	transition: transform 0.3s ease;

@@ -1,4 +1,8 @@
 @charset "UTF-8";
+/**{
+	font-family: 'Noto Sans KR', sans-serif !important;
+}*/
+
 header {
   position: fixed;
   top: 0; left: 0;
@@ -16,6 +20,11 @@ footer {
   height: 5px;
   width: 100%;
   background-color:white;
+}
+
+.col-1,.col-2{
+	display: flex;
+	justify-content: center;
 }
 
 .btn{
@@ -59,6 +68,11 @@ strong:has(div){
 	text-align: center;
 }
 
+#chatting-active{
+	width: 80px;
+	height: 30px;
+}
+
 .enter-room{
 	width: 74.83px;
 	height: 30px;
@@ -85,12 +99,25 @@ hr {
 
 .chat-title{
 	padding:5px;
-	background-color: #a24ff0;
+
+	background-color: #5e72e4;
+	box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+	border-color: #5e72e4;
 	color: #f1ebf7;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #create-room{
+	width: 74.83px;
+	height: 30px;
+	display: none;
+}
+
+#delete-room{
+	padding: 0px !important;
+	text-align: center;
+	width:52px;
+	height: 30px;
 	display: none;
 }
 
@@ -104,6 +131,7 @@ hr {
 
 .emp-list, .chatting-list{
 	margin-top:5px;
+	padding: 0px 5px !important;
 	text-align: left;
 }
 

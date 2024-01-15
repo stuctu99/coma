@@ -1,6 +1,7 @@
 package com.coma.approval.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -75,11 +76,38 @@ public class ApprovalDaoImpl implements ApprovalDao {
 
 
 	@Override
-	public ApprovalDoc selectAppDoc(SqlSession session, String docNo) {
-		
-
-		return session.selectOne("approval.selectAppDoc", docNo);
+	public ApprovalDoc selectAppDoc(SqlSession session, Map<String, String> data) {
+		return session.selectOne("approval.selectAppDoc", data);
 	}
+
+	@Override
+	public Emp selectEmpById(SqlSession session, String empId) {
+		return session.selectOne("emp.selectEmpById", empId);
+	}
+
+//	@Override
+//	public ApprovalDoc selectRefByDocNo(SqlSession session, String docNo) {
+//		return session.selectOne("approval.selectRefByDocNo", docNo);
+//	}
+
+	@Override
+	public List<Approver> selectApprByDocNo(SqlSession session, String docNo) {
+		return session.selectList("approval.selectApprByDocNo", docNo);
+	}
+
+	@Override
+	public List<Referrer> selectRefByDocNo(SqlSession session, String docNo) {
+		return session.selectList("approval.selectRefByDocNo", docNo);
+	}
+
+	@Override
+	public int updateSign(SqlSession session, Map<String, String> data) {
+		return session.update("emp.updateSign", data);
+	}
+
+	
+	
+	
 	
 
 }
