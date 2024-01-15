@@ -44,7 +44,7 @@ $("#back").click(function() {
 			return response.json();
 		})
 		.then(data => {
-			if (data.result == 'success') {
+			if (data.result) {
 				console.log("나가기 성공");
 				server.send(new Message("rest", "", "", "", empId, roomNo).convert());
 				window.close();
@@ -178,7 +178,8 @@ const openMessage = (msg) => {
 }
 
 const connectionRest = (msg) => {
-	const $connectFlag = $("#" + msg.empId);
+	console.log("나가면 여기가 실행되어야해"+msg.empId);
+	const $connectFlag = $(".list-"+msg.roomNo+" #" + msg.empId);
 	$connectFlag.css("color", "black");
 }
 
@@ -216,6 +217,21 @@ window.onload = () => {
 		}
 
 	})
+}
+
+window.closed = () =>{
+	alert("닫기 시 이벤트 발생");
+	const roomNo = $("#roomNo").val();
+	fetch("/chatting/"+roomNo)
+	.then(response=>{
+		if(response.status!=200){
+			console.log('실패!!');
+		}
+		return response.json();
+	})
+	.then(data=>{
+		
+	});
 }
 
 class Message {

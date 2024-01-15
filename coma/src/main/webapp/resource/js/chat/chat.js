@@ -68,10 +68,12 @@ function newRoom(data) {
 	console.log("새로 생성된 채팅방" + data.roomNo);
 	intiCreateModalInput();
 	/*$(".chatting-list-btn").click();*/
-	fn_roomListByType("engagement");
+	/*fn_roomListByType("engagement");*/
+	//알림 보여줄 수 있도록 구현하면 좋을 것 같다.
 }
 
 function privateNewRoom(data) {
+	console.log("여긴들어오니?");
 	$("." + data.targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 	$("." + data.loginId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 }

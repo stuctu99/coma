@@ -67,9 +67,10 @@ div {
 						<li>
 							<div class="col-12 profile">&nbsp;</div>
 						</li>
-						
+
 					</ul>
-					<div class="container profile-list" style="height: 499px;">
+					<div class="container profile-list list-${roomNo } }"
+						style="height: 499px;">
 						<c:if test="${not empty roomMemberList}">
 							<c:forEach var="emp" items="${roomMemberList }">
 								<div class="row ${emp.empId }">
@@ -87,16 +88,18 @@ div {
 									</div>
 
 									<div class="col-9 emp-info">
+									${roomMember }
 										<strong><c:out value="${emp.empName}" /></strong>&nbsp;
 										<c:out value="${emp.job.jobType }" />
-										<c:choose>
-											<c:when test="${empList.contains(emp.empId) }">
-												<strong class="connectView" id="${emp.empId }" style="color: lime;">&#9900</strong>
-											</c:when>
-											<c:otherwise>
-												<strong class="connectView" id="${emp.empId }" >&#9900</strong>
-											</c:otherwise>
-										</c:choose>
+											<c:choose>
+												<c:when test="${roomMember.containsKey(emp.empId)}">
+													<strong class="connectView" id="${emp.empId }"
+														style="color: lime;">&#9900</strong>
+												</c:when>
+												<c:otherwise>
+													<strong class="connectView" id="${emp.empId }">&#9900</strong>
+												</c:otherwise>
+											</c:choose>
 									</div>
 
 								</div>
