@@ -16,7 +16,6 @@ public class ApprovalCash {
 	private String cashNo;
 	private int cashExpense;
 	private Date cashDate;
-	private String cashDetail;
 	private String docNo;
 		
 }

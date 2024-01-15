@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class ApprovalEtc {
 
 	private String etcNo;
-	private String etcDetail;
 	private Date etcDate;
 	private String docNo;
 	
