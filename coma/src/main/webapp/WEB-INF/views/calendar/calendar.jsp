@@ -185,12 +185,8 @@ input[type="datetime-local"] {
               <div>
               <span>일정색상</span>
                <select id="calColor" class="modalV" readonly >
-                  <option value="yellow">노랑색</option>
-                  <option value="red">빨강색</option>
-                  <option value="orange">주황색</option>
+                  <option value="red">노랑색</option>
                   <option value="green">초록색</option>
-                  <option value="blue">파랑색</option>
-                  <option value="indigo">남색</option>
                   <option value="purple">보라색</option>
                 </select>
               </div>
@@ -209,7 +205,7 @@ input[type="datetime-local"] {
     <!-- 실제 화면을 담을 영역 -->
     	 <div>              
                 <button onclick="fcMy()">개인일정</button>      
-                  <button onclick="fcAll()">전체일정</button>           
+                  <button onclick="fcAll()">전사일정</button>           
                  <button onclick="fcDept()">부서일정</button> 
          </div>
          <div>             
@@ -336,7 +332,7 @@ input[type="datetime-local"] {
             	            var events = [];
             	            data.forEach(event => {
             	              events.push({
-            	                id:'dept2',
+            	                id:'MY',
             	                title: event.calTitle,
             	                start: event.calStart,
             	                end: event.calEnd,
@@ -358,6 +354,40 @@ input[type="datetime-local"] {
             	        });
             	      }
             	    };
+        	  var eventSource4 = {
+            	      id: 'approval',
+            	      events: function(fetchInfo, successCallback, failureCallback) {
+            	        $.ajax({
+            	          url: "/calendar/calendarApproval",
+            	          method: 'POST',
+            	          dataType: 'json',
+            	          contentType: 'application/json; charset=utf-8',
+            	          data: JSON.stringify({
+            	            empId: loginmemberEmpId
+            	          }),
+            	         
+            	          success: function(data) {
+            	            var events = [];
+            	            data.forEach(event => {
+            	            	console.log("s너다던",event);
+            	              events.push({
+            	                id:'approval',
+            	                title: event.leaveType,
+            	                start: event.leaveStart,
+            	                end: event.leaveEnd
+            	               
+            	              });
+            	            });
+            	            successCallback(events);
+            	            
+            	          },
+            	          error: function(e) {
+            	        	  console.log(events)
+            	            failureCallback('이벤트를 가져오는 도중 오류가 발생했습니다!');
+            	          }
+            	        });
+            	      }
+            	    };
         	  if (calId.value === 'ALL') {
         	    // 첫 번째 이벤트 소스만 사용
         	    return [eventSource1];
@@ -365,7 +395,7 @@ input[type="datetime-local"] {
         	    // 두 번째 이벤트 소스 추가 사용
         	    return [eventSource2];
         	  } else if(calId.value==="MY"){
-        		  return [eventSource3];
+        		  return [eventSource3,eventSource4];
         	  }
         	}
 
@@ -438,14 +468,17 @@ input[type="datetime-local"] {
             console.log('Coordinates: ', info.jsEvent);
             console.log('View: ', info.view);  */
             console.log('요거요거:',info.event.title);
+            console.log('이거닷!!:',info.event);
+			console.log("진짜 길이:",info.event.endStr.length);
+			if(info.event.endStr.length>10){
             calTitle.value= info.event.title;
             calNo.value= info.event.extendedProps.calNo;
             calContent.value=info.event.extendedProps.calContent; 
             calType.value=info.event.extendedProps.calType;
             console.log(info.event.extendedProps.empId); //COMA_1 이렇게 나옴
-            empId.value=info.event.extendedProps.empId[0].empId; //[object Object]이렇게 넘어옴 ;;
-			
-            let dateEnd = new Date(info.event.endStr); 			
+            empId.value=info.event.extendedProps.empId[0].empId; 
+           
+            let dateEnd = new Date(info.endStr); 			
 			let localOffsetEnd = dateEnd.getTimezoneOffset() * 60000;
 			let localISOTimeEnd = (new Date(dateEnd - localOffsetEnd)).toISOString().slice(0,16);
 			calEnd.value =  localISOTimeEnd; //여기서 형변환 시도 해볼까 ?
@@ -454,10 +487,21 @@ input[type="datetime-local"] {
 			let localOffset = date.getTimezoneOffset() * 60000;
 			let localISOTime = (new Date(date - localOffset)).toISOString().slice(0,16);
 			calStart.value = localISOTime;
-	
+			
 			calColor.value = info.event.backgroundColor;
 			
 			if(loginmemberEmpId===empId.value){			
+				$(".modalV").removeAttr("readonly");
+				delBtn.style.display="block";	
+					}else{
+				$(".modalV").attr("readonly",true);	
+				delBtn.style.display="none";	
+					};
+		            Modal.style.display = "block"; 
+		        };
+			}
+				
+			/* if(loginmemberEmpId===empId.value){			
 		$(".modalV").removeAttr("readonly");
 		delBtn.style.display="block";	
 			}else{
@@ -465,7 +509,7 @@ input[type="datetime-local"] {
 		delBtn.style.display="none";	
 			};
             Modal.style.display = "block"; 
-        };
+        }; */
         
         calendar.on("eventClick",handleEventClick);
         /* calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
@@ -510,7 +554,7 @@ input[type="datetime-local"] {
          //부서일정으로 ㄱㄱ
          function fcDept() {
         	 	calType.value="DEPT";
-        	    
+        	    calColor.value="purple";
         	    calId.value = "DEPT";       	    
         	    // 캘린더를 제거합니다.
         	    calendar.destroy();
@@ -551,6 +595,7 @@ input[type="datetime-local"] {
          }
          function fcAll(){
         	 calType.value="ALL";
+        	 calColor.value="red";
         	 calId.value="ALL";
         	 calendar.destroy();
         	 
@@ -578,6 +623,7 @@ input[type="datetime-local"] {
          }
          function fcMy(){
         	 calType.value="MY";
+        	 calColor.value="green";
         	 calId.value="MY";
         	 calendar.destroy();
         	 const newEventSources=getEventSources(calId);

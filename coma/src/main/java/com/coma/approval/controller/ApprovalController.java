@@ -397,14 +397,14 @@ public class ApprovalController {
    
 //------------------------------- 서명 추가 --------------------------------------
  
-   @GetMapping("/approver")
+   @GetMapping("/addsign")
    public String approver() {
-      return "approval/approver";
+      return "approval/addsign";
    }
    
-   @GetMapping("/newSign")
+   @GetMapping("/signCanvas")
    public String newSign() {
-      return "approval/newSign";
+      return "approval/signCanvas";
    }
    
 
@@ -421,16 +421,14 @@ public class ApprovalController {
 	               String oriName = imgFile.getOriginalFilename();
 	               String ext = oriName.substring(oriName.lastIndexOf("."));
 	               Date today = new Date(System.currentTimeMillis());
-	               int randomNum = (int)(Math.random()*1000)+1;
-	               String rename = "sign_" + new SimpleDateFormat("yyyyMMddHHmmssSSS")
-	                           .format(today)+"_"+randomNum+ext;
-	              
+	               String rename = "sign_" + empId + ext;
+	              // 서명 다시 등록할 경우 파일 덮어쓰기됨.
 	               
 	               data.put("sign", rename); 
 	               data.put("empId", empId); 
 	               
 	               try {
-	            	   imgFile.transferTo(new File(path, oriName));
+	            	   imgFile.transferTo(new File(path, rename));
 	                  
 	               }catch(IOException e) {
 	                  e.printStackTrace();
@@ -445,7 +443,8 @@ public class ApprovalController {
 	   
 	   
 	      
-	   return "approval/approver";
+	   return "redirect:/";
+	   	
    }
    
 }

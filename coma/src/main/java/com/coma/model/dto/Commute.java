@@ -21,6 +21,10 @@ public class Commute {
    private Date commuteEndtime;
    private String commutelateness;
    private String commuteAbsence;
+   private String breakDuration;
+   private String workDuration;
+   
+   
 
 }
 
