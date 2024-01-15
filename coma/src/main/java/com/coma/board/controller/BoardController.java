@@ -76,6 +76,8 @@ public class BoardController {
 		m.addAttribute("pageBarFree", pageFactory.getPage(cPage, numPerpage, totalData, "freelist"));
 		//자유 총글갯수 model에 저장
 		m.addAttribute("totalData", totalData);
+		
+		m.addAttribute("type", boardType);
 	}  
 	
 	//글상세화면

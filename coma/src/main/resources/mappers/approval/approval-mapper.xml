@@ -9,7 +9,7 @@
 		<result column="DOC_DATE" property="docDate"/>		
 		<result column="DOC_CORRECT_DATE" property="docCorrectDate"/>		
 		<result column="DOC_PROGRESS" property="docProgress"/>		
-		<result column="EMP_ID" property="empId"/>		
+		<result column="EMP_ID" property="empId"/>
 		<collection property="files" ofType="apprAttach">
 			<id column="ATTACH_NO" property="attachNo"/>
 			<result column="ATTACH_ORI_NAME" property="attachOriName"/>
@@ -129,6 +129,15 @@
 			WHERE DOC_NO = #{docNo}	
 			ORDER BY DOC_DATE DESC		
 	</select>
-		
+	
+	<!-- 문서 리스트 출력 -->
+	<select id="selectProceedList" parameterType="map" resultMap="apprDocMap">
+		SELECT *
+		FROM APPROVAL_DOC 
+		LEFT JOIN APPROVAL_ATTACHMENT USING(DOC_NO)
+		LEFT JOIN APPROVER USING(DOC_NO)
+		LEFT JOIN REFERRER USING(DOC_NO)
+		JOIN EMP USING(EMP_ID)
+	</select>
 
 </mapper>

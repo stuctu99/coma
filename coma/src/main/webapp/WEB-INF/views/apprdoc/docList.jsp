@@ -13,14 +13,15 @@
 font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
+
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
     <nav class="space-y-2">
       <div class="flex flex-col">
-      	<a href="#">
+      	<a href="${path }/apprdoc/proceedList">
         <span class="text-sm font-semibold text-gray-500">진행중인문서</span>
         </a>
-        <a href="#">
+        <a href="${path }">
           <span class="text-sm font-semibold text-gray-500">문서함</span>
         </a>
       </div>
@@ -58,10 +59,10 @@ font-family: 'Noto Sans KR', sans-serif;
                 문서 번호
               </th>
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                제목
+                종류
               </th>
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                종류
+                제목
               </th>
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
                 기안자
@@ -69,16 +70,28 @@ font-family: 'Noto Sans KR', sans-serif;
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
                 기안일
               </th>
+              <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+                수정일
+              </th>
+              <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+                상태
+              </th>
             </tr>
           </thead>
           <tbody>
-          		<tr>
-	          		<td>1</td>
-	          		<td>제제제목목</td>
-	          		<td>종종류류류</td>
-	          		<td>기기안안자</td>
-	          		<td>기기안안일</td>
-          		</tr>
+	       		<c:forEach var="docs" items="${doc}">
+		       		<c:if test="${docs.docProgress eq '완료' || docs.docProgress eq '반려'}">
+		        		<tr>
+			         		<td>${docs.docNo }</td>
+			         		<td>${docs.docType }</td>
+			         		<td><a href="/approval/viewdoc?docNo=${docs.docNo }">${docs.docTitle }</a></td>
+			         		<td>${docs.empId }</td>
+			         		<td><fmt:formatDate value="${docs.docDate}" pattern="MM-dd" /></td>
+			         		<td>${docs.docCorrectDate }</td>
+		         			<td>${docs.docProgress }</td>
+		        		</tr>
+		       		</c:if>
+	       		</c:forEach>
           </tbody>
         </table>
       </div>

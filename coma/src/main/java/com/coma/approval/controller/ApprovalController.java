@@ -311,7 +311,6 @@ public class ApprovalController {
    @GetMapping("/viewdoc")
    public String viewDoc(String docNo) {
 	   
-	 docNo = "DOC_248"; //테스트용 
 	 ApprovalDoc doc = service.selectAppDoc(docNo); 
 	 
 	 System.out.println("테스트: ***************:"+doc);

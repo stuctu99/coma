@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Collection,com.coma.model.dto.Board" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
@@ -40,7 +41,7 @@
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2>자유게시판</h2>
+						<a href="${path }"><h2>자유게시판</h2></a>
 					</div>
 					
 				</div>
@@ -56,11 +57,11 @@
 							</span>
 						</th>
 						</c:if>
-						<th>번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>조회수</th>
+						<th class="no">번호</th>
+						<th class="title">제목</th>
+						<th class="writer">작성자</th>
+						<th class="date">작성일</th>
+						<th class="read">조회수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -74,8 +75,8 @@
 							</span>
 						</td>
 						</c:if>
-						<td>${free.boardNo }</td>
-	   					<td><a href="/board/freePost?boardNo=${free.boardNo }">${free.boardTitle }&emsp;</a>
+						<td class="no">${free.boardNo }</td>
+	   					<td class="title"><a href="/board/freePost?boardNo=${free.boardNo }">${free.boardTitle }&emsp;</a>
 	   						
 	   						<strong style="color: red;">
 	   							<c:if test="${free.replyCount > 0 }">
@@ -84,13 +85,39 @@
 	   						</strong>
 	   						
 	   					</td>
-	   					<td>${free.emp.empName }</td>
-	   					<td>${free.boardDate }</td>
-	   					<td>${free.boardReadCount }</td>
+	   					<td class="writer">${free.emp.empName }</td>
+	   					
+	   					<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
+						<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
+						<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
+						<td class="date">
+				          <%--   <%=java.time.ChronoUnit.HOURS.between(java.time.LocalDate.now(),
+				            		pageContext.getAttribute("boards"))%> --%>
+							<c:choose>
+								<c:when test="${free.boardDate.toLocalDate() == today}">
+									<c:set var="checkHour" value='<%=(new java.util.Date().getTime()-((Board)pageContext.getAttribute("free"))
+													.getBoardDate().getTime())/(1000*60*60)%>'/>
+									<span>								
+										${checkHour>0?"".concat(checkHour).concat("시간 전"):'방금전'}
+									</span>
+									<%-- <p><%=java.time.LocalDateTime.now().getHour() 
+										 -new java.sql.Timestamp(((Board)pageContext.getAttribute("boards"))
+													.getBoardDate().getTime()).toLocalDateTime().getHour() %></p> --%>
+							        <%-- <fmt:formatDate value="${boards.boardDate}" pattern="HH:mm" /> --%>
+							    </c:when>
+				                <c:when test="${free.boardDate.year == 124}">
+				                    <fmt:formatDate value="${free.boardDate}" pattern="MM-dd" />
+				                </c:when>
+				                <c:otherwise>
+				                    <fmt:formatDate value="${free.boardDate}" pattern="yyyy-MM-dd" />
+				                </c:otherwise>
+				            </c:choose>
+						</td>
+	   					<td class="read">${free.boardReadCount }</td>
 					</tr>				
 					</c:forEach>
 				</tbody>
-			</table>		
+			</table>
 			<div class="search-container">
 			    <form name="searchForm" autocomplete="off">
 				    <select class="se" id="category" name="search-type">
@@ -98,7 +125,7 @@
 				        <option value="search-content">내용</option>
 				        <option value="search-writer">작성자</option>
 				    </select>
-				    <input type="hidden" name="boardType" value="${free.boardType }">
+				    <input type="hidden" name="boardType" value="${type }">
 				    <input class="se" type="text" name="search-keyword" id="searchInput">
 				    <button type="button" class="se btn btn-success" onclick="getSearchList()">
 				   		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">

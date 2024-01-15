@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.Collection" %>
+<%@ page import="java.util.Collection,com.coma.model.dto.Board" %>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
@@ -18,13 +19,8 @@
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2>공지사항</h2>
+						<a href="${path }"><h2>공지사항</h2></a>
 					</div>
-					<!-- 잠시주석 -->
-					<%-- <div class="col-sm-6">
-						<a href="${pageContext.request.contextPath }/createPost" class="btn btn-success" data-toggle="modal"><span>공지추가</span></a>
-						<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><span>공지삭제</span></a>						
-					</div> --%>
 				</div>
 			</div>
 			<table class="table table-striped table-hover">
@@ -54,7 +50,34 @@
 							</span>
 						</td>
 						</c:if>
-						<td>${boards.boardDate }</td>
+						
+						<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
+						<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
+						<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
+						<td>
+				          <%--   <%=java.time.ChronoUnit.HOURS.between(java.time.LocalDate.now(),
+				            		pageContext.getAttribute("boards"))%> --%>
+							<c:choose>
+								<c:when test="${boards.boardDate.toLocalDate() == today}">
+									<c:set var="checkHour" value='<%=(new java.util.Date().getTime()-((Board)pageContext.getAttribute("boards"))
+													.getBoardDate().getTime())/(1000*60*60)%>'/>
+									<span>								
+										${checkHour>0?"".concat(checkHour).concat("시간 전"):'방금전'}
+									</span>
+									<%-- <p><%=java.time.LocalDateTime.now().getHour() 
+										 -new java.sql.Timestamp(((Board)pageContext.getAttribute("boards"))
+													.getBoardDate().getTime()).toLocalDateTime().getHour() %></p> --%>
+							        <%-- <fmt:formatDate value="${boards.boardDate}" pattern="HH:mm" /> --%>
+							    </c:when>
+				                <c:when test="${boards.boardDate.year == 124}">
+				                    <fmt:formatDate value="${boards.boardDate}" pattern="MM-dd" />
+				                </c:when>
+				                <c:otherwise>
+				                    <fmt:formatDate value="${boards.boardDate}" pattern="yyyy-MM-dd" />
+				                </c:otherwise>
+				            </c:choose>
+						</td>
+						
 	   					<td><a href="/board/freePost?boardNo=${boards.boardNo }">
 	   						${boards.boardTitle }</a></td>
 	   					<td>${boards.boardReadCount }</td>
@@ -84,9 +107,9 @@
 							</svg>
 					    </button>
 				    </form>
-					<div class="wrtie" style="text-align: right;">
+					<%-- <div class="wrtie" style="text-align: right;">
 						<a href="${path }/board/writeView?boardType=1" class="btn btn-success"><span>글쓰기</span></a>	
-					</div>
+					</div> --%>
 				</div>
 				
 			 	 <div>

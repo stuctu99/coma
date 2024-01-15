@@ -19,10 +19,10 @@
 					<div class="board-name col-sm-6">
 						<c:choose>
 					      <c:when test="${post.boardType eq 0}">
-					          <h2>공지사항</h2>
+					          <a href="${path }/board/noticelist"><h2>공지사항</h2></a>
 					      </c:when>
 					      <c:when test="${post.boardType eq 1}">
-					          <h2>자유게시판</h2>
+					          <a href="${path }/board/freelist"><h2>자유게시판</h2></a>
 					      </c:when>
 					  	</c:choose>
 					</div>
