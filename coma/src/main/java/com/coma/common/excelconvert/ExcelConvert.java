@@ -37,15 +37,15 @@ public class ExcelConvert extends AbstractXlsView{
 	
 	private void addContent(Sheet sheet, Emp emp) {
 		Row row=sheet.createRow(sheet.getLastRowNum()+1);
-		row.createCell(0).setCellValue(emp.getEmpName()!=null?emp.getEmpName():"");
-		row.createCell(1).setCellValue(emp.getJob().getJobType()!=null?emp.getJob().getJobType():"");
-		row.createCell(2).setCellValue(emp.getDept().getDeptType()!=null?emp.getDept().getDeptType():"");
-		row.createCell(3).setCellValue(emp.getEmpId()!=null?emp.getEmpId():"");
-		row.createCell(4).setCellValue(emp.getEmpGender()!=null?emp.getEmpGender():"");
-		row.createCell(5).setCellValue(emp.getEmpBrithDate().toString()!=null?emp.getEmpBrithDate().toString():"");
-		row.createCell(6).setCellValue(emp.getEmpPhone()!=null?emp.getEmpPhone():"");
-		row.createCell(7).setCellValue(emp.getEmpAddr()!=null?emp.getEmpAddr():"");
-		row.createCell(8).setCellValue(emp.getEmpHireDate().toString()!=null?emp.getEmpHireDate().toString():"");
+		row.createCell(0).setCellValue(emp.getEmpName());
+		row.createCell(1).setCellValue(emp.getJob().getJobType());
+		row.createCell(2).setCellValue(emp.getDept().getDeptType());
+		row.createCell(3).setCellValue(emp.getEmpId());
+		row.createCell(4).setCellValue(emp.getEmpGender());
+		row.createCell(5).setCellValue(emp.getEmpBrithDate().toString());
+		row.createCell(6).setCellValue(emp.getEmpPhone());
+		row.createCell(7).setCellValue(emp.getEmpAddr());
+		row.createCell(8).setCellValue(emp.getEmpHireDate().toString());
 		
 	}
 }
