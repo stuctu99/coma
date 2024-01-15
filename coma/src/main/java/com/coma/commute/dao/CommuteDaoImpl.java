@@ -58,7 +58,7 @@ public class CommuteDaoImpl implements CommuteDao {
 	}
 
 	@Override
-	public List<Map> searchCommute(SqlSession session, Map<String, Object> commute) {
+	public List<Commute> searchCommute(SqlSession session, Map<String, Object> commute) {
 		int cPage=(int)commute.get("cPage");
 		int numPerpage=(Integer)commute.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);

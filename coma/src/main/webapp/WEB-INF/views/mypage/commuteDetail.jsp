@@ -46,7 +46,8 @@ div {
 /* You may need to adjust the styling based on your specific requirements */
 </style>
 <div class="coma-container containerbig">
-	${commute}
+	<%-- ${commute} --%>
+	
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-2" style="display: flex;">
@@ -63,31 +64,36 @@ div {
 		<div class="col-1"></div>
 		<div class="col-10  bigbax">
 			<div class="row" style="margin-left: 30px">
-
-				<div class="col-3 smallbox">
+				<div class="col-2 smallbox" >
+					<div class="">
+						<h3 >근무 일수</h3>
+					</div>
+					<div class="blank">
+						<h4 id="totalwork"> ${count} <h4/>
+					</div>
+				</div>
+				<div class="col-2 smallbox" >
 					<div class="">
 						<h3 class="">지각</h3>
 					</div>
 					<div class="blank">
-						<h4>
-							${emp.empVacation } 일
-							<h4 />
+						<h4 id="empVacation"> ${emp.empVacation } <h4/>
 					</div>
 				</div>
-				<div class=" col-3 smallbox">
+				<div class=" col-2 smallbox">
 					<div class=" ">
-						<h3 class="">사용한 연차</h3>
+						<h3 class="">근무</h3>
 					</div>
 					<div class="blank">
-						<h4>${finishCount }회</h4>
+						<h4 id="finishCount">${finishCount }</h4>
 					</div>
 				</div>
-				<div class=" col-3 smallbox">
+				<div class=" col-2 smallbox">
 					<div class="">
-						<h3 class="">결재 중인 휴가 결재</h3>
+						<h3 class="">결근</h3>
 					</div>
 					<div class="blank">
-						<h4>${ waitCount}</h4>
+						<h4 id="absence">${ waitCount}</h4>
 					</div>
 				</div>
 			</div>
@@ -99,7 +105,7 @@ div {
 		<div class="col-10">
 			<div class="row" style="margin-top: 30px">
 				<div class="col-3">
-					<h1>근태 상세보긱</h1>
+					<h1>근태 상세보기</h1>
 				</div>
 				<div class="col-9">
 					<div class=""></div>
@@ -148,7 +154,7 @@ div {
 								<tr>
 									<td is=""><c:out value="${c.EMP_COMMUTE_STATUS }" /></td>
 									<td><fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" /></td>
-									<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="hh:mm:ss"/></td> 
+									<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="hh:mm:ss"/></td> 
 									<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKOUT.toJdbc() }" pattern="hh:mm:ss" /></td>
 									<td><c:out value="${c.WORK_DURATION }" /></td>  
 									<td><fmt:formatDate value="${c.EMP_COMMUTE_STARTTIME.toJdbc() }" pattern="hh:mm:ss"/></td> 
@@ -175,39 +181,114 @@ div {
 </div> -->
 
 <script>
-function submitForm(cPage=1,numPerpage=10,url) {
-    var startTime= $("#example-date-input-start").val();
-    var endTime= $("#example-date-input-end").val();
-    console.log(startTime);
-    console.log(endTime);
-    // Fetch API
+function submitForm(cPage = 1, numPerpage = 10, url) {
+    var startTime = $("#example-date-input-start").val();
+    var endTime = $("#example-date-input-end").val();
     fetch("${path}/commute/commuteDetailEnd", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-        	cPage:cPage,
-    		numPerpage:numPerpage,
+            cPage: cPage,
+            numPerpage: numPerpage,
             startTime: startTime,
             endTime: endTime,
             jsName: "submitForm"
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Handle the response data
-        console.log(data);
-    })
-    .catch(error => {
-        // Handle errors
-        
-        console.error("Error:", error);
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {      
+            console.log(data);           
+            updateTable(data.commuteList);
+            console.log(totalData); 
+            $('#totalwork').html(totalData);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
 }
+
+function updateTable(commuteList) {
+    $("#empTable").empty();
+    var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
+    var absenceCount=0,latenessCount = 0,nonabsence =0;
+    commuteList.forEach(c => {
+         clockInTime = c.EMP_COMMUTE_CLOCKIN;
+         clockOutTime = c.EMP_COMMUTE_CLOCKOUT;
+         startTime = c.EMP_COMMUTE_STARTTIME;
+         endTime = c.EMP_COMMUTE_ENDTIME;
+         //날짜만 잘라준다 
+         workDate = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
+       
+        /* console.error("clockInTime:", clockInTime);
+        console.error("clockOutTime:", clockOutTime);
+        console.error("startTime:", startTime);
+        console.error("endTime:", endTime);
+        console.error("workDate:", workDate); */  
+        var row = document.createElement("tr");
+
+        var statusCell = document.createElement("td");
+        statusCell.textContent = c.EMP_COMMUTE_STATUS;
+        row.appendChild(statusCell);
+
+        var workDateCell = document.createElement("td");
+        workDateCell.textContent = workDate;
+        row.appendChild(workDateCell);
+
+        var clockInTimeCell = document.createElement("td");
+        clockInTimeCell.textContent = clockInTime;
+        row.appendChild(clockInTimeCell);
+
+        var clockOutTimeCell = document.createElement("td");
+        clockOutTimeCell.textContent = clockOutTime;
+        row.appendChild(clockOutTimeCell);
+
+        var workDurationCell = document.createElement("td");
+        workDurationCell.textContent = c.WORK_DURATION;
+        row.appendChild(workDurationCell);
+
+        var startTimeCell = document.createElement("td");
+        startTimeCell.textContent = startTime;
+        row.appendChild(startTimeCell);
+
+        var endTimeCell = document.createElement("td");
+        endTimeCell.textContent = endTime;
+        row.appendChild(endTimeCell);
+
+        var breakDurationCell = document.createElement("td");
+        breakDurationCell.textContent = c.BREAK_DURATION;
+        row.appendChild(breakDurationCell);
+
+        // Append the row to the table
+        $("#empTable").append(row);
+        if (c.EMP_COMMUTE_ABSENCE === 'Y') {
+            absenceCount++;
+        }
+        if (c.EMP_COMMUTE_ABSENCE === 'N') {
+        	nonabsence++;
+        }
+
+        if (c.EMP_COMMUTE_LATENESS === 'Y') {
+            latenessCount++;
+        }
+        
+    });
+    
+    
+    console.error("latenessCount:", latenessCount);
+    console.error("absenceCount:", absenceCount);
+    console.error("nonabsence:", nonabsence);
+    $('#empVacation').html(${'latenessCount'});
+    $('#finishCount').html(${'absenceCount'});
+    $('#absence').html(${'nonabsence'});
+    
+    
+}
+
 
 	
 </script>

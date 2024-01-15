@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.coma.common.pagefactory.PageFactory;
 import com.coma.commute.service.CommuteService;
+import com.coma.model.dto.Commute;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.RequiredArgsConstructor;
@@ -111,41 +112,13 @@ public class CommuteController {
 		  commute.put("loginId", loginId);
 		  
 		  int totalData =service.countSearchCommute(commute);
-		  List <Map> commuteList = service.searchCommute(commute);
-		  List<Map<String, Object>> convertedCommuteList = new ArrayList<>();
+		  List <Commute> commuteList = service.searchCommute(commute);
+		    
 		  
-		  for (Map<String, Object> commuteMap : commuteList) {
-	            Timestamp empCommuteClockin = (Timestamp) commuteMap.get("EMP_COMMUTE_CLOCKIN");
-	            Timestamp empCommuteClockout = (Timestamp) commuteMap.get("EMP_COMMUTE_CLOCKOUT");
-	            Timestamp empCommuteStarttime = (Timestamp) commuteMap.get("EMP_COMMUTE_STARTTIME");
-	            Timestamp empCommuteEndTime = (Timestamp) commuteMap.get("EMP_COMMUTE_ENDTIME");
-	            
-	            
-	            
-	            
-	            String formattedClockin = convertTimestampToString(empCommuteClockin);
-	            String formattedClockout = convertTimestampToString(empCommuteClockout);
-	            String formattedStarttime = convertTimestampToString(empCommuteStarttime);
-	            String formattedEndTime = convertTimestampToString(empCommuteEndTime);
-	            
-
-	            
-	            commuteMap.put("EMP_COMMUTE_CLOCKIN", formattedClockin);
-	            commuteMap.put("EMP_COMMUTE_CLOCKOUT", formattedClockout);
-	            commuteMap.put("EMP_COMMUTE_STARTTIME", formattedStarttime);
-	            commuteMap.put("EMP_COMMUTE_ENDTIME", formattedEndTime);
-	            convertedCommuteList.add(commuteMap);
-	        }
-		  
-		  
-		  return Map.of("commuteList",convertedCommuteList,"pageBar",pageFactory.pageAjax((int)commute.get("cPage"), (int)commute.get("numPerpage"), totalData, "/mypage/commuteDetailEnd",(String)commute.get("jsName")));
+		  return Map.of("totalData",totalData,"commuteList",commuteList,"pageBar",pageFactory.pageAjax((int)commute.get("cPage"), (int)commute.get("numPerpage"), totalData, "/mypage/commuteDetailEnd",(String)commute.get("jsName")));
 
 	  }
-	  private String convertTimestampToString(Timestamp timestamp) {
-	        // Apply the desired format
-	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-	        return dateFormat.format(timestamp);
-	    }
+		
 	 
 
 

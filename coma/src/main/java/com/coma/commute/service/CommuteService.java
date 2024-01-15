@@ -25,6 +25,6 @@ public interface CommuteService {
 	int countCommute(String loginId);
 	//ajax
 	int countSearchCommute(Map <String, Object> commute);
-	List<Map> searchCommute (Map <String, Object> commute);
+	List<Commute> searchCommute (Map <String, Object> commute);
 	
 }

@@ -71,7 +71,7 @@ public class CommuteServiceImpl implements CommuteService {
 	}
 
 	@Override
-	public List<Map> searchCommute(Map<String, Object> commute) {
+	public List<Commute> searchCommute(Map<String, Object> commute) {
 		// TODO Auto-generated method stub
 		return dao.searchCommute(session,commute);
 	}

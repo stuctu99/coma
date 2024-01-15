@@ -28,7 +28,7 @@ public interface CommuteDao {
 	
 	int countCommute(SqlSession session,String loginId);
 	
-	List<Map> searchCommute (SqlSession session, Map<String, Object> commute);
+	List<Commute> searchCommute (SqlSession session, Map<String, Object> commute);
 	
 	int countSearchCommute(SqlSession session,Map <String, Object> commute);
 }
