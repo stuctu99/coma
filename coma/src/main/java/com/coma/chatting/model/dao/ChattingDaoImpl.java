@@ -1,10 +1,12 @@
 package com.coma.chatting.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingMessage;
@@ -18,13 +20,11 @@ public class ChattingDaoImpl implements ChattingDao {
 	public ChattingJoin selectCheckJoin(SqlSession session, Map<String, String> joinInfo) {
 		// TODO Auto-generated method stub
 		ChattingJoin data = session.selectOne("chatting.selectCheckJoin",joinInfo);
-		System.out.println("DAO 데이터 확인 : "+data);
 		return data;
 	}
 	
 	@Override
-	public List<ChattingJoin> selectRoomMemberList(SqlSession session, String roomNo) {
-		// TODO Auto-generated method stub
+	public List<Emp> selectRoomMemberList(SqlSession session, String roomNo) {
 		return session.selectList("chatting.selectRoomMemberList",roomNo);
 	}
 	
@@ -69,12 +69,8 @@ public class ChattingDaoImpl implements ChattingDao {
 		return session.insert("chatting.insertChattingMessage",msgPackages);
 	}
 
-//	@Override
-//	public int insertChattingMessage(SqlSession session, ChattingMessage msg) {
-//		// TODO Auto-generated method stub
-//		return session.insert("chatting.insertChattingMessage",msg);
-//	}
-	
+
+//	채팅방 신규 접속 여부 Flag Update
 	@Override
 	public int updateChatNewJoin(SqlSession session, Map<String, String> newEmpCheck) {
 		// TODO Auto-generated method stub
@@ -82,16 +78,29 @@ public class ChattingDaoImpl implements ChattingDao {
 	}
 	
 
+	
+//	채팅방 나가기 로직
+	
 	@Override
 	public int deleteChatRoomJoinEmpById(SqlSession session, Map<String, String> exitEmp) {
 		// TODO Auto-generated method stub
 		return session.delete("chatting.deleteChatRoomJoinEmpById",exitEmp);
 	}
+	
 
 	@Override
-	public int deleteChattingMsgByRoomNoAndEmpId(SqlSession session, Map<String, String> exitEmp) {
+	public int selectMemberCountInRoom(SqlSession session, String roomNo) {
 		// TODO Auto-generated method stub
-		return session.delete("chatting.deleteChattingMsgByRoomNoAndEmpId",exitEmp);
+		return session.selectOne("chatting.selectMemberCountInRoom",roomNo);
+	}
+
+	@Override
+	@Transactional
+	public int deleteChattingMsgByRoomNo(SqlSession session, Map<String, String> exitEmp) {
+		int result = session.delete("chatting.deleteChattingMsgByRoomNo",exitEmp);
+		List<String> roomNo = List.of(exitEmp.get("roomNo"));
+		result = session.delete("chatting.deleteChattingRoom",roomNo);
+		return result;
 	}
 
 	

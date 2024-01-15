@@ -92,6 +92,7 @@ public class MessengerController {
 		roomType.setRoomType(roomInfo.get("roomType"));
 		room.setRoomTypeObj(roomType);
 		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
+		
 		if(roomInfo.get("targetId").equals("")) {
 			room.setIdList(Map.of("empId",roomInfo.get("empId")));
 		}else {

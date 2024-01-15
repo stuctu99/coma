@@ -74,15 +74,14 @@ div {
 						<c:forEach var="emp" items="${roomMemberList }">
 							<div class="row">
 								<div class="col-2 profile">
-									<c:if test="${emp.empObj.empGender eq 'M' }">
+									<c:if test="${emp.empGender eq 'M' }">
 										<img id="profile-img" src="${path }/resource/img/chat/profile_m.png" alt="basic_profile_img" />
 									</c:if>
-									<c:if test="${emp.empObj.empGender eq 'F' }">
+									<c:if test="${emp.empGender eq 'F' }">
 										<img id="profile-img" src="${path }/resource/img/chat/profile_f.png" alt="basic_profile_img" />
 									</c:if>
 								</div>
-								<div class="col-8 emp-info"><strong><c:out value="${emp.empObj.empName}"/></strong>&nbsp;<c:out value="${emp.empObj.job.jobType }"/></div>
-								<div class="col-1 connectView" id="${emp.empObj.empId }">&#9900</div> <!-- if문으로 분기처리하여 접속 여부 확인하기 -->
+								<div class="col-9 emp-info"><strong><c:out value="${emp.empName}"/></strong>&nbsp;<c:out value="${emp.job.jobType }"/><strong class="connectView" id="${emp.empId }">&#9900</strong></div>
 							</div>
 						</c:forEach>
 					</c:if>

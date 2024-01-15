@@ -41,6 +41,10 @@ section>div:nth-child(1){
 	overflow: hidden !important;
 }
 
+.chat-title{
+	padding-right: 65px !important;
+}
+
 .emp-info{
 	padding: 0px 5px !important;
 	line-height: 1.7 !important;
@@ -61,16 +65,24 @@ section>div:nth-child(1){
 
 
 .profile-list{
+	width: 180rpx !important;
 	height: 518px !important;
 	padding-top: 15px;
 	margin-bottom: 15px;
 }
 
 .profile-list > .row{
+	padding-left:30px;
 	margin-bottom: 4px;
+	display: flex;
+	justify-content: end;
 }
 
-.profile-list > .row>div:nth-last-child(1){
+.profile-list > .row>div{
+	padding-left : 10px !important;
+}
+
+.profile-list > .row>div:nth-child(1){
 	text-align: left;
 }
 

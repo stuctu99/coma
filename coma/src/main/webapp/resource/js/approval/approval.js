@@ -98,7 +98,7 @@ searchAppInput.addEventListener("keyup",(()=>{
 			.then(result=>result.text())
 			.then(data=>{
 				
-				$('option').remove();			
+				$('.app_op').remove();			
 				JSON.parse(data).forEach(e=>{
 					/* datalist 옵션태그 만들기 */
 				
@@ -283,12 +283,12 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			fetch("/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
-				$('option').remove();	
+				$('.ref_op').remove();	
 				
 				JSON.parse(data).forEach(e=>{
 					//datalist 옵션 태그 만들기
 				
-					const search_op = $('<option>');
+					const search_op = $('<option class="ref_op">');
 					search_op.val(e.empId+" "+e.empName+" "+e.dept.deptType+" "+ e.job.jobType);
 					 $('#search_list2').append(search_op);
 						

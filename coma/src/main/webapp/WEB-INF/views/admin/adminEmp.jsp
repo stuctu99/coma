@@ -181,6 +181,77 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 	const searchData=document.getElementById("searchData").value;
 	const textData=document.getElementById("textData").value;
 	console.log(searchData,textData);
+<<<<<<< HEAD
+	if(textData!=""){
+		fetch(url?'${path}'+url:"/admin/searchEmp",{
+			method:"post",
+			headers:{"Content-Type":"application/json"},
+			body:JSON.stringify({
+				cPage:cPage,
+				numPerpage:numPerpage,
+				searchData:searchData,
+				textData:textData
+			})
+		}).then(response=>{
+			if(response.status!=200) throw new Error(repsonse.status);
+			return response.json();
+		}).then(result=>{
+			console.log(result);
+			const $tbody=document.getElementById("empTable");
+			const $div=document.getElementById("pageBar");
+			const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
+			$trList.forEach($tr => {
+			    $tr.remove(); //각 $tr 요소를 $tbody에서 제거합니다.
+			});
+			result.emps.forEach((e)=>{
+				const $tr=document.createElement('tr');
+				const $td1=document.createElement('td');
+				const $a=document.createElement('a');
+				const $a2=document.createElement('a');
+				$td1.innerText=e.EMP_ID;
+				
+				const $td2=document.createElement('td');
+				$a.setAttribute('href','#');
+				$a.innerText=e.EMP_NAME;
+				$td2.appendChild($a);
+				
+				const $td3=document.createElement('td');
+				$td3.innerText=e.JOB_TYPE;
+				
+				const $td4=document.createElement('td');
+				$td4.innerText=e.DEPT_TYPE;
+				
+				const $td5=document.createElement('td');
+				$a2.setAttribute('href','#');
+				if(e.EMP_COMMUTE_STATUS!=null){
+					$a2.innerText=e.EMP_COMMUTE_STATUS;
+				}else{
+					$a2.innerText='미출근';
+				}
+				$td5.appendChild($a2);
+				
+				const $td6 = document.createElement('td');
+				const $button = document.createElement('button');
+				$button.setAttribute('type', 'button');
+				$button.setAttribute('class', 'btn btn-secondary btn-sm');
+				$button.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
+				$button.innerText = '삭제';
+				$td6.appendChild($button);
+				
+				$tr.appendChild($td1);
+				$tr.appendChild($td2);
+				$tr.appendChild($td3);
+				$tr.appendChild($td4);
+				$tr.appendChild($td5);
+				$tr.appendChild($td6);
+				$tbody.appendChild($tr);
+			})
+			$div.innerText="";
+			$div.innerHTML=result.pageBar;
+			document.getElementById("textData").value="";
+		}).catch(e=>{
+			console.log(e);
+=======
 	fetch(url?'${path}'+url:"/admin/searchEmp",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
@@ -191,67 +262,11 @@ function fn_searchEmp(cPage=1,numPerpage=10,url){
 			textData:textData,
 			jsName:"fn_searchEmp"
 			
+>>>>>>> branch 'master' of https://github.com/stuctu99/coma.git
 		})
-	}).then(response=>{
-		if(response.status!=200) throw new Error(repsonse.status);
-		return response.json();
-	}).then(result=>{
-		console.log(result);
-		const $tbody=document.getElementById("empTable");
-		const $div=document.getElementById("pageBar");
-		const $trList = $tbody.querySelectorAll("tr"); //querySelectorAll을 사용하여 모든 <tr> 요소의 NodeList를 가져옵니다.
-		$trList.forEach($tr => {
-		    $tr.remove(); //각 $tr 요소를 $tbody에서 제거합니다.
-		});
-		result.emps.forEach((e)=>{
-			const $tr=document.createElement('tr');
-			const $td1=document.createElement('td');
-			const $a=document.createElement('a');
-			const $a2=document.createElement('a');
-			$td1.innerText=e.EMP_ID;
-			
-			const $td2=document.createElement('td');
-			$a.setAttribute('href','#');
-			$a.innerText=e.EMP_NAME;
-			$td2.appendChild($a);
-			
-			const $td3=document.createElement('td');
-			$td3.innerText=e.JOB_TYPE;
-			
-			const $td4=document.createElement('td');
-			$td4.innerText=e.DEPT_TYPE;
-			
-			const $td5=document.createElement('td');
-			$a2.setAttribute('href','#');
-			if(e.EMP_COMMUTE_STATUS!=null){
-				$a2.innerText=e.EMP_COMMUTE_STATUS;
-			}else{
-				$a2.innerText='미출근';
-			}
-			$td5.appendChild($a2);
-			
-			const $td6 = document.createElement('td');
-			const $button = document.createElement('button');
-			$button.setAttribute('type', 'button');
-			$button.setAttribute('class', 'btn btn-secondary btn-sm');
-			$button.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
-			$button.innerText = '삭제';
-			$td6.appendChild($button);
-			
-			$tr.appendChild($td1);
-			$tr.appendChild($td2);
-			$tr.appendChild($td3);
-			$tr.appendChild($td4);
-			$tr.appendChild($td5);
-			$tr.appendChild($td6);
-			$tbody.appendChild($tr);
-		})
-		$div.innerText="";
-		$div.innerHTML=result.pageBar;
-		document.getElementById("textData").value="";
-	}).catch(e=>{
-		console.log(e);
-	})
+	}else{
+		alert("검색어를 입력해주세요");
+	}
 }
 
 

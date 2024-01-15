@@ -36,4 +36,10 @@ public interface ApprovalDao {
 	ApprovalDoc selectAppDoc(SqlSession session, Map<String, String> data);
 	
 	Emp selectEmpById(SqlSession session, String empId);
+	
+//	ApprovalDoc selectRefByDocNo(SqlSession session, String docNo);
+	
+	List<Approver> selectApprByDocNo(SqlSession session, String docNo);
+	
+	List<Referrer> selectRefByDocNo(SqlSession session, String docNo);
 }

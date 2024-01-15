@@ -13,7 +13,7 @@ public class StudentDao {
 		return session.selectList("student.selectStudentByEmpId",loginId);
 	}
 	
-	public List<Map> selectStudentByInfo(SqlSession session, String stuNo){
+	public List<Map> selectStudentByInfo(SqlSession session, Map<String, Object> stuNo){
 		return session.selectList("student.selectStudentByInfo", stuNo);
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.student.service.StudentService;
@@ -30,9 +31,15 @@ public class StudentController {
 	}
 	
 	@PostMapping("/infoStudent")
-	public @ResponseBody List<Map> selectStudentByInfo(@RequestBody String stuNo ){
+	public @ResponseBody List<Map> selectStudentByInfo(@RequestBody Map<String, Object> stuNo ){
+		System.out.println(stuNo);
 		List<Map> stuInfo=service.selectStudentByInfo(stuNo);
 		return stuInfo;
+	}
+	
+	@PostMapping(value = "/updateStudent", consumes = "application/json")
+	public void updateStudent(@RequestBody Map<String, Object> formData) {
+		System.out.println(formData);
 	}
 	
 }

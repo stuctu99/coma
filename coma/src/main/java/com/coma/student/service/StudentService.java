@@ -20,7 +20,7 @@ public class StudentService {
 		return dao.selectStudentByEmpId(session, loginId);
 	}
 	
-	public List<Map> selectStudentByInfo(String stuNo){
+	public List<Map> selectStudentByInfo(Map<String, Object> stuNo){
 		return dao.selectStudentByInfo(session, stuNo);
 	}
 }

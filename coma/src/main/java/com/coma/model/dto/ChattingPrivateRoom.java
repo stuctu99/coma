@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ChattingPrivateRoom {
-	private String empId;
 	private String roomNo;
 	private String target;
 }

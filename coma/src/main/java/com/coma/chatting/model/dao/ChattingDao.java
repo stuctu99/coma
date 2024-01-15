@@ -12,11 +12,12 @@ import com.coma.model.dto.Emp;
 
 public interface ChattingDao {
 	ChattingJoin selectCheckJoin(SqlSession session, Map<String, String> joinInfo);
-	List<ChattingJoin> selectRoomMemberList(SqlSession session, String roomNo);
+	List<Emp> selectRoomMemberList(SqlSession session, String roomNo);
 	List<ChattingMessage> selectChatMessageByRoomNo(SqlSession session, String roomNo);
 	ChattingRoom selectRoomByRoomNo(SqlSession session, String roomNo);
 	Emp selectEmpByEmpId(SqlSession session, String empId);
 	ChattingJoin selectJoinCheckByEmpId(SqlSession session, Map<String,String> joinEmp);
+	int selectMemberCountInRoom(SqlSession session, String roomNo);
 	
 	int insertJoinEmp(SqlSession session, Map<String, String> joinInfo);
 	
@@ -27,5 +28,5 @@ public interface ChattingDao {
 	
 	/* int insertChattingMessage(SqlSession session, ChattingMessage msg); */
 	int deleteChatRoomJoinEmpById(SqlSession session, Map<String,String> exitEmp);
-	int deleteChattingMsgByRoomNoAndEmpId(SqlSession session, Map<String,String> exitEmp);
+	int deleteChattingMsgByRoomNo(SqlSession session, Map<String,String> exitEmp);
 }

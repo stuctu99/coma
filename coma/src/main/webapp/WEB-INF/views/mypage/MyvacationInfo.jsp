@@ -44,7 +44,7 @@ div {
 
 /* You may need to adjust the styling based on your specific requirements */
 </style>
-${vacation } 
+${vacation }
 <div class="coma-container containerbig">
 	<div class="row">
 				<div class="col-1" ></div>
@@ -67,7 +67,7 @@ ${vacation }
 						<h3 class="">남은 연차</h3>
 					</div>
 					<div class="blank">
-						<h4>${emp.empVacation } 일 <h4/>
+						<h4> ${emp.empVacation } 일 <h4/>
 					</div>
 				</div>
 				<div class=" col-3 smallbox">
@@ -75,7 +75,7 @@ ${vacation }
 						<h3 class="">사용한 연차</h3>
 					</div>
 					<div class="blank">
-						<h4>1회</h4>
+						<h4>${finishCount }회</h4>
 					</div>
 				</div>
 				<div class=" col-3 smallbox">
@@ -83,7 +83,7 @@ ${vacation }
 						<h3 class="">결재 중인 휴가 결재</h3>
 					</div>
 					<div class="blank">
-						<h4>0회</h4>
+						<h4>${ waitCount}</h4>
 					</div>
 				</div>
 			</div>
@@ -115,19 +115,23 @@ ${vacation }
 						</thead>
 						<tbody class="list" id="empTable">
 							 <c:if test="${not empty vacation}">
-		        	<c:forEach var="v" items="${vacation }">
-		        	<tr>
-		        		<td><c:out value="${v.docNo}"/></td>
-		        		<td><c:out value="${v.docTitle }"/></td>
-		        		<td><c:out value="${v.leaveType }"/></td>
- 		        		<td><c:out value="${v.LEAVE_END}"-"${v.LEAVE_START }"/></td>
-		        		<td><a href="#"><c:out value="${v.docProgress}"/></a></td>
-		        		<td>
-			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${c.EMP_ID }');">삭제</button>
-		        		</td>
-		        	</tr>
-					 </c:forEach>
-		           </c:if> 
+					        	<c:forEach var="v" items="${vacation }">
+					        	<tr>
+					        		<td><c:out value="${v.DOC_NO}"/></td>
+					        		<td>
+					        			<a href="#">
+					        				<c:out value="${v.DOC_TITLE }"/>
+					        			</a>
+					        		</td>
+					        		<td><c:out value="${v.LEAVE_TYPE }"/></td>
+			 		        		<td>${v.DOC_DIFF eq 1 ?(v.LEAVE_TYPE  eq '연차' ?1 : 0.5)   : v.DOC_DIFF}</td>
+					        		<td>
+					        			<fmt:formatDate value="${v.LEAVE_START}" pattern="yyyy-MM-dd" />-<fmt:formatDate value="${v.LEAVE_END}" pattern="yyyy-MM-dd" />
+									</td>
+					        		<td><c:out value="${v.DOC_PROGRESS}"/></td>
+					        	</tr>
+								 </c:forEach>
+					           </c:if> 
 						</tbody>
 					</table>
 					<div id="pageBar">${pageBar }</div>

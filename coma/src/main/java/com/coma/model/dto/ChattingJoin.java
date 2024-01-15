@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ChattingJoin {  
-	private ChattingRoom roomObj;
+//	private ChattingRoom roomObj;
 	private Emp empObj;
+//	private String empId;
+	private String roomNo;
 	private String newJoin;
 }
