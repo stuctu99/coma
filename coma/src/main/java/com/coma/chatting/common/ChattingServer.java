@@ -122,11 +122,14 @@ public class ChattingServer extends TextWebSocketHandler {
 
 	private void sendMessage(ChattingMessage msg) {
 //		모든접속자에게 메세지 전송 => 특정 방 접속자에게 보낼 수 있는 로직 구현하기
-		if (msg.getType().equals("msg")) {
+		if (msg.getType().equals("msg") && room.get(msg.getRoomNo()).size()!=1) {
 			msgPackages.add(msg);
 			if (msgPackages.size() >= 30) {
 				saveChattingMessage();
 			}
+		}else if(msg.getType().equals("msg") && room.get(msg.getRoomNo()).size()==1){
+			msgPackages.add(msg);
+			saveChattingMessage();
 		}
 		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
 			if (chatRoom.getKey().equals(msg.getRoomNo())) {
