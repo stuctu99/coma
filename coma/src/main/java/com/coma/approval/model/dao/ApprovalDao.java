@@ -42,4 +42,7 @@ public interface ApprovalDao {
 	List<Approver> selectApprByDocNo(SqlSession session, String docNo);
 	
 	List<Referrer> selectRefByDocNo(SqlSession session, String docNo);
+	
+	int updateSign(SqlSession session, Map<String, String> data);
+	
 }

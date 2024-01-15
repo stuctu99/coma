@@ -200,6 +200,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.selectRefByDocNo(session, docNo);
 	}
 
+	@Override
+	public int updateSign(Map<String, String> data) {
+		return dao.updateSign(session, data);
+	}
+
 	
 	
 

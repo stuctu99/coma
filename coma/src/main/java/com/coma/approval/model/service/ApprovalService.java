@@ -3,6 +3,8 @@ package com.coma.approval.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.coma.model.dto.ApprovalDoc;
 import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
@@ -27,4 +29,5 @@ public interface ApprovalService {
 	
 	List<Referrer> selectRefByDocNo(String docNo);
 	
+	int updateSign(Map<String, String> data);
 }

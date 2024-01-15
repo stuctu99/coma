@@ -21,7 +21,7 @@
           	   		<div class="col-4">
           	   		</div>
           	   		<div class="col-4">
-          	   			<input type="button" onclick="openSign();" class="btn btn-primary btn-lg" value="서명 추가">
+          	   			<input type="button" onclick="openSign();" class="btn btn-primary btn-lg" value="서명 만들기">
           	   		</div>
           	   		<div class="col-4">
 <!--           	   			<input type="button" onclick="chooseSign();" class="btn btn-primary btn-lg" value="서명 추가"> -->
@@ -37,7 +37,7 @@
           	   		</div>
           	   		<div class="col-3">
           	   			<input type="hidden" name="imgName">
-						<input type="submit" value="승인" class="btn btn-primary btn-lg" >
+						<input type="submit" value="추가하기" class="btn btn-primary btn-lg" >
           	   		</div>
           	   </div>
 		</form>

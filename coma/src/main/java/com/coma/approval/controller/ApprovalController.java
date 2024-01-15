@@ -409,38 +409,41 @@ public class ApprovalController {
    
 
    @PostMapping("/getSignImg")
-   public String getSignImg(@RequestParam MultipartFile imgFile, HttpSession session)
+   public String getSignImg(@RequestParam MultipartFile imgFile, HttpSession session, String empId)
    											throws IOException{
 	   System.out.println("############################ ");
+	   Map<String, String> data = new HashMap<String, String>();
 	   
-	   String path = session.getServletContext().getRealPath("/resource/upload/approval/");
+	   
+	   String path = session.getServletContext().getRealPath("/resource/upload/sign");
 	   
 	   if(imgFile!=null) {
 	               String oriName = imgFile.getOriginalFilename();
 	               String ext = oriName.substring(oriName.lastIndexOf("."));
 	               Date today = new Date(System.currentTimeMillis());
-	               int randomNum = (int)(Math.random()*10000)+1;
-	               String rename = "appr_" + new SimpleDateFormat("yyyyMMddHHmmssSSS")
+	               int randomNum = (int)(Math.random()*1000)+1;
+	               String rename = "sign_" + new SimpleDateFormat("yyyyMMddHHmmssSSS")
 	                           .format(today)+"_"+randomNum+ext;
+	              
 	               
+	               data.put("sign", rename); 
+	               data.put("empId", empId); 
 	               
 	               try {
 	            	   imgFile.transferTo(new File(path, oriName));
 	                  
-	                  //첨부파일 객체 리스트 
-//	                  files.add(      
-//	                        ApprovalAttachment.builder()
-//	                              .attachOriName(oriName)
-//	                              .attachReName(rename)
-//	                              .build()
-//	                        );
 	               }catch(IOException e) {
 	                  e.printStackTrace();
 	               }
 	            }
-	         
+	   
+	   
+		   // sign 파일 이름 DB에 추가
+		 service.updateSign(data);
 	  
 
+	   
+	   
 	      
 	   return "approval/approver";
    }
