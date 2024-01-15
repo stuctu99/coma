@@ -64,7 +64,7 @@
 					</tr>
 				</thead>
 				<tbody>
-   					<c:forEach var="free" items="${totalReply}">
+   					<c:forEach var="free" items="${frees}">
 					<tr>
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						<td>
@@ -90,26 +90,23 @@
 					</tr>				
 					</c:forEach>
 				</tbody>
-			</table>
-			<%-- <form action="${path }/board/writePost" method="post"> --%>
-
-<!-- 				<button type="submit">글쓰기</button>	
-			</form>	 -->			
+			</table>		
 			<div class="search-container">
-			    <form action="searchForm" onsubmit="return false;" autocomplete="off">
-				    <select class="se" id="category" name="category">
-				        <option value="cate-title">제목</option>
-				        <option value="cate-content">내용</option>
-				        <option value="cate-author">작성자</option>
+			    <form name="searchForm" autocomplete="off">
+				    <select class="se" id="category" name="search-type">
+				        <option value="search-title">제목</option>
+				        <option value="search-content">내용</option>
+				        <option value="search-writer">작성자</option>
 				    </select>
-				    <input class="se" type="text" id="searchInput">
-				    <button type="button" class="se btn btn-success" onclick="movePage(1)">
+				    <input type="hidden" name="boardType" value="${free.boardType }">
+				    <input class="se" type="text" name="search-keyword" id="searchInput">
+				    <button type="button" class="se btn btn-success" onclick="getSearchList()">
 				   		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 						  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 						</svg>
 				    </button>
 			    </form>
-   				<div class="wrtie" style="text-align: right;">
+				<div class="wrtie" style="text-align: right;">
 					<a href="${path }/board/writeView?boardType=1" class="btn btn-success"><span>글쓰기</span></a>	
 				</div>
 			</div>
@@ -122,19 +119,41 @@
 </div>
 
 <script>
-	function movePage(page) {
-		
-		const form = document.getElementById('searchForm');
-		
-		const queryParam = {
-			page: (page)? page : 1,
-					recordSize: 10,
-					pageSize: 10,
-					searchType: form.category.value,
-					keyword: from.searchInput.value
+	function handleEnterKey(event) {
+		if (event.key === 'Enter') {
+			getSearchList();
 		}
-		
-		location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+	}
+	
+	$(document).ready(function () {
+		$('#searchInput').on('keyup', handleEnterKey);
+	});
+	
+	//검색기능
+	function getSearchList(){
+		console.log($("form[name=searchForm]"));
+		$.ajax({
+			type: 'POST',
+			url : "/board/search",
+			data : $("form[name=searchForm]").serialize(),
+			success : function(result){
+				$('.table > tbody').empty();
+				if(result.length>=1){
+					result.forEach(function(searchBoard){
+						console.log(searchBoard);
+						str='<tr>'
+						str += "<td>"+searchBoard.boardNo+"</td>";
+						str+="<td><a href = '/board/freePost?boardNo=" + searchBoard.boardNo + "'>" + searchBoard.boardTitle + "</a></td>";
+						str+="<td>"+searchBoard.emp.empName+"</td>";
+						str+="<td>"+searchBoard.boardDate+"</td>";
+						str+="<td>"+searchBoard.boardReadCount+"</td>";
+						str+="</tr>";
+						console.log(str);
+						$('.table').append(str);
+	        		})
+				}
+			}
+		})
 	}
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -104,8 +104,8 @@
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
               <li><a href="${pageContext.request.contextPath}/approval/writedoc">결재신청</a></li>
-              <li><a href="/doclist">결재문서함</a></li>
-              <li><a href="">?</a></li>
+              <li><a href="/docList">진행 중인 문서</a></li>
+              <li><a href="/proceedList">문서함</a></li>
             </ul>
           </li>
           <li class="nav-item">

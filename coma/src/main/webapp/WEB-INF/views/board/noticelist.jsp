@@ -69,71 +69,70 @@
 			      <a href="/deletePost" class="btn btn-success"><span>공지삭제</span></a>   
 			  	</div>
 			</c:if>
+			
+				<div class="search-container">
+				    <form name="searchForm" autocomplete="off">
+					    <select class="se" id="category" name="search-type">
+					        <option value="search-title">제목</option>
+					        <option value="search-content">내용</option>
+					    </select>
+					    <input type="hidden" name="boardType" value="${board.boardType }">
+					    <input class="se" type="text" name="search-keyword" id="searchInput">
+					    <button type="button" class="se btn btn-success" onclick="getSearchList()">
+					   		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+							</svg>
+					    </button>
+				    </form>
+					<div class="wrtie" style="text-align: right;">
+						<a href="${path }/board/writeView?boardType=1" class="btn btn-success"><span>글쓰기</span></a>	
+					</div>
+				</div>
+				
 			 	 <div>
 			      ${pageBarNotice }
 			  	</div>
-			  	<div class="search-container">
-				    <input type="text" id="searchInput" placeholder="제목+내용">
-				    <button type="button" class="btn btn-success" onclick="searchFunction()">검색</button>
-				</div>
 	</div>        
 </div>
 </div>
 </div>
 
-<%-- <style>
-	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-	* {
-	font-family: 'Noto Sans KR', sans-serif;
-	}
-	.section *{
-		font-size:24px;
-	}
-	
-	.container {
-		margin:0 0 0 0px;	
-		padding: 20px 20px 20px 20px;
-		width:1100px;
-		height:100%;
+
+<script>
+	function handleEnterKey(event) {
+		if (event.key === 'Enter') {
+			getSearchList();
+		}
 	}
 	
+	$(document).ready(function () {
+		$('#searchInput').on('keyup', handleEnterKey);
+	});
 	
-</style>
-    <!-- TEAM COMA SPACE -->
-    <div class="section section-properties" style="height: 1110.760px;">
-	  <div class="container">
-	   	<div class="two_third first" style="display: flex">
-		  <div class="" style="width:900px;">
-		   <h2 class="font-weight-bold text-primary heading">공지사항</h2>
-		   <hr/><br><br>
-  <!-- board list area -->
-    <div id="board-list" style="text-align: left">
-        <div class="container">
-        	<div class="" style="display: flex;">
-	        	<div class="" style="width:137px">
-	        		<p>작성일</p>
-	        	</div>
-	        	<div class="" style="width:170px">
-	        		<p>제목</p>
-	        	</div>
-	        	<div class="">
-	        		<p>조회수</p>
-	        	</div>
-        	</div>
-   			<table>
-   				<c:forEach var="notice" items="${notices}">
-   				<tr>
-   					<td>${notice.boardDate }</td>
-   					<td><a href="">${notice.boardTitle }</a></td>
-   					<td>${notice.boardReadCount }</td>
-   				</tr>
-   				</c:forEach>
-       		</table>
-        </div>
-    </div>
-   </div>
-   </div>
-  </div>
-</div> --%>
+	//검색기능
+	function getSearchList(){
+		console.log($("form[name=searchForm]"));
+		$.ajax({
+			type: 'POST',
+			url : "/board/search",
+			data : $("form[name=searchForm]").serialize(),
+			success : function(result){
+				$('.table > tbody').empty();
+				if(result.length>=1){
+					result.forEach(function(searchBoard){
+						console.log(searchBoard);
+						str='<tr>'
+						str += "<td>"+searchBoard.boardDate+"</td>";
+						str+="<td><a href = '/board/freePost?boardNo=" + searchBoard.boardNo + "'>" + searchBoard.boardTitle + "</a></td>";
+						str+="<td>"+searchBoard.boardReadCount+"</td>";
+						str+="</tr>";
+						console.log(str);
+						$('.table').append(str);
+	        		})
+				}
+			}
+		})
+	}
+</script>
     <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

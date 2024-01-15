@@ -71,7 +71,15 @@ font-family: 'Noto Sans KR', sans-serif;
               </th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+          		<tr>
+	          		<td>1</td>
+	          		<td>제제제목목</td>
+	          		<td>종종류류류</td>
+	          		<td>기기안안자</td>
+	          		<td>기기안안일</td>
+          		</tr>
+          </tbody>
         </table>
       </div>
     </div>

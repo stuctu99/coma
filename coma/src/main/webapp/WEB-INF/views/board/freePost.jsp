@@ -7,6 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <c:set var="post" value="${post }"/>
 <c:set var="e" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <div class="coma-container">
@@ -77,17 +78,20 @@
 					            <td>${reply.board.emp.empName }</td>
 					            <td>${reply.replyContent}</td>
 					            <td>${reply.replyDate}</td>
-					            <td></td>
+					            <td>
+					            	<button type="button" class="reply-re">답글</button>
+					            	<button class="reply-del">삭제</button>
+					            </td>
 					        </tr>
 					    </c:forEach>
 					    <tr>
 						<th>댓글작성</th>
 						<td colspan="6" class="view_text">
-							<form action="${path }/board/writeReply" method="post">
+							<form action="${path }/board/writeReply" class="reply-detior" method="post">
 							<div class="d-flex">
 								<input type="hidden" name="boardNo" value="${post.boardNo }">
 								<textarea class="form-control" id="contents" name="replyContent" style="width: 100%" placeholder="^0^"></textarea>
-								<button class="btn btn-success m1-2">확인</button>
+								<button class="btn btn-success m1-2">등록</button>
 							</div>
 							</form>
 						</td>
@@ -123,6 +127,54 @@
 	</div>        
 </div>
 </div>
+
+<script>
+	$(".reply-re").click(e=>{
+		
+		const $tr=$("<tr>");
+		const $td=$("<td>").attr("colspan","2");
+		const $form=$(".reply-detior").clone();
+		$td.append($form);
+		$tr.append($td);
+		
+		$(e.target).parents("tr").after($tr);
+	})
+	
+	$(".reply-del").click(e=>{
+		
+		var confirmDelete =confirm("댓글을 삭제하시겠습니까?");
+		
+		if(confirmDelete){
+			
+			$.ajax({
+				url: "/replyDelete",
+				method: "DELETE".
+				data: {}
+			})
+			
+			alert("삭제되었습니다");
+		}
+		
+		
+	})
+	
+	document
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

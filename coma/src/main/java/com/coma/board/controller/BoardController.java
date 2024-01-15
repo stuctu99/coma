@@ -61,17 +61,14 @@ public class BoardController {
 	
 	//자유게시판리스트
 	@GetMapping("/freelist")
-	public void selectBoardFree(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+	public void selectBoardFree(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "20") int numPerpage,
 								@RequestParam(required = false, defaultValue="1") int boardType, Model m){
 		
 		//Type이 1(자유)인 게시글 List타입으로 가져오기+페이징처리
-		List<Board> boards = service.selectBoardByType(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
+		List<Board> boards = service.selectReplyCount(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
 		
 		//Type이 1(자유)인 게시글 총 갯수
 		int totalData=service.selectBoardCount(boardType);
-		
-		//board에 달려있는 댓글갯수계산
-		List<Reply> totalReply =service.selectReplyCount();
 		
 		//자유게시글 List로 model에 저장
 		m.addAttribute("frees", boards);
@@ -79,8 +76,6 @@ public class BoardController {
 		m.addAttribute("pageBarFree", pageFactory.getPage(cPage, numPerpage, totalData, "freelist"));
 		//자유 총글갯수 model에 저장
 		m.addAttribute("totalData", totalData);
-		//자유게시글에 연결된 댓글수를 List로 model에 저장
-		m.addAttribute("totalReply", totalReply);
 	}  
 	
 	//글상세화면
@@ -247,88 +242,26 @@ public class BoardController {
 	}
 	
 	//글검색
-	@GetMapping("/search")
-	public String searchPost(int boardType) {
-		String path = null;
+	@PostMapping("/search")
+	@ResponseBody
+	public ResponseEntity<List<Board>> searchPost(@RequestParam("search-type")String type, @RequestParam("search-keyword")String keyword,
+							@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+							 @RequestParam(defaultValue="0", name= "boardType") int boardType, Model m) {
 		
-		if(boardType==0) {
-			 path = "redirect:/board/noticelist";
-		}else if(boardType==1) {
-			 path = "redirect:/board/freelist";
-		}
+
+		Map<String, Object> board = new HashMap<>();
+		board.put("type", type);
+		board.put("keyword", keyword);
+		board.put("boardType", boardType);
+		board.put("cPage", cPage);
+		board.put("numPerpage", numPerpage);
 		
-		return path;
+		List<Board> searchBoard = service.searchBoard(board);
+//		int totalData = service.getSearchResultCount(board);
+		
+		
+		return ResponseEntity.ok(searchBoard);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-// *메소드무덤*
-	
-//	@GetMapping("/noticePost")
-//	public void detailBoard(@RequestParam("boardType") String boardType, @RequestParam("boardNo") int boardNo, Model model) {
-//		Board b = service.selectBoardByNo(boardType, boardNo);
-//		
-//		Board.builder().boardType(boardType).boardNo(boardNo).build();
-//		
-//		model.addAttribute("board",b);
-//	}
-	
-//	@GetMapping("/freelist")
-//	public void selectFreeAll(Model m) {
-//		
-//		List<Board> frees = service.selectFreeAll();
-//		
-//		m.addAttribute("frees", frees);
-//	}
-	
-//	@GetMapping("/list")
-//	public void selectBoardList(@RequestParam("boardType") String boardType, Model m){
-//		List<Board> boards = new ArrayList<>();
-//		
-////		if(boardType!=null && boardType.equals("공지")) {
-////			boards = service.selectNoticeAll();
-////		}else if(boardType!=null && boardType.equals("자유")) {
-////			boards = service.selectFreeAll();
-////		}
-//		
-//		boards = service.selectBoardAll(boardType);
-//		
-//		
-//		m.addAttribute("boards", boards);
-//		
-//	}
-	
-//	@GetMapping("/detail")
-//	public void selectBoardByNo(@RequestParam("boardNo") int boardNo, Model m) {
-//		List<Board> b = new ArrayList<>(); 
-//				
-//		b =service.selectBoardByNo(boardNo);
-//		
-//		m.addAttribute("boards", )
-//		
-//	}
-	
-//	@GetMapping("/post")
-//	public void selectBoardByNo(Model m) {
-//		
-//	}
-	
-//	@GetPost("/insert")
-//	public void insertBoard
-//	
-//	@GetPost("/update")
-//	public void updateBoard
-//	
-//	@GetPost("/delete")
-//	public void deleteBoard
-//	
-	
 	
 	
 }

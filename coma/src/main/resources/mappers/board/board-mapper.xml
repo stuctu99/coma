@@ -10,11 +10,13 @@
 		<result column="BOARD_FILE_CHECK" property="boardFileCheck"/>
 		<result column="BOARD_TYPE" property="boardType"/>
 		<result column="REPLY_COUNT" property="replyCount"/>
+		<result column="TYPE" property="type"/>
+		<result column="KEYWORD" property="keyword"/>
 		<association resultMap="emp.empMap" property="emp"/>
 		<association resultMap="boardFile.boardFileMap" property="boardFile"/>
 	</resultMap>
 	
-	<!-- 게시판화면- 리스트출력(boardType) -->
+	<!-- 게시판화면- 공지게시판 리스트출력(boardType) -->
 	<select id="selectBoardByType" resultMap="boardMap" parameterType="_int">		
 		SELECT *
 		FROM BOARD
@@ -23,14 +25,14 @@
 		ORDER BY BOARD_DATE DESC
 	</select>
 	
-	<!-- 게시판화면- 게시글에 달린 댓글수 -->
+	<!-- 게시판화면- 자유게시판 리스트출력 게시글에 달린 댓글수 -->
 	<select id="selectReplyCount" resultMap="boardMap">
-		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_DATE, E.EMP_NAME, B.BOARD_READ_COUNT, COUNT(R.REPLY_NO) AS REPLY_COUNT
+		SELECT B.BOARD_NO, B.BOARD_TYPE, B.BOARD_TITLE, B.BOARD_DATE, E.EMP_NAME, B.BOARD_READ_COUNT, COUNT(R.REPLY_NO) AS REPLY_COUNT
 		FROM BOARD B
 		JOIN EMP E ON B.EMP_ID = E.EMP_ID
 		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
-		WHERE B.BOARD_TYPE = 1
-		GROUP BY B.BOARD_NO, B.BOARD_TITLE, B.BOARD_DATE, E.EMP_NAME, B.BOARD_READ_COUNT
+		WHERE B.BOARD_TYPE = #{boardType}
+		GROUP BY B.BOARD_NO, B.BOARD_TYPE, B.BOARD_TITLE, B.BOARD_DATE, E.EMP_NAME, B.BOARD_READ_COUNT
 		ORDER BY B.BOARD_DATE DESC
 	</select>
 	
@@ -86,7 +88,20 @@
     <select id="searchBoard" resultMap="boardMap" parameterType="map">
     	SELECT *
     	FROM BOARD
-    	WHERE 
+    	JOIN EMP USING(EMP_ID)
+    	WHERE BOARD_TYPE = #{boardType}
+    	<choose>
+    		<when test="type!=null and type.equals('search-title')">
+    			AND BOARD_TITLE LIKE '%' || #{keyword} || '%'
+    		</when>
+    		<when test="type!=null and type.equals('search-content')">
+    			AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+    		</when>
+    		<when test="type!=null and type.equals('search-writer')">
+    			AND EMP_NAME = #{keyword}
+    		</when>
+    	</choose>
+    	ORDER BY BOARD_DATE DESC
     </select> 
     
     

@@ -82,9 +82,16 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public List<Reply> selectReplyCount() {
+	public List<Board> selectReplyCount(Map<String, Integer> page, int boardType) {
 		// TODO Auto-generated method stub
-		return dao.selectReplyCount(session);
+		return dao.selectReplyCount(session, page, boardType);
+	}
+
+
+	@Override
+	public List<Board> searchBoard(Map<String, Object> board) {
+		// TODO Auto-generated method stub
+		return dao.searchBoard(session, board);
 	}
 	
 	

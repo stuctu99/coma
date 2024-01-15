@@ -27,5 +27,7 @@ public interface BoardService {
 	
 	int insertReplyByBoard(Map<String, Object> reply);
 	
-	List<Reply> selectReplyCount();
+	List<Board> selectReplyCount(Map<String, Integer> page, int boardType);
+	
+	List<Board> searchBoard(Map<String, Object> board);
 }
