@@ -87,19 +87,21 @@ public class PdfGenerator {
 	         document.add(generateTable2(doc, font, document, writer));
 	         document.add(emptySpace);
 	       
+	      // ------------------------------ 공통사항 -----------------------------------   
+
+	         // table #3 (부서, 직급)
+	         document.add(pdfType.generateTable3(doc, font, document, writer,"부서",writerInfo.getDept().getDeptType(),"직급",writerInfo.getJob().getJobType()));
+	         
+	         // table #3 (성명)
+	         document.add(pdfType.generateTable3(doc, font, document, writer,"성명", writerInfo.getEmpName(),"",""));
+	         
+	         // table #4 (제목)
+	         document.add(pdfType.generateTable4(doc, font, document, writer, "제목", doc.getDocTitle()));
+	         
+	         
 	      // -----------------------------   휴가신청서 -----------------------------   
 	         if(doc.getDocType().equals("leave")) { 
 	         
-		         // table #3 (부서, 직급)
-		         document.add(pdfType.generateTable3(doc, font, document, writer,"부서",writerInfo.getDept().getDeptType(),"직급",writerInfo.getJob().getJobType()));
-		         
-		         // table #3 (성명)
-		         document.add(pdfType.generateTable3(doc, font, document, writer,"성명", writerInfo.getEmpName(),"",""));
-		  
-		         
-		         // table #4 (제목)
-		         document.add(pdfType.generateTable4(doc, font, document, writer, "제목", doc.getDocTitle()));
-		         
 		         // table #4 (구분)
 		         document.add(pdfType.generateTable4(doc, font, document, writer, "구분", doc.getLeave().getLeaveType()));
 		         
@@ -176,6 +178,7 @@ public class PdfGenerator {
 			//다운로드할 파일 이름 설정
 			String fileName = doc.getDocNo()+".pdf";
 		
+			
 			// HTTP 응답 헤더 설정
 			response.setContentType("application/pdf");
 			response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
@@ -185,6 +188,7 @@ public class PdfGenerator {
 			ServletOutputStream outputStream = response.getOutputStream();
 			baos.writeTo(outputStream); //baos를 원격으로 클라이언트한테 보냄
 			outputStream.flush();
+			
 		
 		
 		}catch (DocumentException | IOException e) {
@@ -282,7 +286,7 @@ public class PdfGenerator {
 	          table1.addCell(t1_hiddenCell3);
 	          
 	          for(int j=0; j<appName.length; j++) {
-	        	  System.out.println("결재자이름들 확인**********"+ appName[j]);
+
 	        	  t1_cell3 = new PdfPCell(new Phrase(appName[j], font));
 	        	  t1_cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        	  t1_cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -357,7 +361,7 @@ public class PdfGenerator {
 		table6.addCell(t6_label);
 		
 		// 상세 내용 content
-		PdfPCell t6_cells = new PdfPCell(new Phrase(doc.getLeave().getLeaveDetail(),font));
+		PdfPCell t6_cells = new PdfPCell(new Phrase(doc.getDocDetail(),font));
 		t6_cells.setFixedHeight(200f);
 		t6_cells.setHorizontalAlignment(Element.ALIGN_CENTER);
 		t6_cells.setVerticalAlignment(Element.ALIGN_MIDDLE);

@@ -17,6 +17,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -161,6 +162,7 @@ public class ApprovalController {
            .docType(docType)
            .docTitle(title)
            .empId(empId)
+           .docDetail(editorContent)
            .build();   
          
       
@@ -172,7 +174,6 @@ public class ApprovalController {
                      .leaveType(leaveType)
                          .leaveStart(formatDate(leaveStart))
                          .leaveEnd(formatDate(leaveEnd))
-                         .leaveDetail(editorContent)
                          .build();
               
       }
@@ -185,7 +186,6 @@ public class ApprovalController {
             cash = ApprovalCash.builder()
                      .cashExpense(expense)
                      .cashDate(formatDate(cashDate))
-                     .cashDetail(editorContent)
                      .build();
       }
       
@@ -194,7 +194,6 @@ public class ApprovalController {
       if(reqDate!=null && !reqDate.equals("")) {
          
             req = ApprovalRequest.builder()
-                     .reqDetail(editorContent)
                      .reqDate(formatDate(reqDate))
                      .build();
       }
@@ -203,7 +202,6 @@ public class ApprovalController {
       if(etcDate!=null && !etcDate.equals("")) {
          
             etc = ApprovalEtc.builder()
-                     .etcDetail(editorContent)
                      .etcDate(formatDate(etcDate))
                      .build();
       }
@@ -317,7 +315,7 @@ public class ApprovalController {
 	   
 	 Map<String, String> data = new HashMap<String, String>();
 	 
-	 docNo = "DOC_284"; //테스트용
+	 docNo = "DOC_311"; //테스트용
 	 docType = "cash"; //테스트용
 	 
 	 data.put("docNo", docNo); 
@@ -355,22 +353,25 @@ public class ApprovalController {
    
    @Autowired
    private PdfGenerator pdfGen;
-   
-   @GetMapping("/pdf")
+
+   @GetMapping("/downloadPdf")
    public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, String docType, String empId) {
 	   
-	   empId = "COMA_2"; //테스트용
+//	   docNo="DOC_304";
+//	   docType="leave";
+//	   empId="COMA_1";
+	   
 	   
 	   Emp writer = service.selectEmpById(empId);
 	   
 	   //-----해당 문서 정보
-	   docNo = "DOC_284"; //테스트용
-	   docType = "cash";
+	   
 	   Map<String, String> data = new HashMap<String, String>();
 	   data.put("docNo", docNo); 
 	   data.put("docType", docType); 
 	   
 	   ApprovalDoc doc = service.selectAppDoc(data); 
+
 	   
 	   //--------------
 	   

@@ -36,8 +36,8 @@
 						      <td>${onlyDate }</td>
 						    </tr>
 						    <tr>
-						      <th scope="row" class="mylabel">기안자</th>
-						      <td>${writer.empName }</td>
+						      <th scope="row" class="mylabel" >기안자</th>
+						      <td id="writer">${writer.empName }</td>
 						      <th scope="row" class="mylabel">부서</th>
 						      <td>${writer.dept.deptType } </td>
 						    </tr>
@@ -54,8 +54,21 @@
 			 
 			 
 			<c:choose> 
-				<c:when test="${typeKor == '휴가 신청서'}">
-				 dd
+				 <c:when test="${typeKor == '휴가 신청서'}">
+				 	 <div class="row">
+						<div class="col-12">
+							<table class="table table-bordered">
+							  <tbody>
+							    <tr>
+							      <th scope="row" class="mylabel">구분</th>
+							      <td>${doc.leave.leaveType }</td>
+							      <th scope="row" class="mylabel">휴가 기간</th>
+							      <td>${doc.leave.leaveStart } ~ ${doc.leave.leaveEnd }</td>
+							    </tr>
+							  </tbody>
+							</table>
+						</div>	
+					</div>	
 				 </c:when>
 				 
 				 <c:when test="${typeKor == '지출 결의서' }">
@@ -75,22 +88,7 @@
 							</table>
 						</div>	
 					</div>	
-							 <div class="row">
-							 	<div class="col-12">
-							 		<table class="table table-bordered">
-							 			<tr>
-									        <th scope="row" class="mylabel">상세 내용</th>
-									    </tr>
-									    <tr>
-									    	<td height="600">
-									    		${doc.cash.cashDetail }
-									    	</td>
-									    </tr>
-							 		
-							 		</table>
-							 	</div>
-							 	
-							 </div>		
+						
 					
 				 </c:when>
 				 
@@ -98,17 +96,7 @@
 				
 					 <div class="row">
 					 	<div class="col-12">
-					 		<table class="table table-bordered">
-					 			<tr>
-							        <th scope="row" class="mylabel">상세 내용</th>
-							    </tr>
-							    <tr>
-							    	<td height="600">
-							    		${doc.req.reqDetail }
-							    	</td>
-							    </tr>
 					 		
-					 		</table>
 					 	</div>
 					 	
 					 </div>		
@@ -120,14 +108,40 @@
 				 </c:when>
 		</c:choose>
           <!-- coma content space -->
+           <div class="row">
+			 	<div class="col-12">
+			 		<table class="table table-bordered">
+			 			<tr>
+					        <th scope="row" class="mylabel">상세 내용</th>
+					    </tr>
+					    <tr>
+					    	<td height="500">
+					    		${doc.docDetail }
+					    	</td>
+					    </tr>
+			 		</table>
+			 	</div>
+		   </div>		
+          
+          
         </div>
     </div>
     <!-- TEAM COMA SPACE -->
     </div>
   </div>
-  
+<form action="${path }/approval/downloadPdf" id="pdfDownload">
+	<input type="hidden" name="docNo" value="${doc.docNo }"> 
+	<input type="hidden" name="empId" value="${doc.empId }">
+	<input type="hidden" name="docType" value="${doc.docType }">
+  </form>
+<script>
+  const downloadPdf=()=>{
+	  $("#pdfDownload").submit();
+	
+  }
+</script>
 
-<script src="/resource/js/approval/apprView.js"></script> 
+<!-- <script src="/resource/js/approval/apprView.js"></script>  -->
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
