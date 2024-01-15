@@ -23,4 +23,8 @@ public interface CommuteService {
 	//한달동안 나의 근태를 보여줌
 	List<Map> selectCommuteAll (String loginId);
 	int countCommute(String loginId);
+	//ajax
+	int countSearchCommute(Map <String, Object> commute);
+	List<Map> searchCommute (Map <String, Object> commute);
+	
 }

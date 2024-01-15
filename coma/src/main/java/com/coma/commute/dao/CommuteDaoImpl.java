@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +55,21 @@ public class CommuteDaoImpl implements CommuteDao {
 	public int countCommute(SqlSession session, String loginId) {
 		// TODO Auto-generated method stub
 		return session.selectOne("commute.countCommute",loginId);
+	}
+
+	@Override
+	public List<Map> searchCommute(SqlSession session, Map<String, Object> commute) {
+		int cPage=(int)commute.get("cPage");
+		int numPerpage=(Integer)commute.get("numPerpage");
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
+		return session.selectList("commute.searchCommute",commute,rb);
+
+	}
+
+	@Override
+	public int countSearchCommute(SqlSession session,Map <String, Object> commute) {
+		// TODO Auto-generated method stub
+		return session.selectOne("commute.countSearchCommute",commute);
 	}
 
 

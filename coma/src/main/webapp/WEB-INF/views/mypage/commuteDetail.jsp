@@ -8,14 +8,7 @@
 </jsp:include>
 <c:set var="emp"
 	value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 
 <script src="/resource/js/jquery-3.7.0.js"></script>
 <style>
@@ -53,7 +46,7 @@ div {
 /* You may need to adjust the styling based on your specific requirements */
 </style>
 <div class="coma-container containerbig">
-${commute}
+	${commute}
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-2" style="display: flex;">
@@ -103,92 +96,73 @@ ${commute}
 	</div>
 	<div class="row" style="text-align: center;">
 		<div class="col-1"></div>
-		<div class="col-10  ">
+		<div class="col-10">
 			<div class="row" style="margin-top: 30px">
 				<div class="col-3">
-					<h1>휴가 신청 내역</h1>
+					<h1>근태 상세보긱</h1>
 				</div>
 				<div class="col-9">
 					<div class=""></div>
 				</div>
 			</div>
-			<form id = "searchForm">
-				<div class="row">
-					<div class="input-daterange datepicker row align-items-center">
-						<div class="input-daterange datepicker row align-items-center">
-							<div class="col">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i
-												class="ni ni-calendar-grid-58"></i></span>
-										</div>
-										<input class="form-control" placeholder="Start date"
-											type="text" value="06/18/2020">
-									</div>
-								</div>
-							</div>
-							<div class="col">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i
-												class="ni ni-calendar-grid-58"></i></span>
-										</div>
-										<input class="form-control" placeholder="End date" type="text"
-											value="06/22/2020">
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="form-group">
-								<input type="submit" class="btn btn-outline-primary" value="검색">
-							</div>
-						</div>
-					</div>
-			</form>
+			<div class="col-1"></div>
 		</div>
 	</div>
-	<div class="col-1"></div>
+	<div class="row">
+		<div class="col-1"></div>
+		<div class="col-2">
+			<div class="form-group">
+		        <input class="form-control" type="date" name="startTime"  id="example-date-input-start">
+		    </div>
+		</div>
+		<div class="col-2">
+			<div class="form-group">
+		        <input class="form-control" type="date" name="endTime"  id="example-date-input-end">
+		    </div>
+		</div>
+		<div col="col-1">
+			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-10">
-				<div class="col">
-					<table class="table align-items-center" style="text-align: center;">
-						<thead class="thead-light">
-							<tr>
-								<th>상태</th> <!-- 지각, 결근,  -->
-								<th>출근 시간</th>
-								<th>퇴근 시간 </th>
-								<th>외출 시작 시간</th>
-								<th>외출 끝 시간</th>
-								<th>근무시간</th>
-								<th>외출시간</th>
-							</tr>
-						</thead>
-						<tbody class="list" id="empTable">
-							<c:if test="${not empty commute}">
-								<c:forEach var="c" items="${commute }">
-									<tr>
- 										<td><fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" /></td>
-										<td><c:out value="${c.EMP_COMMUTE_STATUS }" /></td>	
-												
-										<%-- <td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN}" pattern="HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKOUT}" pattern="HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN}" pattern="HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN}" pattern="HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN}" pattern="HH:mm:ss" /></td> --%>
-									</tr>
-								</c:forEach>
-							</c:if>
-						</tbody>
-					</table>
-					<div id="pageBar">${pageBar }</div>
-				</div>
+			<div class="col">
+				<table class="table align-items-center" style="text-align: center;">
+					<thead class="thead-light">
+						<tr>
+							<th>상태</th>
+							<!-- 지각, 결근,  -->
+							<th>날짜</th>
+							<th>출근 시간</th>
+							<th>퇴근 시간</th>
+							<th>근무시간</th>
+							<th>외출 시작 시간</th>
+							<th>외출 끝 시간</th>
+							<th>외출시간</th>
+						</tr>
+					</thead>
+					<tbody class="list" id="empTable">
+						<c:if test="${not empty commute}">
+							<c:forEach var="c" items="${commute }">
+								<tr>
+									<td is=""><c:out value="${c.EMP_COMMUTE_STATUS }" /></td>
+									<td><fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" /></td>
+									<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="hh:mm:ss"/></td> 
+									<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKOUT.toJdbc() }" pattern="hh:mm:ss" /></td>
+									<td><c:out value="${c.WORK_DURATION }" /></td>  
+									<td><fmt:formatDate value="${c.EMP_COMMUTE_STARTTIME.toJdbc() }" pattern="hh:mm:ss"/></td> 
+									<td><fmt:formatDate  value="${c.EMP_COMMUTE_ENDTIME.toJdbc() }" pattern="hh:mm:ss" /></td> 
+									<td><c:out value="${c.BREAK_DURATION }" /></td> 									
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+				<div id="pageBar">${pageBar }</div>
 			</div>
+		</div>
 		<div class="col-1"></div>
-
 	</div>
 </div>
 <!-- <div class="coma-container">
@@ -201,35 +175,41 @@ ${commute}
 </div> -->
 
 <script>
-document.getElementById('searchForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // 폼의 기본 동작을 막음
-
-    // 시작 날짜와 종료 날짜 가져오기
-    const startDate = document.getElementById('start-date').value;
-    const endDate = document.getElementById('end-date').value;
-
-    // 서버로 검색 요청
-    fetch(`${path}/commute/searchCommute?startDate=${startDate}&endDate=${endDate}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-            // 필요에 따라 다른 헤더 추가 가능
-        },
-        // body: JSON.stringify({ startDate, endDate }) // POST 요청일 경우 사용
+function submitForm(cPage=1,numPerpage=10,url) {
+    var startTime= $("#example-date-input-start").val();
+    var endTime= $("#example-date-input-end").val();
+    console.log(startTime);
+    console.log(endTime);
+    // Fetch API
+    fetch("${path}/commute/commuteDetailEnd", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+        	cPage:cPage,
+    		numPerpage:numPerpage,
+            startTime: startTime,
+            endTime: endTime,
+            jsName: "submitForm"
+        })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
-        // 검색 결과를 사용하여 화면 업데이트
+        // Handle the response data
         console.log(data);
     })
-    .catch(error => console.error('Error:', error));
-});
+    .catch(error => {
+        // Handle errors
+        
+        console.error("Error:", error);
+    });
+}
+
 	
 </script>
-
-
-
-
-
 <script src="${path }/resource/js/plugins/jquery/dist/jquery.min.js"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
