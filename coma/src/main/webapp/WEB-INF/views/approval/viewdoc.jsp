@@ -93,18 +93,37 @@
 				 </c:when>
 				 
 				 <c:when test="${typeKor == '품의서'}">
-				
 					 <div class="row">
 					 	<div class="col-12">
-					 		
+					 		<table class="table table-bordered">
+							  <tbody>
+							    <tr>
+							      <th scope="row" class="mylabel">기안 날짜</th>
+							      <td>${doc.req.reqDate}</td>
+							      <th scope="row" class="mylabel"></th>
+							      <td></td>
+							    </tr>
+							  </tbody>	
+							</table>  
 					 	</div>
-					 	
 					 </div>		
-				 
 				 </c:when>
 				 
 				 <c:when test="${typeKor == '기타 문서' }">
-				 dd
+				 	<div class="row">
+					 	<div class="col-12">
+					 		<table class="table table-bordered">
+							  <tbody>
+							    <tr>
+							      <th scope="row" class="mylabel">기안 날짜</th>
+							      <td>${doc.etc.etcDate}</td>
+							      <th scope="row" class="mylabel"></th>
+							      <td></td>
+							    </tr>
+							  </tbody>	
+							</table>  
+					 	</div>
+					 </div>		
 				 </c:when>
 		</c:choose>
           <!-- coma content space -->

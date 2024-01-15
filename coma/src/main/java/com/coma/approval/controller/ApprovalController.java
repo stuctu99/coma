@@ -315,8 +315,8 @@ public class ApprovalController {
 	   
 	 Map<String, String> data = new HashMap<String, String>();
 	 
-	 docNo = "DOC_311"; //테스트용
-	 docType = "cash"; //테스트용
+	 docNo = "DOC_325"; //테스트용
+	 docType = "etc"; //테스트용
 	 
 	 data.put("docNo", docNo); 
 	 data.put("docType", docType); 
