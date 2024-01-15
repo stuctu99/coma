@@ -17,6 +17,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -161,6 +162,7 @@ public class ApprovalController {
            .docType(docType)
            .docTitle(title)
            .empId(empId)
+           .docDetail(editorContent)
            .build();   
          
       
@@ -172,7 +174,6 @@ public class ApprovalController {
                      .leaveType(leaveType)
                          .leaveStart(formatDate(leaveStart))
                          .leaveEnd(formatDate(leaveEnd))
-                         .leaveDetail(editorContent)
                          .build();
               
       }
@@ -185,7 +186,6 @@ public class ApprovalController {
             cash = ApprovalCash.builder()
                      .cashExpense(expense)
                      .cashDate(formatDate(cashDate))
-                     .cashDetail(editorContent)
                      .build();
       }
       
@@ -194,7 +194,6 @@ public class ApprovalController {
       if(reqDate!=null && !reqDate.equals("")) {
          
             req = ApprovalRequest.builder()
-                     .reqDetail(editorContent)
                      .reqDate(formatDate(reqDate))
                      .build();
       }
@@ -203,7 +202,6 @@ public class ApprovalController {
       if(etcDate!=null && !etcDate.equals("")) {
          
             etc = ApprovalEtc.builder()
-                     .etcDetail(editorContent)
                      .etcDate(formatDate(etcDate))
                      .build();
       }
@@ -317,8 +315,8 @@ public class ApprovalController {
 	   
 	 Map<String, String> data = new HashMap<String, String>();
 	 
-	 docNo = "DOC_284"; //테스트용
-	 docType = "cash"; //테스트용
+	 docNo = "DOC_325"; //테스트용
+	 docType = "etc"; //테스트용
 	 
 	 data.put("docNo", docNo); 
 	 data.put("docType", docType); 
@@ -353,24 +351,30 @@ public class ApprovalController {
    
 //---------------------------- PDF -------------------------------------------
    
+   
+   
    @Autowired
    private PdfGenerator pdfGen;
-   
-   @GetMapping("/pdf")
-   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, String docType, String empId) {
+
+   @GetMapping("/downloadPdf")
+   public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, 
+		   						String docType, String empId, String imgName) {
 	   
-	   empId = "COMA_2"; //테스트용
+//	   docNo="DOC_304";
+//	   docType="leave";
+//	   empId="COMA_1";
+	   
 	   
 	   Emp writer = service.selectEmpById(empId);
 	   
 	   //-----해당 문서 정보
-	   docNo = "DOC_284"; //테스트용
-	   docType = "cash";
+	   
 	   Map<String, String> data = new HashMap<String, String>();
 	   data.put("docNo", docNo); 
 	   data.put("docType", docType); 
 	   
 	   ApprovalDoc doc = service.selectAppDoc(data); 
+
 	   
 	   //--------------
 	   
@@ -379,15 +383,69 @@ public class ApprovalController {
 	   
 	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
 
-  
-	   pdfGen.generateAppr(doc, response, fontPath, writer);
+	   //String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/image (6).png");
+	   String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/"+imgName);
+
+	   
+	   //pdfGen이 service 역할
+	   pdfGen.generatePdf(doc, response, fontPath, writer, imgPath);
 	      
 	   //return "approval/viewdoc"; ㄴㄴ
 	   //return을 하면 outputStream이 또 호출됨
 	   
    }
    
-//---------------------------------------------------------------------
+//------------------------------- 서명 추가 --------------------------------------
+ 
+   @GetMapping("/approver")
+   public String approver() {
+      return "approval/approver";
+   }
    
+   @GetMapping("/newSign")
+   public String newSign() {
+      return "approval/newSign";
+   }
+   
+
+   @PostMapping("/getSignImg")
+   public String getSignImg(@RequestParam MultipartFile imgFile, HttpSession session, String empId)
+   											throws IOException{
+	   System.out.println("############################ ");
+	   Map<String, String> data = new HashMap<String, String>();
+	   
+	   
+	   String path = session.getServletContext().getRealPath("/resource/upload/sign");
+	   
+	   if(imgFile!=null) {
+	               String oriName = imgFile.getOriginalFilename();
+	               String ext = oriName.substring(oriName.lastIndexOf("."));
+	               Date today = new Date(System.currentTimeMillis());
+	               int randomNum = (int)(Math.random()*1000)+1;
+	               String rename = "sign_" + new SimpleDateFormat("yyyyMMddHHmmssSSS")
+	                           .format(today)+"_"+randomNum+ext;
+	              
+	               
+	               data.put("sign", rename); 
+	               data.put("empId", empId); 
+	               
+	               try {
+	            	   imgFile.transferTo(new File(path, oriName));
+	                  
+	               }catch(IOException e) {
+	                  e.printStackTrace();
+	               }
+	            }
+	   
+	   
+		   // sign 파일 이름 DB에 추가
+		 service.updateSign(data);
+	  
+
+	   
+	   
+	      
+	   return "approval/approver";
+   }
    
 }

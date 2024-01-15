@@ -170,7 +170,7 @@ input[type="datetime-local"] {
                   <option value="DEPT">부서</option>
                   <option value="ALL">전체</option>
                 </select> -->
-                <input type="text" id="calType" class="" readonly>
+                <input type="text" id="calType" class="" value="MY" readonly>
               </div>
               <div>
                 <span>시작시간</span> <input type="datetime-local" id="calStart" class="modalV" />
@@ -374,12 +374,12 @@ input[type="datetime-local"] {
         // 캘린더 생성 옵션(참고)
         const calendarOption = {
         		//일정우선순위 옵션 찾기
-        		
+      
             eventSources: eventSources,
             height: '700px', // calendar 높이 설정
             expandRows: true, // 화면에 맞게 높이 재설정
-            slotMinTime: '09:00', // Day 캘린더 시작 시간
-            slotMaxTime: '18:00', // Day 캘린더 종료 시간
+            slotMinTime: '00:00', // Day 캘린더 시작 시간
+            slotMaxTime: '24:00', // Day 캘린더 종료 시간
             // 맨 위 헤더 지정
             headerToolbar: headerToolbar,
             initialView: 'dayGridMonth',  // default: dayGridMonth 'dayGridWeek', 'timeGridDay', 'listWeek'
@@ -394,7 +394,7 @@ input[type="datetime-local"] {
             eventStartEditable: false,
             eventDurationEditable: true,
             */
-            dayMaxEvents: true,  // Row 높이보다 많으면 +숫자 more 링크 보임
+            dayMaxEvents: 3,  // Row 높이보다 많으면 +숫자 more 링크 보임
             
              views: {
                 dayGridMonth: {
@@ -525,9 +525,28 @@ input[type="datetime-local"] {
         	    calendar.render();
         	    
         	    calendar.on("eventClick",handleEventClick);
-        	    calendar.on("dateClick",handleDateClick);
+        	    calendar.on("eventClick",info=>{
         	    
+        	    	if(loginmemberJobCode!="J1"){
+        	    		addBtn.style.display="none";
+        	    		delBtn.style.display="none";
+        	    	}else{
+        	    		addBtn.style.display="block";
+        	    		delBtn.style.display="block";
+        	    	}
+        	    })
+        	    calendar.on("dateClick",handleDateClick);
+        	    calendar.on("dateClick",info=>{
+        	    
+        	    	if(loginmemberJobCode!="J1"){
+        	    		addBtn.style.display="none";
+        	    	}else{
+        	    		addBtn.style.display="block";
+        	    	}
+        	    })
         	    calendar.on("select",handleSelect);
+        	    
+        	   
         	    
          }
          function fcAll(){
@@ -542,11 +561,18 @@ input[type="datetime-local"] {
         	 calendar.on("eventClick",handleEventClick);
         	 console.log(loginmemberEmpId);
         	 calendar.on("eventClick",info =>{
-        		 if(loginmemberEmpId!="COMA_1"){
+        		
+        		 if(loginmemberDeptCode!="D1"){
         			 addBtn.style.display="none";
         		 }
         	 })
      	    calendar.on("dateClick",handleDateClick);
+        	 calendar.on("dateClick",info =>{
+        	
+        		 if(loginmemberDeptCode!="D1"){
+        			 addBtn.style.display="none";
+        		 }
+        	 })
      	    calendar.on("select",handleSelect);
         	 
          }
@@ -565,6 +591,11 @@ input[type="datetime-local"] {
         		 }
         	 })
      	    calendar.on("dateClick",handleDateClick);
+        	 calendar.on("dateClick",info=>{
+        		 if(loginmemberEmpId===empId.value){
+        			 addBtn.style.display="block";
+        		 }
+        	 })
      	    calendar.on("select",handleSelect);
          }
          
