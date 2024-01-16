@@ -18,24 +18,26 @@ font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
-        <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
-    <nav class="space-y-2">
+        
+    <div class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
-		<h1>진행중인문서</h1>
+		<h1>진행중인 문서</h1>
       	<a href="${path }">
-        <span class="text-sm font-semibold text-gray-500">진행중인문서</span>
+        <span class="text-sm font-semibold text-gray-500">진행중인 문서</span>
         </a>
         <a href="${path }/apprdoc/docList">
           <span class="text-sm font-semibold text-gray-500">문서함</span>
         </a>
       </div>
-    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
-  		<span>작성하기</span>
-    </a>
-    </nav>
+      <div>
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
+	  		<span>작성하기</span>
+	    </a>
+	  </div>
+    </div>
   <main class="flex-1 p-5">
     <div class="flex justify-between items-center mb-6">
-      <div class="flex space-x-2">
+      <div class="flex space-x-2" style ="text-align: right;">
      	<form name="searchForm" autocomplete="off">
         <input
           class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -95,7 +97,6 @@ font-family: 'Noto Sans KR', sans-serif;
       </div>
     </div>
   </main>
-  </div>
   </div>
   
 <script>
