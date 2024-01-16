@@ -1,6 +1,9 @@
 package com.coma.student.controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +30,9 @@ public class StudentController {
 		String loginId=pri.getName();
 		List<Map> students=service.selectStudentByEmpId(loginId);
 		m.addAttribute("students",students);
+		
+		LocalDate currentDate = LocalDate.now();
+
 	}
 	
 	@PostMapping("/infoStudent")
@@ -42,5 +48,6 @@ public class StudentController {
 		return "redirect:/student/student";
 		
 	}
+	
 	
 }
