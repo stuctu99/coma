@@ -112,7 +112,12 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return session.selectOne("approval.selectApprStatus", data3);
 	}
 
+	@Override
+	public Approver selectApprMyturn(SqlSession session, String docNo) {
+		return session.selectOne("approval.selectApprMyturn", docNo);
+	}
 
+	
 
 	
 	

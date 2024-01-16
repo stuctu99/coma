@@ -36,4 +36,6 @@ public interface ApprovalService {
 	String getStatusByIdAndDocNo(Map<String, String> data2);
 
 	String selectApprStatus(Map<String, String> data3);
+	
+	Approver selectApprMyturn(String docNo);
 }

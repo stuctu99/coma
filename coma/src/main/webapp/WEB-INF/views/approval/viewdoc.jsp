@@ -9,6 +9,8 @@
 
 <link href="/resource/css/approval/viewdoc.css" rel="stylesheet" />
     <!-- TEAM COMA SPACE -->
+    
+<c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>     
 
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
@@ -21,7 +23,11 @@
           	   		<div class="col-6">
           	   		</div>
           	   		<div class="col-2">
-          	   			<input type="button" onclick="approve();" class="btn btn-primary btn-lg view_Btn" value="승인">
+          	   		
+          	   		console.log(${loginMember.empId } ${myTurnEmpId });
+          	   		<c:if test="${loginMember.empId eq myTurnEmpId}">
+          	   			<input type="button" onclick="approve();" class="btn btn-primary btn-lg view_Btn" value="승인">          	   		
+          	   		</c:if>
           	   		</div>
           	   		<div class="col-2">
           	   			<input type="button" onclick="downloadPdf();" class="btn btn-primary btn-lg view_Btn" value="pdf 받기">
@@ -198,6 +204,10 @@
 <script>
 
 const approve=()=>{
+	<c:forEach var="appr" items="${refInfoList}">
+		
+	</c:forEach>
+	
 	  $("#approve").submit();
 	
 }

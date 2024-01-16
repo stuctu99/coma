@@ -220,6 +220,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.selectApprStatus(session, data3);
 	}
 
+	@Override
+	public Approver selectApprMyturn(String docNo) {
+		return dao.selectApprMyturn(session, docNo);
+	}
+
 
 
 	

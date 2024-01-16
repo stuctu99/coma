@@ -382,6 +382,12 @@ public class ApprovalController {
 	 model.addAttribute("refInfoList",refInfoList);
 	 
 	 
+	 // Myturn 'Y'인 결재자 승인 버튼
+	 Approver apprMyturn = service.selectApprMyturn(docNo);
+	   
+	 model.addAttribute("myTurnEmpId", apprMyturn.getEmpId());
+	 
+	 
 	 return "approval/viewdoc";
    }
    
@@ -497,6 +503,15 @@ public class ApprovalController {
    
    
    //---------------------------- 결재 승인 -------------------------------------
+   
+   @PostMapping("/approve")
+   public String approve(String docNo) {
+	   
+	
+	   
+	   return "redirect:/";
+   }
+   
 //   
 //   @PostMapping("/approve")
 //   public String approve(String docNo, String empId) {
