@@ -8,8 +8,16 @@
 		<result column="DOC_TITLE" property="docTitle"/>
 		<result column="DOC_DATE" property="docDate"/>		
 		<result column="DOC_CORRECT_DATE" property="docCorrectDate"/>		
-		<result column="DOC_PROGRESS" property="docProgress"/>		
+		<result column="DOC_PROGRESS" property="docProgress"/>
 		<result column="EMP_ID" property="empId"/>
+ 		<result column="DOC_DETAIL" property="docDetail"/>	
+ 		
+		<association resultMap="emp.empMap" property="emp"/>
+		<association property="leave" resultMap="apprLeaveMap"/>
+		<association property="cash" resultMap="apprCashMap"/>
+		<association property="req" resultMap="apprReqMap"/>
+		<association property="etc" resultMap="apprEtcMap"/>
+		
 		<collection property="files" ofType="apprAttach">
 			<id column="ATTACH_NO" property="attachNo"/>
 			<result column="ATTACH_ORI_NAME" property="attachOriName"/>
@@ -30,13 +38,25 @@
 		</collection>
 	</resultMap>
 	
+	<resultMap type="approver" id="approverMap">
+		<id column="APPROVER_NO" property="approverNo"/>
+		<result column="DOC_NO" property="docNo"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="APPR_STATUS" property="apprStatus"/>
+		<result column="APPR_ORDER" property="apprOrder"/>
+	</resultMap>
+	
+	<resultMap type="refer" id="referMap">
+		<id column="REFERRER_NO" property="referrerNo"/>
+		<result column="DOC_NO" property="docNo"/>
+		<result column="EMP_ID" property="empId"/>
+	</resultMap>
 	
 	<resultMap type="apprLeave" id="apprLeaveMap">
 		<id column="LEAVE_NO" property="leaveNo"/>
 		<result column="LEAVE_TYPE" property="leaveType"/>
 		<result column="LEAVE_START" property="leaveStart"/>
 		<result column="LEAVE_END" property="leaveEnd"/>
-		<result column="LEAVE_DETAIL" property="leaveDetail"/>	
 		<result column="DOC_NO" property="docNo"/>		
 	</resultMap>
 
@@ -45,14 +65,12 @@
 		<id column="CASH_NO" property="cashNo"/>
 		<result column="CASH_EXPENSE" property="cashExpense"/>
 		<result column="CASH_DATE" property="cashDate"/>
-		<result column="CASH_DETAIL" property="cashDetail"/>
 		<result column="DOC_NO" property="docNo"/>
 	</resultMap>
 
 
 	<resultMap type="apprReq" id="apprReqMap">
 		<id column="REQ_NO" property="reqNo"/>
-		<result column="REQ_DETAIL" property="reqDetail"/>
 		<result column="REQ_DATE" property="reqDate"/>
 		<result column="DOC_NO" property="docNo"/>		
 	</resultMap>
@@ -60,7 +78,6 @@
 
 	<resultMap type="apprEtc" id="apprEtcMap">
 		<id column="ETC_NO" property="etcNo"/>
-		<result column="ETC_DETAIL" property="etcDetail"/>
 		<result column="ETC_DATE" property="etcDate"/>
 		<result column="DOC_NO" property="docNo"/>		
 	</resultMap>
@@ -70,26 +87,26 @@
 <!-- 문서 작성 insert -->
 
 	<insert id="insertApprovalDoc" parameterType="apprDoc">
-		INSERT INTO APPROVAL_DOC VALUES('DOC_'||SEQ_APPROVAL_NO.NEXTVAL, #{docType}, #{docTitle}, DEFAULT, NULL, '대기', #{empId})
+		INSERT INTO APPROVAL_DOC VALUES('DOC_'||SEQ_APPROVAL_NO.NEXTVAL, #{docType}, #{docTitle}, DEFAULT, NULL, '대기', #{empId}, #{docDetail})
 		<selectKey keyProperty="docNo" order="AFTER" resultType="string">
 			SELECT 'DOC_'||SEQ_APPROVAL_NO.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
 	
 	<insert id="insertLeave" parameterType="apprLeave">
-		INSERT INTO APPROVAL_LEAVE VALUES('LV_'||SEQ_APPROVAL_NO.NEXTVAL, #{leaveType}, #{leaveStart}, #{leaveEnd}, #{leaveDetail}, #{docNo})
+		INSERT INTO APPROVAL_LEAVE VALUES('LV_'||SEQ_APPROVAL_NO.NEXTVAL, #{leaveType}, #{leaveStart}, #{leaveEnd}, #{docNo})
 	</insert>
 	
 	<insert id="insertCash" parameterType="apprCash">
-		INSERT INTO APPROVAL_CASH VALUES('CSH_'||SEQ_APPROVAL_NO.NEXTVAL, #{cashExpense}, #{cashDate}, #{cashDetail}, #{docNo})
+		INSERT INTO APPROVAL_CASH VALUES('CSH_'||SEQ_APPROVAL_NO.NEXTVAL, #{cashExpense}, #{cashDate}, #{docNo})
 	</insert>
 
 	<insert id="insertReq" parameterType="apprReq">
-		INSERT INTO APPROVAL_REQUEST VALUES('REQ_'||SEQ_APPROVAL_NO.NEXTVAL, #{reqDetail}, #{reqDate}, #{docNo})
+		INSERT INTO APPROVAL_REQUEST VALUES('REQ_'||SEQ_APPROVAL_NO.NEXTVAL, #{reqDate}, #{docNo})
 	</insert>
 	
 	<insert id="insertEtc" parameterType="apprEtc">
-		INSERT INTO APPROVAL_ETC VALUES('ETC_'||SEQ_APPROVAL_NO.NEXTVAL, #{etcDetail}, #{etcDate}, #{docNo})
+		INSERT INTO APPROVAL_ETC VALUES('ETC_'||SEQ_APPROVAL_NO.NEXTVAL, #{etcDate}, #{docNo})
 	</insert>
 	
 	<insert id="insertAttach" parameterType="apprAttach">
@@ -127,17 +144,54 @@
 					</when>
 				</choose>
 			WHERE DOC_NO = #{docNo}	
-			ORDER BY DOC_DATE DESC		
 	</select>
+	
+	<select id="selectApprByDocNo" parameterType="string" resultMap="approverMap">
+		SELECT EMP_ID, APPR_STATUS, APPR_ORDER
+		FROM APPROVER 
+		WHERE DOC_NO = #{docNo}
+	</select>
+	
+	<select id="selectRefByDocNo" parameterType="string" resultMap="referMap">
+		SELECT EMP_ID FROM REFERRER WHERE DOC_NO = #{docNo}
+	</select>
+	
+	<!-- 우현 approval sql -->
+	<select id="selectVacationInfo" resultType="map" parameterType="map">
+		SELECT APPROVAL_DOC.*,APPROVAL_LEAVE.* , TO_DATE(LEAVE_END) - TO_DATE(LEAVE_START) +1 AS doc_diff
+			FROM APPROVAL_LEAVE
+		    LEFT JOIN APPROVAL_DOC ON APPROVAL_LEAVE.DOC_NO = APPROVAL_DOC.DOC_NO
+		WHERE APPROVAL_DOC.EMP_ID = #{loginId}
+		ORDER BY 1
+		</select>
+		<select id="countVacation" parameterType="map" resultType="_int">
+			SELECT COUNT(*) FROM APPROVAL_DOC
+			    LEFT JOIN APPROVAL_LEAVE USING (DOC_NO)
+		    WHERE EMP_ID =#{loginId} AND DOC_TYPE ='leave'
+	</select>
+	<!-- 우현 approval sql -->
+	
+	
+	<!-- 종민 -->
 	
 	<!-- 문서 리스트 출력 -->
 	<select id="selectProceedList" parameterType="map" resultMap="apprDocMap">
 		SELECT *
-		FROM APPROVAL_DOC 
-		LEFT JOIN APPROVAL_ATTACHMENT USING(DOC_NO)
-		LEFT JOIN APPROVER USING(DOC_NO)
-		LEFT JOIN REFERRER USING(DOC_NO)
+		FROM APPROVAL_DOC
 		JOIN EMP USING(EMP_ID)
+		ORDER BY DOC_DATE DESC
 	</select>
-
+	
+	<!-- 문서 검색 -->
+	    <!-- 게시글 검색 -->
+	<select id="searchDoc" parameterType="map" resultMap="apprDocMap" >
+    	SELECT *
+    	FROM APPROVAL_DOC 
+    	JOIN EMP USING(EMP_ID)
+    	WHERE DOC_TITLE LIKE '%' || #{keyword} || '%'
+    	ORDER BY DOC_DATE DESC
+    </select>
+	<!-- 종민 -->
+	
+	
 </mapper>

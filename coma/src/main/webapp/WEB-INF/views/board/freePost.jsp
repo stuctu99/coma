@@ -80,7 +80,7 @@
 					            <td>${reply.replyDate}</td>
 					            <td>
 					            	<button type="button" class="reply-re">답글</button>
-					            	<button class="reply-del">삭제</button>
+					            	<button type="button" class="reply-del">삭제</button>
 					            </td>
 					        </tr>
 					    </c:forEach>

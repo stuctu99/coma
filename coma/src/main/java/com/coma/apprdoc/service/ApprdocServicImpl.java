@@ -29,6 +29,12 @@ public class ApprdocServicImpl implements ApprdocService {
 		// TODO Auto-generated method stub
 		return dao.selectDocList(session, page, docProgress);
 	}
+
+	@Override
+	public List<ApprovalDoc> searchDoc(Map<String, Object> doc) {
+		// TODO Auto-generated method stub
+		return dao.searchDoc(session, doc);
+	}
 	
 	
 	

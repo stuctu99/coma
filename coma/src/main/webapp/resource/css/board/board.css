@@ -3,13 +3,6 @@
 font-family: 'Noto Sans KR', sans-serif;
 }
 
-.coma-container{
-	height: 1063.5px;
-}
-
-.main-content{
-	height: 100%;
-}
 
 .col-sm-6{
 	flex: 0 0 100%;
@@ -34,7 +27,6 @@ body {
 	padding-bottom: 15px;
 	color: #fff;
 	padding: 16px 30px;
-	min-width: 100%;
 	margin: -20px -25px 10px;
 	border-radius: 3px 3px 0 0;
 }
