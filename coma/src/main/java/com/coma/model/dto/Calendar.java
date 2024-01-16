@@ -21,6 +21,6 @@ public class Calendar {
 	private Timestamp calEnd;
 	private String calType;
 	private String calColor;
-	private List<Emp> empId; 
+	private List<Emp> empId; //test이후에 수정예정
 
 }
