@@ -48,4 +48,12 @@ public interface ApprovalDao {
 	String getSignByApprId(SqlSession session, String arrpId);
 	
 	String getStatusByIdAndDocNo(SqlSession session, Map<String, String> data2);
+	
+	String selectApprStatus(SqlSession session, Map<String, String> data3);
+	
+	Approver selectApprMyturn(SqlSession session, String docNo);
+	
+	int updateThisOrder(SqlSession session, String thisOrder);
+	
+	int updateNextOrder(SqlSession session, String nextOrder);
 }

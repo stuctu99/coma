@@ -16,5 +16,6 @@ public class Approver {
 	private String empId;
 	private String apprStatus;
 	private int apprOrder;
+	private String apprMyturn;
 	
 }

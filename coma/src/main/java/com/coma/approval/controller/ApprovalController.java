@@ -17,9 +17,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -382,6 +382,13 @@ public class ApprovalController {
 	 model.addAttribute("refInfoList",refInfoList);
 	 
 	 
+	 // Myturn 'Y'인 결재자 승인 버튼
+	 Approver apprMyturn = service.selectApprMyturn(docNo);
+	   
+	 model.addAttribute("myTurnEmpId", apprMyturn.getEmpId());
+	 model.addAttribute("myTurnOrder", apprMyturn.getApprOrder());
+	 
+	 
 	 return "approval/viewdoc";
    }
    
@@ -495,4 +502,61 @@ public class ApprovalController {
 	   	
    }
    
+   
+   //---------------------------- 결재 승인 -------------------------------------
+   
+   @PostMapping("/approve")
+   public String approve(String docNo, String thisOrder, String nextOrder) {
+	   
+	   service.updateThisOrder(thisOrder);
+	   
+	   service.updateNextOrder(nextOrder);
+	   
+	   return "redirect:/";
+   }
+   
+//   
+//   @PostMapping("/approve")
+//   public String approve(String docNo, String empId) {
+//	 
+//	   List<Approver> apprList = service.selectApprByDocNo(docNo);
+//	   
+//	   for(Approver appr : apprList) {
+//		   
+//		   Map<String, String> data3 = new HashMap<String, String>();
+//		   data3.put("docNo", docNo);
+//		   data3.put("empId", empId);
+//		   
+//		   switch(appr.getApprOrder()) {
+//		   	
+//		   		case 0 :  //본인이 0번 결재자일 경우
+//		   			data3.put("order", "1");	
+//		   			String status0_1 = service.selectApprStatus(data3); //1번 결재자의 결재상태 확인
+//		   			data3.put("order", "2");	
+//		   			String status0_2 = service.selectApprStatus(data3); //2번 결재자의 결재상태 확인
+//		   				if(status0_1==null && status0_2==null) {
+//		   					//status update실행
+//		   					service.updateSign(data3);
+//		   					
+//		   				}else {
+//		   					//결재 완료일 경우
+//		   					System.out.println("");
+//		   					break;
+//		   				}
+//		   			break;
+//		   		
+//		   		case 1 : //본인이 1번 결재자일 경우
+//		   			data3.put("order", "2");	
+//		   			String status1_1 = service.selectApprStatus(data3); //2번 결재자의 결재상태 확인
+//		   			
+//		   			break;
+//		   		case 2 :	break;
+//		   }
+//		
+//		   
+//	   }
+//	   
+//	   
+//	   return "redirect:/";
+//   }
 }
