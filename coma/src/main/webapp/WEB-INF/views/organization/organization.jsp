@@ -13,43 +13,36 @@
 	}
 </style>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
-	<div class="coma-container" style="text-align:center; display: math;">
+	<div class="coma-container" style="margin-top:5px; margin-bottom: 5px; text-align:center; display: math; ">
 		<h1>조직도</h1>
 		<div class="row">
 			<div class="col-1"></div>
-			<div class="col5">
-				<div class="row">
-					<div class="col-10">
-						<button type="button" class="btn btn-outline-primary">원장</button>
-					</div>
-					<div class="col-1"></div>
-				</div>
-				<div class="row">
-					<div class="col-1"></div>
-					<div class="col-2">
-						<button type="button" class="btn btn-outline-primary">교육</button>
-					</div>
-					<div class="col-2">
-						<button type="button" class="btn btn-outline-primary">행정</button>
-					</div>
-					<div class="col-2">
-						<button type="button" class="btn btn-outline-primary">취업</button>
-					</div>
-					<div class="col-2">
-						<button type="button" class="btn btn-outline-primary">회계</button>
-					</div>
-					<div class="col-2">
-						<button type="button" class="btn btn-outline-primary">회계</button>
-					</div>
-					<div class="col-1"></div>
-				</div>
+			<div class="col5"style="margin-right:20px;">
+				<div>
+					<img src="${path }/resource/upload/profile/user.png" style="width: 800px; height: 600px;">
 				</div>
 			</div>
-			<div class="col5">
-				<div class="row">
-				
+			<div class="col5" style="display: flex; justify-content: space-evenly; flex-direction: column;">
+				<div>
+					<button type="button" class="btn btn-outline-primary">원장</button>
+				</div>
+				<div>
+					<button type="button" class="btn btn-outline-primary">교육</button>
+				</div>
+				<div>
+					<button type="button" class="btn btn-outline-primary">행정</button>
+				</div>
+				<div>
+					<button type="button" class="btn btn-outline-primary">취업</button>
+				</div>
+				<div>
+					<button type="button" class="btn btn-outline-primary">회계</button>
+				</div>
+				<div>
+					<button type="button" class="btn btn-outline-primary">회계</button>
 				</div>
 			</div>
+		</div>
 	</div>
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

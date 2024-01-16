@@ -26,7 +26,7 @@
 			<h1 style="">학생 리스트</h1>
 			<div>
 		    <table class="table align-items-center" style="text-align: center;">
-		        <thead class="">
+		        <thead class="thead-light">
 			      <tr>
 			        <th>학생 번호</th>
 			        <th>학생 이름</th>
