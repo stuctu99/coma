@@ -48,4 +48,6 @@ public interface ApprovalDao {
 	String getSignByApprId(SqlSession session, String arrpId);
 	
 	String getStatusByIdAndDocNo(SqlSession session, Map<String, String> data2);
+	
+	String selectApprStatus(SqlSession session, Map<String, String> data3);
 }

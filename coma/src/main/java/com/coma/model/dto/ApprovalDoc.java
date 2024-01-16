@@ -24,12 +24,13 @@ public class ApprovalDoc {
 	private String docProgress;
 	private String empId;
 	private String docDetail;
+	private Timestamp docEndDate;
 	private int docDiff;
 	private ApprovalLeave leave;
 	private ApprovalCash cash;
 	private ApprovalRequest req;
 	private ApprovalEtc etc;
-//	private Emp emp;
+	private Emp emp;
 	
 	private List<ApprovalAttachment> files;
 	

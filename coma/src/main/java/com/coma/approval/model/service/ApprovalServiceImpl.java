@@ -215,6 +215,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.getStatusByIdAndDocNo(session, data2);
 	}
 
+	@Override
+	public String selectApprStatus(Map<String, String> data3) {
+		return dao.selectApprStatus(session, data3);
+	}
+
 
 
 	

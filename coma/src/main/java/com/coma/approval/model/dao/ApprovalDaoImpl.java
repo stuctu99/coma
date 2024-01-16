@@ -28,16 +28,14 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	
 	@Override
 	public int insertApprovalDoc(SqlSession session, ApprovalDoc doc) {
-		
-		System.out.println("dao doc까지는 오니????");
+
 		int result = session.insert("approval.insertApprovalDoc", doc);
-		System.out.println("dao return 확인: "+ result);
+		
 		return result;
 	}
 
 	@Override
 	public int insertLeave(SqlSession session, ApprovalLeave leave) {
-		System.out.println("leave실행전*****");
 		return session.insert("approval.insertLeave", leave);
 	}
 
@@ -58,19 +56,18 @@ public class ApprovalDaoImpl implements ApprovalDao {
 
 	@Override
 	public int insertAttach(SqlSession session, ApprovalAttachment file) {
-		System.out.println("attach 실행 전**********");
 		return session.insert("approval.insertAttach", file);
 	}
 
 	@Override
 	public int insertApprover(SqlSession session, Approver approver) {
-		System.out.println("dao insertApprover 실행 전: ");
+
 		return session.insert("approval.insertApprover", approver);
 	}
 
 	@Override
 	public int insertRefer(SqlSession session, Referrer ref) {
-		System.out.println("dao insertRef 실행 전: ");
+	
 		return session.insert("approval.insertRefer", ref);
 	}
 
@@ -84,11 +81,6 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public Emp selectEmpById(SqlSession session, String empId) {
 		return session.selectOne("emp.selectEmpById", empId);
 	}
-
-//	@Override
-//	public ApprovalDoc selectRefByDocNo(SqlSession session, String docNo) {
-//		return session.selectOne("approval.selectRefByDocNo", docNo);
-//	}
 
 	@Override
 	public List<Approver> selectApprByDocNo(SqlSession session, String docNo) {
@@ -113,6 +105,11 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	@Override
 	public String getStatusByIdAndDocNo(SqlSession session, Map<String, String> data2) {
 		return session.selectOne("approval.getStatusByIdAndDocNo", data2);
+	}
+
+	@Override
+	public String selectApprStatus(SqlSession session, Map<String, String> data3) {
+		return session.selectOne("approval.selectApprStatus", data3);
 	}
 
 
