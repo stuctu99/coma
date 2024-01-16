@@ -57,21 +57,20 @@ public class PdfGenerator {
 			
 			
 			
-		     //##############################
-	          
-			//서명 매번 추가, 바로 프로젝트 저장
-			//매개변수로 받아오기
-			
+		     //############################## 
 			 Image[] images = new Image[signArr.length];
-			 int i=0;
-			for(String s : signArr) {
+			//서명 
+			if(signArr!=null) { //매개변수로 넘어온 signArr가 null이 아니면
+				 int i=0;
+				for(String s : signArr) {
+					
+					if(s!=null) {
+						images[i] = Image.getInstance(imgPath+s);
+						i++;
+					}
+				}
 				
-				images[i] = Image.getInstance(imgPath+s);
-	         // document.add(image);
-				System.out.println("**************"+images[i]);
-				i++;
 			}
-	          System.out.println("서명 생성 완료");
 	          
 	          //################################
 			
@@ -296,20 +295,22 @@ public class PdfGenerator {
 	          
 	          
 	          //서명
-	          if(images!=null) {
+	      
 		          for(Image image : images) {
 		          
-		        	  t1_cell2 = new PdfPCell(image!=null?image:null);
-		        	  t1_cell2.setFixedHeight(50f);
-		        	  t1_cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
-		        	  t1_cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		        	  table1.addCell(t1_cell2);
-		        	  
+		        	  if(image!=null) {
+			        	  t1_cell2 = new PdfPCell(image);
+			        	  t1_cell2.setFixedHeight(50f);
+			        	  t1_cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+			        	  t1_cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			        	  table1.addCell(t1_cell2);
+		        	  }
 			  
 		          }
-	          }
+		          
+		         table1.completeRow();
+	       
 	          
-	          table1.completeRow();
 	          //--------- hidden 세 번째 줄
 	          t1_hiddenCell3 = new PdfPCell(new Phrase(" ", font));
 	          t1_hiddenCell3.setColspan(3);

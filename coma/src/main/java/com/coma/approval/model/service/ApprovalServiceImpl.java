@@ -205,6 +205,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.updateSign(session, data);
 	}
 
+	@Override
+	public String getSignByApprId(String arrpId) {
+		return dao.getSignByApprId(session, arrpId);
+	}
+
+	@Override
+	public String getStatusByIdAndDocNo(Map<String, String> data2) {
+		return dao.getStatusByIdAndDocNo(session, data2);
+	}
+
 
 
 	

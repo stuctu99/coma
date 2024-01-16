@@ -409,26 +409,28 @@ public class ApprovalController {
 
 	   
 	   //--------------
-	   
-//	   String path = session.getServletContext().getRealPath("/resource/upload/approval/"+doc.getDocNo()+".pdf");
-	  
-	   
+
 	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
 
-	   System.out.println("확이닝인인이닝닝닝닝니인인인이닝닝ㄴ이" + apprIdArr);
-	   
-	   //sign 가져오기
-	   String[] signArr = new String[apprIdArr.length];
-	   for(int i=0; i<apprIdArr.length; i++) {
-		   Emp appr = service.selectEmpById(apprIdArr[i]);
-		   if(appr.getSign()!=null) {
-			   signArr[i] = appr.getSign();			   
-		   }else {
-			   i--;
-		   }
-	   }
+	  
+	   Map<String, String> data2 = new HashMap<String, String>();
+	   data2.put("docNo", docNo); 
+	     	   
+	  String[] signArr = new String[apprIdArr.length];
+	  int i=0;
+	  for(String apprId : apprIdArr) {
+		  data2.put("empId", apprId);
+		  String status = service.getStatusByIdAndDocNo(data2); //해당 결재자의 결재 상태
 
-	
+		  if(status!=null) {
+			  String sign = service.getSignByApprId(apprId); //결재 완료일 경우 사인 가져옴
+			  signArr[i] = sign;
+		  }
+		  i++;
+		  
+	  }
+	   
+	   
 	   //String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/image (6).png");
 	   String imgPath = session.getServletContext().getRealPath("/resource/upload/sign/");
 

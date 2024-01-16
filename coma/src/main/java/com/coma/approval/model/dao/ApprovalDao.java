@@ -45,4 +45,7 @@ public interface ApprovalDao {
 	
 	int updateSign(SqlSession session, Map<String, String> data);
 
+	String getSignByApprId(SqlSession session, String arrpId);
+	
+	String getStatusByIdAndDocNo(SqlSession session, Map<String, String> data2);
 }
