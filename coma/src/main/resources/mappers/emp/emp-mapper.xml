@@ -137,4 +137,7 @@
 	        	JOB_CODE = #{job}
 	    WHERE EMP_ID = #{empId}
 		</update>
+		<select id = "selectEmpId" resultType="map" >
+			SELECT EMP_ID FROM EMP 
+		</select> 
 </mapper>
