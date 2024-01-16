@@ -42,9 +42,39 @@
 						      <td>${writer.dept.deptType } </td>
 						    </tr>
 						    <tr>
+						      	<th scope="row" class="mylabel mytitle">결재자</th>
+						    	<td colspan="3">
+								    <c:if test="${not empty apprInfoList}">
+										<c:forEach var="appr" items="${apprInfoList }">
+											[
+												${appr.dept.deptType } 
+												${appr.job.jobType } 
+												${appr.empName } 
+											]
+										</c:forEach>
+										
+									
+									</c:if>
+									
+						      	</td>	
+						    </tr>
+						    <tr>
+						      <th scope="row" class="mylabel mytitle">참조자</th>
+						      <td colspan="3">
+								    <c:if test="${not empty refInfoList}">
+										<c:forEach var="ref" items="${refInfoList }">
+											[
+												${ref.dept.deptType } 
+												${ref.job.jobType } 
+												${ref.empName } 
+											]
+										</c:forEach>
+									</c:if>
+						      	</td>	
+						    </tr>
+						    <tr>
 						      <th scope="row" class="mylabel mytitle">제목</th>
-						      <td colspan="3">${doc.docTitle }</td>
-						    
+						      <td colspan="3">${doc.docTitle }</td>		    
 						    </tr>
 						  </tbody>
 						</table>
@@ -152,13 +182,30 @@
 	<input type="hidden" name="docNo" value="${doc.docNo }"> 
 	<input type="hidden" name="empId" value="${doc.empId }">
 	<input type="hidden" name="docType" value="${doc.docType }">
+		<input type="hidden" id="apprIdArr" name="apprIdArr">
   </form>
 <script>
+//pdf다운 버튼 -> 결재자 id 배열 넘기기
   const downloadPdf=()=>{
+	  
+	  var apprIdArr = [];
+	  <c:forEach var="appr" items="${apprInfoList}">
+	  	apprIdArr.push('${appr.empId}');
+	  </c:forEach>
+	  
+// 	  var apprIdJson = JSON.stringify(apprIdArr);
+	  $('#apprIdArr').val(apprIdArr);
+	  
+	  console.log($('#apprIdArr').val());
+	  
 	  $("#pdfDownload").submit();
 	
   }
+  
+  
 </script>
+
+
 
 <!-- <script src="/resource/js/approval/apprView.js"></script>  -->
 
