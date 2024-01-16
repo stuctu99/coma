@@ -62,9 +62,13 @@ public class MessengerDaoImpl implements MessengerDao {
 		// TODO Auto-generated method stub
 		return session.selectList("chatting.selectPrivateChatJoinInfo",loginId);
 	}
-	
-	
-	
+		
+
+	@Override
+	public String selectRecentChattingMessageByRoomNo(SqlSession session, String roomNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("chatting.selectRecentChattingMessageByRoomNo",roomNo);
+	}
 
 	// insert
 	@Override

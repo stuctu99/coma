@@ -2,7 +2,6 @@ $("#exit-btn").click(function() {
 	if (confirm("채팅방을 완전히 나가겠습니까?")) {
 		const roomNo = $("#roomNo").val();
 		const empId = $("#loginMember").val();
-		console.log(roomNo, empId);
 		fetch("/chatting", {
 			method: "DELETE",
 			headers: { "Content-Type": "application/json" },
@@ -16,9 +15,12 @@ $("#exit-btn").click(function() {
 			})
 			.then(data => {
 				if (data.result == "success") {
+					
+					alert($(".connectView").val());
 					server.send(new Message("out", "", "", "", empId, roomNo).convert());
-					$(opener.document).find(".chatting-list-btn").click();
+					/*$(opener.document).find(".chatting-list-btn").click();*/
 					close();
+					opener.location.reload();
 				} else {
 					alert("관리자에게 문의하세요!");
 				}
@@ -133,6 +135,11 @@ const messagePrint = (msg) => {
 	document.querySelector(".messageView" + msg.roomNo).appendChild(nameDiv);
 	document.querySelector(".messageView" + msg.roomNo).appendChild(div);
 	document.querySelector(".messageView" + msg.roomNo).scrollTop = document.querySelector(".messageView" + msg.roomNo).scrollHeight;
+	
+	$(opener.document).find(".updateMsg-"+msg.roomNo).remove();
+	const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
+	$updateMsg.text("Message : "+msg.chatContent);
+	$(opener.document).find("#chattingList #"+msg.roomNo).append($updateMsg);
 }
 
 const sendMessage = () => {
@@ -145,7 +152,7 @@ const sendMessage = () => {
 
 const openMessage = (msg) => {
 	/* NEW_JOIN FLAG 여부에 따라 메세지 출력 여부 결정하기*/
-	const $connectFlag = $("#" + msg.empId);
+	const $connectFlag = $(".list-"+msg.roomNo+" #" + msg.empId);
 	$connectFlag.css("color", "lime");
 	fetch("/chatting", {
 		method: "PUT",
@@ -185,14 +192,16 @@ const connectionRest = (msg) => {
 
 const closeMessage = (msg) => {
 	const container = $("<div>").addClass("row openMsgContainer");
-	const content = $("<h4>").text(`${msg.empId}님이 나가셨습니다.`);
+	const content = $("<h4>").text(`${msg.empObj.empName}님이 나가셨습니다.`);
 	const invite = $("<button>").addClass("btn btn-danger").text("다시초대하기");
 	$(".messageView" + msg.roomNo).append(container);
 	container.append(content);
-	container.append("<br>");
+	container.append($("<br>"));
 	container.append(invite);
-	
-	$("."+msg.empId).remove();
+	/*$(opener.document).find("#chatting-active").removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick","privateChatting('"+msg.empId+"','"+loginId+"');");*/
+	/*$(".emp-list-btn").click();*/
+	/*$("."+msg.empId).remove();*/
+	/*opener.location.reload();*/
 	
 }
 
@@ -217,21 +226,6 @@ window.onload = () => {
 		}
 
 	})
-}
-
-window.closed = () =>{
-	alert("닫기 시 이벤트 발생");
-	const roomNo = $("#roomNo").val();
-	fetch("/chatting/"+roomNo)
-	.then(response=>{
-		if(response.status!=200){
-			console.log('실패!!');
-		}
-		return response.json();
-	})
-	.then(data=>{
-		
-	});
 }
 
 class Message {
@@ -263,14 +257,15 @@ class Message {
 }
 
 
-/*
+
 $("#bars").click(function(){
 	const roomNo = $("#roomNo").val();
-	memberList(roomNo);
+	memberList(roomNo,loginId);
 })
 
 const memberList = (roomNo) => {
-	const $profileListDiv = $(".profile-list");
+	const $profileListDiv = $(".list-"+roomNo);
+	$profileListDiv.html("");
 	fetch("/chatting/memberlist/"+roomNo)
 	.then(response=>{
 		return response.json();
@@ -281,15 +276,27 @@ const memberList = (roomNo) => {
 			const $div = $("<div>").addClass("row "+d.empId);
 			const $div_col2 = $("<div>").addClass("col-2 profile");
 			const $div_col8 = $("<div>").addClass("col-8 emp-info");
-			const $div_col1 = $("<div>").addClass("col-1 connectView").text("&#9900");
+			const $div_col1 = $("<div>").addClass("col-1 connect-"+d.empId)
 			const $img = $("<img>").attr("id","profile-img");
+			const $name = $("<strong>").text(d.empName+" "+d.job.jobType);
+			const $connection = $("<strong>").addClass("connectView").attr("id",d.empId);
 			
-			$div_col8.append($("<strong>").text(d.empName));
+			$connection.html('&nbsp;&#9900');
+			if(Object.keys(data.roomMemberCheck).includes(d.empId)){
+				/*Map으로 넘어온 형태에 key값 포함 여부 방식 !!! 알아두기*/
+				$connection.css("color","lime");
+			}else{
+				$connection.css("color","black");
+			}
+			$div_col8.append($name);
+			$name.next(d.job.jobType);
+			/*$div_col9.text(d.job.jobType);*/
+			$div_col1.append($connection);
 			
 			if(d.emp_gender=='M'){
-				$img.attr("src",location.host+"/resource/img/chat/profile_m.png");
+				$img.attr("src","/resource/img/chat/profile_m.png");
 			}else{
-				$img.attr("src",location.host+"/resource/img/chat/profile_f.png");
+				$img.attr("src","/resource/img/chat/profile_f.png");
 			}
 			
 			$div_col2.append($img);
@@ -302,4 +309,4 @@ const memberList = (roomNo) => {
 			
 		})
 	})
-}*/
+}

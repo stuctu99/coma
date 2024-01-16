@@ -23,6 +23,7 @@ public class ChattingRoom {
 	private Date roomCreateDate;
 	private ChattingRoomType roomTypeObj;
 	private Map<String,String> idList;
+	private String endMsg;
 	private Emp empObj;
 	private int memberCount;
 	/* private List<ChattingJoin> joinMember; */

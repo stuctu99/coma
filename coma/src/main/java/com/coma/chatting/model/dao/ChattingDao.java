@@ -19,6 +19,7 @@ public interface ChattingDao {
 	ChattingJoin selectJoinCheckByEmpId(SqlSession session, Map<String,String> joinEmp);
 	int selectMemberCountInRoom(SqlSession session, String roomNo);
 	
+	
 	int insertJoinEmp(SqlSession session, Map<String, String> joinInfo);
 	
 	int insertChattingMessage(SqlSession session, List<ChattingMessage> msgPackages);

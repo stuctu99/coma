@@ -58,7 +58,7 @@ function openEvent(data) {
 		})
 		.then(data => {
 			data.test.forEach(d => {
-				$("." + d.target).attr("onclick", "enter_chattingRoom('" + d.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
+				$("#" + d.target).attr("onclick", "enter_chattingRoom('" + d.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 			})
 		})
 
@@ -262,7 +262,8 @@ const fn_roomListByType = (type) => {
 					const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top", "12px");
 					const $strong_type = $("<strong>");
 					const $strong_title = $("<strong>").css("padding-right", "3px");
-					const $recentMsg = $("<small>").text();
+					/*const $recentMsg = $("<small>").text();*/
+					const $updateMsg = $("<span>").addClass("updateMsg-"+d.roomNo);
 					const $i = $("<div>").addClass("col-1 chatting-room");
 					const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
 					const $user_count = $("<span>");
@@ -279,7 +280,20 @@ const fn_roomListByType = (type) => {
 						$input.addClass("deleteRoom");
 						$div_type.append($input);
 					}
-
+					
+					fetch("/messenger/message/"+d.roomNo)
+					.then(response=>{
+						return response.text();
+					})
+					.then(data=>{
+						if(data!=""){
+						console.log("요이땅"+data);
+						$updateMsg.text("Message : "+data);
+						}else{
+							$updateMsg.text();
+						}
+					})
+					
 					$i.css("padding-top", "14px");
 					$strong_type.text(d.roomTypeObj.roomTypeName);
 					$strong_title.text(d.roomName);
@@ -292,7 +306,7 @@ const fn_roomListByType = (type) => {
 					$user_count.text('(' + d.memberCount + ')');
 					$div_title.append($user_count);
 					$div_title.append($("<br>"));
-					$div_title.append($recentMsg);
+					$div_title.append($updateMsg);
 					$div.append($i);
 					$div.append($div_btn);
 					console.log($div);

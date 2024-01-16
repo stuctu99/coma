@@ -54,6 +54,14 @@ public class ChattingController {
 		model.addAttribute("roomMember", roomMember.get(roomNo));
 		return "chat/chatView";
 	}
+	
+	@GetMapping("/memberlist/{roomNo}")
+	@ResponseBody
+	public Map<String,Object> selectMemberlistByRoomNo(@PathVariable String roomNo){
+		List<Emp> roomMemberList = service.selectRoomMemberList(roomNo);
+		
+		return Map.of("roomMemberList",roomMemberList,"roomMemberCheck",roomMember.get(roomNo));
+	}
 
 //	채팅방 입장 시 입장 인원 insert
 	@PostMapping
@@ -127,6 +135,7 @@ public class ChattingController {
 		if (deleteEmpCheck > 0) {
 			int roomMeberCount = service.selectMemberCountInRoom(exitEmp.get("roomNo"));
 			if (roomMeberCount == 0) {
+				System.err.println(exitEmp.get("roomNo")+"방에 남은 인원 : "+roomMeberCount);
 				int result = service.deleteChattingMsgByRoomNo(exitEmp);
 				if (result > 0) {
 					System.out.println(exitEmp.get("roomNo") + "채탕방 완전 삭제");
