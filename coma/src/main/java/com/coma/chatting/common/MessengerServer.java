@@ -44,18 +44,22 @@ public class MessengerServer extends TextWebSocketHandler {
 			break;
 		case "delete":
 			deleteRoom(msg);
+			break;
+		case "msg":
+			updateMsg(msg);
+			break;
 		}
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println("[MessengerServer] : 접속 유지중인 세션" + clients);
-		System.out.println("[MessengerServer] : 종료");
+		System.err.println("[MessengerServer] : 접속 유지중인 세션" + clients);
+		System.err.println("[MessengerServer] : 종료");
 	}
 
 	private void addClient(MessengerMessage msg, WebSocketSession session) {
 		clients.put(msg.getLoginId(), session);
-		System.out.println("[MessengerServer] : 메신저 접속 세션" + clients);
+		System.err.println("[MessengerServer] : 메신저 접속 세션" + clients);
 		try {
 			session.sendMessage(messageConverter(msg));
 		} catch (Exception e) {
@@ -80,6 +84,7 @@ public class MessengerServer extends TextWebSocketHandler {
 	
 //	1:1채팅방 알림 메소드
 	private void privateRoomAlarm(MessengerMessage msg) {
+		System.err.println("[MessengerServer] 접속 세션 : "+clients);
 		String roomNo = service.selectNowCreateChatRoomNo();
 		msg.setRoomNo(roomNo);
 		String loginId = msg.getLoginId();
@@ -109,6 +114,18 @@ public class MessengerServer extends TextWebSocketHandler {
 				session.sendMessage(messageConverter(msg));
 			}
 			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	메세지 전송 시 해당 접속자에게 채팅방 리스트의 채팅방에 최신메세지
+	private void updateMsg(MessengerMessage msg) {
+		try {
+			for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
+				WebSocketSession session = client.getValue();
+				session.sendMessage(messageConverter(msg));
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -64,6 +64,12 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.selectPrivateChatJoinInfo(session, loginId);
 	}
 	
+	@Override
+	public String selectRecentChattingMessageByRoomNo(String roomNo) {
+		// TODO Auto-generated method stub
+		return dao.selectRecentChattingMessageByRoomNo(session, roomNo);
+	}
+	
 	
 	@Override
 	@Transactional
@@ -84,6 +90,8 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.deleteChatRoomInfoByRoomNo(session, roomList);
 	}
+
+
 
 
 

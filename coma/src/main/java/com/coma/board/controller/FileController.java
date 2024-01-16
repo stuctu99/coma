@@ -1,21 +1,23 @@
 //package com.coma.board.controller;
 //
-//import java.io.File;
-//import java.io.IOException;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
+//import java.util.Map;
 //
 //import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.ResponseBody;
 //import org.springframework.web.multipart.MultipartFile;
 //
-//import jakarta.servlet.http.HttpSession;
-//import lombok.RequiredArgsConstructor;
-//
-//@RequiredArgsConstructor
 //@Controller
 //public class FileController {
+//	
+//	
+//	
+//	@PostMapping("/image/upload")
+//	@ResponseBody
+//	public Map<String, Object> imageUpload(MultipartFile upload){
+//			
+//		
+//	}
 //	
 //	
 //}

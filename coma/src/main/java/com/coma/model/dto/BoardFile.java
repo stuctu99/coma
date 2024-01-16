@@ -16,5 +16,5 @@ public class BoardFile {
 	private String boardFileOriname;
 	private String boardFileRename;
 	private Date boardFileDate;
-	private Board board;
+	
 }

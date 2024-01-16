@@ -16,6 +16,7 @@ public interface MessengerService {
 	String selectNowCreateChatRoomNo();
 	List<ChattingRoom> selectChatRoomListByType(Map<String,String> searchInfo);
 	List<ChattingPrivateRoom> selectPrivateChatJoinInfo(String loginId);
+	String selectRecentChattingMessageByRoomNo(String roomNo);
 	
 	ChattingRoom passwordCheck(Map<String,String> roomInfo);
 	int insertChattingRoom(ChattingRoom room);

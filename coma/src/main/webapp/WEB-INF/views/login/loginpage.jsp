@@ -21,7 +21,6 @@
   <link href="${pageContext.request.contextPath }/resource/assets/test.css"/>
 </head>
 <style>
-
 </style>
 <body class="bg-gradient-primary">
   <div class="main-content">
@@ -50,9 +49,10 @@
               <form action="/logintest" method="post" role="form">
                 <div class="custom-control custom-control-alternative custom-checkbox" style="margin-bottom: 14px;">
                 
-                  <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
+                  <input class="custom-control-input remember-me" 
+                  name="remember_me" id=" customCheckLogin" type="checkbox">
                   <label class="custom-control-label" for=" customCheckLogin">
-                    <span class="text-muted" style="text-align: center">아이디 저장</span>
+                    <span class="text-muted" style="text-align: center">로그인 유지</span>
                   </label>
                 </div>
                 <div class="form-group mb-3">
@@ -93,7 +93,7 @@
       <div class="container">
       </div>
     </footer>
-  </div>
+  </div> 
   <!--   Core   -->
   <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
   <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -107,6 +107,20 @@
         token: "ee6fab19c5a04ac1a32a645abde4613a",
         application: "argon-dashboard-free"
       });
+    
+    /* 로그인유지 체크박스 데이터 */
+/*     const data = {
+            remember-2me: document.getElementById('customCheckLogin').checked,
+        }; */
+    
+   /*  fetch('/security', {
+    	method: 'POST',
+    	headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data), 
+    })
+    .then(response => response.json());  */   
   </script>
 </body>
 

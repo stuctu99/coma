@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.coma.board.dao.BoardDao;
 import com.coma.model.dto.Board;
+import com.coma.model.dto.Reply;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,23 +41,57 @@ public class BoardServiceImpl implements BoardService {
 
 	 
 	@Override
-	public int selectBoardCount() {
+	public int selectBoardCount(int boardType) {
 		// TODO Auto-generated method stub
-		return dao.selectBoardCount(session);
+		return dao.selectBoardCount(session, boardType);
 	}
 
 
 	@Override
-	public int updateBoard(Board b) {
+	public int updateBoard(Map<String, Object> board) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.updateBoard(session, board);
+	}
+
+	@Override
+	public int deleteBoard(Map<String, Integer> board) {
+		// TODO Auto-generated method stub
+		return dao.deleteBoard(session, board);
 	}
 
 
 	@Override
-	public int deleteBoard(int boardNo) {
+	public List<Reply> selectReplyByBoard(int boardNo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.selectReplyByBoard(session, boardNo);
+	}
+
+
+	@Override
+	public Board updateBoardCount(int boardNo) {
+		// TODO Auto-generated method stub
+		return dao.updateBoardCount(session, boardNo);
+	}
+
+
+	@Override
+	public int insertReplyByBoard(Map<String, Object> reply) {
+		// TODO Auto-generated method stub
+		return dao.insertReplyByBoard(session, reply);
+	}
+
+
+	@Override
+	public List<Board> selectReplyCount(Map<String, Integer> page, int boardType) {
+		// TODO Auto-generated method stub
+		return dao.selectReplyCount(session, page, boardType);
+	}
+
+
+	@Override
+	public List<Board> searchBoard(Map<String, Object> board) {
+		// TODO Auto-generated method stub
+		return dao.searchBoard(session, board);
 	}
 	
 	

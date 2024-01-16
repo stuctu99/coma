@@ -1,7 +1,13 @@
 package com.coma.student.controller;
 
 import java.security.Principal;
+<<<<<<< HEAD
 import java.util.Arrays;
+=======
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+>>>>>>> branch 'master' of https://github.com/stuctu99/coma.git
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +34,9 @@ public class StudentController {
 		String loginId=pri.getName();
 		List<Map> students=service.selectStudentByEmpId(loginId);
 		m.addAttribute("students",students);
+		
+		LocalDate currentDate = LocalDate.now();
+
 	}
 	
 	@PostMapping("/infoStudent")
@@ -43,6 +52,7 @@ public class StudentController {
 		return "redirect:/student/student";
 		
 	}
+
 	// 경현
 	@GetMapping("/studentEmp")
 	public void selectStudentEmpByEmpId(Principal pri, Model m) {
@@ -61,4 +71,5 @@ public class StudentController {
 		List<Map> stuInfo = service.infoStudentEmp(stuNo);
 		return stuInfo;
 	}
+
 }

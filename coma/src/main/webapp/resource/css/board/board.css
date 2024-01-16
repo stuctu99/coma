@@ -3,13 +3,6 @@
 font-family: 'Noto Sans KR', sans-serif;
 }
 
-.coma-container{
-	height: 1063.5px;
-}
-
-.main-content{
-	height: 100%;
-}
 
 .col-sm-6{
 	flex: 0 0 100%;
@@ -18,30 +11,24 @@ font-family: 'Noto Sans KR', sans-serif;
 
 body {
 	color: #566787;
-	background: #f5f5f5;
 	font-size: 13px;
 }
-.table-responsive {
-    margin: 0px 0;
-}
 .table-wrapper {
-	background: #fff;
 	padding: 20px 25px;
 	border-radius: 3px;
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .table-title {        
 	padding-bottom: 15px;
-	color: #fff;
 	padding: 16px 30px;
-	min-width: 100%;
 	margin: -20px -25px 10px;
 	border-radius: 3px 3px 0 0;
 }
 .table-title h2 {
 	margin: 5px 0 0;
-	font-size: 38px;
+	font-size: 3.2rem;
 	border-bottom: 2px solid #375472;
+	letter-spacing: -1.7px;
 	
 }
 .table-title .btn-group {
@@ -154,4 +141,12 @@ table.table .avatar {
 	float: left;
 	margin-top: 10px;
 	font-size: 13px;
-}    
+} 
+.ck-content{
+	height: 500px;
+}
+
+.no{
+	width: 70px;
+	text-align: center;
+}
