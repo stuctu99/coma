@@ -3,7 +3,6 @@ package com.coma.model.dto;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

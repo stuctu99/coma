@@ -30,4 +30,8 @@ public interface ApprovalService {
 	List<Referrer> selectRefByDocNo(String docNo);
 	
 	int updateSign(Map<String, String> data);
+	
+	String getSignByApprId(String arrpId);
+
+	String getStatusByIdAndDocNo(Map<String, String> data2);
 }

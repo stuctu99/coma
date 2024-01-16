@@ -44,5 +44,8 @@ public interface ApprovalDao {
 	List<Referrer> selectRefByDocNo(SqlSession session, String docNo);
 	
 	int updateSign(SqlSession session, Map<String, String> data);
+
+	String getSignByApprId(SqlSession session, String arrpId);
 	
+	String getStatusByIdAndDocNo(SqlSession session, Map<String, String> data2);
 }

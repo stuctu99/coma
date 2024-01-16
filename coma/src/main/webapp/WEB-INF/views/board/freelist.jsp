@@ -35,8 +35,6 @@
 </style>
 
 <div class="coma-container">
-<div class="container-xl">
-	<div class="table-responsive">
 		<div class="table-wrapper">
 			<div class="table-title">
 				<div class="row">
@@ -142,8 +140,6 @@
 			</div>
 		</div>
 	</div>        
-</div>
-</div>
 
 <script>
 	function handleEnterKey(event) {
