@@ -33,4 +33,28 @@ public class StudentServiceImpl implements StudentService{
 		if(result!=attendance.length) throw new IllegalArgumentException("저장되지않음");
 		return result;
 	}
+
+	@Override
+	public List<Map> selectStudentEmpByEmpId(String loginId) {		
+		return dao.selectStudentEmpByEmpId(session, loginId);
+	}
+
+	@Override
+	public int insertStudentByEmployment(String[] employment) {
+		int result = 0;
+		if(employment!=null && employment.length>0) {
+			for(String a:employment)
+				result+=dao.insertStudentByEmployment(session,a);
+		}
+		if(result!=employment.length) throw new IllegalArgumentException("저장되지않음");
+		return result;
+		
+	}
+
+	@Override
+	public List<Map> infoStudentEmp(Map<String, Object> stuNo) {
+		
+		return dao.infoStudentEmp(session,stuNo);
+	}
+	
 }

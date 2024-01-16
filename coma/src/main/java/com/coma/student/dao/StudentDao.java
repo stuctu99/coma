@@ -10,4 +10,10 @@ public interface StudentDao {
 	List<Map> selectStudentByEmpId(SqlSession session, String loginId);
 	List<Map> selectStudentByInfo(SqlSession session, Map<String, Object> stuNo);
 	int insertStudentByAttend(SqlSession session, String attendance);
+	
+	//경현
+	List<Map> selectStudentEmpByEmpId(SqlSession session, String loginId);
+	List<Map> infoStudentEmp(SqlSession session, Map<String, Object> stuNo);
+	int insertStudentByEmployment(SqlSession session, String employment);
+	
 }

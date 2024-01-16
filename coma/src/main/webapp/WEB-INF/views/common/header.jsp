@@ -131,6 +131,7 @@
               <li><a href="${path }/admin/adminEmp">사원관리</a></li>
               <li><a href="${path }/admin/adminStudent">학생관리</a></li>
               <li><a href="${path }/student/student">학생 페이지</a></li>
+              <li><a href="${path }/student/studentEmp">학생 취업현황</a></li>
             </ul>
           </li>
           <li class="nav-item">

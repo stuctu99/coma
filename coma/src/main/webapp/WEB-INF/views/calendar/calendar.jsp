@@ -17,11 +17,12 @@
  <style>
  
 	  #calendar {
-	      width: 80vw;
-	      height: 80vh;
+	      width: 70vw;
+	      height: 70vh;
 		 position: relative;
  		 z-index: 0;
-	 
+ 		margin: 20px auto;
+ 		 
 	  }
 	#Modal {
   display: none;
@@ -185,7 +186,7 @@ input[type="datetime-local"] {
  -->
 <body>
 
-    <!-- 모달은 메인 영역 밖으로 빼어 놓는게 좋음-->
+    <!-- 모달창-->
     <div id="Modal">
         <div id="cont" style="text-align: center;">
             <br>
@@ -236,15 +237,16 @@ input[type="datetime-local"] {
             </div>
         </div>
     </div>
-    <!-- 실제 화면을 담을 영역 -->
     	 <div>              
                 <button class="myButton" id="myBtn" onclick="fcMy()">개인일정</button>      
                   <button class="myButton" id="allBtn" onclick="fcAll()">전사일정</button>           
                  <button class="myButton" id="deptBtn" onclick="fcDept()">부서일정</button> 
          </div>
+         <!-- 캘린더 타입 구분해주는 값 -->
          <div>             
              <input type="hidden" id="calId" value="MY" >
              </div>
+    <!-- 캘린더 영역 -->
     <div id="Wrapper">
         <div id='calendar'>
         
@@ -274,7 +276,7 @@ input[type="datetime-local"] {
             center: 'title',
             right: 'dayGridMonth,dayGridWeek,timeGridDay'
         }
-
+		//타입별 캘린더 
         function getEventSources(calId) {
         	  var eventSource1 = {
         	      id: 'default',
@@ -437,9 +439,9 @@ input[type="datetime-local"] {
         
         // 캘린더 생성 옵션(참고)
         const calendarOption = {
-        		//일정우선순위 옵션 찾기
+        		//일정우선순위 시간 순서 및 시간이 같을 시 최근등록 아니면 order 라는 옵션을줘서 설정
       
-            eventSources: eventSources,
+            eventSources: eventSources, //내가 설정한 이벤트 소스
             height: '700px', // calendar 높이 설정
             expandRows: true, // 화면에 맞게 높이 재설정
             slotMinTime: '00:00', // Day 캘린더 시작 시간
@@ -447,7 +449,7 @@ input[type="datetime-local"] {
             // 맨 위 헤더 지정
             headerToolbar: headerToolbar,
             initialView: 'dayGridMonth',  // default: dayGridMonth 'dayGridWeek', 'timeGridDay', 'listWeek'
-            firstDay: 1,
+            firstDay: 1,		// 첫번째 날짜가 월요일로 설정
             locale: 'kr',        // 언어 설정
             selectable: true,    // 영역 선택
             selectMirror: true,  // 오직 TimeGrid view에만 적용됨, default false
@@ -458,7 +460,7 @@ input[type="datetime-local"] {
             eventStartEditable: false,
             eventDurationEditable: true,
             */
-            dayMaxEvents: 3,  // Row 높이보다 많으면 +숫자 more 링크 보임
+            dayMaxEvents: 3,  // Row 높이보다 많으면 +숫자 more 링크 보임 일정 출력되는 최대 객수
             
              views: {
                 dayGridMonth: {
