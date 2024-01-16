@@ -46,7 +46,7 @@ div {
 /* You may need to adjust the styling based on your specific requirements */
 </style>
 <div class="coma-container containerbig">
-	<%-- ${commute} --%>
+	<%--  ${commute} --%>
 	
 	<div class="row">
 		<div class="col-1"></div>
@@ -55,68 +55,13 @@ div {
 		</div>
 		<div class="col-7"></div>
 		<div class="col-1">
-			<button type="button" class="btn btn-outline-primary">근태 변경
-				신청하기</button>
+			<button type="button" class="btn btn-outline-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
 		</div>
 		<div class="col-1"></div>
 	</div>
 	<div class="row" style="text-align: center;">
-		<div class="col-1"></div>
-		<div class="col-10  bigbax">
-			<div class="row" style="margin-left: 30px">
-				<div class="col-2 smallbox" >
-					<div class="">
-						<h3 >근무 일수</h3>
-					</div>
-					<div class="blank">
-						<h4 id="totalwork"> ${count} <h4/>
-					</div>
-				</div>
-				<div class="col-2 smallbox" >
-					<div class="">
-						<h3 class="">지각</h3>
-					</div>
-					<div class="blank">
-						<h4 id="empVacation"> ${emp.empVacation } <h4/>
-					</div>
-				</div>
-				<div class=" col-2 smallbox">
-					<div class=" ">
-						<h3 class="">근무</h3>
-					</div>
-					<div class="blank">
-						<h4 id="finishCount">${finishCount }</h4>
-					</div>
-				</div>
-				<div class=" col-2 smallbox">
-					<div class="">
-						<h3 class="">결근</h3>
-					</div>
-					<div class="blank">
-						<h4 id="absence">${ waitCount}</h4>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-1"></div>
-	</div>
-	<div class="row" style="text-align: center;">
-		<div class="col-1"></div>
-		<div class="col-10">
-			<div class="row" style="margin-top: 30px">
-				<div class="col-3">
-					<h1>근태 상세보기</h1>
-				</div>
-				<div class="col-9">
-					<div class=""></div>
-				</div>
-			</div>
-			<div class="col-1"></div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-1"></div>
-		<div class="col-2">
+	<div class="col-1"></div>
+	<div class="col-2">
 			<div class="form-group">
 		        <input class="form-control" type="date" name="startTime"  id="example-date-input-start">
 		    </div>
@@ -129,6 +74,95 @@ div {
 		<div col="col-1">
 			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
 		</div>
+	</div>
+	<div class="row">
+		<div class="col-1"></div>
+		<div class="col-10  bigbax">
+			<div class="row" style="margin-left: 30px">
+				<div class="col-2 smallbox" >
+					<div class="">
+						<h3 >근무 일수</h3>
+					</div>
+					<div class="blank">
+						<h4 id="totalwork"> ${count} <h4/>
+					</div>
+				</div>
+				<div class="col-2 smallbox" >
+					<div class=" ">
+						<h3 class="">정상 근무</h3>
+					</div>
+					<div class="blank">
+						<c:if test="${not empty commute}">
+					    <c:set var="nomalCount" value="0" />
+					    <c:forEach var="c" items="${commute}" varStatus="loop">
+					    <!-- 지각 안한사람  -->
+					        <c:if test="${c. EMP_COMMUTE_LATENESS == 'N'}">
+					            <c:set var="nomalCount" value="${nomalCount + 1}" />
+					        </c:if>
+					    </c:forEach>
+						
+					    <h4 id="finishCount">${nomalCount}</h4>
+					</c:if>
+					</div>
+					
+				</div>
+				<div class=" col-2 smallbox">
+					<div class="">
+						<h3 class="">지각</h3>
+					</div>
+					<div class="blank">
+						<c:if test="${not empty commute}">
+					    <c:set var="lateCount" value="0" />
+					    <c:forEach var="c" items="${commute}" varStatus="loop">
+					    <!-- 지각 안한사람  -->
+					        <c:if test="${c. EMP_COMMUTE_LATENESS == 'Y'}">
+					            <c:set var="lateCount" value="${lateCount + 1}" />
+					        </c:if>
+					    </c:forEach>
+						
+					    <h4 id="lateCount">${lateCount}</h4>
+					</c:if>
+					</div>
+				</div>
+				<div class=" col-2 smallbox">
+					<div class="">
+						<h3 class="">결근</h3>
+					</div>
+					<div class="blank">
+						<c:if test="${not empty commute}">
+						    <c:set var="absenceCount" value="0" />
+						    <c:forEach var="c" items="${commute}" varStatus="loop">
+						        <c:if test="${c.EMP_COMMUTE_ABSENCE == 'Y'}">
+						            <c:set var="absenceCount" value="${absenceCount + 1}" />
+						        </c:if>
+						    </c:forEach>
+	
+						    <h4 id="finishCount">${absenceCount}</h4>
+						</c:if>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-1"></div>
+	</div>
+	<div class="row" style="text-align: center;">
+		<div class="col-1"></div>
+		<div class="col-10">
+			<div class="row" style="margin-top: 30px">
+				<div class="col-2">
+					<h1>근태 상세보기</h1>
+				</div>
+				<div class="col-9">
+					<div class=""></div>
+				</div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="col-1"></div>
+	</div>
+	<div class="row">
+		<div class="col-1"></div>
+		
 	</div>
 	<div class="row">
 		<div class="col-1"></div>
@@ -282,12 +316,16 @@ function updateTable(commuteList) {
     console.error("latenessCount:", latenessCount);
     console.error("absenceCount:", absenceCount);
     console.error("nonabsence:", nonabsence);
-    $('#empVacation').html(${'latenessCount'});
+    var total = absenceCount+nonabsence
+    $('#lateCount').html(${'latenessCount'});
     $('#finishCount').html(${'absenceCount'});
     $('#absence').html(${'nonabsence'});
-    
+    $('#totalwork').html(${'total'});
     
 }
+document.getElementById('commuteWriteBtn').addEventListener('click', function() {
+    window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
+});
 
 
 	
