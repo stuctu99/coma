@@ -16,7 +16,12 @@
           
           <div class="doc_basic">
           	   <div class="row">
-          	   		<div class="col-10">
+          	   		<div class="col-8">
+          	   		</div>
+          	   		<div class="col-2">
+          	   		분기처리 (결재자일 때, 서명 있을 때, 다음 결재자가 승인하지 않았을 때)
+          	   		필요한 값 : 해당 문서의 모든 결재자 리스트 전체 정보 , emp테이블의 서명 , 
+          	   			<input type="button" onclick="downloadPdf();" class="btn btn-primary btn-lg" value="승인">
           	   		</div>
           	   		<div class="col-2">
           	   			<input type="button" onclick="downloadPdf();" class="btn btn-primary btn-lg" value="pdf 받기">
