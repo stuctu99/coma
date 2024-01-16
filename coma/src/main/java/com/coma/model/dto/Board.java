@@ -21,4 +21,9 @@ public class Board {
 	private String boardFileCheck;
 	private int boardType;
 	private int replyCount;
+	private BoardFile boardFile;
+	
+	//검색기능필요 데이터
+	private String type;
+	private String keyword;
 }

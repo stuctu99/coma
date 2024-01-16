@@ -215,5 +215,3 @@
 <!-- <script src="/resource/js/approval/apprView.js"></script>  -->
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-
-
