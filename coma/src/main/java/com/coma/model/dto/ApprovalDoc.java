@@ -29,7 +29,7 @@ public class ApprovalDoc {
 	private ApprovalCash cash;
 	private ApprovalRequest req;
 	private ApprovalEtc etc;
-//	private Emp emp;
+	private Emp emp;
 	
 	private List<ApprovalAttachment> files;
 	
