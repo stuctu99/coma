@@ -78,6 +78,12 @@ public class MessengerController {
 		System.out.println("원하는 데이터 출력 "+joinRoom);
 		return roomInfo;
 	}
+	
+	@GetMapping("/message/{roomNo}")
+	@ResponseBody
+	public String recentChattingMessageByRoomNo(@PathVariable String roomNo){
+		return service.selectRecentChattingMessageByRoomNo(roomNo);
+	}
 
 	@PostMapping("/createRoom")
 	@ResponseBody
