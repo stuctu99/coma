@@ -24,17 +24,22 @@ mserver.onmessage = (response) => {
 			break;
 		case "delete":
 			openEvent(respMsg);
+			break;
+		case "msg":
+			messageUpdate(respMsg);
+			break;
+				
 	}
 }
 
 class MessageHandler {
 	//type : 'exec'실행  /'create' 방생성 / 'alarm' 메세지알림 / 'invite' 초대 ...
-	constructor(type = "", loginId = "", targetId = "", roomNo = "", data = "") {
+	constructor(type = "", loginId = "", targetId = "", roomNo = "", msg = "") {
 		this.type = type;
 		this.loginId = loginId;
 		this.targetId = targetId;
 		this.roomNo = roomNo;
-		this.data = data;
+		this.msg = msg;
 	}
 	convert() {
 		return JSON.stringify(this);
@@ -58,7 +63,7 @@ function openEvent(data) {
 		})
 		.then(data => {
 			data.test.forEach(d => {
-				$("#" + d.target).attr("onclick", "enter_chattingRoom('" + d.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
+				$("." + d.target).attr("onclick", "enter_chattingRoom('" + d.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 			})
 		})
 
@@ -441,7 +446,7 @@ const fn_deleteRoom = () => {
 					alert("삭제가 완료되었습니다.");
 					$("#delete-room").css("display", "none");
 					const msg = new MessageHandler("delete", loginId);
-					mserver.send(msg);
+					mserver.send(msg.convert());
 					$(".chatting-list-btn").click();
 				} else {
 					alert("삭제 실패하였습니다. 관리자에게 문의하세요:");
@@ -511,3 +516,26 @@ const enter_chattingRoom = (roomNo) => {
 }
 
 
+/* 공부하기 */
+window.updateMsg = function(roomNo,content){
+	console.log("이걸볼건데?"+roomNo,content);
+	const msg = new MessageHandler("msg","","",roomNo,content);
+	mserver.send(msg.convert());
+}
+
+const messageUpdate = (msg) => {
+	$("button#btn-"+msg.roomNo).click(function(){
+	})
+	/* 뱃지 제거 테스트 코드 */
+/*	$("chattingList #"+msg.roomNo+"span:last-child").remove();*/
+	console.log(msg);
+	$(".updateMsg-"+msg.roomNo).remove();
+	const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
+	/*<span class="badge badge-fill badge-circle badge-floating badge-danger border-white">4</span>*/
+	const $alarm = $("<span>").addClass("badge badge-fill badge-circle badge-floating badge-danger border-white");
+	$alarm.text(0);
+	$updateMsg.text("Message : "+msg.msg);
+	$("#chattingList #"+msg.roomNo).append($updateMsg);
+	$("#chattingList #"+msg.roomNo).append($alarm);
+	
+}	

@@ -86,6 +86,7 @@ div {
 							<div class="col-2">
 								<button id="chatting-active" id="${e.empId }" class="${e.empId } btn btn-outline-primary" onclick="privateChatting('${e.empId}','${loginmember.empId }');">대화</button>
 							</div>
+							
 						</c:if>
 						</div>
 						</c:if>

@@ -90,6 +90,9 @@ server.onmessage = (response) => {
 	console.log(receiveMsg);
 }
 const messagePrint = (msg) => {
+	/* 꼭 알아두기 !!! */
+	$(opener.location).attr("href", "javascript:updateMsg('"+msg.roomNo+"','"+msg.chatContent+"');");
+	
 	console.log(msg);
 	const div = document.createElement("div");
 	const nameDiv = document.createElement("div");
@@ -135,11 +138,11 @@ const messagePrint = (msg) => {
 	document.querySelector(".messageView" + msg.roomNo).appendChild(nameDiv);
 	document.querySelector(".messageView" + msg.roomNo).appendChild(div);
 	document.querySelector(".messageView" + msg.roomNo).scrollTop = document.querySelector(".messageView" + msg.roomNo).scrollHeight;
-	
-	$(opener.document).find(".updateMsg-"+msg.roomNo).remove();
+	/* 테스트 */
+/*	$(opener.document).find(".updateMsg-"+msg.roomNo).remove();
 	const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
 	$updateMsg.text("Message : "+msg.chatContent);
-	$(opener.document).find("#chattingList #"+msg.roomNo).append($updateMsg);
+	$(opener.document).find("#chattingList #"+msg.roomNo).append($updateMsg);*/
 }
 
 const sendMessage = () => {
@@ -198,9 +201,9 @@ const closeMessage = (msg) => {
 	container.append(content);
 	container.append($("<br>"));
 	container.append(invite);
-	/*$(opener.document).find("#chatting-active").removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick","privateChatting('"+msg.empId+"','"+loginId+"');");*/
-	/*$(".emp-list-btn").click();*/
-	/*$("."+msg.empId).remove();*/
+	$(opener.document).find("#chatting-active").removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick","privateChatting('"+msg.empId+"','"+loginId+"');");
+	$(".emp-list-btn").click();
+	$("."+msg.empId).remove();
 	/*opener.location.reload();*/
 	
 }

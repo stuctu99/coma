@@ -44,6 +44,10 @@ public class MessengerServer extends TextWebSocketHandler {
 			break;
 		case "delete":
 			deleteRoom(msg);
+			break;
+		case "msg":
+			updateMsg(msg);
+			break;
 		}
 	}
 
@@ -110,6 +114,18 @@ public class MessengerServer extends TextWebSocketHandler {
 				session.sendMessage(messageConverter(msg));
 			}
 			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	메세지 전송 시 해당 접속자에게 채팅방 리스트의 채팅방에 최신메세지
+	private void updateMsg(MessengerMessage msg) {
+		try {
+			for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
+				WebSocketSession session = client.getValue();
+				session.sendMessage(messageConverter(msg));
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
