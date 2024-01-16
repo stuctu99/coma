@@ -22,6 +22,7 @@
 	     	<typeAlias type="com.coma.model.dto.ChattingMessage" alias="chattingMessage" />
 	        <typeAlias type="com.coma.model.dto.ChattingJoin" alias="chattingJoin" />
 			<typeAlias type="com.coma.model.dto.ChattingRoomType" alias="chattingRoomType"/>
+			<typeAlias type="com.coma.model.dto.ChattingPrivateRoom" alias="chattingPrivateRoom"/>
 			
 			<!-- bo -->
 			<typeAlias type="com.coma.model.dto.ApprovalDoc" alias="apprDoc" />

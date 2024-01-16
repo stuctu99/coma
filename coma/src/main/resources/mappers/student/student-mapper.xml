@@ -51,6 +51,6 @@
    </select>
    <update id="updateStudentByCom">
    		UPDATE STUDENT SET STU_COM_STATUS='Y' WHERE STU_END_DATE==SYSDATE
-   </update>
+   </update> 
    
 </mapper>
