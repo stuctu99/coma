@@ -3,7 +3,6 @@ package com.coma.model.dto;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +29,7 @@ public class ApprovalDoc {
 	private ApprovalCash cash;
 	private ApprovalRequest req;
 	private ApprovalEtc etc;
+	private Emp emp;
 	
 	private List<ApprovalAttachment> files;
 	

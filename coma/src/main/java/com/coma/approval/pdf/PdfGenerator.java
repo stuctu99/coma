@@ -42,7 +42,8 @@ public class PdfGenerator {
 //		this.service = service;
 //	}
 	
-	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writerInfo, String imgPath) { 
+	public void generatePdf(ApprovalDoc doc, HttpServletResponse response, String fontPath, Emp writerInfo, 
+								String imgPath, String[] signArr) { 
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
@@ -56,14 +57,20 @@ public class PdfGenerator {
 			
 			
 			
-		     //##############################
-	          
-			//서명 매번 추가, 바로 프로젝트 저장
-			//매개변수로 받아오기
-	          Image image = Image.getInstance(imgPath);
-	         // document.add(image);
-	          System.out.println("서명 생성 완료");
-	          System.out.println("**************"+image);
+		     //############################## 
+			 Image[] images = new Image[signArr.length];
+			//서명 
+			if(signArr!=null) { //매개변수로 넘어온 signArr가 null이 아니면
+				 int i=0;
+				for(String s : signArr) {
+					
+					if(s!=null) {
+						images[i] = Image.getInstance(imgPath+s);
+						i++;
+					}
+				}
+				
+			}
 	          
 	          //################################
 			
@@ -94,7 +101,7 @@ public class PdfGenerator {
 			
 		  // ------------------------------ 결재자 ------------------------------
 			// table #1
-	         document.add(generateTable(doc, font, document, writer, image)); 
+	         document.add(generateTable(doc, font, document, writer, images)); 
 	         document.add(emptySpace);
 	         
 	      // ------------------------------ 참조자 -------------------------------
@@ -225,7 +232,7 @@ public class PdfGenerator {
 	}
 	
 	//------------------------- 결재선 테이블 -------------------------
-	   private PdfPTable generateTable(ApprovalDoc doc, Font font, Document document, PdfWriter writer, Image image) {
+	   private PdfPTable generateTable(ApprovalDoc doc, Font font, Document document, PdfWriter writer, Image[] images) {
 	      
 	      
 	      PdfPTable table1 = new PdfPTable(6);
@@ -287,15 +294,23 @@ public class PdfGenerator {
 	     
 	          
 	          
-	          //서명 
-        	  t1_cell2 = new PdfPCell();
-        	  t1_cell2.setFixedHeight(50f);
-        	  t1_cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
-        	  t1_cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        	  table1.addCell(t1_cell2);
-        	  table1.completeRow();
-	  
-	    
+	          //서명
+	      
+		          for(Image image : images) {
+		          
+		        	  if(image!=null) {
+			        	  t1_cell2 = new PdfPCell(image);
+			        	  t1_cell2.setFixedHeight(50f);
+			        	  t1_cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+			        	  t1_cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			        	  table1.addCell(t1_cell2);
+		        	  }
+			  
+		          }
+		          
+		         table1.completeRow();
+	       
+	          
 	          //--------- hidden 세 번째 줄
 	          t1_hiddenCell3 = new PdfPCell(new Phrase(" ", font));
 	          t1_hiddenCell3.setColspan(3);

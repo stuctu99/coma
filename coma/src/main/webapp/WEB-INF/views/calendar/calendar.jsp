@@ -15,9 +15,13 @@
 </head>
 
  <style>
+ 
 	  #calendar {
 	      width: 80vw;
 	      height: 80vh;
+		 position: relative;
+ 		 z-index: 0;
+	 
 	  }
 	#Modal {
   display: none;
@@ -139,6 +143,36 @@ input[type="datetime-local"] {
 #calContent[readonly]{
   pointer-events: none;
 }
+  .myButton {
+        background-color: #008CBA; /* Blue */
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition-duration: 0.4s;
+        border-radius: 5px;
+        box-shadow: 0 10px 14px 0 rgba(0,0,0,0.2);
+    }
+
+    .myButton:hover {
+        background-color: #4CAF50; /* Green */
+        color: white;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+ #myBtn   {
+ background-color: green;
+ }
+ #allBtn{
+ background-color: red;
+ }
+ #deptBtn{
+ background-color: purple;
+ }
     </style>
 </head>
 
@@ -158,7 +192,7 @@ input[type="datetime-local"] {
             <h1>일정 상세페이지</h1>
             <div class="colflex">
             
-              <div>
+              <div> 
               <input type="text" id="empId" > 
          	  <input type="text" id="calNo" > 
                 <span>제목</span> <input type="text" id="calTitle" class="modalV" readonly >
@@ -185,8 +219,8 @@ input[type="datetime-local"] {
               <div>
               <span>일정색상</span>
                <select id="calColor" class="modalV" readonly >
-                  <option value="red">노랑색</option>
                   <option value="green">초록색</option>
+                  <option value="red">빨간색</option>
                   <option value="purple">보라색</option>
                 </select>
               </div>
@@ -204,9 +238,9 @@ input[type="datetime-local"] {
     </div>
     <!-- 실제 화면을 담을 영역 -->
     	 <div>              
-                <button onclick="fcMy()">개인일정</button>      
-                  <button onclick="fcAll()">전사일정</button>           
-                 <button onclick="fcDept()">부서일정</button> 
+                <button class="myButton" id="myBtn" onclick="fcMy()">개인일정</button>      
+                  <button class="myButton" id="allBtn" onclick="fcAll()">전사일정</button>           
+                 <button class="myButton" id="deptBtn" onclick="fcDept()">부서일정</button> 
          </div>
          <div>             
              <input type="hidden" id="calId" value="MY" >
@@ -470,6 +504,7 @@ input[type="datetime-local"] {
             console.log('요거요거:',info.event.title);
             console.log('이거닷!!:',info.event);
 			console.log("진짜 길이:",info.event.endStr.length);
+			
 			if(info.event.endStr.length>10){
             calTitle.value= info.event.title;
             calNo.value= info.event.extendedProps.calNo;
@@ -478,7 +513,7 @@ input[type="datetime-local"] {
             console.log(info.event.extendedProps.empId); //COMA_1 이렇게 나옴
             empId.value=info.event.extendedProps.empId[0].empId; 
            
-            let dateEnd = new Date(info.endStr); 			
+            let dateEnd = new Date(info.event.endStr); 			
 			let localOffsetEnd = dateEnd.getTimezoneOffset() * 60000;
 			let localISOTimeEnd = (new Date(dateEnd - localOffsetEnd)).toISOString().slice(0,16);
 			calEnd.value =  localISOTimeEnd; //여기서 형변환 시도 해볼까 ?
@@ -571,7 +606,7 @@ input[type="datetime-local"] {
         	    calendar.on("eventClick",handleEventClick);
         	    calendar.on("eventClick",info=>{
         	    
-        	    	if(loginmemberJobCode!="J1"){
+        	    	if(loginmemberJobCode!="J2"){
         	    		addBtn.style.display="none";
         	    		delBtn.style.display="none";
         	    	}else{
@@ -582,7 +617,7 @@ input[type="datetime-local"] {
         	    calendar.on("dateClick",handleDateClick);
         	    calendar.on("dateClick",info=>{
         	    
-        	    	if(loginmemberJobCode!="J1"){
+        	    	if(loginmemberJobCode!="J2"){
         	    		addBtn.style.display="none";
         	    	}else{
         	    		addBtn.style.display="block";

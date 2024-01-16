@@ -60,10 +60,11 @@ public class Emp implements UserDetails, Serializable{
 		List<GrantedAuthority> auth = new ArrayList<>();
 		
 		//기본등급 EMP
-		auth.add(new SimpleGrantedAuthority(MyAuthority.EMP.name()));
 		//empId가 coma_1인 계정은 ADMIN 권한을 갖도록함
 		if(empId.equals("COMA_1")){
 			auth.add(new SimpleGrantedAuthority(MyAuthority.ADMIN.name()));
+		} else {
+			auth.add(new SimpleGrantedAuthority(MyAuthority.EMP.name()));			
 		}
 		
 		return auth;

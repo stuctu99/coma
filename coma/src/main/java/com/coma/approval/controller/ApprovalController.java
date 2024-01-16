@@ -321,15 +321,20 @@ public class ApprovalController {
 	 data.put("docNo", docNo); 
 	 data.put("docType", docType); 
 	 
+	 //문서 번호로 해당 문서 정보 가져오기
+	 
 	 ApprovalDoc doc = service.selectAppDoc(data); 
 	 
 	 	model.addAttribute("doc",doc);
 	 
+	 	
+	 //Date 시간 잘라내고 날짜만 가져오기	
 	 String fullDate = doc.getDocDate()+" ";
      String onlyDate = fullDate.substring(0,10); //시간 잘라내기
 	 
      	model.addAttribute("onlyDate", onlyDate);
 	 
+     //문서 종류 한글로 변환
 	 String typeKor = "";
 	 
 	 switch(doc.getDocType()) {
@@ -341,11 +346,42 @@ public class ApprovalController {
 	 
 	 	model.addAttribute("typeKor", typeKor);
 	
+	 	
+	 //기안자 정보 가져오기	
 	 Emp writer = service.selectEmpById(doc.getEmpId());
 	 	
 	 	model.addAttribute("writer", writer);
+	 
 	 	
+	 //결재자 정보 가져오기
+	 List<Approver> apprList = service.selectApprByDocNo(docNo);
+	
+	 List<Emp> apprInfoList = new ArrayList<>();
+	 
+	 for(Approver a : apprList) {
+		 String apprId = a.getEmpId();
+		 
+		 Emp apprInfo = service.selectEmpById(apprId);
+		 apprInfoList.add(apprInfo);
+	 }
+	 
+	 model.addAttribute("apprInfoList", apprInfoList);
      
+	 //참조자 정보 가져오기
+	 List<Referrer> refList = service.selectRefByDocNo(docNo);
+	 
+	 List<Emp> refInfoList = new ArrayList<>();
+	 
+	 for(Referrer r : refList) {
+		 String refId = r.getEmpId();
+		 
+		 Emp refInfo = service.selectEmpById(refId);
+		 refInfoList.add(refInfo);
+	 }
+	 
+	 model.addAttribute("refInfoList",refInfoList);
+	 
+	 
 	 return "approval/viewdoc";
    }
    
@@ -358,12 +394,8 @@ public class ApprovalController {
 
    @GetMapping("/downloadPdf")
    public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, 
-		   						String docType, String empId, String imgName) {
-	   
-//	   docNo="DOC_304";
-//	   docType="leave";
-//	   empId="COMA_1";
-	   
+		   						String docType, String empId, String imgName, @RequestParam String[] apprIdArr) {
+
 	   
 	   Emp writer = service.selectEmpById(empId);
 	   
@@ -377,18 +409,34 @@ public class ApprovalController {
 
 	   
 	   //--------------
-	   
-//	   String path = session.getServletContext().getRealPath("/resource/upload/approval/"+doc.getDocNo()+".pdf");
-	  
-	   
+
 	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
 
+	  
+	   Map<String, String> data2 = new HashMap<String, String>();
+	   data2.put("docNo", docNo); 
+	     	   
+	  String[] signArr = new String[apprIdArr.length];
+	  int i=0;
+	  for(String apprId : apprIdArr) {
+		  data2.put("empId", apprId);
+		  String status = service.getStatusByIdAndDocNo(data2); //해당 결재자의 결재 상태
+
+		  if(status!=null) {
+			  String sign = service.getSignByApprId(apprId); //결재 완료일 경우 사인 가져옴
+			  signArr[i] = sign;
+		  }
+		  i++;
+		  
+	  }
+	   
+	   
 	   //String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/image (6).png");
-	   String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/"+imgName);
+	   String imgPath = session.getServletContext().getRealPath("/resource/upload/sign/");
 
 	   
 	   //pdfGen이 service 역할
-	   pdfGen.generatePdf(doc, response, fontPath, writer, imgPath);
+	   pdfGen.generatePdf(doc, response, fontPath, writer, imgPath, signArr);
 	      
 	   //return "approval/viewdoc"; ㄴㄴ
 	   //return을 하면 outputStream이 또 호출됨
