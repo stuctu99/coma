@@ -17,40 +17,40 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CommuteServiceImpl implements CommuteService {
-	private final SqlSession session;
-	private final CommuteDao dao;
-	
-	
-	@Override
-	public int insertCommute(@RequestBody HashMap<String, Object> empId) {
-		// TODO Auto-generated method stub
-		return dao.insertCommute(session,empId);
-	}
-	
-	@Override
-	public Commute selectCommute(String empId) {
-		// TODO Auto-generated method stub
-		//return dao.selectCommute(session,empId);
-		return dao.selectCommute(session,empId);
-	}
+   private final SqlSession session;
+   private final CommuteDao dao;
+   
+   
+   @Override
+   public int insertCommute(@RequestBody HashMap<String, Object> empId) {
+      // TODO Auto-generated method stub
+      return dao.insertCommute(session,empId);
+   }
+   
+   @Override
+   public Commute selectCommute(String empId) {
+      // TODO Auto-generated method stub
+      //return dao.selectCommute(session,empId);
+      return dao.selectCommute(session,empId);
+   }
 
-	@Override
-	public int updateClockout(Map<String, Object> empId) {
-		// TODO Auto-generated method stub
-		return dao.updateClockout(session,empId);
-	}
+   @Override
+   public int updateClockout(Map<String, Object> empId) {
+      // TODO Auto-generated method stub
+      return dao.updateClockout(session,empId);
+   }
 
-	@Override
-	public int updateStartTime(Map<String, Object> empId) {
-		// TODO Auto-generated method stub
-		return dao.updateStartTime(session,empId);
-	}
+   @Override
+   public int updateStartTime(Map<String, Object> empId) {
+      // TODO Auto-generated method stub
+      return dao.updateStartTime(session,empId);
+   }
 
-	@Override
-	public int updateEndTime(Map<String, Object> empId) {
-		// TODO Auto-generated method stub
-		return dao.updateEndTime(session,empId);
-	}
+   @Override
+   public int updateEndTime(Map<String, Object> empId) {
+      // TODO Auto-generated method stub
+      return dao.updateEndTime(session,empId);
+   }
 
 	@Override
 	public List<Map> selectCommuteAll(String loginId) {
@@ -62,6 +62,18 @@ public class CommuteServiceImpl implements CommuteService {
 	public int countCommute(String loginId) {
 		// TODO Auto-generated method stub
 		return dao.countCommute(session, loginId);
+	}
+
+	@Override
+	public int countSearchCommute(Map <String, Object> commute) {
+		// TODO Auto-generated method stub
+		return dao.countSearchCommute(session, commute);
+	}
+
+	@Override
+	public List<Commute> searchCommute(Map<String, Object> commute) {
+		// TODO Auto-generated method stub
+		return dao.searchCommute(session,commute);
 	}
 
 

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="board">
+	<resultMap type="board" id="boardMap">
+		<id column="BOARD_NO" property="boardNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_DATE" property="boardDate"/>
+		<result column="BOARD_READ_COUNT" property="boardReadCount"/>
+		<result column="BOARD_FILE_CHECK" property="boardFileCheck"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+		<result column="REPLY_COUNT" property="replyCount"/>
+		<result column="TYPE" property="type"/>
+		<result column="KEYWORD" property="keyword"/>
+		<association resultMap="emp.empMap" property="emp"/>
+		<association resultMap="boardFile.boardFileMap" property="boardFile"/>
+	</resultMap>
+	
+	<!-- 게시판화면- 공지게시판 리스트출력(boardType) -->
+	<select id="selectBoardByType" resultMap="boardMap" parameterType="_int">		
+		SELECT *
+		FROM BOARD
+		JOIN EMP USING(EMP_ID)
+		WHERE BOARD_TYPE=#{boardType}
+		ORDER BY BOARD_DATE DESC
+	</select>
+	
+	<!-- 게시판화면- 자유게시판 리스트출력 게시글에 달린 댓글수 -->
+	<select id="selectReplyCount" resultMap="boardMap">
+		SELECT B.BOARD_NO, B.BOARD_TYPE, B.BOARD_TITLE, B.BOARD_DATE, E.EMP_NAME, B.BOARD_READ_COUNT, COUNT(R.REPLY_NO) AS REPLY_COUNT
+		FROM BOARD B
+		JOIN EMP E ON B.EMP_ID = E.EMP_ID
+		LEFT JOIN REPLY R ON B.BOARD_NO = R.BOARD_NO
+		WHERE B.BOARD_TYPE = #{boardType}
+		GROUP BY B.BOARD_NO, B.BOARD_TYPE, B.BOARD_TITLE, B.BOARD_DATE, E.EMP_NAME, B.BOARD_READ_COUNT
+		ORDER BY B.BOARD_DATE DESC
+	</select>
+	
+	<!-- 게시글화면- 선택한 게시글 출력(boardNo) -->
+	<select id="selectNoticePost" resultMap="boardMap" parameterType="map">
+		SELECT *
+		FROM BOARD
+		WHERE BOARD_NO=#{boardNo}
+	</select>
+	
+	<!-- boardNo로 게시글 가져오기 -->
+	<select id="selectBoardByNo" resultMap="boardMap" parameterType="_int">
+	    SELECT BOARD_NO, EMP_ID, BOARD_TITLE, BOARD_CONTENT, EMP_NAME, BOARD_DATE, BOARD_READ_COUNT, BOARD_TYPE
+	    FROM BOARD
+	    JOIN EMP USING(EMP_ID)
+	    WHERE BOARD_NO=#{boardNo}
+	</select>
+	
+	<!-- 게시글 조회수 -->
+	<select id="selectBoardCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE BOARD_TYPE=#{boardType}
+	</select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="insertBoard" parameterType="board">
+		INSERT INTO BOARD(BOARD_NO, EMP_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_TYPE)
+		VALUES(SEQ_BOD_NO.NEXTVAL, #{emp.empId}, #{boardTitle}, #{boardContent}, SYSDATE, #{boardType})
+	</insert>
+	
+	<!-- 게시글불러오면 해당 게시글 조회수증가 -->
+	<update id="updateBoardCount" parameterType="_int">
+		UPDATE BOARD
+		SET BOARD_READ_COUNT = BOARD_READ_COUNT+1
+		WHERE BOARD_NO=#{boardNo}
+	</update>
+	
+	<!-- 게시글 수정 -->
+    <update id="updateBoard" parameterType="map">
+        UPDATE BOARD
+        SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}
+        WHERE BOARD_NO = #{boardNo}
+    </update>
+
+	<!-- 게시글 삭제 -->
+    <delete id="deleteBoard" parameterType="map">
+        DELETE FROM BOARD
+        WHERE BOARD_NO = #{boardNo} AND BOARD_TYPE = #{boardType}
+    </delete>
+    
+    <!-- 게시글 검색 -->
+    <select id="searchBoard" resultMap="boardMap" parameterType="map">
+    	SELECT *
+    	FROM BOARD
+    	JOIN EMP USING(EMP_ID)
+    	WHERE BOARD_TYPE = #{boardType}
+    	<choose>
+    		<when test="type!=null and type.equals('search-title')">
+    			AND BOARD_TITLE LIKE '%' || #{keyword} || '%'
+    		</when>
+    		<when test="type!=null and type.equals('search-content')">
+    			AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+    		</when>
+    		<when test="type!=null and type.equals('search-writer')">
+    			AND EMP_NAME = #{keyword}
+    		</when>
+    	</choose>
+    	ORDER BY BOARD_DATE DESC
+    </select> 
+    
+    
+    
+</mapper>

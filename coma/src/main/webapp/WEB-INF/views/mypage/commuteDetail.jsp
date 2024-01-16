@@ -8,14 +8,7 @@
 </jsp:include>
 <c:set var="emp"
 	value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 
 <script src="/resource/js/jquery-3.7.0.js"></script>
 <style>
@@ -53,7 +46,8 @@ div {
 /* You may need to adjust the styling based on your specific requirements */
 </style>
 <div class="coma-container containerbig">
-${commute}
+	<%--  ${commute} --%>
+	
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-2" style="display: flex;">
@@ -61,40 +55,90 @@ ${commute}
 		</div>
 		<div class="col-7"></div>
 		<div class="col-1">
-			<button type="button" class="btn btn-outline-primary">근태 변경
-				신청하기</button>
+			<button type="button" class="btn btn-outline-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
 		</div>
 		<div class="col-1"></div>
 	</div>
 	<div class="row" style="text-align: center;">
+	<div class="col-1"></div>
+	<div class="col-2">
+			<div class="form-group">
+		        <input class="form-control" type="date" name="startTime"  id="example-date-input-start">
+		    </div>
+		</div>
+		<div class="col-2">
+			<div class="form-group">
+		        <input class="form-control" type="date" name="endTime"  id="example-date-input-end">
+		    </div>
+		</div>
+		<div col="col-1">
+			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-10  bigbax">
 			<div class="row" style="margin-left: 30px">
-
-				<div class="col-3 smallbox">
+				<div class="col-2 smallbox" >
+					<div class="">
+						<h3 >근무 일수</h3>
+					</div>
+					<div class="blank">
+						<h4 id="totalwork"> ${count} <h4/>
+					</div>
+				</div>
+				<div class="col-2 smallbox" >
+					<div class=" ">
+						<h3 class="">정상 근무</h3>
+					</div>
+					<div class="blank">
+						<c:if test="${not empty commute}">
+					    <c:set var="nomalCount" value="0" />
+					    <c:forEach var="c" items="${commute}" varStatus="loop">
+					    <!-- 지각 안한사람  -->
+					        <c:if test="${c. EMP_COMMUTE_LATENESS == 'N'}">
+					            <c:set var="nomalCount" value="${nomalCount + 1}" />
+					        </c:if>
+					    </c:forEach>
+						
+					    <h4 id="finishCount">${nomalCount}</h4>
+					</c:if>
+					</div>
+					
+				</div>
+				<div class=" col-2 smallbox">
 					<div class="">
 						<h3 class="">지각</h3>
 					</div>
 					<div class="blank">
-						<h4>
-							${emp.empVacation } 일
-							<h4 />
+						<c:if test="${not empty commute}">
+					    <c:set var="lateCount" value="0" />
+					    <c:forEach var="c" items="${commute}" varStatus="loop">
+					    <!-- 지각 안한사람  -->
+					        <c:if test="${c. EMP_COMMUTE_LATENESS == 'Y'}">
+					            <c:set var="lateCount" value="${lateCount + 1}" />
+					        </c:if>
+					    </c:forEach>
+						
+					    <h4 id="lateCount">${lateCount}</h4>
+					</c:if>
 					</div>
 				</div>
-				<div class=" col-3 smallbox">
-					<div class=" ">
-						<h3 class="">사용한 연차</h3>
-					</div>
-					<div class="blank">
-						<h4>${finishCount }회</h4>
-					</div>
-				</div>
-				<div class=" col-3 smallbox">
+				<div class=" col-2 smallbox">
 					<div class="">
-						<h3 class="">결재 중인 휴가 결재</h3>
+						<h3 class="">결근</h3>
 					</div>
 					<div class="blank">
-						<h4>${ waitCount}</h4>
+						<c:if test="${not empty commute}">
+						    <c:set var="absenceCount" value="0" />
+						    <c:forEach var="c" items="${commute}" varStatus="loop">
+						        <c:if test="${c.EMP_COMMUTE_ABSENCE == 'Y'}">
+						            <c:set var="absenceCount" value="${absenceCount + 1}" />
+						        </c:if>
+						    </c:forEach>
+	
+						    <h4 id="finishCount">${absenceCount}</h4>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -103,92 +147,62 @@ ${commute}
 	</div>
 	<div class="row" style="text-align: center;">
 		<div class="col-1"></div>
-		<div class="col-10  ">
+		<div class="col-10">
 			<div class="row" style="margin-top: 30px">
-				<div class="col-3">
-					<h1>휴가 신청 내역</h1>
+				<div class="col-2">
+					<h1>근태 상세보기</h1>
 				</div>
 				<div class="col-9">
 					<div class=""></div>
 				</div>
 			</div>
-			<form id = "searchForm">
-				<div class="row">
-					<div class="input-daterange datepicker row align-items-center">
-						<div class="input-daterange datepicker row align-items-center">
-							<div class="col">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i
-												class="ni ni-calendar-grid-58"></i></span>
-										</div>
-										<input class="form-control" placeholder="Start date"
-											type="text" value="06/18/2020">
-									</div>
-								</div>
-							</div>
-							<div class="col">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i
-												class="ni ni-calendar-grid-58"></i></span>
-										</div>
-										<input class="form-control" placeholder="End date" type="text"
-											value="06/22/2020">
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="form-group">
-								<input type="submit" class="btn btn-outline-primary" value="검색">
-							</div>
-						</div>
-					</div>
-			</form>
+			<div class="col-1"></div>
 		</div>
+		<div class="col-1"></div>
 	</div>
-	<div class="col-1"></div>
+	<div class="row">
+		<div class="col-1"></div>
+		
+	</div>
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-10">
-				<div class="col">
-					<table class="table align-items-center" style="text-align: center;">
-						<thead class="thead-light">
-							<tr>
-								<th>상태</th> <!-- 지각, 결근,  -->
-								<th>출근 시간</th>
-								<th>퇴근 시간 </th>
-								<th>외출 시작 시간</th>
-								<th>외출 끝 시간</th>
-								<th>근무시간</th>
-								<th>외출시간</th>
-							</tr>
-						</thead>
-						<tbody class="list" id="empTable">
-							<c:if test="${not empty commute}">
-								<c:forEach var="c" items="${commute }">
-									<tr>
- 										<td><fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" /></td>
-										<td><c:out value="${c.EMP_COMMUTE_STATUS }" /></td>	
-												
-										<%-- <td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN}" pattern="HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKOUT}" pattern="HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN}" pattern="HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN}" pattern="HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${c.EMP_COMMUTE_CLOCKIN}" pattern="HH:mm:ss" /></td> --%>
-									</tr>
-								</c:forEach>
-							</c:if>
-						</tbody>
-					</table>
-					<div id="pageBar">${pageBar }</div>
-				</div>
+			<div class="col">
+				<table class="table align-items-center" style="text-align: center;">
+					<thead class="thead-light">
+						<tr>
+							<th>상태</th>
+							<!-- 지각, 결근,  -->
+							<th>날짜</th>
+							<th>출근 시간</th>
+							<th>퇴근 시간</th>
+							<th>근무시간</th>
+							<th>외출 시작 시간</th>
+							<th>외출 끝 시간</th>
+							<th>외출시간</th>
+						</tr>
+					</thead>
+					<tbody class="list" id="empTable">
+						<c:if test="${not empty commute}">
+							<c:forEach var="c" items="${commute }">
+								<tr>
+									<td is=""><c:out value="${c.EMP_COMMUTE_STATUS }" /></td>
+									<td><fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" /></td>
+									<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="hh:mm:ss"/></td> 
+									<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKOUT.toJdbc() }" pattern="hh:mm:ss" /></td>
+									<td><c:out value="${c.WORK_DURATION }" /></td>  
+									<td><fmt:formatDate value="${c.EMP_COMMUTE_STARTTIME.toJdbc() }" pattern="hh:mm:ss"/></td> 
+									<td><fmt:formatDate  value="${c.EMP_COMMUTE_ENDTIME.toJdbc() }" pattern="hh:mm:ss" /></td> 
+									<td><c:out value="${c.BREAK_DURATION }" /></td> 									
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+				<div id="pageBar">${pageBar }</div>
 			</div>
+		</div>
 		<div class="col-1"></div>
-
 	</div>
 </div>
 <!-- <div class="coma-container">
@@ -201,35 +215,120 @@ ${commute}
 </div> -->
 
 <script>
-document.getElementById('searchForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // 폼의 기본 동작을 막음
-
-    // 시작 날짜와 종료 날짜 가져오기
-    const startDate = document.getElementById('start-date').value;
-    const endDate = document.getElementById('end-date').value;
-
-    // 서버로 검색 요청
-    fetch(`${path}/commute/searchCommute?startDate=${startDate}&endDate=${endDate}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-            // 필요에 따라 다른 헤더 추가 가능
-        },
-        // body: JSON.stringify({ startDate, endDate }) // POST 요청일 경우 사용
+function submitForm(cPage = 1, numPerpage = 10, url) {
+    var startTime = $("#example-date-input-start").val();
+    var endTime = $("#example-date-input-end").val();
+    fetch("${path}/commute/commuteDetailEnd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            cPage: cPage,
+            numPerpage: numPerpage,
+            startTime: startTime,
+            endTime: endTime,
+            jsName: "submitForm"
+        })
     })
-    .then(response => response.json())
-    .then(data => {
-        // 검색 결과를 사용하여 화면 업데이트
-        console.log(data);
-    })
-    .catch(error => console.error('Error:', error));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {      
+            console.log(data);           
+            updateTable(data.commuteList);
+            console.log(totalData); 
+            $('#totalwork').html(totalData);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+}
+
+function updateTable(commuteList) {
+    $("#empTable").empty();
+    var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
+    var absenceCount=0,latenessCount = 0,nonabsence =0;
+    commuteList.forEach(c => {
+         clockInTime = c.EMP_COMMUTE_CLOCKIN;
+         clockOutTime = c.EMP_COMMUTE_CLOCKOUT;
+         startTime = c.EMP_COMMUTE_STARTTIME;
+         endTime = c.EMP_COMMUTE_ENDTIME;
+         //날짜만 잘라준다 
+         workDate = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
+       
+        /* console.error("clockInTime:", clockInTime);
+        console.error("clockOutTime:", clockOutTime);
+        console.error("startTime:", startTime);
+        console.error("endTime:", endTime);
+        console.error("workDate:", workDate); */  
+        var row = document.createElement("tr");
+
+        var statusCell = document.createElement("td");
+        statusCell.textContent = c.EMP_COMMUTE_STATUS;
+        row.appendChild(statusCell);
+
+        var workDateCell = document.createElement("td");
+        workDateCell.textContent = workDate;
+        row.appendChild(workDateCell);
+
+        var clockInTimeCell = document.createElement("td");
+        clockInTimeCell.textContent = clockInTime;
+        row.appendChild(clockInTimeCell);
+
+        var clockOutTimeCell = document.createElement("td");
+        clockOutTimeCell.textContent = clockOutTime;
+        row.appendChild(clockOutTimeCell);
+
+        var workDurationCell = document.createElement("td");
+        workDurationCell.textContent = c.WORK_DURATION;
+        row.appendChild(workDurationCell);
+
+        var startTimeCell = document.createElement("td");
+        startTimeCell.textContent = startTime;
+        row.appendChild(startTimeCell);
+
+        var endTimeCell = document.createElement("td");
+        endTimeCell.textContent = endTime;
+        row.appendChild(endTimeCell);
+
+        var breakDurationCell = document.createElement("td");
+        breakDurationCell.textContent = c.BREAK_DURATION;
+        row.appendChild(breakDurationCell);
+
+        // Append the row to the table
+        $("#empTable").append(row);
+        if (c.EMP_COMMUTE_ABSENCE === 'Y') {
+            absenceCount++;
+        }
+        if (c.EMP_COMMUTE_ABSENCE === 'N') {
+        	nonabsence++;
+        }
+
+        if (c.EMP_COMMUTE_LATENESS === 'Y') {
+            latenessCount++;
+        }
+        
+    });
+    
+    
+    console.error("latenessCount:", latenessCount);
+    console.error("absenceCount:", absenceCount);
+    console.error("nonabsence:", nonabsence);
+    var total = absenceCount+nonabsence
+    $('#lateCount').html(${'latenessCount'});
+    $('#finishCount').html(${'absenceCount'});
+    $('#absence').html(${'nonabsence'});
+    $('#totalwork').html(${'total'});
+    
+}
+document.getElementById('commuteWriteBtn').addEventListener('click', function() {
+    window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
 });
+
+
 	
 </script>
-
-
-
-
-
 <script src="${path }/resource/js/plugins/jquery/dist/jquery.min.js"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

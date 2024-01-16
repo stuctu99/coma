@@ -44,7 +44,7 @@ div {
 
 /* You may need to adjust the styling based on your specific requirements */
 </style>
-${vacation }
+<%-- ${vacation } --%>
 <div class="coma-container containerbig">
 	<div class="row">
 				<div class="col-1" ></div>
@@ -53,7 +53,7 @@ ${vacation }
 				</div>
 				<div class="col-7"></div>
 				<div class="col-1">
-					<button type="button" class="btn btn-outline-primary">휴가 신청하기</button>
+					<button type="button" class="btn btn-outline-primary" id ="vacationWriteBtn">휴가 신청하기</button>
 				</div>
 				<div class="col-1"></div>
 			</div>
@@ -149,6 +149,11 @@ ${vacation }
 		<div class="col-4">3</div>
 	</div>
 </div> -->
+<script>
+document.getElementById('vacationWriteBtn').addEventListener('click', function() {
+    window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
+});
+</script>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

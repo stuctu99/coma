@@ -10,30 +10,34 @@
 <style>
 table {
 	/* width: 800px;
-	height: 700px; */ //
-	border: 1px solid #444444;
+	height: 700px; */
+	/* border: 1px solid #444444; */
 	border-collapse: collapse;
 }
 
 td {
-	width: 200px;
-	height: 150px;
-	*/
+	width: 150px;
+	height: 100px;
+	
 }
-.calendar{
-	/* background-color: grey; */
+.calendarContainer{
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+	text-align: center;
+	padding: 0px;
+	background-color:white;
+	border-radius: 50px; 
 
 }
 </style>
 <body onload="autoReload();">
 	<div class="coma-container containerbig">
-		<div class="row" style = "padding: 10px;">
+		<div class="row" style = "padding: 30px;">
 			<div class="col-9 "></div>
 			<div class="col-2"><button type="button" class="btn btn-primary" id="commuteDetail">  근태 상세 보기</button></div>
 			<div class="col-1 "></div>
 		</div>
-		<div class="calendar row">
-			<table align="center" id="calendar">
+		<div class="calendar row ">
+			<table align="center" id="calendar" class= "calendarContainer">
 				<tr>
 					<td><a id="before" href="javascript:beforem()"></a></td>
 					<td colspan="4" align="center">
@@ -48,8 +52,8 @@ td {
 					<td width="14%">수</td>
 					<td width="14%">목</td>
 					<td width="14%">금</td>
-					<td width="14%"><font color="#009de0">토</font></td>
-					<td width="14%"><font color="#ed5353">일</font></td>
+					<td width="14%" style ="background-color: #f1edff;"><font color="#009de0">토</font></td>
+					<td width="14%" style ="background-color: #f1edff;"><font color="#ed5353">일</font></td>
 				</tr>
 			</table>
 		</div>
@@ -111,7 +115,7 @@ td {
 			cnt = cnt + 1; //요일값
 			cell = row.insertCell();
 			if (i > 4) { //주말
-				cell.style.backgroundColor = "#f7f7f7";
+				cell.style.backgroundColor = "#f1edff";
 			}
 		}
 
@@ -133,7 +137,7 @@ td {
 				str += "</div>";
 				cell.innerHTML = str;
 				cell.style.color = "#009de0";
-				cell.style.backgroundColor = "#f7f7f7";
+				cell.style.backgroundColor = "#f1edff";
 			}
 			if (cnt % 7 == 0) { //일요일
 				var str = "";
@@ -144,7 +148,7 @@ td {
 				cell.innerHTML = str;
 				row = calendar.insertRow();// 줄 추가
 				cell.style.color = "#ed5353";
-				cell.style.backgroundColor = "#f7f7f7";
+				cell.style.backgroundColor = "#f1edff";
 			}
 			//마지막 날짜가 지나면 일요일 칸 그리기
 			if (lastDate.getDate() == i && ((cnt % 7) != 0)) {
@@ -153,10 +157,10 @@ td {
 					cell = row.insertCell();
 					cnt = cnt + 1;
 					if (cnt % 7 == 6) {//토요일
-						cell.style.backgroundColor = "#f7f7f7";
+						/* cell.style.backgroundColor = "#f1edff"; */
 					}
 					if (cnt % 7 == 0) { //일요일
-						cell.style.backgroundColor = "#f7f7f7";
+						/* cell.style.backgroundColor = "#f1edff"; */
 					}
 				}
 			}
@@ -174,10 +178,10 @@ td {
 					cell = row.insertCell();
 					cnt = cnt + 1;
 					if (cnt % 7 == 6) {//토요일
-						cell.style.backgroundColor = "#f7f7f7";
+						cell.style.backgroundColor = "#f1edff";
 					}
 					if (cnt % 7 == 0) { //일요일
-						cell.style.backgroundColor = "#f7f7f7";
+						cell.style.backgroundColor = "#f1edff";
 					}
 				}
 			}
@@ -188,15 +192,15 @@ td {
 			clockIn = clockIn.substring(10, clockIn.length - 2);			
 			/* console.log(tdId); */
 			var str = "";
-			str +="<span style='font-weight: bold;'>" +clockIn+" </span><span style='color: green;'>출근 </span>";
+			str +="<span style='font-weight: bold;color: #F7878E1'>" +clockIn+" </span><span style='color: #F7878E1;font-weight: bold;'>출근 </span>";
 			if("${item.EMP_COMMUTE_CLOCKOUT}"){
 				var clockOut = "${item.EMP_COMMUTE_CLOCKOUT}"
 				clockOut = clockOut.substring(10, clockOut.length - 2);
-				str += "<br><span style='font-weight: bold;'>"+clockOut+ "</span><span style='color: orange;' > 퇴근</span> ";
+				str += "<br><span style='font-weight: bold; color: #F7878E1;'>"+clockOut+ "</span><span style='color: #F7878E1;font-weight: bold;' > 퇴근</span> ";
 			}
 			
 			if ("${item.EMP_COMMUTE_CLOCKOUT}" && "${item.EMP_COMMUTE_LATENESS}" === 'Y') {
-				str += "<h4 style='color: red;'>지각</h4>";
+				str += "<h4 style='color: #FF6464;'>지각</h4>";
 			}
 			document.getElementById(tdId).innerHTML = str;			
 		</c:forEach>
