@@ -8,7 +8,7 @@
 	<jsp:param name="id" value="mine" />
 </jsp:include>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
-<c:set var="loginmember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+
 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
@@ -26,7 +26,7 @@
 		<div class="col-5" style="text-align:center;">
 			<h1 style="">학생 리스트</h1>
 			<div>
-		  
+		
 		    <table class="table align-items-center" style="text-align: center;">
 		        <thead class="">
 			      <tr>
@@ -44,8 +44,8 @@
 			        		<td><button type="button" class="btn btn-secondary btn-sm" onclick="fn_stuInfo('${s.STU_NO }');"><c:out value="${s.STU_NAME }"/></button></td>
 			        		<td><c:out value="${s.EMP_NAME }"/></td>
 			        		<td>
-								<input type="checkbox" name="employment" value="${s.STU_NO }" ${s.STU_EMP_STATUS=='Y'?'disabled':''}>
-								${s.STU_EMP_STATUS }
+								<input type="checkbox" name="employment" value="${s.STU_NO }" ${s.STU_EMP_STATUS=='Y'?'disabled checked':''}>
+								
 			        		</td>
 			        	</tr>
 			        </c:forEach>
@@ -95,12 +95,12 @@
 			<div class="row" id="stu_regulatoryStatus">
 				<div class="col-4">
 			        <label for="example-text-input" class="form-control-label">취업/총원</label>
-			        <input class="form-control" type="text" value="" id="example-text-input" style="text-align:center;" >
+			        <input class="form-control" type="text" value="${empCount[0].A }/${empCount[0].B}" id="example-text-input" style="text-align:center;" readonly>
 				</div>
 				<div class="col-8">
 			        <div style="width:470px; margin-left: 10px;">
 					  <div class="progress-info" style="margin-top: 3px;">
-					    <label for="example-text-input" class="form-control-label">출석일 수/총 수업일 수</label>
+					    <label for="example-text-input" class="form-control-label">취업/총원</label>
 					    <div class="progress-percentage">
 					      <span>0%</span>
 					    </div>
@@ -116,20 +116,8 @@
 	</div>
 </div>
 <script>
-	const empId = ${loginmember.empId };
-	function empAll(empId){
-		console.log(empId);
-		fetch("${path}/student/empCount",{
-			method:"post",
-			headers:{"Content-Type":"application/json"},
-			body:JSON.stringify({
-				empId:empId
-			})
-		}).then(empCount=>{
-			console.log(empCount);
-		})
-	}
-	 
+	const empCountA= ${empCount[0].A};
+	const empCountB= ${empCount[0].B};
 	
 	//학생 정보 출력
 	function fn_stuInfo(stuNo) {
@@ -255,7 +243,7 @@
 				const $div9=document.createElement("div");
 				$div9.className = "progress-percentage";
 				const $span=document.createElement("span");
-				$span.textContent = student.AVGATTENDANCE+"%";
+				$span.textContent = Math.floor(empCountA/empCountB*100)+"%";
 				const $div10=document.createElement("div");
 				$div10.className = "progress";
 				$div10.style.marginTop = "15px";
@@ -265,7 +253,7 @@
 				$div11.ariaValuenow = "0";
 				$div11.ariaValuemin = "0";
 				$div11.ariaValuemax = "100";
-				$div11.style.width = student.AVGATTENDANCE+"%";
+				$div11.style.width = empCountA/empCountB*100+"%";
 				
 				$div8.appendChild($label6);
 				$div8.appendChild($div9);

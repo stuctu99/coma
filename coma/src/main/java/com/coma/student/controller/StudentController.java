@@ -1,13 +1,12 @@
 package com.coma.student.controller;
 
 import java.security.Principal;
-<<<<<<< HEAD
+
 import java.util.Arrays;
-=======
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
->>>>>>> branch 'master' of https://github.com/stuctu99/coma.git
 import java.util.List;
 import java.util.Map;
 
@@ -53,23 +52,5 @@ public class StudentController {
 		
 	}
 
-	// 경현
-	@GetMapping("/studentEmp")
-	public void selectStudentEmpByEmpId(Principal pri, Model m) {
-		String loginId=pri.getName();
-		List<Map> students=service.selectStudentEmpByEmpId(loginId);
-		m.addAttribute("students",students);
-	}
-	@PostMapping("/insertStudentEmp")
-	public String insertStudentEmp(String [] employment) {
-		System.out.println("이걸찾으시오"+Arrays.toString(employment));
-		int result = service.insertStudentByEmployment(employment);
-		return "redirect:/student/studentEmp";
-	}
-	@PostMapping("/infoStudentEmp")
-	public @ResponseBody List<Map> infoStudentEmp(@RequestBody Map<String, Object> stuNo){
-		List<Map> stuInfo = service.infoStudentEmp(stuNo);
-		return stuInfo;
-	}
-
+	
 }
