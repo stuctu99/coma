@@ -14,6 +14,10 @@
 /*   	div{
       border: 2px solid red;
     }  */
+    
+    input:read-only{
+    	background-color:white;
+    }
 </style>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row">
@@ -33,26 +37,17 @@
 			            <label class="custom-control-label" for="attendanceToggle">출석 여부</label>
 			          </div>
 			        </th>
-			        <th>
-			          <div class="custom-control custom-checkbox">
-			            <input type="checkbox" class="custom-control-input" id="checkOutToggle" onclick="fn_Checkboxes('checkOut')">
-			            <label class="custom-control-label" for="checkOutToggle">퇴실 여부</label>
-			          </div>
-			        </th>
 			      </tr>
 		        </thead>
 		        <tbody class="list" id="studentTable">
-		        	<form action="/student/updateStudent" method="post">
+		        	<form action="/student/insertStudent" method="post">
 			        <c:forEach var="s" items="${students }">
 			        	<tr>
 			        		<td><c:out value="${s.STU_NO }"/></td>
 			        		<td><button type="button" class="btn btn-secondary btn-sm" onclick="fn_stuInfo('${s.STU_NO }');"><c:out value="${s.STU_NAME }"/></button></td>
 			        		<td><c:out value="${s.EMP_NAME }"/></td>
 			        		<td>
-								<input type="checkbox" name="attendance" value="${s.STU_NO }">
-			        		</td>
-			        		<td>
-			        			<input type="checkbox" name="checkOut" value="${s.STU_NO }">
+								<input type="checkbox" name="attendance" value="${s.STU_NO }" ${s.STU_COMMUTE_STATUS!='Y'?'':'disabled'}>
 			        		</td>
 			        	</tr>
 			        </c:forEach>
@@ -81,19 +76,19 @@
 				<div class="col-6" id="stu_viewDetails">
 				    <div class="form-group">
 				        <label for="example-text-input" class="form-control-label">이름</label>
-				        <input class="form-control" type="text" value="학생 이름" id="example-text-input">
+				        <input class="form-control" type="text" value="학생 이름" id="example-text-input" >
 				    </div>
 				    <div class="form-group">
 				        <label for="example-datetime-local-input" class="form-control-label">강의 시작일</label>
-				        <input class="form-control" type="date" value="2018-11-23" id="example-search-input">
+				        <input class="form-control" type="date" value="" id="example-search-input" >
 				    </div>
 				    <div class="form-group">
 				        <label for="example-datetime-local-input" class="form-control-label">수료일</label>
-				        <input class="form-control" type="date" value="2018-11-23" id="example-email-input">
+				        <input class="form-control" type="date" value="" id="example-email-input" >
 				    </div>
 				    <div class="form-group">
 				        <label for="example-datetime-local-input" class="form-control-label">생일</label>
-				        <input class="form-control" type="date" value="2018-11-23" id="example-datetime-local-input">
+				        <input class="form-control" type="date" value="" id="example-datetime-local-input" >
 				    </div>
 				</div>
 			</div>
@@ -101,18 +96,18 @@
 			<div class="row" id="stu_regulatoryStatus">
 				<div class="col-4">
 			        <label for="example-text-input" class="form-control-label">총 출석 수</label>
-			        <input class="form-control" type="text" value="0/120" id="example-text-input" style="text-align:center;">
+			        <input class="form-control" type="text" value="0/120" id="example-text-input" style="text-align:center;" >
 				</div>
 				<div class="col-8">
 			        <div style="width:470px; margin-left: 10px;">
 					  <div class="progress-info" style="margin-top: 3px;">
 					    <label for="example-text-input" class="form-control-label">출석일 수/총 수업일 수</label>
 					    <div class="progress-percentage">
-					      <span>80%</span>
+					      <span>0%</span>
 					    </div>
 					  </div>
 					  <div class="progress" style="margin-top: 15px;">
-					    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
+					    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
 					  </div>
 					</div>
 				</div>
@@ -123,42 +118,39 @@
 </div>
 <script>
 	//체크 박스 전체 선택
-    function fn_Checkboxes(checkboxName) {
-        const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]');
-        const masterCheckbox = document.getElementById(checkboxName + 'Toggle');
-
-        checkboxes.forEach(function (checkbox) {
-            checkbox.checked = masterCheckbox.checked;
-        });
-    }
-
-    function getCheckedCheckboxValues(checkboxName) {
-        const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked');
-        const values = Array.from(checkboxes).map(checkbox => checkbox.value);
-        return values;
-    }
-
-    function submitForm() {
-        const attendanceValues = getCheckedCheckboxValues('attendance');
-        const checkOutValues = getCheckedCheckboxValues('checkOut');
-
-        // 여기서 필요한 작업을 수행하고 서버로 전송
-        sendFormDataToServer(attendanceValues, checkOutValues);
-    }
-
-    function sendFormDataToServer(attendanceValues, checkOutValues) {
-        // Ajax 또는 다른 방식으로 서버로 데이터를 전송
-		const xhr = new XMLHttpRequest();
-		xhr.open('POST', '/student/updateStudent', true);
-		xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-
-        const data = {
-            attendance: attendanceValues,
-            checkOut: checkOutValues
-        };
-
-        xhr.send(JSON.stringify(data));
-    }
+	function fn_Checkboxes(checkboxName) {
+	    const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]');
+	    const masterCheckbox = document.getElementById(checkboxName + 'Toggle');
+	
+	    checkboxes.forEach(function (checkbox) {
+	        checkbox.addEventListener('change', function() {
+	            // 체크박스가 disabled 상태가 아니고, 하나라도 체크가 풀리면 masterCheckbox 해제
+	            if (!checkbox.disabled && !isCheckedAll(checkboxes)) {
+	                masterCheckbox.checked = false;
+	            } else {
+	                // 모든 체크박스가 체크되면 masterCheckbox 선택
+	                masterCheckbox.checked = isCheckedAll(checkboxes);
+	            }
+	        });
+	    });
+	
+	    // 모든 체크박스가 체크되어 있는지 확인하는 함수
+	    function isCheckedAll(checkboxes) {
+	        return Array.from(checkboxes).every(function(checkbox) {
+	            return checkbox.checked;
+	        });
+	    }
+	
+	    // masterCheckbox가 변경되었을 때 모든 체크박스의 상태를 일괄적으로 변경
+	    masterCheckbox.addEventListener('change', function() {
+	        checkboxes.forEach(function (checkbox) {
+	            // 체크박스가 disabled 상태가 아닌 경우에만 선택 상태를 변경
+	            if (!checkbox.disabled) {
+	                checkbox.checked = masterCheckbox.checked;
+	            }
+	        });
+	    });
+	}
 	
 	//학생 정보 출력
 	function fn_stuInfo(stuNo) {
