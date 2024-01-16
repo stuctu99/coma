@@ -52,4 +52,8 @@ public interface ApprovalDao {
 	String selectApprStatus(SqlSession session, Map<String, String> data3);
 	
 	Approver selectApprMyturn(SqlSession session, String docNo);
+	
+	int updateThisOrder(SqlSession session, String thisOrder);
+	
+	int updateNextOrder(SqlSession session, String nextOrder);
 }

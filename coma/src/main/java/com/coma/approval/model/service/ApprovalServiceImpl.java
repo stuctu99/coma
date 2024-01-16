@@ -225,6 +225,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.selectApprMyturn(session, docNo);
 	}
 
+	@Override
+	public int updateThisOrder(String thisOrder) {
+		return dao.updateThisOrder(session, thisOrder);
+	}
+
+	@Override
+	public int updateNextOrder(String nextOrder) {
+		return dao.updateNextOrder(session, nextOrder);
+	}
+
 
 
 	

@@ -38,4 +38,8 @@ public interface ApprovalService {
 	String selectApprStatus(Map<String, String> data3);
 	
 	Approver selectApprMyturn(String docNo);
+	
+	int updateThisOrder(String thisOrder);
+	
+	int updateNextOrder(String nextOrder);
 }

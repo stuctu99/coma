@@ -386,6 +386,7 @@ public class ApprovalController {
 	 Approver apprMyturn = service.selectApprMyturn(docNo);
 	   
 	 model.addAttribute("myTurnEmpId", apprMyturn.getEmpId());
+	 model.addAttribute("myTurnOrder", apprMyturn.getApprOrder());
 	 
 	 
 	 return "approval/viewdoc";
@@ -505,9 +506,11 @@ public class ApprovalController {
    //---------------------------- 결재 승인 -------------------------------------
    
    @PostMapping("/approve")
-   public String approve(String docNo) {
+   public String approve(String docNo, String thisOrder, String nextOrder) {
 	   
-	
+	   service.updateThisOrder(thisOrder);
+	   
+	   service.updateNextOrder(nextOrder);
 	   
 	   return "redirect:/";
    }

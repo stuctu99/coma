@@ -117,6 +117,16 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return session.selectOne("approval.selectApprMyturn", docNo);
 	}
 
+	@Override
+	public int updateThisOrder(SqlSession session, String thisOrder) {
+		return session.update("approval.updateThisOrder", thisOrder);
+	}
+
+	@Override
+	public int updateNextOrder(SqlSession session, String nextOrder) {
+		return session.update("approval.updateNextOrder", nextOrder);
+	}
+
 	
 
 	
