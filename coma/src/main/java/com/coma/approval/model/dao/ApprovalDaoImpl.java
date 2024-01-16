@@ -105,6 +105,18 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return session.update("emp.updateSign", data);
 	}
 
+	@Override
+	public String getSignByApprId(SqlSession session, String arrpId) {
+		return session.selectOne("emp.getSignByApprId", arrpId);
+	}
+
+	@Override
+	public String getStatusByIdAndDocNo(SqlSession session, Map<String, String> data2) {
+		return session.selectOne("approval.getStatusByIdAndDocNo", data2);
+	}
+
+
+
 	
 	
 	
