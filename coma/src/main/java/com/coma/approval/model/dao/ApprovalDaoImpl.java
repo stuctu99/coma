@@ -133,8 +133,8 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	}
 
 	@Override
-	public int updateEndDate(SqlSession session, String docNo) {
-		return session.update("approval.updateEndDate", docNo);
+	public int updateEndDate(SqlSession session, Map<String, String> data) {
+		return session.update("approval.updateEndDate", data);
 	}
 
 	@Override
@@ -156,6 +156,13 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public String selectWriterByDocNo(SqlSession session, String docNo) {
 		return session.selectOne("approval.selectWriterByDocNo", docNo);
 	}
+
+	@Override
+	public int updateAllMyturn(SqlSession session, Map<String, String> data) {
+		return session.update("approval.updateAllMyturn", data);
+	}
+	
+	
 
 
 	

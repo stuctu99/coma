@@ -40,7 +40,7 @@ public interface ApprovalService {
 	
 	int updateNextOrder(Map<String, String> data);
 	
-	int updateEndDate(String docNo);
+	int updateEndDate(Map<String, String> data);
 	
 	ApprovalLeave selectLeaveDoc(String docNo);
 	
@@ -49,4 +49,8 @@ public interface ApprovalService {
 	int updateVacation(Map<String, String> dataL);
 	
 	String selectWriterByDocNo(String docNo);
+	
+	int updateProgress(Map<String, String> data);
+	
+	int updateAllMyturn(Map<String, String> data);
 }

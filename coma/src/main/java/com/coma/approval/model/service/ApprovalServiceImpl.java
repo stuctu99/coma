@@ -231,11 +231,13 @@ public class ApprovalServiceImpl implements ApprovalService {
 			int result = dao.updateThisOrder(session, data);
 		
 			if(result==1) { 
+				data.put("progress", "진행");
 				int result2 = dao.updateProgress(session, data);
 				return result2;
 			}else return result;
 			
 	}
+	
 
 	@Override
 	public int updateNextOrder(Map<String, String> data) {
@@ -243,8 +245,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public int updateEndDate(String docNo) {
-		return dao.updateEndDate(session, docNo);
+	public int updateEndDate(Map<String, String> data) {
+		return dao.updateEndDate(session, data);
 	}
 
 	@Override
@@ -265,6 +267,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public String selectWriterByDocNo(String docNo) {
 		return dao.selectWriterByDocNo(session, docNo);
+	}
+
+	@Override
+	public int updateProgress(Map<String, String> data) {
+		return dao.updateProgress(session, data);
+	}
+
+	@Override
+	public int updateAllMyturn(Map<String, String> data) {
+		return dao.updateAllMyturn(session, data);
 	}
 
 

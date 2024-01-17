@@ -59,7 +59,7 @@ public interface ApprovalDao {
 
 	int updateProgress(SqlSession session, Map<String, String> data);
 	
-	int updateEndDate(SqlSession session, String docNo);
+	int updateEndDate(SqlSession session, Map<String, String> data);
 	
 	ApprovalLeave selectLeaveDoc(SqlSession session, String docNo);
 	
@@ -68,4 +68,6 @@ public interface ApprovalDao {
 	int updateVacation(SqlSession session, Map<String, String> dataL);
 	
 	String selectWriterByDocNo(SqlSession session, String docNo);
+
+	int updateAllMyturn(SqlSession session, Map<String, String> data);
 } 

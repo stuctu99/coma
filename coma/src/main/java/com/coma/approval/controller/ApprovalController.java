@@ -506,6 +506,32 @@ public class ApprovalController {
    
    //---------------------------- 결재 승인 -------------------------------------
    
+   @PostMapping("/reject")
+   public String reject(String docNo, String thisOrder, Model model) { //empId = 문서 기안자
+	  
+	   Map<String, String> data = new HashMap<String, String>();
+	   data.put("docNo", docNo);
+	   data.put("progress", "반려");
+	   data.put("thisOrder", thisOrder);
+		
+	   int result1 = service.updateEndDate(data); //진행상태 반려로 변경
+	   
+//	   int result2 =service.updateThisOrder(data); //myTurn 'Y'에서 NULL으로 변경
+	   
+	   int result2 = service.updateAllMyturn(data);
+	   
+	   System.out.println("진행상태 반려 변경: " + result1+ "myturn 변경: " + result2);
+	   
+	   String msg="반려 처리 완료";
+       String loc="apprdoc/docList";
+	   
+       model.addAttribute("msg",msg);
+       model.addAttribute("loc",loc);
+       
+	   return "common/msg";
+   }
+   
+   
    @PostMapping("/approve")
    public String approve(String docNo, String thisOrder, String nextOrder, Model model, String docType, String empId) {
 	   //empId = 문서 기안자
@@ -521,7 +547,7 @@ public class ApprovalController {
 		   int result2 = service.updateNextOrder(data);
 		   
 		   String msg="승인 완료";
-	       String loc="/";
+	       String loc="apprdoc/docList";
 	       model.addAttribute("msg",msg);
 	       model.addAttribute("loc",loc);
 
@@ -529,7 +555,8 @@ public class ApprovalController {
 		   Approver apprMyturn = service.selectApprMyturn(docNo);
 		   
 		   if(apprMyturn==null) {
-			   service.updateEndDate(docNo); 
+			   data.put("progress", "완료");
+			   service.updateEndDate(data); 
 			   
 			   //휴가신청서일 경우 계산
 			   if(docType.equals("leave")) {   
@@ -567,31 +594,5 @@ public class ApprovalController {
 	      return "common/msg";
    }
    
-//   @GetMapping("/test")
-//   public String approve() {
-//	   String docNo = "DOC_408";
-//	   String empId = "COMA_12";
-//	   
-//	   ApprovalLeave leave = service.selectLeaveDoc(docNo);
-//	  
-//	   if(leave.getLeaveType().equals("연차")) {
-//		   Date startDate = leave.getLeaveStart();
-//		   Date endDate =leave.getLeaveEnd();
-//		   
-//		   long diffSec = (endDate.getTime()-startDate.getTime());
-//		   
-//		   long diffDays = diffSec / (24*60*60)/1000 +1; //휴가 일수
-//		   
-//		   Map<String, String> data = new HashMap<String, String>();
-//		   data.put("empId", empId);
-//		   data.put("diffDays", String.valueOf(diffDays));
-//		   
-//		   int result = service.updateVacation(data);
-//		   
-//	   }else {
-//		   int result = service.updateVacationHalf(empId);
-//	   }
-//	   return "redirect:/";
-//   }
 
 }
