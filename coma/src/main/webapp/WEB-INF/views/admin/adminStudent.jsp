@@ -55,6 +55,11 @@
 			<div style="text-align:center;">
 				<h1>학생 수료율 통계</h1>
 			</div>
+<%-- 				<select id="chartYearData" class="form-control form-control-sm" onchange="fn_chartYearData();">
+				<c:forEach var="c" items="${chartDate }">
+					<option><c:out value="${c.STU_END_DATE }"/></option>				
+				</c:forEach> --%>
+				</select>
 			<div>
 				<canvas id="stuComChart" style="height:200px; width:400px"></canvas>
 			</div>
@@ -248,6 +253,25 @@ const myChart2 = new Chart(ctx2, {
       }
   }
 });
+
+/* function fn_chartYearData() {
+	const chartYearData = document.getElementById("chartYearData").value;
+	fetch('${path}/admin/searchStudent',{
+		method:"post",
+		headers:{"Content-Type":"application/json"},
+		body:JSON.stringify({
+			chartYearData:chartYearData
+		})
+	}).then(response=>{
+		if(response.status!=200) throw new Error(repsonse.status);
+		return response.json();
+	}).then(result=>{
+		
+	}).catch(e=>{
+		console.log(e);
+	})
+}
+ */
 //학생 취업율 차트 데이터
 const sbe=${studentByEmp}
 const sbeo=JSON.stringify(sbe);

@@ -135,15 +135,14 @@ public class AdminController {
 		List<Map> students=service.selectStudent(Map.of("cPage",cPage,"numPerpage",numPerpage));	//전체 학생 데이터 출력
 		int totalData=service.countStudent();	//전체 학생 수 출력
 		List<Map> studentCount=service.studentCountByEmpId();
-		int studentComStatusData=service.countStudentByCom();	//수교한 학생 수 출력
-		int studentEmpStatusData=service.countStudentByEmp();	//취업한 학생 수 출력
+		System.out.println(studentCount);
+		//List<Map> chartDate=service.chartFilterDate();
+		
 		m.addAttribute("students",students);
 		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, "/admin/adminStudent"));
 		m.addAttribute("studentCount",studentCount);
-		m.addAttribute("studentComStatusData",studentComStatusData);
-		m.addAttribute("studentEmpStatusData",studentEmpStatusData);
 		m.addAttribute("totalStudent",totalData);
-		
+		//m.addAttribute("chartDate",chartDate);
 
 		//chart.js 메소드
 		//학생 출석률 Data

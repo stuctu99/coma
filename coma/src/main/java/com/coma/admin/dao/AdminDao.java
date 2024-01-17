@@ -100,6 +100,10 @@ public class AdminDao {
 		return session.selectOne("student.countStudentByCom");
 	}
 	
+	//public List<Map> chartFilterDate(SqlSession session){
+	//	return session.selectList("student.chartFilterDate");
+	//}
+	
 	//학생 수료 자동화 기능
 	public List studentByCom(SqlSession session) {
 		return session.selectList("studentCommute.studentByCom");
