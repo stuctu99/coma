@@ -97,6 +97,7 @@ server.onmessage = (response) => {
 }
 const messagePrint = (msg) => {
 	/* 꼭 알아두기 !!! */
+	/* 채팅 전송 시 채팅방 제목 하단에 최근 메세지 출력 */
 	$(opener.location).attr("href", "javascript:updateMsg('"+msg.roomNo+"','"+msg.chatContent+"');");
 	
 	console.log(msg);

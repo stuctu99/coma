@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingPrivateRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
@@ -34,7 +35,7 @@ public class MessengerDaoImpl implements MessengerDao {
 	}
 
 	@Override
-	public List<String> selectMyJoinRoomById(SqlSession session, String loginId) {
+	public List<ChattingJoin> selectMyJoinRoomById(SqlSession session, String loginId) {
 		// TODO Auto-generated method stub
 		return session.selectList("chatting.selectMyJoinRoomById", loginId);
 	}
@@ -96,7 +97,6 @@ public class MessengerDaoImpl implements MessengerDao {
 	
 	@Override
 	public int insertInviteEmp(SqlSession session, Map<String,Object> inviteInsertInfo) {
-		// TODO Auto-generated method stub
 		return session.insert("chatting.insertInviteEmp",inviteInsertInfo);
 	}
 	

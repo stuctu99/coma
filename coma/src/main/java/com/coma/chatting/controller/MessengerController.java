@@ -1,5 +1,6 @@
 package com.coma.chatting.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.chatting.model.service.MessengerService;
+import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingPrivateRoom;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.ChattingRoomType;
@@ -66,7 +68,7 @@ public class MessengerController {
 	public Map<String, Object> chatRoomListByType(@PathVariable String type, @PathVariable String loginId) {
 		Map<String, String> searchInfo = Map.of("type", type, "loginId", loginId);
 		List<ChattingRoom> roomList = service.selectChatRoomListByType(searchInfo);
-		List<String> joinRoom = service.selectMyJoinRoomById(loginId);
+		List<ChattingJoin> joinRoom = service.selectMyJoinRoomById(loginId);
 		// 변수명 수정 필요
 		List<ChattingPrivateRoom> privateRoomList = service.selectPrivateChatJoinInfo(loginId);
 		Map<String, Object> roomInfo = new HashMap<String, Object>();
@@ -141,9 +143,12 @@ public class MessengerController {
 
 	@PostMapping("/invite/{roomNo}")
 	@ResponseBody
-	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo, @RequestBody String[] inviteEmp) {
-		List<String> inviteEmpList = Arrays.asList(inviteEmp);
-		Map<String,Object> inviteInsertInfo = Map.of("roomNo",roomNo,"inviteEmp",inviteEmp);
+	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo,@RequestBody String[] inviteEmp) {
+		List<String> inviteEmpList = new ArrayList<String>(Arrays.asList(inviteEmp));
+		Map<String,Object> inviteInsertInfo = new  HashMap<String,Object>();
+		inviteInsertInfo.put("roomNo",roomNo);
+		inviteInsertInfo.put("inviteEmpList",inviteEmpList);
+		System.err.println("여기 함 봐보자고!!!"+inviteInsertInfo);
 		int inviteInsertCheck = service.insertInviteEmp(inviteInsertInfo);
 		if (inviteInsertCheck > 0) {
 			return Map.of("result", "success");

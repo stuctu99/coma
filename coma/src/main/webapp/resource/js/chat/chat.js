@@ -72,7 +72,7 @@ function openEvent(data) {
 function newRoom(data) {
 	console.log("새로 생성된 채팅방" + data.roomNo);
 	intiCreateModalInput();
-	/*$(".chatting-list-btn").click();*/
+	$(".chatting-list-btn").click();
 	/*fn_roomListByType("engagement");*/
 	//알림 보여줄 수 있도록 구현하면 좋을 것 같다.
 }
@@ -151,8 +151,8 @@ const createRoom = (empId) => {
 							}
 							return response.json();
 						})
-						.then(data => {
-							if (data.result == "success") {
+						.then(resp => {
+							if (resp.result == "success") {
 								const msg = new MessageHandler("new", empId, "", "", "");
 								mserver.send(msg.convert());
 								$("#createRoom").modal('hide');
@@ -310,7 +310,7 @@ const fn_roomListByType = (type) => {
 						$i.append($("<i>").addClass("fa-solid fa-lock-open"));
 					}
 
-					if (loginId === 'COMA_1') {
+					if (autority === 'J1') {
 						const $input = $("<input>").attr("type", "checkbox").attr("name", "deleteRoom[]").val(d.roomNo).css("margin-right", "5px");
 						$input.addClass("deleteRoom");
 						$div_type.append($input);
@@ -322,14 +322,13 @@ const fn_roomListByType = (type) => {
 						})
 						.then(data => {
 							if (data != "") {
-								console.log("요이땅" + data);
 								$updateMsg.text("Message : " + data);
 							} else {
-								$updateMsg.text();
+								$updateMsg.text("No Message");
 							}
 						})
 
-					$i.css("padding-top", "14px");
+					$i.css("padding-top", "18px");
 					$strong_type.text(d.roomTypeObj.roomTypeName);
 					$strong_title.text(d.roomName);
 					$div_type.append($strong_type);
@@ -354,8 +353,12 @@ const fn_roomListByType = (type) => {
 				content.appned($div);
 			}
 
-			data.joinRoom.forEach(r => {
-				$("#btn-" + r).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
+			data.joinRoom.forEach(param => {
+				$("#btn-" + param.roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
+				if(param.newJoin != 'N'){
+					const $span = $("<span>").addClass("badge badge-danger").attr("name","new").text("New");
+					$("div#"+param.roomNo).prepend($span);
+				}
 			})
 
 		})
@@ -537,6 +540,7 @@ const enter_chattingRoom = (roomNo) => {
 				$("#btn-" + roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
 				$(".chatting-list-btn").click();
 				window.open(url, windowName, options);
+				$("div#"+roomNo+">span").remove();
 
 				/*if (!chattingView || chattingView.closed) {
 					const url = "/chatting/room/" + roomNo;
