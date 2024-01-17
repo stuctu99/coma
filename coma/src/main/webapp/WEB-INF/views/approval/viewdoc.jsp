@@ -212,9 +212,11 @@ const approve=()=>{ //승인버튼
 	if(result){
 		$('#thisOrder').val(thisOrder);
 		$('#nextOrder').val(nextOrder);
+		
+		$("#approve").submit();
 	}
 	
-	  $("#approve").submit();
+	  
 }
 
 //pdf다운 버튼 -> 결재자 id 배열 넘기기

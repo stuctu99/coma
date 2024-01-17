@@ -299,7 +299,7 @@ public class ApprovalController {
             delFile.delete();
          }
       }
-      
+
       model.addAttribute("msg",msg);
       model.addAttribute("loc",loc);
       
@@ -314,9 +314,7 @@ public class ApprovalController {
    public String viewDoc(String docNo, String docType, Model model) {
 	   
 	 Map<String, String> data = new HashMap<String, String>();
-	 
-	 docNo = "DOC_325"; //테스트용
-	 docType = "etc"; //테스트용
+	
 	 
 	 data.put("docNo", docNo); 
 	 data.put("docType", docType); 
@@ -384,10 +382,13 @@ public class ApprovalController {
 	 
 	 // Myturn 'Y'인 결재자 승인 버튼
 	 Approver apprMyturn = service.selectApprMyturn(docNo);
-	   
-	 model.addAttribute("myTurnEmpId", apprMyturn.getEmpId());
-	 model.addAttribute("myTurnOrder", apprMyturn.getApprOrder());
-	 
+	 if(apprMyturn!=null) {
+		 model.addAttribute("myTurnEmpId", apprMyturn.getEmpId());
+		 model.addAttribute("myTurnOrder", apprMyturn.getApprOrder());
+	 }else {
+		 System.out.println("apprMyturn = null");
+		 
+	 }
 	 
 	 return "approval/viewdoc";
    }
@@ -506,13 +507,35 @@ public class ApprovalController {
    //---------------------------- 결재 승인 -------------------------------------
    
    @PostMapping("/approve")
-   public String approve(String docNo, String thisOrder, String nextOrder) {
+   public String approve(String docNo, String thisOrder, String nextOrder, Model model) {
 	   
-	   service.updateThisOrder(thisOrder);
-	   
-	   service.updateNextOrder(nextOrder);
-	   
-	   return "redirect:/";
+		   Map<String, String> data = new HashMap<String, String>();
+			
+		   data.put("docNo", docNo);
+		   data.put("thisOrder", thisOrder);
+		   data.put("nextOrder", nextOrder);
+		   
+		   int result1 =service.updateThisOrder(data);
+		   
+		   int result2 = service.updateNextOrder(data);
+		   
+		   System.out.println("결과확인^^^^");
+		   System.out.println(result1);
+		   System.out.println(result2);
+		   
+		   String msg="승인 완료";
+	       String loc="/";
+	       model.addAttribute("msg",msg);
+	       model.addAttribute("loc",loc);
+
+	       // Myturn 'Y'인 결재자가 없으면 완료 처리
+		   Approver apprMyturn = service.selectApprMyturn(docNo);
+		   
+		   if(apprMyturn==null) service.updateEndDate(docNo); 
+			   
+		   
+		   
+	      return "common/msg";
    }
    
 //   

@@ -39,7 +39,9 @@ public interface ApprovalService {
 	
 	Approver selectApprMyturn(String docNo);
 	
-	int updateThisOrder(String thisOrder);
+	int updateThisOrder(Map<String, String> data);
 	
-	int updateNextOrder(String nextOrder);
+	int updateNextOrder(Map<String, String> data);
+	
+	int updateEndDate(String docNo);
 }

@@ -118,14 +118,25 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	}
 
 	@Override
-	public int updateThisOrder(SqlSession session, String thisOrder) {
-		return session.update("approval.updateThisOrder", thisOrder);
+	public int updateThisOrder(SqlSession session, Map<String, String> data) {
+		return session.update("approval.updateThisOrder", data);
 	}
 
 	@Override
-	public int updateNextOrder(SqlSession session, String nextOrder) {
-		return session.update("approval.updateNextOrder", nextOrder);
+	public int updateProgress(SqlSession session, Map<String, String> data) {
+		return session.update("approval.updateProgress", data);
 	}
+
+	@Override
+	public int updateNextOrder(SqlSession session, Map<String, String> data) {
+		return session.update("approval.updateNextOrder", data);
+	}
+
+	@Override
+	public int updateEndDate(SqlSession session, String docNo) {
+		return session.update("approval.updateEndDate", docNo);
+	}
+
 
 	
 

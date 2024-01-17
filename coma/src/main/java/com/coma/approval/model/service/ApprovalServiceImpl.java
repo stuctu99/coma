@@ -226,13 +226,24 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public int updateThisOrder(String thisOrder) {
-		return dao.updateThisOrder(session, thisOrder);
+	public int updateThisOrder(Map<String, String> data) {
+			int result = dao.updateThisOrder(session, data);
+		
+			if(result==1) { 
+				int result2 = dao.updateProgress(session, data);
+				return result2;
+			}else return result;
+			
 	}
 
 	@Override
-	public int updateNextOrder(String nextOrder) {
-		return dao.updateNextOrder(session, nextOrder);
+	public int updateNextOrder(Map<String, String> data) {
+		return dao.updateNextOrder(session, data);
+	}
+
+	@Override
+	public int updateEndDate(String docNo) {
+		return dao.updateEndDate(session, docNo);
 	}
 
 
