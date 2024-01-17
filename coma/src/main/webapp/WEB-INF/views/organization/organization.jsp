@@ -17,43 +17,32 @@
 </style>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 	<div class="coma-container" style="margin-top:5px; margin-bottom: 5px; text-align:center; display: math; ">
-		<h1>조직도</h1>
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-6">
+				<h1>조직도</h1>	
+			</div>
+			<div class="col-1"></div>
+			<div class="col-2">
+				<h1>부서 소개</h1>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-1"></div>
 			<div class="col-6" style="margin-right:20px; display: flex; justify-content: space-evenly; flex-direction: column;">
-				<div style="width: 800px; height: 600px;">
-					<img src="${path }/resource/upload/organization/COMA.png" style="width: 800px; height: 600px; border-radius: 25px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+				<div style="width: 100%; height: 100%;">
+					<img src="${path }/resource/img/organization/COMA_demo.png" style="width: 100%; height: 800px; border-radius: 25px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
 				</div>
 			</div>
 			<div class="col-1" style="display: flex; justify-content: space-evenly; flex-direction: column;">
 				<div>
-					<button type="button" class="btn btn-outline-primary" onclick="fn_organiztionDept();">원장</button>
-				</div>
-				<div>
-					<button type="button" class="btn btn-outline-primary">교육</button>
-				</div>
-				<div>
-					<button type="button" class="btn btn-outline-primary">행정</button>
-				</div>
-				<div>
-					<button type="button" class="btn btn-outline-primary">취업</button>
-				</div>
-				<div>
-					<button type="button" class="btn btn-outline-primary">회계</button>
+					<button type="button" class="btn btn-primary" data-container="body" data-toggle="popover" data-color="primary" data-placement="right" data-content="This is a very beautiful popover, show some love.">
+					 	원장
+					</button>
 				</div>
 			</div>
 			<div class="col-2">
-				<table class="table align-items-center">
-			        <thead class="thead-light">
-			            <tr>
-			                <th scope="col" class="sort" data-sort="name">Name</th>
-			                <th scope="col" class="sort" data-sort="budget">Job</th>
-			            </tr>
-			        </thead>
-			        <tbody class="list">
-			        	
-			        </tbody>
-				</table>
+				<div>부서 소개 글</div>
 			</div>
 		</div>
 	</div>

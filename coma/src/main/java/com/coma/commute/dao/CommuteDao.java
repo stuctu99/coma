@@ -14,7 +14,7 @@ import com.coma.model.dto.Emp;
 
 public interface CommuteDao {
 	//출근시간 찍히기 -> insert
-	int insertCommute(SqlSession session, @RequestBody HashMap<String, Object> empId);
+	int updateClockIn(SqlSession session, Map <String, Object> emp);
 	//퇴근시간 찍히기 ->update
 	int updateClockout(SqlSession session, Map <String, Object> emp);
 	//외출시작시간찍히기 
@@ -31,4 +31,9 @@ public interface CommuteDao {
 	List<Commute> searchCommute (SqlSession session, Map<String, Object> commute);
 	
 	int countSearchCommute(SqlSession session,Map <String, Object> commute);
+	
+	int insertCommuteAll(SqlSession session, String empIds);
+	
+	int updateEmployeeCommute(SqlSession session, Map<String, Object> commute);
+	
 }

@@ -14,10 +14,6 @@
 /*   	div{
       border: 2px solid red;
     }  */
-    
-    input:read-only{
-    	background-color:white;
-    }
 </style>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row">

@@ -274,7 +274,7 @@ input[type="datetime-local"] {
         const headerToolbar = {
             left: 'prevYear,prev,next,nextYear today',
             center: 'title',
-            right: 'dayGridMonth,dayGridWeek,timeGridDay'
+            right: 'dayGridMonth,dayGridWeek,timeGridDay,list'
         }
 		//타입별 캘린더 
         function getEventSources(calId) {
@@ -415,7 +415,8 @@ input[type="datetime-local"] {
             	              });
             	            });
             	            successCallback(events);
-            	            
+            	            console.log(events);
+            	           
             	          },
             	          error: function(e) {
             	        	  console.log(events)
@@ -444,8 +445,8 @@ input[type="datetime-local"] {
             eventSources: eventSources, //내가 설정한 이벤트 소스
             height: '700px', // calendar 높이 설정
             expandRows: true, // 화면에 맞게 높이 재설정
-            slotMinTime: '00:00', // Day 캘린더 시작 시간
-            slotMaxTime: '24:00', // Day 캘린더 종료 시간
+            slotMinTime: '09:00', // Day 캘린더 시작 시간
+            slotMaxTime: '19:00', // Day 캘린더 종료 시간
             // 맨 위 헤더 지정
             headerToolbar: headerToolbar,
             initialView: 'dayGridMonth',  // default: dayGridMonth 'dayGridWeek', 'timeGridDay', 'listWeek'
@@ -552,16 +553,49 @@ input[type="datetime-local"] {
         /* calendar.on("eventMouseEnter", info => console.log("eEnter:", info));
         calendar.on("eventMouseLeave", info => console.log("eLeave:", info)); */ 
         function handleDateClick(info){        	
-       /*  }
-        calendar.on("dateClick", info => { */
-           
-        	console.log("dateClick: "+info);
-        	console.log("dateClick:", info.dateStr);
-     delBtn.style.display="none";
-        	calStart.value=info.dateStr+" 09:00:00";
-        	calEnd.value=info.dateStr+" 18:00:00";
+      
+        	var year = info.date.getFullYear();
+        	var month = info.date.getMonth()+1;
+        	if(month < 10) {
+            	month = "0" + month;
+            }
+        	var date = info.date.getDate();
+            if(date < 10){
+            	date = "0" + date;
+            }
+        	var dateStr = year + "-" + month + "-" + date;
+            
+        	console.log(info);
+
+     		delBtn.style.display="none";
+     		if(info.allDay) {
+     			console.log(info.allDay);
+     			calStart.value=dateStr+" 09:00:00";
+     			calEnd.value=dateStr+" 18:00:00";
+     			console.log("이거다잉",dateStr);
+     		} else {
+     			console.log(info.allDay);
+     			var hour = info.date.getHours();
+     			if(hour <10){
+     				hour = "0" + hour;
+     			}
+     			var min = info.date.getMinutes();
+     			var minEnd = info.date.getMinutes()+20;
+     			console.log(minEnd);
+     			if(min < 10) {
+     				min = "0" + min;
+     			}
+     			var timeStr = hour + ":" + min + ":" + "00";
+     			var timeEnd = hour + ":" + minEnd + ":" + "00";
+     			calStart.value=dateStr+" "+timeStr;
+     			calEnd.value=dateStr+" "+timeStr;
+     			if(calStart.value==calEnd.value){
+     				calEnd.value=dateStr+" "+timeEnd;
+     			}
+     			
+     		}
         	calTitle.value="";
-       $(".modalV").removeAttr("readonly");
+       		$(".modalV").removeAttr("readonly");
 			
             calContent.value="";
             calNo.value="";
@@ -570,14 +604,25 @@ input[type="datetime-local"] {
         calendar.on("dateClick",handleDateClick);
         
         function handleSelect(info){       	
-      /*   }
-         calendar.on("select", info => {   */          
+         	
+  			console.log("야",info);
+              
   	delBtn.style.display="none";
-            calStart.value=info.startStr+" 09:00:00";
+  			if(info.allDay){
+             calStart.value=info.startStr+" 09:00:00";
            var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
            var dateString = endData.toISOString();
            dateString = dateString.split("T")[0] + " 18:00:00";
-           calEnd.value=  dateString;
+           calEnd.value=  dateString; 
+  			}else{
+  				console.log(info.startStr);
+  				console.log(info.endStr);
+  				console.log(info.allDay);
+  				calStart.value= info.startStr.substring(0, 19);
+  					calEnd.value=info.endStr.substring(0, 19);
+  			}
+           
+           
        $(".modalV").removeAttr("readonly");
            info.endStr=calEnd.value; 
            info.end=dateString;
@@ -626,7 +671,13 @@ input[type="datetime-local"] {
         	    	}
         	    })
         	    calendar.on("select",handleSelect);
-        	    
+        	    calendar.on("select",info=>{
+           		 if(loginmemberJobCode!="J2"){
+           			addBtn.style.display="none";
+           		 }else{
+     	    		addBtn.style.display="block";
+     	    	}
+           	 })
         	   
         	    
          }
@@ -657,6 +708,7 @@ input[type="datetime-local"] {
         	 })
      	    calendar.on("select",handleSelect);
         	 
+        	 
          }
          function fcMy(){
         	 calType.value="MY";
@@ -680,6 +732,7 @@ input[type="datetime-local"] {
         		 }
         	 })
      	    calendar.on("select",handleSelect);
+        	 
          }
          
         // 일정(이벤트) 추가하기

@@ -1,17 +1,15 @@
 package com.coma.commute.service;
 
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.RequestBody;
 
-import com.coma.model.dto.Calendar;
 import com.coma.model.dto.Commute;
 
 public interface CommuteService {
 	//출근시간 찍히기 -> insert
-	int insertCommute(@RequestBody HashMap<String, Object> empId);
+	int updateClockIn (Map <String, Object> emp);
 	//퇴근시간 찍히기 ->update
 	int updateClockout(Map <String, Object> emp);
 	//외출시작시간찍히기 
@@ -25,6 +23,12 @@ public interface CommuteService {
 	int countCommute(String loginId);
 	//ajax
 	int countSearchCommute(Map <String, Object> commute);
+	
 	List<Commute> searchCommute (Map <String, Object> commute);
+	
+	int insertCommuteAll(String empIds);
+	
+	int updateEmployeeCommute(Map<String, Object> commute);
+	
 	
 }

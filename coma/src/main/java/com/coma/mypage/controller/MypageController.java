@@ -120,9 +120,7 @@ public class MypageController {
 	@PostMapping("/EmployeeDetailEnd")
 	public String  updateEmployeeDetail(@RequestParam Map<String, Object> emp, Model model) {
 		//logger.debug();
-		
 		//System.out.println("Received!!!"+emp);
-		
 		//받은 값을 update 시키는 메소드 
 		int result = service.updateEmployeeDetail(emp);
 		//result 결과에 따라서 메세지 출력 

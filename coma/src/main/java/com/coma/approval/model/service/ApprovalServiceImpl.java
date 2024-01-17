@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.coma.approval.model.dao.ApprovalDao;
 import com.coma.approval.pdf.PdfGenerator;
 import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.ApprovalLeave;
 import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Referrer;
@@ -226,13 +227,56 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public int updateThisOrder(String thisOrder) {
-		return dao.updateThisOrder(session, thisOrder);
+	public int updateThisOrder(Map<String, String> data) {
+			int result = dao.updateThisOrder(session, data);
+		
+			if(result==1) { 
+				data.put("progress", "진행");
+				int result2 = dao.updateProgress(session, data);
+				return result2;
+			}else return result;
+			
+	}
+	
+
+	@Override
+	public int updateNextOrder(Map<String, String> data) {
+		return dao.updateNextOrder(session, data);
 	}
 
 	@Override
-	public int updateNextOrder(String nextOrder) {
-		return dao.updateNextOrder(session, nextOrder);
+	public int updateEndDate(Map<String, String> data) {
+		return dao.updateEndDate(session, data);
+	}
+
+	@Override
+	public ApprovalLeave selectLeaveDoc(String docNo) {
+		return dao.selectLeaveDoc(session, docNo);
+	}
+
+	@Override
+	public int updateVacationHalf(String empId) {
+		return dao.updateVacationHalf(session, empId);
+	}
+
+	@Override
+	public int updateVacation(Map<String, String> dataL) {
+		return dao.updateVacation(session, dataL);
+	}
+
+	@Override
+	public String selectWriterByDocNo(String docNo) {
+		return dao.selectWriterByDocNo(session, docNo);
+	}
+
+	@Override
+	public int updateProgress(Map<String, String> data) {
+		return dao.updateProgress(session, data);
+	}
+
+	@Override
+	public int updateAllMyturn(Map<String, String> data) {
+		return dao.updateAllMyturn(session, data);
 	}
 
 

@@ -92,6 +92,10 @@ public class AdminService {
 		return dao.studentCountByEmpId(session);
 	}
 	
+	//public List<Map> chartFilterDate(){
+	//	return dao.chartFilterDate(session);
+	//}
+	
 	//학생 수료 자동화 기능
 	public List studentByCom() {	//수료 가능한 학생 추리기
 		return dao.studentByCom(session);

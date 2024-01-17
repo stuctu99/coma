@@ -139,7 +139,7 @@
               <i class="ni ni-key-25 text-info"></i> 테스트2
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
-              <li><a href="">인사부</a></li>
+              <li><a href="${path}/organization/organization">조직도</a></li>
               <li><a href="">인사부</a></li>
               <li><a href="">인사부</a></li>
             </ul>
