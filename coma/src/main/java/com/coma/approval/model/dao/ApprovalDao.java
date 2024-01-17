@@ -60,4 +60,12 @@ public interface ApprovalDao {
 	int updateProgress(SqlSession session, Map<String, String> data);
 	
 	int updateEndDate(SqlSession session, String docNo);
+	
+	ApprovalLeave selectLeaveDoc(SqlSession session, String docNo);
+	
+	int updateVacationHalf(SqlSession session, String empId);
+	
+	int updateVacation(SqlSession session, Map<String, String> dataL);
+	
+	String selectWriterByDocNo(SqlSession session, String docNo);
 } 

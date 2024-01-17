@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.coma.approval.model.dao.ApprovalDao;
 import com.coma.approval.pdf.PdfGenerator;
 import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.ApprovalLeave;
 import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Referrer;
@@ -244,6 +245,26 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int updateEndDate(String docNo) {
 		return dao.updateEndDate(session, docNo);
+	}
+
+	@Override
+	public ApprovalLeave selectLeaveDoc(String docNo) {
+		return dao.selectLeaveDoc(session, docNo);
+	}
+
+	@Override
+	public int updateVacationHalf(String empId) {
+		return dao.updateVacationHalf(session, empId);
+	}
+
+	@Override
+	public int updateVacation(Map<String, String> dataL) {
+		return dao.updateVacation(session, dataL);
+	}
+
+	@Override
+	public String selectWriterByDocNo(String docNo) {
+		return dao.selectWriterByDocNo(session, docNo);
 	}
 
 

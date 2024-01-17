@@ -137,6 +137,26 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		return session.update("approval.updateEndDate", docNo);
 	}
 
+	@Override
+	public ApprovalLeave selectLeaveDoc(SqlSession session, String docNo) {
+		return session.selectOne("approval.selectLeaveDoc", docNo);
+	}
+
+	@Override
+	public int updateVacationHalf(SqlSession session, String empId) {
+		return session.update("emp.updateVacationHalf", empId);
+	}
+
+	@Override
+	public int updateVacation(SqlSession session, Map<String, String> dataL) {
+		return session.update("emp.updateVacation", dataL);
+	}
+
+	@Override
+	public String selectWriterByDocNo(SqlSession session, String docNo) {
+		return session.selectOne("approval.selectWriterByDocNo", docNo);
+	}
+
 
 	
 

@@ -200,6 +200,7 @@
  	<input type="hidden" name="empId" value="${doc.empId }">
  	<input type="hidden" name="thisOrder" id="thisOrder">
  	<input type="hidden" name="nextOrder" id="nextOrder">
+ 	<input type="hidden" name="docType" value="${doc.docType }">
  </form>
 <script>
 
