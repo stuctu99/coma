@@ -18,9 +18,12 @@
           
           <div class="doc_basic">
           	   <div class="row">
-          	   		<div class="col-2">
-          	         </div>
           	   		<div class="col-6">
+          	         </div>
+          	   		<div class="col-2">
+          	   			<c:if test="${loginMember.empId eq myTurnEmpId}">
+          	   				<input type="button" onclick="reject();" class="btn btn-primary btn-lg view_Btn" value="반려">          	   		
+          	   			</c:if>
           	   		</div>
           	   		<div class="col-2">
 	          	   		<c:if test="${loginMember.empId eq myTurnEmpId}">
@@ -200,10 +203,30 @@
  	<input type="hidden" name="empId" value="${doc.empId }">
  	<input type="hidden" name="thisOrder" id="thisOrder">
  	<input type="hidden" name="nextOrder" id="nextOrder">
+ 	<input type="hidden" name="docType" value="${doc.docType }">
  </form>
+ <form action="${path }/approval/reject" id="reject" method="post">
+	<input type="hidden" name="docNo" value="${ doc.docNo }">
+ 	<input type="hidden" name="empId" value="${doc.empId }">
+ 	<input type="hidden" name="thisOrder" id="thisOrder">
+ </form>
+ 
 <script>
 
-const approve=()=>{ //승인버튼
+
+const reject=()=>{ //반려 버튼
+	const result = confirm("반려하시겠습니까?")
+	
+	const thisOrder = ${myTurnOrder} 
+	
+	if(result){
+		$('#thisOrder').val(thisOrder);
+		$("#reject").submit();
+	}
+	
+}
+
+const approve=()=>{ //승인 버튼
 	const result = confirm("승인하시겠습니까?")
 	
 	const thisOrder = ${myTurnOrder} 
@@ -212,9 +235,11 @@ const approve=()=>{ //승인버튼
 	if(result){
 		$('#thisOrder').val(thisOrder);
 		$('#nextOrder').val(nextOrder);
+		
+		$("#approve").submit();
 	}
 	
-	  $("#approve").submit();
+	  
 }
 
 //pdf다운 버튼 -> 결재자 id 배열 넘기기
