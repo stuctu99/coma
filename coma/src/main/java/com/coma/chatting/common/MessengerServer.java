@@ -131,7 +131,7 @@ public class MessengerServer extends TextWebSocketHandler {
 		}
 	}
 
-//	데이터 전송 메세지 Jackson mppaer 이용하여 변환하기
+//	데이터 전송 메세지 Jackson mappaer 이용하여 변환하기
 	private TextMessage messageConverter(MessengerMessage msg) throws Exception{
 		String message = null;
 		 message = mapper.writeValueAsString(msg);

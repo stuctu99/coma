@@ -60,9 +60,14 @@ div {
 	<section>
 		<div class="container emp-list">
 			<div class="row">
-				<div class="col-12">
+				<div class="col-2">
+				</div>
+				<div class="col-8" style="display:flex; justify-content:center;">
 					<input type="hidden" id="empId" value="${loginmember.empId }"/>
 					<h2>${loginmember.empName }님 반갑습니다.</h2>
+				</div>
+				<div class="col-2">
+					<button class="btn btn-outline-primary" id="invite-create" style="display:none;">방생성</button>
 				</div>
 			</div>
 			<!------------------- 사원 데이터 ----------------------->
@@ -76,10 +81,12 @@ div {
 					<c:forEach var="e" items="${emp}">
 						<c:if test="${e.dept.deptCode eq d.deptCode}">
 						<div class="row">
+							<div class="col-1">
+							</div>
 							<div class="col-2 job-name">
 								<small><c:out value="${e.job.jobType }"/></small>
 							</div>
-							<div class="col-8">
+							<div class="col-7">
 								<img src=""/><strong><c:out value="${e.empName}"/></strong>
 							</div>
 						<c:if test="${e.empId!=loginmember.empId }">
@@ -177,6 +184,24 @@ div {
 								<div class="col-6">
 									<input type="checkbox" name="roomPasswordFlag" id="roomPasswordFlag" value="N"/>
 									<label for="roomPasswordFlag"><strong>비밀번호</strong></label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<h3>초대</h3>
+								</div>
+							</div>
+							<div class="contain" id="invite-emp-list">
+								<div class="row">
+									<div class="col-12">
+										<c:forEach var="e" items="${emp}">
+											<c:if test="${loginmember.empId != e.empId }">
+												<input type="checkbox" class="invite_emp" name="invite_emp[]" id="${e.empId}" value="${e.empId}">
+												<span><c:out value="${e.empName} ${e.job.jobType }"/></span>
+												<br>
+											</c:if>
+										</c:forEach>
+									</div>
 								</div>
 							</div>
 						</div>

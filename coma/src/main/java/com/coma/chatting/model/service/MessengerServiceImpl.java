@@ -84,6 +84,14 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.insertChattingRoom(session, room);
 	}
+	
+	@Override
+	public int insertInviteEmp(Map<String,Object> inviteInsertInfo) {
+		// TODO Auto-generated method stub
+		return dao.insertInviteEmp(session, inviteInsertInfo);
+	}
+	
+	
 
 	@Override
 	@Transactional
@@ -97,6 +105,8 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.deleteChatRoomInfoByRoomNo(session, roomList);
 	}
+
+
 
 	
 

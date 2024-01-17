@@ -28,7 +28,7 @@ mserver.onmessage = (response) => {
 		case "msg":
 			messageUpdate(respMsg);
 			break;
-				
+
 	}
 }
 
@@ -96,8 +96,17 @@ const createRoom = (empId) => {
 	const roomPassword = $("#roomPassword").val();
 	const roomPasswordFlag = $("#roomPasswordFlag").val();
 	const roomType = $("#roomType").val();
-	console.log("방생성 ID : " + empId);
-	console.log(roomPasswordFlag);
+
+	let inviteEmp = new Array();
+	let cnt = 0;
+	const inviteCheckbox = $(".invite_emp");
+	for (i = 0; i < inviteCheckbox.length; i++) {
+		if (inviteCheckbox[i].checked == true) {
+			inviteEmp[cnt] = inviteCheckbox[i].value;
+			cnt++;
+		}
+	}
+
 	const ChattingRoom = {
 		"roomName": roomName,
 		"roomPassword": roomPassword,
@@ -106,6 +115,8 @@ const createRoom = (empId) => {
 		"empId": empId,
 		"targetId": ""
 	}
+
+	console.log("초대멤버배열" + inviteEmp);
 
 
 	fetch("/messenger/createRoom", {
@@ -125,15 +136,34 @@ const createRoom = (empId) => {
 		})
 		.then(data => {
 			if (data.result == "success") {
-				console.log("방생성 성공");
-				const msg = new MessageHandler("new", empId, "", "", "");
-				mserver.send(msg.convert());
-				$("#createRoom").modal('hide');
-				if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
-					intiCreateModalInput();
-					enter_chattingRoom(data.roomNo);
-				} else {
-					
+				console.log("방생성 성공 // 초대인원 수 :" + inviteEmp.length);
+
+				/* 초대 멤버가 존재할 때 실행 */
+				if (inviteEmp.length > 0) {
+					fetch("/messenger/invite/"+data.roomNo, {
+						method: "post",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(inviteEmp)
+					})
+						.then(response => {
+							if (response.status != 200) {
+								alert("접근할 수 없습니다. 관리자에게 문의하세요:");
+							}
+							return response.json();
+						})
+						.then(data => {
+							if (data.result == "success") {
+								const msg = new MessageHandler("new", empId, "", "", "");
+								mserver.send(msg.convert());
+								$("#createRoom").modal('hide');
+								if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
+									intiCreateModalInput();
+									enter_chattingRoom(data.roomNo);
+								}
+							} else {
+								alert("관리자에게 문의하세요:");
+							}
+						})
 				}
 			} else {
 				console.log("방생성 실패");
@@ -268,7 +298,7 @@ const fn_roomListByType = (type) => {
 					const $strong_type = $("<strong>");
 					const $strong_title = $("<strong>").css("padding-right", "3px");
 					/*const $recentMsg = $("<small>").text();*/
-					const $updateMsg = $("<span>").addClass("updateMsg-"+d.roomNo);
+					const $updateMsg = $("<span>").addClass("updateMsg-" + d.roomNo);
 					const $i = $("<div>").addClass("col-1 chatting-room");
 					const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
 					const $user_count = $("<span>");
@@ -285,20 +315,20 @@ const fn_roomListByType = (type) => {
 						$input.addClass("deleteRoom");
 						$div_type.append($input);
 					}
-					
-					fetch("/messenger/message/"+d.roomNo)
-					.then(response=>{
-						return response.text();
-					})
-					.then(data=>{
-						if(data!=""){
-						console.log("요이땅"+data);
-						$updateMsg.text("Message : "+data);
-						}else{
-							$updateMsg.text();
-						}
-					})
-					
+
+					fetch("/messenger/message/" + d.roomNo)
+						.then(response => {
+							return response.text();
+						})
+						.then(data => {
+							if (data != "") {
+								console.log("요이땅" + data);
+								$updateMsg.text("Message : " + data);
+							} else {
+								$updateMsg.text();
+							}
+						})
+
 					$i.css("padding-top", "14px");
 					$strong_type.text(d.roomTypeObj.roomTypeName);
 					$strong_title.text(d.roomName);
@@ -396,8 +426,6 @@ $(document).ready(function() {
 			passwordCheck();
 		}
 	})
-	$(".deleteCheckbox").change(function() {
-	})
 
 })
 
@@ -416,6 +444,15 @@ $(document).on('change', 'input[class="deleteRoom"]', function() {
 		$("#delete-room").css("display", "block");
 	}
 })
+
+$(document).on('change', 'input[class="invite_emp"]', function() {
+	if ($(".invite_emp:checked").length == 0) {
+		$("#invite-create").css("display", "none");
+	} else {
+		$("#invite-create").css("display", "block");
+	}
+})
+
 
 
 
@@ -495,11 +532,11 @@ const enter_chattingRoom = (roomNo) => {
 			console.log(data);
 			if (data) {
 				const url = "/chatting/room/" + roomNo;
-					const windowName = "chattingRoom " + roomNo;
-					const options = "width=600, height=600, scrollbars=yes"
-					$("#btn-" + roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
-					$(".chatting-list-btn").click();
-					window.open(url, windowName, options);
+				const windowName = "chattingRoom " + roomNo;
+				const options = "width=600, height=600, scrollbars=yes"
+				$("#btn-" + roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
+				$(".chatting-list-btn").click();
+				window.open(url, windowName, options);
 
 				/*if (!chattingView || chattingView.closed) {
 					const url = "/chatting/room/" + roomNo;
@@ -517,31 +554,31 @@ const enter_chattingRoom = (roomNo) => {
 
 
 /* 공부하기 */
-window.updateMsg = function(roomNo,content){
-	console.log("이걸볼건데?"+roomNo,content);
-	const msg = new MessageHandler("msg","","",roomNo,content);
+window.updateMsg = function(roomNo, content) {
+	console.log("이걸볼건데?" + roomNo, content);
+	const msg = new MessageHandler("msg", "", "", roomNo, content);
 	mserver.send(msg.convert());
 }
 
 const messageUpdate = (msg) => {
-/*	$("button#btn-"+msg.roomNo).click(function(){
-	})*/
+	/*	$("button#btn-"+msg.roomNo).click(function(){
+		})*/
 	/* 뱃지 제거 테스트 코드 */
-/*	$("chattingList #"+msg.roomNo+"span:last-child").remove();*/
+	/*	$("chattingList #"+msg.roomNo+"span:last-child").remove();*/
 	console.log(msg);
-	$(".updateMsg-"+msg.roomNo).remove();
-	const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
+	$(".updateMsg-" + msg.roomNo).remove();
+	const $updateMsg = $("<span>").addClass("updateMsg-" + msg.roomNo);
 	/*<span class="badge badge-fill badge-circle badge-floating badge-danger border-white">4</span>*/
 	/*const $alarm = $("<span>").addClass("badge badge-fill badge-circle badge-floating badge-danger border-white");
 	$alarm.text(0);*/
-	$updateMsg.text("Message : "+msg.msg);
-	$("#chattingList #"+msg.roomNo).append($updateMsg);
+	$updateMsg.text("Message : " + msg.msg);
+	$("#chattingList #" + msg.roomNo).append($updateMsg);
 	/*$("#chattingList #"+msg.roomNo).append($alarm);*/
-	
-}	
+
+}
 
 
-window.connectUpdate = function(){
+window.connectUpdate = function() {
 	console.log("닫혔다아아아!!!");
-	
+
 }

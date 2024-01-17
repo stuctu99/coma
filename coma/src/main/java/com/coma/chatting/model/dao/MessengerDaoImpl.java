@@ -56,7 +56,7 @@ public class MessengerDaoImpl implements MessengerDao {
 		// TODO Auto-generated method stub
 		return session.selectList("chatting.selectChatRoomListByType", searchInfo);
 	}
-	
+
 	@Override
 	public List<ChattingPrivateRoom> selectPrivateChatJoinInfo(SqlSession session, String loginId) {
 		// TODO Auto-generated method stub
@@ -93,6 +93,13 @@ public class MessengerDaoImpl implements MessengerDao {
 		}
 		return result;
 	}
+	
+	@Override
+	public int insertInviteEmp(SqlSession session, Map<String,Object> inviteInsertInfo) {
+		// TODO Auto-generated method stub
+		return session.insert("chatting.insertInviteEmp",inviteInsertInfo);
+	}
+	
 	// update
 
 	// delete

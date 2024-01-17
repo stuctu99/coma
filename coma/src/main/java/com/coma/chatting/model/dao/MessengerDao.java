@@ -24,6 +24,7 @@ public interface MessengerDao {
 	
 	ChattingRoom passwordCheck(SqlSession session, Map<String,String> roomInfo);
 	int insertChattingRoom(SqlSession session, ChattingRoom room);
+	int insertInviteEmp(SqlSession session, Map<String,Object> inviteInsertInfo);
 	
 	int deleteChatRoomInfoByRoomNo(SqlSession session, List<String> roomList);
 }

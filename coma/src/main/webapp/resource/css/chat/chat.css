@@ -190,3 +190,8 @@ img#joinList{
 	width: 15px;
 	height: 15px;
 }
+
+#invite-emp-list{
+	height: 100px;
+	overflow-y: auto;
+}
