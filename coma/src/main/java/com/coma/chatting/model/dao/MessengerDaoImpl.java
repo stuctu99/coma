@@ -70,6 +70,12 @@ public class MessengerDaoImpl implements MessengerDao {
 		return session.selectOne("chatting.selectRecentChattingMessageByRoomNo",roomNo);
 	}
 
+	@Override
+	public Emp selectEmpByTargetId(SqlSession session, String targetId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("chatting.selectEmpByTargetId",targetId);
+	}
+
 	// insert
 	@Override
 	@Transactional

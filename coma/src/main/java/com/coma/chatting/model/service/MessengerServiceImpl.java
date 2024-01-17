@@ -70,6 +70,13 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.selectRecentChattingMessageByRoomNo(session, roomNo);
 	}
 	
+	@Override
+	public Emp selectEmpByTargetId(String targetId) {
+		// TODO Auto-generated method stub
+		return dao.selectEmpByTargetId(session,targetId);
+	}
+	
+	
 	
 	@Override
 	@Transactional
@@ -90,6 +97,8 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.deleteChatRoomInfoByRoomNo(session, roomList);
 	}
+
+	
 
 
 

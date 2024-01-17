@@ -84,7 +84,7 @@ div {
 							</div>
 						<c:if test="${e.empId!=loginmember.empId }">
 							<div class="col-2">
-								<button id="chatting-active" id="${e.empId }" class="${e.empId } btn btn-outline-primary" onclick="privateChatting('${e.empId}','${loginmember.empId }');">대화</button>
+								<button id="chatting-active" id="${e.empId }" class="${e.empId } btn btn-outline-primary" onclick="privateChatting('${e.empId}','${e.empName } ${e.job.jobType }','${loginmember.empId}','${loginmember.empName} ${loginmember.job.jobType }');">대화</button>
 							</div>
 							
 						</c:if>

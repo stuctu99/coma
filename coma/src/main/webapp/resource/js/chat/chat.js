@@ -143,10 +143,10 @@ const createRoom = (empId) => {
 }
 
 /* 1:1 채팅 */
-const privateChatting = (targetId, empId) => {
+const privateChatting = (targetId, targetName, empId, empName) => {
 	console.log(targetId, empId);
 	const privateChat = {
-		"roomName": targetId + ", " + empId + " 대화방",
+		"roomName": targetName + ", " + empName + " 대화방",
 		"roomType": "P",
 		"roomPassword": "",
 		"roomPasswordFlag": "N",
@@ -524,18 +524,24 @@ window.updateMsg = function(roomNo,content){
 }
 
 const messageUpdate = (msg) => {
-	$("button#btn-"+msg.roomNo).click(function(){
-	})
+/*	$("button#btn-"+msg.roomNo).click(function(){
+	})*/
 	/* 뱃지 제거 테스트 코드 */
 /*	$("chattingList #"+msg.roomNo+"span:last-child").remove();*/
 	console.log(msg);
 	$(".updateMsg-"+msg.roomNo).remove();
 	const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
 	/*<span class="badge badge-fill badge-circle badge-floating badge-danger border-white">4</span>*/
-	const $alarm = $("<span>").addClass("badge badge-fill badge-circle badge-floating badge-danger border-white");
-	$alarm.text(0);
+	/*const $alarm = $("<span>").addClass("badge badge-fill badge-circle badge-floating badge-danger border-white");
+	$alarm.text(0);*/
 	$updateMsg.text("Message : "+msg.msg);
 	$("#chattingList #"+msg.roomNo).append($updateMsg);
-	$("#chattingList #"+msg.roomNo).append($alarm);
+	/*$("#chattingList #"+msg.roomNo).append($alarm);*/
 	
 }	
+
+
+window.connectUpdate = function(){
+	console.log("닫혔다아아아!!!");
+	
+}
