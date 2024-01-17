@@ -57,7 +57,7 @@
 
 <div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
 
-<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>
+<!-- <button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button> -->
 
 
 <%-- ${myCommute} --%>

@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +20,7 @@ import com.coma.common.pagefactory.PageFactory;
 import com.coma.commute.service.CommuteService;
 import com.coma.emp.service.EmpService;
 import com.coma.model.dto.Commute;
+import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
 @RequestMapping("/commute")
@@ -91,12 +91,13 @@ public class CommuteController {
 	     @GetMapping("/commuteDetail")
 	     public String commuteDetail(Principal pri, Model m,@RequestParam(defaultValue="1") int cPage,
 	            @RequestParam(defaultValue="10") int numPerpage) {
-	        String loginId=pri.getName();
+	        
+	    	String loginId=pri.getName();
 	        List<Map> commute= service.selectCommuteAll(loginId);
 	        int count =service.countCommute(loginId);
 	        m.addAttribute("commute",commute);   
 	        m.addAttribute("count",count);
-	      m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/mypage/MyvacationInfo"));
+	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/mypage/MyvacationInfo"));
 
 	        return "mypage/commuteDetail";
 	     }
@@ -117,26 +118,69 @@ public class CommuteController {
 	        return Map.of("totalData",totalData,"commuteList",commuteList,"pageBar",pageFactory.pageAjax((int)commute.get("cPage"), (int)commute.get("numPerpage"), totalData, "/mypage/commuteDetailEnd",(String)commute.get("jsName")));
 
 	     }
+	     
+	     //사원 근태 수정하기 페이지 맵핑
+	     @GetMapping("/empCommute")
+	     public void empCommute (@RequestParam("empId") String empId, Model m,@RequestParam(defaultValue="1") int cPage,
+		            @RequestParam(defaultValue="10") int numPerpage) {
+			
+	    	List<Map> commute= service.selectCommuteAll(empId);
+			int count =service.countCommute(empId);
+			m.addAttribute("commute",commute);   
+			m.addAttribute("count",count);
+			m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/mypage/MyvacationInfo"));
+	     }
+	    //수정하기 
+	    @PostMapping("/updateEmployeeCommute")
+	 	public String  updateEmployeeCommute (@RequestParam Map<String, Object> emp, Model model) {
+	    	//int result = service.updateEmployeeCommute(emp);
+	    	
+//	    	String msg, loc;		
+//	 		if(result>0) {
+//	 			msg="입력성공";
+//	 			loc="admin/adminEmp";
+//	 		}else {
+//	 			Object empId = emp.get("empId");
+//	 			msg="입력실패";
+//	 			loc = "mypage/EmployeeDetails?empId=" + empId;
+//	 			
+//	 		}
+//	 		model.addAttribute("msg",msg);
+//			model.addAttribute("loc",loc);
+			return "common/msg";
 
-	  
-	   //@Scheduled(cron = "0 0 8 * * *")
-		  @GetMapping("/checkInsert")
-		  public void checkInsert() {
-			  //System.out.println("실행됐다고 ?"); 
-			  List <Map> empIds = empService.selectEmpId();
-			  //System.out.println(empIds); 
-			  //int count=0 ;
-			  for (Map empIdMap : empIds) { 
-				  String empId =(String) empIdMap.get("EMP_ID");
-			  
-			  //System.out.println(empId);
-				  if (empId != null) {
-					  service.insertCommuteAll(empId);
-					  //count++; 
-				  } 
-			  //System.out.println(count);
-			  }
-		  }
+	     }
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+	     
+
+	     //월요일부터 금요일까지 아침 9시에 insert되게 
+		@Scheduled(cron = "0 0 9 * * 1-5")
+		/* @GetMapping("/checkInsert") */
+		public void checkInsert() {
+			List <Map> empIds = empService.selectEmpId();
+			for (Map empIdMap : empIds) { 
+				String empId =(String) empIdMap.get("EMP_ID"); 
+				
+				if (empId != null) {
+				service.insertCommuteAll(empId);
+				
+				} 
+			}
+		}
 			 
 		
 	 
