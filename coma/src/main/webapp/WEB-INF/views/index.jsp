@@ -56,6 +56,10 @@
 </style>
 
 <div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
+
+<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>
+
+
 <%-- ${myCommute} --%>
 <%-- ${mainNotice} --%>
    <div class="row">
@@ -69,7 +73,7 @@
             <h1 id="stopwatch" >00:00:00</h1>               
             <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly; height : 44px">
                <c:choose>
-                   <c:when test="${myCommute == null}">
+                   <c:when test="${myCommute.commuteClockin == null}">
                        <div class=" col-3" id="clockin">
                           <div class="btncss" id="clockin1"> 
                               <i class="ni ni-briefcase-24"  ></i>
@@ -137,8 +141,7 @@
                <h2>Work Life </h2>
             </div>
          </div>
-         <div class="bigContainer"
-            style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
+         <div class="bigContainer" style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
             <h4>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
             <button type="button" class="btn btn-primary" id="myCommuteBtn">근태 정보</button>
             <button type="button" class="btn btn-primary" id="vacationButton">휴가 정보</button>
@@ -157,10 +160,11 @@
          <div class="bigContainer"  >
             <div class = "row">
                <div class= col-12 style="text-align: center;">
-                  <h1 style="text-align: center; margin : 150px;"> <i class="ni ni-world"></i>${emp.dept.deptType }과 ${emp.empName }님 환영합니다 </h1>
+               		<img src="/resource/img/brand/COMA2.png">
+                  <h1 style="text-align: center; margin : 10px;"> ${emp.empName }님 환영합니다 </h1>
                </div>
             </div>
-            <div class = "row" style="padding:30px;">
+            <div class = "row" style="padding:10px;">
                <div class= col-12>
                   <h1><i class="ni ni-check-bold"></i>공지사항 </h1>
                </div>
@@ -309,7 +313,7 @@ document.getElementById('clockin').addEventListener('click', function() {
     
     console.log('출근 버'+clockIn);
     // Fetch to insert commute record
-    fetch('${path}/commute/insertCommute', {
+    fetch('${path}/commute/updateClockIn', {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -499,6 +503,10 @@ document.getElementById('vacationButton').addEventListener('click', function() {
 
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
     window.location.href = '/commute/MyCommuteInfo';
+});
+checkInsert
+document.getElementById('checkInsert').addEventListener('click', function() {
+    window.location.href = '/commute/checkInsert';
 });
  /* window.onload=()=>{
  var test='<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH24:mm:ss"/>';
