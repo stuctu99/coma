@@ -9,7 +9,6 @@
 <c:set var="emp"
 	value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
 
-
 <script src="/resource/js/jquery-3.7.0.js"></script>
 <style>
 div {
@@ -53,14 +52,12 @@ div {
 			<h1>근태 정보</h1>
 		</div>
 		<div class="col-7"></div>
-		<div class="col-1">
-			<button type="button" class="btn btn-outline-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
-		</div>
+		
 		<div class="col-1"></div>
 	</div>
 	<div class="row" style="text-align: center;">
-	<div class="col-1"></div>
-	<div class="col-2">
+		<div class="col-1"></div>
+		<div class="col-2">
 			<div class="form-group">
 		        <input class="form-control" type="date" name="startTime"  id="example-date-input-start">
 		    </div>
@@ -70,8 +67,12 @@ div {
 		        <input class="form-control" type="date" name="endTime"  id="example-date-input-end">
 		    </div>
 		</div>
-		<div col="col-1">
+		<div class="col-1">
 			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
+		</div>
+		
+		<div class="col-1">
+			<button type="button" class="btn btn-primary"  onclick="submitForm()">전체보기</button>
 		</div>
 	</div>
 	<div class="row">
@@ -82,6 +83,7 @@ div {
 					<div class="">
 						<h3 >근무 일수</h3>
 					</div>
+					
 					<div class="blank">
 					<!--  -->
 						<c:if test="${not empty commute}">
@@ -164,8 +166,12 @@ div {
 				<div class="col-2">
 					<h1>근태 상세보기</h1>
 				</div>
-				<div class="col-9">
+				
+				<div class="col-8">
 					<div class=""></div>
+				</div>
+				<div class="col-1">
+					<button type="button" class="btn btn-outline-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
 				</div>
 			</div>
 			<div class="col-1"></div>
@@ -184,7 +190,6 @@ div {
 					<thead class="thead-light">
 						<tr>
 							<th>상태</th>
-							<!-- 지각, 결근,  -->
 							<th>날짜</th>
 							<th>출근 시간</th>
 							<th>퇴근 시간</th>

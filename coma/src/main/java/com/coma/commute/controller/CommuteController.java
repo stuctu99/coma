@@ -1,6 +1,7 @@
 package com.coma.commute.controller;
 
 import java.security.Principal;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,20 +122,30 @@ public class CommuteController {
 	     
 	     //사원 근태 수정하기 페이지 맵핑
 	     @GetMapping("/empCommute")
-	     public void empCommute (@RequestParam("empId") String empId, Model m,@RequestParam(defaultValue="1") int cPage,
+	     public String  empCommute (@RequestParam("empId") String empId, Model m,@RequestParam(defaultValue="1") int cPage,
 		            @RequestParam(defaultValue="10") int numPerpage) {
 			
 	    	List<Map> commute= service.selectCommuteAll(empId);
 			int count =service.countCommute(empId);
 			m.addAttribute("commute",commute);   
 			m.addAttribute("count",count);
+			m.addAttribute("empId",empId);
 			m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/mypage/MyvacationInfo"));
+			
+			return "mypage/empCommute";
 	     }
 	    //수정하기 
 	    @PostMapping("/updateEmployeeCommute")
-	 	public String  updateEmployeeCommute (@RequestParam Map<String, Object> emp, Model model) {
-	    	//int result = service.updateEmployeeCommute(emp);
-	    	
+	 	public String  updateEmployeeCommute (@RequestParam Map<String, Object> commute, Model model) {
+	    	System.out.println("여기 왔ㄴ; ??");
+	    	System.out.println(commute);
+	    	String clockin = (String) commute.get("clockin");
+	    	String clockout = (String) commute.get("clockout");
+	    	String starttime = (String) commute.get("starttime");
+	    	String workdate = (String) commute.get("workdate");
+	    	System.out.println(workdate);
+	    	int result = service.updateEmployeeCommute(commute);
+	    	System.out.println(result);
 //	    	String msg, loc;		
 //	 		if(result>0) {
 //	 			msg="입력성공";
@@ -168,8 +179,8 @@ public class CommuteController {
 	     
 
 	     //월요일부터 금요일까지 아침 9시에 insert되게 
-		@Scheduled(cron = "0 0 9 * * 1-5")
-		/* @GetMapping("/checkInsert") */
+		//@Scheduled(cron = "0 0 9 * * 1-5")
+		@GetMapping("/checkInsert") 
 		public void checkInsert() {
 			List <Map> empIds = empService.selectEmpId();
 			for (Map empIdMap : empIds) { 

@@ -33,4 +33,7 @@ public interface CommuteDao {
 	int countSearchCommute(SqlSession session,Map <String, Object> commute);
 	
 	int insertCommuteAll(SqlSession session, String empIds);
+	
+	int updateEmployeeCommute(SqlSession session, Map<String, Object> commute);
+	
 }

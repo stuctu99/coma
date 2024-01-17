@@ -79,6 +79,14 @@ public class CommuteServiceImpl implements CommuteService {
 		return dao.insertCommuteAll(session,empIds);
 	}
 
+	@Override
+	public int updateEmployeeCommute(Map<String, Object> commute) {
+		// TODO Auto-generated method stub
+		return dao.updateEmployeeCommute(session,commute);
+	}
+
+
+
 
 
 }

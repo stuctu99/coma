@@ -74,6 +74,15 @@ public class CommuteDaoImpl implements CommuteDao {
 		return session.insert("commute.insertCommuteAll", empIds);
 	}
 
+	@Override
+	public int updateEmployeeCommute(SqlSession session, Map<String, Object> commute) {
+		// TODO Auto-generated method stub
+		System.out.println(commute);
+		return session.update("commute.updateEmployeeCommute",commute);
+	}
+
+
+
 
 
 }

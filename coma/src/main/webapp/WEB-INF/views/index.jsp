@@ -57,7 +57,7 @@
 
 <div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
 
-<!-- <button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button> -->
+<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>
 
 
 <%-- ${myCommute} --%>
@@ -231,7 +231,6 @@
 		   ss = ss >= 10 ? ss : '0' +ss;
 		   return hh + ':'+mm + ':'+ ss ;   
 		}
-	 
 	 //setInterval 변수로 지정해주기 => 타이머 중지때문에 
 	 var interval;
 	 function generatePattern(milliseconds) {	
@@ -246,7 +245,6 @@
 	    // 1초마다 updatePattern 함수 진행
 	     interval = setInterval(updatePattern, 1000);
 	}
-	 
 	// 값이 있는 경우에만 타이머 작동
 	if (commuteClockin) {
 	 	// 외출시간이 있다면
@@ -277,10 +275,9 @@
 	            	document.getElementById("stopwatch").innerText = formatTime(totalwork1);
 	        	}else{
 	        		console.log('외출 안했고 퇴근했음');
-	            	document.getElementById("stopwatch").innerText = formatTime(totalwork1);
+	            	document.getElementById("stopwatch").innerText = formatTime(totalwork2);
 	        	}
 	        }else{
-	        	
 	        	//출근했다 !
 	    	    console.log('출근했어요!');
 	    	    generatePattern(time1);
@@ -293,8 +290,8 @@
 			console.log('commuteClockin이 없고 ( 출근했지만 새로고침하지 않을 상태) + 외출은 안하고퇴근을 눌렀다 ? ');
 			document.getElementById("stopwatch").innerText = formatTime(totalwork2);
 		}
-	}     
-/* 달력 */
+	}
+	/* 달력 */
     document.addEventListener('DOMContentLoaded', function() {
        const calendarEl = document.getElementById('calendar')
        const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -311,7 +308,7 @@ document.getElementById('clockin').addEventListener('click', function() {
     var empId = '${emp.empId}';
     clockIn = new Date().getTime();
     
-    console.log('출근 버'+clockIn);
+    console.log('출근 버튼'+clockIn);
     // Fetch to insert commute record
     fetch('${path}/commute/updateClockIn', {
         method: "post",
@@ -333,7 +330,7 @@ document.getElementById('clockin').addEventListener('click', function() {
             // Display clock-in time
             document.getElementById('clockInResult').textContent = getFormatTime(new Date());
             //출근 누르면 타이머 시작!
-            generatePattern(2000);
+            generatePattern(1000);
         }
     }).catch(e => {
         alert(e);
@@ -488,8 +485,6 @@ document.getElementById('clockin').addEventListener('click', function() {
             }
             //console.log('최종으로 근무시간을 찍어볼게요 ! '+formatTime(now));
             document.getElementById("stopwatch").innerText = formatTime(now);
-            
-            
         }
     }).catch(e => {
         alert(e);
