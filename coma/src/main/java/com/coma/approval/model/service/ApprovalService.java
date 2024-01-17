@@ -3,14 +3,11 @@ package com.coma.approval.model.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
-
 import com.coma.model.dto.ApprovalDoc;
+import com.coma.model.dto.ApprovalLeave;
 import com.coma.model.dto.Approver;
 import com.coma.model.dto.Emp;
 import com.coma.model.dto.Referrer;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 public interface ApprovalService {
 
@@ -39,7 +36,21 @@ public interface ApprovalService {
 	
 	Approver selectApprMyturn(String docNo);
 	
-	int updateThisOrder(String thisOrder);
+	int updateThisOrder(Map<String, String> data);
 	
-	int updateNextOrder(String nextOrder);
+	int updateNextOrder(Map<String, String> data);
+	
+	int updateEndDate(Map<String, String> data);
+	
+	ApprovalLeave selectLeaveDoc(String docNo);
+	
+	int updateVacationHalf(String empId);
+	
+	int updateVacation(Map<String, String> dataL);
+	
+	String selectWriterByDocNo(String docNo);
+	
+	int updateProgress(Map<String, String> data);
+	
+	int updateAllMyturn(Map<String, String> data);
 }

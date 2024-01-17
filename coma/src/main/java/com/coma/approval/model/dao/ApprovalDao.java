@@ -53,7 +53,21 @@ public interface ApprovalDao {
 	
 	Approver selectApprMyturn(SqlSession session, String docNo);
 	
-	int updateThisOrder(SqlSession session, String thisOrder);
+	int updateThisOrder(SqlSession session, Map<String, String> data);
 	
-	int updateNextOrder(SqlSession session, String nextOrder);
-}
+	int updateNextOrder(SqlSession session, Map<String, String> data);
+
+	int updateProgress(SqlSession session, Map<String, String> data);
+	
+	int updateEndDate(SqlSession session, Map<String, String> data);
+	
+	ApprovalLeave selectLeaveDoc(SqlSession session, String docNo);
+	
+	int updateVacationHalf(SqlSession session, String empId);
+	
+	int updateVacation(SqlSession session, Map<String, String> dataL);
+	
+	String selectWriterByDocNo(SqlSession session, String docNo);
+
+	int updateAllMyturn(SqlSession session, Map<String, String> data);
+} 

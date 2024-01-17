@@ -97,19 +97,7 @@
 			        <label for="example-text-input" class="form-control-label">취업/총원</label>
 			        <input class="form-control" type="text" value="${empCount[0].A }/${empCount[0].B}" id="example-text-input" style="text-align:center;" readonly>
 				</div>
-				<div class="col-8">
-			        <div style="width:470px; margin-left: 10px;">
-					  <div class="progress-info" style="margin-top: 3px;">
-					    <label for="example-text-input" class="form-control-label">취업/총원</label>
-					    <div class="progress-percentage">
-					      <span>0%</span>
-					    </div>
-					  </div>
-					  <div class="progress" style="margin-top: 15px;">
-					    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-					  </div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 		<div class="col-1"></div>
@@ -228,47 +216,13 @@
 				$div5.appendChild($input5);
 				
 				
-				//개인 출석율
-				const $div6=document.createElement("div");
-				$div6.className = "col-8";
-				const $div7=document.createElement("div");
-				$div7.style.width = "470px";
-				$div7.style.marginLeft = "10px";
-				const $div8=document.createElement("div");
-				$div8.className = "progress-info";
-				const $label6=document.createElement("label");
-				$label6.className = "form-control-label";
-				$label6.htmlFor = "example-text-input";
-				$label6.textContent = "출석일 수/총 수업일 수";
-				const $div9=document.createElement("div");
-				$div9.className = "progress-percentage";
-				const $span=document.createElement("span");
-				$span.textContent = Math.floor(empCountA/empCountB*100)+"%";
-				const $div10=document.createElement("div");
-				$div10.className = "progress";
-				$div10.style.marginTop = "15px";
-				const $div11=document.createElement("div");
-				$div11.className = "progress-bar bg-primary";
-				$div11.role = "progressbar";
-				$div11.ariaValuenow = "0";
-				$div11.ariaValuemin = "0";
-				$div11.ariaValuemax = "100";
-				$div11.style.width = empCountA/empCountB*100+"%";
-				
-				$div8.appendChild($label6);
-				$div8.appendChild($div9);
-				$div9.appendChild($span);
-				$div10.appendChild($div11);
-				$div7.appendChild($div8);
-				$div7.appendChild($div10);
-				$div6.appendChild($div7);
 				
 				while ($divStuRegulatoryStatus.firstChild) {
 				    $divStuRegulatoryStatus.removeChild($divStuRegulatoryStatus.firstChild);
 				};
 				
 				$divStuRegulatoryStatus.appendChild($div5);
-				$divStuRegulatoryStatus.appendChild($div6);
+				
 			})
 		}).catch(e=>{
 			console.log(e);
