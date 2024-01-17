@@ -1,23 +1,19 @@
 package com.coma.commute.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.coma.model.dto.Calendar;
 import com.coma.model.dto.Commute;
 @Repository
 public class CommuteDaoImpl implements CommuteDao {
 
    @Override
-   public int insertCommute(SqlSession session, @RequestBody HashMap<String, Object> empId) {
+   public int updateClockIn(SqlSession session, Map <String, Object> emp) {
       // TODO Auto-generated method stub
-      return session.insert("commute.insertCommute",empId);
+      return session.update("commute.updateClockIn",emp);
    }
    
    @Override
@@ -70,6 +66,12 @@ public class CommuteDaoImpl implements CommuteDao {
 	public int countSearchCommute(SqlSession session,Map <String, Object> commute) {
 		// TODO Auto-generated method stub
 		return session.selectOne("commute.countSearchCommute",commute);
+	}
+
+	@Override
+	public int insertCommuteAll(SqlSession session, String empIds) {
+		// TODO Auto-generated method stub
+		return session.insert("commute.insertCommuteAll", empIds);
 	}
 
 
