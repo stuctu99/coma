@@ -204,7 +204,7 @@ div {
 		menu.classList.toggle("active");
 	});
 
-	const loginId = "${loginmember}";
+	const loginId = "${loginmember.empId}";
 	const empName = "${loginmember.empName}";
 </script>
 <script src="${path }/resource/js/chat/chatView.js"></script>
