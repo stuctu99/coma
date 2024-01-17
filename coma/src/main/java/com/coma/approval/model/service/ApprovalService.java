@@ -30,4 +30,16 @@ public interface ApprovalService {
 	List<Referrer> selectRefByDocNo(String docNo);
 	
 	int updateSign(Map<String, String> data);
+	
+	String getSignByApprId(String arrpId);
+
+	String getStatusByIdAndDocNo(Map<String, String> data2);
+
+	String selectApprStatus(Map<String, String> data3);
+	
+	Approver selectApprMyturn(String docNo);
+	
+	int updateThisOrder(String thisOrder);
+	
+	int updateNextOrder(String nextOrder);
 }

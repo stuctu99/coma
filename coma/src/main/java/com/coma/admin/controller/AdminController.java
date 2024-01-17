@@ -203,7 +203,7 @@ public class AdminController {
 	}
 	
 	//학생 수료 자동화 기능
-	@Scheduled(cron = "0 0 18 1 ?")
+	@Scheduled(cron = "0 0 18 1 * ?")
 	public void updateStudentByCom() {
 		List student=service.studentByCom();
 		service.updateStudentByCom(student);

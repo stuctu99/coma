@@ -3,7 +3,6 @@ package com.coma.model.dto;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +24,7 @@ public class ApprovalDoc {
 	private String docProgress;
 	private String empId;
 	private String docDetail;
+	private Timestamp docEndDate;
 	private int docDiff;
 	private ApprovalLeave leave;
 	private ApprovalCash cash;

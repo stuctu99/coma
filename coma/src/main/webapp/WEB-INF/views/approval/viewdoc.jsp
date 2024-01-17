@@ -9,6 +9,8 @@
 
 <link href="/resource/css/approval/viewdoc.css" rel="stylesheet" />
     <!-- TEAM COMA SPACE -->
+    
+<c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>     
 
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
@@ -16,16 +18,24 @@
           
           <div class="doc_basic">
           	   <div class="row">
-          	   		<div class="col-10">
+          	   		<div class="col-2">
+          	         </div>
+          	   		<div class="col-6">
           	   		</div>
           	   		<div class="col-2">
-          	   			<input type="button" onclick="downloadPdf();" class="btn btn-primary btn-lg" value="pdf 받기">
+	          	   		<c:if test="${loginMember.empId eq myTurnEmpId}">
+	          	   			<input type="button" onclick="approve();" class="btn btn-primary btn-lg view_Btn" value="승인">          	   		
+	          	   		</c:if>
           	   		</div>
+          	   		<div class="col-2">
+          	   			<input type="button" onclick="downloadPdf();" class="btn btn-primary btn-lg view_Btn" value="pdf 받기">
+          	   		</div>
+          	   	
           	   </div>
-			
-			 
+
 			  <div class="row">
 			  		<div class="col-12">
+			  		
 			  			<table class="table table-bordered">
 						  
 						  <tbody>
@@ -42,9 +52,39 @@
 						      <td>${writer.dept.deptType } </td>
 						    </tr>
 						    <tr>
+						      	<th scope="row" class="mylabel mytitle">결재자</th>
+						    	<td colspan="3">
+								    <c:if test="${not empty apprInfoList}">
+										<c:forEach var="appr" items="${apprInfoList }">
+											[
+												${appr.dept.deptType } 
+												${appr.job.jobType } 
+												${appr.empName } 
+											]
+										</c:forEach>
+										
+									
+									</c:if>
+									
+						      	</td>	
+						    </tr>
+						    <tr>
+						      <th scope="row" class="mylabel mytitle">참조자</th>
+						      <td colspan="3">
+								    <c:if test="${not empty refInfoList}">
+										<c:forEach var="ref" items="${refInfoList }">
+											[
+												${ref.dept.deptType } 
+												${ref.job.jobType } 
+												${ref.empName } 
+											]
+										</c:forEach>
+									</c:if>
+						      	</td>	
+						    </tr>
+						    <tr>
 						      <th scope="row" class="mylabel mytitle">제목</th>
-						      <td colspan="3">${doc.docTitle }</td>
-						    
+						      <td colspan="3">${doc.docTitle }</td>		    
 						    </tr>
 						  </tbody>
 						</table>
@@ -152,13 +192,52 @@
 	<input type="hidden" name="docNo" value="${doc.docNo }"> 
 	<input type="hidden" name="empId" value="${doc.empId }">
 	<input type="hidden" name="docType" value="${doc.docType }">
+	<input type="hidden" id="apprIdArr" name="apprIdArr">
   </form>
+ 
+ <form action="${path }/approval/approve" id="approve" method="post">
+ 	<input type="hidden" name="docNo" value="${ doc.docNo }">
+ 	<input type="hidden" name="empId" value="${doc.empId }">
+ 	<input type="hidden" name="thisOrder" id="thisOrder">
+ 	<input type="hidden" name="nextOrder" id="nextOrder">
+ </form>
 <script>
+
+const approve=()=>{ //승인버튼
+	const result = confirm("승인하시겠습니까?")
+	
+	const thisOrder = ${myTurnOrder} 
+	const nextOrder = ${myTurnOrder}+1
+	
+	if(result){
+		$('#thisOrder').val(thisOrder);
+		$('#nextOrder').val(nextOrder);
+	}
+	
+	  $("#approve").submit();
+}
+
+//pdf다운 버튼 -> 결재자 id 배열 넘기기
   const downloadPdf=()=>{
+	  
+	  var apprIdArr = [];
+	  <c:forEach var="appr" items="${apprInfoList}">
+	  	apprIdArr.push('${appr.empId}');
+	  </c:forEach>
+	  
+// 	  var apprIdJson = JSON.stringify(apprIdArr);
+	  $('#apprIdArr').val(apprIdArr);
+	  
+	  console.log($('#apprIdArr').val());
+	  
 	  $("#pdfDownload").submit();
 	
   }
+  
+  
 </script>
+
+
 
 <!-- <script src="/resource/js/approval/apprView.js"></script>  -->
 

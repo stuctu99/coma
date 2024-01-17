@@ -17,9 +17,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -321,15 +321,20 @@ public class ApprovalController {
 	 data.put("docNo", docNo); 
 	 data.put("docType", docType); 
 	 
+	 //문서 번호로 해당 문서 정보 가져오기
+	 
 	 ApprovalDoc doc = service.selectAppDoc(data); 
 	 
 	 	model.addAttribute("doc",doc);
 	 
+	 	
+	 //Date 시간 잘라내고 날짜만 가져오기	
 	 String fullDate = doc.getDocDate()+" ";
      String onlyDate = fullDate.substring(0,10); //시간 잘라내기
 	 
      	model.addAttribute("onlyDate", onlyDate);
 	 
+     //문서 종류 한글로 변환
 	 String typeKor = "";
 	 
 	 switch(doc.getDocType()) {
@@ -341,11 +346,49 @@ public class ApprovalController {
 	 
 	 	model.addAttribute("typeKor", typeKor);
 	
+	 	
+	 //기안자 정보 가져오기	
 	 Emp writer = service.selectEmpById(doc.getEmpId());
 	 	
 	 	model.addAttribute("writer", writer);
+	 
 	 	
+	 //결재자 정보 가져오기
+	 List<Approver> apprList = service.selectApprByDocNo(docNo);
+	
+	 List<Emp> apprInfoList = new ArrayList<>();
+	 
+	 for(Approver a : apprList) {
+		 String apprId = a.getEmpId();
+		 
+		 Emp apprInfo = service.selectEmpById(apprId);
+		 apprInfoList.add(apprInfo);
+	 }
+	 
+	 model.addAttribute("apprInfoList", apprInfoList);
      
+	 //참조자 정보 가져오기
+	 List<Referrer> refList = service.selectRefByDocNo(docNo);
+	 
+	 List<Emp> refInfoList = new ArrayList<>();
+	 
+	 for(Referrer r : refList) {
+		 String refId = r.getEmpId();
+		 
+		 Emp refInfo = service.selectEmpById(refId);
+		 refInfoList.add(refInfo);
+	 }
+	 
+	 model.addAttribute("refInfoList",refInfoList);
+	 
+	 
+	 // Myturn 'Y'인 결재자 승인 버튼
+	 Approver apprMyturn = service.selectApprMyturn(docNo);
+	   
+	 model.addAttribute("myTurnEmpId", apprMyturn.getEmpId());
+	 model.addAttribute("myTurnOrder", apprMyturn.getApprOrder());
+	 
+	 
 	 return "approval/viewdoc";
    }
    
@@ -358,12 +401,8 @@ public class ApprovalController {
 
    @GetMapping("/downloadPdf")
    public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, 
-		   						String docType, String empId, String imgName) {
-	   
-//	   docNo="DOC_304";
-//	   docType="leave";
-//	   empId="COMA_1";
-	   
+		   						String docType, String empId, String imgName, @RequestParam String[] apprIdArr) {
+
 	   
 	   Emp writer = service.selectEmpById(empId);
 	   
@@ -377,18 +416,34 @@ public class ApprovalController {
 
 	   
 	   //--------------
-	   
-//	   String path = session.getServletContext().getRealPath("/resource/upload/approval/"+doc.getDocNo()+".pdf");
-	  
-	   
+
 	   String fontPath = session.getServletContext().getRealPath("/resource/fonts/NotoSansKR-VariableFont_wght.ttf");
 
+	  
+	   Map<String, String> data2 = new HashMap<String, String>();
+	   data2.put("docNo", docNo); 
+	     	   
+	  String[] signArr = new String[apprIdArr.length];
+	  int i=0;
+	  for(String apprId : apprIdArr) {
+		  data2.put("empId", apprId);
+		  String status = service.getStatusByIdAndDocNo(data2); //해당 결재자의 결재 상태
+
+		  if(status!=null) {
+			  String sign = service.getSignByApprId(apprId); //결재 완료일 경우 사인 가져옴
+			  signArr[i] = sign;
+		  }
+		  i++;
+		  
+	  }
+	   
+	   
 	   //String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/image (6).png");
-	   String imgPath = session.getServletContext().getRealPath("/resource/upload/approval/"+imgName);
+	   String imgPath = session.getServletContext().getRealPath("/resource/upload/sign/");
 
 	   
 	   //pdfGen이 service 역할
-	   pdfGen.generatePdf(doc, response, fontPath, writer, imgPath);
+	   pdfGen.generatePdf(doc, response, fontPath, writer, imgPath, signArr);
 	      
 	   //return "approval/viewdoc"; ㄴㄴ
 	   //return을 하면 outputStream이 또 호출됨
@@ -447,4 +502,61 @@ public class ApprovalController {
 	   	
    }
    
+   
+   //---------------------------- 결재 승인 -------------------------------------
+   
+   @PostMapping("/approve")
+   public String approve(String docNo, String thisOrder, String nextOrder) {
+	   
+	   service.updateThisOrder(thisOrder);
+	   
+	   service.updateNextOrder(nextOrder);
+	   
+	   return "redirect:/";
+   }
+   
+//   
+//   @PostMapping("/approve")
+//   public String approve(String docNo, String empId) {
+//	 
+//	   List<Approver> apprList = service.selectApprByDocNo(docNo);
+//	   
+//	   for(Approver appr : apprList) {
+//		   
+//		   Map<String, String> data3 = new HashMap<String, String>();
+//		   data3.put("docNo", docNo);
+//		   data3.put("empId", empId);
+//		   
+//		   switch(appr.getApprOrder()) {
+//		   	
+//		   		case 0 :  //본인이 0번 결재자일 경우
+//		   			data3.put("order", "1");	
+//		   			String status0_1 = service.selectApprStatus(data3); //1번 결재자의 결재상태 확인
+//		   			data3.put("order", "2");	
+//		   			String status0_2 = service.selectApprStatus(data3); //2번 결재자의 결재상태 확인
+//		   				if(status0_1==null && status0_2==null) {
+//		   					//status update실행
+//		   					service.updateSign(data3);
+//		   					
+//		   				}else {
+//		   					//결재 완료일 경우
+//		   					System.out.println("");
+//		   					break;
+//		   				}
+//		   			break;
+//		   		
+//		   		case 1 : //본인이 1번 결재자일 경우
+//		   			data3.put("order", "2");	
+//		   			String status1_1 = service.selectApprStatus(data3); //2번 결재자의 결재상태 확인
+//		   			
+//		   			break;
+//		   		case 2 :	break;
+//		   }
+//		
+//		   
+//	   }
+//	   
+//	   
+//	   return "redirect:/";
+//   }
 }

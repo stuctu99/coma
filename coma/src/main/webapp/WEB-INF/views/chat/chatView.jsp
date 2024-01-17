@@ -50,8 +50,8 @@ div {
 				</div>
 				<div class="col-11 chat-title">
 					<h1>COMA MESSENGER</h1>
-					<input type="hidden" id="roomNo" value="${roomNo}" /> <input
-						type="hidden" id="loginMember" value="${loginmember.empId }" />
+					<input type="hidden" id="roomNo" value="${roomNo}" /> 
+					<input type="hidden" id="loginMember" value="${loginmember.empId }" />
 				</div>
 			</div>
 			<hr style="margin: 2px 0;">
@@ -61,16 +61,18 @@ div {
 				</div>
 				<div class="col-10">
 					<h4 style="line-height: 2.0;">${room.roomName }</h4>
+					<input type="hidden" id="roomType" value="${room.roomTypeObj.roomType }"/>
 				</div>
 				<nav id="menu">
 					<ul>
 						<li>
 							<div class="col-12 profile">&nbsp;</div>
 						</li>
-						
+
 					</ul>
-					<div class="container profile-list" style="height: 499px;">
-						<c:if test="${not empty roomMemberList}">
+					<div class="container profile-list list-${roomNo } }"
+						style="height: 499px;">
+						<%-- <c:if test="${not empty roomMemberList}">
 							<c:forEach var="emp" items="${roomMemberList }">
 								<div class="row ${emp.empId }">
 									<div class="col-2 profile">
@@ -89,19 +91,19 @@ div {
 									<div class="col-9 emp-info">
 										<strong><c:out value="${emp.empName}" /></strong>&nbsp;
 										<c:out value="${emp.job.jobType }" />
-										<c:choose>
-											<c:when test="${empList.contains(emp.empId) }">
-												<strong class="connectView" id="${emp.empId }" style="color: lime;">&#9900</strong>
-											</c:when>
-											<c:otherwise>
-												<strong class="connectView" id="${emp.empId }" >&#9900</strong>
-											</c:otherwise>
-										</c:choose>
+											<c:choose>
+												<c:when test="${roomMember.containsKey(emp.empId)}">
+													<strong class="connectView" id="${emp.empId }" style="color: lime;">&#9900</strong>
+												</c:when>
+												<c:otherwise>
+													<strong class="connectView" id="${emp.empId }">&#9900</strong>
+												</c:otherwise>
+											</c:choose>
 									</div>
 
 								</div>
 							</c:forEach>
-						</c:if>
+						</c:if> --%>
 					</div>
 					<div>
 						<button class="btn btn-primary" id="exit-btn">채팅방 나가기</button>
@@ -122,7 +124,6 @@ div {
 	</header>
 	<section>
 		<div class="container messageView${roomNo }">
-			${roomMemberList }
 			<c:if test="${not empty chatMsg }">
 				<c:forEach var="msg" items="${chatMsg }">
 					<c:if test="${msg.empId eq loginmember.empId}">

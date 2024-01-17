@@ -175,8 +175,8 @@ public class BoardController {
 				String ext = oriName.substring(oriName.lastIndexOf("."));
 				Date today = new Date(System.currentTimeMillis());
 				int randomNum = (int)(Math.random()*10000)+1;
-				String rename = "COMA"+"_"+ new SimpleDateFormat("yyyyMMddHHmmssSSS")
-						.format(today)+"_"+randomNum+ext;
+				String rename = "board_"+"COMA"+"_"+ (new SimpleDateFormat("yyyyMMddHHmmssSSS")
+						.format(today))+"_"+randomNum+ext;
 				try {
 					upload.transferTo(new File(path,rename));
 					return ResponseEntity.status(HttpStatus.OK).body(Map.of("url","/resource/upload/board/"+rename));

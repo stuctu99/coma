@@ -8,6 +8,7 @@
 	<jsp:param name="id" value="mine" />
 </jsp:include>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+
 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
@@ -25,32 +26,30 @@
 		<div class="col-5" style="text-align:center;">
 			<h1 style="">학생 리스트</h1>
 			<div>
+		
 		    <table class="table align-items-center" style="text-align: center;">
-		        <thead class="thead-light">
+		        <thead class="">
 			      <tr>
 			        <th>학생 번호</th>
 			        <th>학생 이름</th>
 			        <th>담당 강사</th>
-			        <th>
-			          <div class="custom-control custom-checkbox">
-			            <input type="checkbox" class="custom-control-input" id="attendanceToggle" onclick="fn_Checkboxes('attendance')">
-			            <label class="custom-control-label" for="attendanceToggle">출석 여부</label>
-			          </div>
-			        </th>
+			        <th>취업 여부</th>
 			      </tr>
 		        </thead>
 		        <tbody class="list" id="studentTable">
-		        	<form action="/student/insertStudent" method="post">
+		        	<form action="/student/insertStudentEmp" method="post">
 			        <c:forEach var="s" items="${students }">
 			        	<tr>
 			        		<td><c:out value="${s.STU_NO }"/></td>
 			        		<td><button type="button" class="btn btn-secondary btn-sm" onclick="fn_stuInfo('${s.STU_NO }');"><c:out value="${s.STU_NAME }"/></button></td>
 			        		<td><c:out value="${s.EMP_NAME }"/></td>
 			        		<td>
-								<input type="checkbox" name="attendance" value="${s.STU_NO }" ${s.STU_COMMUTE_STATUS!='Y'?'':'disabled'}>
+								<input type="checkbox" name="employment" value="${s.STU_NO }" ${s.STU_EMP_STATUS=='Y'?'disabled checked':''}>
+								
 			        		</td>
 			        	</tr>
 			        </c:forEach>
+			    
 		        </tbody>
 		    </table>
 		    <div class="row">
@@ -92,16 +91,16 @@
 				    </div>
 				</div>
 			</div>
-			<h1>출석 현황</h1>
+			<h1>취업 현황</h1>
 			<div class="row" id="stu_regulatoryStatus">
 				<div class="col-4">
-			        <label for="example-text-input" class="form-control-label">총 출석 수</label>
-			        <input class="form-control" type="text" value="0/120" id="example-text-input" style="text-align:center;" >
+			        <label for="example-text-input" class="form-control-label">취업/총원</label>
+			        <input class="form-control" type="text" value="${empCount[0].A }/${empCount[0].B}" id="example-text-input" style="text-align:center;" readonly>
 				</div>
 				<div class="col-8">
 			        <div style="width:470px; margin-left: 10px;">
 					  <div class="progress-info" style="margin-top: 3px;">
-					    <label for="example-text-input" class="form-control-label">출석일 수/총 수업일 수</label>
+					    <label for="example-text-input" class="form-control-label">취업/총원</label>
 					    <div class="progress-percentage">
 					      <span>0%</span>
 					    </div>
@@ -117,45 +116,13 @@
 	</div>
 </div>
 <script>
-	//체크 박스 전체 선택
-	function fn_Checkboxes(checkboxName) {
-	    const checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]');
-	    const masterCheckbox = document.getElementById(checkboxName + 'Toggle');
-	
-	    checkboxes.forEach(function (checkbox) {
-	        checkbox.addEventListener('change', function() {
-	            // 체크박스가 disabled 상태가 아니고, 하나라도 체크가 풀리면 masterCheckbox 해제
-	            if (!checkbox.disabled && !isCheckedAll(checkboxes)) {
-	                masterCheckbox.checked = false;
-	            } else {
-	                // 모든 체크박스가 체크되면 masterCheckbox 선택
-	                masterCheckbox.checked = isCheckedAll(checkboxes);
-	            }
-	        });
-	    });
-	
-	    // 모든 체크박스가 체크되어 있는지 확인하는 함수
-	    function isCheckedAll(checkboxes) {
-	        return Array.from(checkboxes).every(function(checkbox) {
-	            return checkbox.checked;
-	        });
-	    }
-	
-	    // masterCheckbox가 변경되었을 때 모든 체크박스의 상태를 일괄적으로 변경
-	    masterCheckbox.addEventListener('change', function() {
-	        checkboxes.forEach(function (checkbox) {
-	            // 체크박스가 disabled 상태가 아닌 경우에만 선택 상태를 변경
-	            if (!checkbox.disabled) {
-	                checkbox.checked = masterCheckbox.checked;
-	            }
-	        });
-	    });
-	}
+	const empCountA= ${empCount[0].A};
+	const empCountB= ${empCount[0].B};
 	
 	//학생 정보 출력
 	function fn_stuInfo(stuNo) {
 		console.log(stuNo);
-		fetch("${path}/student/infoStudent",{
+		fetch("${path}/student/infoStudentEmp",{
 			method:"post",
 			headers:{"Content-Type":"application/json"},
 			body:JSON.stringify({
@@ -248,13 +215,15 @@
 				const $input5=document.createElement("input");
 				$input5.className = "form-control";
 				$input5.type = "text";
-				$input5.value = student.COUNTATTENDANCE+"/120";
+		
+				$input5.value = student.STU_EMP_STATUS=='Y'?"취업":"미취업";
+		
 				$input5.id = "example-text-input";
 				$input5.style.textAlign = "center";
 				const $label5=document.createElement("label");
 				$label5.className = "form-control-label";
 				$label5.htmlFor = "example-text-input";
-				$label5.textContent = "총 출석 수";
+				$label5.textContent = "취업 상태";
 				$div5.appendChild($label5);
 				$div5.appendChild($input5);
 				
@@ -274,7 +243,7 @@
 				const $div9=document.createElement("div");
 				$div9.className = "progress-percentage";
 				const $span=document.createElement("span");
-				$span.textContent = student.AVGATTENDANCE+"%";
+				$span.textContent = Math.floor(empCountA/empCountB*100)+"%";
 				const $div10=document.createElement("div");
 				$div10.className = "progress";
 				$div10.style.marginTop = "15px";
@@ -284,7 +253,7 @@
 				$div11.ariaValuenow = "0";
 				$div11.ariaValuemin = "0";
 				$div11.ariaValuemax = "100";
-				$div11.style.width = student.AVGATTENDANCE+"%";
+				$div11.style.width = empCountA/empCountB*100+"%";
 				
 				$div8.appendChild($label6);
 				$div8.appendChild($div9);
@@ -307,4 +276,4 @@
 	}
 </script>
 <!-- TEAM COMA SPACE -->
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>s

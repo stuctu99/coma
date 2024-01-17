@@ -19,8 +19,8 @@ font-family: 'Noto Sans KR', sans-serif;
 </style>
 
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
-        <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
-    <nav class="space-y-2">
+
+    <nav class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
       	<h1>문서함</h1>
       	<a href="${path }/apprdoc/proceedList">
@@ -36,7 +36,7 @@ font-family: 'Noto Sans KR', sans-serif;
     </nav>
   <main class="flex-1 p-5">
     <div class="flex justify-between items-center mb-6">
-      <div class="flex space-x-2">
+      <div class="flex space-x-2" style ="text-align: right;">
       <form name="searchForm" autocomplete="off">
         <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
           placeholder="문서 검색" name="keyword"/>
@@ -100,9 +100,7 @@ font-family: 'Noto Sans KR', sans-serif;
       </div>
     </div>
   </main>
-  </div>
-  </div>
-  
+  </div> 
 <script>
 //검색기능
 function getSearchList(){
