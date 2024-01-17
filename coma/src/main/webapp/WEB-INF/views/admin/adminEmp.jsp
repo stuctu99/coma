@@ -105,10 +105,10 @@
 		        	<c:forEach var="e" items="${emps }">
 		        	<tr>
 		        		<td><c:out value="${e.EMP_ID }"/></td>
-		        		<td><a href="${path }/mypage/EmployeeDetails?empId=${e.EMP_ID }"><c:out value="${e.EMP_NAME }"/></a></td>
+		        		<td><button type="button" class="btn btn-secondary btn-sm"><a href="${path }/mypage/EmployeeDetails?empId=${e.EMP_ID }"><c:out value="${e.EMP_NAME }"/></a></button></td>
 		        		<td><c:out value="${e.JOB_TYPE }"/></td>
  		        		<td><c:out value="${e.DEPT_TYPE }"/></td>
-		        		<td><!-- <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModal"> --><c:out value="${e.EMP_COMMUTE_STATUS!=null?e.EMP_COMMUTE_STATUS:'미출근'}"/><!-- </button> --></td>
+		        		<td><button type="button" class="btn btn-secondary btn-sm"><a href="${path }/commute/empCommute?empId=${e.EMP_ID }"><c:out value="${e.EMP_COMMUTE_STATUS!=null?e.EMP_COMMUTE_STATUS:'미출근'}"/></a></button></td>
 		        		<td>
 			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.EMP_ID }');">삭제</button>
 		        		</td>
@@ -118,28 +118,6 @@
 		        </tbody>
 		    </table>
 		    <div id="pageBar">${pageBar }</div>
-		    <!-- Modal -->
-<!-- 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-dialog-centered" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">근태 현황</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			      	<label for="example-date-input" class="form-control-label">검색 날짜</label>
-			      	<input class="form-control" type="date" id="example-date-input" style="width: 241px; height: 37px;">
-			      </div>
-			      <div id="empCommuteInfo"></div>
-			      <div class="modal-footer">
-			      	<button type="button" class="btn btn-primary btn-sm">변경</button>
-			        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-			      </div>
-			    </div>
-			  </div>
-			</div> -->
 		</div>
 	</div>
 </div>
@@ -202,7 +180,6 @@
 		const searchData=document.getElementById("searchData").value;
 		const textData=document.getElementById("textData").value;
 		console.log(searchData,textData);
-		if(textData!=""){
 			fetch(url?'${path}'+url:"/admin/searchEmp",{
 				method:"post",
 				headers:{"Content-Type":"application/json"},
@@ -273,9 +250,6 @@
 			}).catch(e=>{
 				console.log(e);
 			})
-		}else{
-			alert("검색어를 입력해주세요");
-		}
 	}
 
 
@@ -344,50 +318,6 @@
 	function fn_empExcelDown(){
 		location.assign("${path}/admin/excelEmp");
 	}
-
-/* 	//사원 근태 현황 변경
-	const dateInput = document.getElementById('example-date-input');
-	
-	dateInput.addEventListener('change', function () {
-	    const selectedDate = dateInput.value;
-	
-	    fetchData(selectedDate);
-	});
-	
-	function fetchData(selectedDate) {
-	    const apiUrl = 'https://your-api-endpoint.com';
-	
-	    fetch(apiUrl, {
-	        method: 'POST',
-	        headers: {
-	            'Content-Type': 'application/json',
-	        },
-	        body: JSON.stringify({ date: selectedDate }),
-	    })
-	    .then(response=>{
-			console.log(response);
-			if(response.status!=200){
-				throw new Error("");
-			}
-			return response.json();
-	    .then(data => {
-	        console.log(data);
-	        const $div=document.getElementById("empCommuteInfo");
-	        const $table=document.creatElement("table");
-	        $table.className="table align-items-center";
-	        const 
-	        const $tr1=document.creatElement("tr");
-	        const $tr2=document.creatElement("tr");
-	        const $th1=document.creatElement("th");
-	        const $th2=document.creatElement("th");
-	        const $td1=document.creatElement("td");
-	        const $td2=document.creatElement("td");
-	    })
-	    .catch(error => {
-	        console.error('Error:', error);
-	    });
-	}
- */
 
 </script>
 <!-- TEAM COMA SPACE -->
