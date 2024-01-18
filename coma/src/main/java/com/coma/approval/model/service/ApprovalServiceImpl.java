@@ -231,7 +231,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 			int result = dao.updateThisOrder(session, data);
 		
 			if(result==1) { 
-				data.put("progress", "진행");
+				data.put("progress", "진행"); // 문서 진행 상황
 				int result2 = dao.updateProgress(session, data);
 				return result2;
 			}else return result;

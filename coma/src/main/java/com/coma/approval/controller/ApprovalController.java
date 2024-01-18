@@ -402,7 +402,7 @@ public class ApprovalController {
 
    @GetMapping("/downloadPdf")
    public void generatePdf(HttpSession session, HttpServletResponse response, String docNo, 
-		   						String docType, String empId, String imgName, @RequestParam String[] apprIdArr) {
+		   						String docType, String empId, @RequestParam String[] apprIdArr) {
 
 	   
 	   Emp writer = service.selectEmpById(empId);
@@ -424,14 +424,22 @@ public class ApprovalController {
 	   Map<String, String> data2 = new HashMap<String, String>();
 	   data2.put("docNo", docNo); 
 	     	   
+	   System.out.println("apprIdArr**********************" + apprIdArr);
 	  String[] signArr = new String[apprIdArr.length];
 	  int i=0;
 	  for(String apprId : apprIdArr) {
-		  data2.put("empId", apprId);
+		   System.out.println("apprId**********************" + apprId);
+
+		  data2.put("empId", apprId); 
 		  String status = service.getStatusByIdAndDocNo(data2); //해당 결재자의 결재 상태
 
+		   System.out.println("apprId status###**********************################# " + status);
+		  
 		  if(status!=null) {
 			  String sign = service.getSignByApprId(apprId); //결재 완료일 경우 사인 가져옴
+			   System.out.println("apprId sign**********************" + sign);
+
+			  
 			  signArr[i] = sign;
 		  }
 		  i++;
@@ -516,8 +524,6 @@ public class ApprovalController {
 		
 	   int result1 = service.updateEndDate(data); //진행상태 반려로 변경
 	   
-//	   int result2 =service.updateThisOrder(data); //myTurn 'Y'에서 NULL으로 변경
-	   
 	   int result2 = service.updateAllMyturn(data);
 	   
 	   System.out.println("진행상태 반려 변경: " + result1+ "myturn 변경: " + result2);
@@ -541,6 +547,7 @@ public class ApprovalController {
 		   data.put("docNo", docNo);
 		   data.put("thisOrder", thisOrder);
 		   data.put("nextOrder", nextOrder);
+		   data.put("status", "완료");
 		   
 		   int result1 =service.updateThisOrder(data);
 		   
