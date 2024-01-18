@@ -13,9 +13,15 @@
 }
 
 .date_bo{
-	
+	/*border: 1px solid #444444;*/
+	/*text-align: left !important;*/
 	margin-top: -10px;
+	margin-left: -15px;
 }
+/*
+#date_span{
+	width: 100px;
+}*/
  
  .appr_table{
     width: 700px;
