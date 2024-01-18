@@ -96,8 +96,16 @@ public class MessengerDaoImpl implements MessengerDao {
 	}
 	
 	@Override
+	@Transactional
 	public int insertInviteEmp(SqlSession session, Map<String,Object> inviteInsertInfo) {
-		return session.insert("chatting.insertInviteEmp",inviteInsertInfo);
+		int result = session.insert("chatting.insertInviteEmp",inviteInsertInfo);
+		if(result>0) {
+			ChattingRoom room = session.selectOne("chatting.selectRoomByRoomNo",inviteInsertInfo.get("roomNo"));
+			if(room.getRoomTypeObj().getRoomType().equals("P")) {
+				result = session.update("chatting.updateRoomTypeByRoomNo",room.getRoomNo());
+			}
+		}
+		return result;
 	}
 	
 	// update

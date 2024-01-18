@@ -64,14 +64,12 @@ div {
 	<section>
 		<div class="container emp-list">
 			<div class="row">
-				<div class="col-2">${loginmember }</div>
+				<div class="col-2"></div>
 				<div class="col-8" style="display: flex; justify-content: center;">
 					<input type="hidden" id="empId" value="${loginmember.empId }" />
 					<h2>${loginmember.empName }님반갑습니다.</h2>
 				</div>
 				<div class="col-2">
-					<button class="btn btn-outline-primary" id="invite-create"
-						style="display: none;">방생성</button>
 				</div>
 			</div>
 			<!------------------- 사원 데이터 ----------------------->
@@ -90,7 +88,7 @@ div {
 									<small><c:out value="${e.job.jobType }" /></small>
 								</div>
 								<div class="col-7">
-									<img src="" /><strong><c:out value="${e.empName}" /></strong>
+									<img class="emp-profile-img" src="${path }/resource/upload/profile/${e.empPhoto }" /><strong>&nbsp;&nbsp;<c:out value="${e.empName}" /></strong>
 								</div>
 								<c:if test="${e.empId!=loginmember.empId }">
 									<div class="col-2">
@@ -162,7 +160,7 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="text" name="roomName" id="roomName" value="" />
+									<input type="text" name="roomName" id="roomName" value=""/>
 								</div>
 								<div class="col-6">
 									<select name="roomType" id="roomType">
@@ -229,7 +227,7 @@ div {
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
 						<button class="btn btn-primary"
-							onclick="createRoom('${loginmember.empId}');">생성</button>
+							onclick="createRoomCheck('${loginmember.empId}');">생성</button>
 					</div>
 					<!-- </form> -->
 				</div>

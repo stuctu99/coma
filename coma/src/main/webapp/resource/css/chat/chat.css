@@ -60,6 +60,12 @@ strong:has(div){
 	text-align: center;
 }
 
+.emp-profile-img{
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+}
+
 .chatting-list>.row:nth-child(1){
 	margin-top:10px;
 	text-align: center;
@@ -137,7 +143,7 @@ hr {
 }
 
 .emp-list>div.row{
-	padding:0px 5px;
+	padding:3px 5px;
 	margin-bottom: 2px;
 }
 

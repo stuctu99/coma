@@ -70,6 +70,7 @@ function openEvent(data) {
 }
 
 function newRoom(data) {
+	
 	console.log("새로 생성된 채팅방" + data.roomNo);
 	intiCreateModalInput();
 	$(".chatting-list-btn").click();
@@ -78,7 +79,7 @@ function newRoom(data) {
 }
 
 function privateNewRoom(data) {
-	console.log("여긴들어오니?");
+	console.log("어디가 문제인건가...?"+data.roomNo);
 	$("." + data.targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 	$("." + data.loginId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 }
@@ -90,6 +91,15 @@ function intiCreateModalInput() {
 
 
 /* 방생성 */
+const createRoomCheck = (empId) =>{
+	const createTitle = $("#roomName");
+	if(createTitle.val().length>0){
+		createRoom(empId);
+	}else{
+		alert("제목을 입력하세요!!!");
+	}
+}
+
 
 const createRoom = (empId) => {
 	const roomName = $("#roomName").val();
@@ -115,7 +125,6 @@ const createRoom = (empId) => {
 		"empId": empId,
 		"targetId": ""
 	}
-
 	console.log("초대멤버배열" + inviteEmp);
 
 
@@ -137,10 +146,10 @@ const createRoom = (empId) => {
 		.then(data => {
 			if (data.result == "success") {
 				console.log("방생성 성공 // 초대인원 수 :" + inviteEmp.length);
-
+				$("#createRoom").modal('hide');
 				/* 초대 멤버가 존재할 때 실행 */
 				if (inviteEmp.length > 0) {
-					fetch("/messenger/invite/"+data.roomNo, {
+					fetch("/messenger/invite/" + data.roomNo, {
 						method: "post",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify(inviteEmp)
@@ -155,7 +164,6 @@ const createRoom = (empId) => {
 							if (resp.result == "success") {
 								const msg = new MessageHandler("new", empId, "", "", "");
 								mserver.send(msg.convert());
-								$("#createRoom").modal('hide');
 								if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
 									intiCreateModalInput();
 									enter_chattingRoom(data.roomNo);
@@ -164,11 +172,19 @@ const createRoom = (empId) => {
 								alert("관리자에게 문의하세요:");
 							}
 						})
+				} else {
+					if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
+						intiCreateModalInput();
+						enter_chattingRoom(data.roomNo);
+					}
+					$(".chatting-list-btn").click();
 				}
 			} else {
 				console.log("방생성 실패");
 			}
 		})
+	
+
 
 }
 
@@ -202,12 +218,13 @@ const privateChatting = (targetId, targetName, empId, empName) => {
 		.then(data => {
 			if (data.result == "success") {
 				console.log("방생성 성공");
-				const msg = new MessageHandler("privateNew", empId, targetId, "", "");
-				mserver.send(msg.convert());
 				$("#createRoom").modal('hide');
 				if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
 					intiCreateModalInput();
 					enter_chattingRoom(data.roomNo);
+					console.log("방금생성된 방번호 : "+ data.roomNo)
+					const msg = new MessageHandler("privateNew", empId, targetId, data.roomNo, "");
+					mserver.send(msg.convert());
 				} else {
 					newRoom();
 					$("." + targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
@@ -289,7 +306,7 @@ const fn_roomListByType = (type) => {
 			const $content = $(".content");
 			$content.attr("id");
 			$content.html("");
-			if (data != null) {
+			if (data != null || data != '') {
 				data.roomList.forEach(d => {
 					const $div = $("<div>").addClass("row");
 					const $div_type = $("<div>").addClass("col-2 chatting-room").css("display", "flex").css("justify-content", "center").css("align-items", "center");
@@ -310,6 +327,7 @@ const fn_roomListByType = (type) => {
 						$i.append($("<i>").addClass("fa-solid fa-lock-open"));
 					}
 
+					//권한이 관리자(J1)인 사원만 삭제기능을 가질 수 있다.
 					if (autority === 'J1') {
 						const $input = $("<input>").attr("type", "checkbox").attr("name", "deleteRoom[]").val(d.roomNo).css("margin-right", "5px");
 						$input.addClass("deleteRoom");
@@ -355,10 +373,6 @@ const fn_roomListByType = (type) => {
 
 			data.joinRoom.forEach(param => {
 				$("#btn-" + param.roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
-				if(param.newJoin != 'N'){
-					const $span = $("<span>").addClass("badge badge-danger").attr("name","new").text("New");
-					$("div#"+param.roomNo).prepend($span);
-				}
 			})
 
 		})
@@ -540,7 +554,7 @@ const enter_chattingRoom = (roomNo) => {
 				$("#btn-" + roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
 				$(".chatting-list-btn").click();
 				window.open(url, windowName, options);
-				$("div#"+roomNo+">span").remove();
+				$("div#" + roomNo + ">span").remove();
 
 				/*if (!chattingView || chattingView.closed) {
 					const url = "/chatting/room/" + roomNo;

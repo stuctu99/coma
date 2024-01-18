@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingMessage;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
 public interface ChattingDao {
@@ -18,7 +19,8 @@ public interface ChattingDao {
 	Emp selectEmpByEmpId(SqlSession session, String empId);
 	ChattingJoin selectJoinCheckByEmpId(SqlSession session, Map<String,String> joinEmp);
 	int selectMemberCountInRoom(SqlSession session, String roomNo);
-	
+	List<Emp> selectInviteList(SqlSession session, String roomNo);
+	List<Dept> selectDept(SqlSession session);
 	
 	int insertJoinEmp(SqlSession session, Map<String, String> joinInfo);
 	
