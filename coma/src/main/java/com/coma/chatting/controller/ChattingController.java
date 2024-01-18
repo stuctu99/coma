@@ -1,6 +1,6 @@
 package com.coma.chatting.controller;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -99,6 +99,7 @@ public class ChattingController {
 
 		return enterCheck;
 	}
+
 
 //	채팅방 신규접속 여부 체크 및 신규접속Flag 업데이트
 	@PutMapping

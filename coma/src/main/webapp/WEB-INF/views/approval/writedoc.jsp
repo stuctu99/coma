@@ -164,7 +164,7 @@
 					<div class="col-3">
 	          			휴가 날짜
 	          		</div>
-					<div class="col-6">
+					<div class="col-7">
 						<div class="input-daterange datepicker row align-items-center date_bo">
 							    <div class="col">
 							        <div class="form-group">
@@ -176,20 +176,20 @@
 							            </div>
 							        </div>
 							    </div>
-							   
-							    <div class="col">
-							        <div class="form-group">
-							            <div class="input-group">
-							                <div class="input-group-prepend">
-							                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-							                </div>
-							                <input class="form-control" name="leaveEnd" placeholder="끝 날짜" type="text" >
-							            </div>
-							        </div>
-							    </div>
-							</div>
-		     		  </div>
-		     		  <div class="col-3"></div>
+						    <div class="col">
+						        <div class="form-group">
+						            <div class="input-group">
+						                <div class="input-group-prepend">
+						                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+						                </div>
+						                <input class="form-control" name="leaveEnd" placeholder="끝 날짜" type="text" >
+						            </div>
+						        </div>
+						    </div>
+						    
+						</div>   
+					</div>
+		     		<div class="col-2"></div>
 			    </div>  
 
 	      </div>

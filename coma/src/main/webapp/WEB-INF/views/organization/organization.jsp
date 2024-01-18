@@ -16,11 +16,11 @@
 	}
 </style>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
-	<div class="coma-container" style="margin-top:5px; margin-bottom: 5px; text-align:center; display: math; ">
+	<div class="coma-container" style="margin-top:5px; margin-bottom: 5px; text-align:center; display: math;">
 		<div class="row">
 			<div class="col-1"></div>
 			<div class="col-6">
-				<h1>조직도</h1>	
+				<h1>조직도</h1>
 			</div>
 			<div class="col-1"></div>
 			<div class="col-2">

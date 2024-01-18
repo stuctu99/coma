@@ -35,7 +35,10 @@ public class StudentServiceImpl implements StudentService{
 		return result;
 	}
 
-	
+	public int studentSignificantBystuNo(Map<String, Object> significantData) {
+		return dao.studentSignificantBystuNo(session,significantData);
+	}
+
 	
 }
 

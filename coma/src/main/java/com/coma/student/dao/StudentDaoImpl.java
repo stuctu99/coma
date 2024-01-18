@@ -22,7 +22,9 @@ public class StudentDaoImpl implements StudentDao{
 		return session.insert("studentCommute.insertStudentByAttend",attendance);
 	}
 
-	
-	
+	public int studentSignificantBystuNo(SqlSession session, Map<String, Object> significantData) {
+		return session.insert("studentSignificant.studentSignificantBystuNo",significantData);
+	}
+
 }
 
