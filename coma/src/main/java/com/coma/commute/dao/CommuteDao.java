@@ -36,4 +36,8 @@ public interface CommuteDao {
 	
 	int updateEmployeeCommute(SqlSession session, Map<String, Object> commute);
 	
+	Emp selectEmpName(SqlSession session, String empId);
+	
+
+	
 }

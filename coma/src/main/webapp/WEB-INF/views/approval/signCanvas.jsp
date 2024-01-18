@@ -2,6 +2,18 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+#save_container{
+	padding-left : 80%;
+	margin-top : 5px;
+}
+</style>
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <title>title</title>
@@ -14,7 +26,9 @@
   </div>
   <div>
     <!-- 저장 버튼 -->
-    <button id="save">save</button>
+   	<div id="save_container">
+	    <button id="save" class="btn btn-outline-dark">save</button>
+   	</div>
   <div>
   <script>
     (function(obj){

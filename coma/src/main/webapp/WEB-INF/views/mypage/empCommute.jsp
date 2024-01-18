@@ -41,17 +41,18 @@ div {
 	padding-top: 20px;
 }
 
-/* You may need to adjust the styling based on your specific requirements */
+
 </style>
 <div class="coma-container containerbig">
-	  ${commute} 
-	  ${empId }
+<%-- 	  ${commute} 
+	  ${empId } --%>
+	  
 	<div class="row">
 		<div class="col-1"></div>
-		<div class="col-2" style="display: flex;">
-			<h1>${empId }의 근태 정보</h1>
+		<div class="col-4" style="display: flex;">
+			<h1 style= "color:blue;">${empName.empName}</h1> <h1>님의 근태 정보</h1>
 		</div>
-		<div class="col-7"></div>
+		<div class="col-5"></div>
 		<div class="col-1">
 			<button type="button" class="btn btn-outline-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
 		</div>
@@ -61,23 +62,27 @@ div {
 	<div class="col-1"></div>
 	<div class="col-2">
 			<div class="form-group">
-		        <input class="form-control" type="date" name="startTime"  id="example-date-input-start">
+				<input class="form-control" value= "" type="date" name="endTime"  id="endTime"  onchange="updateEndTimeMin()">
 		    </div>
 		</div>
 		<div class="col-2">
 			<div class="form-group">
-		        <input class="form-control" type="date" name="endTime"  id="example-date-input-end">
+		        <input class="form-control" type="date" name="start"  id="start">
 		    </div>
 		</div>
 		<div col="col-1">
 			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
 		</div>
+		<!-- <div col="col-1">
+			<button type="button" class="btn btn-primary"  id=""></button>
+		</div> -->
 	</div>
 	<td>            
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-10">
 			<div class="col">
+			<form action="${path}/commute/updateEmployeeCommute" method="post">
 				<table class="table align-items-center" style="text-align: center;">
 					<thead class="thead-light">
 						<tr>
@@ -90,8 +95,9 @@ div {
 							<th>수정</th>
 						</tr>
 					</thead>
+					
 					<tbody class="list" id="empTable">
-					<form action="${path}/commute/updateEmployeeCommute" method="post">
+					
 						<c:if test="${not empty commute}">
 							<c:forEach var="c" items="${commute }">
 								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
@@ -101,19 +107,19 @@ div {
 											<fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" />
 										</td>
 										<td>
-									        <input class="form-control" type="time" name= "clockin"
+									        <input class="form-control" type="time" name= "clockin" step="1"
 									        value="<fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="HH:mm:ss"/>" id="example-search-input"/>
 										</td> 
 										<td>
-											<input class="form-control" type="time" name= "clockout"
-									        value="<fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="HH:mm:ss"/>" id="example-search-input"/>
+											<input class="form-control" type="time" name= "clockout" step="1"
+									        value="<fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKOUT.toJdbc() }" pattern="HH:mm:ss"/>" id="example-search-input"/>
 										</td>
 										<td>
-											<input class="form-control" type="time" name= "starttime"
+											<input class="form-control" type="time" name= "starttime" step="1"
 									        value="<fmt:formatDate value="${c.EMP_COMMUTE_STARTTIME.toJdbc() }" pattern="HH:mm:ss"/>" id="example-search-input"/>
 										</td> 
 										<td>
-											<input class="form-control"  type="time" name= "endtime"
+											<input class="form-control"  type="time" name= "endtime" step="1"
 									        value="<fmt:formatDate  value="${c.EMP_COMMUTE_ENDTIME.toJdbc() }" pattern="HH:mm:ss" />" id="example-search-input"/>
 										</td> 	
 										<td>
@@ -121,15 +127,17 @@ div {
 										</td>
 									</tr>
 									<input type="hidden" value = "<fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yy/MM/dd" />" name= "workdate">
-									${empId }
-									<input type="hidden" value = "${empId }" name= "empId">
+									
+									<input type="hidden" value = "${empId }" name= "empId" id="empId" >
 									
 								</c:if>
 							</c:forEach>
 						</c:if>
-						</form>
+						
 					</tbody>
+					
 				</table>
+				</form>
 				<div id="pageBar">${pageBar }</div>
 			</div>
 		</div>
@@ -146,10 +154,31 @@ div {
 </div> -->
 
 <script>
+
+var today = new Date();
+var year = today.getFullYear();
+var month = today.getMonth() + 1; 
+var day = today.getDate();
+// 날짜를 "YYYY-MM-DD" 형식의 문자열로 만들기
+var formattedDate = (year % 100) + '/' + (month < 10 ? '0' + month : month) + '/' + (day < 10 ? '0' + day : day);
+console.log(formattedDate);
+// 입력 요소에 현재 날짜 설정
+document.getElementById('start').value = formattedDate;
+
+
+
+
+
+
 function submitForm(cPage = 1, numPerpage = 10, url) {
-    var startTime = $("#example-date-input-start").val();
-    var endTime = $("#example-date-input-end").val();
-    fetch("${path}/commute/commuteDetailEnd", {
+    var empId = $("#empId").val();
+    var endTime = $("#start").val();
+    var startTime = $("#endTime").val();
+    var loginId = $("#empId").val();
+    console.log(startTime);
+    console.log(endTime);
+    console.log(empId);
+    fetch("${path}/commute/empCommuteEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -157,6 +186,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
             numPerpage: numPerpage,
             startTime: startTime,
             endTime: endTime,
+            loginId: loginId,
             jsName: "submitForm"
         })
     })
@@ -168,130 +198,119 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
         })
         .then(data => {      
             console.log(data);           
-            updateTable(data.commuteList);
-            console.log(totalData); 
-            $('#totalwork').html(totalData);
+           
+            
+            const $tbody = document.getElementById("empTable");
+    	    const $div = document.getElementById("pageBar");
+    	    const $trList = $tbody.querySelectorAll("tr");
+
+    	    $trList.forEach($tr => {
+    	        $tr.remove();
+    	    });
+
+    	    data.commuteList.forEach(c => {
+    	        const $tr = document.createElement('tr');
+
+    	        const $td1 = document.createElement('td');
+    	        $td1.innerText = c.EMP_COMMUTE_STATUS;
+
+    	        const $td2 = document.createElement('td');
+    	        $td2.innerText = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
+				
+				
+    	        const $td3 = document.createElement('td');
+    	        const $input1 = document.createElement('input');
+    	        $input1.className = 'form-control';
+    	        $input1.type = 'time';
+    	        $input1.name = 'clockin';
+    	        $input1.step='1';
+    	        $input1.value = c.EMP_COMMUTE_CLOCKIN  // 원하는 초기값 설정
+    	        $input1.id = 'example-search-input';
+    	        $td3.appendChild($input1);
+    	        console.log(typeof c.EMP_COMMUTE_WORKDATE);
+
+    	        const $td4 = document.createElement('td');
+    	        const $input2 = document.createElement('input');
+    	        $input2.className = 'form-control';
+    	        $input2.type = 'time';
+    	        $input2.name = 'clockout';
+    	        $input2.step='1';
+    	        $input2.value = c.EMP_COMMUTE_CLOCKOUT;  // 초기값 설정
+    	        $input2.id = 'example-search-input';
+    	        $td4.appendChild($input2);
+
+    	        const $td5 = document.createElement('td');
+    	        const $input3 = document.createElement('input');8
+    	        $input3.className = 'form-control';
+    	        $input3.type = 'time';
+    	        $input3.step='1';
+    	        $input3.name = 'starttime';
+    	        $input3.value = c.EMP_COMMUTE_STARTTIME;  // 초기값 설정
+    	        $input3.id = 'example-search-input';
+    	        $td5.appendChild($input3);
+
+    	        const $td6 = document.createElement('td');
+    	        const $input4 = document.createElement('input');
+    	        $input4.className = 'form-control';
+    	        $input4.type = 'time';
+    	        $input4.name = 'endtime';
+    	        $input4.step='1';
+    	        $input4.value = c.EMP_COMMUTE_ENDTIME ;  // 초기값 설정
+    	        $input4.id = 'example-search-input';
+    	        $td6.appendChild($input4);
+    			
+    	        const $td7 = document.createElement('td');
+    	        const $button = document.createElement('button');
+    	        $button.type = 'submit';
+    	        $button.className = 'btn btn-secondary btn-sm';
+    	        $button.innerText = '근무 수정';
+    	        $td7.appendChild($button);
+
+    	        const $hiddenInput1 = document.createElement('input');
+    	        $hiddenInput1.type = 'hidden';
+    	        $hiddenInput1.value = c.EMP_COMMUTE_WORKDATE;
+    	        $hiddenInput1.name = 'workdate';
+
+    	        const $hiddenInput2 = document.createElement('input');
+    	        $hiddenInput2.type = 'hidden';
+    	        $hiddenInput2.value = empId;
+    	        $hiddenInput2.name = 'empId';
+    	        $hiddenInput2.id = 'empId';
+
+    	        // 필요한 hidden input 요소들을 각각의 td에 추가
+    	        $td3.appendChild($hiddenInput1);
+    	        $td3.appendChild($hiddenInput2);
+
+    	        // 필요에 따라 다른 작업을 수행할 수 있습니다.
+    	        // 예를 들어, $tr을 $tbody에 추가하는 등의 작업을 수행할 수 있습니다.
+    	        $tr.appendChild($td1);
+    	        $tr.appendChild($td2);
+    	        $tr.appendChild($td3);
+    	        $tr.appendChild($td4);
+    	        $tr.appendChild($td5);
+    	        $tr.appendChild($td6);
+    	        $tr.appendChild($td7); 
+    	        $tbody.appendChild($tr);
+    	    });
+            
         })
         .catch(error => {
             console.error("Error:", error);
         });
 }
 
-function updateTable(commuteList) {
-    $("#empTable").empty();
-    var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
-    var absenceCount=0,latenessCount = 0,nonabsence =0;
-    commuteList.forEach(c => {
-         clockInTime = c.EMP_COMMUTE_CLOCKIN;
-         clockOutTime = c.EMP_COMMUTE_CLOCKOUT;
-         startTime = c.EMP_COMMUTE_STARTTIME;
-         endTime = c.EMP_COMMUTE_ENDTIME;
-         //날짜만 잘라준다 
-         workDate = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
-       
-        /* console.error("clockInTime:", clockInTime);
-        console.error("clockOutTime:", clockOutTime);
-        console.error("startTime:", startTime);
-        console.error("endTime:", endTime);
-        console.error("workDate:", workDate); */  
-        var row = document.createElement("tr");
 
-        var statusCell = document.createElement("td");
-        statusCell.textContent = c.EMP_COMMUTE_STATUS;
-        row.appendChild(statusCell);
-
-        var workDateCell = document.createElement("td");
-        workDateCell.textContent = workDate;
-        row.appendChild(workDateCell);
-
-        var clockInTimeCell = document.createElement("td");
-        clockInTimeCell.textContent = clockInTime;
-        row.appendChild(clockInTimeCell);
-
-        var clockOutTimeCell = document.createElement("td");
-        clockOutTimeCell.textContent = clockOutTime;
-        row.appendChild(clockOutTimeCell);
-
-        var workDurationCell = document.createElement("td");
-        workDurationCell.textContent = c.WORK_DURATION;
-        row.appendChild(workDurationCell);
-
-        var startTimeCell = document.createElement("td");
-        startTimeCell.textContent = startTime;
-        row.appendChild(startTimeCell);
-
-        var endTimeCell = document.createElement("td");
-        endTimeCell.textContent = endTime;
-        row.appendChild(endTimeCell);
-
-        var breakDurationCell = document.createElement("td");
-        breakDurationCell.textContent = c.BREAK_DURATION;
-        row.appendChild(breakDurationCell);
-/* 
-        // Append the row to the table
-        $("#empTable").append(row);
-        if (c.EMP_COMMUTE_ABSENCE === 'Y') {
-            absenceCount++;
-        }
-        if (c.EMP_COMMUTE_ABSENCE === 'N') {
-        	nonabsence++;
-        }
-
-        if (c.EMP_COMMUTE_LATENESS === 'Y') {
-            latenessCount++;
-        } */
-        
-    });
-    
-   /*  
-    console.error("latenessCount:", latenessCount);
-    console.error("absenceCount:", absenceCount);
-    console.error("nonabsence:", nonabsence);
-    var total = absenceCount+nonabsence
-    $('#lateCount').html(${'latenessCount'});
-    $('#finishCount').html(${'absenceCount'});
-    $('#absence').html(${'nonabsence'});
-    $('#totalwork').html(${'total'}); */
-    
-}
 document.getElementById('commuteWriteBtn').addEventListener('click', function() {
     window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
 });
-/* 
-   $("time1").ready(function() {
-	 // INPUT 박스에 들어간 ID값을 적어준다.
-	 $("#START_TIME,#END_TIME").timepicker({
-            'minTime': '09:00am', // 조회하고자 할 시작 시간 ( 09시 부터 선택 가능하다. )
-            'maxTime': '20:00pm', // 조회하고자 할 종료 시간 ( 20시 까지 선택 가능하다. )
-            'timeFormat': 'H:i',
-            'step': 30 // 30분 단위로 지정. ( 10을 넣으면 10분 단위 )    });
-	         $(window).scroll(function(){
-		        $(".ui-timepicker-wrapper").hide();
-		    }); 
-	}
-	}  
-*/
 
-
-/*   $(document).ready(function() { 
-	       // INPUT 박스에 들어간 ID값을 적어준다.
-	        $("#START_TIME,#END_TIME").timepicker({
-		            'minTime': '09:00am', 
-		// 조회하고자 할 시작 시간 ( 09시 부터 선택 가능하다. )
-		            'maxTime': '20:00pm', 
-		// 조회하고자 할 종료 시간 ( 20시 까지 선택 가능하다. )
-		            'timeFormat': 'H:i',
-		            'step': 30 
-		// 30분 단위로 지정. ( 10을 넣으면 10분 단위 )
-		    });       
-		 $(window).scroll(function(){
-			        $(".ui-timepicker-wrapper").hide();
-		});
-    });  */
-			
-	
-	
-
+//기간 시작 기간보다 끝기간 못 지정하기 
+function updateEndTimeMin() {
+    var startTimeInput = document.getElementById('endTime');
+    var selectedDate = startTimeInput.value;
+    var endTimeInput = document.getElementById('start');
+    endTimeInput.min = selectedDate;
+}
 
 
 	

@@ -9,7 +9,7 @@
 
 <link href="/resource/css/approval/viewdoc.css" rel="stylesheet" />
     <!-- TEAM COMA SPACE -->
-    
+<script src="/resource/js/jquery-3.7.0.js"></script>    
 <c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>     
 
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
@@ -31,9 +31,9 @@
 	          	   		</c:if>
           	   		</div>
           	   		<div class="col-2">
-          	   			<input type="button" onclick="downloadPdf();" class="btn btn-primary btn-lg view_Btn" value="pdf 받기">
+          	   			<input type="button" onclick="pdfDownload();" class="btn btn-primary btn-lg view_Btn" value="pdf 받기">
           	   		</div>
-          	   	
+          	 
           	   </div>
 
 			  <div class="row">
@@ -212,6 +212,25 @@
  </form>
  
 <script>
+//pdf다운 버튼 -> 결재자 id 배열 넘기기
+  const pdfDownload=()=>{
+  	 console.log("버튼 테스트");
+  	
+  	  var apprIdArr = [];
+  	  <c:forEach var="appr" items="${apprInfoList}">
+  	  	apprIdArr.push('${appr.empId}');
+  	  </c:forEach>
+
+  	  $('#apprIdArr').val(apprIdArr);
+  	  
+  	  console.log($('#apprIdArr').val());
+  	  
+  	  $("#pdfDownload").submit();
+  	
+  }
+</script>
+ 
+<script>
 
 
 const reject=()=>{ //반려 버튼
@@ -242,23 +261,6 @@ const approve=()=>{ //승인 버튼
 	  
 }
 
-//pdf다운 버튼 -> 결재자 id 배열 넘기기
-  const downloadPdf=()=>{
-	  
-	  var apprIdArr = [];
-	  <c:forEach var="appr" items="${apprInfoList}">
-	  	apprIdArr.push('${appr.empId}');
-	  </c:forEach>
-	  
-// 	  var apprIdJson = JSON.stringify(apprIdArr);
-	  $('#apprIdArr').val(apprIdArr);
-	  
-	  console.log($('#apprIdArr').val());
-	  
-	  $("#pdfDownload").submit();
-	
-  }
-  
   
 </script>
 

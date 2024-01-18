@@ -1,12 +1,7 @@
 package com.coma.student.controller;
 
 import java.security.Principal;
-
-import java.util.Arrays;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +45,13 @@ public class StudentController {
 		int result=service.insertStudentByAttend(attendance);
 		return "redirect:/student/student";
 		
+	}
+	
+	@PostMapping("/studentSignificant")
+	public @ResponseBody int studentSignificantBystuNo(@RequestBody Map<String, Object> significantData) {
+		System.out.println(significantData);
+		int result=service.studentSignificantBystuNo(significantData);
+		return result;
 	}
 
 	

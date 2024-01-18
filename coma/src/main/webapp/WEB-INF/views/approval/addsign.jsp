@@ -13,7 +13,7 @@
     <!-- TEAM COMA SPACE -->
 
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
-        <div class="container" style="text-align: center; margin-top:5px; margin-bottom: 5px;">
+        <div class="container" style="text-align: left; margin-top:5px; margin-bottom: 5px;">
           <!-- coma content space -->
     
           <div class="doc_basic">
@@ -21,26 +21,75 @@
           	  <input type="hidden" name="empId" value="${loginMember.empId }">
           	  
           	   <div class="row">
-          	   		<div class="col-4">
+          	   		<div class="col-7">
+          	   			<h2>서명 새로 만들기</h2>
+          	   			<span>
+          	   				서명을 새로 그려 png파일로 저장합니다. 
+          	   			</span>
           	   		</div>
-          	   		<div class="col-4">
+          	   		<div class="col-3">
           	   			<input type="button" onclick="openSign();" class="btn btn-primary btn-lg" value="서명 만들기">
           	   		</div>
-          	   		<div class="col-4">
-<!--           	   			<input type="button" onclick="chooseSign();" class="btn btn-primary btn-lg" value="서명 추가"> -->
-						    <div class="custom-file">
-						        <input type="file" accept="image/*" name="imgFile" class="custom-file-input" id="customFileLang" lang="en">
-						        <label class="custom-file-label" for="customFileLang">서명 가져오기</label>
-						    </div>
-
+          	   		<div class="col-2">
           	   		</div>
           	   </div>
           	   <div class="row">
           	   		<div class="col-9">
+          	   			<hr>
+          	   		</div>
+          	   		<div class="col-3">
+          	   		</div>
+          	   </div>		
+          	   <div class="row">
+	          	   	<div class="col-7">
+	          	   		<h2>서명 가져오기</h2>
+	          	   		<span>
+	          	   			저장된 서명을 가져와 추가하기 버튼을 누르면 
+	          	   			해당 아이디의 서명이 등록됩니다.
+	          	   		</span>
+	          	   	</div>
+	          	   	<div class="col-5">
+	          	   	</div>
+          	   </div>
+          	   <div class="row">
+          	   		<div class="col-7">
+          	   		  <div class="custom-file">
+						        <input type="file" accept="image/*" name="imgFile" class="custom-file-input" id="customFileLang" lang="en">
+						        <label class="custom-file-label" for="customFileLang">서명 가져오기</label>
+						    </div>
           	   		</div>
           	   		<div class="col-3">
           	   			<input type="hidden" name="imgName">
-						<input type="submit" value="추가하기" class="btn btn-primary btn-lg" >
+						<input type="submit" value="추가하기" class="btn btn-outline-primary">
+          	   		</div>
+          	   		<div class="col-2">
+          	   		
+          	   		</div>
+          	   </div>
+          	    <div class="row">
+          	   		<div class="col-9">
+          	   			<hr>
+          	   		</div>
+          	   		<div class="col-3">
+          	   		</div>
+          	   </div>	
+          	   <div class="row">
+          	   		<div class="col-7">
+          	   			<h2>결재 승인 예시</h2>
+          	   			<span>
+          	   				결재 승인 후 pdf로 문서 다운로드시 결재 승인란에 자동으로 서명이 추가됩니다.
+          	   			</span>
+          	   		</div>
+          	   		<div class="col-3">
+          	   		</div>
+          	   		<div class="col-2">
+          	   		</div>
+          	   </div>
+          	   <div class="row">
+          	   		<div class="col-6">
+          	   			<img src="${path }/resource/upload/sign/appr_example.png"/>
+          	   		</div>
+          	   		<div class="col-6">
           	   		</div>
           	   </div>
 		</form>

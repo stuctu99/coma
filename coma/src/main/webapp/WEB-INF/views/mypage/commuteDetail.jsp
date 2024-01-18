@@ -59,7 +59,7 @@ div {
 		<div class="col-1"></div>
 		<div class="col-2">
 			<div class="form-group">
-		        <input class="form-control" type="date" name="startTime"  id="example-date-input-start">
+		        <input class="form-control" type="date" name="startTime"  id="example-date-input-start" onchange="updateEndTimeMin()">
 		    </div>
 		</div>
 		<div class="col-2">
@@ -72,7 +72,7 @@ div {
 		</div>
 		
 		<div class="col-1">
-			<button type="button" class="btn btn-primary"  onclick="submitForm()">전체보기</button>
+			<button type="button" class="btn btn-primary"  onclick="total()">전체보기</button>
 		</div>
 	</div>
 	<div class="row">
@@ -257,8 +257,8 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
         .then(data => {      
             console.log(data);           
             updateTable(data.commuteList);
-            console.log(totalData); 
-            $('#totalwork').html(totalData);
+            //console.log(totalData); 
+            //$('#totalwork').html(totalData);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -269,6 +269,7 @@ function updateTable(commuteList) {
     $("#empTable").empty();
     var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
     var absenceCount=0,latenessCount = 0,nonabsence =0;
+    console.log(commuteList);
     commuteList.forEach(c => {
          clockInTime = c.EMP_COMMUTE_CLOCKIN;
          clockOutTime = c.EMP_COMMUTE_CLOCKOUT;
@@ -276,7 +277,7 @@ function updateTable(commuteList) {
          endTime = c.EMP_COMMUTE_ENDTIME;
          //날짜만 잘라준다 
          workDate = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
-       
+         console.log(clockOutTime-clockInTime);
         /* console.error("clockInTime:", clockInTime);
         console.error("clockOutTime:", clockOutTime);
         console.error("startTime:", startTime);
@@ -299,6 +300,11 @@ function updateTable(commuteList) {
         var clockOutTimeCell = document.createElement("td");
         clockOutTimeCell.textContent = clockOutTime;
         row.appendChild(clockOutTimeCell);
+        
+        var clockOutTimeCell = document.createElement("td");
+        clockOutTimeCell.textContent = clockOutTime-clockInTime;
+        row.appendChild(clockOutTimeCell);
+        console.log(clockOutTime-clockInTime);
 
         var workDurationCell = document.createElement("td");
         workDurationCell.textContent = c.WORK_DURATION;
@@ -346,6 +352,13 @@ document.getElementById('commuteWriteBtn').addEventListener('click', function() 
     window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
 });
 
+function updateEndTimeMin() {
+    
+    var startTimeInput = document.getElementById('example-date-input-start');
+    var selectedDate = startTimeInput.value;
+    var endTimeInput = document.getElementById('example-date-input-end');
+    endTimeInput.min = selectedDate;
+}
 
 	
 </script>
