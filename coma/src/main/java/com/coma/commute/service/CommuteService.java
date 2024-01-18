@@ -28,4 +28,7 @@ public interface CommuteService {
 	
 	int insertCommuteAll(String empIds);
 	
+	int updateEmployeeCommute(Map<String, Object> commute);
+	
+	
 }

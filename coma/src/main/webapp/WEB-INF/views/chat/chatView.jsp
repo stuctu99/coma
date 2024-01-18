@@ -142,7 +142,7 @@ div {
 					</c:if>
 					<c:if test="${msg.empId != loginmember.empId }">
 						<div class="row other">
-							<span>${msg.empObj.empName }</span>
+							<span>${msg.empObj.empName } ${msg.empObj.job.jobType }</span>
 						</div>
 						<div class="row other">
 							<div class="msg-container">
@@ -162,9 +162,12 @@ div {
 		<div class="container">
 			<div class="row" style="padding: 0px 10px;">
 				<div class="input-group mb-3">
+					 <div class="input-group-prepend">
+				
 					<input type="text" id="msg" class="form-control"
 						placeholder="메세지를 입력하세요!" aria-label="Recipient's username"
 						aria-describedby="button-addon2">
+      				</div>
 					<div class="input-group-append">
 						<button id="btnSend" class="btn btn-outline-primary" type="button"
 							id="button-addon2" style="height: 46px;" onclick="sendMessage();"

@@ -32,6 +32,12 @@ $("#back").click(function() {
 	const roomNo = $("#roomNo").val();
 	const empId = loginId;
 	/*$connect.css("color","black");*/
+	connectUpdate(roomNo,empId);
+	
+})
+
+const connectUpdate = (roomNo,empId) =>{
+	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	fetch("/chatting/back", {
 		method: "delete",
 		headers: {
@@ -49,17 +55,17 @@ $("#back").click(function() {
 			if (data.result) {
 				console.log("나가기 성공");
 				server.send(new Message("rest", "", "", "", empId, roomNo).convert());
+				
 				window.close();
 				$("#chatting-list-btn").click();
 			}
 		})
-})
+}
+
 
 $(function() {
 	$("section>.container").scrollTop($("section>.container")[0].scrollHeight);
 })
-
-
 
 
 /* 채팅구현 */
@@ -91,6 +97,7 @@ server.onmessage = (response) => {
 }
 const messagePrint = (msg) => {
 	/* 꼭 알아두기 !!! */
+	/* 채팅 전송 시 채팅방 제목 하단에 최근 메세지 출력 */
 	$(opener.location).attr("href", "javascript:updateMsg('"+msg.roomNo+"','"+msg.chatContent+"');");
 	
 	console.log(msg);
@@ -126,7 +133,7 @@ const messagePrint = (msg) => {
 	} else {
 		//이외 receiver
 		nameDiv.classList.add("row", "other");
-		nameSpan.innerText = msg.empObj.empName;
+		nameSpan.innerText = msg.empObj.empName+" "+msg.empObj.job.jobType;
 		nameDiv.appendChild(nameSpan);
 		div.classList.add("other");
 		/*div.appendChild(nameDiv);*/
@@ -147,9 +154,12 @@ const messagePrint = (msg) => {
 
 const sendMessage = () => {
 	const msg = document.querySelector("#msg").value;
+	const $btnSend=$("#btnSend");
 	document.querySelector("#msg").value = "";
 	/*type,chatNo,chatContent,chatCreateDate,empId,roomNo*/
-	$("#btnSend").prop("disabled", true);
+	$btnSend.removeClass("btn-primary");
+	$btnSend.addClass("btn-outline-primary");
+	$btnSend.prop("disabled", true);
 	server.send(new Message("msg", "", msg, new Date(Date.now()), empId, roomNo).convert());
 }
 
@@ -212,13 +222,17 @@ window.onload = () => {
 	const $msg = $("#msg");
 	const $btn = $("#btnSend");
 	$msg.focus();
-	$msg.on("keyup", (e) => {
+	$msg.on("keydown", (e) => {
 		$btn.prop("disabled", false);
+		$btn.removeClass("btn-outline-primary");
+		$btn.addClass("btn-primary");
 		const $msgVal = $msg.val();
 		if ($msgVal.length > 0) {
 			if (e.key == 'Enter') {
 				sendMessage();
 				$("#msg").val("");
+				$btn.removeClass("btn-primary");
+				$btn.addClass("btn-outline-primary");
 				$btn.prop("disabled", true);
 			} else if ($msgVal.length == 0) {
 				$btn.prop("disabled", true);
@@ -313,3 +327,21 @@ const memberList = (roomNo) => {
 		})
 	})
 }
+
+
+/* 새로고침 방지 버튼 */
+function NotReload(e){
+    if( (e.ctrlKey == true && (e.keyCode == 78 || e.keyCode == 82)) || (e.keyCode == 116) ) {
+        e.keyCode = 0;
+        e.cancelBubble = true;
+        e.returnValue = false;
+    } 
+}
+document.onkeydown = NotReload;
+
+/*window.addEventListener('beforeunload', () => {
+	const roomNo = $("#roomNo").val();
+	const empId = loginId;
+	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+roomNo + "" + empId);
+	connectUpdate(roomNo,empId);
+})*/
