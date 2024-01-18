@@ -114,8 +114,6 @@ public class CommuteController {
 	        
 	        int totalData =service.countSearchCommute(commute);
 	        List <Commute> commuteList = service.searchCommute(commute);
-	          
-	        
 	        return Map.of("totalData",totalData,"commuteList",commuteList,"pageBar",pageFactory.pageAjax((int)commute.get("cPage"), (int)commute.get("numPerpage"), totalData, "/mypage/commuteDetailEnd",(String)commute.get("jsName")));
 
 	     }
@@ -127,6 +125,9 @@ public class CommuteController {
 			
 	    	List<Map> commute= service.selectCommuteAll(empId);
 			int count =service.countCommute(empId);
+			Emp empName = service.selectEmpName(empId);
+			
+			m.addAttribute("empName",empName);
 			m.addAttribute("commute",commute);   
 			m.addAttribute("count",count);
 			m.addAttribute("empId",empId);
@@ -134,6 +135,15 @@ public class CommuteController {
 			
 			return "mypage/empCommute";
 	     }
+	     //ajax 리스트 메소
+	     @PostMapping("/empCommuteEnd")
+	     public @ResponseBody Map<String, Object> empCommuteEnd (@RequestBody Map<String, Object> commute) {	        
+	        int totalData =service.countSearchCommute(commute);
+	        List <Commute> commuteList = service.searchCommute(commute); 
+	        
+	        return Map.of("commuteList",commuteList,"pageBar",pageFactory.pageAjax((int)commute.get("cPage"), (int)commute.get("numPerpage"), totalData, "/mypage/empCommute",(String)commute.get("jsName")));
+	     }
+	     
 	    //수정하기 
 	    @PostMapping("/updateEmployeeCommute")
 	 	public String  updateEmployeeCommute (@RequestParam Map<String, Object> commute, Model model) {
@@ -146,18 +156,17 @@ public class CommuteController {
 	    	System.out.println(workdate);
 	    	int result = service.updateEmployeeCommute(commute);
 	    	System.out.println(result);
-//	    	String msg, loc;		
-//	 		if(result>0) {
-//	 			msg="입력성공";
-//	 			loc="admin/adminEmp";
-//	 		}else {
-//	 			Object empId = emp.get("empId");
-//	 			msg="입력실패";
-//	 			loc = "mypage/EmployeeDetails?empId=" + empId;
-//	 			
-//	 		}
-//	 		model.addAttribute("msg",msg);
-//			model.addAttribute("loc",loc);
+	    	String msg, loc;		
+	 		if(result>0) {
+	 			msg="입력성공";
+	 			loc="admin/adminEmp";
+	 		}else {
+	 			String empId = (String)commute.get("empId");
+	 			msg="입력실패";
+	 			loc = "commute/empCommute?empId=" + empId;
+	 		}
+	 		model.addAttribute("msg",msg);
+			model.addAttribute("loc",loc);
 			return "common/msg";
 
 	     }
