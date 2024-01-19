@@ -55,12 +55,13 @@
 					    </ul>
 					</div>
 				</div>
+				<div class="col-1"></div>
 				<div class="row" style="display: flex; justify-content: center;">
-					<div class="card shadow" style="height: 500px; margin-top: 20px; width: 700px;">
+					<div class="card shadow" style="height: 500px; margin-top: 20px; width: 600px;">
 					    <div class="card-body">
 					        <div class="tab-content" id="myTabContent">
 					            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-					            	<h1>"COMA_THINK"</h1>
+					            	<h2>"COMA_THINK"</h2>
 					                <p class="description">
 					                	“인간다움”을 존중하는 소통과 공감을 소중하게 생각합니다.<br>
 					                	먹고 살기 위한 단순 취업이나 취업률이라는 숫자만을 고집하지는 않습니다.<br>
@@ -73,7 +74,7 @@
 					                </h1>
 					            </div>
 					            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-					                <h1>"COMA_행정팀"</h1>
+					                <h2>"COMA_행정팀"</h2>
 					                <p class="description">
 					                	여러분들의 원활한 업무와 강의를 위해 노력하겠습니다.<br>
 					                	365일 여러분의 뒤에서 튼튼한 버팀목 행정팀이 되겠습니다.<br>
@@ -85,7 +86,7 @@
 					                </h1>
 					            </div>
 					            <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-					                <h1>"COMA_교육팀"</h1>
+					                <h2>"COMA_교육팀"</h2>
 					                <p class="description">
 										“노력은 절대 배신하지 않는다. 노력하는 만큼 성장한다.”<br>
 										사람마다 지식을 습득하는 시간에는 차이가 있습니다.<br>
@@ -106,7 +107,7 @@
 					                </h1>
 					            </div>
 					            <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
-					                <h1>"COMA_취업팀"</h1>
+					                <h2>"COMA_취업팀"</h2>
 					                <p class="description">
 					                	“인생의 바다에서 방향을 고민하는 당신을 응원합니다.”<br>
 										공부와 취업 준비는 어두운 터널을 지나는 과정이 아니라<br>
@@ -120,7 +121,7 @@
 					                </h1>
 					            </div>
 					            <div class="tab-pane fade" id="tabs-icons-text-5" role="tabpanel" aria-labelledby="tabs-icons-text-5-tab">
-					            	<h1>"COMA_회계팀"</h1>
+					            	<h2>"COMA_회계팀"</h2>
 					                <p class="description">
 										"여러분의 학원 생활에 부족함 없이 꼼꼼히 관리하는 회계팀이 되겠습니다."<br>
 					                </p>
