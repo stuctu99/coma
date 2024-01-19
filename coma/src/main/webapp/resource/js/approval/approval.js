@@ -437,4 +437,20 @@ const addref=addDelref[0];
 const delref=addDelref[1];
 
 
+// ---------------------- 자주 쓰는 결재선 저장 ---------------------------
+
+const save_appr=()=>{
+	$(".save_appr").show();
+	$("#save_btn").hide();
+	
+}
+
+const cancel_appr=()=>{ // 결재선 저장 취소
+	$("#save_btn").show();
+	$(".save_appr").hide();
+	
+	
+}
+
+
 	
