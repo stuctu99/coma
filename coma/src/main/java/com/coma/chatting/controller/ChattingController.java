@@ -1,6 +1,5 @@
 package com.coma.chatting.controller;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +20,7 @@ import com.coma.chatting.model.service.ChattingService;
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingMessage;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
@@ -62,6 +62,17 @@ public class ChattingController {
 		List<Emp> roomMemberList = service.selectRoomMemberList(roomNo);
 
 		return Map.of("roomMemberList", roomMemberList, "roomMemberCheck", roomMember.get(roomNo));
+	}
+	
+	@GetMapping("/invitelist/{roomNo}")
+	@ResponseBody
+	public Map<String,Object> selectInviteList(@PathVariable String roomNo){
+		List<Emp> inviteList = service.selectInviteList(roomNo);
+		List<Dept> dept = service.selectDept();
+		Map<String,Object> inviteData = new HashMap<String,Object>();
+		inviteData.put("inviteList", inviteList);
+		inviteData.put("dept", dept);
+		return inviteData;
 	}
 
 //	채팅방 입장 시 입장 인원 insert
@@ -134,6 +145,8 @@ public class ChattingController {
 
 		int deleteEmpCheck = service.deleteChatRoomJoinEmpById(exitEmp);
 		if (deleteEmpCheck > 0) {
+			Map<String, String> memberlist = roomMember.get(exitEmp.get("roomNo"));
+			memberlist.remove(exitEmp.get("empId"));
 			int roomMeberCount = service.selectMemberCountInRoom(exitEmp.get("roomNo"));
 			if (roomMeberCount == 0) {
 				System.err.println(exitEmp.get("roomNo") + "방에 남은 인원 : " + roomMeberCount);

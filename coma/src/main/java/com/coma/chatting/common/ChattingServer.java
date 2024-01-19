@@ -59,6 +59,8 @@ public class ChattingServer extends TextWebSocketHandler {
 		case "msg":
 			sendMessage(msg);
 			break;
+		case "invite":
+			sendMessage(msg);
 		case "rest":
 			clientOut(msg);
 			break;

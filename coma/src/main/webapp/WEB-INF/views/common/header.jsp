@@ -135,33 +135,11 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link">
-              <i class="ni ni-key-25 text-info"></i> 테스트2
-            </a>
-            <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
-              <li><a href="${path}/organization/organization">조직도</a></li>
-              <li><a href="">인사부</a></li>
-              <li><a href="">인사부</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">
-              <i class="ni ni-circle-08 text-pink"></i> 테스트3
+            <a class="nav-link" id="messenger-btn" onclick="messenger_active('${pageContext.request.contextPath}');">
+             <i class="ni ni-chat-round text-primary"></i> 메신저
             </a>
           </li>
         </ul>
-        <!-- Divider -->
-        <hr class="my-3">
-        <!-- Heading -->
-        <h6 class="navbar-heading text-muted">PLUS</h6>
-        <!-- Navigation -->
-        <ul class="navbar-nav mb-md-3">
-          <li class="nav-item">
-            <a class="nav-link" id="messenger-btn" onclick="messenger_active('${pageContext.request.contextPath}');">
-              <i class="ni ni-spaceship"></i> Messenger
-            </a>
-          </li>
-         </ul>
       </div>
     </div>
   </nav>

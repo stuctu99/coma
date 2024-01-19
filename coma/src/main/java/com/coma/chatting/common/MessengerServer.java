@@ -2,6 +2,7 @@ package com.coma.chatting.common;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,17 @@ public class MessengerServer extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		
+		Iterator<Map.Entry<String, WebSocketSession>> client = clients.entrySet().iterator();
+		while(client.hasNext()) {
+			Map.Entry<String, WebSocketSession> info = client.next();
+			if(info.getValue().equals(session)) {
+				System.err.println("삭제 세션 정보"+info.getKey()+":"+info.getValue());
+				clients.remove(info.getKey());
+			}
+		}
+		
+		System.err.println("세션정보!!!!"+session);
 		System.err.println("[MessengerServer] : 접속 유지중인 세션" + clients);
 		System.err.println("[MessengerServer] : 종료");
 	}
@@ -85,8 +97,6 @@ public class MessengerServer extends TextWebSocketHandler {
 //	1:1채팅방 알림 메소드
 	private void privateRoomAlarm(MessengerMessage msg) {
 		System.err.println("[MessengerServer] 접속 세션 : "+clients);
-		String roomNo = service.selectNowCreateChatRoomNo();
-		msg.setRoomNo(roomNo);
 		String loginId = msg.getLoginId();
 		String targetId = msg.getTargetId();
 		List<String> list = new ArrayList<String>();
