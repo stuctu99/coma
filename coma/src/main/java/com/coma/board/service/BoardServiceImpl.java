@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.coma.board.dao.BoardDao;
 import com.coma.model.dto.Board;
@@ -34,9 +35,23 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
+	@Transactional
 	public int insertBoard(Board b) {
-		// TODO Auto-generated method stub
-		return dao.insertBoard(session, b);
+		
+		int result=dao.insertBoard(session, b);
+		
+		if(result>0) {
+			if(b.getBoardFile().size()>0) {
+				b.getBoardFile().forEach(file->{
+					int fileresult = dao.insertBoardFile(session, file);
+					if(fileresult==0) throw new RuntimeException("등록실패");
+				});
+			}else {
+				throw new RuntimeException("등록실패");
+			}
+		}
+		
+		return result;
 	}
 
 	 
@@ -92,6 +107,13 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> searchBoard(Map<String, Object> board) {
 		// TODO Auto-generated method stub
 		return dao.searchBoard(session, board);
+	}
+
+
+	@Override
+	public int deleteReply(int replyNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteReply(session, replyNo);
 	}
 	
 	

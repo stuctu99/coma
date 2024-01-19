@@ -23,11 +23,14 @@
   <link href="${path }/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
-  <!-- <style>
-    div{
-      border: 2px solid red;
-    }
-  </style> -->
+<!-- 1.19 15:27 jm 폰트추가 -->
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+	
+	* {
+	font-family: 'Noto Sans KR', sans-serif;
+	}
+</style>
 </head>
 <body class="">
   <c:set var="e" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
@@ -94,8 +97,8 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item  active ">
-            <a class="nav-link  active " href="#">
-              <i class="ni ni-tv-2 text-primary"></i> 내 부서
+            <a class="nav-link  active " href="${path }/organization/organization">
+              <i class="ni ni-tv-2 text-primary"></i> 조직도
             </a>
           </li>
           <li class="nav-item">
@@ -105,8 +108,7 @@
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
               <li><a href="${pageContext.request.contextPath}/approval/addsign">서명 등록</a></li>
               <li><a href="${pageContext.request.contextPath}/approval/writedoc">결재신청</a></li>
-              <li><a href="${path }/apprdoc/proceedList">진행 중인 문서</a></li>
-              <li><a href="${path }/apprdoc/docList">문서함</a></li>
+              <li><a href="${path }/apprdoc/allList">문서함</a></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -135,33 +137,11 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link">
-              <i class="ni ni-key-25 text-info"></i> 테스트2
-            </a>
-            <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
-              <li><a href="${path}/organization/organization">조직도</a></li>
-              <li><a href="">인사부</a></li>
-              <li><a href="">인사부</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">
-              <i class="ni ni-circle-08 text-pink"></i> 테스트3
+            <a class="nav-link" id="messenger-btn" onclick="messenger_active('${pageContext.request.contextPath}');">
+             <i class="ni ni-chat-round text-primary"></i> 메신저
             </a>
           </li>
         </ul>
-        <!-- Divider -->
-        <hr class="my-3">
-        <!-- Heading -->
-        <h6 class="navbar-heading text-muted">PLUS</h6>
-        <!-- Navigation -->
-        <ul class="navbar-nav mb-md-3">
-          <li class="nav-item">
-            <a class="nav-link" id="messenger-btn" onclick="messenger_active('${pageContext.request.contextPath}');">
-              <i class="ni ni-spaceship"></i> Messenger
-            </a>
-          </li>
-         </ul>
       </div>
     </div>
   </nav>

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingMessage;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
 public interface ChattingService {
@@ -16,7 +17,8 @@ public interface ChattingService {
 	Emp selectEmpByEmpId(String empId);
 	ChattingJoin selectJoinCheckByEmpId(Map<String,String> joinEmp);
 	int selectMemberCountInRoom(String roomNo);
-	
+	List<Emp> selectInviteList(String roomNo);
+	List<Dept> selectDept();
 	
 	int insertJoinEmp(Map<String,String> joinInfo);
 	int insertChattingMessage(List<ChattingMessage> msgPackages); 

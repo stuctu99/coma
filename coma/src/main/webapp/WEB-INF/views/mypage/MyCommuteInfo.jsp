@@ -199,10 +199,11 @@ td {
 				str += "<br><span style='font-weight: bold; color: #F7878E1;'>"+clockOut+ "</span><span style='color: #F7878E1;font-weight: bold;' > 퇴근</span> ";
 			}
 			
-			if ("${item.EMP_COMMUTE_CLOCKOUT}" && "${item.EMP_COMMUTE_LATENESS}" === 'Y') {
+			if ("${item.EMP_COMMUTE_LATENESS}" === 'Y') {
 				str += "<h4 style='color: #FF6464;'>지각</h4>";
 			}
-			document.getElementById(tdId).innerHTML = str;			
+
+			document.getElementById(tdId).innerHTML = str;
 		</c:forEach>
 	}
 

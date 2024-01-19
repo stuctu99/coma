@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingMessage;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
 @Repository
@@ -49,6 +50,18 @@ public class ChattingDaoImpl implements ChattingDao {
 	public ChattingJoin selectJoinCheckByEmpId(SqlSession session, Map<String, String> joinEmp) {
 		// TODO Auto-generated method stub
 		return session.selectOne("chatting.selectJoinCheckByEmpId",joinEmp);
+	}
+	
+	@Override
+	public List<Emp> selectInviteList(SqlSession session, String roomNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("chatting.selectInviteList",roomNo);
+	}
+
+	@Override
+	public List<Dept> selectDept(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectList("emp.selectDeptListforChatting");
 	}
 
 	@Override

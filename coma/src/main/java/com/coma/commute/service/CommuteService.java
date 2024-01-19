@@ -6,6 +6,7 @@ import java.util.Map;
 
 
 import com.coma.model.dto.Commute;
+import com.coma.model.dto.Emp;
 
 public interface CommuteService {
 	//출근시간 찍히기 -> insert
@@ -29,6 +30,10 @@ public interface CommuteService {
 	int insertCommuteAll(String empIds);
 	
 	int updateEmployeeCommute(Map<String, Object> commute);
+	
+	Emp selectEmpName(String empId);
+	
+	int updateUncleared();
 	
 	
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import com.coma.model.dto.Commute;
+import com.coma.model.dto.Emp;
 @Repository
 public class CommuteDaoImpl implements CommuteDao {
 
@@ -80,6 +81,20 @@ public class CommuteDaoImpl implements CommuteDao {
 		System.out.println(commute);
 		return session.update("commute.updateEmployeeCommute",commute);
 	}
+
+	@Override
+	public Emp selectEmpName(SqlSession session, String empId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectEmpName",empId);
+	}
+
+	@Override
+	public int updateUncleared(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.update("commute.updateUncleared");
+	}
+
+
 
 
 

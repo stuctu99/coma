@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.coma.commute.dao.CommuteDao;
 import com.coma.model.dto.Commute;
+import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -84,6 +85,20 @@ public class CommuteServiceImpl implements CommuteService {
 		// TODO Auto-generated method stub
 		return dao.updateEmployeeCommute(session,commute);
 	}
+
+	@Override
+	public Emp selectEmpName(String empId) {
+		// TODO Auto-generated method stub
+		return dao.selectEmpName(session,empId);
+	}
+
+	@Override
+	public int updateUncleared() {
+		
+		return dao.updateUncleared(session);
+	}
+
+
 
 
 

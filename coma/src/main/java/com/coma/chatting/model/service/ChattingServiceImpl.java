@@ -12,6 +12,7 @@ import com.coma.chatting.model.dao.ChattingDao;
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingMessage;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
@@ -57,6 +58,18 @@ public class ChattingServiceImpl implements ChattingService {
 		return dao.selectJoinCheckByEmpId(session, joinEmp);
 	}
 	
+	@Override
+	public List<Emp> selectInviteList(String roomNo) {
+		// TODO Auto-generated method stub
+		return dao.selectInviteList(session, roomNo);
+	}
+	
+	@Override
+	public List<Dept> selectDept() {
+		// TODO Auto-generated method stub
+		return dao.selectDept(session);
+	}
+
 	
 	@Override
 	@Transactional
@@ -105,6 +118,7 @@ public class ChattingServiceImpl implements ChattingService {
 		// TODO Auto-generated method stub
 		return dao.deleteChattingMsgByRoomNo(session,exitEmp);
 	}
+	
 	
 	
 
