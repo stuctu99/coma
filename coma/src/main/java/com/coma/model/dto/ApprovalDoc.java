@@ -32,6 +32,7 @@ public class ApprovalDoc {
 	private ApprovalEtc etc;
 	private Emp emp;
 	
+	
 	private List<ApprovalAttachment> files;
 	
 	private List<Approver> approver;

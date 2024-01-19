@@ -14,4 +14,6 @@ public interface ApprdocService {
 	List<ApprovalDoc> selectDocList(Map<String, Integer> page, String docProgress);
 	//문서검색
 	List<ApprovalDoc> searchDoc(Map<String, Object> doc);
+	//문서수카운트
+	int selectApprCount(String progress);
 }

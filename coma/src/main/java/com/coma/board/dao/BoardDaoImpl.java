@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.coma.model.dto.Board;
+import com.coma.model.dto.BoardFile;
 import com.coma.model.dto.Reply;
 
 @Repository
@@ -84,6 +85,19 @@ public class BoardDaoImpl implements BoardDao {
 		// TODO Auto-generated method stub
 		return session.selectList("board.searchBoard",board);
 	}
+
+	@Override
+	public int deleteReply(SqlSession session, int replyNo) {
+		// TODO Auto-generated method stub
+		return session.delete("reply.deleteReply", replyNo);
+	}
+
+	@Override
+	public int insertBoardFile(SqlSession session, BoardFile bf) {
+		// TODO Auto-generated method stub
+		return session.insert("board.insertBoardFile",bf);
+	}
+	
 	
 	
 	

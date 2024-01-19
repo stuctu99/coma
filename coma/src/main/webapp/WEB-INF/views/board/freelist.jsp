@@ -74,15 +74,25 @@
 						</td>
 						</c:if>
 						<td class="no">${free.boardNo }</td>
-	   					<td class="title"><a href="/board/freePost?boardNo=${free.boardNo }">${free.boardTitle }&emsp;</a>
-	   						
-	   						<strong style="color: red;">
-	   							<c:if test="${free.replyCount > 0 }">
-	   								${free.replyCount }
-	   							</c:if>
-	   						</strong>
-	   						
+						
+						
+	   					<td class="title">
+	   						<a href="/board/freePost?boardNo=${free.boardNo }" style="display: flex">
+	   							<!-- 글 제목 -->
+	   							${free.boardTitle }&emsp;
+	   							<!-- 글 이미지여부 -->
+		   						<c:if test="${free.boardFileCount > 0 }">
+		   							<i class="ni ni-image" style="color: black;"></i>&emsp;
+		   						</c:if>
+		   						<!-- 글 댓글여부  -->
+		   						<strong style="color: red;">
+		   							<c:if test="${free.replyCount > 0 }">
+		   								${free.replyCount }
+		   							</c:if>
+		   						</strong>
+		   					</a>
 	   					</td>
+	   					
 	   					<td class="writer">${free.emp.empName }</td>
 	   					
 	   					<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
@@ -135,7 +145,7 @@
 					<a href="${path }/board/writeView?boardType=1" class="btn btn-success"><span>글쓰기</span></a>	
 				</div>
 			</div>
-			<div class="">
+			<div class="pageBar-container">
 						${pageBarFree }
 			</div>
 		</div>

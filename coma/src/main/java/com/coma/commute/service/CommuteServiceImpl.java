@@ -92,6 +92,12 @@ public class CommuteServiceImpl implements CommuteService {
 		return dao.selectEmpName(session,empId);
 	}
 
+	@Override
+	public int updateUncleared() {
+		
+		return dao.updateUncleared(session);
+	}
+
 
 
 
