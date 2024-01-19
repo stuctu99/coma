@@ -444,17 +444,35 @@ const save_appr=()=>{
 	$("#save_btn").hide();*/
 	
 	let apprList = "";
+	let apprListNum ="";
 	
+	
+	// 수정 필요
 	for(let i=0; i<$(".appr_result").length; i++){	
 		if($('input[name="appr_result[]"]')[i].value){
-				apprList += (i+1)+". " + $('input[name="appr_result[]"]')[i].value + "\n";
+				apprList += $('input[name="appr_result[]"]')[i].value
+				apprListNum += (i+1)+". " + apprList + "\n";
+				
+				console.log(apprList);
+				console.log(apprListNum);
 		} 
 	}
 
 	console.log(apprList);
 
-	let save_msg = prompt(apprList, '결재선 이름을 설정하세요.');
-
+	let lineName = prompt(apprListNum, '결재선 이름을 설정하세요.');
+	
+	localStorage.setItem(lineName, apprListNum);
+	
+	let test = localStorage.getItem(apprLine)
+	
+	for(let i=0; i<window.localStorage.length; i++){
+		const line_key = window.localStorage.key(i);
+		const line_val = window.localStorage.getItem(line_key);
+		// console.log(line_key + "<br/>"+ line_val + "<br/>");
+		
+		
+	}
 	
 }
 
