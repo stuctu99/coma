@@ -38,6 +38,14 @@ public class ApprdocDaoImpl implements ApprdocDao {
 		return session.selectList("approval.searchDoc",doc,rb);
 	}
 
+	@Override
+	public int selectApprCount(SqlSession session, Map<String, Object> pgMap) {
+		// TODO Auto-generated method stub
+		return session.selectOne("approval.selectApprCount", pgMap);
+	}
+	
+	
+
 	
 	
 }

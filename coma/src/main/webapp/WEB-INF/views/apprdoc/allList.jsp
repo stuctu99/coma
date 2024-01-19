@@ -22,25 +22,25 @@ font-family: 'Noto Sans KR', sans-serif;
 	text-align: left;
 }
 </style>
-
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
-
-    <nav class="space-y-2" style="text-align: center">
+        
+    <div class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
-      	<h1>문서함</h1>
-      	<a href="${path }/apprdoc/proceedList">
-        <span class="text-sm font-semibold text-gray-500">진행중인문서</span>
+		<h1>진행중인 문서</h1>
+      	<a href="${path }">
+        <span class="text-sm font-semibold text-gray-500">진행중인 문서</span>
         </a>
-        <a href="${path }">
+        <a href="${path }/apprdoc/docList">
           <span class="text-sm font-semibold text-gray-500">문서함</span>
         </a>
       </div>
-    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
-  		<span>작성하기</span>
-    </a>
-    </nav>
-    
-   <div class="card-container">
+      <div>
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
+	  		<span>작성하기</span>
+	    </a>
+	  </div>
+    </div>
+<div class="card-container">
 	<div class="container" style="margin: 20px 0 20px 0; display: flex; width: 100%; justify-content: center;">
 		<div class="card card-stats alldoc">
 		    <a href="${path }/apprdoc/allList">
@@ -61,7 +61,7 @@ font-family: 'Noto Sans KR', sans-serif;
 				    <span class="text-nowrap"></span>
 				</p>
 		    </div>
-			</a>
+		    </a>
 		</div>
 		<div class="card card-stats pgdoc">
 			<a href="${path }/apprdoc/proceedList">
@@ -106,25 +106,25 @@ font-family: 'Noto Sans KR', sans-serif;
 		    </a>
 		</div>
 	</div>
-    
+</div> 
     
   <main class="flex-1 p-5">
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-3">
       <div class="flex space-x-2" style ="text-align: right;">
-      <form name="searchForm" autocomplete="off">
-        <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+     	<form name="searchForm" autocomplete="off">
+        <input
+          class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
           placeholder="문서 검색" name="keyword"/>
         <select
           aria-hidden="true"
           tabindex="-1"
-          style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
-        >
-        <option value=""></option>
+          style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;">
+          <option value=""></option>
         </select>
         <button type="button" class="inline-flex items-center justify-center btn btn-success" onclick="getSearchList()">
         	검색
 	    </button>
-	   </form>
+        </form>
       </div>
     </div>
     <div class="bg-white p-5 border rounded">
@@ -148,7 +148,7 @@ font-family: 'Noto Sans KR', sans-serif;
                 기안일
               </th>
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                완료일
+                수정일
               </th>
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
                 상태
@@ -156,25 +156,24 @@ font-family: 'Noto Sans KR', sans-serif;
             </tr>
           </thead>
           <tbody>
-	       		<c:forEach var="docs" items="${doc}">
-		       		<c:if test="${docs.docProgress eq '완료' || docs.docProgress eq '반려'}">
-		        		<tr>
-			         		<td>${docs.docNo }</td>
-			         		<td>${docs.docType }</td>
-			         		<td><a href="/approval/viewdoc?docNo=${docs.docNo }">${docs.docTitle }</a></td>
-			         		<td>${docs.empId }</td>
-			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
-			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
-		         			<td>${docs.docProgress }</td>
-		        		</tr>
-		       		</c:if>
-	       		</c:forEach>
+         		<c:forEach var="proceeds" items="${proceed}">
+		         		<tr>
+			          		<td>${proceeds.docNo }</td>
+			          		<td>${proceeds.docType }</td>
+			          		<td><a href="/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
+			          		<td>${proceeds.emp.empName }</td>
+			          		<td><fmt:formatDate value="${proceeds.docDate}" pattern="YYYY-MM-dd" /></td>
+			          		<td></td>
+			          		<td>${proceeds.docProgress }</td>
+		         		</tr>
+          		</c:forEach>	
           </tbody>
         </table>
       </div>
     </div>
   </main>
-  </div> 
+  </div>
+  
 <script>
 //검색기능
 function getSearchList(){
@@ -186,18 +185,18 @@ function getSearchList(){
 		success : function(result){
 			$('.table > tbody').empty();
 			if(result.length>=1){
-				result.filter(e=>e.docProgress.includes('반려')||e.docProgress.includes('완료'))
+				result.filter(e=>e.docProgress.includes('대기')||e.docProgress.includes('진행'))
 				.forEach(function(searchDoc){
 					console.log(searchDoc);
 					const writeDate=new Date(searchDoc.docDate);
 					str='<tr>'
-					str+="<td>"+searchDoc.docNo+"</td>";
-					str+="<td>"+searchDoc.docType+"</td>";
-					str+="<td><a href = '/approval/viewdoc?docNo=" + searchDoc.docNo + "'>" + searchDoc.docTitle + "</a></td>";
-					str+="<td>"+searchDoc.emp.empName+"</td>";
-					str+="<td>"+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+"</td>";
-					str+="<td>"+searchDoc.docCorrectDate+"</td>";
-					str+="<td>"+searchDoc.docProgress+"</td>";
+						str+="<td>"+searchDoc.docNo+"</td>";
+						str+="<td>"+searchDoc.docType+"</td>";
+						str+="<td><a href = '/approval/viewdoc?docNo=" + searchDoc.docNo + "'>" + searchDoc.docTitle + "</a></td>";
+						str+="<td>"+searchDoc.emp.empName+"</td>";
+						str+="<td>"+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+"</td>";
+						str+="<td>"+searchDoc.docCorrectDate+"</td>";
+						str+="<td>"+searchDoc.docProgress+"</td>";
 					str+="</tr>";
 					console.log(str);
 					$('.table').append(str);

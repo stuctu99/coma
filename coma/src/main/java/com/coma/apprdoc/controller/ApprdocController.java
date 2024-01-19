@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.apprdoc.service.ApprdocService;
+import com.coma.common.pagefactory.PageFactory;
 import com.coma.model.dto.ApprovalDoc;
 import com.coma.model.dto.Board;
 
@@ -28,26 +29,97 @@ import lombok.extern.slf4j.Slf4j;
 public class ApprdocController {
 	
 	private final ApprdocService service;
+	private final PageFactory pageFactory;
+	
+	@GetMapping("/allList")
+	public void	selectAllList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "20") int numPerpage,
+			  @RequestParam(required = false, defaultValue="대기") String docProgress, Model m) {
+			
+			List<ApprovalDoc> appr = new ArrayList<>();
+			String[] progress = null;
+			Map<String, Object> pgMap = new HashMap<>();
+			
+			//전체문서수
+			int allCount = service.selectApprCount(null);
+			m.addAttribute("allCount", allCount);
+			//진행중인 문서(대기,진행)
+			progress = new String[]{"진행","대기"};
+			pgMap.put("start", progress);
+			int startCount = service.selectApprCount(pgMap);		
+			m.addAttribute("startCount", startCount);
+			//완료문서(완료,반려)
+			progress = new String[]{"완료","반려"};
+			pgMap.put("end", progress);
+			int endCount = service.selectApprCount(pgMap);
+			m.addAttribute("endCount", endCount);
+			
+			//문서리스트
+			appr = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
+			
+			
+			m.addAttribute("proceed", appr);
+			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));
+		
+	}
+	
 	
 	//문서 리스트출력
 	@GetMapping("/proceedList")
-	public void selectProceedList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+	public void selectProceedList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "20") int numPerpage,
 							  @RequestParam(required = false, defaultValue="대기") String docProgress, Model m) {
 			List<ApprovalDoc> appr = new ArrayList<>();
+			String[] progress = null;
+			Map<String, Object> pgMap = new HashMap<>();
 			
+			//전체문서수
+			int allCount = service.selectApprCount(null);
+			m.addAttribute("allCount", allCount);
+			//진행중인 문서(대기,진행)
+			progress = new String[]{"진행","대기"};
+			pgMap.put("start", progress);
+			int startCount = service.selectApprCount(pgMap);		
+			m.addAttribute("startCount", startCount);
+			//완료문서(완료,반려)
+			progress = new String[]{"완료","반려"};
+			pgMap.put("end", progress);
+			int endCount = service.selectApprCount(pgMap);
+			m.addAttribute("endCount", endCount);
+			
+			//문서리스트
 			appr = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
 			
+			
 			m.addAttribute("proceed", appr);
+			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));
 		
 	}
 	
 	//문서함 리스트출력 메소드
 	@GetMapping("/docList")
-	public void selectDocList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+	public void selectDocList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "20") int numPerpage,
 							  @RequestParam(required = false, defaultValue="완료") String docProgress, Model m) {
 			List<ApprovalDoc> doc = new ArrayList<>();
+			String[] progress = null;
+			Map<String, Object> pgMap = new HashMap<>();
+			
 			
 			doc = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
+			
+			
+			//전체문서수
+			int allCount = service.selectApprCount(null);
+			m.addAttribute("allCount", allCount);
+			//진행중인 문서(대기,진행)
+			progress = new String[]{"진행","대기"};
+			pgMap.put("start", progress);
+			int startCount = service.selectApprCount(pgMap);		
+			m.addAttribute("startCount", startCount);
+			//완료문서(완료,반려)
+			progress = new String[]{"완료","반려"};
+			pgMap.put("end", progress);
+			int endCount = service.selectApprCount(pgMap);
+			m.addAttribute("endCount", endCount);
+			
 			
 			m.addAttribute("doc", doc);
 			

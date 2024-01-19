@@ -35,6 +35,12 @@ public class ApprdocServicImpl implements ApprdocService {
 		// TODO Auto-generated method stub
 		return dao.searchDoc(session, doc);
 	}
+
+	@Override
+	public int selectApprCount(Map<String, Object> pgMap) {
+		// TODO Auto-generated method stub
+		return dao.selectApprCount(session, pgMap);
+	}
 	
 	
 	

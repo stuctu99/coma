@@ -21,6 +21,8 @@ public interface BoardService {
 	int deleteBoard(Map<String, Integer> board);
 
 	Board updateBoardCount(int boardNo);
+
+	List<Board> searchBoard(Map<String, Object> board);
 	
 	//reply관련
 	List<Reply> selectReplyByBoard(int boardNo);
@@ -29,5 +31,6 @@ public interface BoardService {
 	
 	List<Board> selectReplyCount(Map<String, Integer> page, int boardType);
 	
-	List<Board> searchBoard(Map<String, Object> board);
+	int deleteReply(int replyNo);
+	
 }

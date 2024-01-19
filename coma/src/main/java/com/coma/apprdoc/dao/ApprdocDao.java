@@ -17,4 +17,6 @@ public interface ApprdocDao {
 		List<ApprovalDoc> selectDocList(SqlSession session, Map<String, Integer> page, String docProgress);
 		//검색기능
 		List<ApprovalDoc> searchDoc(SqlSession session, Map<String, Object> doc);
+		
+		int selectApprCount(SqlSession session, Map<String, Object> pgMap);
 }
