@@ -1,198 +1,222 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-   <jsp:param name="id" value="mine" />
+	<jsp:param name="id" value="mine" />
 </jsp:include>
-<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
+<script
+	src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
 <!-- TEAM COMA SPACE -->
 <style>
-/*   div{
+
+/* div{
    border: 2px solid red;
-}   */
-
-.bigContainer{
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-   text-align: center;
-   padding: 50px 50px 50px 70px;
-   background-color: #f1edff;
-   border-radius: 20px;
-}
-.bigContainer2{
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-   text-align: center;
-   padding: 30px;
-   background-color: #f1edff;
-   border-radius: 50px;
-}
-#calendar{
-   height: 500px;
+}    */
+.bigContainer {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	background-color: white;
+	border-radius: 20px;
+	margin: 0px 0px 20px;
 }
 
- td{
-       padding: 15px;
-} 
+#calendar {
+	height: 500px;
+}
 
+td {
+	padding: 15px;
+}
 
 .btncss {
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #5e72e4;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: inline-block;
+	padding: 10px 15px;
+	background-color: #5e72e4;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 .btn i {
-    margin-right: 5px;
+	margin-right: 5px;
 }
-
+/* 일요일 날짜 빨간색 */
+.fc-day-sun  {
+  color: red;
+  text-decoration: none;
+}
+.fc-day-sat {
+  color: blue;
+  text-decoration: none;
+}
+/* 캘린더 전달, 다음달 커스텀 버튼 css  */
+.fc-customPrev-button{
+	background-color:#007bff !important;
+	color:#ffffff !important;
+	border-color:#007bff !important;
+}
+.fc-customNext-button{
+	background-color: blue !important;
+	color:#ffffff !important;
+	border-color:#007bff !important;
+}
 </style>
 
-<div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
-<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
-<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>
+<div class="coma-container" style="margin-top:30px;">
+	<div class="row">
+		<div class=" col-1"></div>
+		<div class=" col-3">
+			<div class="bigContainer" style="border-radius: 20px; margin: 0px 0px 20px 0px; height:170px;">
+				<h1 id="stopwatch">00:00:00</h1>
+				<div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly; height: 44px">
+					<c:choose>
+						<c:when test="${myCommute.commuteClockin == null}">
+							<div class=" col-3" id="clockin">
+								<div class="btncss" id="clockin1">
+									<i class="ni ni-briefcase-24"></i>
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-3">
+								<div id="clockin" style="display:none;"></div>							
+							</div>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${myCommute.commuteStarttime == null}">
+							<div class=" col-3" id="starttime">
+								<div class="btncss" id="starttime1">
+									<i class="ni ni-button-pause"></i>
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-3" id="starttime"></div>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${myCommute.commuteEndtime == null}">
+							<div class=" col-3" id="endtime">
+								<div class="btncss" id="endtime1">
+									<i class="ni ni-button-play"></i>
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-3" id="endtime"></div>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${myCommute.commuteClockout == null}">
+							<div class="col-3" id="clockout">
+								<div class="btncss" id="clockout1">
+									<i class="ni ni-spaceship"></i>
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-3" id=""></div>
+						</c:otherwise>
+					</c:choose>
 
+				</div>
+				<div class="row"style="display: flex; flex-direction: row; justify-content: space-evenly;">
+					<div class="col-3">
+						<label for="clockin" class="form-control-label">출근하기</label>
+					</div>
+					<div class="col-3">
+						<label for="starttime" class="form-control-label">외출하기</label>
+					</div>
+					<div class="col-3">
+					<label for="endtime" class="form-control-label">복귀하기</label>
+					</div>
+					<div class="col-3">
+						<label for="clockout" class="form-control-label">퇴근하기</label>
+					</div>
+				</div>
+				<div class="row "
+					style="display: flex; flex-direction: row; justify-content: space-evenly;">
+					<div id="clockInResult" class="col-3">
+						<fmt:formatDate value="${myCommute.commuteClockin}"
+							pattern="HH:mm:ss" />
+					</div>
+					<div id="starttimeResult" class="col-3">
+						<fmt:formatDate value="${myCommute.commuteStarttime}"
+							pattern="HH:mm:ss" />
+					</div>
+					<div id="endtimeResult" class="col-3">
+						<fmt:formatDate value="${myCommute.commuteEndtime}"
+							pattern="HH:mm:ss" />
+					</div>
+					<div id="clockoutResult" class="col-3">
+						<fmt:formatDate value="${myCommute.commuteClockout}"
+							pattern="HH:mm:ss" />
+					</div>
+				</div>
+			</div>
+			<div class="bigContainer" style="display: flex;border-radius: 20px;height:150px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
+				<div>
+					<h2>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
+				</div>
+				<div class="row">
+					<div class="col-2"></div>
+					<div class="col-4">
+						<button type="button" class="btn btn-primary" id="myCommuteBtn">근태 정보</button>
+					</div>
+					<div class="col-4">
+						<button type="button" class="btn btn-primary" id="vacationButton">휴가 정보</button>
+					</div>
+					<div class="col-2"></div>
+				</div>
+			</div>
+			<div class="bigContainer" style="display: flex;border-radius: 20px;height:380px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
+				<div class="row">
+				<div class=col-12>
+					<h1>
+						<i class="ni ni-check-bold"></i>공지사항
+					</h1>
+				</div>
+					<div class=col-12 style="text-align: -webkit-center;">
+						<table>
+							<c:forEach var="mainNotice" items="${mainNotice}">
+								<tr>
+									<td><a
+										href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
+									<td>${mainNotice.boardDate}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class=" col-7">
+			<div class="bigContainer">
+				<div class="row">
+					<div class=col-12 style="">
+						<img src="/resource/img/brand/COMA2.png">
+						<h1>${emp.empName }님	환영합니다</h1>
+					</div>
+				</div>
+			</div>
+			<div class="bigContainer" style="height:530px; display: flex; justify-content: center; align-items: center;">
+				<div id='calendar' style="width:90%;"></div>
+			</div>
+		</div>
+<!-- 		<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
+	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button> -->
 
-<%-- ${myCommute} --%>
-<%-- ${mainNotice} --%>
-   <div class="row">
-      <div class=" col-4">
-         <div class="row">
-            <div class="col-12">
-               <h2>근무체크</h2>
-            </div>
-         </div>
-         <div class="bigContainer" style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">        
-            <h1 id="stopwatch" >00:00:00</h1>               
-            <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly; height : 44px">
-               <c:choose>
-                   <c:when test="${myCommute.commuteClockin == null}">
-                       <div class=" col-3" id="clockin">
-                          <div class="btncss" id="clockin1"> 
-                              <i class="ni ni-briefcase-24"  ></i>
-                           </div>
-                       </div>
-                   </c:when>
-                   <c:otherwise>
-                       <div class="col-3" id=""> </div>
-                   </c:otherwise>
-               </c:choose>
-               <c:choose>
-                   <c:when test="${myCommute.commuteStarttime == null}">
-                       <div class=" col-3" id="starttime">
-                          <div class="btncss" id="starttime1">
-                              <i class="ni ni-button-pause" ></i>
-                           </div>
-                       </div>
-                   </c:when>
-                   <c:otherwise>
-                       <div class="col-3" id="starttime"> </div>
-                   </c:otherwise>
-               </c:choose>
-               <c:choose>
-                   <c:when test="${myCommute.commuteEndtime == null}">
-                       <div class=" col-3" id="endtime">
-                          <div class="btncss" id="endtime1">
-                              <i class="ni ni-button-play"></i>
-                           </div>
-                       </div>
-                   </c:when>
-                   <c:otherwise>
-                       <div class="col-3" id="endtime"> </div>
-                   </c:otherwise>
-               </c:choose>
-               <c:choose>
-                   <c:when test="${myCommute.commuteClockout == null}">
-                       <div class="col-3" id="clockout">
-                          <div class="btncss" id="clockout1">
-                              <i class="ni ni-spaceship"></i>
-                           </div>
-                       </div>
-                   </c:when>
-                   <c:otherwise>
-                       <div class="col-3" id=""> </div>
-                   </c:otherwise>
-               </c:choose>
-               
-            </div>
-            <div class="row "  style="display: flex; flex-direction: row; justify-content: space-evenly;">
-               <label for="clockin" class="form-control-label">출근하기</label>
-               <label for="starttime" class="form-control-label">외출하기</label>
-               <label for="endtime" class="form-control-label">복귀하기</label>
-               <label for="clockout" class="form-control-label">퇴근하기</label>
-
-            </div>
-            <div class="row " style="display: flex; flex-direction: row; justify-content: space-evenly;">                              
-                <div id="clockInResult" class="col-3"><fmt:formatDate value="${myCommute.commuteClockin}" pattern="HH:mm:ss" /></div>
-                <div id="starttimeResult" class="col-3"><fmt:formatDate value="${myCommute.commuteStarttime}" pattern="HH:mm:ss" /></div>
-                <div id="endtimeResult" class="col-3"><fmt:formatDate value="${myCommute.commuteEndtime}" pattern="HH:mm:ss" /></div>
-                <div id="clockoutResult" class="col-3"><fmt:formatDate value="${myCommute.commuteClockout}" pattern="HH:mm:ss" /></div>               
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-12">
-               <h2>Work Life </h2>
-            </div>
-         </div>
-         <div class="bigContainer" style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
-            <h4>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
-            <button type="button" class="btn btn-primary" id="myCommuteBtn">근태 정보</button>
-            <button type="button" class="btn btn-primary" id="vacationButton">휴가 정보</button>
-         </div>
-         <div class="row">
-            <div class="col-12">
-               <h2>내 일정</h2>
-            </div>
-         </div>
-         <div class="bigContainer2">
-            <div id='calendar'></div>
-         </div>
-      </div>
-      
-      <div class=" col-8">
-         <div class="bigContainer"  >
-            <div class = "row">
-               <div class= col-12 style="text-align: center;">
-               		<img src="/resource/img/brand/COMA2.png">
-                  <h1 style="text-align: center; margin : 10px;"> ${emp.empName }님 환영합니다 </h1>
-               </div>
-            </div>
-         </div>
-      <br>
-      <div class= col-12>
-                  <h1><i class="ni ni-check-bold"></i>공지사항 </h1>
-      </div>
-      <div class="bigContainer">
-      <div class = "row" style="padding:10px;">
-               
-            </div>
-            <div class = "row" style="padding:30px;">
-               <div class= col-12 style="text-align: -webkit-center;">
-                  <table>
-                     <c:forEach var="mainNotice" items="${mainNotice}">
-                            <tr>
-                                <td><a href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
-                                <td>${mainNotice.boardDate}</td>
-                            </tr>
-                        </c:forEach>
-                  </table>
-               </div>
-            </div>
-      </div>
-      </div>
-      
-      
-      
-   </div>
+	<div class=" col-1"></div>
+	</div>
 </div>
- <script>
+<script>
 	 // myCommute 객체에서 시간 값들을 가져옴
 	 var ex = new Date('${myCommute.commuteClockin}').getTime();
 	 var commuteClockin = new Date("<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>").getTime();
@@ -300,6 +324,28 @@
        const calendarEl = document.getElementById('calendar')
        const calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
+          firstDay:1,
+          locale:'kr',
+          headerToolbar:{
+        	  left:'',
+        	  center:'title',
+        	  right:'customPrev,customNext'
+          },
+          customButtons:{
+        	  customPrev:{
+        		  text: '전달',
+        		  click: function(){
+        			  calendar.prev();
+        		  }
+        	  },
+        	  customNext:{
+        		  text:'다음달',
+        		  click: function(){
+        			  calendar.next();
+        		  }
+        	  }  
+          },
+          
            expandRows: true, // 화면에 맞게 높이 설정
        })
            calendar.render();
@@ -503,13 +549,12 @@ document.getElementById('vacationButton').addEventListener('click', function() {
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
     window.location.href = '/commute/MyCommuteInfo';
 });
-checkInsert
-document.getElementById('checkInsert').addEventListener('click', function() {
+/* document.getElementById('checkInsert').addEventListener('click', function() {
     window.location.href = '/commute/checkInsert';
 });
 document.getElementById('updateUncleared').addEventListener('click', function() {
     window.location.href = '/commute/updateUncleared';
-});
+}); */
 
  /* window.onload=()=>{
  var test='<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH24:mm:ss"/>';
