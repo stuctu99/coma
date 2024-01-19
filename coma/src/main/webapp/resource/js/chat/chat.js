@@ -70,7 +70,7 @@ function openEvent(data) {
 }
 
 function newRoom(data) {
-	
+
 	console.log("새로 생성된 채팅방" + data.roomNo);
 	intiCreateModalInput();
 	$(".chatting-list-btn").click();
@@ -79,7 +79,7 @@ function newRoom(data) {
 }
 
 function privateNewRoom(data) {
-	console.log("어디가 문제인건가...?"+data.roomNo);
+	console.log("어디가 문제인건가...?" + data.roomNo);
 	$("." + data.targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 	$("." + data.loginId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 }
@@ -91,11 +91,11 @@ function intiCreateModalInput() {
 
 
 /* 방생성 */
-const createRoomCheck = (empId) =>{
+const createRoomCheck = (empId) => {
 	const createTitle = $("#roomName");
-	if(createTitle.val().length>0){
+	if (createTitle.val().length > 0) {
 		createRoom(empId);
-	}else{
+	} else {
 		alert("제목을 입력하세요!!!");
 	}
 }
@@ -123,7 +123,7 @@ const createRoom = (empId) => {
 		"roomType": roomType,
 		"roomPasswordFlag": roomPasswordFlag,
 		"empId": empId,
-		"inviteEmp": ""
+		"targetId": ""
 	}
 	console.log("초대멤버배열" + inviteEmp);
 
@@ -183,7 +183,7 @@ const createRoom = (empId) => {
 				console.log("방생성 실패");
 			}
 		})
-	
+
 
 
 }
@@ -222,7 +222,7 @@ const privateChatting = (targetId, targetName, empId, empName) => {
 				if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
 					intiCreateModalInput();
 					enter_chattingRoom(data.roomNo);
-					console.log("방금생성된 방번호 : "+ data.roomNo)
+					console.log("방금생성된 방번호 : " + data.roomNo)
 					const msg = new MessageHandler("privateNew", empId, targetId, data.roomNo, "");
 					mserver.send(msg.convert());
 				} else {
@@ -314,8 +314,7 @@ const fn_roomListByType = (type) => {
 					const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top", "12px");
 					const $strong_type = $("<strong>");
 					const $strong_title = $("<strong>").css("padding-right", "3px");
-					/*const $recentMsg = $("<small>").text();*/
-					const $updateMsg = $("<span>").addClass("updateMsg-" + d.roomNo);
+					const $updateMsg = $("<span>").addClass("updateMsg-" + d.roomNo).css("color","megenta");
 					const $i = $("<div>").addClass("col-1 chatting-room");
 					const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
 					const $user_count = $("<span>");
@@ -334,16 +333,19 @@ const fn_roomListByType = (type) => {
 						$div_type.append($input);
 					}
 
+
 					fetch("/messenger/message/" + d.roomNo)
 						.then(response => {
 							return response.text();
 						})
 						.then(data => {
-							if (data != "") {
-								$updateMsg.text("Message : " + data);
-							} else {
-								$updateMsg.text("No Message");
-							}
+							if (d.roomPasswordFlag == 'N') {
+									if (data != "") {
+										$updateMsg.text("Message : " + data);
+									} else {
+										$updateMsg.text("No Message");
+									}
+								}
 						})
 
 					$i.css("padding-top", "18px");
@@ -483,6 +485,7 @@ const fn_deleteRoom = () => {
 			cnt++;
 		}
 	}
+	console.log(delRoom);
 	if (confirm("정말로 삭제하시겠습니까?")) {
 		fetch("/messenger", {
 			method: "delete",
@@ -573,25 +576,29 @@ const enter_chattingRoom = (roomNo) => {
 
 /* 공부하기 */
 window.updateMsg = function(roomNo, content) {
-	console.log("이걸볼건데?" + roomNo, content);
-	const msg = new MessageHandler("msg", "", "", roomNo, content);
-	mserver.send(msg.convert());
+	fetch("/messenger/room/"+roomNo)
+	.then(response=>{
+		if(response.status!=200){
+			alert("조회불가!!!");
+		}
+		return response.text();
+	})
+	.then(data=>{
+		if(data == 'N'){
+			const msg = new MessageHandler("msg", "", "", roomNo, content);
+			mserver.send(msg.convert());
+		}
+		
+	})
 }
 
 const messageUpdate = (msg) => {
-	/*	$("button#btn-"+msg.roomNo).click(function(){
-		})*/
-	/* 뱃지 제거 테스트 코드 */
-	/*	$("chattingList #"+msg.roomNo+"span:last-child").remove();*/
+
 	console.log(msg);
 	$(".updateMsg-" + msg.roomNo).remove();
 	const $updateMsg = $("<span>").addClass("updateMsg-" + msg.roomNo);
-	/*<span class="badge badge-fill badge-circle badge-floating badge-danger border-white">4</span>*/
-	/*const $alarm = $("<span>").addClass("badge badge-fill badge-circle badge-floating badge-danger border-white");
-	$alarm.text(0);*/
 	$updateMsg.text("Message : " + msg.msg);
 	$("#chattingList #" + msg.roomNo).append($updateMsg);
-	/*$("#chattingList #"+msg.roomNo).append($alarm);*/
 
 }
 

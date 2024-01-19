@@ -77,6 +77,12 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.selectEmpByTargetId(session,targetId);
 	}
 	
+	@Override
+	public String selectPasswordFlagByRoomNo(String roomNo) {
+		// TODO Auto-generated method stub
+		return dao.selectPasswordFlagByRoomNo(session, roomNo);
+	}
+
 	
 	
 	@Override
@@ -106,6 +112,7 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.deleteChatRoomInfoByRoomNo(session, roomList);
 	}
+
 
 
 

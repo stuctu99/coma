@@ -33,7 +33,7 @@ section{
 }
 
 section>div:nth-child(1){
-	max-height: 510px !important;
+	max-height: 450px !important;
 	overflow: auto;
 	background-color: white;
 	margin: 0 auto;
@@ -84,7 +84,7 @@ section>div:nth-child(1)::-webkit-scrollbar-track{
 
 .profile-list{
 	width: 210px !important;
-	height: 518px !important;
+	height: 433px !important;
 	padding-top: 15px;
 	margin-bottom: 15px; 
 	opacity: 1.5;
@@ -227,6 +227,7 @@ section>div:nth-child(1)::-webkit-scrollbar-track{
 #menu>ul{
 	list-style: none;
 	padding-left: 0px;
+	margin-bottom:1rem !important;
 	/*border-bottom: 1px solid slateblue;*/
 }
 
@@ -260,7 +261,7 @@ section>div:nth-child(1)::-webkit-scrollbar-track{
 }
 
 .input-group-prepend{
-	width: 87%;
+	width: 85%;
 }
 
 .invite-list{

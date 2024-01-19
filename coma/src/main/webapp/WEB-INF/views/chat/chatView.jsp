@@ -151,10 +151,10 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="text" name="roomName" id="updateroomName" value=""/>
+									<input type="text" name="updateroomName" id="updateroomName" value=""/>
 								</div>
 								<div class="col-6">
-									<select name="roomType" id="updateroomType">
+									<select name="updateroomType" id="updateroomType">
 										<option value="A">공통</option>
 										<option value="D1">관리부</option>
 										<option value="D2">행정부</option>
@@ -171,15 +171,15 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="password" name="roomPassword" id="updateroomPassword"
+									<input type="password" name="updateroomPassword" id="updateroomPassword"
 										value="" disabled />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-6">
 									<input type="checkbox" name="updateroomPasswordFlag"
-										id="roomPasswordFlag" value="N" /> <label
-										for="roomPasswordFlag"><strong>비밀번호</strong></label>
+										id="updateroomPasswordFlag" value="N" /> <label
+										for="updateroomPasswordFlag"><strong>비밀번호</strong></label>
 								</div>
 							</div>
 						</div>

@@ -192,9 +192,9 @@ div {
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
-									<h3>초대하기</h3>
-								</div>
+								<div class="col-12" style="border-top:1px solid black;border-bottom:1px solid black;">
+									<h3>&nbsp;초대리스트</h3>
+								</div>	
 							</div>
 							<div class="contain" id="invite-emp-list">
 								<c:forEach var="d" items="${dept}">

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.apprdoc.service.ApprdocService;
 import com.coma.model.dto.ApprovalDoc;
-import com.coma.model.dto.Board;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -75,6 +75,12 @@ public class MessengerDaoImpl implements MessengerDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("chatting.selectEmpByTargetId", targetId);
 	}
+	
+	@Override
+	public String selectPasswordFlagByRoomNo(SqlSession session, String roomNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("chatting.selectPassowrdFlagByRoomNo",roomNo);
+	}
 
 	// insert
 	@Override

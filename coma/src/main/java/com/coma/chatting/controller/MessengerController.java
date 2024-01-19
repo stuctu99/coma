@@ -55,13 +55,12 @@ public class MessengerController {
 		test.put("test", data);
 		return test;
 	}
-
-	/*
-	 * @GetMapping("/roomlist")
-	 * 
-	 * @ResponseBody public List<ChattingRoom> chatRoomList() { return
-	 * service.selectRoomList(); }
-	 */
+	
+	@GetMapping("/room/{roomNo}")
+	@ResponseBody
+	public String selectRoomPasswordFlag(@PathVariable String roomNo) {
+		return service.selectPasswordFlagByRoomNo(roomNo);
+	}
 
 	@GetMapping("/roomlist/{type}/{loginId}")
 	@ResponseBody

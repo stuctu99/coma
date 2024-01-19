@@ -18,9 +18,8 @@ $("#exit-btn").click(function() {
 
 					alert($(".connectView").val());
 					server.send(new Message("out", "", "", "", empId, roomNo).convert());
-					/*$(opener.document).find(".chatting-list-btn").click();*/
 					close();
-					opener.location.reload();
+					$(opener.location).attr("href","javascript:fn_roomListByType('engagement');");
 				} else {
 					alert("관리자에게 문의하세요!");
 				}
@@ -214,7 +213,7 @@ const closeChatting = (msg) => {
 	$(opener.document).find("#chatting-active").removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick", "privateChatting('" + msg.empId + "','" + loginId + "');");
 	$(".emp-list-btn").click();
 	$("." + msg.empId).remove();
-	opener.location.reload();
+	$(opener.location).attr("href","javascript:$('.emp-list-btn').click()");
 
 }
 
@@ -412,13 +411,12 @@ const fn_update = (roomNo) => {
 	})
 	.then(data=>{
 		if(data.result=='success'){
-			alert("초대가 완료되었습니다.");
 			const msg = new Message("invite","","","","",roomNo);
 			server.send(msg.convert());
 			$("#invite-modal").modal('hide');
 			memberList(msg.roomNo, msg.empId);
 		}else{
-			alert("초대 실패하였습니다. 관리자에게 문의하세요:(");
+			alert("접근할 수 없습니다. 관리자에게 문의하세요:(");
 		}
 	})
 }
@@ -430,14 +428,14 @@ const inviteReload = (msg) =>{
 }
 
 
-$("#roomPasswordFlag").click(function() {
-	if ($("#roomPasswordFlag").is(":checked")) {
+$("#updateroomPasswordFlag").click(function() {
+	if ($("#updateroomPasswordFlag").is(":checked")) {
 		console.log("체크");
 		$(this).val("Y");
-		$("#roomPassword").prop("disabled", false);
-		$("#roomPassword").focus();
+		$("#updateroomPassword").prop("disabled", false);
+		$("#updateroomPassword").focus();
 	} else {
-		$("#roomPassword").prop("disabled", true);
+		$("#updateroomPassword").prop("disabled", true);
 		$(this).val("N");
 	}
 	console.log($(this).val());
