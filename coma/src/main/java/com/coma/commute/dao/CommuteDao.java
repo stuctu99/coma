@@ -38,6 +38,8 @@ public interface CommuteDao {
 	
 	Emp selectEmpName(SqlSession session, String empId);
 	
+	int updateUncleared(SqlSession session);
+	
 
 	
 }
