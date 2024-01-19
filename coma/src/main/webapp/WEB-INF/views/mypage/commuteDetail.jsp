@@ -6,8 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
-<c:set var="emp"
-	value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
 
 <script src="/resource/js/jquery-3.7.0.js"></script>
 <style>
@@ -34,7 +33,7 @@ div {
 }
 
 .smallbox {
-	margin: 30px;
+	/* margin: 30px; */
 	/* border: 1px solid lightgrey;   */
 }
 
@@ -42,8 +41,9 @@ div {
 	padding-top: 20px;
 }
 
-/* You may need to adjust the styling based on your specific requirements */
 </style>
+
+
 <div class="coma-container containerbig">
 	  <%-- ${commute}  --%>
 	<div class="row">
@@ -76,16 +76,14 @@ div {
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-1"></div>
+	<div class="col-1"></div>
 		<div class="col-10  bigbax">
-			<div class="row" style="margin-left: 30px">
+			<div class="row" style="display: flex; justify-content: space-evenly;">
 				<div class="col-2 smallbox" >
 					<div class="">
 						<h3 >근무 일수</h3>
 					</div>
-					
 					<div class="blank">
-					<!--  -->
 						<c:if test="${not empty commute}">
 						    <c:set var="nomalCount" value="0" />
 						    <c:set var="nonAntteCount" value="0" />
@@ -95,7 +93,7 @@ div {
 							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" />
 							        </c:if>
 						   	 	</c:forEach>
-						    	<h4 id="finishCount">${nomalCount-nonAntteCount}</h4>
+						    <h4 id="finishCount">${nomalCount-nonAntteCount}</h4>
 						</c:if>
 					</div>
 				</div>
@@ -107,7 +105,6 @@ div {
 						<c:if test="${not empty commute}">
 					    <c:set var="nomalCount" value="0" />
 					    	<c:forEach var="c" items="${commute}" varStatus="loop">
-					    	<!-- 지각 안한사람  -->
 						        <c:if test="${c. EMP_COMMUTE_LATENESS == 'N'}">
 						            <c:set var="nomalCount" value="${nomalCount + 1}" />
 						        </c:if>
@@ -115,7 +112,6 @@ div {
 					    <h4 id="finishCount">${nomalCount}</h4>
 						</c:if>
 					</div>
-					
 				</div>
 				<div class=" col-2 smallbox">
 					<div class="">
@@ -125,7 +121,6 @@ div {
 						<c:if test="${not empty commute}">
 					    <c:set var="lateCount" value="0" />
 					    <c:forEach var="c" items="${commute}" varStatus="loop">
-					    <!-- 지각 안한사람  -->
 					        <c:if test="${c. EMP_COMMUTE_LATENESS == 'Y'}">
 					            <c:set var="lateCount" value="${lateCount + 1}" />
 					        </c:if>
@@ -155,9 +150,25 @@ div {
 						</c:if>
 					</div>
 				</div>
+				<div class=" col-2 smallbox">
+					<div class="">
+						<h3 class="">퇴근 미처리</h3>
+					</div>
+					<div class="blank">
+						<c:if test="${not empty commute}">
+						    <c:set var="Uncleared" value="0" />
+						    <c:forEach var="c" items="${commute}" varStatus="loop">				    
+						        <c:if test="${c.EMP_COMMUTE_STATUS == 'Uncleared'}">
+						            <c:set var="Uncleared" value="${Uncleared + 1}" />
+						        </c:if>
+						    </c:forEach>						  
+						    <h4 id="Uncleared">${Uncleared}</h4>
+						</c:if>
+					</div>
+					
+				</div>
 			</div>
 		</div>
-		<div class="col-1"></div>
 	</div>
 	<div class="row" style="text-align: center;">
 		<div class="col-1"></div>
@@ -180,7 +191,6 @@ div {
 	</div>
 	<div class="row">
 		<div class="col-1"></div>
-		
 	</div>
 	<div class="row">
 		<div class="col-1"></div>
@@ -204,7 +214,11 @@ div {
 							<c:forEach var="c" items="${commute }">
 								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
 									<tr>
-										<td is=""><c:out value="${c.EMP_COMMUTE_STATUS }" /></td>
+										<td>
+										    <c:if test="${c.EMP_COMMUTE_STATUS eq 'Uncleared'}">
+										        퇴근 미처리
+										    </c:if>
+										</td>
 										<td><fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" /></td>
 										<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="hh:mm:ss"/></td> 
 										<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKOUT.toJdbc() }" pattern="hh:mm:ss" /></td>
@@ -224,16 +238,8 @@ div {
 		<div class="col-1"></div>
 	</div>
 </div>
-<!-- <div class="coma-container">
-	<div class="row">
-		총 12칸
-		<div class="col-4">1</div>
-		<div class="col-4">2</div>
-		<div class="col-4">3</div>
-	</div>
-</div> -->
-
 <script>
+/* 기간 검색 ajax */
 function submitForm(cPage = 1, numPerpage = 10, url) {
     var startTime = $("#example-date-input-start").val();
     var endTime = $("#example-date-input-end").val();
@@ -264,13 +270,14 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
             console.error("Error:", error);
         });
 }
-
+/*  ajax결과 */
 function updateTable(commuteList) {
     $("#empTable").empty();
     var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
-    var absenceCount=0,latenessCount = 0,nonabsence =0;
+    var absenceCount=0,latenessCount = 0,nonabsence =0;Uncleared = 0;
     console.log(commuteList);
     commuteList.forEach(c => {
+    	if(c.EMP_COMMUTE_STATUS!='nonAntte'){
          clockInTime = c.EMP_COMMUTE_CLOCKIN;
          clockOutTime = c.EMP_COMMUTE_CLOCKOUT;
          startTime = c.EMP_COMMUTE_STARTTIME;
@@ -286,9 +293,14 @@ function updateTable(commuteList) {
         var row = document.createElement("tr");
 
         var statusCell = document.createElement("td");
-        statusCell.textContent = c.EMP_COMMUTE_STATUS;
+        if(c.EMP_COMMUTE_STATUS =='Uncleared'){
+	        statusCell.textContent = '퇴근 미처리';
+        
+        }else{
+        	statusCell.textContent = c.EMP_COMMUTE_STATUS;
+        }
         row.appendChild(statusCell);
-
+        
         var workDateCell = document.createElement("td");
         workDateCell.textContent = workDate;
         row.appendChild(workDateCell);
@@ -302,8 +314,13 @@ function updateTable(commuteList) {
         row.appendChild(clockOutTimeCell);
         
         var clockOutTimeCell = document.createElement("td");
-        clockOutTimeCell.textContent = clockOutTime-clockInTime;
+        if(clockOutTime){
+        	clockOutTimeCell.textContent = clockOutTime-clockInTime;
+        }else{
+        	clockOutTimeCell.textContent = '퇴근 미처리';
+        }
         row.appendChild(clockOutTimeCell);
+       
         console.log(clockOutTime-clockInTime);
 
         var workDurationCell = document.createElement("td");
@@ -333,25 +350,26 @@ function updateTable(commuteList) {
 
         if (c.EMP_COMMUTE_LATENESS === 'Y') {
             latenessCount++;
+        } 
+        if(c.EMP_COMMUTE_STATUS == 'Uncleared'){
+        	Uncleared++;
         }
-        
-    });
-    
-    
-    console.error("latenessCount:", latenessCount);
-    console.error("absenceCount:", absenceCount);
-    console.error("nonabsence:", nonabsence);
+    }
+ });
+
     var total = absenceCount+nonabsence
     $('#lateCount').html(${'latenessCount'});
     $('#finishCount').html(${'absenceCount'});
     $('#absence').html(${'nonabsence'});
     $('#totalwork').html(${'total'});
+    $('#Uncleared').html(${'Uncleared'});
     
 }
+/* /approval/writedoc 결재로 넘어가기  */
 document.getElementById('commuteWriteBtn').addEventListener('click', function() {
     window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
 });
-
+/* 기간 막기 함수  */
 function updateEndTimeMin() {
     
     var startTimeInput = document.getElementById('example-date-input-start');

@@ -88,6 +88,12 @@ public class CommuteDaoImpl implements CommuteDao {
 		return session.selectOne("emp.selectEmpName",empId);
 	}
 
+	@Override
+	public int updateUncleared(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.update("commute.updateUncleared");
+	}
+
 
 
 

@@ -33,5 +33,7 @@ public interface CommuteService {
 	
 	Emp selectEmpName(String empId);
 	
+	int updateUncleared();
+	
 	
 }

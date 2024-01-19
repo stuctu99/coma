@@ -97,8 +97,8 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item  active ">
-            <a class="nav-link  active " href="#">
-              <i class="ni ni-tv-2 text-primary"></i> 내 부서
+            <a class="nav-link  active " href="${path }/organization/organization">
+              <i class="ni ni-tv-2 text-primary"></i> 조직도
             </a>
           </li>
           <li class="nav-item">

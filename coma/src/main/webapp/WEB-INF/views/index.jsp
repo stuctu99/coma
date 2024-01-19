@@ -56,7 +56,7 @@
 </style>
 
 <div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
-
+<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
 <button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>
 
 
@@ -507,6 +507,10 @@ checkInsert
 document.getElementById('checkInsert').addEventListener('click', function() {
     window.location.href = '/commute/checkInsert';
 });
+document.getElementById('updateUncleared').addEventListener('click', function() {
+    window.location.href = '/commute/updateUncleared';
+});
+
  /* window.onload=()=>{
  var test='<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH24:mm:ss"/>';
    console.log(test);
