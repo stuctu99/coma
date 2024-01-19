@@ -57,14 +57,19 @@ td {
 }
 /* 캘린더 전달, 다음달 커스텀 버튼 css  */
 .fc-customPrev-button{
-	background-color:#007bff !important;
+	background-color:#5e72e4 !important;
 	color:#ffffff !important;
-	border-color:#007bff !important;
+	border-color:#5e72e4!important;
+	margin:10px !important;
+	border-radius: 5px !important;
 }
 .fc-customNext-button{
-	background-color: blue !important;
+	background-color: #5e72e4 !important;
 	color:#ffffff !important;
-	border-color:#007bff !important;
+	border-color:#5e72e4 !important;
+	margin:10px !important;
+	border-radius: 5px !important;
+	
 }
 </style>
 
