@@ -1,9 +1,18 @@
 .row{
-/*	     border: 1px solid #444444;*/
+/*     border: 1px solid #444444;*/
 	     width: 100%;
 	     margin: 40px;
 	  
   }
+
+.type_lable{
+	margin-top: 3px;
+}
+
+.write_lable{
+/*	border: 1px solid #444444;*/
+	margin-top: 7px;
+}
 
 .ck_appr{
 	
@@ -13,11 +22,24 @@
 }
 
 .date_bo{
-	/*border: 1px solid #444444;*/
-	/*text-align: left !important;*/
+/*	border: 1px solid #444444;*/
+	text-align: center !important;
 	margin-top: -10px;
-	margin-left: -15px;
+	
+	
 }
+
+.start_bo{
+/*	border: 1px solid #444444;*/
+	margin-left: -55px;
+}
+
+.end_bo{
+/*	border: 1px solid #444444;*/
+	margin-right: 25px;
+/*	margin-right: -30px;*/
+}
+
 /*
 #date_span{
 	width: 100px;

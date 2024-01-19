@@ -443,15 +443,19 @@ const save_appr=()=>{
 /*	$(".save_appr").show();
 	$("#save_btn").hide();*/
 	
-	let apprList = "";
-	let apprListNum ="";
 	
+	let apprListNum =""; //루프 밖에서 초기화 
+	let apprList = ""; 
 	
 	// 수정 필요
 	for(let i=0; i<$(".appr_result").length; i++){	
+		 
+		
 		if($('input[name="appr_result[]"]')[i].value){
-				apprList += $('input[name="appr_result[]"]')[i].value
-				apprListNum += (i+1)+". " + apprList + "\n";
+				apprList += $('input[name="appr_result[]"]')[i].value;
+				apprListNum += (i+1)+". " 
+								+$('input[name="appr_result[]"]')[i].value 
+								+ "\n";
 				
 				console.log(apprList);
 				console.log(apprListNum);
@@ -464,7 +468,7 @@ const save_appr=()=>{
 	
 	localStorage.setItem(lineName, apprListNum);
 	
-	let test = localStorage.getItem(apprLine)
+	let test = localStorage.getItem(lineName)
 	
 	for(let i=0; i<window.localStorage.length; i++){
 		const line_key = window.localStorage.key(i);
@@ -475,6 +479,7 @@ const save_appr=()=>{
 	}
 	
 }
+
 
 const cancel_appr=()=>{ // 결재선 저장 취소
 	$("#save_btn").show();
@@ -488,10 +493,18 @@ const line_submit=()=>{ //결재선 저장 submit
 	
 }
 
-/*const add_appr=()=>{
-	$(".add_appr").show();
+const take_line=()=>{
 	
-}*/
 
+	for(let i=0; i<window.localStorage.length; i++){
+		const line_key = window.localStorage.key(i);
+		const line_val = window.localStorage.getItem(line_key);
+		console.log(line_key + " "+ line_val);
+		
+		
+	}
+
+	
+}
 
 	

@@ -35,7 +35,7 @@
 	  
 	          
 	          <div class="row">
-	       			<div class="col-3">
+	       			<div class="col-3 type_lable">
 	       				문서 종류
 	       			</div>
 		            <div class="col-7">
@@ -54,7 +54,7 @@
 		     </div>    
 
 	         <div class="row">
-	            <div class="col-3">
+	            <div class="col-3 write_lable">
 	            	문서 제목
 	            </div>
 	            <div class="col-7">
@@ -74,7 +74,7 @@
   			<div class="col-3">
   			</div>
         	<div class="col-3">
-        		<button type="button" class="btn btn-primary btn-lg btn-block">결재선 불러오기</button>
+        		<button type="button" onclick="take_line();" class="btn btn-primary btn-lg btn-block">결재선 불러오기</button>
         	</div>
        
         	<div class="col-3">
@@ -86,7 +86,7 @@
         </div>
 
         <div class="row add_appr" >
-	   		<div class="col-3">
+	   		<div class="col-3 write_lable">
 	   			결재자
 	   		</div>
    		
@@ -145,7 +145,7 @@
         </div>
         
          <div class="row">
- 			<div class="col-3">
+ 			<div class="col-3 write_lable">
  				참조자
      		</div>
 	        <div class="col-7">
@@ -184,7 +184,7 @@
        		<hr>		
        		<h2>휴가 신청서</h2>
 	          <div class="row">
-	          		<div class="col-3">
+	          		<div class="col-3 write_lable">
 	          			휴가 종류
 	          		</div>
 		          	<div class="col-7">
@@ -203,12 +203,12 @@
 	          </div>  
 		      <div class="row">
 				<!-- 휴가 신청 날짜 선택 -->
-					<div class="col-3">
+					<div class="col-3 write_lable">
 	          			휴가 날짜
 	          		</div>
 					<div class="col-7">
 						<div class="input-daterange datepicker row align-items-center date_bo">
-							    <div class="col">
+							    <div class="col start_bo">
 							        <div class="form-group">
 							            <div class="input-group">
 							                <div class="input-group-prepend">
@@ -218,7 +218,7 @@
 							            </div>
 							        </div>
 							    </div>
-						    <div class="col">
+						    <div class="col end_bo">
 						        <div class="form-group">
 						            <div class="input-group">
 						                <div class="input-group-prepend">
@@ -241,7 +241,7 @@
           <hr>    
           	<h2>지출결의서</h2>
 	          <div class="row">
-		          	<div class="col-3">
+		          	<div class="col-3 write_lable">
 		          		비용
 		          	</div>
 		          	<div class="col-7">
@@ -260,7 +260,7 @@
 		          	<div class="col-2"></div>
 	          </div> 
 	          <div class="row">
-	          	<div class="col-3">
+	          	<div class="col-3 write_lable">
 	          		지출 날짜
 	          	</div>
 	          	<div class="col-7">
@@ -281,7 +281,7 @@
           <hr>
           	<h2>품의서</h2>
 	          <div class="row">
-	          	<div class="col-3">
+	          	<div class="col-3 write_lable">
 	          		기안 날짜
 	          	</div>
 	          	<div class="col-7">
@@ -303,7 +303,7 @@
           <hr>
           		<h2>기타 문서</h2>
            <div class="row">
-          	<div class="col-3">
+          	<div class="col-3 write_lable">
           		기안 날짜
           	</div>
           	<div class="col-7">
