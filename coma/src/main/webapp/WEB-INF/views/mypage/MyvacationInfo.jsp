@@ -52,9 +52,7 @@ div {
 					<h1 >휴가 정보</h1>
 				</div>
 				<div class="col-7"></div>
-				<div class="col-1">
-					<button type="button" class="btn btn-outline-primary" id ="vacationWriteBtn">휴가 신청하기</button>
-				</div>
+				
 				<div class="col-1"></div>
 			</div>
 	<div class="row" style="text-align: center;">
@@ -95,13 +93,17 @@ div {
 		<div class="col-10  ">
 			<div class="row" style="margin-top:30px">
 				<div class="col-2"><h1>휴가 신청 내역</h1></div>
-				<div class="col-10">
+				<div class="col-8">
 					<div class=""></div>
-					
 				</div>
+				<div class="col-1">
+					<button type="button" class="btn btn-outline-primary" id ="vacationWriteBtn">휴가 신청하기</button>
+				</div>
+				<div class="col-1"></div>
 			</div>
 			<div class="row">
-				<div class="col">
+				<div class="col-1"></div>
+				<div class="col-10">
 					<table class="table align-items-center" style="text-align: center;">
 						<thead class="thead-light">
 							<tr>
@@ -136,6 +138,7 @@ div {
 					</table>
 					<div id="pageBar">${pageBar }</div>
 				</div>
+				<div class="col-1"></div>
 			</div>
 		</div>
 		<div class="col-1"></div>

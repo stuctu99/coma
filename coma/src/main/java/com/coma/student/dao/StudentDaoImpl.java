@@ -1,3 +1,4 @@
+
 package com.coma.student.dao;
 
 import java.util.List;
@@ -20,4 +21,10 @@ public class StudentDaoImpl implements StudentDao{
 	public int insertStudentByAttend(SqlSession session, String attendance) {
 		return session.insert("studentCommute.insertStudentByAttend",attendance);
 	}
+
+	public int studentSignificantBystuNo(SqlSession session, Map<String, Object> significantData) {
+		return session.insert("studentSignificant.studentSignificantBystuNo",significantData);
+	}
+
 }
+

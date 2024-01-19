@@ -14,10 +14,6 @@
 /*   	div{
       border: 2px solid red;
     }  */
-    
-    input:read-only{
-    	background-color:white;
-    }
 </style>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row">
@@ -26,7 +22,7 @@
 			<h1 style="">학생 리스트</h1>
 			<div>
 		    <table class="table align-items-center" style="text-align: center;">
-		        <thead class="">
+		        <thead class="thead-light">
 			      <tr>
 			        <th>학생 번호</th>
 			        <th>학생 이름</th>
@@ -37,6 +33,7 @@
 			            <label class="custom-control-label" for="attendanceToggle">출석 여부</label>
 			          </div>
 			        </th>
+			        <th>출결 특이사항</th>
 			      </tr>
 		        </thead>
 		        <tbody class="list" id="studentTable">
@@ -49,6 +46,39 @@
 			        		<td>
 								<input type="checkbox" name="attendance" value="${s.STU_NO }" ${s.STU_COMMUTE_STATUS!='Y'?'':'disabled'}>
 			        		</td>
+			        		<!-- Button -->
+			        		<td>
+			        			<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModal_${s.STU_NO}">작성버튼</button>
+			        		</td>
+					        <!-- Modal -->
+							<div class="modal fade" id="exampleModal_${s.STU_NO}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">${s.STU_NO }학생의 출결 특이사항 작성창</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+									<select class="form-control form-control-sm" id="significantSelect" style="width:120px; text-align:center; margin-bottom:10px;">
+										<option>분류 선택</option>
+										<option>병가</option>
+										<option>경조사</option>
+										<option>개인사</option>
+										<option>기타</option>
+									</select>
+									<div>
+										<textarea class="form-control" id="significantContent_${s.STU_NO}" aria-label="With textarea" style="resize:none;" placeholder="분류에 대한 사유를 작성해주세요"></textarea>
+									</div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-primary btn-sm" onclick="fn_significant('${s.STU_NO }');">저장</button>
+							        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
 			        	</tr>
 			        </c:forEach>
 		        </tbody>
@@ -110,6 +140,16 @@
 					    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
 					  </div>
 					</div>
+				</div>
+			</div>
+			<div>
+				<div>
+					<h1>학생 특이사항</h1>
+				</div>
+			</div>
+			<div id="stu_significant">
+				<div>
+					<textarea class="form-control" style="height:200px; resize:none;" aria-label="With textarea"></textarea>
 				</div>
 			</div>
 		</div>
@@ -294,6 +334,27 @@
 				$div7.appendChild($div10);
 				$div6.appendChild($div7);
 				
+				//학생 특이사항
+				const $divSignificant=document.getElementById("stu_significant");
+				const $div13=document.createElement("div");
+				const textarea = document.createElement("textarea");
+				textarea.className = "form-control";
+				textarea.style.height = "200px";
+				textarea.style.resize = "none";
+				textarea.setAttribute("aria-label", "With textarea");
+				if(typeof student.STU_SIGNIFICANT_CONTENT !== "undefined" && student.STU_SIGNIFICANT_CONTENT !== null){
+					textarea.value = student.STU_SIGNIFICANT_CONTENT;
+				}else{
+					textarea.value = '';
+				}
+				
+				while ($divSignificant.firstChild) {
+					$divSignificant.removeChild($divSignificant.firstChild);
+				}
+				
+				$div13.appendChild(textarea);
+				$divSignificant.appendChild($div13);
+				
 				while ($divStuRegulatoryStatus.firstChild) {
 				    $divStuRegulatoryStatus.removeChild($divStuRegulatoryStatus.firstChild);
 				};
@@ -305,6 +366,36 @@
 			console.log(e);
 		})
 	}
+	
+	function fn_significant(stuNo){
+		const content = document.getElementById("significantContent_"+stuNo).value;
+		const select = document.getElementById("significantSelect").value;
+		console.log(content);
+		fetch("${path}/student/studentSignificant",{
+			method:"post",
+			headers:{"Content-Type":"application/json"},
+			body:JSON.stringify({
+				stuNo:stuNo,
+				content:select+":"+content
+				
+			})
+		}).then(response=>{
+			if(response.status!=200) throw new Error(repsonse.status);
+			return response.json();
+		}).then(result=>{
+			console.log(result);
+			if(result>0){
+				alert("입력이 완료 되었습니다");
+				$("#exampleModal_"+stuNo).modal('hide');
+			}else{
+				alert("입력이 실패 하었습니다");
+				$("#exampleModal_"+stuNo).modal('hide');
+			}
+			
+		}).catch(e=>{
+			console.log(e);
+		})
+	}
 </script>
 <!-- TEAM COMA SPACE -->
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>s
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

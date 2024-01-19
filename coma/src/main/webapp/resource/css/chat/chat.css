@@ -50,9 +50,6 @@ div.header-menu > div{
 	padding: 0 0;
 }
 
-div.header-menu>div:nth-child(1){
-/*	background-color: #edebf0;*/
-}
 
 strong:has(div){
 	background-color: #f1ebf7;
@@ -63,9 +60,19 @@ strong:has(div){
 	text-align: center;
 }
 
+.emp-profile-img{
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+}
+
 .chatting-list>.row:nth-child(1){
 	margin-top:10px;
 	text-align: center;
+}
+
+#chattingList>.row{
+	min-height: 73px !important;
 }
 
 #chatting-active{
@@ -136,7 +143,7 @@ hr {
 }
 
 .emp-list>div.row{
-	padding:0px 5px;
+	padding:3px 5px;
 	margin-bottom: 2px;
 }
 
@@ -170,6 +177,7 @@ hr {
 
 /* Create Room Modal */
 .modal-body{
+	padding-top:5px !important;
 	border-top: 1px solid rgba(236, 230, 237, 0.9);
 	border-bottom: 1px solid rgba(236, 230, 237, 0.9);
 }
@@ -189,4 +197,17 @@ hr {
 img#joinList{
 	width: 15px;
 	height: 15px;
+}
+
+#invite-emp-list{
+	height: 210px !important;
+	overflow-y: auto;
+}
+
+span[name=new]{
+	width: 39px;
+    height: 17px;
+    padding-bottom: 14px;
+    margin-right: 9px;
+    font-size: 10px;
 }

@@ -56,6 +56,10 @@
 </style>
 
 <div class="coma-container"style="margin-top: 5px; margin-bottom: 5px; padding: 50px;">
+
+<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>
+
+
 <%-- ${myCommute} --%>
 <%-- ${mainNotice} --%>
    <div class="row">
@@ -69,7 +73,7 @@
             <h1 id="stopwatch" >00:00:00</h1>               
             <div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly; height : 44px">
                <c:choose>
-                   <c:when test="${myCommute == null}">
+                   <c:when test="${myCommute.commuteClockin == null}">
                        <div class=" col-3" id="clockin">
                           <div class="btncss" id="clockin1"> 
                               <i class="ni ni-briefcase-24"  ></i>
@@ -137,8 +141,7 @@
                <h2>Work Life </h2>
             </div>
          </div>
-         <div class="bigContainer"
-            style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
+         <div class="bigContainer" style="text-align: center; padding: 50px; background-color: #f1edff; border-radius: 20px;">
             <h4>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
             <button type="button" class="btn btn-primary" id="myCommuteBtn">근태 정보</button>
             <button type="button" class="btn btn-primary" id="vacationButton">휴가 정보</button>
@@ -157,10 +160,11 @@
          <div class="bigContainer"  >
             <div class = "row">
                <div class= col-12 style="text-align: center;">
-                  <h1 style="text-align: center; margin : 150px;"> <i class="ni ni-world"></i>${emp.dept.deptType }과 ${emp.empName }님 환영합니다 </h1>
+               		<img src="/resource/img/brand/COMA2.png">
+                  <h1 style="text-align: center; margin : 10px;"> ${emp.empName }님 환영합니다 </h1>
                </div>
             </div>
-            <div class = "row" style="padding:30px;">
+            <div class = "row" style="padding:10px;">
                <div class= col-12>
                   <h1><i class="ni ni-check-bold"></i>공지사항 </h1>
                </div>
@@ -227,7 +231,6 @@
 		   ss = ss >= 10 ? ss : '0' +ss;
 		   return hh + ':'+mm + ':'+ ss ;   
 		}
-	 
 	 //setInterval 변수로 지정해주기 => 타이머 중지때문에 
 	 var interval;
 	 function generatePattern(milliseconds) {	
@@ -242,7 +245,6 @@
 	    // 1초마다 updatePattern 함수 진행
 	     interval = setInterval(updatePattern, 1000);
 	}
-	 
 	// 값이 있는 경우에만 타이머 작동
 	if (commuteClockin) {
 	 	// 외출시간이 있다면
@@ -273,10 +275,9 @@
 	            	document.getElementById("stopwatch").innerText = formatTime(totalwork1);
 	        	}else{
 	        		console.log('외출 안했고 퇴근했음');
-	            	document.getElementById("stopwatch").innerText = formatTime(totalwork1);
+	            	document.getElementById("stopwatch").innerText = formatTime(totalwork2);
 	        	}
 	        }else{
-	        	
 	        	//출근했다 !
 	    	    console.log('출근했어요!');
 	    	    generatePattern(time1);
@@ -289,8 +290,8 @@
 			console.log('commuteClockin이 없고 ( 출근했지만 새로고침하지 않을 상태) + 외출은 안하고퇴근을 눌렀다 ? ');
 			document.getElementById("stopwatch").innerText = formatTime(totalwork2);
 		}
-	}     
-/* 달력 */
+	}
+	/* 달력 */
     document.addEventListener('DOMContentLoaded', function() {
        const calendarEl = document.getElementById('calendar')
        const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -307,9 +308,9 @@ document.getElementById('clockin').addEventListener('click', function() {
     var empId = '${emp.empId}';
     clockIn = new Date().getTime();
     
-    console.log('출근 버'+clockIn);
+    console.log('출근 버튼'+clockIn);
     // Fetch to insert commute record
-    fetch('${path}/commute/insertCommute', {
+    fetch('${path}/commute/updateClockIn', {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -329,7 +330,7 @@ document.getElementById('clockin').addEventListener('click', function() {
             // Display clock-in time
             document.getElementById('clockInResult').textContent = getFormatTime(new Date());
             //출근 누르면 타이머 시작!
-            generatePattern(2000);
+            generatePattern(1000);
         }
     }).catch(e => {
         alert(e);
@@ -484,8 +485,6 @@ document.getElementById('clockin').addEventListener('click', function() {
             }
             //console.log('최종으로 근무시간을 찍어볼게요 ! '+formatTime(now));
             document.getElementById("stopwatch").innerText = formatTime(now);
-            
-            
         }
     }).catch(e => {
         alert(e);
@@ -499,6 +498,10 @@ document.getElementById('vacationButton').addEventListener('click', function() {
 
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
     window.location.href = '/commute/MyCommuteInfo';
+});
+checkInsert
+document.getElementById('checkInsert').addEventListener('click', function() {
+    window.location.href = '/commute/checkInsert';
 });
  /* window.onload=()=>{
  var test='<fmt:formatDate value="${myCommute.commuteClockin}" pattern="yyyy-MM-dd'T'HH24:mm:ss"/>';

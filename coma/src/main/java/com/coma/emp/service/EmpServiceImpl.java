@@ -1,6 +1,7 @@
 package com.coma.emp.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,12 @@ public class EmpServiceImpl implements EmpService {
 		// TODO Auto-generated method stub
 		System.out.println("service" +empId);
 		return dao.selectEmpById(session, empId);
+	}
+
+	@Override
+	public List<Map> selectEmpId() {
+		// TODO Auto-generated method stub
+		return dao.selectEmpId(session);
 	}
 
 }

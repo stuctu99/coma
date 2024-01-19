@@ -48,10 +48,16 @@ div {
 				<div class="col-1" style="padding: 0px 0px;">
 					<button id="bars">&#9776</button>
 				</div>
-				<div class="col-11 chat-title">
+				<div class="col-10 chat-title">
 					<h1>COMA MESSENGER</h1>
 					<input type="hidden" id="roomNo" value="${roomNo}" /> <input
 						type="hidden" id="loginMember" value="${loginmember.empId }" />
+				</div>
+				
+				<div class="col-1" style="padding: 0px 0px;">
+					<button class="invite" id="bars"  data-toggle="modal" data-target="#invite-modal" onclick="fn_empListLoad('${roomNo }');">
+						<i class="fa-solid fa-user-plus"></i>
+					</button>
 				</div>
 			</div>
 			<hr style="margin: 2px 0;">
@@ -61,68 +67,29 @@ div {
 				</div>
 				<div class="col-10">
 					<h4 style="line-height: 2.0;">${room.roomName }</h4>
+					<input type="hidden" id="roomType"
+						value="${room.roomTypeObj.roomType }" />
 				</div>
 				<nav id="menu">
 					<ul>
 						<li>
 							<div class="col-12 profile">&nbsp;</div>
 						</li>
-						
+
 					</ul>
-					<div class="container profile-list" style="height: 499px;">
-						<c:if test="${not empty roomMemberList}">
-							<c:forEach var="emp" items="${roomMemberList }">
-								<div class="row ${emp.empId }">
-									<div class="col-2 profile">
-										<c:if test="${emp.empGender eq 'M' }">
-											<img id="profile-img"
-												src="${path }/resource/img/chat/profile_m.png"
-												alt="basic_profile_img" />
-										</c:if>
-										<c:if test="${emp.empGender eq 'F' }">
-											<img id="profile-img"
-												src="${path }/resource/img/chat/profile_f.png"
-												alt="basic_profile_img" />
-										</c:if>
-									</div>
-
-									<div class="col-9 emp-info">
-										<strong><c:out value="${emp.empName}" /></strong>&nbsp;
-										<c:out value="${emp.job.jobType }" />
-										<c:choose>
-											<c:when test="${empList.contains(emp.empId) }">
-												<strong class="connectView" id="${emp.empId }" style="color: lime;">&#9900</strong>
-											</c:when>
-											<c:otherwise>
-												<strong class="connectView" id="${emp.empId }" >&#9900</strong>
-											</c:otherwise>
-										</c:choose>
-									</div>
-
-								</div>
-							</c:forEach>
-						</c:if>
-					</div>
+					<div class="container profile-list list-${roomNo } }"
+						style="height: 499px;"></div>
 					<div>
 						<button class="btn btn-primary" id="exit-btn">채팅방 나가기</button>
 					</div>
 				</nav>
 			</div>
-			<%-- <div class="row header-menu">
-				<div class="col-6 emp-list-btn">
-					<img src="${path }/resource/img/chat/list-icon.png" />
-				</div>
-				<div class="col-6 chatting-list-btn">
-					<img src="${path }/resource/img/chat/chat-icon.png" />
-				</div>
-			</div> --%>
 			<hr>
 			<hr>
 		</div>
 	</header>
 	<section>
 		<div class="container messageView${roomNo }">
-			${roomMemberList }
 			<c:if test="${not empty chatMsg }">
 				<c:forEach var="msg" items="${chatMsg }">
 					<c:if test="${msg.empId eq loginmember.empId}">
@@ -141,7 +108,7 @@ div {
 					</c:if>
 					<c:if test="${msg.empId != loginmember.empId }">
 						<div class="row other">
-							<span>${msg.empObj.empName }</span>
+							<span>${msg.empObj.empName } ${msg.empObj.job.jobType }</span>
 						</div>
 						<div class="row other">
 							<div class="msg-container">
@@ -156,14 +123,48 @@ div {
 				</c:forEach>
 			</c:if>
 		</div>
+
+		<!-- invite Modal  -->
+		<div class="modal fade" id="invite-modal" tabindex="-1" role="dialog"
+			aria-labelledby="modal-default" aria-hidden="true">
+			<div class="modal-dialog modal- modal-dialog-centered modal-"
+				role="document">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h3 class="modal-title" id="modal-title-default">사원 초대</h3>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+
+					<div class="modal-body invite-modal-body">
+						<div class="contain invite-list" id="invite-list">
+							
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="fn_invite('${roomNo}');">&#43;초대</button>
+						<button type="button" class="btn btn-link  ml-auto"
+							data-dismiss="modal">닫기</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
 	</section>
 	<footer id="chatView-footer">
 		<div class="container">
 			<div class="row" style="padding: 0px 10px;">
 				<div class="input-group mb-3">
-					<input type="text" id="msg" class="form-control"
-						placeholder="메세지를 입력하세요!" aria-label="Recipient's username"
-						aria-describedby="button-addon2">
+					<div class="input-group-prepend">
+
+						<input type="text" id="msg" class="form-control"
+							placeholder="메세지를 입력하세요!" aria-label="Recipient's username"
+							aria-describedby="button-addon2">
+					</div>
 					<div class="input-group-append">
 						<button id="btnSend" class="btn btn-outline-primary" type="button"
 							id="button-addon2" style="height: 46px;" onclick="sendMessage();"

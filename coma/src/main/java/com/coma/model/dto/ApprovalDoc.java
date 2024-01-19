@@ -24,6 +24,7 @@ public class ApprovalDoc {
 	private String docProgress;
 	private String empId;
 	private String docDetail;
+	private Timestamp docEndDate;
 	private int docDiff;
 	private ApprovalLeave leave;
 	private ApprovalCash cash;

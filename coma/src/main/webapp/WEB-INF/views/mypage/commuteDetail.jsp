@@ -9,7 +9,6 @@
 <c:set var="emp"
 	value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
 
-
 <script src="/resource/js/jquery-3.7.0.js"></script>
 <style>
 div {
@@ -46,24 +45,21 @@ div {
 /* You may need to adjust the styling based on your specific requirements */
 </style>
 <div class="coma-container containerbig">
-	<%--  ${commute} --%>
-	
+	  <%-- ${commute}  --%>
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-2" style="display: flex;">
 			<h1>근태 정보</h1>
 		</div>
 		<div class="col-7"></div>
-		<div class="col-1">
-			<button type="button" class="btn btn-outline-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
-		</div>
+		
 		<div class="col-1"></div>
 	</div>
 	<div class="row" style="text-align: center;">
-	<div class="col-1"></div>
-	<div class="col-2">
+		<div class="col-1"></div>
+		<div class="col-2">
 			<div class="form-group">
-		        <input class="form-control" type="date" name="startTime"  id="example-date-input-start">
+		        <input class="form-control" type="date" name="startTime"  id="example-date-input-start" onchange="updateEndTimeMin()">
 		    </div>
 		</div>
 		<div class="col-2">
@@ -71,8 +67,12 @@ div {
 		        <input class="form-control" type="date" name="endTime"  id="example-date-input-end">
 		    </div>
 		</div>
-		<div col="col-1">
+		<div class="col-1">
 			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
+		</div>
+		
+		<div class="col-1">
+			<button type="button" class="btn btn-primary"  onclick="total()">전체보기</button>
 		</div>
 	</div>
 	<div class="row">
@@ -83,8 +83,20 @@ div {
 					<div class="">
 						<h3 >근무 일수</h3>
 					</div>
+					
 					<div class="blank">
-						<h4 id="totalwork"> ${count} <h4/>
+					<!--  -->
+						<c:if test="${not empty commute}">
+						    <c:set var="nomalCount" value="0" />
+						    <c:set var="nonAntteCount" value="0" />
+						    	<c:forEach var="c" items="${commute}" varStatus="loop">
+							        <c:set var="nomalCount" value="${nomalCount + 1}" />
+							        <c:if test="${c. EMP_COMMUTE_STATUS == 'nonAntte'}">
+							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" />
+							        </c:if>
+						   	 	</c:forEach>
+						    	<h4 id="finishCount">${nomalCount-nonAntteCount}</h4>
+						</c:if>
 					</div>
 				</div>
 				<div class="col-2 smallbox" >
@@ -94,15 +106,14 @@ div {
 					<div class="blank">
 						<c:if test="${not empty commute}">
 					    <c:set var="nomalCount" value="0" />
-					    <c:forEach var="c" items="${commute}" varStatus="loop">
-					    <!-- 지각 안한사람  -->
-					        <c:if test="${c. EMP_COMMUTE_LATENESS == 'N'}">
-					            <c:set var="nomalCount" value="${nomalCount + 1}" />
-					        </c:if>
-					    </c:forEach>
-						
+					    	<c:forEach var="c" items="${commute}" varStatus="loop">
+					    	<!-- 지각 안한사람  -->
+						        <c:if test="${c. EMP_COMMUTE_LATENESS == 'N'}">
+						            <c:set var="nomalCount" value="${nomalCount + 1}" />
+						        </c:if>
+					   	 	</c:forEach>
 					    <h4 id="finishCount">${nomalCount}</h4>
-					</c:if>
+						</c:if>
 					</div>
 					
 				</div>
@@ -129,15 +140,18 @@ div {
 						<h3 class="">결근</h3>
 					</div>
 					<div class="blank">
+						<c:set var="nonAntteCount" value="0" />
 						<c:if test="${not empty commute}">
 						    <c:set var="absenceCount" value="0" />
 						    <c:forEach var="c" items="${commute}" varStatus="loop">
 						        <c:if test="${c.EMP_COMMUTE_ABSENCE == 'Y'}">
 						            <c:set var="absenceCount" value="${absenceCount + 1}" />
 						        </c:if>
+						        <c:if test="${c. EMP_COMMUTE_STATUS == 'nonAntte'}">
+							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" />
+							    </c:if>
 						    </c:forEach>
-	
-						    <h4 id="finishCount">${absenceCount}</h4>
+						    <h4 id="finishCount">${absenceCount-nonAntteCount}</h4>
 						</c:if>
 					</div>
 				</div>
@@ -152,8 +166,12 @@ div {
 				<div class="col-2">
 					<h1>근태 상세보기</h1>
 				</div>
-				<div class="col-9">
+				
+				<div class="col-8">
 					<div class=""></div>
+				</div>
+				<div class="col-1">
+					<button type="button" class="btn btn-outline-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
 				</div>
 			</div>
 			<div class="col-1"></div>
@@ -172,7 +190,6 @@ div {
 					<thead class="thead-light">
 						<tr>
 							<th>상태</th>
-							<!-- 지각, 결근,  -->
 							<th>날짜</th>
 							<th>출근 시간</th>
 							<th>퇴근 시간</th>
@@ -185,16 +202,18 @@ div {
 					<tbody class="list" id="empTable">
 						<c:if test="${not empty commute}">
 							<c:forEach var="c" items="${commute }">
-								<tr>
-									<td is=""><c:out value="${c.EMP_COMMUTE_STATUS }" /></td>
-									<td><fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" /></td>
-									<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="hh:mm:ss"/></td> 
-									<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKOUT.toJdbc() }" pattern="hh:mm:ss" /></td>
-									<td><c:out value="${c.WORK_DURATION }" /></td>  
-									<td><fmt:formatDate value="${c.EMP_COMMUTE_STARTTIME.toJdbc() }" pattern="hh:mm:ss"/></td> 
-									<td><fmt:formatDate  value="${c.EMP_COMMUTE_ENDTIME.toJdbc() }" pattern="hh:mm:ss" /></td> 
-									<td><c:out value="${c.BREAK_DURATION }" /></td> 									
-								</tr>
+								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
+									<tr>
+										<td is=""><c:out value="${c.EMP_COMMUTE_STATUS }" /></td>
+										<td><fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" /></td>
+										<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="hh:mm:ss"/></td> 
+										<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKOUT.toJdbc() }" pattern="hh:mm:ss" /></td>
+										<td><c:out value="${c.WORK_DURATION }" /></td>  
+										<td><fmt:formatDate value="${c.EMP_COMMUTE_STARTTIME.toJdbc() }" pattern="hh:mm:ss"/></td> 
+										<td><fmt:formatDate  value="${c.EMP_COMMUTE_ENDTIME.toJdbc() }" pattern="hh:mm:ss" /></td> 
+										<td><c:out value="${c.BREAK_DURATION }" /></td> 									
+									</tr>
+								</c:if>
 							</c:forEach>
 						</c:if>
 					</tbody>
@@ -238,8 +257,8 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
         .then(data => {      
             console.log(data);           
             updateTable(data.commuteList);
-            console.log(totalData); 
-            $('#totalwork').html(totalData);
+            //console.log(totalData); 
+            //$('#totalwork').html(totalData);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -250,6 +269,7 @@ function updateTable(commuteList) {
     $("#empTable").empty();
     var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
     var absenceCount=0,latenessCount = 0,nonabsence =0;
+    console.log(commuteList);
     commuteList.forEach(c => {
          clockInTime = c.EMP_COMMUTE_CLOCKIN;
          clockOutTime = c.EMP_COMMUTE_CLOCKOUT;
@@ -257,7 +277,7 @@ function updateTable(commuteList) {
          endTime = c.EMP_COMMUTE_ENDTIME;
          //날짜만 잘라준다 
          workDate = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
-       
+         console.log(clockOutTime-clockInTime);
         /* console.error("clockInTime:", clockInTime);
         console.error("clockOutTime:", clockOutTime);
         console.error("startTime:", startTime);
@@ -280,6 +300,11 @@ function updateTable(commuteList) {
         var clockOutTimeCell = document.createElement("td");
         clockOutTimeCell.textContent = clockOutTime;
         row.appendChild(clockOutTimeCell);
+        
+        var clockOutTimeCell = document.createElement("td");
+        clockOutTimeCell.textContent = clockOutTime-clockInTime;
+        row.appendChild(clockOutTimeCell);
+        console.log(clockOutTime-clockInTime);
 
         var workDurationCell = document.createElement("td");
         workDurationCell.textContent = c.WORK_DURATION;
@@ -327,6 +352,13 @@ document.getElementById('commuteWriteBtn').addEventListener('click', function() 
     window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
 });
 
+function updateEndTimeMin() {
+    
+    var startTimeInput = document.getElementById('example-date-input-start');
+    var selectedDate = startTimeInput.value;
+    var endTimeInput = document.getElementById('example-date-input-end');
+    endTimeInput.min = selectedDate;
+}
 
 	
 </script>

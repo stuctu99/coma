@@ -1,7 +1,7 @@
 package com.coma.chatting.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +20,7 @@ import com.coma.chatting.model.service.ChattingService;
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingMessage;
 import com.coma.model.dto.ChattingRoom;
+import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChattingController {
 	private final ChattingService service;
-	public static Map<String, List<String>> roomMember = new HashMap<String, List<String>>();
-	public static List<String> empList = new ArrayList<String>();
+	public static Map<String, Map<String, String>> roomMember = new HashMap<String, Map<String, String>>();
+	public static Map<String, String> empList = new HashMap<String, String>();
 
 //	채팅방 접속 사원 정보 조회
 	@GetMapping("/{empId}")
@@ -51,8 +52,27 @@ public class ChattingController {
 		model.addAttribute("roomMemberList", roomMemberList);
 		model.addAttribute("room", room);
 		model.addAttribute("chatMsg", chatMsg);
-		model.addAttribute("empList", empList);
+		model.addAttribute("roomMember", roomMember.get(roomNo));
 		return "chat/chatView";
+	}
+
+	@GetMapping("/memberlist/{roomNo}")
+	@ResponseBody
+	public Map<String, Object> selectMemberlistByRoomNo(@PathVariable String roomNo) {
+		List<Emp> roomMemberList = service.selectRoomMemberList(roomNo);
+
+		return Map.of("roomMemberList", roomMemberList, "roomMemberCheck", roomMember.get(roomNo));
+	}
+	
+	@GetMapping("/invitelist/{roomNo}")
+	@ResponseBody
+	public Map<String,Object> selectInviteList(@PathVariable String roomNo){
+		List<Emp> inviteList = service.selectInviteList(roomNo);
+		List<Dept> dept = service.selectDept();
+		Map<String,Object> inviteData = new HashMap<String,Object>();
+		inviteData.put("inviteList", inviteList);
+		inviteData.put("dept", dept);
+		return inviteData;
 	}
 
 //	채팅방 입장 시 입장 인원 insert
@@ -62,10 +82,18 @@ public class ChattingController {
 		int insertResult = 0;
 		boolean enterCheck = false;
 
-		empList.add(joinInfo.get("empId"));
-		roomMember.put(joinInfo.get("roomNo"), empList);
+		if (roomMember.containsKey(joinInfo.get("roomNo"))) {
+			empList = roomMember.get(joinInfo.get("roomNo"));
+			empList.put(joinInfo.get("empId"), joinInfo.get("empId"));
+			roomMember.put(joinInfo.get("roomNo"), empList);
+		} else {
+			empList = new HashMap<String, String>();
+			empList.put(joinInfo.get("empId"), joinInfo.get("empId"));
+			roomMember.put(joinInfo.get("roomNo"), empList);
+		}
 
-		System.out.println("이걸로 활용할 수 있을까?" + empList);
+		System.err.println("이걸로 활용할 수 있을까?" + empList);
+		System.err.println("방정보가 나오려나?" + roomMember);
 		System.out.println("[채팅방입장]조회할 정보:" + joinInfo);
 		ChattingJoin joinCheck = service.selectCheckJoin(joinInfo);
 		System.out.println("[채팅방입장]조회결과 : " + joinCheck);
@@ -82,6 +110,7 @@ public class ChattingController {
 
 		return enterCheck;
 	}
+
 
 //	채팅방 신규접속 여부 체크 및 신규접속Flag 업데이트
 	@PutMapping
@@ -116,13 +145,22 @@ public class ChattingController {
 
 		int deleteEmpCheck = service.deleteChatRoomJoinEmpById(exitEmp);
 		if (deleteEmpCheck > 0) {
+			Map<String, String> memberlist = roomMember.get(exitEmp.get("roomNo"));
+			memberlist.remove(exitEmp.get("empId"));
 			int roomMeberCount = service.selectMemberCountInRoom(exitEmp.get("roomNo"));
 			if (roomMeberCount == 0) {
+				System.err.println(exitEmp.get("roomNo") + "방에 남은 인원 : " + roomMeberCount);
 				int result = service.deleteChattingMsgByRoomNo(exitEmp);
 				if (result > 0) {
-					System.out.println(exitEmp.get("roomNo") + "채탕방 완전 삭제");
 					roomMember.remove(exitEmp.get("roomNo"));
+					System.out.println(exitEmp.get("roomNo") + "채탕방 완전 삭제");
+					Iterator<Map.Entry<String, Map<String, String>>> entries = roomMember.entrySet().iterator();
+					while (entries.hasNext()) {
+						System.err.println("확인데이터" + entries.next());
+					}
+
 				}
+
 			}
 
 			msg.put("result", "success");
@@ -137,12 +175,14 @@ public class ChattingController {
 
 	@DeleteMapping("/back")
 	@ResponseBody
-	public Map<String, String> memberCheckOut(@RequestBody Map<String, String> data) {
-		List<String> list = roomMember.get(data.get("roomNo"));
-		System.err.println(list + " 채팅방 남은 인원 : " + data.get("empId"));
+	public Map<String, Boolean> memberCheckOut(@RequestBody Map<String, String> data) {
+		Map<String, Boolean> check = new HashMap<>();
+		Map<String, String> memberlist = roomMember.get(data.get("roomNo"));
+		memberlist.remove(data.get("empId"));
 
-		list.remove(data.get("empId"));
-		data.put("result", "success");
-		return data;
+		System.err.println(" 채팅방 남은 인원 : " + memberlist);
+		check.put("result", true);
+		return check;
 	}
+
 }

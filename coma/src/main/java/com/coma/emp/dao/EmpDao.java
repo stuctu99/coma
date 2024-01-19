@@ -1,6 +1,7 @@
 package com.coma.emp.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -12,4 +13,6 @@ public interface EmpDao {
 	
 	//empId로조회
 	Emp selectEmpById(SqlSession session, String empId);
+
+	List<Map> selectEmpId(SqlSession session);
 }

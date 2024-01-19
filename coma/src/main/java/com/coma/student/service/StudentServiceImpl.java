@@ -1,3 +1,4 @@
+
 package com.coma.student.service;
 
 import java.util.List;
@@ -33,4 +34,12 @@ public class StudentServiceImpl implements StudentService{
 		if(result!=attendance.length) throw new IllegalArgumentException("저장되지않음");
 		return result;
 	}
+
+	public int studentSignificantBystuNo(Map<String, Object> significantData) {
+		return dao.studentSignificantBystuNo(session,significantData);
+	}
+
+	
 }
+
+

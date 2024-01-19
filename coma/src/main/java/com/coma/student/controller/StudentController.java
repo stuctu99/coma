@@ -1,6 +1,7 @@
 package com.coma.student.controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,9 @@ public class StudentController {
 		String loginId=pri.getName();
 		List<Map> students=service.selectStudentByEmpId(loginId);
 		m.addAttribute("students",students);
+		
+		LocalDate currentDate = LocalDate.now();
+
 	}
 	
 	@PostMapping("/infoStudent")
@@ -42,5 +46,13 @@ public class StudentController {
 		return "redirect:/student/student";
 		
 	}
+	
+	@PostMapping("/studentSignificant")
+	public @ResponseBody int studentSignificantBystuNo(@RequestBody Map<String, Object> significantData) {
+		System.out.println(significantData);
+		int result=service.studentSignificantBystuNo(significantData);
+		return result;
+	}
+
 	
 }

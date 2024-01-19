@@ -1,5 +1,6 @@
 package com.coma.chatting.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coma.chatting.model.service.MessengerService;
+import com.coma.model.dto.ChattingJoin;
+import com.coma.model.dto.ChattingPrivateRoom;
 import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.ChattingRoomType;
-import com.coma.model.dto.ChattingPrivateRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
@@ -29,27 +31,26 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessengerController {
 	private final MessengerService service;
-	
+
 	@GetMapping
 	public String MessengerOpen(Model model) {
 		List<Emp> emp = service.selectEmpListAll();
 		List<Dept> dept = service.selectDept();
 		model.addAttribute("emp", emp);
 		model.addAttribute("dept", dept);
-		
-		/* 조회 데이터 확인용
-		 * for (Emp e : emp) { System.out.println(e); }
-		 *System.out.println(dept);
-		*/
+
+		/*
+		 * 조회 데이터 확인용 for (Emp e : emp) { System.out.println(e); }
+		 * System.out.println(dept);
+		 */
 		return "chat/chat";
 	}
-	
-	
-	//변수명 수정하기
+
+	// 변수명 수정하기
 	@GetMapping("/init/{loginId}")
 	@ResponseBody
-	public Map<String,Object> initButton(@PathVariable String loginId){
-		Map<String,Object> test = new HashMap<>();
+	public Map<String, Object> initButton(@PathVariable String loginId) {
+		Map<String, Object> test = new HashMap<>();
 		List<ChattingPrivateRoom> data = service.selectPrivateChatJoinInfo(loginId);
 		test.put("test", data);
 		return test;
@@ -61,28 +62,33 @@ public class MessengerController {
 	 * @ResponseBody public List<ChattingRoom> chatRoomList() { return
 	 * service.selectRoomList(); }
 	 */
-	
+
 	@GetMapping("/roomlist/{type}/{loginId}")
 	@ResponseBody
-	public Map<String,Object> chatRoomListByType(@PathVariable String type, @PathVariable String loginId){
-		Map<String,String> searchInfo = Map.of("type",type,"loginId",loginId);
+	public Map<String, Object> chatRoomListByType(@PathVariable String type, @PathVariable String loginId) {
+		Map<String, String> searchInfo = Map.of("type", type, "loginId", loginId);
 		List<ChattingRoom> roomList = service.selectChatRoomListByType(searchInfo);
-		List<String> joinRoom = service.selectMyJoinRoomById(loginId);
-		//변수명 수정 필요
+		List<ChattingJoin> joinRoom = service.selectMyJoinRoomById(loginId);
+		// 변수명 수정 필요
 		List<ChattingPrivateRoom> privateRoomList = service.selectPrivateChatJoinInfo(loginId);
-		Map<String,Object> roomInfo = new HashMap<String,Object>();
-		
-		roomInfo.put("roomList",roomList);
+		Map<String, Object> roomInfo = new HashMap<String, Object>();
+
+		roomInfo.put("roomList", roomList);
 		roomInfo.put("joinRoom", joinRoom);
 		roomInfo.put("privateRoom", privateRoomList);
-		System.out.println("원하는 데이터 출력 "+joinRoom);
+		System.out.println("원하는 데이터 출력 " + joinRoom);
 		return roomInfo;
+	}
+
+	@GetMapping("/message/{roomNo}")
+	@ResponseBody
+	public String recentChattingMessageByRoomNo(@PathVariable String roomNo) {
+		return service.selectRecentChattingMessageByRoomNo(roomNo);
 	}
 
 	@PostMapping("/createRoom")
 	@ResponseBody
 	public Map<String, Object> createRoom(@RequestBody Map<String, String> roomInfo) {
-		
 		ChattingRoom room = new ChattingRoom();
 		ChattingRoomType roomType = new ChattingRoomType();
 		room.setRoomName(roomInfo.get("roomName"));
@@ -92,21 +98,21 @@ public class MessengerController {
 		roomType.setRoomType(roomInfo.get("roomType"));
 		room.setRoomTypeObj(roomType);
 		room.setRoomPasswordFlag(roomInfo.get("roomPasswordFlag"));
-		
-		if(roomInfo.get("targetId").equals("")) {
-			room.setIdList(Map.of("empId",roomInfo.get("empId")));
-		}else {
-			room.setIdList(Map.of("empId",roomInfo.get("empId"),"targetId",roomInfo.get("targetId")));
-			
+
+		if (roomInfo.get("targetId").equals("")) {
+			room.setIdList(Map.of("empId", roomInfo.get("empId")));
+		} else {
+			room.setIdList(Map.of("empId", roomInfo.get("empId"), "targetId", roomInfo.get("targetId")));
+
 		}
 		System.out.println(roomInfo);
 //		int alreadyExistFlag = service.selectCountPrivateRoomCheck();
 		int result = service.insertChattingRoom(room);
 		Map<String, Object> data = new HashMap<>();
-		if(result>0) {
+		if (result > 0) {
 			data.put("result", "success");
 			data.put("roomNo", service.selectNowCreateChatRoomNo());
-		}else {
+		} else {
 			data.put("result", "fail");
 		}
 
@@ -134,22 +140,38 @@ public class MessengerController {
 
 		return data;
 	}
-	
+
+	@PostMapping("/invite/{roomNo}")
+	@ResponseBody
+	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo,@RequestBody String[] inviteEmp) {
+		List<String> inviteEmpList = new ArrayList<String>(Arrays.asList(inviteEmp));
+		Map<String,Object> inviteInsertInfo = new  HashMap<String,Object>();
+		inviteInsertInfo.put("roomNo",roomNo);
+		inviteInsertInfo.put("inviteEmpList",inviteEmpList);
+		System.err.println("여기 함 봐보자고!!!"+inviteInsertInfo);
+		int inviteInsertCheck = service.insertInviteEmp(inviteInsertInfo);
+		if (inviteInsertCheck > 0) {
+			return Map.of("result", "success");
+		}
+
+		return Map.of("result", "fail");
+	}
+
 	@DeleteMapping
 	@ResponseBody
-	public Map<String,String> deleteChatRoomInfoByRoomNo(@RequestBody String[] roomNo){
+	public Map<String, String> deleteChatRoomInfoByRoomNo(@RequestBody String[] roomNo) {
 		System.out.println(roomNo);
-		Map<String,String> result = new HashMap<>();
+		Map<String, String> result = new HashMap<>();
 		List<String> delRoomList = Arrays.asList(roomNo);
 		int delResult = service.deleteChatRoomInfoByRoomNo(delRoomList);
-		if(delResult>0) {
+		if (delResult > 0) {
 			result.put("result", "success");
-		}else {
-			result.put("result","fail");
+		} else {
+			result.put("result", "fail");
 		}
-		
+
 		return result;
-		
+
 	}
 
 }
