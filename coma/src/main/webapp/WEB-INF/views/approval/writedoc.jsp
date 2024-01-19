@@ -64,9 +64,87 @@
 	         </div>
           </div><!-- doc_basic -->
           
-<!----------------------- 결재선 설정 ------------------------->          
+<!----------------------- 결재선 설정 ------------------------->        
+	<hr>  
       <div class="app_line">
-	      <div class="row">
+	     
+        </div>
+     
+  		<div class="row" >
+  			<div class="col-3">
+  			</div>
+        	<div class="col-3">
+        		<button type="button" class="btn btn-primary btn-lg btn-block">결재선 불러오기</button>
+        	</div>
+       
+        	<div class="col-3">
+        		<button class="btn btn-primary btn-lg btn-block" id="save_btn" onclick="save_appr();" type="button">결재선 저장</button>
+        	</div>
+        
+        	<div class="col-3">
+        	</div>
+        </div>
+
+        <div class="row add_appr" >
+	   		<div class="col-3">
+	   			결재자
+	   		</div>
+   		
+         	<div class="col-7">
+           		 <div class="input-group mb-3">	  
+					  <input type="text" list="search_list1" id="search_app" class="form-control" 
+					   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
+					   aria-describedby="button-addon1" autocomplete="off">
+					 		<datalist id="search_list1">
+					 		</datalist> 	 		
+					  <div class="input-group-prepend">
+					   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" 
+					   		onclick="addAppr();">추가하기</button>	  
+					  </div>
+				</div>
+         	</div>
+         	<div class="col-2">
+       	    </div>
+        </div> 	
+
+        <div class="row ck_appr">
+        	<div class="col-3">
+        	</div>
+        	<div class="col-7 appr_container">
+        		<input type="hidden" name="appr_result[]" class="appr_result">
+        		<input type="hidden" name="appr_result[]" class="appr_result">
+        		<input type="hidden" name="appr_result[]" class="appr_result">
+        	</div>
+   
+        	<div class="col-2">
+			
+        	</div>
+        	
+        </div>
+        
+        <div class="row save_appr" style="display:none">
+        	<div class="col-3">
+        		결재선 이름
+        	</div>
+        	<div class="col-7">
+
+        	<div class="input-group mb-3">
+			  <input type="text" class="form-control" placeholder="ex) 휴가 신청 결재선" aria-describedby="button-addon2">
+			  <div class="input-group-append">
+			    <button class="btn btn-outline-primary" onclick="line_submit();" type="button" id="button-addon2">저장하기</button>
+			  </div>
+			</div>
+
+        		
+        	</div>
+        	<div class="col-2">
+        		<button class="btn btn-primary" onclick="cancel_appr();" type="button">취소</button>
+        	</div>
+        	
+        	
+        </div>
+        
+         <div class="row">
  			<div class="col-3">
  				참조자
      		</div>
@@ -86,8 +164,8 @@
             </div>
 	   		<div class="col-2">
 	   		</div>
-        </div>
-        <div class="row ck_appr">
+	   	</div>
+	   	<div class="row ck_appr">
           	<div class="col-3">
           	</div>
           	<div class="col-7 ref_container">
@@ -98,57 +176,6 @@
           	<div class="col-2">
           	</div>
         </div> 
-
-        <div class="row">
-	   		<div class="col-3">
-	   			결재자
-	   		</div>
-   		
-         	<div class="col-7">
-           		 <div class="input-group mb-3">	  
-					  <input type="text" list="search_list1" id="search_app" class="form-control" 
-					   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
-					   aria-describedby="button-addon1" autocomplete="off">
-					 		<datalist id="search_list1">
-					 		</datalist> 	 		
-					  <div class="input-group-prepend">
-					   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" 
-					   		onclick="addAppr();">추가하기</button>
-					  		<!-- <input type="hidden"> -->
-					  </div>
-				</div>
-         	</div>
-         	<div class="col-2">
-       	    </div>
-        </div> 	
-
-        <div class="row ck_appr">
-        	<div class="col-3">
-        	</div>
-        	<div class="col-7 appr_container">
-        		<input type="hidden" name="appr_result[]" class="appr_result">
-        		<input type="hidden" name="appr_result[]" class="appr_result">
-        		<input type="hidden" name="appr_result[]" class="appr_result">
-        	</div>
-   
-        	<div class="col-2">
-				<button class="btn btn-primary" id="save_btn" onclick="save_appr();" type="button">결재선 저장</button>
-        	</div>
-        	
-        </div>
-        
-        <div class="row save_appr" style="display:none">
-        	<div class="col-3">
-        		결재선 이름
-        	</div>
-        	<div class="col-7">
-        		<input type="text" class="form-control" placeholder="ex) 휴가 신청 결재선">
-        	</div>
-        	<div class="col-2">
-        			<button class="btn btn-primary" onclick="cancel_appr();" type="button">취소</button>
-        		
-        	</div>
-        </div>
 
 <!------------------------- 문서별 입력 내용 -------------------------->
 

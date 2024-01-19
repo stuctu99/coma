@@ -440,8 +440,21 @@ const delref=addDelref[1];
 // ---------------------- 자주 쓰는 결재선 저장 ---------------------------
 
 const save_appr=()=>{
-	$(".save_appr").show();
-	$("#save_btn").hide();
+/*	$(".save_appr").show();
+	$("#save_btn").hide();*/
+	
+	let apprList = "";
+	
+	for(let i=0; i<$(".appr_result").length; i++){	
+		if($('input[name="appr_result[]"]')[i].value){
+				apprList += (i+1)+". " + $('input[name="appr_result[]"]')[i].value + "\n";
+		} 
+	}
+
+	console.log(apprList);
+
+	let save_msg = prompt(apprList, '결재선 이름을 설정하세요.');
+
 	
 }
 
@@ -451,6 +464,16 @@ const cancel_appr=()=>{ // 결재선 저장 취소
 	
 	
 }
+
+const line_submit=()=>{ //결재선 저장 submit
+	
+	
+}
+
+/*const add_appr=()=>{
+	$(".add_appr").show();
+	
+}*/
 
 
 	
