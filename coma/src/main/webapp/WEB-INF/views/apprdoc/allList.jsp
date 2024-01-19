@@ -7,11 +7,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
-* {
-font-family: 'Noto Sans KR', sans-serif;
-}
 
 .card-stats {
 	width:240px;
@@ -26,22 +21,16 @@ font-family: 'Noto Sans KR', sans-serif;
         
     <div class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
-		<h1>진행중인 문서</h1>
-      	<a href="${path }">
-        <span class="text-sm font-semibold text-gray-500">진행중인 문서</span>
-        </a>
-        <a href="${path }/apprdoc/docList">
-          <span class="text-sm font-semibold text-gray-500">문서함</span>
-        </a>
+		<h1>문서함</h1>
       </div>
       <div>
-	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary">
 	  		<span>작성하기</span>
 	    </a>
 	  </div>
     </div>
 <div class="card-container">
-	<div class="container" style="margin: 20px 0 20px 0; display: flex; width: 100%; justify-content: center;">
+	<div class="" style="margin: 20px 0 0 0; display: flex; width: 100%; justify-content: center;">
 		<div class="card card-stats alldoc">
 		    <a href="${path }/apprdoc/allList">
 		    <div class="card-body">
@@ -121,7 +110,7 @@ font-family: 'Noto Sans KR', sans-serif;
           style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;">
           <option value=""></option>
         </select>
-        <button type="button" class="inline-flex items-center justify-center btn btn-success" onclick="getSearchList()">
+        <button type="button" class="inline-flex items-center justify-center btn btn-primary" onclick="getSearchList()">
         	검색
 	    </button>
         </form>

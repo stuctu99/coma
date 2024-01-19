@@ -37,9 +37,9 @@ public class ApprdocServicImpl implements ApprdocService {
 	}
 
 	@Override
-	public int selectApprCount(Map<String, Object> pgMap) {
+	public int selectApprCount(String progress) {
 		// TODO Auto-generated method stub
-		return dao.selectApprCount(session, pgMap);
+		return dao.selectApprCount(session, progress);
 	}
 	
 	

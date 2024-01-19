@@ -39,9 +39,10 @@ public class ApprdocDaoImpl implements ApprdocDao {
 	}
 
 	@Override
-	public int selectApprCount(SqlSession session, Map<String, Object> pgMap) {
+	public int selectApprCount(SqlSession session, String progress) {
 		// TODO Auto-generated method stub
-		return session.selectOne("approval.selectApprCount", pgMap);
+		
+		return session.selectOne("approval.selectApprCount",progress);
 	}
 	
 	

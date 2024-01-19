@@ -28,12 +28,6 @@ font-family: 'Noto Sans KR', sans-serif;
     <nav class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
       	<h1>문서함</h1>
-      	<a href="${path }/apprdoc/proceedList">
-        <span class="text-sm font-semibold text-gray-500">진행중인문서</span>
-        </a>
-        <a href="${path }">
-          <span class="text-sm font-semibold text-gray-500">문서함</span>
-        </a>
       </div>
     <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
   		<span>작성하기</span>
@@ -41,7 +35,7 @@ font-family: 'Noto Sans KR', sans-serif;
     </nav>
     
    <div class="card-container">
-	<div class="container" style="margin: 20px 0 20px 0; display: flex; width: 100%; justify-content: center;">
+	<div class="" style="margin: 20px 0 0 0; display: flex; width: 100%; justify-content: center;">
 		<div class="card card-stats alldoc">
 		    <a href="${path }/apprdoc/allList">
 		    <div class="card-body">
@@ -106,10 +100,10 @@ font-family: 'Noto Sans KR', sans-serif;
 		    </a>
 		</div>
 	</div>
-    
+   </div>
     
   <main class="flex-1 p-5">
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-3">
       <div class="flex space-x-2" style ="text-align: right;">
       <form name="searchForm" autocomplete="off">
         <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -162,7 +156,7 @@ font-family: 'Noto Sans KR', sans-serif;
 			         		<td>${docs.docNo }</td>
 			         		<td>${docs.docType }</td>
 			         		<td><a href="/approval/viewdoc?docNo=${docs.docNo }">${docs.docTitle }</a></td>
-			         		<td>${docs.empId }</td>
+			         		<td>${docs.emp.empName }</td>
 			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
 			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
 		         			<td>${docs.docProgress }</td>

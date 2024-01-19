@@ -164,19 +164,20 @@
                   <h1 style="text-align: center; margin : 10px;"> ${emp.empName }님 환영합니다 </h1>
                </div>
             </div>
-            <div class = "row" style="padding:10px;">
-               <div class= col-12>
+         </div>
+      <br>
+      <div class= col-12>
                   <h1><i class="ni ni-check-bold"></i>공지사항 </h1>
-               </div>
+      </div>
+      <div class="bigContainer">
+      <div class = "row" style="padding:10px;">
+               
             </div>
             <div class = "row" style="padding:30px;">
                <div class= col-12 style="text-align: -webkit-center;">
                   <table>
                      <c:forEach var="mainNotice" items="${mainNotice}">
                             <tr>
-                               <td>${mainNotice.boardNo }</td>
-                                <td>${mainNotice.emp.empId}</td>
-                                <td>${mainNotice.emp.empName}</td>
                                 <td><a href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
                                 <td>${mainNotice.boardDate}</td>
                             </tr>
@@ -184,8 +185,11 @@
                   </table>
                </div>
             </div>
-         </div>
       </div>
+      </div>
+      
+      
+      
    </div>
 </div>
  <script>

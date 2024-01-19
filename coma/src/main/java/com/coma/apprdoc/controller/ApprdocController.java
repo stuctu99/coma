@@ -32,30 +32,29 @@ public class ApprdocController {
 	private final PageFactory pageFactory;
 	
 	@GetMapping("/allList")
-	public void	selectAllList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "20") int numPerpage,
+	public void	selectAllList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
 			  @RequestParam(required = false, defaultValue="대기") String docProgress, Model m) {
 			
 			List<ApprovalDoc> appr = new ArrayList<>();
-			String[] progress = null;
+			String progress = null;
 			Map<String, Object> pgMap = new HashMap<>();
 			
 			//전체문서수
 			int allCount = service.selectApprCount(null);
 			m.addAttribute("allCount", allCount);
+			
 			//진행중인 문서(대기,진행)
-			progress = new String[]{"진행","대기"};
-			pgMap.put("start", progress);
-			int startCount = service.selectApprCount(pgMap);		
+			progress = "진행";
+			int startCount = service.selectApprCount(progress);
 			m.addAttribute("startCount", startCount);
+			
 			//완료문서(완료,반려)
-			progress = new String[]{"완료","반려"};
-			pgMap.put("end", progress);
-			int endCount = service.selectApprCount(pgMap);
+			progress = "완료";
+			int endCount = service.selectApprCount(progress);
 			m.addAttribute("endCount", endCount);
 			
 			//문서리스트
 			appr = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
-			
 			
 			m.addAttribute("proceed", appr);
 			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));
@@ -65,24 +64,24 @@ public class ApprdocController {
 	
 	//문서 리스트출력
 	@GetMapping("/proceedList")
-	public void selectProceedList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "20") int numPerpage,
+	public void selectProceedList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
 							  @RequestParam(required = false, defaultValue="대기") String docProgress, Model m) {
 			List<ApprovalDoc> appr = new ArrayList<>();
-			String[] progress = null;
+			String progress = null;
 			Map<String, Object> pgMap = new HashMap<>();
 			
 			//전체문서수
-			int allCount = service.selectApprCount(null);
+			int allCount = service.selectApprCount(progress);
 			m.addAttribute("allCount", allCount);
+			
 			//진행중인 문서(대기,진행)
-			progress = new String[]{"진행","대기"};
-			pgMap.put("start", progress);
-			int startCount = service.selectApprCount(pgMap);		
+			progress = "진행";
+			int startCount = service.selectApprCount(progress);
 			m.addAttribute("startCount", startCount);
+			
 			//완료문서(완료,반려)
-			progress = new String[]{"완료","반려"};
-			pgMap.put("end", progress);
-			int endCount = service.selectApprCount(pgMap);
+			progress = "완료";
+			int endCount = service.selectApprCount(progress);
 			m.addAttribute("endCount", endCount);
 			
 			//문서리스트
@@ -96,10 +95,10 @@ public class ApprdocController {
 	
 	//문서함 리스트출력 메소드
 	@GetMapping("/docList")
-	public void selectDocList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "20") int numPerpage,
+	public void selectDocList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
 							  @RequestParam(required = false, defaultValue="완료") String docProgress, Model m) {
 			List<ApprovalDoc> doc = new ArrayList<>();
-			String[] progress = null;
+			String progress = null;
 			Map<String, Object> pgMap = new HashMap<>();
 			
 			
@@ -109,15 +108,15 @@ public class ApprdocController {
 			//전체문서수
 			int allCount = service.selectApprCount(null);
 			m.addAttribute("allCount", allCount);
+			
 			//진행중인 문서(대기,진행)
-			progress = new String[]{"진행","대기"};
-			pgMap.put("start", progress);
-			int startCount = service.selectApprCount(pgMap);		
+			progress = "진행";
+			int startCount = service.selectApprCount(progress);
 			m.addAttribute("startCount", startCount);
+			
 			//완료문서(완료,반려)
-			progress = new String[]{"완료","반려"};
-			pgMap.put("end", progress);
-			int endCount = service.selectApprCount(pgMap);
+			progress = "완료";
+			int endCount = service.selectApprCount(progress);
 			m.addAttribute("endCount", endCount);
 			
 			
@@ -129,8 +128,9 @@ public class ApprdocController {
 	//문서검색 메소드
 	@PostMapping("/search")
 	@ResponseBody
-	public ResponseEntity<List<ApprovalDoc>> searchDoc(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+	public ResponseEntity<List<ApprovalDoc>> searchDoc(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
 														String keyword, Model m){
+		
 		Map<String, Object> doc = new HashMap<>();
 		doc.put("keyword", keyword);
 		doc.put("cPage", cPage);

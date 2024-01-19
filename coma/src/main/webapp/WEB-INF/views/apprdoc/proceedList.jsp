@@ -26,13 +26,7 @@ font-family: 'Noto Sans KR', sans-serif;
         
     <div class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
-		<h1>진행중인 문서</h1>
-      	<a href="${path }">
-        <span class="text-sm font-semibold text-gray-500">진행중인 문서</span>
-        </a>
-        <a href="${path }/apprdoc/docList">
-          <span class="text-sm font-semibold text-gray-500">문서함</span>
-        </a>
+		<h1>문서함</h1>
       </div>
       <div>
 	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
@@ -41,7 +35,7 @@ font-family: 'Noto Sans KR', sans-serif;
 	  </div>
     </div>
 <div class="card-container">
-	<div class="container" style="margin: 20px 0 20px 0; display: flex; width: 100%; justify-content: center;">
+	<div class="" style="margin: 20px 0 0 0; display: flex; width: 100%; justify-content: center;">
 		<div class="card card-stats alldoc">
 		    <a href="${path }/apprdoc/allList">
 		    <div class="card-body">

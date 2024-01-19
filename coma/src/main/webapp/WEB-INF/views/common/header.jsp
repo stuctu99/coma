@@ -23,11 +23,14 @@
   <link href="${path }/resource/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
-  <!-- <style>
-    div{
-      border: 2px solid red;
-    }
-  </style> -->
+<!-- 1.19 15:27 jm 폰트추가 -->
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+	
+	* {
+	font-family: 'Noto Sans KR', sans-serif;
+	}
+</style>
 </head>
 <body class="">
   <c:set var="e" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
@@ -105,8 +108,7 @@
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
               <li><a href="${pageContext.request.contextPath}/approval/addsign">서명 등록</a></li>
               <li><a href="${pageContext.request.contextPath}/approval/writedoc">결재신청</a></li>
-              <li><a href="${path }/apprdoc/proceedList">진행 중인 문서</a></li>
-              <li><a href="${path }/apprdoc/docList">문서함</a></li>
+              <li><a href="${path }/apprdoc/allList">문서함</a></li>
             </ul>
           </li>
           <li class="nav-item">

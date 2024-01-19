@@ -137,7 +137,7 @@
 							     </c:otherwise>
 							 </c:choose>
 						</td>
-						<c:if test="${post.emp.empId eq e.empId }">	
+						<c:if test="${post.emp.empId eq e.empId or fn:contains(e.authorities, 'ADMIN')}">	
 						<td>
 							<a href="${path }/board/updatePost?boardNo=${post.boardNo }" class="btn btn-success"><span>글수정</span></a>
 						</td>
