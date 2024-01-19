@@ -38,6 +38,15 @@ public class ApprdocDaoImpl implements ApprdocDao {
 		return session.selectList("approval.searchDoc",doc,rb);
 	}
 
+	@Override
+	public int selectApprCount(SqlSession session, String progress) {
+		// TODO Auto-generated method stub
+		
+		return session.selectOne("approval.selectApprCount",progress);
+	}
+	
+	
+
 	
 	
 }

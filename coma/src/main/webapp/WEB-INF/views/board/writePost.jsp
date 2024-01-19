@@ -28,7 +28,7 @@
 				  <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요">
 				</div>
 	        	<div>
-	        		<input type="text" class="form-control" value="${loginMember.empName }" style="width:100px;">
+	        		<input type="text" class="form-control" value="${loginMember.empName }" style="width:100px;" disabled="disabled">
 	        		<input type="hidden" name="writer" value="${loginMember.empId }" >
 	        	</div>
 				<br>

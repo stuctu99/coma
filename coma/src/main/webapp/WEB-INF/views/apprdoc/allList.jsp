@@ -7,11 +7,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
-* {
-font-family: 'Noto Sans KR', sans-serif;
-}
 
 .card-stats {
 	width:240px;
@@ -29,7 +24,7 @@ font-family: 'Noto Sans KR', sans-serif;
 		<h1>문서함</h1>
       </div>
       <div>
-	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary">
 	  		<span>작성하기</span>
 	    </a>
 	  </div>
@@ -115,7 +110,7 @@ font-family: 'Noto Sans KR', sans-serif;
           style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;">
           <option value=""></option>
         </select>
-        <button type="button" class="inline-flex items-center justify-center btn btn-success" onclick="getSearchList()">
+        <button type="button" class="inline-flex items-center justify-center btn btn-primary" onclick="getSearchList()">
         	검색
 	    </button>
         </form>
@@ -151,7 +146,6 @@ font-family: 'Noto Sans KR', sans-serif;
           </thead>
           <tbody>
          		<c:forEach var="proceeds" items="${proceed}">
-	         		<c:if test="${proceeds.docProgress eq '대기' || proceeds.docProgress eq '진행'}">
 		         		<tr>
 			          		<td>${proceeds.docNo }</td>
 			          		<td>${proceeds.docType }</td>
@@ -161,7 +155,6 @@ font-family: 'Noto Sans KR', sans-serif;
 			          		<td></td>
 			          		<td>${proceeds.docProgress }</td>
 		         		</tr>
-	         		</c:if>
           		</c:forEach>	
           </tbody>
         </table>

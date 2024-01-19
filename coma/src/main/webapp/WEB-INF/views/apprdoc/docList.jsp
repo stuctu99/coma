@@ -13,6 +13,11 @@
 font-family: 'Noto Sans KR', sans-serif;
 }
 
+.card-stats {
+	width:240px;
+	margin: 0 20px 0 20px;
+}
+
 .table td{
 	text-align: left;
 }
@@ -23,19 +28,82 @@ font-family: 'Noto Sans KR', sans-serif;
     <nav class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
       	<h1>문서함</h1>
-      	<a href="${path }/apprdoc/proceedList">
-        <span class="text-sm font-semibold text-gray-500">진행중인문서</span>
-        </a>
-        <a href="${path }">
-          <span class="text-sm font-semibold text-gray-500">문서함</span>
-        </a>
       </div>
     <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
   		<span>작성하기</span>
     </a>
     </nav>
+    
+   <div class="card-container">
+	<div class="" style="margin: 20px 0 0 0; display: flex; width: 100%; justify-content: center;">
+		<div class="card card-stats alldoc">
+		    <a href="${path }/apprdoc/allList">
+		    <div class="card-body">
+				<div class="row">
+				    <div class="col">
+				        <h5 class="card-title text-uppercase text-muted mb-0">총 문서</h5>
+				        <span class="h2 font-weight-bold mb-0">${allCount }개</span>
+				    </div>
+				    <div class="col-auto">
+				      <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+				          <i class="ni ni-archive-2"></i>
+				      </div>
+				    </div>
+				</div>
+				<p class="mt-3 mb-0 text-sm">
+				    <span class="text-success mr-2"></span>
+				    <span class="text-nowrap"></span>
+				</p>
+		    </div>
+			</a>
+		</div>
+		<div class="card card-stats pgdoc">
+			<a href="${path }/apprdoc/proceedList">
+		    <div class="card-body"> 
+				<div class="row">
+				    <div class="col">
+				        <h5 class="card-title text-uppercase text-muted mb-0">진행중인 문서</h5>
+				        <span class="h2 font-weight-bold mb-0">${startCount }개</span>
+				    </div>
+				    <div class="col-auto">
+				      <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+				          <i class="ni ni-button-play"></i>
+				      </div>
+				    </div>
+				</div>
+				<p class="mt-3 mb-0 text-sm">
+				    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
+				    <span class="text-nowrap">결재할 문서가 있습니다</span>
+				</p>
+		    </div>
+		    </a>
+		</div>
+		<div class="card card-stats enddoc">
+			<a href="${path }/apprdoc/docList">
+		    <div class="card-body"> 
+				<div class="row">
+				    <div class="col">
+				        <h5 class="card-title text-uppercase text-muted mb-0">완료된 문서</h5>
+				        <span class="h2 font-weight-bold mb-0">${endCount }개</span>
+				    </div>
+				    <div class="col-auto">
+				      <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+				          <i class="ni ni-folder-17"></i>
+				      </div>
+				    </div>
+				</div>
+				<p class="mt-3 mb-0 text-sm">
+				    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
+				    <span class="text-nowrap">업데이트된 문서가 있습니다</span>
+				</p>
+		    </div>
+		    </a>
+		</div>
+	</div>
+   </div>
+    
   <main class="flex-1 p-5">
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-3">
       <div class="flex space-x-2" style ="text-align: right;">
       <form name="searchForm" autocomplete="off">
         <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -74,7 +142,7 @@ font-family: 'Noto Sans KR', sans-serif;
                 기안일
               </th>
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                수정일
+                완료일
               </th>
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
                 상태
@@ -88,9 +156,9 @@ font-family: 'Noto Sans KR', sans-serif;
 			         		<td>${docs.docNo }</td>
 			         		<td>${docs.docType }</td>
 			         		<td><a href="/approval/viewdoc?docNo=${docs.docNo }">${docs.docTitle }</a></td>
-			         		<td>${docs.empId }</td>
-			         		<td><fmt:formatDate value="${docs.docDate}" pattern="MM-dd" /></td>
-			         		<td>${docs.docCorrectDate }</td>
+			         		<td>${docs.emp.empName }</td>
+			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
+			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
 		         			<td>${docs.docProgress }</td>
 		        		</tr>
 		       		</c:if>
