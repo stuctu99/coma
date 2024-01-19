@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.coma.model.dto.ApprovalLeave;
 import com.coma.model.dto.Calendar;
+import com.coma.model.dto.Commute;
 
 
 public interface CalendarDao {
