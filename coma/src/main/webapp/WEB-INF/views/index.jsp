@@ -81,7 +81,7 @@
                        </div>
                    </c:when>
                    <c:otherwise>
-                       <div class="col-3" id="clockin"> </div>
+                       <div class="col-3" id=""> </div>
                    </c:otherwise>
                </c:choose>
                <c:choose>
@@ -117,7 +117,7 @@
                        </div>
                    </c:when>
                    <c:otherwise>
-                       <div class="col-3" id="clockout"> </div>
+                       <div class="col-3" id=""> </div>
                    </c:otherwise>
                </c:choose>
                
