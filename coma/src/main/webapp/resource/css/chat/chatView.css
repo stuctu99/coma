@@ -263,7 +263,11 @@ section>div:nth-child(1)::-webkit-scrollbar-track{
 	width: 87%;
 }
 
-.invite-modal-body{
+.invite-list{
     overflow-y: auto !important;
-    height: 420px !important;
+    max-height: 239px !important;
+}
+
+.emp_checkbox{
+	margin-right: 3px !important;
 }

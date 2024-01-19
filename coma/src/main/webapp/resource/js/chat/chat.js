@@ -123,7 +123,7 @@ const createRoom = (empId) => {
 		"roomType": roomType,
 		"roomPasswordFlag": roomPasswordFlag,
 		"empId": empId,
-		"targetId": ""
+		"inviteEmp": ""
 	}
 	console.log("초대멤버배열" + inviteEmp);
 

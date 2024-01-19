@@ -55,8 +55,8 @@ div {
 				</div>
 				
 				<div class="col-1" style="padding: 0px 0px;">
-					<button class="invite" id="bars"  data-toggle="modal" data-target="#invite-modal" onclick="fn_empListLoad('${roomNo }');">
-						<i class="fa-solid fa-user-plus"></i>
+					<button class="invite" id="bars"  data-toggle="modal" data-target="#invite-modal" onclick="fn_updateInfo('${roomNo }');">
+						<i class="fa-solid fa-gear"></i>
 					</button>
 				</div>
 			</div>
@@ -66,7 +66,7 @@ div {
 					<button id="back" style="transform: rotate(180deg);">&#10132</button>
 				</div>
 				<div class="col-10">
-					<h4 style="line-height: 2.0;">${room.roomName }</h4>
+					<h4 id="room_name" style="line-height: 2.0;">${room.roomName }</h4>
 					<input type="hidden" id="roomType"
 						value="${room.roomTypeObj.roomType }" />
 				</div>
@@ -132,7 +132,7 @@ div {
 				<div class="modal-content">
 
 					<div class="modal-header">
-						<h3 class="modal-title" id="modal-title-default">사원 초대</h3>
+						<h3 class="modal-title" id="modal-title-default">방 정보 수정</h3>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">×</span>
@@ -140,13 +140,61 @@ div {
 					</div>
 
 					<div class="modal-body invite-modal-body">
+						<div class="contain" style="border-bottom:1px solid black;">
+							<div class="row">
+								<div class="col-6">
+									<strong>채팅방 제목</strong>
+								</div>
+								<div class="col-6">
+									<strong>유형</strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-6">
+									<input type="text" name="roomName" id="updateroomName" value=""/>
+								</div>
+								<div class="col-6">
+									<select name="roomType" id="updateroomType">
+										<option value="A">공통</option>
+										<option value="D1">관리부</option>
+										<option value="D2">행정부</option>
+										<option value="D3">회계부</option>
+										<option value="D4">교육부</option>
+										<option value="D5">취업부</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-6">
+									<strong>비밀번호</strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-6">
+									<input type="password" name="roomPassword" id="updateroomPassword"
+										value="" disabled />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-6">
+									<input type="checkbox" name="updateroomPasswordFlag"
+										id="roomPasswordFlag" value="N" /> <label
+										for="roomPasswordFlag"><strong>비밀번호</strong></label>
+								</div>
+							</div>
+						</div>
+						<div class="contain">
+							<div class="row" style="border-bottom:1px solid black;">
+								<h3>&nbsp;&nbsp;&nbsp;&nbsp;초대리스트</h3>
+							</div>							
+						</div>
 						<div class="contain invite-list" id="invite-list">
 							
 						</div>
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onclick="fn_invite('${roomNo}');">&#43;초대</button>
+						<button type="button" class="btn btn-primary" onclick="fn_update('${roomNo}');">&#43;수정</button>
 						<button type="button" class="btn btn-link  ml-auto"
 							data-dismiss="modal">닫기</button>
 					</div>
