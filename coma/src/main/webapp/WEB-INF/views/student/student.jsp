@@ -62,7 +62,7 @@
 							      </div>
 							      <div class="modal-body">
 									<select class="form-control form-control-sm" id="significantSelect" style="width:120px; text-align:center; margin-bottom:10px;">
-										<option>분류 선택</option>
+										<option>분류선택</option>
 										<option>병가</option>
 										<option>경조사</option>
 										<option>개인사</option>
@@ -367,34 +367,38 @@
 		})
 	}
 	
+	//학생 특이사항 작성 기능
 	function fn_significant(stuNo){
 		const content = document.getElementById("significantContent_"+stuNo).value;
 		const select = document.getElementById("significantSelect").value;
-		console.log(content);
-		fetch("${path}/student/studentSignificant",{
-			method:"post",
-			headers:{"Content-Type":"application/json"},
-			body:JSON.stringify({
-				stuNo:stuNo,
-				content:select+":"+content
+		if(select != '분류선택'){
+			fetch("${path}/student/studentSignificant",{
+				method:"post",
+				headers:{"Content-Type":"application/json"},
+				body:JSON.stringify({
+					stuNo:stuNo,
+					content:select+":"+content
+					
+				})
+			}).then(response=>{
+				if(response.status!=200) throw new Error(repsonse.status);
+				return response.json();
+			}).then(result=>{
+				console.log(result);
+				if(result>0){
+					alert("입력이 완료 되었습니다");
+					$("#exampleModal_"+stuNo).modal('hide');
+				}else{
+					alert("입력이 실패 하었습니다");
+					$("#exampleModal_"+stuNo).modal('hide');
+				}
 				
+			}).catch(e=>{
+				console.log(e);
 			})
-		}).then(response=>{
-			if(response.status!=200) throw new Error(repsonse.status);
-			return response.json();
-		}).then(result=>{
-			console.log(result);
-			if(result>0){
-				alert("입력이 완료 되었습니다");
-				$("#exampleModal_"+stuNo).modal('hide');
-			}else{
-				alert("입력이 실패 하었습니다");
-				$("#exampleModal_"+stuNo).modal('hide');
-			}
-			
-		}).catch(e=>{
-			console.log(e);
-		})
+		}else{
+			alert("특이사항 분류를 선택해주세요");
+		}
 	}
 </script>
 <!-- TEAM COMA SPACE -->
