@@ -100,9 +100,16 @@ div {
 					
 						<c:if test="${not empty commute}">
 							<c:forEach var="c" items="${commute }">
-								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
+								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'NON-ANTTE'}">
 									<tr>
-										<td><c:out value="${c.EMP_COMMUTE_STATUS }" /></td>
+										<td>
+											<c:if test="${c.EMP_COMMUTE_STATUS eq 'Uncleared'}">
+											    퇴근 미처리
+											</c:if>
+											<c:if test="${c.EMP_COMMUTE_STATUS ne 'Uncleared'}">
+											    ${c.EMP_COMMUTE_STATUS}
+											</c:if>
+										</td>
 										<td>
 											<fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" />
 										</td>
@@ -144,6 +151,8 @@ div {
 		<div class="col-1"></div>
 	</div>
 </div>
+<!--  -->
+
 <!-- <div class="coma-container">
 	<div class="row">
 		총 12칸
@@ -209,88 +218,94 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     	    });
 
     	    data.commuteList.forEach(c => {
-    	        const $tr = document.createElement('tr');
-
-    	        const $td1 = document.createElement('td');
-    	        $td1.innerText = c.EMP_COMMUTE_STATUS;
-
-    	        const $td2 = document.createElement('td');
-    	        $td2.innerText = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
-				
-				
-    	        const $td3 = document.createElement('td');
-    	        const $input1 = document.createElement('input');
-    	        $input1.className = 'form-control';
-    	        $input1.type = 'time';
-    	        $input1.name = 'clockin';
-    	        $input1.step='1';
-    	        $input1.value = c.EMP_COMMUTE_CLOCKIN  // 원하는 초기값 설정
-    	        $input1.id = 'example-search-input';
-    	        $td3.appendChild($input1);
-    	        console.log(typeof c.EMP_COMMUTE_WORKDATE);
-
-    	        const $td4 = document.createElement('td');
-    	        const $input2 = document.createElement('input');
-    	        $input2.className = 'form-control';
-    	        $input2.type = 'time';
-    	        $input2.name = 'clockout';
-    	        $input2.step='1';
-    	        $input2.value = c.EMP_COMMUTE_CLOCKOUT;  // 초기값 설정
-    	        $input2.id = 'example-search-input';
-    	        $td4.appendChild($input2);
-
-    	        const $td5 = document.createElement('td');
-    	        const $input3 = document.createElement('input');8
-    	        $input3.className = 'form-control';
-    	        $input3.type = 'time';
-    	        $input3.step='1';
-    	        $input3.name = 'starttime';
-    	        $input3.value = c.EMP_COMMUTE_STARTTIME;  // 초기값 설정
-    	        $input3.id = 'example-search-input';
-    	        $td5.appendChild($input3);
-
-    	        const $td6 = document.createElement('td');
-    	        const $input4 = document.createElement('input');
-    	        $input4.className = 'form-control';
-    	        $input4.type = 'time';
-    	        $input4.name = 'endtime';
-    	        $input4.step='1';
-    	        $input4.value = c.EMP_COMMUTE_ENDTIME ;  // 초기값 설정
-    	        $input4.id = 'example-search-input';
-    	        $td6.appendChild($input4);
-    			
-    	        const $td7 = document.createElement('td');
-    	        const $button = document.createElement('button');
-    	        $button.type = 'submit';
-    	        $button.className = 'btn btn-secondary btn-sm';
-    	        $button.innerText = '근무 수정';
-    	        $td7.appendChild($button);
-
-    	        const $hiddenInput1 = document.createElement('input');
-    	        $hiddenInput1.type = 'hidden';
-    	        $hiddenInput1.value = c.EMP_COMMUTE_WORKDATE;
-    	        $hiddenInput1.name = 'workdate';
-
-    	        const $hiddenInput2 = document.createElement('input');
-    	        $hiddenInput2.type = 'hidden';
-    	        $hiddenInput2.value = empId;
-    	        $hiddenInput2.name = 'empId';
-    	        $hiddenInput2.id = 'empId';
-
-    	        // 필요한 hidden input 요소들을 각각의 td에 추가
-    	        $td3.appendChild($hiddenInput1);
-    	        $td3.appendChild($hiddenInput2);
-
-    	        // 필요에 따라 다른 작업을 수행할 수 있습니다.
-    	        // 예를 들어, $tr을 $tbody에 추가하는 등의 작업을 수행할 수 있습니다.
-    	        $tr.appendChild($td1);
-    	        $tr.appendChild($td2);
-    	        $tr.appendChild($td3);
-    	        $tr.appendChild($td4);
-    	        $tr.appendChild($td5);
-    	        $tr.appendChild($td6);
-    	        $tr.appendChild($td7); 
-    	        $tbody.appendChild($tr);
+    	    	if(c.EMP_COMMUTE_STATUS!='NON-ANTTE'){
+	    	        const $tr = document.createElement('tr');
+	
+	    	        const $td1 = document.createElement('td');
+	    	        if(c.EMP_COMMUTE_STATUS =='Uncleared'){
+	    	        	$td1.innerText = '퇴근 미처리';
+	    	        }else{
+	    	        	$td1.innerText = c.EMP_COMMUTE_STATUS;
+	    	        }
+	    	        
+	    	        const $td2 = document.createElement('td');
+	    	        $td2.innerText = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
+					
+					
+	    	        const $td3 = document.createElement('td');
+	    	        const $input1 = document.createElement('input');
+	    	        $input1.className = 'form-control';
+	    	        $input1.type = 'time';
+	    	        $input1.name = 'clockin';
+	    	        $input1.step='1';
+	    	        $input1.value = c.EMP_COMMUTE_CLOCKIN  // 원하는 초기값 설정
+	    	        $input1.id = 'example-search-input';
+	    	        $td3.appendChild($input1);
+	    	        console.log(typeof c.EMP_COMMUTE_WORKDATE);
+	
+	    	        const $td4 = document.createElement('td');
+	    	        const $input2 = document.createElement('input');
+	    	        $input2.className = 'form-control';
+	    	        $input2.type = 'time';
+	    	        $input2.name = 'clockout';
+	    	        $input2.step='1';
+	    	        $input2.value = c.EMP_COMMUTE_CLOCKOUT;  // 초기값 설정
+	    	        $input2.id = 'example-search-input';
+	    	        $td4.appendChild($input2);
+	
+	    	        const $td5 = document.createElement('td');
+	    	        const $input3 = document.createElement('input');8
+	    	        $input3.className = 'form-control';
+	    	        $input3.type = 'time';
+	    	        $input3.step='1';
+	    	        $input3.name = 'starttime';
+	    	        $input3.value = c.EMP_COMMUTE_STARTTIME;  // 초기값 설정
+	    	        $input3.id = 'example-search-input';
+	    	        $td5.appendChild($input3);
+	
+	    	        const $td6 = document.createElement('td');
+	    	        const $input4 = document.createElement('input');
+	    	        $input4.className = 'form-control';
+	    	        $input4.type = 'time';
+	    	        $input4.name = 'endtime';
+	    	        $input4.step='1';
+	    	        $input4.value = c.EMP_COMMUTE_ENDTIME ;  // 초기값 설정
+	    	        $input4.id = 'example-search-input';
+	    	        $td6.appendChild($input4);
+	    			
+	    	        const $td7 = document.createElement('td');
+	    	        const $button = document.createElement('button');
+	    	        $button.type = 'submit';
+	    	        $button.className = 'btn btn-secondary btn-sm';
+	    	        $button.innerText = '근무 수정';
+	    	        $td7.appendChild($button);
+	
+	    	        const $hiddenInput1 = document.createElement('input');
+	    	        $hiddenInput1.type = 'hidden';
+	    	        $hiddenInput1.value = c.EMP_COMMUTE_WORKDATE;
+	    	        $hiddenInput1.name = 'workdate';
+	
+	    	        const $hiddenInput2 = document.createElement('input');
+	    	        $hiddenInput2.type = 'hidden';
+	    	        $hiddenInput2.value = empId;
+	    	        $hiddenInput2.name = 'empId';
+	    	        $hiddenInput2.id = 'empId';
+	
+	    	        // 필요한 hidden input 요소들을 각각의 td에 추가
+	    	        $td3.appendChild($hiddenInput1);
+	    	        $td3.appendChild($hiddenInput2);
+	
+	    	        // 필요에 따라 다른 작업을 수행할 수 있습니다.
+	    	        // 예를 들어, $tr을 $tbody에 추가하는 등의 작업을 수행할 수 있습니다.
+	    	        $tr.appendChild($td1);
+	    	        $tr.appendChild($td2);
+	    	        $tr.appendChild($td3);
+	    	        $tr.appendChild($td4);
+	    	        $tr.appendChild($td5);
+	    	        $tr.appendChild($td6);
+	    	        $tr.appendChild($td7); 
+	    	        $tbody.appendChild($tr);
+    	    	}
     	    });
             
         })
