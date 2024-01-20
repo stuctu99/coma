@@ -39,7 +39,7 @@
 	       				문서 종류
 	       			</div>
 		            <div class="col-7">
-		            	 <select class="form-control form-control-sm" onchange="fn_docType(this.value);">
+		            	 <select required class="form-control form-control-sm" onchange="fn_docType(this.value);">
 							  <option value="" selected disabled hidden>문서 종류를 선택하세요.</option>
 							  <option value="leave">휴가신청서</option>
 							  <option value="cash">지출결의서</option>
@@ -58,11 +58,12 @@
 	            	문서 제목
 	            </div>
 	            <div class="col-7">
-	            	<input class="form-control" type="text" placeholder="제목" name="title">
+	            	<input class="form-control" id="ck_title" type="text" placeholder="제목" name="title">
 	            </div>  
 	            <div class="col-2"></div>
 	         </div>
           </div><!-- doc_basic -->
+          
           
 <!----------------------- 결재선 설정 ------------------------->        
 	<hr>  
@@ -73,12 +74,14 @@
   		<div class="row" >
   			<div class="col-3">
   			</div>
-        	<div class="col-3">
-        		<button type="button" onclick="take_line();" class="btn btn-primary btn-lg btn-block">결재선 불러오기</button>
+        	<div class="col-3 remake">
+        		<!-- 모달창 코드는 맨 밑에 -->
+        		<button type="button" id="take_btn" onclick="take_line();" class="btn btn-block btn-primary mb-3" data-toggle="modal" data-target="#modal-default">결재선 불러오기</button>	 
+        		<button type="button" onclick="fn_reset();" id="reset_btn" style="display:none" class="btn btn-block btn-primary mb-3">리셋</button>
         	</div>
        
         	<div class="col-3">
-        		<button class="btn btn-primary btn-lg btn-block" id="save_btn" onclick="save_appr();" type="button">결재선 저장</button>
+        		<button class="btn btn-block btn-primary mb-3" id="save_btn" onclick="save_appr();" type="button">결재선 저장</button>
         	</div>
         
         	<div class="col-3">
@@ -92,7 +95,7 @@
    		
          	<div class="col-7">
            		 <div class="input-group mb-3">	  
-					  <input type="text" list="search_list1" id="search_app" class="form-control" 
+					  <input required type="text" list="search_list1" id="search_app" class="form-control" 
 					   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
 					   aria-describedby="button-addon1" autocomplete="off">
 					 		<datalist id="search_list1">
@@ -107,17 +110,18 @@
        	    </div>
         </div> 	
 
+
         <div class="row ck_appr">
         	<div class="col-3">
         	</div>
         	<div class="col-7 appr_container">
+        		<input type="hidden" name="appr_result[]" class="appr_result" id="ck_appr">
         		<input type="hidden" name="appr_result[]" class="appr_result">
         		<input type="hidden" name="appr_result[]" class="appr_result">
-        		<input type="hidden" name="appr_result[]" class="appr_result">
-        	</div>
-   
+        	
+        	</div>	
         	<div class="col-2">
-			
+				
         	</div>
         	
         </div>
@@ -360,11 +364,49 @@
     			<!--제출 전 에디터 값 넘기기 위해 type="button"으로 줌 -->
     	</div>
     </div>      
+    	
+    	
+       
+      <!----------------------- 결재선 불러오기 모달 창 ----------------------->
+  
+    <div class="row">
+	  <div class="col-md-4">
+	     
+	      <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+		    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+		       	 <div class="modal-content">
+			        	
+			            <div class="modal-header">
+				                <h6 class="modal-title" id="modal-title-default">결재선 이름</h6>
+				                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                    <span aria-hidden="true">×</span>
+				                </button>
+			            </div>
+			            
+		           		<div class="modal-body" id="take_line"> <!-- radio 출력 div -->
+		               
+		           		</div>
+			            
+			            <div class="modal-footer">
+			                <button type="button" onclick="line_end();" class="btn btn-primary">확인</button>
+			                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">취소</button>
+			            </div>
+			            
+			        </div>
+			    </div>
+			</div>
+	    </div>
+	</div>	
+
+    <!--  --> 	
+  
           <!-- coma content space -->
         </div>
     </div>
 
 </form>   
+
+    
     
     <!-- TEAM COMA SPACE -->
     </div>
