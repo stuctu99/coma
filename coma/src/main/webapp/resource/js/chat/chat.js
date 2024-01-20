@@ -100,6 +100,19 @@ const createRoomCheck = (empId) => {
 	}
 }
 
+function initModal(){
+	const roomName = $("#roomName");
+	const roomPassword = $("#roomPassword");
+	const roomPasswordFlag = $("#roomPasswordFlag");
+	const roomType = $("#roomType");
+	const inviteCheckbox = $(".invite_emp");
+	
+	roomName.val("");
+	roomPassword.val("");
+	roomPasswordFlag.val("");
+	roomType.val("").val("A").prop("selected", true);
+	inviteCheckbox.prop("checked",false);
+}
 
 const createRoom = (empId) => {
 	const roomName = $("#roomName").val();
@@ -147,6 +160,7 @@ const createRoom = (empId) => {
 			if (data.result == "success") {
 				console.log("방생성 성공 // 초대인원 수 :" + inviteEmp.length);
 				$("#createRoom").modal('hide');
+				initModal();
 				/* 초대 멤버가 존재할 때 실행 */
 				
 				if (inviteEmp.length > 0) {
@@ -317,7 +331,7 @@ const fn_roomListByType = (type) => {
 					const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top", "12px");
 					const $strong_type = $("<strong>");
 					const $strong_title = $("<strong>").css("padding-right", "3px");
-					const $updateMsg = $("<span>").addClass("updateMsg-" + d.roomNo).css("color","megenta");
+					const $updateMsg = $("<span>").addClass("updateMsg-" + d.roomNo);
 					const $i = $("<div>").addClass("col-1 chatting-room");
 					const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
 					const $user_count = $("<span>");
@@ -342,11 +356,9 @@ const fn_roomListByType = (type) => {
 							return response.text();
 						})
 						.then(data => {
-							if (d.roomPasswordFlag == 'N') {
+							if (d.roomPasswordFlag == 'N' && type=='engagement') {
 									if (data != "") {
 										$updateMsg.text("Message : " + data);
-									} else {
-										$updateMsg.text("No Message");
 									}
 								}
 						})
@@ -556,7 +568,7 @@ const enter_chattingRoom = (roomNo) => {
 			if (data) {
 				const url = "/chatting/room/" + roomNo;
 				const windowName = "chattingRoom " + roomNo;
-				const options = "width=600, height=600, scrollbars=yes"
+				const options = "width=600, height=700, scrollbars=yes"
 				$("#btn-" + roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
 				$(".chatting-list-btn").click();
 				window.open(url, windowName, options);

@@ -77,8 +77,9 @@ div {
 						</li>
 
 					</ul>
-					<div class="container profile-list list-${roomNo } }"
-						style="height: 499px;"></div>
+					<div class="container profile-list list-${roomNo } }" style="height: 499px;">
+						
+					</div>
 					<div>
 						<button class="btn btn-primary" id="exit-btn">채팅방 나가기</button>
 					</div>

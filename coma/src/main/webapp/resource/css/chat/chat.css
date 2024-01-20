@@ -72,6 +72,7 @@ strong:has(div){
 }
 
 #chattingList>.row{
+	padding: 0px 10px;
 	min-height: 73px !important;
 }
 
@@ -80,8 +81,20 @@ strong:has(div){
     height: 363px;
 }
 
-#chattingList::-webkit-scrollbar{
-	display: none;
+::-webkit-scrollbar{
+	width: 10px;
+	height: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #5e72e4; /* 스크롤바 막대 색상 */
+    border: 2px solid #5e72e4; /* 스크롤바 막대 테두리 설정  */
+    border-radius: 12px 12px 12px 12px;
+}
+
+::-webkit-scrollbar-track {
+	border-radius: 12px 12px 12px 12px;
+	background: rgb(235, 224, 234); /* 스크롤바 뒷 배경 색상 */
 }
 
 #chatting-active{
@@ -149,6 +162,11 @@ hr {
 	margin-top:5px;
 	padding: 0px 5px !important;
 	text-align: left;
+}
+
+.emp-list{
+	max-height: 492px;
+	overflow-y: auto !important;
 }
 
 .emp-list>div.row{
@@ -219,4 +237,14 @@ span[name=new]{
     padding-bottom: 14px;
     margin-right: 9px;
     font-size: 10px;
+}
+
+#invite-title{
+	padding: 5px 0px !important;
+	margin: 0px 0px !important;;
+}
+
+#searchType{
+	width: 90px;
+    margin-left: 10px;
 }
