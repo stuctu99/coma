@@ -29,7 +29,7 @@
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						<th>
 							<span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
+								<input type="checkbox" id="selectAll" onclick="allChecked()">
 								<label for="selectAll"></label>
 							</span>
 						</th>
@@ -45,7 +45,7 @@
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						<td>
 							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox1" name="options[]" value="1">
+								<input type="checkbox" id="checkbox1" name="options[]" value="1" onclick="boxClicked()">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
@@ -89,7 +89,7 @@
 			<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 				<div class="col-sm-6" style="text-align: right;">
 			      <a href="${path }/board/writeView?boardType=0" class="btn btn-success"><span>공지작성</span></a>   
-			      <a href="/deletePost" class="btn btn-success"><span>공지삭제</span></a>   
+			      <a onclick="deleteSelected()" class="btn btn-success"><span>공지삭제</span></a>   
 			  	</div>
 			</c:if>
 			
@@ -122,6 +122,66 @@
 
 
 <script>
+	
+	//체크박스
+	function allChecked() {
+	    // 'selectAll' 체크박스가 변경되면 모든 하위 체크박스를 선택/해제
+	    var checkboxes = document.getElementsByName('options[]');
+	    var selectAllCheckbox = document.getElementById('selectAll');
+	
+	    for (var i = 0; i < checkboxes.length; i++) {
+	        checkboxes[i].checked = selectAllCheckbox.checked;
+	    }
+	}
+	
+	function boxClicked() {
+	    // 하위 체크박스 중 하나라도 체크가 해제되면 'selectAll' 체크박스도 해제
+	    var checkboxes = document.getElementsByName('options[]');
+	    var selectAllCheckbox = document.getElementById('selectAll');
+	
+	    for (var i = 0; i < checkboxes.length; i++) {
+	        if (!checkboxes[i].checked) {
+	            selectAllCheckbox.checked = false;
+	            return;
+	        }
+	    }
+	
+	    // 모든 하위 체크박스가 체크되면 'selectAll' 체크박스도 체크
+	    selectAllCheckbox.checked = true;
+	}
+	
+	function deleteSelected() {
+        // 선택된 체크박스의 값을 수집하여 삭제 요청 등을 수행
+        var checkboxes = document.getElementsByName('options[]');
+        var selectedIds = [];
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                // 여기에서 선택된 체크박스의 ID 값을 추출하고 배열에 추가
+                selectedIds.push(checkboxes[i].value);
+            }
+        }
+
+        // 선택된 ID 값을 사용하여 삭제 동작 수행 (예: AJAX 요청 등)
+        if (selectedIds.length > 0) {
+            // 여기에서 선택된 ID 값을 사용하여 삭제 동작 수행
+        	 $.ajax({
+                 url: '/board/checkDelete', 
+                 method: 'GET',
+                 data: { ids: selectedIds },
+                 success: function(response) {
+                     alert('삭제 성공!');
+                 },
+             });
+			
+        } else {
+            alert('선택된 항목이 없습니다.');
+        }
+    }
+	
+	//
+
+
 	function handleEnterKey(event) {
 		if (event.key === 'Enter') {
 			getSearchList();

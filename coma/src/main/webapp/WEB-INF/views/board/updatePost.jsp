@@ -28,7 +28,7 @@
 				  <input type="text" class="form-control" id="title" name="title" value="${post.boardTitle }">
 				</div>
 	        	<div>
-	        		<input type="text" class="form-control" value="${loginMember.empName }" style="width:100px;">
+	        		<input type="text" class="form-control" value="${loginMember.empName }" style="width:100px;" disabled="disabled">
 	        		<input type="hidden" name="boardNo" value="${post.boardNo }" >
 	        	</div>
 				<br>

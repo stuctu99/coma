@@ -65,15 +65,6 @@
   margin-bottom: 10px;
 }
 
-#cont button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  margin-right: 10px;
-  border-radius: 3px;
-}
 
 #cont button:last-child {
   background-color: #f44336;
@@ -125,11 +116,11 @@ input[type="datetime-local"] {
 	display: none;
 }
 /* 일요일 날짜 빨간색 */
-.fc-day-sun a {
+.fc-day-sun {
   color: red;
   text-decoration: none;
 }
-.fc-day-sat a {
+.fc-day-sat {
   color: blue;
   text-decoration: none;
 }
@@ -144,23 +135,22 @@ input[type="datetime-local"] {
 #calContent[readonly]{
   pointer-events: none;
 }
- .btn{
-       
+ .typeBtn{      
         border: none;
         color: white;
+   	    box-shadow: 0 10px 14px 0 rgba(0,0,0,0.2);
         padding: 10px 24px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
-        margin: 4px 2px;
+        margin: 4px 5px;
         cursor: pointer;
         transition-duration: 0.4s;
         border-radius: 5px;
-        box-shadow: 0 10px 14px 0 rgba(0,0,0,0.2);
+  
     }
 
-   
  #myBtn   {
  background-color: #fbc5cb;
  }
@@ -225,18 +215,25 @@ input[type="datetime-local"] {
               
               <div>
               
-                <button onclick="fCalAdd()" id="addBtn">저장하기</button>
-                <button onclick="fMClose()" id="closeBtn">취소하기</button>
-                <button onclick="delClose()" id="delBtn">삭제하기</button>
+                <button type="button" class="btn btn-primary btn" onclick="fCalAdd()" id="addBtn">저장하기</button>
+                <button type="button" class="btn btn-outline-danger btn" onclick="fMClose()" id="closeBtn">취소하기</button>
+                <button type="button" class="btn btn-danger btn" onclick="delClose()" id="delBtn">삭제하기</button>
          
               </div>
             </div>
         </div>
     </div>
-    	 <div>              
-                <button class="btn btn-primary btn-sm" id="myBtn" onclick="fcMy()">개인일정</button>      
-                  <button class="btn btn-primary btn-sm" id="allBtn" onclick="fcAll()">전사일정</button>           
-                 <button class="btn btn-primary btn-sm" id="deptBtn" onclick="fcDept()">부서일정</button> 
+    <div class="row">
+    <div class="col-1"></div>
+    	 <div >              
+                <button class="typeBtn" id="myBtn" onclick="fcMy()">개인일정</button>   
+         </div>  
+         <div >        
+                  <button class="typeBtn" id="allBtn" onclick="fcAll()">전사일정</button>           
+         </div>
+         <div>        
+                 <button class="typeBtn" id="deptBtn" onclick="fcDept()">부서일정</button> 
+        	</div>
          </div>
          <!-- 캘린더 타입 구분해주는 값 -->
          <div>             
@@ -270,7 +267,7 @@ input[type="datetime-local"] {
         const headerToolbar = {
             left: 'prevYear,prev,next,nextYear today',
             center: 'title',
-            right: 'dayGridMonth,dayGridWeek,timeGridDay,list'
+            right: 'dayGridMonth,dayGridWeek,timeGridDay,listWeek'
         }
 		//타입별 캘린더 
         function getEventSources(calId) {
@@ -453,7 +450,7 @@ input[type="datetime-local"] {
             slotMaxTime: '18:00', // Day 캘린더 종료 시간
             // 맨 위 헤더 지정
             headerToolbar: headerToolbar,
-            initialView: 'dayGridMonth',  // default: dayGridMonth 'dayGridWeek', 'timeGridDay', 'listWeek'
+            initialView: 'dayGridMonth',   // default: dayGridMonth 'dayGridWeek', 'timeGridDay', 'listWeek'
             firstDay: 1,		// 첫번째 날짜가 월요일로 설정
             locale: 'kr',        // 언어 설정
             selectable: true,    // 영역 선택
@@ -626,7 +623,7 @@ input[type="datetime-local"] {
         	    calendar.on("eventClick",handleEventClick);
         	    calendar.on("eventClick",info=>{
         	    
-        	    	if(loginmemberJobCode=="J2"||"J1"){
+        	    	if(loginmemberJobCode=="J2"){
         	    		addBtn.style.display="block";
         	    		delBtn.style.display="block";
         	    		
@@ -638,7 +635,7 @@ input[type="datetime-local"] {
         	    calendar.on("dateClick",handleDateClick);
         	    calendar.on("dateClick",info=>{
         	    
-        	    	if(loginmemberJobCode=="J2"||"J1"){        	    		
+        	    	if(loginmemberJobCode=="J2"){        	    		
         	    		addBtn.style.display="block";
         	    	}else{
         	    		addBtn.style.display="none";
@@ -646,7 +643,7 @@ input[type="datetime-local"] {
         	    })
         	    calendar.on("select",handleSelect);
         	    calendar.on("select",info=>{
-           		 if(loginmemberJobCode=="J2"||"J1"){
+           		 if(loginmemberJobCode=="J2"){
      	    		addBtn.style.display="block";           			
            		 }else{
      	    		addBtn.style.display="none";

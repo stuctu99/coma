@@ -15,11 +15,11 @@ div {
 
 .bigbax {
 	/* border: 2px solid blue; */
-	margin: 15px;
+	/* margin: 15px; */
 	/* border: 2px solid lightgrey */;
 	border-radius: 20px;
-	background-color: #f1edff;
-	padding: 20px 10px 0px 20px;
+	background-color: #ffffff;
+	padding: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -30,21 +30,7 @@ div {
 	border-radius: 20px;
 }
 
-.smallbox {
-	margin: 30px;
-	/* border: 1px solid lightgrey;   */
-	
-}
-.blank{
-	padding-top: 20px;
-	
-
-
-}
-
-/* You may need to adjust the styling based on your specific requirements */
 </style>
-<%-- ${vacation } --%>
 <div class="coma-container containerbig">
 	<div class="row">
 				<div class="col-1" ></div>
@@ -58,8 +44,8 @@ div {
 	<div class="row" style="text-align: center;">
 		<div class="col-1"></div>
 		<div class="col-10  bigbax">
-			<div class="row" style="margin-left:30px">
-				
+			<div class="row" style= "text-align: center;">
+				<div class="col-1"></div>
 				<div class="col-3 smallbox">
 					<div class="">
 						<h3 class="">남은 연차</h3>
@@ -73,7 +59,7 @@ div {
 						<h3 class="">사용한 연차</h3>
 					</div>
 					<div class="blank">
-						<h4>${finishCount }회</h4>
+						<h4>${finishCount } 회</h4>
 					</div>
 				</div>
 				<div class=" col-3 smallbox">
@@ -81,9 +67,10 @@ div {
 						<h3 class="">결재 중인 휴가 결재</h3>
 					</div>
 					<div class="blank">
-						<h4>${ waitCount}</h4>
+						<h4>${ waitCount} 건</h4>
 					</div>
 				</div>
+				<div class="col-1"></div>
 			</div>
 		</div>
 		<div class="col-1"></div>
@@ -97,7 +84,7 @@ div {
 					<div class=""></div>
 				</div>
 				<div class="col-1">
-					<button type="button" class="btn btn-outline-primary" id ="vacationWriteBtn">휴가 신청하기</button>
+					<button type="button" class="btn btn-primary" id ="vacationWriteBtn">휴가 신청하기</button>
 				</div>
 				<div class="col-1"></div>
 			</div>
@@ -144,14 +131,7 @@ div {
 		<div class="col-1"></div>
 	</div>
 </div>
-<!-- <div class="coma-container">
-	<div class="row">
-		총 12칸
-		<div class="col-4">1</div>
-		<div class="col-4">2</div>
-		<div class="col-4">3</div>
-	</div>
-</div> -->
+
 <script>
 document.getElementById('vacationWriteBtn').addEventListener('click', function() {
     window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';

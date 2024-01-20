@@ -17,4 +17,5 @@ public class Reply {
 	private String replyContent;
 	private Date replyDate;
 	private String replyParentNo;
+	private Emp emp;
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Collection,com.coma.model.dto.Reply" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
@@ -66,30 +67,57 @@
 							</div>
 						</td>
 					</tr>
+					
 					<c:if test="${post.boardType eq 1}">
 						<tr>
 					        <th>이름</th>
-					        <th>댓글내용</th>
-					        <th>댓글날짜</th>
+					        <th>내용</th>
+					        <th>작성일</th>
 					        <th></th>
 					    </tr>
-					    <c:forEach var="reply" items="${reply}">
+					    
+					    <c:forEach var="replys" items="${reply}">
 					        <tr>
-					            <td>${reply.board.emp.empName }</td>
-					            <td>${reply.replyContent}</td>
-					            <td>${reply.replyDate}</td>
+					            <td>${replys.emp.empName}</td>
+					            <td>${replys.replyContent}</td>
+					            
+								<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
+								<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
+								<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
+								<td class="date">
+									<c:choose>
+										<c:when test="${replys.replyDate.toLocalDate() == today}">
+											<c:set var="checkHour" value='<%=(new java.util.Date().getTime()-((Reply)pageContext.getAttribute("replys"))
+															.getReplyDate().getTime())/(1000*60*60)%>'/>
+											<span>								
+												${checkHour>0?"".concat(checkHour).concat("시간 전"):'방금전'}
+											</span>
+									    </c:when>
+						                <c:when test="${free.boardDate.year == 124}">
+						                    <fmt:formatDate value="${replys.replyDate}" pattern="MM-dd" />
+						                </c:when>
+						                <c:otherwise>
+						                    <fmt:formatDate value="${replys.replyDate}" pattern="yyyy-MM-dd" />
+						                </c:otherwise>
+						            </c:choose>
+								</td>
+								
 					            <td>
-					            	<button type="button" class="reply-re">답글</button>
-					            	<button type="button" class="reply-del">삭제</button>
+					            	<input type="hidden" class="replyNo" name="replyNo" value="${replys.replyNo }">
+					            	<button type="button" class="btn reply-re">답글</button>
+					            	<button type="button" class="btn reply-del">삭제</button>
 					            </td>
 					        </tr>
 					    </c:forEach>
+					        
 					    <tr>
-						<th>댓글작성</th>
+						<th>${e.empName }</th>
 						<td colspan="6" class="view_text">
-							<form action="${path }/board/writeReply" class="reply-detior" method="post">
+							<form action="${path }/board/writeReply" class="reply-editor" method="post">
 							<div class="d-flex">
 								<input type="hidden" name="boardNo" value="${post.boardNo }">
+								<input type="hidden" name="replyEmpId" value="${e.empId }">
+								<%-- <input type="hidden" name="replyNo" value="${reply.replyNo }"> --%>
 								<textarea class="form-control" id="contents" name="replyContent" style="width: 100%" placeholder="^0^"></textarea>
 								<button class="btn btn-success m1-2">등록</button>
 							</div>
@@ -97,6 +125,7 @@
 						</td>
 						</tr>
 					</c:if>
+					
 					<tr>
 						<td>
 							 <c:choose>
@@ -108,17 +137,15 @@
 							     </c:otherwise>
 							 </c:choose>
 						</td>
-					</tr>
-					<c:if test="${post.emp.empId eq e.empId }">
-					<tr>
+						<c:if test="${post.emp.empId eq e.empId or fn:contains(e.authorities, 'ADMIN')}">	
 						<td>
 							<a href="${path }/board/updatePost?boardNo=${post.boardNo }" class="btn btn-success"><span>글수정</span></a>
 						</td>
 						<td>
 							<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-success"><span>글삭제</span></a>
 						</td>
-					</tr>
-					</c:if>
+						</c:if>		
+					</tr>	
 				</tbody>
 			</table>
 	</div>
@@ -133,7 +160,8 @@
 		
 		const $tr=$("<tr>");
 		const $td=$("<td>").attr("colspan","2");
-		const $form=$(".reply-detior").clone();
+		const $form=$(".reply-editor").clone();
+		
 		$td.append($form);
 		$tr.append($td);
 		
@@ -142,23 +170,26 @@
 	
 	$(".reply-del").click(e=>{
 		
-		var confirmDelete =confirm("댓글을 삭제하시겠습니까?");
+		const confirmDelete = confirm("댓글을 삭제하시겠습니까?");
 		
 		if(confirmDelete){
 			
-			$.ajax({
-				url: "/replyDelete",
-				method: "DELETE".
-				data: {}
-			})
+			const replyNo = $(".replyNo").val();
 			
-			alert("삭제되었습니다");
-		}
-		
-		
-	})
-	
-	document
+			$.ajax({
+				url: "/board/deleteReply",
+				method: "GET",
+				data: { replyNo:replyNo },
+				success: function(response) {
+	                alert("삭제되었습니다");
+	                location.reload();
+	            },
+	            error: function(error) {
+	                console.error("삭제 실패", error);
+	            }
+			});
+		}		
+	});
 </script>
 
 

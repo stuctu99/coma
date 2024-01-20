@@ -51,7 +51,7 @@ public class EmployeeController {
 										@RequestParam(defaultValue="0") int boardType) {
 		
 		List<Board> boards = service.selectBoardByType(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
-        List<Board> mainNotice = boards.stream().limit(7).collect(Collectors.toList());
+        List<Board> mainNotice = boards.stream().limit(3).collect(Collectors.toList());
         // ***근태 정보 불러오기 ***
         //로그인한 정보에서 아이디 가져오기 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

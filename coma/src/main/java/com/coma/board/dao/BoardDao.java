@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import com.coma.model.dto.Board;
+import com.coma.model.dto.BoardFile;
 import com.coma.model.dto.Reply;
 
 public interface BoardDao {
@@ -15,6 +16,8 @@ public interface BoardDao {
 	Board selectBoardByNo(SqlSession session, int boardNo);
 	
 	int insertBoard(SqlSession session, Board b);
+	
+	int insertBoardFile(SqlSession session, BoardFile bf);
 	
 	int selectBoardCount(SqlSession session, int boardType);
 	
@@ -31,4 +34,6 @@ public interface BoardDao {
 	int updateBoard(SqlSession session, Map<String, Object> board);
 	
 	List<Board> searchBoard(SqlSession session, Map<String, Object> board);
+	
+	int deleteReply(SqlSession session, int replyNo);
 }

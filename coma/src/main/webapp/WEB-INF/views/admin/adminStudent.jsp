@@ -171,7 +171,7 @@ function colorize() {
 	var r = Math.floor(Math.random()*200);
 	var g = Math.floor(Math.random()*200);
 	var b = Math.floor(Math.random()*200);
-	var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.2)';
+	var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.5)';
 	return color;
 }
 
@@ -221,7 +221,7 @@ function colorize() {
 	var r = Math.floor(Math.random()*200);
 	var g = Math.floor(Math.random()*200);
 	var b = Math.floor(Math.random()*200);
-	var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.2)';
+	var color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.5)';
 	return color;
 }
 
