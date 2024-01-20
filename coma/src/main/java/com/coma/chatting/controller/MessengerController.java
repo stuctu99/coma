@@ -55,7 +55,7 @@ public class MessengerController {
 		test.put("test", data);
 		return test;
 	}
-	
+
 	@GetMapping("/room/{roomNo}")
 	@ResponseBody
 	public String selectRoomPasswordFlag(@PathVariable String roomNo) {
@@ -142,10 +142,10 @@ public class MessengerController {
 
 	@PostMapping("/invite/{roomNo}")
 	@ResponseBody
-	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo,@RequestBody ChattingRoom room ) {
+	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo, @RequestBody ChattingRoom room) {
 		List<String> inviteEmpList = new ArrayList<String>(Arrays.asList(room.getInviteEmp()));
 		Map<String, Object> inviteInsertInfo = new HashMap<String, Object>();
-		
+
 		room.setRoomNo(roomNo);
 		inviteInsertInfo.put("room", room);
 		inviteInsertInfo.put("roomNo", roomNo);

@@ -123,7 +123,7 @@ const createRoom = (empId) => {
 		"roomType": roomType,
 		"roomPasswordFlag": roomPasswordFlag,
 		"empId": empId,
-		"targetId": ""
+		"targetId":""
 	}
 	console.log("초대멤버배열" + inviteEmp);
 
@@ -148,11 +148,14 @@ const createRoom = (empId) => {
 				console.log("방생성 성공 // 초대인원 수 :" + inviteEmp.length);
 				$("#createRoom").modal('hide');
 				/* 초대 멤버가 존재할 때 실행 */
+				
 				if (inviteEmp.length > 0) {
+					ChattingRoom.inviteEmp = inviteEmp;
+					console.log("여까지 오면 성공!!!"+ChattingRoom);
 					fetch("/messenger/invite/" + data.roomNo, {
 						method: "post",
 						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify(inviteEmp)
+						body: JSON.stringify(ChattingRoom)
 					})
 						.then(response => {
 							if (response.status != 200) {

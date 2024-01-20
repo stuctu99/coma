@@ -414,7 +414,7 @@ const fn_update = (roomNo) => {
 			const msg = new Message("invite","","","","",roomNo);
 			server.send(msg.convert());
 			$("#invite-modal").modal('hide');
-			memberList(msg.roomNo, msg.empId);
+			/*memberList(msg.roomNo, msg.empId);*/
 		}else{
 			alert("접근할 수 없습니다. 관리자에게 문의하세요:(");
 		}
