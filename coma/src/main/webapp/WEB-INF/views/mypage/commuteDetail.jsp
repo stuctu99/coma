@@ -10,41 +10,20 @@
 
 <script src="/resource/js/jquery-3.7.0.js"></script>
 <style>
-div {
-	/*  border: 2px solid red; */
-	
-}
+
 
 .bigbax {
-	/* border: 2px solid blue; */
-	margin: 15px;
-	/* border: 2px solid lightgrey */;
+	margin-top: 20px;
 	border-radius: 20px;
-	background-color: #f1edff;
-	padding: 20px 10px 0px 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.containerbig {
-	margin: 50px;
-	text-align: center;
+	background-color: #ffffff;
 	padding: 20px;
-	border-radius: 20px;
-}
-
-.smallbox {
-	/* margin: 30px; */
-	/* border: 1px solid lightgrey;   */
-}
-
-.blank {
-	padding-top: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 </style>
 
 
-<div class="coma-container containerbig">
+<div class="coma-container" style="margin-top: 40px;">
 	  <%-- ${commute}  --%>
 	<div class="row">
 		<div class="col-1"></div>
@@ -76,9 +55,10 @@ div {
 		</div>
 	</div>
 	<div class="row">
-	<div class="col-1"></div>
+		<div class="col-1"></div>
 		<div class="col-10  bigbax">
-			<div class="row" style="display: flex; justify-content: space-evenly;">
+			<div class="row" style="display: flex; justify-content: space-evenly; text-align: center;">
+				<div class="col-1"></div>
 				<div class="col-2 smallbox" >
 					<div class="">
 						<h3 >근무 일수</h3>
@@ -90,10 +70,10 @@ div {
 						    	<c:forEach var="c" items="${commute}" varStatus="loop">
 							        <c:set var="nomalCount" value="${nomalCount + 1}" />
 							        <c:if test="${c. EMP_COMMUTE_STATUS == 'nonAntte'}">
-							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" />
+							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" /> 
 							        </c:if>
 						   	 	</c:forEach>
-						    <h4 id="finishCount">${nomalCount-nonAntteCount}</h4>
+						    <h4 id="finishCount">${nomalCount-nonAntteCount} 일 </h4>
 						</c:if>
 					</div>
 				</div>
@@ -109,7 +89,7 @@ div {
 						            <c:set var="nomalCount" value="${nomalCount + 1}" />
 						        </c:if>
 					   	 	</c:forEach>
-					    <h4 id="finishCount">${nomalCount}</h4>
+					    <h4 id="finishCount">${nomalCount} 일</h4>
 						</c:if>
 					</div>
 				</div>
@@ -126,7 +106,7 @@ div {
 					        </c:if>
 					    </c:forEach>
 						
-					    <h4 id="lateCount">${lateCount}</h4>
+					    <h4 id="lateCount">${lateCount} 회</h4>
 					</c:if>
 					</div>
 				</div>
@@ -141,12 +121,12 @@ div {
 						    <c:forEach var="c" items="${commute}" varStatus="loop">
 						        <c:if test="${c.EMP_COMMUTE_ABSENCE == 'Y'}">
 						            <c:set var="absenceCount" value="${absenceCount + 1}" />
-						        </c:if>
+						        </c:if> 
 						        <c:if test="${c. EMP_COMMUTE_STATUS == 'nonAntte'}">
 							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" />
 							    </c:if>
 						    </c:forEach>
-						    <h4 id="finishCount">${absenceCount-nonAntteCount}</h4>
+						    <h4 id="finishCount">${absenceCount-nonAntteCount} 회</h4>
 						</c:if>
 					</div>
 				</div>
@@ -162,11 +142,12 @@ div {
 						            <c:set var="Uncleared" value="${Uncleared + 1}" />
 						        </c:if>
 						    </c:forEach>						  
-						    <h4 id="Uncleared">${Uncleared}</h4>
+						    <h4 id="Uncleared">${Uncleared} 회</h4>
 						</c:if>
 					</div>
 					
 				</div>
+				<div class="col-1"></div>
 			</div>
 		</div>
 	</div>
@@ -182,7 +163,7 @@ div {
 					<div class=""></div>
 				</div>
 				<div class="col-1">
-					<button type="button" class="btn btn-outline-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
+					<button type="button" class="btn btn-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
 				</div>
 			</div>
 			<div class="col-1"></div>
@@ -212,12 +193,15 @@ div {
 					<tbody class="list" id="empTable">
 						<c:if test="${not empty commute}">
 							<c:forEach var="c" items="${commute }">
-								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
+								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'NON-ANTTE'}">
 									<tr>
 										<td>
 										    <c:if test="${c.EMP_COMMUTE_STATUS eq 'Uncleared'}">
-										        퇴근 미처리
-										    </c:if>
+											    퇴근 미처리
+											</c:if>
+											<c:if test="${c.EMP_COMMUTE_STATUS ne 'Uncleared'}">
+											    ${c.EMP_COMMUTE_STATUS}
+											</c:if>
 										</td>
 										<td><fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" /></td>
 										<td><fmt:formatDate  value="${c.EMP_COMMUTE_CLOCKIN.toJdbc() }" pattern="hh:mm:ss"/></td> 
@@ -277,7 +261,7 @@ function updateTable(commuteList) {
     var absenceCount=0,latenessCount = 0,nonabsence =0;Uncleared = 0;
     console.log(commuteList);
     commuteList.forEach(c => {
-    	if(c.EMP_COMMUTE_STATUS!='nonAntte'){
+    	if(c.EMP_COMMUTE_STATUS!='NON-ANTTE'){
          clockInTime = c.EMP_COMMUTE_CLOCKIN;
          clockOutTime = c.EMP_COMMUTE_CLOCKOUT;
          startTime = c.EMP_COMMUTE_STARTTIME;

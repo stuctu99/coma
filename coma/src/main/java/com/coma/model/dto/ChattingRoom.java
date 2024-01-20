@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class ChattingRoom {
 	private String roomNo;
 	private String roomName;
-	/* private String roomType; */
+	private String roomType; 
 	private String roomPasswordFlag;
 	private String roomPassword;
 	private Date roomCreateDate;
@@ -26,5 +26,6 @@ public class ChattingRoom {
 	private String endMsg;
 	private Emp empObj;
 	private int memberCount;
+	private String[] inviteEmp;
 	/* private List<ChattingJoin> joinMember; */
 }
