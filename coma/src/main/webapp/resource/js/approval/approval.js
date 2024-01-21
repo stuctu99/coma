@@ -153,6 +153,7 @@ const app_job_arr = [];
 
 
 const addDelAppr=(function(){
+	
 	let appr_num=0; // n번째 결재자. id, name 뒤에 붙음 
 	
 	
@@ -554,11 +555,11 @@ const line_end=()=>{
 	
 	let selected_line = localStorage.getItem(selectedRadio);
 	
-	console.log("line", selected_line);
+//	console.log("line", selected_line);
 	
 	let selected_line_arr = selected_line.split(',');
 	
-	console.log("arr", selected_line_arr);
+//	console.log("arr", selected_line_arr);
 	
 	// 버튼 생성 ----------
 	
@@ -579,7 +580,7 @@ const line_end=()=>{
 //							const i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delAppr(this);">');
 							
 					
-							app_all_arr.push(emp);
+							app_all_arr.push(emp); //배열에 추가
 							app_id_arr.push(emp_id);
 							app_name_arr.push(emp_name);
 							app_dept_arr.push(emp_dept);
@@ -602,11 +603,13 @@ const line_end=()=>{
 							let appr_result = $('.appr_result'); // hidden input
 							
 							for(let i=0; i<app_all_arr.length; i++){ //배열 길이만큼 반복
-								appr_result[i].value = app_all_arr[i]; // hidden input의 value에 배열 값 넣기
+								if(appr_result[i]) 
+									appr_result[i].value = app_all_arr[i]; // hidden input의 value에 배열 값 넣기
 							
 							}
+
 							
-							
+//							console.log("불러오기 후 확인", $('.appr_result').val());
 							$('#search_app').val("");
 							$('#modal-default').modal('hide'); //모달창 닫기
 	}
@@ -625,11 +628,30 @@ fn_reset=()=>{
 	
 	//리셋 버튼 -> 결재선 불러오기 버튼
 	$('input[name="app_fix"]').remove();
-	$('#reset_btn').remove();
-	$('.remake').append(btn_tag);
+	$('#reset_btn').hide();
+	$('.remake').prepend(btn_tag);
 	$('.appr_container').empty();
 	
+
+	let appr_result = $('.appr_result');
+
+	for (let i=0; i < app_all_arr.length; i++) {
+	    
+	appr_result[i].value = ""; //hidden input 비워주기
 	
+	console.log("222: ",  appr_result[i].value);
+		
+	}
+
+	for (let i = app_all_arr.length - 1; i >= 0; i--) { //배열 값 삭제
+	    app_all_arr.pop(); // 역순으로 pop 호출
+	    
+		console.log("111: ", app_all_arr[i]);
+	}
+	
+	
+
+
 }
 
 
