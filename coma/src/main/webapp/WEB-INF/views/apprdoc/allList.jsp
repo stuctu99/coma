@@ -177,7 +177,7 @@ function getSearchList(){
 		success : function(result){
 			$('.table > tbody').empty();
 			if(result.length>=1){
-				result.filter(e=>e.docProgress.includes('대기')||e.docProgress.includes('진행'))
+				result
 				.forEach(function(searchDoc){
 					console.log(searchDoc);
 					const writeDate=new Date(searchDoc.docDate);

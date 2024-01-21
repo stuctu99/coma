@@ -29,7 +29,7 @@ font-family: 'Noto Sans KR', sans-serif;
       <div class="flex flex-col">
       	<h1>문서함</h1>
       </div>
-    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
+    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary">
   		<span>작성하기</span>
     </a>
     </nav>
@@ -115,7 +115,7 @@ font-family: 'Noto Sans KR', sans-serif;
         >
         <option value=""></option>
         </select>
-        <button type="button" class="inline-flex items-center justify-center btn btn-success" onclick="getSearchList()">
+        <button type="button" class="inline-flex items-center justify-center btn btn-primary" onclick="getSearchList()">
         	검색
 	    </button>
 	   </form>
@@ -126,25 +126,25 @@ font-family: 'Noto Sans KR', sans-serif;
         <table class="table w-full caption-bottom text-sm">
           <thead class="[&amp;_tr]:border-b">
             <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-              <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+              <th>
                 문서 번호
               </th>
-              <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+              <th>
                 종류
               </th>
-              <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+              <th>
                 제목
               </th>
-              <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+              <th>
                 기안자
               </th>
-              <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+              <th>
                 기안일
               </th>
-              <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+              <th>
                 완료일
               </th>
-              <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+              <th>
                 상태
               </th>
             </tr>

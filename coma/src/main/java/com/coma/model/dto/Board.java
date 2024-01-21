@@ -21,10 +21,7 @@ import lombok.NoArgsConstructor;
 public class Board {
 	private int boardNo;
 	private Emp emp;
-	
-	@NotEmpty(message = "제목을 입력해주세요")
 	private String boardTitle;
-	@NotEmpty(message = "내용을 입력해주세요")
 	private String boardContent;
 	private Date boardDate;
 	private int boardReadCount;

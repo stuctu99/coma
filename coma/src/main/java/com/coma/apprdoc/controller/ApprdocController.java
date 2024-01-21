@@ -54,6 +54,8 @@ public class ApprdocController {
 			//문서리스트
 			appr = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
 			
+			
+			
 			m.addAttribute("proceed", appr);
 			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));
 		
