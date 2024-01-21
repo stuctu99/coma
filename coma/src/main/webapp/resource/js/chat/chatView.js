@@ -2,7 +2,7 @@ $("#exit-btn").click(function() {
 	if (confirm("채팅방을 완전히 나가겠습니까?")) {
 		const roomNo = $("#roomNo").val();
 		const empId = $("#loginMember").val();
-		fetch("/chatting", {
+		fetch(path+"/chatting", {
 			method: "DELETE",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ "roomNo": roomNo, "empId": empId })
@@ -17,7 +17,7 @@ $("#exit-btn").click(function() {
 				if (data.result == "success") {
 
 					alert($(".connectView").val());
-					server.send(new Message("out", "", "", "", empId, roomNo).convert());
+					server.send(new Message("out","", "", "", empId, roomNo).convert());
 					close();
 					$(opener.location).attr("href","javascript:fn_roomListByType('engagement');");
 				} else {
@@ -36,7 +36,7 @@ $("#back").click(function() {
 })
 
 const connectUpdate = (roomNo, empId) => {
-	fetch("/chatting/back", {
+	fetch(path+"/chatting/back", {
 		method: "delete",
 		headers: {
 			"Content-Type": "application/json"
@@ -165,7 +165,7 @@ const openMessage = (msg) => {
 	const $connectFlag = $(".list-" + msg.roomNo + " #" + msg.empId);
 	$connectFlag.css("color", "lime");
 	memberList(msg.roomNo, msg.empId);
-	fetch("/chatting", {
+	fetch(path+"/chatting", {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json"
@@ -185,7 +185,7 @@ const openMessage = (msg) => {
 		.then(data => {
 			if (data.joinEmp != null && data.joinEmp.newJoin === 'Y') {
 				const container = $("<div>").addClass("row openMsgContainer");
-				const content = $("<h4>").text(`${data.joinEmp.empObj.empId}님이 접속하셨습니다.`);
+				const content = $("<h4>").text(`${data.joinEmp.empObj.empName}님이 접속하셨습니다.`);
 				$(".messageView" + msg.roomNo).append(container);
 				container.append(content);
 			}
@@ -282,7 +282,7 @@ $("#bars").click(function() {
 const memberList = (roomNo) => {
 	const $profileListDiv = $(".list-" + roomNo);
 	$profileListDiv.html("");
-	fetch("/chatting/memberlist/" + roomNo)
+	fetch(path+"/chatting/memberlist/" + roomNo)
 		.then(response => {
 			return response.json();
 		})
@@ -310,9 +310,9 @@ const memberList = (roomNo) => {
 				$div_col1.append($connection);
 
 				if (d.emp_gender == 'M') {
-					$img.attr("src", "/resource/img/chat/profile_m.png");
+					$img.attr("src", path+"/resource/img/chat/profile_m.png");
 				} else {
-					$img.attr("src", "/resource/img/chat/profile_f.png");
+					$img.attr("src", path+"/resource/img/chat/profile_f.png");
 				}
 
 				$div_col2.append($img);
@@ -336,7 +336,7 @@ const fn_updateInfo = (roomNo) => {
 	}else{
 		updateType.val(roomType).prop("selected", true);
 	}
-	fetch("/chatting/invitelist/" + roomNo)
+	fetch(path+"/chatting/invitelist/" + roomNo)
 		.then(response => {
 			if (response.status != 200) {
 				alert("조회실패!!!");
@@ -347,7 +347,7 @@ const fn_updateInfo = (roomNo) => {
 			const $div = $("#invite-list");
 			$div.html("");
 			data.dept.forEach(d => {
-				const $deptrow = $("<div>").addClass("row dept");
+				const $deptrow = $("<div>").addClass("row dept").css("backgroundColor","rgba(157, 190, 242,0.2)");
 				const $dept = $("<div>").addClass("col-12 dept_title_container");
 				const $dept_title = $("<h3>").text(d.deptType + "부");
 				$dept.append($dept_title);
@@ -398,7 +398,7 @@ const fn_update = (roomNo) => {
 	}
 	
 	console.log(inviteEmp);
-	fetch("/messenger/invite/"+roomNo,{
+	fetch(path+"/messenger/invite/"+roomNo,{
 		method:"POST",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify(ChattingRoom)

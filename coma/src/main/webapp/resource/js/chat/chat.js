@@ -53,7 +53,7 @@ class MessageHandler {
 function openEvent(data) {
 	const loginId = data.loginId;
 	console.log(loginId);
-	fetch("/messenger/init/" + loginId)
+	fetch(path+"/messenger/init/" + loginId)
 		.then(response => {
 			console.log(response);
 			if (response.status != 200) {
@@ -100,18 +100,18 @@ const createRoomCheck = (empId) => {
 	}
 }
 
-function initModal(){
+function initModal() {
 	const roomName = $("#roomName");
 	const roomPassword = $("#roomPassword");
 	const roomPasswordFlag = $("#roomPasswordFlag");
 	const roomType = $("#roomType");
 	const inviteCheckbox = $(".invite_emp");
-	
+
 	roomName.val("");
 	roomPassword.val("");
 	roomPasswordFlag.val("");
 	roomType.val("").val("A").prop("selected", true);
-	inviteCheckbox.prop("checked",false);
+	inviteCheckbox.prop("checked", false);
 }
 
 const createRoom = (empId) => {
@@ -136,12 +136,12 @@ const createRoom = (empId) => {
 		"roomType": roomType,
 		"roomPasswordFlag": roomPasswordFlag,
 		"empId": empId,
-		"targetId":""
+		"targetId": ""
 	}
 	console.log("초대멤버배열" + inviteEmp);
 
 
-	fetch("/messenger/createRoom", {
+	fetch(path+"/messenger/createRoom", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -162,11 +162,11 @@ const createRoom = (empId) => {
 				$("#createRoom").modal('hide');
 				initModal();
 				/* 초대 멤버가 존재할 때 실행 */
-				
+
 				if (inviteEmp.length > 0) {
 					ChattingRoom.inviteEmp = inviteEmp;
-					console.log("여까지 오면 성공!!!"+ChattingRoom);
-					fetch("/messenger/invite/" + data.roomNo, {
+					console.log("여까지 오면 성공!!!" + ChattingRoom);
+					fetch(path+"/messenger/invite/" + data.roomNo, {
 						method: "post",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify(ChattingRoom)
@@ -217,7 +217,7 @@ const privateChatting = (targetId, targetName, empId, empName) => {
 		"targetId": targetId
 	}
 	console.log(privateChat);
-	fetch("/messenger/createRoom", {
+	fetch(path+"/messenger/createRoom", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -310,7 +310,7 @@ const fn_roomListByType = (type) => {
 	empListHidden();
 	chatListDisplay();
 
-	fetch("/messenger/roomlist/" + type + "/" + loginId)
+	fetch(path+"/messenger/roomlist/" + type + "/" + loginId)
 		.then(response => {
 			if (response != 200)
 				console.log(response.ok);
@@ -351,16 +351,18 @@ const fn_roomListByType = (type) => {
 					}
 
 
-					fetch("/messenger/message/" + d.roomNo)
+					fetch(path+"/messenger/message/" + d.roomNo)
 						.then(response => {
 							return response.text();
 						})
 						.then(data => {
-							if (d.roomPasswordFlag == 'N' && type=='engagement') {
-									if (data != "") {
-										$updateMsg.text("Message : " + data);
-									}
+							if (d.roomPasswordFlag == 'N' && type == 'engagement') {
+								if (data != "") {
+									$updateMsg.text("Message : " + data);
 								}
+							}else{
+								$div_title.css("line-height",3.0);
+							}
 						})
 
 					$i.css("padding-top", "18px");
@@ -426,7 +428,7 @@ const passwordCheck = () => {
 	}
 	console.log(roomNo);
 	console.log(password);
-	fetch("/messenger/passwordCheck", {
+	fetch(path+"/messenger/passwordCheck", {
 		method: "post",
 		headers: {
 			"Content-Type": "application/json"
@@ -502,7 +504,7 @@ const fn_deleteRoom = () => {
 	}
 	console.log(delRoom);
 	if (confirm("정말로 삭제하시겠습니까?")) {
-		fetch("/messenger", {
+		fetch(path+"/messenger", {
 			method: "delete",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(delRoom)
@@ -548,7 +550,7 @@ const enter_chattingRoom = (roomNo) => {
 		"roomNo": roomNo,
 		"empId": empId
 	}
-	fetch("/chatting", {
+	fetch(path+"/chatting", {
 		method: "post",
 		headers: {
 			"Content-Type": "application/json"
@@ -566,7 +568,7 @@ const enter_chattingRoom = (roomNo) => {
 			//ChattingJoin 객체 전달 String roomNo, String empId
 			console.log(data);
 			if (data) {
-				const url = "/chatting/room/" + roomNo;
+				const url = path+"/chatting/room/" + roomNo;
 				const windowName = "chattingRoom " + roomNo;
 				const options = "width=600, height=700, scrollbars=yes"
 				$("#btn-" + roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
@@ -591,20 +593,20 @@ const enter_chattingRoom = (roomNo) => {
 
 /* 공부하기 */
 window.updateMsg = function(roomNo, content) {
-	fetch("/messenger/room/"+roomNo)
-	.then(response=>{
-		if(response.status!=200){
-			alert("조회불가!!!");
-		}
-		return response.text();
-	})
-	.then(data=>{
-		if(data == 'N'){
-			const msg = new MessageHandler("msg", "", "", roomNo, content);
-			mserver.send(msg.convert());
-		}
-		
-	})
+	fetch(path+"/messenger/room/" + roomNo)
+		.then(response => {
+			if (response.status != 200) {
+				alert("조회불가!!!");
+			}
+			return response.text();
+		})
+		.then(data => {
+			if (data == 'N') {
+				const msg = new MessageHandler("msg", "", "", roomNo, content);
+				mserver.send(msg.convert());
+			}
+
+		})
 }
 
 const messageUpdate = (msg) => {

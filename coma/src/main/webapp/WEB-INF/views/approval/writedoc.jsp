@@ -77,7 +77,7 @@
         	<div class="col-3 remake">
         		<!-- 모달창 코드는 맨 밑에 -->
         		<button type="button" id="take_btn" onclick="take_line();" class="btn btn-block btn-primary mb-3" data-toggle="modal" data-target="#modal-default">결재선 불러오기</button>	 
-        		<button type="button" onclick="fn_reset();" id="reset_btn" style="display:none" class="btn btn-block btn-primary mb-3">리셋</button>
+        		<button type="button" onclick="fn_reset();" id="reset_btn" style="display:none" class="btn btn-block btn-outline-danger mb-3">리셋</button>
         	</div>
        
         	<div class="col-3">
@@ -115,11 +115,13 @@
         	<div class="col-3">
         	</div>
         	<div class="col-7 appr_container">
-        		<input type="hidden" name="appr_result[]" class="appr_result" id="ck_appr">
-        		<input type="hidden" name="appr_result[]" class="appr_result">
-        		<input type="hidden" name="appr_result[]" class="appr_result">
-        	
+        		
         	</div>	
+        	
+        	<input type="hidden" name="appr_result[]" class="appr_result" id="ck_appr">
+       		<input type="hidden" name="appr_result[]" class="appr_result">
+       		<input type="hidden" name="appr_result[]" class="appr_result">
+       	
         	<div class="col-2">
 				
         	</div>
@@ -389,7 +391,7 @@
 			            
 			            <div class="modal-footer">
 			                <button type="button" onclick="line_end();" class="btn btn-primary">확인</button>
-			                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">취소</button>
+			                <button type="button" class="btn btn-danger  ml-auto" onclick="del_line();">초기화</button>
 			            </div>
 			            
 			        </div>

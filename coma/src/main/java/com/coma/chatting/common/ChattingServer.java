@@ -117,7 +117,12 @@ public class ChattingServer extends TextWebSocketHandler {
 		}else if(msg.getType().equals("msg") && room.get(msg.getRoomNo()).size()==1){
 			msgPackages.add(msg);
 			saveChattingMessage();
+		}else if(msg.getType().equals("invite") && msgPackages.size()>0){
+			msgPackages.add(msg);
+			saveChattingMessage();
 		}
+		
+		
 		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
 			if (chatRoom.getKey().equals(msg.getRoomNo())) {
 				for (Map.Entry<String, WebSocketSession> client : chatRoom.getValue().entrySet()) {
@@ -157,6 +162,7 @@ public class ChattingServer extends TextWebSocketHandler {
 							try {
 								c.getValue().close();
 								client.remove();
+								System.err.println("어거 꼭 찾아서 봐보셈...!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+client);
 							}catch(Exception e) {
 								e.printStackTrace();
 							}
@@ -176,7 +182,10 @@ public class ChattingServer extends TextWebSocketHandler {
 
 //	채팅메시지 DB저장 (현재 30개 기준)
 	private void saveChattingMessage() {
-		int result = service.insertChattingMessage(msgPackages);
+		int result = 0;
+		if(!msgPackages.isEmpty()) {
+			result = service.insertChattingMessage(msgPackages);
+		}
 		if (result > 0) {
 			System.out.println("[ChattingServer] : 메세지 저장 완료");
 			msgPackages.clear();
