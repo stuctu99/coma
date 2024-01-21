@@ -390,8 +390,8 @@
 		           		</div>
 			            
 			            <div class="modal-footer">
-			                <button type="button" onclick="line_end();" class="btn btn-primary">확인</button>
-			                <button type="button" class="btn btn-danger  ml-auto" onclick="del_line();">초기화</button>
+			                <button type="button" class="btn btn-danger" onclick="del_line();">초기화</button>
+			                <button type="button" onclick="line_end();" class="btn btn-primary ml-auto">확인</button>
 			            </div>
 			            
 			        </div>
