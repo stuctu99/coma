@@ -27,15 +27,39 @@ const editor = new toastui.Editor({
     previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
 });
 
-/* ---------------------- 에디터 값 넘기기 ----------------------- */
+/* ---------------------- 전체 데이터 + 에디터 데이터 넘기기 ----------------------- */
 
 function submitForm() { //input type="button"
 
     const editorContentInput = document.getElementById('editorContent'); //hidden input
     const markdownContent = editor.getMarkdown(); //입력한 값
+    
+       console.log('Markdown Content:', markdownContent); 
+         if (!markdownContent) {
+        alert('Markdown 내용을 입력하세요.'); // 또는 다른 사용자에게 보여줄 메시지
+        return; // 폼 제출을 중지
+    }
+    
     editorContentInput.value = markdownContent; //hidden input에 입력 값 넣기
     
     const editorForm = document.getElementById('app_form'); //form태그
+    
+    
+    
+    // required가 적용이 안돼서 직접 분기처리 
+      
+     if(!$('#docType').val()){
+		   alert("문서 종류를 선택하세요.");
+		   return false; //제출 금지
+		   
+	 }else if(!$('#ck_title').val()){
+		   alert("제목을 입력하세요.");
+		   return false; //제출 금지
+	 }else if(!$('#ck_appr').val()){
+		   alert("결재자를 입력하세요.");
+		   return false; //제출 금지
+	 }
+    
     
     editorForm.submit(); //form submit
 }
@@ -435,6 +459,178 @@ const addDelref=(function(){
 
 const addref=addDelref[0];
 const delref=addDelref[1];
+
+
+// ---------------------- 자주 쓰는 결재선 저장 ---------------------------
+
+const save_appr=()=>{
+/*	$(".save_appr").show();
+	$("#save_btn").hide();*/
+	
+//	localStorage.clear();
+	
+	let apprListNum =""; //루프 밖에서 초기화 
+	let apprList = []; 
+	
+	// 수정 필요
+	for(let i=0; i<$(".appr_result").length; i++){	
+		 
+		
+		if($('input[name="appr_result[]"]')[i].value){
+				apprList.push($('input[name="appr_result[]"]')[i].value);
+				apprListNum += (i+1)+". " + apprList[i] + "\n";
+		} 
+	}
+
+	console.log(apprList);
+
+	let lineName = prompt(apprListNum, '결재선 이름을 설정하세요.');
+	
+	localStorage.setItem(lineName, apprList);
+	
+	let test = localStorage.getItem(lineName); 
+	
+//	console.log("localStorage.getItem(lineName): "+ test);
+	let all_appr_line = "";
+
+}
+
+
+const cancel_appr=()=>{ // 결재선 저장 취소
+	$("#save_btn").show();
+	$(".save_appr").hide();
+	
+	
+}
+
+const line_submit=()=>{ //결재선 저장 submit
+	
+	
+}
+
+
+// ------------------------ 결재선 불러오기 ------------------------
+let selectedRadio = '';
+
+const take_line=()=>{
+	
+	let all_appr_line = "";
+
+	let radioContainer = $('#take_line');
+
+
+	radioContainer.empty();
+	
+	for(let i=0; i<window.localStorage.length; i++){ //전체 결재선 정보
+	
+		const line_key = window.localStorage.key(i);
+		const line_val = window.localStorage.getItem(line_key);
+	 	all_appr_line += line_key + " : "+ line_val + "\n";
+
+	//localStorage key값 분기처리
+	if (line_key !== null && line_key !== 'TOAST UI editor for localhost: Statistics' && line_key !== 'null') {
+			radioContainer.append(
+				$('<label>').text(line_key).append(
+					$('<input>').attr({
+						type: 'radio',
+						name: 'line_radio',
+						value: line_key
+					})
+				)
+				
+			).append('<br>');
+
+		}
+	}
+	
+
+	
+}
+
+
+const line_end=()=>{
+	
+	selectedRadio = $('input[name="line_radio"]:checked').val(); 
+	
+	let selected_line = localStorage.getItem(selectedRadio);
+	
+	console.log("line", selected_line);
+	
+	let selected_line_arr = selected_line.split(',');
+	
+	console.log("arr", selected_line_arr);
+	
+	// 버튼 생성 ----------
+	
+	for (let i = 0; i < selected_line_arr.length; i++) {
+		
+		const emp = selected_line_arr[i];
+
+		const emp_arr = emp.split(" ");
+
+		const emp_id = emp_arr[0]
+		const emp_name = emp_arr[1];
+		const emp_dept = emp_arr[2];
+		const emp_job = emp_arr[3];
+		
+		const btn_tag = $('<button type="button" class="btn btn-secondary"'
+												+ 'data-container="body" data-toggle="popover" data-color="secondary"'
+												+ 'name="app_fix"'+'data-placement="top">');
+//							const i_tag = $('<i class="ni ni-fat-remove" style="cursor:pointer" onclick="delAppr(this);">');
+							
+					
+							app_all_arr.push(emp);
+							app_id_arr.push(emp_id);
+							app_name_arr.push(emp_name);
+							app_dept_arr.push(emp_dept);
+							app_job_arr.push(emp_job);
+							
+							
+							
+							btn_tag.text(emp_id +" "+ emp_name);
+							btn_tag.attr('data-content',emp_dept+" "+emp_job);
+
+
+							
+							$('.appr_container').append(btn_tag);
+//							$('.appr_container').append(i_tag);
+						
+							btn_tag.popover();
+							 /* 부트스트랩은 js를 사용하여 동적으로 웹 페이지를 조작하고 업데이트하기때문에 
+				            동적으로 생성된 요소에 대해서는 초기화 작업이 필요.*/
+				
+							let appr_result = $('.appr_result'); // hidden input
+							
+							for(let i=0; i<app_all_arr.length; i++){ //배열 길이만큼 반복
+								appr_result[i].value = app_all_arr[i]; // hidden input의 value에 배열 값 넣기
+							
+							}
+							
+							
+							$('#search_app').val("");
+							$('#modal-default').modal('hide'); //모달창 닫기
+	}
+	
+	// 결재선 불러오기 버튼 -> 리셋 버튼
+	$('#take_btn').remove();
+	$('#reset_btn').show();
+	
+	
+}
+
+
+fn_reset=()=>{
+	
+	const btn_tag = $('<button type="button" id="take_btn" onclick="take_line();" class="btn btn-block btn-primary mb-3" data-toggle="modal" data-target="#modal-default">결재선 불러오기</button>');
+	
+	//리셋 버튼 -> 결재선 불러오기 버튼
+	$('input[name="app_fix"]').remove();
+	$('#reset_btn').remove();
+	$('.remake').append(btn_tag);
+	$('.appr_container').empty();
+	
+	
+}
 
 
 	

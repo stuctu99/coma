@@ -35,11 +35,11 @@
 	  
 	          
 	          <div class="row">
-	       			<div class="col-3">
+	       			<div class="col-3 type_lable">
 	       				문서 종류
 	       			</div>
 		            <div class="col-7">
-		            	 <select class="form-control form-control-sm" onchange="fn_docType(this.value);">
+		            	 <select required class="form-control form-control-sm" onchange="fn_docType(this.value);">
 							  <option value="" selected disabled hidden>문서 종류를 선택하세요.</option>
 							  <option value="leave">휴가신청서</option>
 							  <option value="cash">지출결의서</option>
@@ -54,87 +54,133 @@
 		     </div>    
 
 	         <div class="row">
-	            <div class="col-3">
+	            <div class="col-3 write_lable">
 	            	문서 제목
 	            </div>
 	            <div class="col-7">
-	            	<input class="form-control" type="text" placeholder="제목" name="title">
+	            	<input class="form-control" id="ck_title" type="text" placeholder="제목" name="title">
 	            </div>  
 	            <div class="col-2"></div>
 	         </div>
           </div><!-- doc_basic -->
           
-<!----------------------- 결재선 설정 ------------------------->          
-          <div class="app_line">
           
-	          <div class="row">
-	     		<div class="col-3">
-	     			결재자
-	     		</div>
-	     		
-	            <div class="col-7">
-			            <div class="input-group mb-3">	  
-							  <input type="text" list="search_list1" id="search_app" class="form-control" 
-							   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
-							   aria-describedby="button-addon1" autocomplete="off">
-							 		<datalist id="search_list1">
-							 		</datalist> 	 		
-							  <div class="input-group-prepend">
-							   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" 
-							   		onclick="addAppr();">추가하기</button>
-							  		<!-- <input type="hidden"> -->
-							  </div>
-						</div>
+<!----------------------- 결재선 설정 ------------------------->        
+	<hr>  
+      <div class="app_line">
+	     
+        </div>
+     
+  		<div class="row" >
+  			<div class="col-3">
+  			</div>
+        	<div class="col-3 remake">
+        		<!-- 모달창 코드는 맨 밑에 -->
+        		<button type="button" id="take_btn" onclick="take_line();" class="btn btn-block btn-primary mb-3" data-toggle="modal" data-target="#modal-default">결재선 불러오기</button>	 
+        		<button type="button" onclick="fn_reset();" id="reset_btn" style="display:none" class="btn btn-block btn-primary mb-3">리셋</button>
+        	</div>
+       
+        	<div class="col-3">
+        		<button class="btn btn-block btn-primary mb-3" id="save_btn" onclick="save_appr();" type="button">결재선 저장</button>
+        	</div>
+        
+        	<div class="col-3">
+        	</div>
+        </div>
 
-	           	</div>
-	           	<div class="col-2">
-	            </div>
-	          </div> 	
-         
-	          <div class="row ck_appr">
-	          	<div class="col-3">
-	          	</div>
-	          	<div class="col-7 appr_container">
-	          		<input type="hidden" name="appr_result[]" class="appr_result">
-	          		<input type="hidden" name="appr_result[]" class="appr_result">
-	          		<input type="hidden" name="appr_result[]" class="appr_result">
-	          	</div>
-	          	<div class="col-2">
-	          	</div>
-	          	
-	          </div>
-	          <div class="row">
-	 			<div class="col-3">
-	 				참조자
-	     		</div>
-		        <div class="col-7">
-		           		<div class="input-group mb-3">	  
-							   <input type="text" list="search_list2" id="search_ref" class="form-control" 
-							   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
-							   aria-describedby="button-addon1">
-							 		<datalist id="search_list2">
-							 		</datalist> 	 	
-							  <div class="input-group-prepend">
-							    <button class="btn btn-outline-primary ref_btn" type="button" id="button-addon1"
-							    onclick="addref();">추가하기</button>
-							  </div>
-						</div>
+        <div class="row add_appr" >
+	   		<div class="col-3 write_lable">
+	   			결재자
+	   		</div>
+   		
+         	<div class="col-7">
+           		 <div class="input-group mb-3">	  
+					  <input required type="text" list="search_list1" id="search_app" class="form-control" 
+					   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
+					   aria-describedby="button-addon1" autocomplete="off">
+					 		<datalist id="search_list1">
+					 		</datalist> 	 		
+					  <div class="input-group-prepend">
+					   		<button class="btn btn-outline-primary app_btn" type="button" id="button-addon1" 
+					   		onclick="addAppr();">추가하기</button>	  
+					  </div>
+				</div>
+         	</div>
+         	<div class="col-2">
+       	    </div>
+        </div> 	
 
-	            </div>
-    			<div class="col-2"></div>
-          	 </div>
-          	<div class="row ck_appr">
-	          	<div class="col-3">
-	          	</div>
-	          	<div class="col-7 ref_container">
-					<input type="hidden" name="ref_result[]" class="ref_result">
-	          		<input type="hidden" name="ref_result[]" class="ref_result">
-	          		<input type="hidden" name="ref_result[]" class="ref_result">
-	          	</div>
-	          	<div class="col-2"></div>
-           </div> 
-   		</div>  <!-- app_line --> 
- 	
+
+        <div class="row ck_appr">
+        	<div class="col-3">
+        	</div>
+        	<div class="col-7 appr_container">
+        		<input type="hidden" name="appr_result[]" class="appr_result" id="ck_appr">
+        		<input type="hidden" name="appr_result[]" class="appr_result">
+        		<input type="hidden" name="appr_result[]" class="appr_result">
+        	
+        	</div>	
+        	<div class="col-2">
+				
+        	</div>
+        	
+        </div>
+        
+        <div class="row save_appr" style="display:none">
+        	<div class="col-3">
+        		결재선 이름
+        	</div>
+        	<div class="col-7">
+
+        	<div class="input-group mb-3">
+			  <input type="text" class="form-control" placeholder="ex) 휴가 신청 결재선" aria-describedby="button-addon2">
+			  <div class="input-group-append">
+			    <button class="btn btn-outline-primary" onclick="line_submit();" type="button" id="button-addon2">저장하기</button>
+			  </div>
+			</div>
+
+        		
+        	</div>
+        	<div class="col-2">
+        		<button class="btn btn-primary" onclick="cancel_appr();" type="button">취소</button>
+        	</div>
+        	
+        	
+        </div>
+        
+         <div class="row">
+ 			<div class="col-3 write_lable">
+ 				참조자
+     		</div>
+	        <div class="col-7">
+           		<div class="input-group mb-3">	  
+					   <input type="text" list="search_list2" id="search_ref" class="form-control" 
+					   placeholder="이름을 입력하세요." aria-label="Example text with button addon" 
+					   aria-describedby="button-addon1">
+					 		<datalist id="search_list2">
+					 		</datalist> 	 	
+					  <div class="input-group-prepend">
+					    <button class="btn btn-outline-primary ref_btn" type="button" id="button-addon1"
+					    onclick="addref();">추가하기</button>
+					  </div>
+				</div>
+
+            </div>
+	   		<div class="col-2">
+	   		</div>
+	   	</div>
+	   	<div class="row ck_appr">
+          	<div class="col-3">
+          	</div>
+          	<div class="col-7 ref_container">
+				<input type="hidden" name="ref_result[]" class="ref_result">
+          		<input type="hidden" name="ref_result[]" class="ref_result">
+          		<input type="hidden" name="ref_result[]" class="ref_result">
+          	</div>
+          	<div class="col-2">
+          	</div>
+        </div> 
+
 <!------------------------- 문서별 입력 내용 -------------------------->
 
     <!-------------- 휴가신청서 --------------->   
@@ -142,7 +188,7 @@
        		<hr>		
        		<h2>휴가 신청서</h2>
 	          <div class="row">
-	          		<div class="col-3">
+	          		<div class="col-3 write_lable">
 	          			휴가 종류
 	          		</div>
 		          	<div class="col-7">
@@ -161,12 +207,12 @@
 	          </div>  
 		      <div class="row">
 				<!-- 휴가 신청 날짜 선택 -->
-					<div class="col-3">
+					<div class="col-3 write_lable">
 	          			휴가 날짜
 	          		</div>
 					<div class="col-7">
 						<div class="input-daterange datepicker row align-items-center date_bo">
-							    <div class="col">
+							    <div class="col start_bo">
 							        <div class="form-group">
 							            <div class="input-group">
 							                <div class="input-group-prepend">
@@ -176,7 +222,7 @@
 							            </div>
 							        </div>
 							    </div>
-						    <div class="col">
+						    <div class="col end_bo">
 						        <div class="form-group">
 						            <div class="input-group">
 						                <div class="input-group-prepend">
@@ -199,7 +245,7 @@
           <hr>    
           	<h2>지출결의서</h2>
 	          <div class="row">
-		          	<div class="col-3">
+		          	<div class="col-3 write_lable">
 		          		비용
 		          	</div>
 		          	<div class="col-7">
@@ -218,7 +264,7 @@
 		          	<div class="col-2"></div>
 	          </div> 
 	          <div class="row">
-	          	<div class="col-3">
+	          	<div class="col-3 write_lable">
 	          		지출 날짜
 	          	</div>
 	          	<div class="col-7">
@@ -239,7 +285,7 @@
           <hr>
           	<h2>품의서</h2>
 	          <div class="row">
-	          	<div class="col-3">
+	          	<div class="col-3 write_lable">
 	          		기안 날짜
 	          	</div>
 	          	<div class="col-7">
@@ -261,7 +307,7 @@
           <hr>
           		<h2>기타 문서</h2>
            <div class="row">
-          	<div class="col-3">
+          	<div class="col-3 write_lable">
           		기안 날짜
           	</div>
           	<div class="col-7">
@@ -318,11 +364,49 @@
     			<!--제출 전 에디터 값 넘기기 위해 type="button"으로 줌 -->
     	</div>
     </div>      
+    	
+    	
+       
+      <!----------------------- 결재선 불러오기 모달 창 ----------------------->
+  
+    <div class="row">
+	  <div class="col-md-4">
+	     
+	      <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+		    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+		       	 <div class="modal-content">
+			        	
+			            <div class="modal-header">
+				                <h6 class="modal-title" id="modal-title-default">결재선 이름</h6>
+				                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                    <span aria-hidden="true">×</span>
+				                </button>
+			            </div>
+			            
+		           		<div class="modal-body" id="take_line"> <!-- radio 출력 div -->
+		               
+		           		</div>
+			            
+			            <div class="modal-footer">
+			                <button type="button" onclick="line_end();" class="btn btn-primary">확인</button>
+			                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">취소</button>
+			            </div>
+			            
+			        </div>
+			    </div>
+			</div>
+	    </div>
+	</div>	
+
+    <!--  --> 	
+  
           <!-- coma content space -->
         </div>
     </div>
 
 </form>   
+
+    
     
     <!-- TEAM COMA SPACE -->
     </div>

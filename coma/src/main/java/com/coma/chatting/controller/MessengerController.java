@@ -56,12 +56,11 @@ public class MessengerController {
 		return test;
 	}
 
-	/*
-	 * @GetMapping("/roomlist")
-	 * 
-	 * @ResponseBody public List<ChattingRoom> chatRoomList() { return
-	 * service.selectRoomList(); }
-	 */
+	@GetMapping("/room/{roomNo}")
+	@ResponseBody
+	public String selectRoomPasswordFlag(@PathVariable String roomNo) {
+		return service.selectPasswordFlagByRoomNo(roomNo);
+	}
 
 	@GetMapping("/roomlist/{type}/{loginId}")
 	@ResponseBody
@@ -143,12 +142,15 @@ public class MessengerController {
 
 	@PostMapping("/invite/{roomNo}")
 	@ResponseBody
-	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo,@RequestBody String[] inviteEmp) {
-		List<String> inviteEmpList = new ArrayList<String>(Arrays.asList(inviteEmp));
-		Map<String,Object> inviteInsertInfo = new  HashMap<String,Object>();
-		inviteInsertInfo.put("roomNo",roomNo);
-		inviteInsertInfo.put("inviteEmpList",inviteEmpList);
-		System.err.println("여기 함 봐보자고!!!"+inviteInsertInfo);
+	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo, @RequestBody ChattingRoom room) {
+		List<String> inviteEmpList = new ArrayList<String>(Arrays.asList(room.getInviteEmp()));
+		Map<String, Object> inviteInsertInfo = new HashMap<String, Object>();
+
+		room.setRoomNo(roomNo);
+		inviteInsertInfo.put("room", room);
+		inviteInsertInfo.put("roomNo", roomNo);
+		inviteInsertInfo.put("inviteEmpList", inviteEmpList);
+		System.err.println("여기 함 봐보자고!!!" + inviteInsertInfo);
 		int inviteInsertCheck = service.insertInviteEmp(inviteInsertInfo);
 		if (inviteInsertCheck > 0) {
 			return Map.of("result", "success");

@@ -53,7 +53,7 @@ public class MessengerDaoImpl implements MessengerDao {
 	}
 
 	@Override
-	public List<ChattingRoom> selectChatRoomListByType(SqlSession session, Map<String,String> searchInfo) {
+	public List<ChattingRoom> selectChatRoomListByType(SqlSession session, Map<String, String> searchInfo) {
 		// TODO Auto-generated method stub
 		return session.selectList("chatting.selectChatRoomListByType", searchInfo);
 	}
@@ -61,20 +61,25 @@ public class MessengerDaoImpl implements MessengerDao {
 	@Override
 	public List<ChattingPrivateRoom> selectPrivateChatJoinInfo(SqlSession session, String loginId) {
 		// TODO Auto-generated method stub
-		return session.selectList("chatting.selectPrivateChatJoinInfo",loginId);
+		return session.selectList("chatting.selectPrivateChatJoinInfo", loginId);
 	}
-		
 
 	@Override
 	public String selectRecentChattingMessageByRoomNo(SqlSession session, String roomNo) {
 		// TODO Auto-generated method stub
-		return session.selectOne("chatting.selectRecentChattingMessageByRoomNo",roomNo);
+		return session.selectOne("chatting.selectRecentChattingMessageByRoomNo", roomNo);
 	}
 
 	@Override
 	public Emp selectEmpByTargetId(SqlSession session, String targetId) {
 		// TODO Auto-generated method stub
-		return session.selectOne("chatting.selectEmpByTargetId",targetId);
+		return session.selectOne("chatting.selectEmpByTargetId", targetId);
+	}
+	
+	@Override
+	public String selectPasswordFlagByRoomNo(SqlSession session, String roomNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("chatting.selectPassowrdFlagByRoomNo",roomNo);
 	}
 
 	// insert
@@ -94,20 +99,24 @@ public class MessengerDaoImpl implements MessengerDao {
 		}
 		return result;
 	}
-	
+
 	@Override
 	@Transactional
-	public int insertInviteEmp(SqlSession session, Map<String,Object> inviteInsertInfo) {
-		int result = session.insert("chatting.insertInviteEmp",inviteInsertInfo);
-		if(result>0) {
-			ChattingRoom room = session.selectOne("chatting.selectRoomByRoomNo",inviteInsertInfo.get("roomNo"));
-			if(room.getRoomTypeObj().getRoomType().equals("P")) {
-				result = session.update("chatting.updateRoomTypeByRoomNo",room.getRoomNo());
+	public int insertInviteEmp(SqlSession session, Map<String, Object> inviteInsertInfo) {
+		int result = 0;
+		if (((ChattingRoom)inviteInsertInfo.get("room")).getInviteEmp().length!=0) {
+			result = session.insert("chatting.insertInviteEmp", inviteInsertInfo);
+			if (result > 0) {
+				System.err.println("MessengerDao1");
+				result = session.update("chatting.updateRoomByRoomNo", (ChattingRoom) inviteInsertInfo.get("room"));
+				System.err.println("MessengerDao1 : " + result);
 			}
+		} else {
+			result = session.update("chatting.updateRoomByRoomNo", (ChattingRoom) inviteInsertInfo.get("room"));
 		}
 		return result;
 	}
-	
+
 	// update
 
 	// delete
@@ -119,7 +128,5 @@ public class MessengerDaoImpl implements MessengerDao {
 
 		return session.delete("chatting.deleteChattingRoom", roomList);
 	}
-
-	
 
 }

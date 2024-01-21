@@ -18,9 +18,8 @@ $("#exit-btn").click(function() {
 
 					alert($(".connectView").val());
 					server.send(new Message("out", "", "", "", empId, roomNo).convert());
-					/*$(opener.document).find(".chatting-list-btn").click();*/
 					close();
-					opener.location.reload();
+					$(opener.location).attr("href","javascript:fn_roomListByType('engagement');");
 				} else {
 					alert("관리자에게 문의하세요!");
 				}
@@ -203,7 +202,7 @@ const connectionRest = (msg) => {
 }
 
 const closeChatting = (msg) => {
-	fn_empListLoad(msg.roomNo);
+	fn_updateInfo(msg.roomNo);
 	const container = $("<div>").addClass("row openMsgContainer");
 	const content = $("<h4>").text(`${msg.empObj.empName}님이 나가셨습니다.`);
 	/*const invite = $("<button>").addClass("btn btn-danger").text("다시초대하기");*/
@@ -214,7 +213,7 @@ const closeChatting = (msg) => {
 	$(opener.document).find("#chatting-active").removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick", "privateChatting('" + msg.empId + "','" + loginId + "');");
 	$(".emp-list-btn").click();
 	$("." + msg.empId).remove();
-	opener.location.reload();
+	$(opener.location).attr("href","javascript:$('.emp-list-btn').click()");
 
 }
 
@@ -328,7 +327,15 @@ const memberList = (roomNo) => {
 		})
 }
 
-const fn_empListLoad = (roomNo) => {
+const fn_updateInfo = (roomNo) => {
+	$("#updateroomName").val($("#room_name").text());
+	let updateType = $("#updateroomType");
+	const roomType = $("#roomType").val();
+	if(roomType=='P'){
+		updateType.val("A").prop("selected", true);
+	}else{
+		updateType.val(roomType).prop("selected", true);
+	}
 	fetch("/chatting/invitelist/" + roomNo)
 		.then(response => {
 			if (response.status != 200) {
@@ -348,15 +355,14 @@ const fn_empListLoad = (roomNo) => {
 				$div.append($deptrow);
 				data.inviteList.forEach(e => {
 					const $emprow = $("<div>").addClass("row emp");
-					const $col_1 = $("<div>").addClass("col-1");
-					const $col_7 = $("<div>").addClass("col-7");
-					const $checkbox = $("<input>").addClass("emp_checkbox").attr("type", "checkbox", "id", e.empId).val(e.empId);
-					const $empInfo = $("<span>").text(e.empName + " " + e.job.jobType);
+					const $col_8 = $("<div>").addClass("col-8");
+					const $label = $("<label>").attr("for",e.empId).text(e.empName + " " + e.job.jobType);
+					const $checkbox = $("<input>").addClass("emp_checkbox").attr("type", "checkbox").attr( "id", e.empId).val(e.empId);
 					if (d.deptCode == e.dept.deptCode) {
-						$col_1.append($checkbox);
-						$col_7.append($empInfo);
-						$emprow.append($col_1);
-						$emprow.append($col_7);
+						$col_8.append($checkbox);
+						$col_8.append($label);
+						/*$emprow.append($col_1);*/
+						$emprow.append($col_8);
 						$div.append($emprow);
 					}
 
@@ -366,10 +372,13 @@ const fn_empListLoad = (roomNo) => {
 }
 
 
-const fn_invite = (roomNo) => {
+const fn_update = (roomNo) => {
+	const roomName = $("#updateroomName").val();
+	const roomPassword = $("#updateroomPassword").val();
+	const roomPasswordFlag = $("#updateroomPasswordFlag").val();
+	const roomType = $("#updateroomType").val();
 	const inviteCheckbox = $(".emp_checkbox");
-	const roomType = $("#roomType");
-	console.log(inviteCheckbox);
+	
 	let inviteEmp = new Array();
 	let cnt = 0;
 
@@ -379,12 +388,20 @@ const fn_invite = (roomNo) => {
 			cnt++;
 		}
 	}
+	const ChattingRoom = {
+		"roomName": roomName,
+		"roomPassword": roomPassword,
+		"roomType": roomType,
+		"roomPasswordFlag": roomPasswordFlag,
+		"empId": empId,
+		"inviteEmp": inviteEmp
+	}
 	
 	console.log(inviteEmp);
 	fetch("/messenger/invite/"+roomNo,{
 		method:"POST",
 		headers:{"Content-Type":"application/json"},
-		body:JSON.stringify(inviteEmp)
+		body:JSON.stringify(ChattingRoom)
 	})
 	.then(response=>{
 		if(response.status!=200){
@@ -394,23 +411,35 @@ const fn_invite = (roomNo) => {
 	})
 	.then(data=>{
 		if(data.result=='success'){
-			alert("초대가 완료되었습니다.");
 			const msg = new Message("invite","","","","",roomNo);
 			server.send(msg.convert());
 			$("#invite-modal").modal('hide');
-			memberList(msg.roomNo, msg.empId);
+			/*memberList(msg.roomNo, msg.empId);*/
 		}else{
-			alert("초대 실패하였습니다. 관리자에게 문의하세요:(");
+			alert("접근할 수 없습니다. 관리자에게 문의하세요:(");
 		}
 	})
 }
 
 const inviteReload = (msg) =>{
-	fn_empListLoad(msg.roomNo);
-	$(opener.document).find(".chatting-list-btn").click();
+	console.log("초대 함수 테스트");
+	memberList(msg.roomNo, msg.empId);
+	$(opener.location).attr("href","javascript:newRoom('');");
 }
 
 
+$("#updateroomPasswordFlag").click(function() {
+	if ($("#updateroomPasswordFlag").is(":checked")) {
+		console.log("체크");
+		$(this).val("Y");
+		$("#updateroomPassword").prop("disabled", false);
+		$("#updateroomPassword").focus();
+	} else {
+		$("#updateroomPassword").prop("disabled", true);
+		$(this).val("N");
+	}
+	console.log($(this).val());
+})
 
 
 /* 새로고침 방지 버튼 */
