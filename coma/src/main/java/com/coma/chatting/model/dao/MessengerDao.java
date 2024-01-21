@@ -21,7 +21,7 @@ public interface MessengerDao {
 	List<ChattingPrivateRoom> selectPrivateChatJoinInfo(SqlSession session, String loginId);
 	String selectRecentChattingMessageByRoomNo(SqlSession session, String roomNo);
 	Emp selectEmpByTargetId(SqlSession session, String targetId);
-	
+	String selectPasswordFlagByRoomNo(SqlSession session, String roomNo);
 	
 	ChattingRoom passwordCheck(SqlSession session, Map<String,String> roomInfo);
 	int insertChattingRoom(SqlSession session, ChattingRoom room);

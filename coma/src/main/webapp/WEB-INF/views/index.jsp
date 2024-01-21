@@ -70,6 +70,13 @@ td {
 	border-radius: 5px !important;
 	
 }
+
+.notice *:not(h1):not(span) {
+	font-size: 16px;
+}
+
+
+
 </style>
 
 <div class="coma-container" style="margin-top:30px;">
@@ -163,26 +170,41 @@ td {
 					<div class="col-2"></div>
 				</div>
 			</div>
-			<div class="bigContainer" style="display: flex;border-radius: 20px;height:380px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
+			
+			<div class="bigContainer notice" style="display: flex;border-radius: 20px;height:380px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
 				<div class="row">
 				<div class=col-12>
 					<h1>
-						<i class="ni ni-check-bold"></i>공지사항
+						공지사항
 					</h1>
 				</div>
 					<div class=col-12 style="text-align: -webkit-center;">
-						<table>
+						<table class="table" style="width:100%;">
+							<a href="${path }/board/noticelist" style="color: inherit; text-decoration: none;">
+								<span style="font-size: 16px; float: right; padding: 0 24px 16px 0;">+더보기</span>
+							</a>
 							<c:forEach var="mainNotice" items="${mainNotice}">
 								<tr>
-									<td><a
+									<td class="notice-title"><a
 										href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
-									<td>${mainNotice.boardDate}</td>
+									
+									<c:choose>
+										<c:when test="${mainNotice.boardDate.year == 124}">
+						                    <td class="noitce-date" style="text-align: right;"><fmt:formatDate value="${mainNotice.boardDate}" pattern="MM-dd" /></td>
+						                </c:when>
+						                <c:otherwise>
+						                    <td class="noitce-date" style="text-align: right;"><fmt:formatDate value="${mainNotice.boardDate}" pattern="yyyy-MM-dd" /></td>
+						                </c:otherwise>
+						            </c:choose>
+						            
 								</tr>
 							</c:forEach>
+							<td></td><td></td>
 						</table>
 					</div>
 				</div>
 			</div>
+			
 		</div>
 		<div class=" col-7">
 			<div class="bigContainer">

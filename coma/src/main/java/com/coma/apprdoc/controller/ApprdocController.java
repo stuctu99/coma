@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.coma.apprdoc.service.ApprdocService;
 import com.coma.common.pagefactory.PageFactory;
 import com.coma.model.dto.ApprovalDoc;
-import com.coma.model.dto.Board;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +36,6 @@ public class ApprdocController {
 			
 			List<ApprovalDoc> appr = new ArrayList<>();
 			String progress = null;
-			Map<String, Object> pgMap = new HashMap<>();
 			
 			//전체문서수
 			int allCount = service.selectApprCount(null);
@@ -55,6 +53,8 @@ public class ApprdocController {
 			
 			//문서리스트
 			appr = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
+			
+			
 			
 			m.addAttribute("proceed", appr);
 			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));

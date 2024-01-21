@@ -192,9 +192,9 @@ div {
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-12">
-									<h3>초대하기</h3>
-								</div>
+								<div class="col-12" style="border-top:1px solid black;border-bottom:1px solid black;">
+									<h3 id="invite-title">사원리스트</h3>
+								</div>	
 							</div>
 							<div class="contain" id="invite-emp-list">
 								<c:forEach var="d" items="${dept}">
@@ -225,7 +225,7 @@ div {
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">취소</button>
+							data-dismiss="modal" onclick="initModal();">취소</button>
 						<button class="btn btn-primary"
 							onclick="createRoomCheck('${loginmember.empId}');">생성</button>
 					</div>
@@ -310,6 +310,7 @@ div {
 <script>
 	const loginId = '${loginmember.empId}';
 	const autority = '${loginmember.job.jobCode}';
+	const path = '${path}';
 </script>
 <script src="${path }/resource/js/chat/chat.js"></script>
 </html>

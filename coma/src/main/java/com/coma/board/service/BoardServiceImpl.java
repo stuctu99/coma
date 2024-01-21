@@ -41,14 +41,14 @@ public class BoardServiceImpl implements BoardService {
 		int result=dao.insertBoard(session, b);
 		
 		if(result>0) {
-			if(b.getBoardFile().size()>0) {
+			if(b.getBoardFile()!=null && b.getBoardFile().size()>0) {
 				b.getBoardFile().forEach(file->{
 					int fileresult = dao.insertBoardFile(session, file);
 					if(fileresult==0) throw new RuntimeException("등록실패");
 				});
-			}else {
-				throw new RuntimeException("등록실패");
 			}
+		}else {
+			throw new RuntimeException("등록실패");
 		}
 		
 		return result;

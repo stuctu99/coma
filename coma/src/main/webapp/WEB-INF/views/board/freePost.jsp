@@ -119,7 +119,7 @@
 								<input type="hidden" name="replyEmpId" value="${e.empId }">
 								<%-- <input type="hidden" name="replyNo" value="${reply.replyNo }"> --%>
 								<textarea class="form-control" id="contents" name="replyContent" style="width: 100%" placeholder="^0^"></textarea>
-								<button class="btn btn-success m1-2">등록</button>
+								<button class="btn btn-primary m1-2">등록</button>
 							</div>
 							</form>
 						</td>
@@ -130,19 +130,19 @@
 						<td>
 							 <c:choose>
 							     <c:when test="${post.boardType eq 0}">
-							         <a href="${path}/board/noticelist" class="btn btn-success"><span>글목록</span></a>
+							         <a href="${path}/board/noticelist" class="btn btn-primary"><span>글목록</span></a>
 							     </c:when>
 							     <c:otherwise>
-							         <a href="${path}/board/freelist" class="btn btn-success"><span>글목록</span></a>
+							         <a href="${path}/board/freelist" class="btn btn-primary"><span>글목록</span></a>
 							     </c:otherwise>
 							 </c:choose>
 						</td>
 						<c:if test="${post.emp.empId eq e.empId or fn:contains(e.authorities, 'ADMIN')}">	
 						<td>
-							<a href="${path }/board/updatePost?boardNo=${post.boardNo }" class="btn btn-success"><span>글수정</span></a>
+							<a href="${path }/board/updatePost?boardNo=${post.boardNo }" class="btn btn-primary"><span>글수정</span></a>
 						</td>
 						<td>
-							<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-success"><span>글삭제</span></a>
+							<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-primary"><span>글삭제</span></a>
 						</td>
 						</c:if>		
 					</tr>	
