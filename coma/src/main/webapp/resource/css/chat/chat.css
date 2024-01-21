@@ -139,7 +139,7 @@ hr {
 #create-room{
 	width: 74.83px;
 	height: 30px;
-	display: none;
+	margin-right: 37px !important;
 }
 
 #delete-room{
@@ -147,6 +147,7 @@ hr {
 	text-align: center;
 	width:52px;
 	height: 30px;
+	margin-right: 10px !important;
 	display: none;
 }
 

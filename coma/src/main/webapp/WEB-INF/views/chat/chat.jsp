@@ -310,6 +310,7 @@ div {
 <script>
 	const loginId = '${loginmember.empId}';
 	const autority = '${loginmember.job.jobCode}';
+	const path = '${path}';
 </script>
 <script src="${path }/resource/js/chat/chat.js"></script>
 </html>

@@ -195,7 +195,7 @@ div {
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onclick="fn_update('${roomNo}');">&#43;수정</button>
+						<button type="button" class="btn btn-primary" onclick="fn_update('${roomNo}');">&#43;초대 및 변경</button>
 						<button type="button" class="btn btn-link  ml-auto"
 							data-dismiss="modal">닫기</button>
 					</div>
@@ -252,6 +252,7 @@ div {
 
 	const loginId = "${loginmember.empId}";
 	const empName = "${loginmember.empName}";
+	const path = '${path}';
 </script>
 <script src="${path }/resource/js/chat/chatView.js"></script>
 </html>
