@@ -621,7 +621,7 @@ const line_end=()=>{
 	
 }
 
-
+//------- 결재선 불러오기 취소 -------
 fn_reset=()=>{
 	
 	const btn_tag = $('<button type="button" id="take_btn" onclick="take_line();" class="btn btn-block btn-primary mb-3" data-toggle="modal" data-target="#modal-default">결재선 불러오기</button>');
@@ -630,28 +630,27 @@ fn_reset=()=>{
 	$('input[name="app_fix"]').remove();
 	$('#reset_btn').hide();
 	$('.remake').prepend(btn_tag);
-	$('.appr_container').empty();
+	$('.appr_container').empty(); 
 	
 
 	let appr_result = $('.appr_result');
 
 	for (let i=0; i < app_all_arr.length; i++) {
 	    
-	appr_result[i].value = ""; //hidden input 비워주기
-	
-	console.log("222: ",  appr_result[i].value);
-		
+		appr_result[i].value = ""; //hidden input 비워주기
 	}
 
 	for (let i = app_all_arr.length - 1; i >= 0; i--) { //배열 값 삭제
 	    app_all_arr.pop(); // 역순으로 pop 호출
-	    
-		console.log("111: ", app_all_arr[i]);
 	}
 	
-	
 
+}
 
+//----- localStorage 결재선 초기화 ------
+del_line=()=>{
+	localStorage.clear();
+	$('#modal-default').modal('hide'); //모달창 닫기
 }
 
 

@@ -290,7 +290,7 @@ public class ApprovalController {
          int result = service.insertApproval(doc);   
 
          msg="문서 등록 성공";
-         loc="approval/writedoc"; // 결재 문서함 주소로 수정 
+         loc="apprdoc/allList"; // 결재 문서함 페이지로 이동
       }catch(RuntimeException e){
          msg="문서 등록 실패";
          loc="approval/writedoc";
@@ -473,9 +473,8 @@ public class ApprovalController {
    
 
    @PostMapping("/getSignImg")
-   public String getSignImg(@RequestParam MultipartFile imgFile, HttpSession session, String empId)
+   public String getSignImg(@RequestParam MultipartFile imgFile, HttpSession session, String empId, Model model)
    											throws IOException{
-	   System.out.println("############################ ");
 	   Map<String, String> data = new HashMap<String, String>();
 	   
 	   
@@ -505,9 +504,13 @@ public class ApprovalController {
 	  
 
 	   
-	   
-	      
-	   return "redirect:/";
+		   String msg="서명 등록 완료";
+	       String loc="approval/addsign";
+		   
+	       model.addAttribute("msg",msg);
+	       model.addAttribute("loc",loc);
+	       
+		   return "common/msg";
 	   	
    }
    

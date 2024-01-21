@@ -391,7 +391,7 @@
 			            
 			            <div class="modal-footer">
 			                <button type="button" onclick="line_end();" class="btn btn-primary">확인</button>
-			                <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">취소</button>
+			                <button type="button" class="btn btn-danger  ml-auto" onclick="del_line();">초기화</button>
 			            </div>
 			            
 			        </div>
