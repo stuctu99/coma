@@ -15,7 +15,7 @@
     Coma Academy
   </title>
   <!-- Favicon -->
-  <link href="${path }/resource/img/brand/favicon_2.png" rel="icon" type="image/png">
+  <link href="${path }/resource/img/brand/comacon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -180,17 +180,17 @@
                 <i class="ni ni-single-02"></i>
                 <span>My profile</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="${path}/commute/commuteDetail" class="dropdown-item">
                 <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
+                <span>근태 상태</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="${path}/commute/MyCommuteInfo" class="dropdown-item">
                 <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
+                <span>근태 상세보기</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="${path}/mypage/MyvacationInfo" class="dropdown-item">
                 <i class="ni ni-support-16"></i>
-                <span>Support</span>
+                <span>나의 휴가 </span>
               </a>
               <div class="dropdown-divider"></div>
               <a href="/logout" class="dropdown-item">

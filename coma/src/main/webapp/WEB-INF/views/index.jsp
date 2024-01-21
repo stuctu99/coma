@@ -7,8 +7,7 @@
    <jsp:param name="id" value="mine" />
 </jsp:include>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
-<script
-   src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
 <!-- TEAM COMA SPACE -->
 <style>
@@ -83,8 +82,8 @@ td {
 					<c:choose>
 						<%-- 출근 시간이 값이 없으면  --%>
 						<c:when test="${myCommute.commuteClockin == null}">
-							<div class=" col-3" id="clockin">
-								<div class="btncss" id="clockin1 ">
+							<div class=" col-3 " id="clockin">
+								<div class="btncss" id="clockin1">
 									<i class="ni ni-briefcase-24"></i>
 								</div>
 							</div>
@@ -151,7 +150,7 @@ td {
 			</div>
 			<div class="bigContainer" style="display: flex;border-radius: 20px;height:150px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
 				<div>
-					<h2>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
+					<h2>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h2>
 				</div>
 				<div class="row">
 					<div class="col-2"></div>
@@ -198,8 +197,8 @@ td {
 				<div id='calendar' style="width:90%;"></div>
 			</div>
 		</div>
-	<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
-	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>
+<!-- 	<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
+	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button> -->
 
    <div class=" col-1"></div>
    </div>
@@ -218,11 +217,7 @@ td {
     var time2 = (commuteStarttime-commuteClockin);
     var totalwork1 = (commuteStarttime-commuteClockin) + (commuteClockout-commuteEndtime);
     var totalwork2 = commuteClockout-commuteClockin;
-    var time3 = time2 + (nowTime -commuteEndtime);   
-    //값이 있으면 false
-    //console.log(!commuteStarttime);
-    //console.log(!commuteEndtime);    
-    
+    var time3 = time2 + (nowTime -commuteEndtime);       
     // 시간을 HH:mm:ss 형식으로 변환
     function formatTime(milliseconds) {
                 var seconds = Math.floor(milliseconds / 1000);
@@ -233,7 +228,6 @@ td {
                 hours %= 24;   
                 return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
     }
-    
     function pad(number) {
          return (number < 10 ? '0' : '') + number;
      }
@@ -343,38 +337,38 @@ td {
 let clockIn, clockout,endtime, starttime;
 //출근하기 버튼을 눌렀을 때
 if(!commuteClockin){
-document.getElementById('clockin').addEventListener('click', function() {
-    var empId = '${emp.empId}';
-    clockIn = new Date().getTime();
-    
-    console.log('출근 버튼'+clockIn);
-    // Fetch to insert commute record
-    fetch('${path}/commute/updateClockIn', {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            empId: empId
-        })
-    }).then(response => {
-        console.log(response);
-        if (response.status != 200) {
-            throw new Error("");
-        }
-        return response.json();
-    }).then(result => {
-        if (result > 0) {
-            alert("출근했습니다.");
-            var clockinDiv = document.getElementById('clockin1');
-            clockinDiv.remove();
-            // Display clock-in time
-            document.getElementById('clockin').textContent = getFormatTime(new Date());
-            //출근 누르면 타이머 시작!
-            generatePattern(1000);
-        }
-    }).catch(e => {
-        alert(e);
-    });
-});
+	document.getElementById('clockin').addEventListener('click', function() {
+	    var empId = '${emp.empId}';
+	    clockIn = new Date().getTime();
+	    
+	    console.log('출근 버튼'+clockIn);
+	    // Fetch to insert commute record
+	    fetch('${path}/commute/updateClockIn', {
+	        method: "post",
+	        headers: { "Content-Type": "application/json" },
+	        body: JSON.stringify({
+	            empId: empId
+	        })
+	    }).then(response => {
+	        console.log(response);
+	        if (response.status != 200) {
+	            throw new Error("");
+	        }
+	        return response.json();
+	    }).then(result => {
+	        if (result > 0) {
+	            alert("출근했습니다.");
+	            /* var clockinDiv = document.getElementById('clockin1'); */
+	            document.getElementById('clockin1').remove();
+	            // Display clock-in time
+	            document.getElementById('clockin').textContent = getFormatTime(new Date());
+	            //출근 누르면 타이머 시작!
+	            generatePattern(1000);
+	        }
+	    }).catch(e => {
+	        alert(e);
+	    });
+	});
 }
 
 //외출시작하기 눌렀을 때
@@ -545,12 +539,12 @@ document.getElementById('vacationButton').addEventListener('click', function() {
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
     window.location.href = '/commute/MyCommuteInfo';
 });
-document.getElementById('checkInsert').addEventListener('click', function() {
+/* document.getElementById('checkInsert').addEventListener('click', function() {
     window.location.href = '/commute/checkInsert';
 });
 document.getElementById('updateUncleared').addEventListener('click', function() {
     window.location.href = '/commute/updateUncleared';
-}); 
+});  */
 
 </script>
 
