@@ -147,6 +147,7 @@ public class BoardController {
 		//파일업로드 경로
 		String path = session.getServletContext().getRealPath("/resource/upload/board");
 		String rename = "";
+		
 		//boardFile List
 		List<BoardFile> files = (List<BoardFile>)session.getAttribute("uploadFile");
 		if(files==null) files=new ArrayList<>();
@@ -213,6 +214,7 @@ public class BoardController {
 			msg="등록성공";
 			loc="/freelist";
 		}catch(RuntimeException e) {
+			e.printStackTrace();
 			msg="등록실패";
 			loc="/freelist";
 			for(BoardFile bf : imagePath) {

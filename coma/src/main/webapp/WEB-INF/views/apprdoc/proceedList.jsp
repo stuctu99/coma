@@ -80,7 +80,7 @@ font-family: 'Noto Sans KR', sans-serif;
 		</div>
 		<div class="card card-stats enddoc">
 			<a href="${path }/apprdoc/docList">
-		    <div class="card-body"> 
+		    <div class="card-body">
 				<div class="row">
 				    <div class="col">
 				        <h5 class="card-title text-uppercase text-muted mb-0">완료된 문서</h5>

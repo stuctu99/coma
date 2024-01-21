@@ -37,7 +37,6 @@ public class ApprdocController {
 			
 			List<ApprovalDoc> appr = new ArrayList<>();
 			String progress = null;
-			Map<String, Object> pgMap = new HashMap<>();
 			
 			//전체문서수
 			int allCount = service.selectApprCount(null);
