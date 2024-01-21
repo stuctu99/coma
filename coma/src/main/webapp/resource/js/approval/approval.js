@@ -531,6 +531,7 @@ const take_line=()=>{
 	//localStorage key값 분기처리
 	if (line_key !== null && line_key !== 'TOAST UI editor for localhost: Statistics' && line_key !== 'null') {
 			radioContainer.append(
+			
 				$('<label>').text(line_key).append(
 					$('<input>').attr({
 						type: 'radio',
@@ -547,6 +548,9 @@ const take_line=()=>{
 
 	
 }
+
+
+
 
 
 const line_end=()=>{
