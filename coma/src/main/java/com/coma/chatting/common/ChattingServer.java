@@ -44,15 +44,15 @@ public class ChattingServer extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		/* System.err.println("[ChattingServer] : 메세지 받았다."); */
-		System.err.println("[ChattingServer 전송메세지 정보] :"+message.getPayload()); // 클라이언트가 전송한 메세지
+		System.err.println("[ChattingServer 전송메세지 정보] :" + message.getPayload()); // 클라이언트가 전송한 메세지
 		ChattingMessage msg = mapper.readValue(message.getPayload(), ChattingMessage.class);
 		Emp emp = service.selectEmpByEmpId(msg.getEmpId());
 		msg.setEmpObj(emp);
-		
-		for(Map.Entry<String, Map<String,WebSocketSession>> chatRoom : room.entrySet()) {
-			System.err.println("[ChattingServer] 현재 유지중인 채팅방 : "+chatRoom);
+
+		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
+			System.err.println("[ChattingServer] 현재 유지중인 채팅방 : " + chatRoom);
 		}
-		
+
 		switch (msg.getType()) {
 		case "open":
 			addClient(session, msg);
@@ -77,20 +77,24 @@ public class ChattingServer extends TextWebSocketHandler {
 		if (msgPackages.size() > 0) {
 			saveChattingMessage();
 		}
-		
-		for(Map.Entry<String,Map<String,WebSocketSession>> chatRoom : room.entrySet()) {
-			Iterator<Map.Entry<String, WebSocketSession>> client = chatRoom.getValue().entrySet().iterator();
-			while(client.hasNext()) {
-				Map.Entry<String,WebSocketSession> c = client.next();
-				if(c.getValue().equals(session)) {
-					String roomNo = chatRoom.getKey();
-					String empId = c.getKey();
-					client.remove();
-					sendMessage(tempMessage(roomNo,empId));
+
+		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
+			if (chatRoom.getValue().isEmpty()) {
+				room.remove(chatRoom.getKey());
+			} else {
+				Iterator<Map.Entry<String, WebSocketSession>> client = chatRoom.getValue().entrySet().iterator();
+				while (client.hasNext()) {
+					Map.Entry<String, WebSocketSession> c = client.next();
+					if (c.getValue().equals(session)) {
+						String roomNo = chatRoom.getKey();
+						String empId = c.getKey();
+						client.remove();
+						sendMessage(tempMessage(roomNo, empId));
+					}
 				}
 			}
 		}
-		
+
 		System.err.println("[ChattingServer] : 채팅서버종료");
 	}
 
@@ -104,8 +108,8 @@ public class ChattingServer extends TextWebSocketHandler {
 				System.err.println("[ChattingServer] : 현재 세션 유지중인 채팅방 리스트 : " + chatRoom);
 				if (chatRoom.getKey().equals(msg.getRoomNo())) {
 					/* clients.put(msg.getEmpId(), session); */
-					 chatRoom.getValue().put(msg.getEmpId(), session); 
-					 room.put(msg.getRoomNo(), chatRoom.getValue());
+					chatRoom.getValue().put(msg.getEmpId(), session);
+					room.put(msg.getRoomNo(), chatRoom.getValue());
 
 				}
 			}
@@ -124,28 +128,28 @@ public class ChattingServer extends TextWebSocketHandler {
 
 	private void sendMessage(ChattingMessage msg) {
 //		모든접속자에게 메세지 전송 => 특정 방 접속자에게 보낼 수 있는 로직 구현하기
-		if (msg.getType().equals("msg") && room.get(msg.getRoomNo()).size()!=1) {
+		if (msg.getType().equals("msg") && room.get(msg.getRoomNo()).size() != 1) {
 			msgPackages.add(msg);
 			if (msgPackages.size() >= 30) {
 				saveChattingMessage();
 			}
-		}else if(msg.getType().equals("msg") && room.get(msg.getRoomNo()).size()==1){
+		} else if (msg.getType().equals("msg") && room.get(msg.getRoomNo()).size() == 1) {
 			msgPackages.add(msg);
 			saveChattingMessage();
-		}else if(msg.getType().equals("invite") && msgPackages.size()>0){
+		} else if (msg.getType().equals("invite") && msgPackages.size() > 0) {
 			msgPackages.add(msg);
 			saveChattingMessage();
 		}
-		
+
 		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
 			if (chatRoom.getKey().equals(msg.getRoomNo())) {
 				for (Map.Entry<String, WebSocketSession> client : chatRoom.getValue().entrySet()) {
 					WebSocketSession session = client.getValue();
 					/* System.err.println("[ChattingServer 전달 세션 정보] : "+session); */
 					try {
-						if(!chatRoom.getValue().isEmpty()) {
+						if (!chatRoom.getValue().isEmpty()) {
 							String message = mapper.writeValueAsString(msg);
-							session.sendMessage(new TextMessage(message)); 
+							session.sendMessage(new TextMessage(message));
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -157,42 +161,48 @@ public class ChattingServer extends TextWebSocketHandler {
 
 	private void clientOut(ChattingMessage msg) {
 		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
-			if(chatRoom.getValue().isEmpty()) {
+			if (chatRoom.getValue().isEmpty()) {
 				room.remove(chatRoom.getKey());
 				continue;
 			}
-			//채팅방 전체 순회
+			// 채팅방 전체 순회
 			if (chatRoom.getKey().equals(msg.getRoomNo())) {
-				//요청들어온 채팅방 일때만 실행
+				// 요청들어온 채팅방 일때만 실행
 				Iterator<Map.Entry<String, WebSocketSession>> client = chatRoom.getValue().entrySet().iterator();
-				while(client.hasNext()) {
-					//채팅방 세션 멤버 Map 순회
+				while (client.hasNext()) {
+					// 채팅방 세션 멤버 Map 순회
 					Map.Entry<String, WebSocketSession> c = client.next();
-						if(c.getKey().equals(msg.getEmpId())) {
-							//채팅방 이벤트 발생 사원 아이디와 일치시 채팅방에서 세션 제거
-							try {
+					if (c.getKey().equals(msg.getEmpId())) {
+						// 채팅방 이벤트 발생 사원 아이디와 일치시 채팅방에서 세션 제거
+						try {
 //								c.getValue().close();
-								client.remove();
-							}catch(Exception e) {
-								e.printStackTrace();
-							}
-							System.err.println("[ChattingServer 전체조회] :"+chatRoom);
+							client.remove();
+//							if(chatRoom.getValue().isEmpty()) {
+//								
+//							}
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
+						System.err.println("[ChattingServer 전체조회] :" + chatRoom);
+					}
 
 				}
 			}
 		}
-		System.err.println("[ChattingServer 메세지 전송 전] : "+msg);
-		System.err.println("[ChattingServer Room]"+room);
-		if(!room.get(msg.getRoomNo()).isEmpty()) {
+		System.err.println("[ChattingServer 메세지 전송 전] : " + msg);
+		System.err.println("[ChattingServer Room]" + room);
+		if (!room.get(msg.getRoomNo()).isEmpty()) {
 			sendMessage(msg);
+		}else {
+			sendMessage(msg);
+			room.remove(msg.getRoomNo());
 		}
 	}
 
 //	채팅메시지 DB저장 (현재 30개 기준)
 	private void saveChattingMessage() {
 		int result = 0;
-		if(!msgPackages.isEmpty()) {
+		if (!msgPackages.isEmpty()) {
 			result = service.insertChattingMessage(msgPackages);
 		}
 		if (result > 0) {
@@ -202,7 +212,7 @@ public class ChattingServer extends TextWebSocketHandler {
 			System.out.println("[ChattingServer] : 메세지 저장 실패");
 		}
 	}
-	
+
 	private ChattingMessage tempMessage(String roomNo, String empId) {
 		ChattingMessage msg = new ChattingMessage();
 		msg.setType("rest");
@@ -211,7 +221,5 @@ public class ChattingServer extends TextWebSocketHandler {
 		tempMsg = msg;
 		return tempMsg;
 	}
-	
-
 
 }

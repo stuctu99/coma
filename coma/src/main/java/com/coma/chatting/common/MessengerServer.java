@@ -52,6 +52,9 @@ public class MessengerServer extends TextWebSocketHandler {
 		case "close":
 			removeClient(msg);
 			break;
+		case "invite":
+			inviteAlarm(msg);
+			break;
 		}
 	}
 
@@ -62,7 +65,8 @@ public class MessengerServer extends TextWebSocketHandler {
 		while(client.hasNext()) {
 			Map.Entry<String, WebSocketSession> info = client.next();
 			if(info.getValue().equals(session)) {
-				clients.remove(info.getKey());
+//				clients.remove(info.getKey());
+				client.remove();
 			}
 		}
 		
@@ -142,6 +146,20 @@ public class MessengerServer extends TextWebSocketHandler {
 		}
 	}
 	
+//	초대 알림 메세지	
+	private void inviteAlarm(MessengerMessage msg) {
+		System.err.println("여기 안오셈?");
+		for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
+			if(client.getKey().equals(msg.getLoginId())) {
+				try {
+					WebSocketSession session = client.getValue();
+					session.sendMessage(messageConverter(msg));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 //	메신저 종료 시 클라이언트 세션 삭제
 	public void removeClient(MessengerMessage msg) {
 		Iterator<Map.Entry<String, WebSocketSession>> client = clients.entrySet().iterator();

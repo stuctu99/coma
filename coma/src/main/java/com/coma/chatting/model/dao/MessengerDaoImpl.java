@@ -1,5 +1,6 @@
 package com.coma.chatting.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,9 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.ChattingJoin;
 import com.coma.model.dto.ChattingPrivateRoom;
+import com.coma.model.dto.ChattingRoom;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
@@ -80,6 +81,17 @@ public class MessengerDaoImpl implements MessengerDao {
 	public String selectPasswordFlagByRoomNo(SqlSession session, String roomNo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("chatting.selectPassowrdFlagByRoomNo",roomNo);
+	}	
+	
+	@Override
+	@Transactional
+	public Map<String, Object> selectInviteInfo(SqlSession session, Map<String, String> inviteInfo) {
+		ChattingRoom room = session.selectOne("chatting.selectRoomByRoomNo",inviteInfo.get("roomNo"));
+		Emp emp = session.selectOne("chatting.selectEmpByEmpId", inviteInfo.get("sendId"));
+		Map<String,Object> roomData = new HashMap<String,Object>();
+		roomData.put("room",room);
+		roomData.put("emp",emp);
+		return roomData;
 	}
 
 	// insert
