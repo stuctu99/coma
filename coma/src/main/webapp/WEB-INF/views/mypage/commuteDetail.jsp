@@ -163,7 +163,7 @@
 					<div class=""></div>
 				</div>
 				<div class="col-1">
-					<button type="button" class="btn btn-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
+					<button type="button" class="btn btn-primary" onclick="commuteWriteBtn();">근태 변경 신청하기</button>
 				</div>
 			</div>
 			<div class="col-1"></div>
@@ -339,12 +339,18 @@ function updateTable(commuteList) {
     
 }
 /* /approval/writedoc 결재로 넘어가기  */
-document.getElementById('commuteWriteBtn').addEventListener('click', function() {
+/* document.getElementById('commuteWriteBtn').addEventListener('click', function() {
     window.location.href = '${pageContext.request.contextPath}/approval/writedoc';
-});
+}); */
+function commuteWriteBtn(){
+	window.location.href = '${pageContext.request.contextPath}/approval/writedoc';
+}
 document.getElementById('total').addEventListener('click', function() {
     window.location.href = '${pageContext.request.contextPath}/commute/commuteDetail';
 });
+
+
+
 /* 기간 막기 함수  */
 function updateEndTimeMin() {
     

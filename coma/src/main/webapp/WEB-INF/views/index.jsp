@@ -393,8 +393,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+//ajax로 받는 시간을 변수로 선언 
+let clockIn, clockout,endtime, starttime;
 //출근하기 버튼을 눌렀을 때
-
 function clockin1(){
     var empId = '${emp.empId}';
     clockIn = new Date().getTime();
@@ -421,6 +422,7 @@ function clockin1(){
             document.getElementById('clockout1').disabled = false;
             //출근 누르면 타이머 시작!
             generatePattern(1000);
+            
         }
     }).catch(e => {
         alert(e);
@@ -560,16 +562,18 @@ function clockout1(){
 	                 now= new Date().getTime()-commuteClockin;
 	              }
 	           }
+	           
 	        }else{
 	           //새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 
 	           if(starttime){
-	              //console.log('새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 ');
+	              console.log('새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 ');
 	              now= (starttime-clockIn)+(new Date().getTime()-endtime) ;   
-	              //console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
+	              console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
 	           }else{
 	              //출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근 
-	              //console.log ('출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근' );
-	              now= new Date().getTime()-clockIn;
+	              console.log ('출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근' );
+	              now= (new Date().getTime())-clockIn;
+	              console.log (now );
 	           }
 	        }
 	        //console.log('최종으로 근무시간을 찍어볼게요 ! '+formatTime(now));

@@ -68,7 +68,7 @@ div {
 		    </div>
 		</div>
 		<div class="col-1">
-			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
+			<button type="button" class="btn btn-primary"  onclick="submitForm();">검색</button>
 		</div>
 		<div class="col-1">
 			<a href="${path }/commute/empCommute?empId=${empId }">

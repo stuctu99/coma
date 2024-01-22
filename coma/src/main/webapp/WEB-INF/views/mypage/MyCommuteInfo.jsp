@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-   <jsp:param name="id" value="mine" />
+	<jsp:param name="id" value="mine" />
 </jsp:include>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <style>

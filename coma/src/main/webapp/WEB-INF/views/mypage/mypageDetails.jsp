@@ -66,7 +66,7 @@ select:disabled, select[readonly] {
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
-		 <form id="employeeForm" action="${path}/mypage/updatemypage" method="post"  enctype="multipart/form-data">
+		 <form id="employeeForm" action="${pageContext.request.contextPath}/mypage/updatemypage" method="post"  enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-6">
 				 <input type="file" id="accompany-file" name="empPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
@@ -246,7 +246,6 @@ function submitEmployeeForm() {
 
 /* 비밀번호 확인 여부 ajax */
 $(document).ready(function () {
-
     function checkPasswordMatch() {
       var newPassword = $('#example-password-input').val();
       var confirmPassword = $('#example-password2-input').val();

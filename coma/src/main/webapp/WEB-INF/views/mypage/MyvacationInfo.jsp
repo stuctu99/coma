@@ -89,7 +89,7 @@
 					<div class=""></div>
 				</div>
 				<div class="col-1">
-					<button type="button" class="btn btn-primary" id ="vacationWriteBtn">휴가 신청하기</button>
+					<button type="button" class="btn btn-primary" onclick ="vacationWriteBtn()">휴가 신청하기</button>
 				</div>
 				<div class="col-1"></div>
 			</div>
@@ -138,9 +138,10 @@
 </div>
 
 <script>
-document.getElementById('vacationWriteBtn').addEventListener('click', function() {
-    window.location.href = '${pageContext.request.contextPath}/approval/writedoc';
-});
+function vacationWriteBtn(){
+	window.location.href = '${path}/approval/writedoc';
+}
+
 </script>
 
 
