@@ -424,7 +424,7 @@ const fn_update = (roomNo) => {
 
 const inviteReload = (msg) => {
 	memberList(msg.roomNo, msg.empId);
-	$(opener.location).attr("href", "javascript:newRoom('');");
+	$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
 }
 
 
