@@ -42,7 +42,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="/">
-        <img src="/resource/img/brand/COMA2.png" class="navbar-brand-img" alt="...">
+        <img src="${path }/resource/img/brand/COMA2.png" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <!-- <ul class="nav align-items-center d-md-none">
@@ -82,7 +82,7 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <a href="/">
-                <img src="/resource/img/brand/blue.png">
+                <img src="${path }/resource/img/brand/blue.png">
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -160,11 +160,11 @@
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
                	<c:if test="${e.empPhoto == null}" >
-				 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 36px; height: 36px">
+				 	<img src="${path}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 36px; height: 36px">
                  </c:if>
 				 <%-- 프로필 이미지 가 있으면 이미지 --%>
                    <c:if test="${e.empPhoto != null}" >
-						<img src="${pageContext.request.contextPath}/resource/upload/profile/${e.empPhoto}" alt="Profile Image" id="profileImage"style="width: 36px; height: 36px">
+						<img src="${path }/resource/upload/profile/${e.empPhoto}" alt="Profile Image" id="profileImage"style="width: 36px; height: 36px">
                    </c:if>
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
