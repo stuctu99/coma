@@ -28,6 +28,7 @@
 			        <th>학생 이름</th>
 			        <th>담당 강사</th>
 			        <th>
+		        	<form action="/student/insertStudent" method="post">
 			          <div class="custom-control custom-checkbox">
 			            <input type="checkbox" class="custom-control-input" id="attendanceToggle" onclick="fn_Checkboxes('attendance')">
 			            <label class="custom-control-label" for="attendanceToggle">출석 여부</label>
@@ -37,7 +38,6 @@
 			      </tr>
 		        </thead>
 		        <tbody class="list" id="studentTable">
-		        	<form action="/student/insertStudent" method="post">
 			        <c:forEach var="s" items="${students }">
 			        	<tr>
 			        		<td><c:out value="${s.STU_NO }"/></td>
@@ -87,7 +87,7 @@
 		    	<div class="col-1"></div>
 		    	<div class="col-5"></div>
 		    	<div class="col-6" style="display: flex; justify-content: flex-end;">
-		    		<button type="reset" class="btn btn-default btn-sm">선택 취소</button>
+		    		<button type="reset" class="btn btn-secondary btn-sm">선택 취소</button>
 					<button type="submit" class="btn btn-primary btn-sm">입력 완료</button>
 		    	</div>
 		    </div>

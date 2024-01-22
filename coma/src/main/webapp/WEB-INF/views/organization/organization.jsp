@@ -57,7 +57,7 @@
 				</div>
 				<div class="col-1"></div>
 				<div class="row" style="display: flex; justify-content: center;">
-					<div class="card shadow" style="height: 500px; margin-top: 20px; width: 600px;">
+					<div class="card shadow" style="height: 450px; margin-top: 20px; width: 600px;">
 					    <div class="card-body">
 					        <div class="tab-content" id="myTabContent">
 					            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">

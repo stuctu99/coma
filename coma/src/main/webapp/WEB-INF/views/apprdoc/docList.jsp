@@ -6,13 +6,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="path" value="${pageContext.request.contextPath }" />
+<c:set var="e" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
-* {
-font-family: 'Noto Sans KR', sans-serif;
-}
-
 .card-stats {
 	width:240px;
 	margin: 0 20px 0 20px;
@@ -21,23 +17,48 @@ font-family: 'Noto Sans KR', sans-serif;
 .table td{
 	text-align: left;
 }
+.doc-no{
+	width: 110px;
+}
+
+.doc-type{
+	width: 94px;
+}
+
+.doc-title{
+
+}
+
+.doc-writer{
+	width: 100px;
+}
+
+.doc-date{
+	width: 140px;
+}
+
+.doc-end{
+	width: 140px;
+}
+
+.doc-pg{
+	width: 100px;
+}
+
 </style>
 
-    <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
+    <div class="coma-container" style="margin-top:20px; margin-bottom: 5px;">
 
-    <nav class="space-y-2" style="text-align: center">
+    <div class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
       	<h1>문서함</h1>
       </div>
-    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary">
-  		<span>작성하기</span>
-    </a>
-    </nav>
+    </div>
     
    <div class="card-container">
-	<div class="" style="margin: 20px 0 0 0; display: flex; width: 100%; justify-content: center;">
+	<div class="" style="margin: 20px 0 20px 0; display: flex; width: 100%; justify-content: center;">
 		<div class="card card-stats alldoc">
-		    <a href="${path }/apprdoc/allList">
+		    <a href="${path }/apprdoc/allList?empId=${e.empId}">
 		    <div class="card-body">
 				<div class="row">
 				    <div class="col">
@@ -58,7 +79,7 @@ font-family: 'Noto Sans KR', sans-serif;
 			</a>
 		</div>
 		<div class="card card-stats pgdoc">
-			<a href="${path }/apprdoc/proceedList">
+			<a href="${path }/apprdoc/proceedList?empId=${e.empId}">
 		    <div class="card-body"> 
 				<div class="row">
 				    <div class="col">
@@ -72,19 +93,23 @@ font-family: 'Noto Sans KR', sans-serif;
 				    </div>
 				</div>
 				<p class="mt-3 mb-0 text-sm">
+				<c:if test="${startCount > 0}">
 				    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
 				    <span class="text-nowrap">결재할 문서가 있습니다</span>
+				</c:if>
 				</p>
 		    </div>
 		    </a>
 		</div>
 		<div class="card card-stats enddoc">
-			<a href="${path }/apprdoc/docList">
+			<a href="${path }/apprdoc/docList?empId=${e.empId}">
 		    <div class="card-body"> 
 				<div class="row">
 				    <div class="col">
+				    
 				        <h5 class="card-title text-uppercase text-muted mb-0">완료된 문서</h5>
 				        <span class="h2 font-weight-bold mb-0">${endCount }개</span>
+				   
 				    </div>
 				    <div class="col-auto">
 				      <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
@@ -93,16 +118,23 @@ font-family: 'Noto Sans KR', sans-serif;
 				    </div>
 				</div>
 				<p class="mt-3 mb-0 text-sm">
+				<c:if test="${endCount > 0}">
 				    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
 				    <span class="text-nowrap">업데이트된 문서가 있습니다</span>
+				</c:if>
 				</p>
 		    </div>
 		    </a>
 		</div>
 	</div>
+	<div style="text-align: center">
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary" style="width:780px;">
+	  		<span style="font-size:16px;">+문서 작성하기</span>
+	    </a>
+	 </div>
    </div>
     
-  <main class="flex-1 p-5">
+  <main class="flex-1 p-5" style="padding-left: 139.91px !important; padding-right: 139.91px !important;">
     <div class="flex justify-between items-center mb-3">
       <div class="flex space-x-2" style ="text-align: right;">
       <form name="searchForm" autocomplete="off">
@@ -126,48 +158,47 @@ font-family: 'Noto Sans KR', sans-serif;
         <table class="table w-full caption-bottom text-sm">
           <thead class="[&amp;_tr]:border-b">
             <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-              <th>
-                문서 번호
+              <th class="doc-no">
+                &nbsp;문서 번호
               </th>
-              <th>
+              <th class="doc-type">
                 종류
               </th>
-              <th>
+              <th class="doc-title">
                 제목
               </th>
-              <th>
-                기안자
+              <th class="doc-writer">
+                &nbsp;기안자
               </th>
-              <th>
-                기안일
+              <th class="doc-date">
+                &nbsp;&nbsp; 기안일
               </th>
-              <th>
-                완료일
+              <th class="doc-end">
+                &nbsp;&nbsp;&nbsp; 완료일
               </th>
-              <th>
+              <th class="doc-pg">
                 상태
               </th>
             </tr>
           </thead>
           <tbody>
 	       		<c:forEach var="docs" items="${doc}">
-		       		<c:if test="${docs.docProgress eq '완료' || docs.docProgress eq '반려'}">
 		        		<tr>
 			         		<td>${docs.docNo }</td>
 			         		<td>${docs.docType }</td>
 			         		<td><a href="${path }/approval/viewdoc?docNo=${docs.docNo }">${docs.docTitle }</a></td>
 			         		<td>${docs.emp.empName }</td>
 			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
-			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
+			         		<td><fmt:formatDate value="${docs.docEndDate}" pattern="YYYY-MM-dd" /></td>
 		         			<td>${docs.docProgress }</td>
 		        		</tr>
-		       		</c:if>
 	       		</c:forEach>
           </tbody>
         </table>
       </div>
     </div>
   </main>
+  	<div>${pageBar }</div>
   </div> 
 <script>
 //검색기능
