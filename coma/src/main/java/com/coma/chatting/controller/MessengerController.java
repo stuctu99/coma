@@ -83,6 +83,17 @@ public class MessengerController {
 	public String recentChattingMessageByRoomNo(@PathVariable String roomNo) {
 		return service.selectRecentChattingMessageByRoomNo(roomNo);
 	}
+	
+	@PostMapping("/alarm")
+	@ResponseBody
+	public Map<String,Object> selectInviteInfo(@RequestBody Map<String,String> inviteInfo){
+		return service.selectInviteInfo(inviteInfo);
+		
+	}
+	
+	
+	
+	
 
 	@PostMapping("/createRoom")
 	@ResponseBody

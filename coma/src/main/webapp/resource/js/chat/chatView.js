@@ -412,8 +412,12 @@ const fn_update = (roomNo) => {
 		})
 		.then(data => {
 			if (data.result == 'success') {
-				const msg = new Message("invite", "", "", "", "", roomNo);
-				server.send(msg.convert());
+				console.log(inviteEmp.length);
+				inviteEmp.forEach(id=>{
+					const msg = new Message("invite","", "", "", id , roomNo);
+					server.send(msg.convert());
+					
+				})
 				$("#invite-modal").modal('hide');
 				/*memberList(msg.roomNo, msg.empId);*/
 			} else {
@@ -424,6 +428,7 @@ const fn_update = (roomNo) => {
 
 const inviteReload = (msg) => {
 	memberList(msg.roomNo, msg.empId);
+	$(opener.location).attr("href","javascript:fn_invite('"+msg.roomNo+"','"+loginId+"','"+msg.empId+"');");
 	$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
 }
 

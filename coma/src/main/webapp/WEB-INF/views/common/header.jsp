@@ -109,11 +109,11 @@
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
               <li><a href="${pageContext.request.contextPath}/approval/addsign">서명 등록</a></li>
               <li><a href="${pageContext.request.contextPath}/approval/writedoc">결재신청</a></li>
-              <li><a href="${path }/apprdoc/allList">문서함</a></li>
+              <li><a href="${path }/apprdoc/allList?empId=${e.empId}">문서함</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="/calendar">
+            <a class="nav-link " href="${path }/calendar">
               <i class="ni ni-pin-3 text-orange"></i> 캘린더
             </a>
           </li>

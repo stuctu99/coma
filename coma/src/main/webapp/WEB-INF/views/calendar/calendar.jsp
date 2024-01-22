@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="loginmember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 
 <head>
@@ -16,24 +17,24 @@
 
  <style>
  
-	  #calendar {
-	      width: 70vw;
-	      height: 70vh;
-		 position: relative;
- 		 z-index: 0;
- 		margin: 20px auto;
- 		 
-	  }
-	#Modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+#calendar {
+    width: 70vw;
+    height: 70vh;
+position: relative;
+ z-index: 0;
+margin: 20px auto;
+ 
+}
+#Modal {
+ display: none;
+ position: fixed;
+ z-index: 1000;
+ left: 0;
+ top: 0;
+ width: 100%;
+ height: 100%;
+ overflow: auto;
+ background-color: rgba(0, 0, 0, 0.4);
 }
 
 #cont {
@@ -52,50 +53,32 @@
   text-align: center;
 }
 
-#cont input[type="text"],
-#cont select {
+#calTitle{
   width: 90%;
+  margin: 0 auto;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-right: 10%;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 3px;
+
 }
 
-#cont input[type="checkbox"] {
-  margin-bottom: 10px;
-}
-
-
-#cont button:last-child {
-  background-color: #f44336;
-}
-
-#cont button:hover {
-  opacity: 0.8;
-}
- #cont select {
-  width: 30%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  appearance: none;
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: 10px;
-} 
 #calContent {
   width: 90%;
-  height: 100px;
+  height: 180px;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
+  margin-right: 10%;
   border: 1px solid #ccc;
   border-radius: 3px;
   resize: none;
 }
-input[type="datetime-local"] {
+
+#calStart,#calEnd {
+  
   padding: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
@@ -115,8 +98,15 @@ input[type="datetime-local"] {
 #delBtn{
 	display: none;
 }
+#calContent[readonly]{
+  pointer-events: none;
+}
 /* 일요일 날짜 빨간색 */
 .fc-day-sun {
+  color: red;
+  text-decoration: none;
+}
+.fc-day-sun a{
   color: red;
   text-decoration: none;
 }
@@ -124,32 +114,25 @@ input[type="datetime-local"] {
   color: blue;
   text-decoration: none;
 }
-#calType[readonly] {
-  background-color: #ddd;
-  pointer-events: none;
+.fc-day-sat a{
+  color: blue;
+  text-decoration: none;
 }
-#calColor[readonly] {
-  background-color: #ddd;
-   pointer-events: none; 
+.typeBtn{      
+    border: none;
+    color: white;
+    box-shadow: 0 10px 14px 0 rgba(0,0,0,0.2);
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 5px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border-radius: 5px;
+
 }
-#calContent[readonly]{
-  pointer-events: none;
-}
- .typeBtn{      
-        border: none;
-        color: white;
-   	    box-shadow: 0 10px 14px 0 rgba(0,0,0,0.2);
-        padding: 10px 24px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 5px;
-        cursor: pointer;
-        transition-duration: 0.4s;
-        border-radius: 5px;
-  
-    }
 
  #myBtn   {
  background-color: #fbc5cb;
@@ -163,13 +146,6 @@ input[type="datetime-local"] {
     </style>
 </head>
 
-
-<!-- <head>
-    <meta charset='utf-8' />
- 
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-</head>
- -->
 <body>
 
     <!-- 모달창-->
@@ -180,18 +156,15 @@ input[type="datetime-local"] {
             <div class="colflex">
             
               <div> 
-              <input type="text" id="empId" > 
-         	  <input type="text" id="calNo" > 
-                <span>제목</span> <input type="text" id="calTitle" class="modalV" readonly >
+              <input type="hidden" id="empId" > 
+         	  <input type="hidden" id="calNo" > 
               </div>
+              <div>
+                <span>제목</span> <input type="text" id="calTitle" class="modalV" readonly >
+               </div>
                <div>
-               <span>타입</span>
-            <!--   <select id="calType" class="modalV" readonly>
-                  <option value="MY">개인</option>                                  
-                  <option value="DEPT">부서</option>
-                  <option value="ALL">전체</option>
-                </select> -->
-                <input type="text" id="calType" class="" value="MY" readonly>
+            	<!-- 일정타입 -->
+                <input type="hidden" id="calType" class="" value="MY" readonly>
               </div>
               <div>
                 <span>시작시간</span> <input type="datetime-local" id="calStart" class="modalV" />
@@ -204,8 +177,8 @@ input[type="datetime-local"] {
               </div>
               
               <div>
-              <span>일정색상</span>
-               <select id="calColor" readonly >
+              <!-- 일정별 일정 바 색상 -->
+               <select id="calColor" readonly style="display:none" >
                   <option value="#fbc5cb">my</option>
                   <option value="#c5cefb">all</option>
                   <option value="#fbdfc5">dept</option>
@@ -276,7 +249,7 @@ input[type="datetime-local"] {
         	      id: 'default',
         	      events: function(fetchInfo, successCallback, failureCallback) {
         	        $.ajax({
-        	          url: "/calendar/calendarAll",
+        	          url: "${path}/calendar/calendarAll",
         	          method: "POST",
         	          dataType: "JSON",
         	          contentType: 'application/json; charset=utf-8',
@@ -318,7 +291,7 @@ input[type="datetime-local"] {
         	      id: 'dept2',
         	      events: function(fetchInfo, successCallback, failureCallback) {
         	        $.ajax({
-        	          url: "/calendar/calendarDept",
+        	          url: "${path}/calendar/calendarDept",
         	          method: 'POST',
         	          dataType: 'json',
         	          contentType: 'application/json; charset=utf-8',
@@ -358,7 +331,7 @@ input[type="datetime-local"] {
             	      id: 'MY',
             	      events: function(fetchInfo, successCallback, failureCallback) {
             	        $.ajax({
-            	          url: "/calendar/calendarMy",
+            	          url: "${path}/calendar/calendarMy",
             	          method: 'POST',
             	          dataType: 'json',
             	          contentType: 'application/json; charset=utf-8',
@@ -396,7 +369,7 @@ input[type="datetime-local"] {
             	      id: 'approval',
             	      events: function(fetchInfo, successCallback, failureCallback) {
             	        $.ajax({
-            	          url: "/calendar/calendarApproval",
+            	          url: "${path}/calendar/calendarApproval",
             	          method: 'POST',
             	          dataType: 'json',
             	          contentType: 'application/json; charset=utf-8',
@@ -532,10 +505,8 @@ input[type="datetime-local"] {
             if(date < 10){
             	date = "0" + date;
             }
-        	var dateStr = year + "-" + month + "-" + date;
-            
+        	var dateStr = year + "-" + month + "-" + date;            
         	console.log(info);
-
      		delBtn.style.display="none";
      		if(info.allDay) {
      			console.log(info.allDay);
@@ -565,7 +536,7 @@ input[type="datetime-local"] {
      		}
         	calTitle.value="";
        		$(".modalV").removeAttr("readonly");
-			
+       		Modal.style.display="block";
             calContent.value="";
             calNo.value="";
             empId.value="${loginmember.empId}";    
@@ -598,8 +569,7 @@ input[type="datetime-local"] {
            calNo.value="";
            calTitle.value="";
            calContent.value="";
-           empId.value="${loginmember.empId}";
-            Modal.style.display = "block";         
+           empId.value="${loginmember.empId}";        
         };
         calendar.on("select",handleSelect);
         
@@ -607,7 +577,8 @@ input[type="datetime-local"] {
          function fcDept() {
         	 	calType.value="DEPT";
         	    calColor.value="#fbdfc5";
-        	    calId.value = "DEPT";       	    
+        	    calId.value = "DEPT"; 
+        	    Modal.style.display="none";
         	    // 캘린더를 제거합니다.
         	    calendar.destroy();
         	    // 새로운 이벤트 소스를 가져옵니다.
@@ -624,10 +595,12 @@ input[type="datetime-local"] {
         	    calendar.on("eventClick",info=>{
         	    
         	    	if(loginmemberJobCode=="J2"){
+        	    	
         	    		addBtn.style.display="block";
         	    		delBtn.style.display="block";
         	    		
         	    	}else{
+        	    		
         	    		addBtn.style.display="none";
         	    		delBtn.style.display="none";
         	    	}
@@ -636,17 +609,18 @@ input[type="datetime-local"] {
         	    calendar.on("dateClick",info=>{
         	    
         	    	if(loginmemberJobCode=="J2"){        	    		
-        	    		addBtn.style.display="block";
+        	    		Modal.style.display="block";
         	    	}else{
-        	    		addBtn.style.display="none";
+        	    		Modal.style.display="none";
         	    	}
         	    })
         	    calendar.on("select",handleSelect);
         	    calendar.on("select",info=>{
            		 if(loginmemberJobCode=="J2"){
-     	    		addBtn.style.display="block";           			
+           			Modal.style.display="block";         			
            		 }else{
-     	    		addBtn.style.display="none";
+           			Modal.style.display="none";
+
      	    	}
            	 })
         	   
@@ -657,7 +631,6 @@ input[type="datetime-local"] {
         	 calColor.value="#c5cefb";  
         	 calId.value="ALL";
         	 calendar.destroy();
-        	 
         	 const newEventSources =getEventSources(calId);
         	 calendarOption.eventSources = newEventSources;
         	 calendar= new FullCalendar.Calendar(calendarEl, calendarOption);
@@ -665,7 +638,7 @@ input[type="datetime-local"] {
         	 calendar.on("eventClick",handleEventClick);
         	 console.log(loginmemberEmpId);
         	 calendar.on("eventClick",info =>{
-        		
+        		 Modal.style.display="block";
         		 if(loginmemberDeptCode!="D1"){
         			 addBtn.style.display="none";
         		 }else{
@@ -676,17 +649,17 @@ input[type="datetime-local"] {
         	 calendar.on("dateClick",info =>{
         	
         		 if(loginmemberDeptCode!="D1"){
-        			 addBtn.style.display="none";
+        			 Modal.style.display="none";        			
         		 }else{
-        			 addBtn.style.display="block";
+        			 Modal.style.display="block";
         		 }
         	 })
      	    calendar.on("select",handleSelect);
         	 calendar.on("select",info=>{
         		 if(loginmemberDeptCode!="D1"){
-        			 addBtn.style.display="none";
+        			 Modal.style.display="none";
         		 }else{
-        			 addBtn.style.display="block";
+        			 Modal.style.display="block";
         		 }
         	 })
         	 
@@ -703,6 +676,7 @@ input[type="datetime-local"] {
         	 calendar.render();
         	 calendar.on("eventClick",handleEventClick);
         	 calendar.on("eventClick",info=>{
+        		 Modal.style.display="block";
         		 if(loginmemberEmpId===empId.value){
         			 addBtn.style.display="block";
         		 }else{
@@ -711,6 +685,7 @@ input[type="datetime-local"] {
         	 })
      	    calendar.on("dateClick",handleDateClick);
         	 calendar.on("dateClick",info=>{
+        		 Modal.style.display="block";
         		 if(loginmemberEmpId===empId.value){
         			 addBtn.style.display="block";
         		 }else{
@@ -719,6 +694,7 @@ input[type="datetime-local"] {
         	 })
      	    calendar.on("select",handleSelect);
         	 calendar.on("select",info=>{
+        		 Modal.style.display="block";
         		 if(loginmemberEmpId===empId.value){
         			 addBtn.style.display="block";
         		 }else{
@@ -748,7 +724,7 @@ input[type="datetime-local"] {
             }; 
             if(!calNo.value){
             $.ajax({
-                url: "/calendar/calendarInsert",
+                url: "${path}/calendar/calendarInsert",
                 method: "POST",
                 dataType: "json",
                 data: JSON.stringify(event),
@@ -765,7 +741,7 @@ input[type="datetime-local"] {
             })
             }else{
             	$.ajax({
-            		url: "/calendar/calendarUpdate",
+            		url: "${path}/calendar/calendarUpdate",
             		method: "POST",
             		dataType: "json",
             		data: JSON.stringify(event),
@@ -789,7 +765,7 @@ input[type="datetime-local"] {
             		calNo: calNo.value
             };
  			$.ajax({
-        		url: "/calendar/calendarDelete",
+        		url: "${path}/calendar/calendarDelete",
         		method: "POST",
         		dataType: "json",
         		data: JSON.stringify(event),
