@@ -155,7 +155,7 @@ font-family: 'Noto Sans KR', sans-serif;
 		         		<tr>
 			          		<td>${proceeds.docNo }</td>
 			          		<td>${proceeds.docType }</td>
-			          		<td><a href="/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
+			          		<td><a href="${path }/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
 			          		<td>${proceeds.emp.empName }</td>
 			          		<td><fmt:formatDate value="${proceeds.docDate}" pattern="YYYY-MM-dd" /></td>
 			          		<td></td>
