@@ -75,7 +75,6 @@ public class MessengerController {
 		roomInfo.put("roomList", roomList);
 		roomInfo.put("joinRoom", joinRoom);
 		roomInfo.put("privateRoom", privateRoomList);
-		System.out.println("원하는 데이터 출력 " + joinRoom);
 		return roomInfo;
 	}
 
@@ -122,7 +121,6 @@ public class MessengerController {
 	@ResponseBody
 	public Map<String, Object> checkPassword(@RequestBody Map<String, String> roomInfo) {
 		Map<String, Object> data = new HashMap<String, Object>();
-		System.out.println(roomInfo);
 		ChattingRoom room = service.passwordCheck(roomInfo);
 
 		Boolean flag = false;
@@ -150,7 +148,6 @@ public class MessengerController {
 		inviteInsertInfo.put("room", room);
 		inviteInsertInfo.put("roomNo", roomNo);
 		inviteInsertInfo.put("inviteEmpList", inviteEmpList);
-		System.err.println("여기 함 봐보자고!!!" + inviteInsertInfo);
 		int inviteInsertCheck = service.insertInviteEmp(inviteInsertInfo);
 		if (inviteInsertCheck > 0) {
 			return Map.of("result", "success");

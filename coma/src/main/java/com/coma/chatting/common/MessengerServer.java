@@ -49,6 +49,9 @@ public class MessengerServer extends TextWebSocketHandler {
 		case "msg":
 			updateMsg(msg);
 			break;
+		case "close":
+			removeClient(msg);
+			break;
 		}
 	}
 
@@ -59,12 +62,10 @@ public class MessengerServer extends TextWebSocketHandler {
 		while(client.hasNext()) {
 			Map.Entry<String, WebSocketSession> info = client.next();
 			if(info.getValue().equals(session)) {
-				System.err.println("삭제 세션 정보"+info.getKey()+":"+info.getValue());
 				clients.remove(info.getKey());
 			}
 		}
 		
-		System.err.println("세션정보!!!!"+session);
 		System.err.println("[MessengerServer] : 접속 유지중인 세션" + clients);
 		System.err.println("[MessengerServer] : 종료");
 	}
@@ -103,7 +104,7 @@ public class MessengerServer extends TextWebSocketHandler {
 		list.add(loginId);
 		list.add(targetId);
 		
-		msg.setMsg(loginId+"로 부터 대화 요청이 들어왔습니다.");
+		/* msg.setMsg(loginId+"로 부터 대화 요청이 들어왔습니다."); */
 		try {
 			if(clients.get(targetId)!=null) {
 				for(String id : list) {
@@ -139,6 +140,18 @@ public class MessengerServer extends TextWebSocketHandler {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+//	메신저 종료 시 클라이언트 세션 삭제
+	public void removeClient(MessengerMessage msg) {
+		Iterator<Map.Entry<String, WebSocketSession>> client = clients.entrySet().iterator();
+		while(client.hasNext()) {
+			Map.Entry<String, WebSocketSession> removeClient = client.next();
+			if(removeClient.getKey().equals(msg.getLoginId())) {
+				client.remove();
+			}
+		}
+		System.err.println("메신저 접속 세션 정보 : "+clients);
 	}
 
 //	데이터 전송 메세지 Jackson mappaer 이용하여 변환하기

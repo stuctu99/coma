@@ -107,9 +107,7 @@ public class MessengerDaoImpl implements MessengerDao {
 		if (((ChattingRoom)inviteInsertInfo.get("room")).getInviteEmp().length!=0) {
 			result = session.insert("chatting.insertInviteEmp", inviteInsertInfo);
 			if (result > 0) {
-				System.err.println("MessengerDao1");
 				result = session.update("chatting.updateRoomByRoomNo", (ChattingRoom) inviteInsertInfo.get("room"));
-				System.err.println("MessengerDao1 : " + result);
 			}
 		} else {
 			result = session.update("chatting.updateRoomByRoomNo", (ChattingRoom) inviteInsertInfo.get("room"));
