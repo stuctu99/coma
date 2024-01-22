@@ -43,7 +43,13 @@ public class AdminController {
 	@GetMapping("/adminEmp")
 	public void selectEmpAllByCurrent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m) {
 		int year=sysDate.getYear();
-		int month=sysDate.getMonthValue();
+		int month=0;
+		if(month >=10) {
+			month=sysDate.getMonthValue();
+		}else {
+			month=Integer.parseInt("0"+sysDate.getMonthValue());
+		}
+		System.out.println("월 :"+month);
 		int day=sysDate.getDayOfMonth();
 		List<Map> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage,"year", year,"month", month,"day", day));	//전체 사원 데이터 가져오기
 		//List<Map> empCommutes=service.selectEmpAllByCommute();	//사원 근태 형황 데이터 가져오기
