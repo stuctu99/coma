@@ -505,10 +505,8 @@ margin: 20px auto;
             if(date < 10){
             	date = "0" + date;
             }
-        	var dateStr = year + "-" + month + "-" + date;
-            
+        	var dateStr = year + "-" + month + "-" + date;            
         	console.log(info);
-
      		delBtn.style.display="none";
      		if(info.allDay) {
      			console.log(info.allDay);
@@ -538,7 +536,7 @@ margin: 20px auto;
      		}
         	calTitle.value="";
        		$(".modalV").removeAttr("readonly");
-			
+       		Modal.style.display="block";
             calContent.value="";
             calNo.value="";
             empId.value="${loginmember.empId}";    
@@ -571,8 +569,7 @@ margin: 20px auto;
            calNo.value="";
            calTitle.value="";
            calContent.value="";
-           empId.value="${loginmember.empId}";
-            Modal.style.display = "block";         
+           empId.value="${loginmember.empId}";        
         };
         calendar.on("select",handleSelect);
         
@@ -580,7 +577,8 @@ margin: 20px auto;
          function fcDept() {
         	 	calType.value="DEPT";
         	    calColor.value="#fbdfc5";
-        	    calId.value = "DEPT";       	    
+        	    calId.value = "DEPT"; 
+        	    Modal.style.display="none";
         	    // 캘린더를 제거합니다.
         	    calendar.destroy();
         	    // 새로운 이벤트 소스를 가져옵니다.
@@ -597,10 +595,12 @@ margin: 20px auto;
         	    calendar.on("eventClick",info=>{
         	    
         	    	if(loginmemberJobCode=="J2"){
+        	    	
         	    		addBtn.style.display="block";
         	    		delBtn.style.display="block";
         	    		
         	    	}else{
+        	    		
         	    		addBtn.style.display="none";
         	    		delBtn.style.display="none";
         	    	}
@@ -609,17 +609,18 @@ margin: 20px auto;
         	    calendar.on("dateClick",info=>{
         	    
         	    	if(loginmemberJobCode=="J2"){        	    		
-        	    		addBtn.style.display="block";
+        	    		Modal.style.display="block";
         	    	}else{
-        	    		addBtn.style.display="none";
+        	    		Modal.style.display="none";
         	    	}
         	    })
         	    calendar.on("select",handleSelect);
         	    calendar.on("select",info=>{
            		 if(loginmemberJobCode=="J2"){
-     	    		addBtn.style.display="block";           			
+           			Modal.style.display="block";         			
            		 }else{
-     	    		addBtn.style.display="none";
+           			Modal.style.display="none";
+
      	    	}
            	 })
         	   
@@ -630,7 +631,6 @@ margin: 20px auto;
         	 calColor.value="#c5cefb";  
         	 calId.value="ALL";
         	 calendar.destroy();
-        	 
         	 const newEventSources =getEventSources(calId);
         	 calendarOption.eventSources = newEventSources;
         	 calendar= new FullCalendar.Calendar(calendarEl, calendarOption);
@@ -638,7 +638,7 @@ margin: 20px auto;
         	 calendar.on("eventClick",handleEventClick);
         	 console.log(loginmemberEmpId);
         	 calendar.on("eventClick",info =>{
-        		
+        		 Modal.style.display="block";
         		 if(loginmemberDeptCode!="D1"){
         			 addBtn.style.display="none";
         		 }else{
@@ -649,17 +649,17 @@ margin: 20px auto;
         	 calendar.on("dateClick",info =>{
         	
         		 if(loginmemberDeptCode!="D1"){
-        			 addBtn.style.display="none";
+        			 Modal.style.display="none";        			
         		 }else{
-        			 addBtn.style.display="block";
+        			 Modal.style.display="block";
         		 }
         	 })
      	    calendar.on("select",handleSelect);
         	 calendar.on("select",info=>{
         		 if(loginmemberDeptCode!="D1"){
-        			 addBtn.style.display="none";
+        			 Modal.style.display="none";
         		 }else{
-        			 addBtn.style.display="block";
+        			 Modal.style.display="block";
         		 }
         	 })
         	 
@@ -676,6 +676,7 @@ margin: 20px auto;
         	 calendar.render();
         	 calendar.on("eventClick",handleEventClick);
         	 calendar.on("eventClick",info=>{
+        		 Modal.style.display="block";
         		 if(loginmemberEmpId===empId.value){
         			 addBtn.style.display="block";
         		 }else{
@@ -684,6 +685,7 @@ margin: 20px auto;
         	 })
      	    calendar.on("dateClick",handleDateClick);
         	 calendar.on("dateClick",info=>{
+        		 Modal.style.display="block";
         		 if(loginmemberEmpId===empId.value){
         			 addBtn.style.display="block";
         		 }else{
@@ -692,6 +694,7 @@ margin: 20px auto;
         	 })
      	    calendar.on("select",handleSelect);
         	 calendar.on("select",info=>{
+        		 Modal.style.display="block";
         		 if(loginmemberEmpId===empId.value){
         			 addBtn.style.display="block";
         		 }else{
