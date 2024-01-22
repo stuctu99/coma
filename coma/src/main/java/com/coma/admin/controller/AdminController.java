@@ -43,15 +43,15 @@ public class AdminController {
 	@GetMapping("/adminEmp")
 	public void selectEmpAllByCurrent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m) {
 		int year=sysDate.getYear();
-		int month=0;
-		if(month >=10) {
-			month=sysDate.getMonthValue();
-		}else {
-			month=Integer.parseInt("0"+sysDate.getMonthValue());
-		}
-		System.out.println("월 :"+month);
+		int month=sysDate.getMonthValue();
 		int day=sysDate.getDayOfMonth();
-		List<Map> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage,"year", year,"month", month,"day", day));	//전체 사원 데이터 가져오기
+		String dateData="";
+		if(month>=10) {
+			dateData=year+"-"+month+"-"+day;
+		}else {
+			dateData=year+"-0"+month+"-"+day;			
+		}
+		List<Map> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage,"dateData", dateData));	//전체 사원 데이터 가져오기
 		//List<Map> empCommutes=service.selectEmpAllByCommute();	//사원 근태 형황 데이터 가져오기
 		Map<String, Object> empData= new HashMap<>();	
 		empData.put("emps", emps);	//전체 사원 데이터 Map
@@ -118,9 +118,13 @@ public class AdminController {
 		int year=sysDate.getYear();
 		int month=sysDate.getMonthValue();
 		int day=sysDate.getDayOfMonth();
-		searchMap.put("year", year);
-		searchMap.put("month", month);
-		searchMap.put("day", day);
+		String dateData="";
+		if(month>=10) {
+			dateData=year+"-"+month+"-"+day;
+		}else {
+			dateData=year+"-0"+month+"-"+day;			
+		}
+		searchMap.put("dateData", dateData);
 		List<Map> emps=service.searchEmp(searchMap);
 		int totalData=service.countEmpByData(searchMap);
 		return Map.of("emps",emps,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchEmp",(String)searchMap.get("jsName")));

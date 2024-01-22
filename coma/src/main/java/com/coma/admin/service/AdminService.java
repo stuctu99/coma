@@ -22,7 +22,7 @@ public class AdminService {
 	private final SqlSession session;
 	
 	//사원관련 서비스
-	public List<Map> selectEmpAllByCurrent(Map<String, Integer> page){
+	public List<Map> selectEmpAllByCurrent(Map<String, Object> page){
 		return dao.selectEmpAllByCurrent(session, page);
 	}
 	
