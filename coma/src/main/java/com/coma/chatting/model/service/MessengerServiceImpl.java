@@ -78,9 +78,9 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 	
 	@Override
-	public String selectPasswordFlagByRoomNo(String roomNo) {
+	public ChattingRoom selectRoomByRoomNo(String roomNo) {
 		// TODO Auto-generated method stub
-		return dao.selectPasswordFlagByRoomNo(session, roomNo);
+		return dao.selectRoomByRoomNo(session, roomNo);
 	}
 
 	@Override
