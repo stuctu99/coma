@@ -124,8 +124,8 @@
 		<div class="col-1.5" style="padding-left:0px; ">
 			<input class="form-control form-control-sm" type="text" id="textData" placeholder="이름으로 검색">
 		</div>
-		<div class="col-9.5" style="padding-left:0px;">
-			<button type="button" class="btn btn-secondary btn-sm" onclick="fn_searchStudent();">검색</button>
+		<div class="col-9.5" style="padding-left:0px; margin-left:5px;">
+			<button type="button" class="btn btn-primary btn-sm" onclick="fn_searchStudent();">검색</button>
 		</div>
 	</div>
 	<div class="table-responsive" style="padding: 0px 115px 0px 115px;">
@@ -314,7 +314,7 @@ const myChart3 = new Chart(ctx3, {
 //학생 검색 기능
 function fn_searchStudent(cPage=1,numPerpage=10,url){
 	const textData=document.getElementById("textData").value;
-	fetch(url?'${path}'+url:"/admin/searchStudent",{
+	fetch(url?'${path}'+url:"${path}/admin/searchStudent",{
 		method:"post",
 		headers:{"Content-Type":"application/json"},
 		body:JSON.stringify({
