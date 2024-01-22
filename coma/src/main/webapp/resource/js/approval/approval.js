@@ -36,7 +36,7 @@ function submitForm() { //input type="button"
     
        console.log('Markdown Content:', markdownContent); 
          if (!markdownContent) {
-        alert('Markdown 내용을 입력하세요.'); // 또는 다른 사용자에게 보여줄 메시지
+        alert('상세내용을 입력하세요.'); // 또는 다른 사용자에게 보여줄 메시지
         return; // 폼 제출을 중지
     }
     
