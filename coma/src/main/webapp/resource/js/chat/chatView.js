@@ -65,7 +65,7 @@ $(function() {
 
 
 /* 채팅구현 */
-const server = new WebSocket("ws://" + location.host + "/chattingServer");
+const server = new WebSocket("ws://"+location.host+""+ path + "/chattingServer");
 const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
 console.log(roomNo, empId);

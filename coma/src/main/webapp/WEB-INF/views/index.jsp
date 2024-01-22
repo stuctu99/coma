@@ -6,6 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
    <jsp:param name="id" value="mine" />
 </jsp:include>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
@@ -210,7 +211,7 @@ td {
 			<div class="bigContainer">
 				<div class="row">
 					<div class=col-12 style="">
-						<img src="/resource/img/brand/COMA2.png">
+						<img src="${path }/resource/img/brand/COMA2.png">
 						<h1>${emp.empName }님	환영합니다</h1>
 					</div>
 				</div>
@@ -555,11 +556,11 @@ if(!commuteClockout){
 }
 //휴가 근황 페이지 전환되는 기능 
 document.getElementById('vacationButton').addEventListener('click', function() {
-    window.location.href = '/mypage/MyvacationInfo';
+    window.location.href = '${path}/mypage/MyvacationInfo';
 });
 
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
-    window.location.href = '/commute/MyCommuteInfo';
+    window.location.href = '${path}/commute/MyCommuteInfo';
 });
 /* document.getElementById('checkInsert').addEventListener('click', function() {
     window.location.href = '/commute/checkInsert';

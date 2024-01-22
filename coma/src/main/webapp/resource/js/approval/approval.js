@@ -119,7 +119,7 @@ searchAppInput.addEventListener("keyup",(()=>{
 			clearTimeout(requestFunc);
 		}
 		requestFunc = setTimeout(()=>{
-			fetch("/approval/apprline?data="+e.target.value)
+			fetch(path+"/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
 				
@@ -306,7 +306,7 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			
 		}
 		requestFunc = setTimeout(()=>{
-			fetch("/approval/apprline?data="+e.target.value)
+			fetch(path+"/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
 				$('.ref_op').remove();	

@@ -5,12 +5,13 @@
 </jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
   <!-- Editor's Style -->
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-<script src="/resource/js/jquery-3.7.0.js"></script>
-<link href="/resource/css/approval/writedoc.css" rel="stylesheet" />
+<script src="${path }/resource/js/jquery-3.7.0.js"></script>
+<link href="${path }/resource/css/approval/writedoc.css" rel="stylesheet" />
 
 <c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
 	
@@ -414,8 +415,10 @@
     </div>
   </div>
   
-
- <script src="/resource/js/approval/approval.js"></script> 
+<script>
+	const path = '${path}';
+</script>
+ <script src="${path }/resource/js/approval/approval.js"></script> 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
