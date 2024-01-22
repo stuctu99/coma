@@ -1,16 +1,20 @@
-/*const contextPath=location.hostname;*/
+/* 메신저 서버 */
 
 const mserver = new WebSocket("ws://" + location.host + path + "/messengerServer");
+
+/* 서버 접속 */
 mserver.onopen = () => {
 	const msg = new MessageHandler("exec", loginId);
 	mserver.send(msg.convert());
 }
 
+/* 서버 종료 */
 mserver.close = () => {
 	const msg = new Message("close", loginId);
 	server.send(msg.convert());
 }
 
+/* 메신저 서버 메세지 처리 */
 mserver.onmessage = (response) => {
 	console.log(response.data);
 	const respMsg = MessageHandler.deconvert(response.data);
@@ -25,21 +29,26 @@ mserver.onmessage = (response) => {
 			newRoom(respMsg);
 			break;
 		case "privateNew":
+			//1:1 채팅 실행 시
 			privateNewRoom(respMsg);
 			break;
 		case "delete":
+			//채팅방 삭제
 			openEvent(respMsg);
 			break;
 		case "msg":
+			//채팅방 메세지 로드
 			messageUpdate(respMsg);
 			break;
 		case "invite":
+			//채팅방 초대
 			inviteAlarm(respMsg);
 			break;
 
 	}
 }
 
+/* 메신저 이벤트 메세지 구현체 */
 class MessageHandler {
 	//type : 'exec'실행  /'create' 방생성 / 'alarm' 메세지알림 / 'invite' 초대 ...
 	constructor(type = "", loginId = "", targetId = "", roomNo = "", msg = "") {
@@ -58,6 +67,7 @@ class MessageHandler {
 
 }
 
+/* 메신저 실행 시 함수 */
 function openEvent(data) {
 	const loginId = data.loginId;
 	console.log(loginId);
@@ -77,26 +87,79 @@ function openEvent(data) {
 
 }
 
+/* 새로운 방 생성 시 */
 function newRoom(data) {
+	//type = "", loginId = "", targetId = "", roomNo = "", msg = ""
+	//방 생성 모달 초기화
 	initModal();
-	$(".chatting-list-btn").click();
+
+	chatRoomContainer(data);
+	/*$(".chatting-list-btn").click();*/
 }
 
+function chatRoomContainer(data) {
+	const $container = $("#chattingList");
+	const $row = $("<div>").addClass("row");
+	const $col_2 = $("<div>").addClass("col-2 chatting-room");
+	let $strong = $("<strong>"); //roomType;
+	const $col_7 = $("<div>").addClass("col-7 chatting-room").attr(data.roomNo);
+	const $span = $("<span>");
+	const $br = $("<br>");
+	const $col_1 = $("<div>").addClass("col-1 chatting-room");
+	const $btn_conatainer = $("<div>").addClass("col-2 chatting-room");
+	const $btn = $("<button>").addClass("enter-room btn btn-primary").attr("onclick", "enter_room('" + data.roomNo + "');").attr("id", "btn-" + data.roomNo);
+	fetch(path + "/messenger/room/" + data.roomNo)
+		.then(resp => {
+			if (resp.status != 200) {
+				alert("관리자에게 문의하세요.");
+			}
+			return resp.json();
+		})
+		.then(data => {
+			$strong.text(data.roomTypeObj.roomTypeName);
+			$col_2.append($strong);
+
+			/*$strong.text(data.roomName);*/
+			$span.addClass("updateMsg-" + data.roomNo);
+			/*$col_7.append($strong);*/
+			$col_7.append($br);
+			$col_7.append($span);
+
+			if (data.roomPasswordFlag == 'Y') {
+				$col_1.append($("<i>").addClass("fa-solid fa-lock"));
+			} else {
+				$col_1.append($("<i>").addClass("fa-solid fa-lock-open"));
+			}
+
+			if (autority == 'J1') {
+				const $input = $("<input>").attr("type", "checkbox").attr("name", "deleteRoom[]").val(d.roomNo).css("margin-right", "5px");
+				$input.addClass("deleteRoom");
+				$col_2.append($input);
+			}
+
+			$btn_conatainer.append($btn);
+
+			$row.append($col_2);
+			$row.append($col_7);
+			$row.append($col_1);
+			$row.append($btn_conatainer);
+
+		})
+	$container.append($row);
+
+
+}
+
+
+/* 1:1 채팅 이벤트 */
 function privateNewRoom(data) {
+	chatRoomContainer(data);
 	$("." + data.targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 	$("." + data.loginId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 }
 /*=============================================================================*/
-function intiCreateModalInput() {
-	$("#roomName").val("");
-	$("#roomPassword").val("");
-	$("#roomPasswordFlag").var("N");
-	$("#roomType").var("A").prop("selected", true);
 
-}
-
-
-/* 방생성 */
+/* 방생성 시 방 제목 입력 체크 */
 const createRoomCheck = (empId) => {
 	const createTitle = $("#roomName");
 	if (createTitle.val().length > 0) {
@@ -106,6 +169,7 @@ const createRoomCheck = (empId) => {
 	}
 }
 
+/* 모달 초기화 */
 function initModal() {
 	const roomName = $("#roomName");
 	const roomPassword = $("#roomPassword");
@@ -120,12 +184,16 @@ function initModal() {
 	inviteCheckbox.prop("checked", false);
 }
 
+
+/* 방생성 */
 const createRoom = (empId) => {
+	/* 방 생성 입력 정보 (모달) */
 	const roomName = $("#roomName").val();
 	const roomPassword = $("#roomPassword").val();
 	const roomPasswordFlag = $("#roomPasswordFlag").val();
 	const roomType = $("#roomType").val();
 
+	/* 방생성 창 초대 인원 */
 	let inviteEmp = new Array();
 	let cnt = 0;
 	const inviteCheckbox = $(".invite_emp");
@@ -136,6 +204,7 @@ const createRoom = (empId) => {
 		}
 	}
 
+	/* 생성 방 정보 객체화 */
 	const ChattingRoom = {
 		"roomName": roomName,
 		"roomPassword": roomPassword,
@@ -198,7 +267,8 @@ const createRoom = (empId) => {
 					}
 					const msg = new MessageHandler("new", empId, "", data.roomNo, "NEW");
 					mserver.send(msg.convert());
-					$(".chatting-list-btn").click();
+					location.reload();
+					/*$(".chatting-list-btn").click();*/
 				}
 			} else {
 				console.log("방생성 실패");
@@ -346,7 +416,7 @@ const fn_roomListByType = (type) => {
 					}
 
 					//권한이 관리자(J1)인 사원만 삭제기능을 가질 수 있다.
-					if (autority === 'J1') {
+					if (autority == 'J1') {
 						const $input = $("<input>").attr("type", "checkbox").attr("name", "deleteRoom[]").val(d.roomNo).css("margin-right", "5px");
 						$input.addClass("deleteRoom");
 						$div_type.append($input);
@@ -399,7 +469,8 @@ const fn_roomListByType = (type) => {
 		})
 }
 
-// type별 채팅방 조회
+
+/* type별 채팅방 조회 */
 const fn_roomType = () => {
 	const type = $("#searchType").val();
 	fn_roomListByType(type);
@@ -420,7 +491,7 @@ $("#roomPasswordFlag").click(function() {
 })
 
 
-
+/* 패스워드 확인 로직 */
 const passwordCheck = () => {
 	const roomNo = $("#check-roomNo").val();
 	const password = $("#passwordCode").val();
@@ -474,8 +545,10 @@ $(function() {
 
 });
 
+/* 동적 생성한 input type=checkbox에 change 이벤트 할당 */
 $(document).on('change', 'input[class="deleteRoom"]', function() {
 	if ($(".deleteRoom:checked").length == 0) {
+		//체크박스 체크 갯수가 1개 이상 시 삭제버튼 출력
 		$("#delete-room").css("display", "none");
 	} else {
 		$("#delete-room").css("display", "block");
@@ -492,7 +565,7 @@ $(document).on('change', 'input[class="invite_emp"]', function() {
 
 
 
-
+/* 방 삭제 함수 */
 const fn_deleteRoom = () => {
 	let delRoom = new Array();
 	let cnt = 0;
@@ -566,7 +639,6 @@ const enter_chattingRoom = (roomNo) => {
 		})
 		.then(data => {
 			//ChattingJoin 객체 전달 String roomNo, String empId
-			console.log(data);
 			if (data) {
 				const url = path + "/chatting/room/" + roomNo;
 				const windowName = "chattingRoom " + roomNo;
@@ -590,62 +662,41 @@ const enter_chattingRoom = (roomNo) => {
 		});
 }
 
-window.fn_invite = function(roomNo, sendId, targetId) {
-	const msg = new MessageHandler("invite", targetId, sendId, roomNo, "");
+
+/* 채팅화면 방 설정에서 사원 초대 시 */
+window.fn_invite = function(roomNo, sendName, targetId) {
+	const msg = new MessageHandler("invite", targetId, sendName, roomNo, "");
 	mserver.send(msg.convert());
 }
 
+
+/* 초대 받은 인원에게 알림창 출력 */
 function inviteAlarm(data) {
 	const $modal_body = $("#invite-alarm-body");
 	const $div = $("<div>").addClass("roomTitle");
 	const $row = $("<div>").addClass("row");
 	const $col_12 = $("<div>").addClass("col-12");
-	const $alarmMsg = $("<h4>");
+	const $alarmMsg = $("<h4>").attr("id", "invite-alarm-msg");
 	const $enterRoom_btn = $("#enterRoom-btn");
 	$modal_body.html("");
-	
-	
-	const inviteInfo = {
-		"sendId": data.targetId,
-		"roomNo": data.roomNo
-	}
-	
-	
-	fetch(path + "/messenger/alarm", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(inviteInfo)
-	})
-		.then(resp => {
-			if (resp.status != 200) {
-				alert("관리자에게 문의하세요.");
-			}
-
-			return resp.json();
-		})
-		.then(data => {
-			$enterRoom_btn.attr("onclick", "enter_chattingRoom('" + data.room.roomNo + "');");
-
-			$alarmMsg.text(data.emp.empName + "님이 초대하셨습니다. 바로 입장하시겠습니까?");
-			$col_12.append($alarmMsg);
-			$row.append($col_12);
-			$div.append($row);
-			$modal_body.append($div);
-			$("#invite-alarm").modal();
-			
-		})
+	$enterRoom_btn.attr("onclick", "enter_chattingRoom('" + data.roomNo + "');");
+	$alarmMsg.text(data.targetId + "님이 초대하셨습니다. 바로 입장하시겠습니까?");
+	$col_12.append($alarmMsg);
+	$row.append($col_12);
+	$div.append($row);
+	$modal_body.append($div);
+	$("#invite-alarm").modal();
 
 
 }
 
-$("#enterRoom-btn").click(function(){
+/* 초대 메세지에서 입장 클릭 시 모달 숨김 */
+$("#enterRoom-btn").click(function() {
 	$("#invite-alarm").modal('hide');
 })
 
 
-/* 공부하기 */
+/* 공부하기, 채팅방에서 작성한 채팅 메세지 채팅창에 실시간 출력 */
 window.updateMsg = function(roomNo, content) {
 	fetch(path + "/messenger/room/" + roomNo)
 		.then(response => {
@@ -655,7 +706,7 @@ window.updateMsg = function(roomNo, content) {
 			return response.text();
 		})
 		.then(data => {
-			if (data == 'N') {
+			if (data.roomPasswordFlag == 'N') {
 				const msg = new MessageHandler("msg", "", "", roomNo, content);
 				mserver.send(msg.convert());
 			}
@@ -663,6 +714,7 @@ window.updateMsg = function(roomNo, content) {
 		})
 }
 
+/* updateMsg 실행 후 서버에서 접속 세션에 메세지 동기화 */
 const messageUpdate = (msg) => {
 
 	console.log(msg);

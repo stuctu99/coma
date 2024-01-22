@@ -148,6 +148,7 @@ public class ChattingController {
 //				System.err.println(exitEmp.get("roomNo") + "방에 남은 인원 : " + roomMeberCount);
 				int result = service.deleteChattingMsgByRoomNo(exitEmp);
 				if (result > 0) {
+					msg.put("result", "success");
 					roomMember.remove(exitEmp.get("roomNo"));
 					Iterator<Map.Entry<String, Map<String, String>>> entries = roomMember.entrySet().iterator();
 					while (entries.hasNext()) {

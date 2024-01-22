@@ -127,6 +127,7 @@ public class ChattingServer extends TextWebSocketHandler {
 	}
 
 	private void sendMessage(ChattingMessage msg) {
+		String message = null;
 //		모든접속자에게 메세지 전송 => 특정 방 접속자에게 보낼 수 있는 로직 구현하기
 		if (msg.getType().equals("msg") && room.get(msg.getRoomNo()).size() != 1) {
 			msgPackages.add(msg);
@@ -137,7 +138,6 @@ public class ChattingServer extends TextWebSocketHandler {
 			msgPackages.add(msg);
 			saveChattingMessage();
 		} else if (msg.getType().equals("invite") && msgPackages.size() > 0) {
-			msgPackages.add(msg);
 			saveChattingMessage();
 		}
 
@@ -148,8 +148,31 @@ public class ChattingServer extends TextWebSocketHandler {
 					/* System.err.println("[ChattingServer 전달 세션 정보] : "+session); */
 					try {
 						if (!chatRoom.getValue().isEmpty()) {
-							String message = mapper.writeValueAsString(msg);
-							session.sendMessage(new TextMessage(message));
+							switch(msg.getType()) {
+							case "open":
+								if(!client.getKey().equals(msg.getEmpId())) {
+									message = mapper.writeValueAsString(msg);
+									session.sendMessage(new TextMessage(message));
+								}
+								break;
+							case "invite":
+								if(!client.getKey().equals(msg.getEmpId())) {
+									message = mapper.writeValueAsString(msg);
+									session.sendMessage(new TextMessage(message));
+								}
+								break;
+							case "msg":
+								message = mapper.writeValueAsString(msg);
+								session.sendMessage(new TextMessage(message));
+								break;
+								
+							case "out":
+								message = mapper.writeValueAsString(msg);
+								session.sendMessage(new TextMessage(message));
+								break;
+							}
+						
+							
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -157,6 +180,7 @@ public class ChattingServer extends TextWebSocketHandler {
 				}
 			}
 		}
+
 	}
 
 	private void clientOut(ChattingMessage msg) {
@@ -193,7 +217,7 @@ public class ChattingServer extends TextWebSocketHandler {
 		System.err.println("[ChattingServer Room]" + room);
 		if (!room.get(msg.getRoomNo()).isEmpty()) {
 			sendMessage(msg);
-		}else {
+		} else {
 			sendMessage(msg);
 			room.remove(msg.getRoomNo());
 		}
