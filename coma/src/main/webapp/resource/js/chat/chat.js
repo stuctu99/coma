@@ -1,9 +1,14 @@
 /*const contextPath=location.hostname;*/
 
-const mserver = new WebSocket("ws://" + location.host + "/messengerServer");
+const mserver = new WebSocket("ws://" + location.host+path+ "/messengerServer");
 mserver.onopen = () => {
 	const msg = new MessageHandler("exec", loginId);
 	mserver.send(msg.convert());
+}
+
+mserver.close = () =>{
+	const msg = new Message("close",loginId);
+	server.send(msg.convert());
 }
 
 mserver.onmessage = (response) => {

@@ -65,17 +65,23 @@ $(function() {
 
 
 /* 채팅구현 */
-const server = new WebSocket("ws://" + location.host + "/chattingServer");
+const server = new WebSocket("ws://" + location.host +path+"/chattingServer");
 const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
 console.log(roomNo, empId);
+
 server.onopen = (response) => {
 	console.log(empId);
 	console.log(response);
 
-	const msg = new Message("open", "", "", new Date(Date.now()), empId, roomNo);
+	const msg = new Message("open", "", "", new Date(Date.now()), loginId, roomNo);
 	server.send(msg.convert());
 
+}
+
+server.onclose = () =>{
+	const msg = new Message("rest","","","",loginId,roomNo);
+	server.send(msg.convert());
 }
 
 server.onmessage = (response) => {
@@ -88,6 +94,7 @@ server.onmessage = (response) => {
 		case "invite":inviteReload(receiveMsg); break;
 		case "rest": connectionRest(receiveMsg); break;
 		case "out": closeChatting(receiveMsg); break;
+		case "close": connectionRest(receiveMsg); break;
 	}
 
 	console.log(receiveMsg);
@@ -109,7 +116,9 @@ const messagePrint = (msg) => {
 	div.classList.add("row"); //메세지 라인 컨테이너
 	timeDiv.classList.add("time-container"); //전송 시간 컨테이너
 	//메세지 전송 시간 출력
+	console.log( );
 	timeTag.innerText = ("0" + new Date(msg.chatCreateDate).getHours()).slice(-2) + ":" + ("0" + new Date(msg.chatCreateDate).getMinutes()).slice(-2) + "  ";
+	/*timTag.innerText = (new Date(msg.chatCreateDate).getHours());*/
 	timeDiv.appendChild(timeTag);
 
 	//메세지 컨테이너
@@ -183,11 +192,11 @@ const openMessage = (msg) => {
 			return response.json();
 		})
 		.then(data => {
-			if (data.joinEmp != null && data.joinEmp.newJoin === 'Y') {
+			if (data.joinEmp != null && data.joinEmp.newJoin == 'Y') {
 				const container = $("<div>").addClass("row openMsgContainer");
 				const content = $("<h4>").text(`${data.joinEmp.empObj.empName}님이 접속하셨습니다.`);
-				$(".messageView" + msg.roomNo).append(container);
 				container.append(content);
+				$(".messageView" + msg.roomNo).append(container);
 			}
 
 		})
