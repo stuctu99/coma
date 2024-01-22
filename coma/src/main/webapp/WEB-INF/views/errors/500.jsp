@@ -6,6 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
    <jsp:param name="id" value="mine" />
 </jsp:include>
+<c:set var="path" value="${pageContext.request.contextPath }"/>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 <div class="coma-container" style="display: flex; margin-top: 5px; margin-bottom: 5px; flex-direction: column; height: 900px; align-items: center; justify-content: center">
