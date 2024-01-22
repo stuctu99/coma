@@ -98,24 +98,21 @@ select:disabled, select[readonly] {
 						 	<div class="form-group col-6">
 							    <label for="exampleFormControlSelect1" class="form-control-label"">연차 개수 </label>
 							 		<c:set var="empVacation" value="${emp.empVacation}" />
-									
-									    <%-- <c:if test="${empVacation % 1 == 0}">
+									<c:choose>
+									    <c:when test="${empVacation % 1 == 0}">
 									        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
-									    		
-									    </c:if> --%>
-									    
-									
-							 	
-							 	<input class="form-control" type="text" value="${emp.empVacation}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
-	
+							 				<input class="form-control" type="text" value="${formattedNumber}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
+									    </c:when>
+									    <c:otherwise>
+							 				<input class="form-control" type="text" value="${emp.empVacation}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
+									    </c:otherwise>
+									</c:choose>	
 							  </div>
 							<div class="form-group col-6">
 							    <label for="example-hiredate-input" class="form-control-label">채용일시</label>
 							    <input class="form-control" type="date" value="${emp.empHireDate}" id="example-hiredate-input" style="background-color:  #f1edff;" disabled>
 							</div>
-	
 						 </div>
-						
 					</div>
 				</div>
 				<div class="col-6">
