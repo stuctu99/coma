@@ -193,7 +193,7 @@
                 <span>나의 휴가 </span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="/logout" class="dropdown-item">
+              <a href="${path }/logout" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>
