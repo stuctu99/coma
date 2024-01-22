@@ -15,8 +15,6 @@ $("#exit-btn").click(function() {
 			})
 			.then(data => {
 				if (data.result == "success") {
-
-					alert($(".connectView").val());
 					server.send(new Message("out", "", "", "", empId, roomNo).convert());
 					close();
 					$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
