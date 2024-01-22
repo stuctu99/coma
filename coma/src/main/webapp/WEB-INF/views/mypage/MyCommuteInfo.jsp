@@ -89,17 +89,17 @@ td {
 
 		if (today.getMonth() + 1 == 12) {
 		//  눌렀을 때 월이 넘어가는 곳
-			before.innerHTML = "<h1>"+("<" + today.getMonth()) + "월"+"</h1>";
-			next.innerHTML = "<h1>"+"1월>"+"</h1>";
+			before.innerHTML = "<h1><i class='ni ni-bold-left'></h1>";
+			next.innerHTML = "<h1><i class='ni ni-bold-right'></h1>";
 
 		} else if (today.getMonth() + 1 == 1) {
 		//  1월 일 때
-			before.innerHTML = "<h1>"+"<12월"+"</h1>";
-			next.innerHTML = "<h1>"+(today.getMonth() + 2) + "월" + ">"+"</h1>";
+			before.innerHTML = "<h1><i class='ni ni-bold-left'></h1>";
+			next.innerHTML = "<h1><i class='ni ni-bold-right'></h1>";
 		} else {
 		//   12월 일 때
-			before.innerHTML ="<h1>"+ "<" + (today.getMonth()) + "월"+"</h1>";
-			next.innerHTML = "<h1>"+(today.getMonth() + 2) + "월" + ">"+"<h1>";
+			before.innerHTML ="<h1><i class='ni ni-bold-left'></h1>";
+			next.innerHTML = "<h1><i class='ni ni-bold-right'><h1>";
 		}
 		// 남은 테이블 줄 삭제
 		while (tbcal.rows.length > 2) {

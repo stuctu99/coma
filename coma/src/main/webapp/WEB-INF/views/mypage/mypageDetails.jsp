@@ -63,7 +63,6 @@ select:disabled, select[readonly] {
 
 </style>
 <!-- TEAM COMA SPACE -->
-<%-- ${emp.empAddrDetail} --%>
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
@@ -98,33 +97,8 @@ select:disabled, select[readonly] {
 					<div class="row">
 					 	<div class="form-group col-6">
 						    <label for="exampleFormControlSelect1" class="form-control-label"">연차 개수 </label>
-						    <select class="form-control" id="exampleFormControlSelect1" style="background-color:  #f1edff;" disabled>
-						      <option>1</option>
-						      <option>2</option>
-						      <option>3</option>
-						      <option>4</option>
-						      <option>5</option>
-						      <option>6</option>
-						      <option>7</option>
-						      <option>8</option>
-						      <option>9</option>
-						      <option>10</option>
-						      <option>11</option>
-						      <option>12</option>
-						      <option>13</option>
-						      <option>14</option>
-						      <option>15</option>
-						      <option>16</option>
-						      <option>17</option>
-						      <option>18</option>
-						      <option>19</option>
-						      <option>20</option>
-						      <option>21</option>
-						      <option>22</option>
-						      <option>23</option>
-						      <option>24</option>
-						      <option>25</option>
-						    </select>
+						 	<input class="form-control" type="text" value="${emp.empVacation}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
+
 						  </div>
 						<div class="form-group col-6">
 						    <label for="example-hiredate-input" class="form-control-label">채용일시</label>
@@ -252,8 +226,18 @@ $("#accompany-file").change(e => {
 });
 /* submit 기능 함수  */
 function submitEmployeeForm() {
-    var form = document.getElementById("employeeForm");
-    form.submit();
+	var newPassword = $('#example-password-input').val();
+    var confirmPassword = $('#example-password2-input').val();
+    
+    if (newPassword === confirmPassword) {
+    	var form = document.getElementById("employeeForm");
+        form.submit();
+      } else {
+        alert('비밀번호를 확인해주세요.');
+        
+      }
+    /* var form = document.getElementById("employeeForm");
+    form.submit(); */
 }
 
 
@@ -266,12 +250,12 @@ $(document).ready(function () {
       var messageElement = $('#passwordMatchMessage');
 
       if (newPassword === confirmPassword) {
-        messageElement.text('Passwords match!');
+        messageElement.text('비밀번호가 일치합니다.');
         messageElement.css('color', 'green');  // Set color to red for match
         // You can perform any additional actions here if passwords match
       } else {
-        messageElement.text('Passwords do not match!');
-        messageElement.css('color', 'red');  // Set color to green for no match
+        messageElement.text('비밀번호가 일치하지 않습니다.');
+        messageElement.css('color', 'red');  
       }
     }
 

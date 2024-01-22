@@ -215,9 +215,11 @@ td {
 					</div>
 				</div>
 			</div>
-			<div class="bigContainer" style="height:530px; display: flex; justify-content: center; align-items: center;">
-				<div id='calendar' style="width:90%;"></div>
-			</div>
+			<a href="${path }/calendar"> 
+				<div class="bigContainer" style="height:530px; display: flex; justify-content: center; align-items: center;">
+					<div id='calendar' style="width:90%;"></div>
+				</div>
+			</a>
 		</div>
 <!-- 	<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
 	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button> -->
