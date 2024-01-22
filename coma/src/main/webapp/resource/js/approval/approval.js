@@ -529,7 +529,7 @@ const take_line=()=>{
 	 	all_appr_line += line_key + " : "+ line_val + "\n";
 
 	//localStorage key값 분기처리
-	if (line_key !== null && line_key !== 'TOAST UI editor for localhost: Statistics' && line_key !== 'null') {
+	if (line_key !== null && line_key !== 'TOAST UI editor for 14.36.141.71: Statistics' && line_key !== 'null') {
 			radioContainer.append(
 			
 				$('<label>').text(line_key).append(
