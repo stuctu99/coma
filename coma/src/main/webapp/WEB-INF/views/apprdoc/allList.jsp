@@ -54,19 +54,17 @@
 
 
 
-<div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
+<div class="coma-container" style="margin-top:20px; margin-bottom: 5px;">
 
-	<nav class="space-y-2" style="text-align: center">
+	<div class="space-y-2" style="text-align: center">
 	  <div class="flex flex-col">
 	  	<h1>문서함</h1>
 	  </div>
-		<a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary">
-		<span>작성하기</span>
-	</a>
-	</nav>
+		
+	</div>
  
 <div class="card-container">
-	<div class="" style="margin: 20px 0 0 0; display: flex; width: 100%; justify-content: center;">
+	<div class="" style="margin: 20px 0 20px 0; display: flex; width: 100%; justify-content: center;">
 		<div class="card card-stats alldoc">
 		    <a href="${path }/apprdoc/allList?empId=${e.empId}">
 		    <div class="card-body">
@@ -137,6 +135,11 @@
 		    </a>
 		</div>
 	</div>
+	<div style="text-align: center">
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary" style="width:780px;">
+	  		<span style="font-size:16px;">+문서 작성하기</span>
+	    </a>
+	 </div>
    </div>
     
   <main class="flex-1 p-5" style="padding-left: 139.91px !important; padding-right: 139.91px !important;">
@@ -178,9 +181,6 @@
               <th class="doc-date">
                 &nbsp;&nbsp; 기안일
               </th>
-              <th class="doc-end">
-                완료일
-              </th>
               <th class="doc-pg">
                 상태
               </th>
@@ -194,7 +194,6 @@
                             <td class="doc-title"><a href="${path }/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
                             <td class="doc-writer">${proceeds.emp.empName }</td>
                             <td class="doc-date"><fmt:formatDate value="${proceeds.docDate}" pattern="YYYY-MM-dd" /></td>
-                            <td class="doc-end"></td>
                             <td class="doc-pg">${proceeds.docProgress }</td>
                         </tr>
                     </c:forEach>

@@ -52,20 +52,15 @@ font-family: 'Noto Sans KR', sans-serif;
 	width: 100px;
 }
 </style>
-    <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
+    <div class="coma-container" style="margin-top:20px; margin-bottom: 5px;">
         
     <div class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
 		<h1>문서함</h1>
       </div>
-      <div>
-	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary">
-	  		<span>작성하기</span>
-	    </a>
-	  </div>
     </div>
 <div class="card-container">
-	<div class="" style="margin: 20px 0 0 0; display: flex; width: 100%; justify-content: center;">
+	<div class="" style="margin: 20px 0 20px 0; display: flex; width: 100%; justify-content: center;">
 		<div class="card card-stats alldoc">
 		    <a href="${path }/apprdoc/allList?empId=${e.empId}">
 		    <div class="card-body">
@@ -134,6 +129,11 @@ font-family: 'Noto Sans KR', sans-serif;
 		    </a>
 		</div>
 	</div>
+	<div style="text-align: center">
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary" style="width:780px;">
+	  		<span style="font-size:16px;">+문서 작성하기</span>
+	    </a>
+	 </div>
 </div> 
     
   <main class="flex-1 p-5" style="padding-left: 139.91px !important; padding-right: 139.91px !important;">
@@ -176,7 +176,7 @@ font-family: 'Noto Sans KR', sans-serif;
                 &nbsp;&nbsp; 기안일
               </th>
               <th class="doc-end">
-                완료일
+                수정일
               </th>
               <th class="doc-pg">
                 상태
@@ -191,7 +191,7 @@ font-family: 'Noto Sans KR', sans-serif;
 			          		<td><a href="${path }/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
 			          		<td>${proceeds.emp.empName }</td>
 			          		<td><fmt:formatDate value="${proceeds.docDate}" pattern="YYYY-MM-dd" /></td>
-			          		<td></td>
+			          		<td><fmt:formatDate value="${proceeds.docCorrectDate}" pattern="YYYY-MM-dd" /></td>
 			          		<td>${proceeds.docProgress }</td>
 		         		</tr>
           		</c:forEach>

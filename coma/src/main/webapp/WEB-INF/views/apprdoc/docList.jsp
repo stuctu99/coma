@@ -47,19 +47,16 @@
 
 </style>
 
-    <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
+    <div class="coma-container" style="margin-top:20px; margin-bottom: 5px;">
 
-    <nav class="space-y-2" style="text-align: center">
+    <div class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
       	<h1>문서함</h1>
       </div>
-    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary">
-  		<span>작성하기</span>
-    </a>
-    </nav>
+    </div>
     
    <div class="card-container">
-	<div class="" style="margin: 20px 0 0 0; display: flex; width: 100%; justify-content: center;">
+	<div class="" style="margin: 20px 0 20px 0; display: flex; width: 100%; justify-content: center;">
 		<div class="card card-stats alldoc">
 		    <a href="${path }/apprdoc/allList?empId=${e.empId}">
 		    <div class="card-body">
@@ -130,6 +127,11 @@
 		    </a>
 		</div>
 	</div>
+	<div style="text-align: center">
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary" style="width:780px;">
+	  		<span style="font-size:16px;">+문서 작성하기</span>
+	    </a>
+	 </div>
    </div>
     
   <main class="flex-1 p-5" style="padding-left: 139.91px !important; padding-right: 139.91px !important;">
@@ -187,7 +189,7 @@
 			         		<td><a href="${path }/approval/viewdoc?docNo=${docs.docNo }">${docs.docTitle }</a></td>
 			         		<td>${docs.emp.empName }</td>
 			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
-			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
+			         		<td><fmt:formatDate value="${docs.docEndDate}" pattern="YYYY-MM-dd" /></td>
 		         			<td>${docs.docProgress }</td>
 		        		</tr>
 	       		</c:forEach>
