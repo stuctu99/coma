@@ -79,7 +79,7 @@ text-align: left;
 								<img src="${pageContext.request.contextPath}/resource/upload/profile/${emp.empPhoto}" alt="Profile Image" id="profileImage"style="width: 200px; height: 300px">
 	                      </c:if>
 					</div>
-					<div>2
+					<div>
 						<div class="row">
 							<div class="form-group col-6">
 							<form action="${path}/mypage/EmployeeDetailEnd" method="post">	
@@ -110,36 +110,19 @@ text-align: left;
 	
 						 </div>
 						 <div class="row">
-						 	<div class="form-group col-6">
-							    <label for="exampleFormControlSelect1" class="form-control-label"">연차 개수 </label>
-							    <select class="form-control" id="exampleFormControlSelect1" name="empVacation">
-							      <option>1</option>
-							      <option>2</option>
-							      <option>3</option>
-							      <option>4</option>
-							      <option>5</option>
-							      <option>6</option>
-							      <option>7</option>
-							      <option>8</option>
-							      <option>9</option>
-							      <option>10</option>
-							      <option>11</option>
-							      <option>12</option>
-							      <option>13</option>
-							      <option>14</option>
-							      <option>15</option>
-							      <option>16</option>
-							      <option>17</option>
-							      <option>18</option>
-							      <option>19</option>
-							      <option>20</option>
-							      <option>21</option>
-							      <option>22</option>
-							      <option>23</option>
-							      <option>24</option>
-							      <option>25</option>
-							    </select>
-							  </div>
+						 	<div class="form-group col-6"">
+						        <label for="example-number-input" class="form-control-label">연차</label>
+						       <c:set var="empVacation" value="${emp.empVacation}" />
+									<c:choose>
+									    <c:when test="${empVacation % 1 == 0}">
+									        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
+							 				<input class="form-control" type="number" value="${formattedNumber}" id="example-number-input" name = "empVation" >
+									    </c:when>
+									    <c:otherwise>
+						        			<input class="form-control" type="number" value="${emp.empVacation}" id="example-number-input" name = "empVation">
+									    </c:otherwise>
+									</c:choose>	
+						    </div>
 							<div class="form-group col-6">
 							    <label for="example-hiredate-input" class="form-control-label">채용일시</label>
 							    <input class="form-control" type="date" value="${emp.empHireDate}" id="example-hiredate-input" name="empHireDate">
