@@ -32,31 +32,43 @@ public class ApprdocController {
 	
 	@GetMapping("/allList")
 	public void	selectAllList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
-			  @RequestParam(required = false, defaultValue="대기") String docProgress, Model m) {
+			  @RequestParam(required = false, defaultValue="대기") String docProgress, String empId,Model m) {
 			
-			List<ApprovalDoc> appr = new ArrayList<>();
+//			List<ApprovalDoc> appr = new ArrayList<>();
+			List<ApprovalDoc> myAppr = new ArrayList<>();
+			List<ApprovalDoc> myStartAppr = new ArrayList<>();
+			
 			String progress = null;
+			Map<String, Object> pgMap = new HashMap<>();
+			Map<String, Object> myMap = new HashMap<>();
 			
-			//전체문서수
-			int allCount = service.selectApprCount(null);
-			m.addAttribute("allCount", allCount);
+			myMap.put("empId", empId);
+			myMap.put("progress", docProgress);
 			
-			//진행중인 문서(대기,진행)
-			progress = "진행";
-			int startCount = service.selectApprCount(progress);
-			m.addAttribute("startCount", startCount);
+			pgMap.put("empId", empId);
 			
-			//완료문서(완료,반려)
-			progress = "완료";
-			int endCount = service.selectApprCount(progress);
-			m.addAttribute("endCount", endCount);
+			// 진행 중인 문서(대기,진행)
+		    progress = "진행";
+		    pgMap.put("progress", progress);
+		    int startCount = service.selectApprCount(pgMap);
+		    m.addAttribute("startCount", startCount);
+
+		    // 완료 문서(완료,반려)
+		    progress = "완료";
+		    pgMap.put("progress", progress);
+		    int endCount = service.selectApprCount(pgMap);
+		    m.addAttribute("endCount", endCount);
+		    
+		    // 전체 문서 수
+		    pgMap.put("progress", null); // null일 때 전체 문서를 카운트하기 위해
+		    int allCount = service.selectApprCount(pgMap);
+		    m.addAttribute("allCount", allCount);
 			
 			//문서리스트
-			appr = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
+			myAppr = service.selectMyList(Map.of("cPage", cPage, "numPerpage", numPerpage), myMap);
 			
 			
-			
-			m.addAttribute("proceed", appr);
+			m.addAttribute("proceed", myAppr);
 			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));
 		
 	}
@@ -65,62 +77,82 @@ public class ApprdocController {
 	//문서 리스트출력
 	@GetMapping("/proceedList")
 	public void selectProceedList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
-							  @RequestParam(required = false, defaultValue="대기") String docProgress, Model m) {
-			List<ApprovalDoc> appr = new ArrayList<>();
+							  @RequestParam(required = false, defaultValue="대기") String docProgress, String empId, Model m) {
+			
+			List<ApprovalDoc> myAppr = new ArrayList<>();
 			String progress = null;
 			Map<String, Object> pgMap = new HashMap<>();
+			Map<String, Object> myMap = new HashMap<>();
 			
-			//전체문서수
-			int allCount = service.selectApprCount(progress);
-			m.addAttribute("allCount", allCount);
+			myMap.put("empId", empId);
+			myMap.put("progress", "진행");
 			
-			//진행중인 문서(대기,진행)
-			progress = "진행";
-			int startCount = service.selectApprCount(progress);
-			m.addAttribute("startCount", startCount);
+			pgMap.put("empId", empId);
 			
-			//완료문서(완료,반려)
-			progress = "완료";
-			int endCount = service.selectApprCount(progress);
-			m.addAttribute("endCount", endCount);
+			// 진행 중인 문서(대기,진행)
+		    progress = "진행";
+		    pgMap.put("progress", progress);
+		    int startCount = service.selectApprCount(pgMap);
+		    m.addAttribute("startCount", startCount);
+		    pgMap.remove("progress");
+
+		    // 완료 문서(완료,반려)
+		    progress = "완료";
+		    pgMap.put("progress", progress);
+		    int endCount = service.selectApprCount(pgMap);
+		    m.addAttribute("endCount", endCount);
+		    pgMap.remove("progress");
+
+		    // 전체 문서 수
+		    pgMap.put("progress", null); // null일 때 전체 문서를 카운트하기 위해
+		    int allCount = service.selectApprCount(pgMap);
+		    m.addAttribute("allCount", allCount);
 			
-			//문서리스트
-			appr = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
+			myAppr = service.selectMyList(Map.of("cPage", cPage, "numPerpage", numPerpage),myMap);
 			
-			
-			m.addAttribute("proceed", appr);
+			m.addAttribute("proceed", myAppr);
 			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));
-		
 	}
 	
 	//문서함 리스트출력 메소드
 	@GetMapping("/docList")
 	public void selectDocList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
-							  @RequestParam(required = false, defaultValue="완료") String docProgress, Model m) {
-			List<ApprovalDoc> doc = new ArrayList<>();
+							  @RequestParam(required = false, defaultValue="완료") String docProgress, String empId,Model m) {
+			
+			List<ApprovalDoc> myAppr = new ArrayList<>();
 			String progress = null;
 			Map<String, Object> pgMap = new HashMap<>();
+			Map<String, Object> myMap = new HashMap<>();
+			
+			myMap.put("empId", empId);
+			myMap.put("progress", "완료");
 			
 			
-			doc = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
+			pgMap.put("empId", empId);
 			
+			// 진행 중인 문서(대기,진행)
+		    progress = "진행";
+		    pgMap.put("progress", progress);
+		    int startCount = service.selectApprCount(pgMap);
+		    m.addAttribute("startCount", startCount);
+		    pgMap.remove("progress");
+	
+		    // 완료 문서(완료,반려)
+		    progress = "완료";
+		    pgMap.put("progress", progress);
+		    int endCount = service.selectApprCount(pgMap);
+		    m.addAttribute("endCount", endCount);
+		    pgMap.remove("progress");
+	
+		    // 전체 문서 수
+		    pgMap.put("progress", null); // null일 때 전체 문서를 카운트하기 위해
+		    int allCount = service.selectApprCount(pgMap);
+		    m.addAttribute("allCount", allCount);
 			
-			//전체문서수
-			int allCount = service.selectApprCount(null);
-			m.addAttribute("allCount", allCount);
+			myAppr = service.selectMyList(Map.of("cPage", cPage, "numPerpage", numPerpage),myMap);
 			
-			//진행중인 문서(대기,진행)
-			progress = "진행";
-			int startCount = service.selectApprCount(progress);
-			m.addAttribute("startCount", startCount);
-			
-			//완료문서(완료,반려)
-			progress = "완료";
-			int endCount = service.selectApprCount(progress);
-			m.addAttribute("endCount", endCount);
-			
-			
-			m.addAttribute("doc", doc);
+			m.addAttribute("doc", myAppr);
+			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));
 			
 		
 	}

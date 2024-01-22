@@ -39,10 +39,20 @@ public class ApprdocDaoImpl implements ApprdocDao {
 	}
 
 	@Override
-	public int selectApprCount(SqlSession session, String progress) {
+	public int selectApprCount(SqlSession session, Map<String, Object> pgMap) {
 		// TODO Auto-generated method stub
 		
-		return session.selectOne("approval.selectApprCount",progress);
+		return session.selectOne("approval.selectApprCount",pgMap);
+	}
+
+	@Override
+	public List<ApprovalDoc> selectMyList(SqlSession session, Map<String, Integer> page,Map<String, Object> myMap) {
+		// TODO Auto-generated method stub
+		int cPage=page.get("cPage");
+		int numPerpage=page.get("numPerpage");
+		RowBounds rb = new RowBounds((cPage-1)*numPerpage,numPerpage);
+		
+		return session.selectList("approval.selectMyList",myMap,rb);
 	}
 	
 	

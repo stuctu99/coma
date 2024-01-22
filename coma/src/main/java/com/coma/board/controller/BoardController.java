@@ -180,7 +180,7 @@ public class BoardController {
 	
 	//글작성(완료버튼눌렀을때)
 	@PostMapping("/writePost")
-	public String writePost(HttpSession session,@Valid String title,String writer,@Valid String content, int boardType, Model m) {
+	public String writePost(HttpSession session,String title,String writer,String content, int boardType, Model m) {
 		
 		Board b =	Board.builder().boardTitle(title)
 				.emp(Emp.builder()
