@@ -7,8 +7,8 @@
 	<jsp:param name="id" value="mine" />
 </jsp:include>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
-
-<script src="/resource/js/jquery-3.7.0.js"></script>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<script src="${pageContext.request.contextPath}/resource/js/jquery-3.7.0.js"></script>
 <style>
 
 
@@ -336,10 +336,10 @@ function updateTable(commuteList) {
 }
 /* /approval/writedoc 결재로 넘어가기  */
 document.getElementById('commuteWriteBtn').addEventListener('click', function() {
-    window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
+    window.location.href = '${pageContext.request.contextPath}/approval/writedoc';
 });
 document.getElementById('total').addEventListener('click', function() {
-    window.location.href = ${pageContext.request.contextPath}'/commute/commuteDetail';
+    window.location.href = '${pageContext.request.contextPath}/commute/commuteDetail';
 });
 /* 기간 막기 함수  */
 function updateEndTimeMin() {

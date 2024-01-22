@@ -4,11 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<%-- <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> --%>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script  src="${path }http://code.jquery.com/jquery-latest.min.js"></script>
 
 <style>
 /*  div{
@@ -71,7 +71,7 @@ text-align: left;
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
-		 <form id="employeeForm" action="${path}/mypage/EmployeeDetailEnd" method="post">
+		 <form action="${path}/mypage/EmployeeDetailEnd" method="post">
 		<div class="row">
 			<div class="col-6">
 				<div class="file-btn" ">
@@ -179,7 +179,7 @@ text-align: left;
 					<input class="form-control" type="text" id="address_kakao"  value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="width:500px; background-color:  #f1edff;" readonly>
 					<input class="form-control" type="text"  value= "${emp.empAddrDetail}" placeholder="상세주소" style="width:500px; background-color:  #f1edff;" readonly>
 			    </div>
-			    <button type="submit" class="btn btn-primary" onclick="submitEmployeeForm();" >회원정보 변경</button>
+			    <button type="submit" class="btn btn-primary"  >회원정보 변경</button>
 			</div>
 		</div>
 	</div>
@@ -187,10 +187,7 @@ text-align: left;
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Assuming emp.empVacation holds the initial value
     var initialVacationValue = "${emp.empVacation}";
-    
-    // Set the selected attribute based on the initial value
     var selectElement = document.getElementById("exampleFormControlSelect1");
     for (var i = 0; i < selectElement.options.length; i++) {
       if (selectElement.options[i].value === initialVacationValue) {

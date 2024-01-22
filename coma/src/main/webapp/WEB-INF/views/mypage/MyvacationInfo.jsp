@@ -6,17 +6,11 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
    <jsp:param name="id" value="mine" />
 </jsp:include>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <style>
-div {
-	/*  border: 2px solid red; */
-	
-}
 
 .bigbax {
-	/* border: 2px solid blue; */
-	/* margin: 15px; */
-	/* border: 2px solid lightgrey */;
 	border-radius: 20px;
 	background-color: #ffffff;
 	padding: 20px;
@@ -134,7 +128,7 @@ div {
 
 <script>
 document.getElementById('vacationWriteBtn').addEventListener('click', function() {
-    window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
+    window.location.href = '${pageContext.request.contextPath}/approval/writedoc';
 });
 </script>
 

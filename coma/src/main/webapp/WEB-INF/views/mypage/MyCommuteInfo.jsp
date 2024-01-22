@@ -9,9 +9,6 @@
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <style>
 table {
-	/* width: 800px;
-	height: 700px; */
-	/* border: 1px solid #444444; */
 	border-collapse: collapse;
 }
 
@@ -208,7 +205,7 @@ td {
 	}
 
 	document.getElementById('commuteDetail').addEventListener('click', function() {
-	    window.location.href = '/commute/commuteDetail';
+	    window.location.href = '${pageContext.request.contextPath}/commute/commuteDetail';
 	});
 
 </script>
