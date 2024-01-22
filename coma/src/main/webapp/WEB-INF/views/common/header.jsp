@@ -193,7 +193,7 @@
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="/logout" class="dropdown-item">
+              <a href="${path }/logout" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>
