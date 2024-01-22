@@ -28,32 +28,39 @@ td {
 </style>
 <body onload="autoReload();">
 	<div class="coma-container containerbig">
-		<div class="row" style = "padding: 30px;">
-			<div class="col-9 "></div>
-			<div class="col-2"><button type="button" class="btn btn-primary" id="commuteDetail">  근태 상세 보기</button></div>
-			<div class="col-1 "></div>
+		<div class="row" style = "padding: 40px 0px 20px; ">
+			<div class="col-2 "></div>
+			<div class="col-7 ">
+				<h1>나의 근태확인하기</h1>
+			</div>
+			<div class="col-3"><button type="button" class="btn btn-primary" id="commuteDetail">  근태 상세 보기</button></div>
+			
 		</div>
-		<div class="calendar row ">
-			<table align="center" id="calendar" class= "calendarContainer">
-				<tr>
-					<td><a id="before" href="javascript:beforem()"></a></td>
-					<td colspan="4" align="center">
-						<div id="yearmonth"></div>
-					</td>
-					<td><a id="next" href="javascript:nextm()"></a></td>
-					<td><h1 href="javascript:thisMonth()">오늘</h1></td>
-				</tr>
-				<tr>
-					<td width="14%">월</td>
-					<td width="14%">화</td>
-					<td width="14%">수</td>
-					<td width="14%">목</td>
-					<td width="14%">금</td>
-					<td width="14%" style ="background-color: #f1edff;"><font color="#009de0">토</font></td>
-					<td width="14%" style ="background-color: #f1edff;"><font color="#ed5353">일</font></td>
-				</tr>
-			</table>
+		<div class="row ">
+			<div class="col-2 "></div>
+				<div class=" col-8 calendar ">
+				<table align="center" id="calendar" class= "calendarContainer">
+					<tr>
+						<td><a id="before" href="javascript:beforem()"></a></td>
+						<td colspan="4" align="center">
+							<div id="yearmonth"></div>
+						</td>
+						<td><a id="next" href="javascript:nextm()"></a></td>
+						<td><h1 href="javascript:thisMonth()">오늘</h1></td>
+					</tr>
+					<tr>
+						<td width="14%">월</td>
+						<td width="14%">화</td>
+						<td width="14%">수</td>
+						<td width="14%">목</td>
+						<td width="14%">금</td>
+						<td width="14%" style ="background-color: #f1edff;"><font color="#009de0">토</font></td>
+						<td width="14%" style ="background-color: #f1edff;"><font color="#ed5353">일</font></td>
+					</tr>
+				</table>
+			</div>
 		</div>
+		<div class="col-2 "></div>
 	</div>
 </body>
 <script>

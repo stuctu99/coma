@@ -83,7 +83,7 @@ public class CommuteController {
 	      return modelAndView;
 	      
 	   }
-	   
+	   //
 	     @GetMapping("/commuteDetail")
 	     public String commuteDetail(Principal pri, Model m,@RequestParam(defaultValue="1") int cPage,
 	            @RequestParam(defaultValue="10") int numPerpage) {

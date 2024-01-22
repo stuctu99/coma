@@ -308,7 +308,7 @@ function updateTable(commuteList) {
         breakDurationCell.textContent = c.BREAK_DURATION;
         row.appendChild(breakDurationCell);
 
-        // Append the row to the table
+
         $("#empTable").append(row);
         if (c.EMP_COMMUTE_ABSENCE === 'Y') {
             absenceCount++;
@@ -325,7 +325,11 @@ function updateTable(commuteList) {
         }
     }
  });
-
+	console.log(absenceCount);
+	console.log(nonabsence);
+	console.log(latenessCount);
+	console.log(Uncleared);
+	console.log("여기");
     var total = absenceCount+nonabsence
     $('#lateCount').html(${'latenessCount'});
     $('#finishCount').html(${'absenceCount'});

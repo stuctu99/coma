@@ -97,6 +97,15 @@ select:disabled, select[readonly] {
 						<div class="row">
 						 	<div class="form-group col-6">
 							    <label for="exampleFormControlSelect1" class="form-control-label"">연차 개수 </label>
+							 		<c:set var="empVacation" value="${emp.empVacation}" />
+									
+									    <%-- <c:if test="${empVacation % 1 == 0}">
+									        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
+									    		
+									    </c:if> --%>
+									    
+									
+							 	
 							 	<input class="form-control" type="text" value="${emp.empVacation}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
 	
 							  </div>
@@ -240,6 +249,7 @@ function submitEmployeeForm() {
 
 /* 비밀번호 확인 여부 ajax */
 $(document).ready(function () {
+
     function checkPasswordMatch() {
       var newPassword = $('#example-password-input').val();
       var confirmPassword = $('#example-password2-input').val();

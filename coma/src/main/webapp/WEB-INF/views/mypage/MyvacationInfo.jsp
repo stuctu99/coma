@@ -45,12 +45,23 @@
 						<h3 class="">남은 연차</h3>
 					</div>
 					<div class="blank">
-						<h4> ${emp.empVacation } 일 <h4/>
+						<h4> 
+							<c:set var="empVacation" value="${emp.empVacation}" />
+							<c:choose>
+							    <c:when test="${empVacation % 1 == 0}">
+							        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
+							    		${formattedNumber} 일
+							    </c:when>
+							    <c:otherwise>
+							       ${emp.empVacation} 일
+							    </c:otherwise>
+							</c:choose>
+						<h4/>
 					</div>
 				</div>
 				<div class=" col-3 smallbox">
 					<div class=" ">
-						<h3 class="">사용한 연차</h3>
+						<h3 class="">승인된 휴가 결재</h3>
 					</div>
 					<div class="blank">
 						<h4>${finishCount } 회</h4>

@@ -158,7 +158,18 @@ td {
 			</div>
 			<div class="bigContainer" style="display: flex;border-radius: 20px;height:150px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
 				<div>
-					<h2>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h2>
+					<h2>잔여 휴가 
+						<c:set var="empVacation" value="${emp.empVacation}" />
+						<c:choose>
+						    <c:when test="${empVacation % 1 == 0}">
+						        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
+						    		${formattedNumber} 일
+						    </c:when>
+						    <c:otherwise>
+						       ${emp.empVacation} 일
+						    </c:otherwise>
+						</c:choose>
+					남았습니다.</h2>
 				</div>
 				<div class="row">
 					<div class="col-2"></div>
@@ -200,7 +211,6 @@ td {
 						            
 								</tr>
 							</c:forEach>
-							<td></td><td></td>
 						</table>
 					</div>
 				</div>
