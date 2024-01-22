@@ -158,8 +158,8 @@ public class CommuteController {
 	     }
 
 	  //월요일부터 금요일까지 아침 10시에 퇴근 미처리 update
-	    @Scheduled(cron = "0 0 22 * * 1-5")
-		//@GetMapping("/updateUncleared") 
+	    //@Scheduled(cron = "0 0 22 * * 1-5")
+		@GetMapping("/updateUncleared") 
 		public void updateUncleared() {
 			System.out.println("잘들어왓구요 ");
 			int result = service.updateUncleared();
@@ -168,8 +168,8 @@ public class CommuteController {
 
 	    
 		//월요일부터 금요일까지 아침 9시에 insert
-		@Scheduled(cron = "0 0 9 * * 1-5")
-		//@GetMapping("/checkInsert") 
+		//@Scheduled(cron = "0 0 9 * * 1-5")
+		@GetMapping("/checkInsert") 
 		public void checkInsert() {
 			List <Map> empIds = empService.selectEmpId();
 			for (Map empIdMap : empIds) { 

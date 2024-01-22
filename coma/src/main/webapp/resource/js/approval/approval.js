@@ -36,7 +36,7 @@ function submitForm() { //input type="button"
     
        console.log('Markdown Content:', markdownContent); 
          if (!markdownContent) {
-        alert('Markdown 내용을 입력하세요.'); // 또는 다른 사용자에게 보여줄 메시지
+        alert('상세내용을 입력하세요.'); // 또는 다른 사용자에게 보여줄 메시지
         return; // 폼 제출을 중지
     }
     
@@ -485,9 +485,57 @@ const save_appr=()=>{
 
 	console.log(apprList);
 
-	let lineName = prompt(apprListNum, '결재선 이름을 설정하세요.');
+	//let lineName = prompt(apprListNum, '결재선 이름을 설정하세요.');
 	
-	localStorage.setItem(lineName, apprList);
+	let lineName = "";
+	
+	//--------- sweetAlert 결재선 저장 
+
+	swal("결재선 이름을 설정하세요.", {
+	  content: "input",
+	  buttons : {
+		  cancle: {
+			  text: '취소',
+			  value: false,
+			  className: 'btn btn-danger bo_cancel'
+		  },
+		  confirm : {
+			  text: '완료',
+			  value: true,
+			  className: 'btn btn-primary bo_confirm'
+		  }
+	  }
+	})
+	.then((value) => {
+		
+		if(value){
+			
+			lineName = value
+			console.log("테스뚜", lineName);
+			localStorage.setItem(lineName, apprList);
+			
+		  swal('결재선이 저장되었습니다.',{
+			  buttons : {
+				  confirm: {
+					  className: 'btn btn-primary bo_confirm'
+				  }
+			  }
+		  });
+		}else{
+			//취소 버튼
+			swal('취소되었습니다.',{
+				buttons:{
+					confirm: {
+						text: '완료',
+						className: 'btn btn-primary bo_confirm'
+					}
+				}
+			});
+		}
+	});
+	
+	
+	
 	
 	let test = localStorage.getItem(lineName); 
 	
@@ -529,7 +577,10 @@ const take_line=()=>{
 	 	all_appr_line += line_key + " : "+ line_val + "\n";
 
 	//localStorage key값 분기처리
-	if (line_key !== null && line_key !== 'TOAST UI editor for localhost: Statistics' && line_key !== 'null') {
+	if (line_key !== null && line_key !== 'null'
+				&& line_key !== 'TOAST UI editor for localhost: Statistics' 	
+				&& line_key !== 'TOAST UI editor for 14.36.141.71: Statistics' 
+		) {
 			radioContainer.append(
 			
 				$('<label>').text(line_key).append(

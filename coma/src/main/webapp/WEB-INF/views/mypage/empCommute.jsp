@@ -53,9 +53,7 @@ div {
 			<h1 style= "color:blue;">${empName.empName}</h1> <h1>님의 근태 정보</h1>
 		</div>
 		<div class="col-5"></div>
-		<div class="col-1">
-			<button type="button" class="btn btn-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
-		</div>
+		
 		<div class="col-1"></div>
 	</div>
 	<div class="row" style="text-align: center;">

@@ -157,11 +157,12 @@ public class MypageController {
 		int finishCount = 0;
 		while (iterator.hasNext()) {
 		    Map<Object, Object> vacation = iterator.next();
-		    if (!("완료".equals("DOC_PROGRESS") || "반려".equals("DOC_PROGRESS"))) {
+		    if (!("완료".equals(vacation.get("DOC_PROGRESS")) || "반려".equals(vacation.get("DOC_PROGRESS")))) {
+		    	
 		        waitCount++;
 		        System.out.println("들어왔니 ?");
 		    }		    
-		    if ("완료".equals("DOC_PROGRESS")){
+		    if ("완료".equals(vacation.get("DOC_PROGRESS"))){
 		    	finishCount++;
 		    	System.out.println("들어왔니 ?");
 		    }

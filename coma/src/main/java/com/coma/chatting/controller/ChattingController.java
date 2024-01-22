@@ -92,11 +92,7 @@ public class ChattingController {
 			roomMember.put(joinInfo.get("roomNo"), empList);
 		}
 
-		System.err.println("이걸로 활용할 수 있을까?" + empList);
-		System.err.println("방정보가 나오려나?" + roomMember);
-		System.out.println("[채팅방입장]조회할 정보:" + joinInfo);
 		ChattingJoin joinCheck = service.selectCheckJoin(joinInfo);
-		System.out.println("[채팅방입장]조회결과 : " + joinCheck);
 		if (joinCheck == null) {
 			insertResult = service.insertJoinEmp(joinInfo);
 			if (insertResult > 0) {
@@ -149,25 +145,24 @@ public class ChattingController {
 			memberlist.remove(exitEmp.get("empId"));
 			int roomMeberCount = service.selectMemberCountInRoom(exitEmp.get("roomNo"));
 			if (roomMeberCount == 0) {
-				System.err.println(exitEmp.get("roomNo") + "방에 남은 인원 : " + roomMeberCount);
+//				System.err.println(exitEmp.get("roomNo") + "방에 남은 인원 : " + roomMeberCount);
 				int result = service.deleteChattingMsgByRoomNo(exitEmp);
 				if (result > 0) {
 					roomMember.remove(exitEmp.get("roomNo"));
-					System.out.println(exitEmp.get("roomNo") + "채탕방 완전 삭제");
 					Iterator<Map.Entry<String, Map<String, String>>> entries = roomMember.entrySet().iterator();
 					while (entries.hasNext()) {
-						System.err.println("확인데이터" + entries.next());
+//						System.err.println("확인데이터" + entries.next());
 					}
 
 				}
 
 			}
-
+			
+//			채팅방 리스트 삭제
 			msg.put("result", "success");
-			System.out.println("채팅방 리스트에서 삭제!!!");
 		} else {
+//			채팅방 리스트 삭제 실패
 			msg.put("result", "fail");
-			System.out.println("채팅방 리스트 삭제 실패!!!");
 		}
 
 		return msg;
@@ -180,7 +175,7 @@ public class ChattingController {
 		Map<String, String> memberlist = roomMember.get(data.get("roomNo"));
 		memberlist.remove(data.get("empId"));
 
-		System.err.println(" 채팅방 남은 인원 : " + memberlist);
+//		System.err.println(" 채팅방 남은 인원 : " + memberlist);
 		check.put("result", true);
 		return check;
 	}

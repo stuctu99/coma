@@ -211,9 +211,13 @@
 					$td1.innerText=e.EMP_ID;
 					
 					const $td2=document.createElement('td');
-					$a.setAttribute('href','#');
+					const $button = document.createElement('button');
+					$button.type = 'button';
+					$button.className = 'btn btn-secondary btn-sm';
+					$a.setAttribute('href','${path }/mypage/EmployeeDetails?empId='+e.EMP_ID);
 					$a.innerText=e.EMP_NAME;
-					$td2.appendChild($a);
+					$button.appendChild($a);
+					$td2.appendChild($button);
 					
 					const $td3=document.createElement('td');
 					$td3.innerText=e.JOB_TYPE;
@@ -222,21 +226,25 @@
 					$td4.innerText=e.DEPT_TYPE;
 					
 					const $td5=document.createElement('td');
-					$a2.setAttribute('href','#');
+					const $button2 = document.createElement('button');
+					$button2.type = 'button';
+					$button2.className = 'btn btn-secondary btn-sm';
+					$a2.setAttribute('href','${path }/commute/empCommute?empId='+e.EMP_ID);
 					if(e.EMP_COMMUTE_STATUS!=null){
 						$a2.innerText=e.EMP_COMMUTE_STATUS;
 					}else{
 						$a2.innerText='미출근';
 					}
-					$td5.appendChild($a2);
+					$button2.appendChild($a2);
+					$td5.appendChild($button2);
 					
 					const $td6 = document.createElement('td');
-					const $button = document.createElement('button');
-					$button.setAttribute('type', 'button');
-					$button.setAttribute('class', 'btn btn-secondary btn-sm');
-					$button.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
-					$button.innerText = '삭제';
-					$td6.appendChild($button);
+					const $button3 = document.createElement('button');
+					$button3.setAttribute('type', 'button');
+					$button3.setAttribute('class', 'btn btn-secondary btn-sm');
+					$button3.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
+					$button3.innerText = '삭제';
+					$td6.appendChild($button3);
 					
 					$tr.appendChild($td1);
 					$tr.appendChild($td2);

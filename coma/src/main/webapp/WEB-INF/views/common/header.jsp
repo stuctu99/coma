@@ -103,7 +103,8 @@
           </li>
           <li class="nav-item">
             <a class="nav-link ">
-              <i class="ni ni-planet text-blue"></i> 전자결재
+              <i class="ni ni-archive-2 text-purple"></i> 전자결재
+              
             </a>
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
               <li><a href="${pageContext.request.contextPath}/approval/addsign">서명 등록</a></li>
