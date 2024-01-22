@@ -89,5 +89,15 @@
 	  
   }
 
+.bo_confirm:hover{
+	  background-color: #5e72e4 !important;
+	  border-color: #5e72e4  !important;
+}
+
+.bo_cancel:hover{
+	  background-color: #f5365c !important;
+	  border-color: #f5365c  !important;
+	
+}
 
   

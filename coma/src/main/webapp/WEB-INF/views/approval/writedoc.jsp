@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <script src="${path }/resource/js/jquery-3.7.0.js"></script>
 <link href="${path }/resource/css/approval/writedoc.css" rel="stylesheet" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- sweetAlert -->
+
 
 <c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
 	
@@ -409,7 +411,6 @@
 
 </form>   
 
-    
     
     <!-- TEAM COMA SPACE -->
     </div>
