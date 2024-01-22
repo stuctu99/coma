@@ -49,7 +49,6 @@ const connectUpdate = (roomNo, empId) => {
 		})
 		.then(data => {
 			if (data.result) {
-				console.log("나가기 성공");
 				server.send(new Message("rest", "", "", "", empId, roomNo).convert());
 				window.close();
 			}
@@ -67,7 +66,6 @@ $(function() {
 const server = new WebSocket("ws://" + location.host + path + "/chattingServer");
 const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
-console.log(roomNo, empId);
 
 server.onopen = (response) => {
 	console.log(empId);
@@ -86,7 +84,6 @@ server.onclose = () => {
 server.onmessage = (response) => {
 	console.log("response응답데이터 " + response.data);
 	const receiveMsg = Message.deconvert(response.data);
-	console.log("asdasd" + receiveMsg.type);
 	switch (receiveMsg.type) {
 		case "open": openMessage(receiveMsg); break;
 		case "msg": messagePrint(receiveMsg); break;
@@ -103,7 +100,6 @@ const messagePrint = (msg) => {
 	/* 채팅 전송 시 채팅방 제목 하단에 최근 메세지 출력 */
 	$(opener.location).attr("href", "javascript:updateMsg('" + msg.roomNo + "','" + msg.chatContent + "');");
 
-	console.log(msg);
 	const div = document.createElement("div");
 	const nameDiv = document.createElement("div");
 	const nameSpan = document.createElement("span");
@@ -204,7 +200,6 @@ const openMessage = (msg) => {
 }
 
 const connectionRest = (msg) => {
-	console.log("나가면 여기가 실행되어야해" + msg.empId);
 	const $connectFlag = $(".list-" + msg.roomNo + " #" + msg.empId);
 	$connectFlag.css("color", "black");
 }
@@ -274,8 +269,6 @@ class Message {
 		return JSON.stringify(this);
 	}
 	static deconvert(data) {
-		console.log("비교1" + data);
-		console.log("비교2" + JSON.parse(data));
 		return JSON.parse(data);
 	}
 }
@@ -430,7 +423,6 @@ const fn_update = (roomNo) => {
 }
 
 const inviteReload = (msg) => {
-	console.log("초대 함수 테스트");
 	memberList(msg.roomNo, msg.empId);
 	$(opener.location).attr("href", "javascript:newRoom('');");
 }
