@@ -16,7 +16,7 @@
 </style>
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-  <title>title</title>
+  	<title>서명 그리기</title>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
@@ -41,7 +41,7 @@
       var ctx = canvas[0].getContext("2d");
       var drawble = false;
       
-      // 이제 html 버그? canvas의 style의 height와 width를 수정하게 되면 그림이 이상하게 그려짐.
+      // 버그? canvas의 style의 height와 width를 수정하게 되면 그림이 이상하게 그려짐.
       function canvasResize(){
         canvas[0].height = div.height();
         canvas[0].width = div.width();
