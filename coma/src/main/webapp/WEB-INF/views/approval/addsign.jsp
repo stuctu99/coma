@@ -5,10 +5,11 @@
 </jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<script src="/resource/js/jquery-3.7.0.js"></script>
+<script src="${path }/resource/js/jquery-3.7.0.js"></script>
 
-<link href="/resource/css/approval/viewdoc.css" rel="stylesheet" />
+<link href="${path }/resource/css/approval/viewdoc.css" rel="stylesheet" />
 <c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
     <!-- TEAM COMA SPACE -->
 

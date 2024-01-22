@@ -6,6 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
 
 .card-stats {
@@ -153,7 +154,7 @@
                         <tr>
                             <td>${proceeds.docNo }</td>
                             <td>${proceeds.docType }</td>
-                            <td><a href="/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
+                            <td><a href="${path }/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
                             <td>${proceeds.emp.empName }</td>
                             <td><fmt:formatDate value="${proceeds.docDate}" pattern="YYYY-MM-dd" /></td>
                             <td></td>
