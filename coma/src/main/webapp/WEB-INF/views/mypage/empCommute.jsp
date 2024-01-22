@@ -31,7 +31,6 @@ div {
 	padding: 20px;
 	border-radius: 20px;
 }
-
 .smallbox {
 	margin: 30px;
 	/* border: 1px solid lightgrey;   */

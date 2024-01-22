@@ -12,10 +12,6 @@
 
 <!-- TEAM COMA SPACE -->
 <style>
-
-/* div{
-   border: 2px solid red;
-}    */
 .bigContainer {
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
    text-align: center;
@@ -221,7 +217,7 @@ td {
 							<c:forEach var="mainNotice" items="${mainNotice}">
 								<tr>
 									<td class="notice-title"><a
-										href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
+										href="${path }/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
 									
 									<c:choose>
 										<c:when test="${mainNotice.boardDate.year == 124}">
@@ -360,36 +356,39 @@ td {
       }
    }
    /* 달력 */
-document.addEventListener('DOMContentLoaded', function() {
-   const calendarEl = document.getElementById('calendar')
-   const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      firstDay:1,
-      locale:'kr',
-      headerToolbar:{
-         left:'',
-         center:'title',
-         right:'customPrev,customNext'
-      },
-      customButtons:{
-         customPrev:{
-            text: '전달',
-            click: function(){
-               calendar.prev();
-            }
-         },
-         customNext:{
-            text:'다음달',
-            click: function(){
-               calendar.next();
-            }
-         }  
-      },
-      
-       expandRows: true, // 화면에 맞게 높이 설정
-   })
-       calendar.render();
-});
+ document.addEventListener('DOMContentLoaded', function() {
+       const calendarEl = document.getElementById('calendar')
+       const calendar = new FullCalendar.Calendar(calendarEl, {
+          dateClick: function(info){
+             window.location.href="${path}/calendar";
+          },
+         initialView: 'dayGridMonth',
+          firstDay:1,
+          locale:'kr',
+          headerToolbar:{
+             left:'',
+             center:'title',
+             right:'customPrev,customNext'
+          },
+          customButtons:{
+             customPrev:{
+                text: '전달',
+                click: function(){
+                   calendar.prev();
+                }
+             },
+             customNext:{
+                text:'다음달',
+                click: function(){
+                   calendar.next();
+                }
+             }  
+          },
+          
+           expandRows: true, // 화면에 맞게 높이 설정
+       })
+           calendar.render();
+    });
 
 
 
