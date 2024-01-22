@@ -78,7 +78,7 @@
 				            </c:choose>
 						</td>
 						
-	   					<td><a href="/board/freePost?boardNo=${boards.boardNo }">
+	   					<td><a href="${path }/board/freePost?boardNo=${boards.boardNo }">
 	   						${boards.boardTitle }</a></td>
 	   					<td>${boards.boardReadCount }</td>
 					</tr>				
