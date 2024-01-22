@@ -59,7 +59,7 @@ public class EmployeeController {
         //System.out.println("LoggedID: " + empId);
         //오늘 근태 정보 가져오기 
         Commute myCommute = commuteService.selectCommute(empId);
-        //System.out.println(myCommute);
+        System.out.println(myCommute);
         //type이 date이면 날짜빼고 시분초 변경해주기 
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("mainNotice", mainNotice);

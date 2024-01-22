@@ -6,9 +6,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
-<c:set var="emp"
-	value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
-<script src="/resource/js/jquery-3.7.0.js"></script>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
+<script src="${path }/resource/js/jquery-3.7.0.js"></script>
 <style>
 div {
 	/*  border: 2px solid red; */
@@ -41,7 +41,6 @@ div {
 	padding-top: 20px;
 }
 
-
 </style>
 <div class="coma-container containerbig">
  <%--  ${commute} 
@@ -69,7 +68,7 @@ div {
 		    </div>
 		</div>
 		<div class="col-1">
-			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
+			<button type="button" class="btn btn-primary"  onclick="submitForm();">검색</button>
 		</div>
 		<div class="col-1">
 			<a href="${path }/commute/empCommute?empId=${empId }">
@@ -97,7 +96,6 @@ div {
 					</thead>
 					
 					<tbody class="list" id="empTable">
-					
 						<c:if test="${not empty commute}">
 							<c:forEach var="c" items="${commute }">
 								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
@@ -134,15 +132,11 @@ div {
 										</td>
 									</tr>
 									<input type="hidden" value = "<fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yy/MM/dd" />" name= "workdate">
-									
-									<input type="hidden" value = "${empId }" name= "empId" id="empId" >
-									
+									<input type="hidden" value = "${empId }" name= "empId" id="empId" >									
 								</c:if>
 							</c:forEach>
 						</c:if>
-						
 					</tbody>
-					
 				</table>
 				</form>
 				<div id="pageBar">${pageBar }</div>
@@ -151,16 +145,6 @@ div {
 		<div class="col-1"></div>
 	</div>
 </div>
-<!--  -->
-
-<!-- <div class="coma-container">
-	<div class="row">
-		총 12칸
-		<div class="col-4">1</div>
-		<div class="col-4">2</div>
-		<div class="col-4">3</div>
-	</div>
-</div> -->
 
 <script>
 
@@ -187,7 +171,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     console.log(startTime);
     console.log(endTime);
     console.log(empId);
-    fetch("${path}/commute/empCommuteEnd", {
+    fetch(${path}"/commute/empCommuteEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
