@@ -77,7 +77,7 @@
 						
 						
 	   					<td class="title">
-	   						<a href="/board/freePost?boardNo=${free.boardNo }" style="display: flex">
+	   						<a href="${path }/board/freePost?boardNo=${free.boardNo }" style="display: flex">
 	   							<!-- 글 제목 -->
 	   							${free.boardTitle }&emsp;
 	   							<!-- 글 이미지여부 -->
