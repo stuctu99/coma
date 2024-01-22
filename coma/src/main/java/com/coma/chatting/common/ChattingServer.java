@@ -171,7 +171,7 @@ public class ChattingServer extends TextWebSocketHandler {
 						if(c.getKey().equals(msg.getEmpId())) {
 							//채팅방 이벤트 발생 사원 아이디와 일치시 채팅방에서 세션 제거
 							try {
-								c.getValue().close();
+//								c.getValue().close();
 								client.remove();
 							}catch(Exception e) {
 								e.printStackTrace();

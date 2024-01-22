@@ -36,7 +36,6 @@ public class ApprdocController {
 			
 			List<ApprovalDoc> appr = new ArrayList<>();
 			String progress = null;
-			Map<String, Object> pgMap = new HashMap<>();
 			
 			//전체문서수
 			int allCount = service.selectApprCount(null);
@@ -54,6 +53,8 @@ public class ApprdocController {
 			
 			//문서리스트
 			appr = service.selectProceedList(Map.of("cPage", cPage, "numPerpage", numPerpage),docProgress);
+			
+			
 			
 			m.addAttribute("proceed", appr);
 			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));

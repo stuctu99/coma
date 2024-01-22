@@ -44,7 +44,7 @@ div {
 
 </style>
 <div class="coma-container containerbig">
-<%-- 	  ${commute} 
+ <%--  ${commute} 
 	  ${empId } --%>
 	  
 	<div class="row">
@@ -53,9 +53,7 @@ div {
 			<h1 style= "color:blue;">${empName.empName}</h1> <h1>님의 근태 정보</h1>
 		</div>
 		<div class="col-5"></div>
-		<div class="col-1">
-			<button type="button" class="btn btn-outline-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
-		</div>
+		
 		<div class="col-1"></div>
 	</div>
 	<div class="row" style="text-align: center;">
@@ -70,12 +68,14 @@ div {
 		        <input class="form-control" type="date" name="start"  id="start">
 		    </div>
 		</div>
-		<div col="col-1">
+		<div class="col-1">
 			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
 		</div>
-		<!-- <div col="col-1">
-			<button type="button" class="btn btn-primary"  id=""></button>
-		</div> -->
+		<div class="col-1">
+			<a href="${path }/commute/empCommute?empId=${empId }">
+				<img src="${pageContext.request.contextPath }/resource/img/icons/common/back.png" style="width: 40px;">
+			</a>
+		</div>
 	</div>
 	<td>            
 	<div class="row">
@@ -100,7 +100,7 @@ div {
 					
 						<c:if test="${not empty commute}">
 							<c:forEach var="c" items="${commute }">
-								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'NON-ANTTE'}">
+								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
 									<tr>
 										<td>
 											<c:if test="${c.EMP_COMMUTE_STATUS eq 'Uncleared'}">
@@ -218,7 +218,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     	    });
 
     	    data.commuteList.forEach(c => {
-    	    	if(c.EMP_COMMUTE_STATUS!='NON-ANTTE'){
+    	    	if(c.EMP_COMMUTE_STATUS!='nonAntte'){
 	    	        const $tr = document.createElement('tr');
 	
 	    	        const $td1 = document.createElement('td');
@@ -318,7 +318,9 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
 document.getElementById('commuteWriteBtn').addEventListener('click', function() {
     window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
 });
-
+/* document.getElementById('total').addEventListener('click', function() {
+    window.location.href = ${pageContext.request.contextPath}'/commute/empCommute?empId='${e.EMP_ID };
+}); */
 //기간 시작 기간보다 끝기간 못 지정하기 
 function updateEndTimeMin() {
     var startTimeInput = document.getElementById('endTime');

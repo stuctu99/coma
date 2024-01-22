@@ -15,7 +15,7 @@
     Coma Academy
   </title>
   <!-- Favicon -->
-  <link href="${path }/resource/img/brand/favicon_2.png" rel="icon" type="image/png">
+  <link href="${path }/resource/img/brand/comacon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -42,7 +42,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="/">
-        <img src="/resource/img/brand/COMA2.png" class="navbar-brand-img" alt="...">
+        <img src="${path }/resource/img/brand/COMA2.png" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <!-- <ul class="nav align-items-center d-md-none">
@@ -82,7 +82,7 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <a href="/">
-                <img src="/resource/img/brand/blue.png">
+                <img src="${path }/resource/img/brand/blue.png">
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -160,11 +160,11 @@
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
                	<c:if test="${e.empPhoto == null}" >
-				 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 36px; height: 36px">
+				 	<img src="${path}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 36px; height: 36px">
                  </c:if>
 				 <%-- 프로필 이미지 가 있으면 이미지 --%>
                    <c:if test="${e.empPhoto != null}" >
-						<img src="${pageContext.request.contextPath}/resource/upload/profile/${e.empPhoto}" alt="Profile Image" id="profileImage"style="width: 36px; height: 36px">
+						<img src="${path }/resource/upload/profile/${e.empPhoto}" alt="Profile Image" id="profileImage"style="width: 36px; height: 36px">
                    </c:if>
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
@@ -180,20 +180,20 @@
                 <i class="ni ni-single-02"></i>
                 <span>My profile</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="${path}/commute/commuteDetail" class="dropdown-item">
                 <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
+                <span>근태 상태</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="${path}/commute/MyCommuteInfo" class="dropdown-item">
                 <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
+                <span>근태 상세보기</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="${path}/mypage/MyvacationInfo" class="dropdown-item">
                 <i class="ni ni-support-16"></i>
-                <span>Support</span>
+                <span>나의 휴가 </span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="/logout" class="dropdown-item">
+              <a href="${path }/logout" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>

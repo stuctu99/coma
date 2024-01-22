@@ -77,7 +77,7 @@
 						
 						
 	   					<td class="title">
-	   						<a href="/board/freePost?boardNo=${free.boardNo }" style="display: flex">
+	   						<a href="${path }/board/freePost?boardNo=${free.boardNo }" style="display: flex">
 	   							<!-- 글 제목 -->
 	   							${free.boardTitle }&emsp;
 	   							<!-- 글 이미지여부 -->
@@ -135,14 +135,14 @@
 				    </select>
 				    <input type="hidden" name="boardType" value="${type }">
 				    <input class="se" type="text" name="search-keyword" id="searchInput">
-				    <button type="button" class="se btn btn-success" onclick="getSearchList()">
+				    <button type="button" class="se btn btn-primary" onclick="getSearchList()">
 				   		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 						  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 						</svg>
 				    </button>
 			    </form>
 				<div class="wrtie" style="text-align: right;">
-					<a href="${path }/board/writeView?boardType=1" class="btn btn-success"><span>글쓰기</span></a>	
+					<a href="${path }/board/writeView?boardType=1" class="btn btn-primary"><span>글쓰기</span></a>	
 				</div>
 			</div>
 			<div class="pageBar-container">

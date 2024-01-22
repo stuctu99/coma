@@ -29,7 +29,7 @@ font-family: 'Noto Sans KR', sans-serif;
 		<h1>문서함</h1>
       </div>
       <div>
-	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-success">
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary">
 	  		<span>작성하기</span>
 	    </a>
 	  </div>
@@ -80,7 +80,7 @@ font-family: 'Noto Sans KR', sans-serif;
 		</div>
 		<div class="card card-stats enddoc">
 			<a href="${path }/apprdoc/docList">
-		    <div class="card-body"> 
+		    <div class="card-body">
 				<div class="row">
 				    <div class="col">
 				        <h5 class="card-title text-uppercase text-muted mb-0">완료된 문서</h5>
@@ -115,7 +115,7 @@ font-family: 'Noto Sans KR', sans-serif;
           style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;">
           <option value=""></option>
         </select>
-        <button type="button" class="inline-flex items-center justify-center btn btn-success" onclick="getSearchList()">
+        <button type="button" class="inline-flex items-center justify-center btn btn-primary" onclick="getSearchList()">
         	검색
 	    </button>
         </form>
@@ -155,7 +155,7 @@ font-family: 'Noto Sans KR', sans-serif;
 		         		<tr>
 			          		<td>${proceeds.docNo }</td>
 			          		<td>${proceeds.docType }</td>
-			          		<td><a href="/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
+			          		<td><a href="${path }/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
 			          		<td>${proceeds.emp.empName }</td>
 			          		<td><fmt:formatDate value="${proceeds.docDate}" pattern="YYYY-MM-dd" /></td>
 			          		<td></td>

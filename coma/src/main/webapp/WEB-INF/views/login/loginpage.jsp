@@ -46,7 +46,7 @@
               <!-- <div class="text-center text-muted mb-4">
                 <small>Or sign in with credentials</small>
               </div> -->
-              <form action="/logintest" method="post" role="form">
+              <form action="${pageContext.request.contextPath }/logintest" method="post" role="form">
                 <div class="custom-control custom-control-alternative custom-checkbox" style="margin-bottom: 14px;">
                 
                   <input class="custom-control-input remember-me" 
@@ -95,11 +95,11 @@
     </footer>
   </div> 
   <!--   Core   -->
-  <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resource/js/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="${pageContext.request.contextPath }/resource/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <!--   Optional JS   -->
   <!--   Argon JS   -->
-  <script src="../assets/js/argon-dashboard.min.js?v=1.1.2"></script>
+  <script src="${pageContext.request.contextPath }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
     window.TrackJS &&

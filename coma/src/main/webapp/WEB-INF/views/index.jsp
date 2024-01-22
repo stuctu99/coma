@@ -6,9 +6,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
    <jsp:param name="id" value="mine" />
 </jsp:include>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
-<script
-   src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
 <!-- TEAM COMA SPACE -->
 <style>
@@ -71,6 +71,13 @@ td {
 	border-radius: 5px !important;
 	
 }
+
+.notice *:not(h1):not(span) {
+	font-size: 16px;
+}
+
+
+
 </style>
 
 <div class="coma-container" style="margin-top:30px;">
@@ -83,8 +90,8 @@ td {
 					<c:choose>
 						<%-- 출근 시간이 값이 없으면  --%>
 						<c:when test="${myCommute.commuteClockin == null}">
-							<div class=" col-3" id="clockin">
-								<div class="btncss" id="clockin1 ">
+							<div class=" col-3 " id="clockin">
+								<div class="btncss" id="clockin1">
 									<i class="ni ni-briefcase-24"></i>
 								</div>
 							</div>
@@ -151,7 +158,7 @@ td {
 			</div>
 			<div class="bigContainer" style="display: flex;border-radius: 20px;height:150px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
 				<div>
-					<h2>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h4>
+					<h2>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h2>
 				</div>
 				<div class="row">
 					<div class="col-2"></div>
@@ -164,42 +171,59 @@ td {
 					<div class="col-2"></div>
 				</div>
 			</div>
-			<div class="bigContainer" style="display: flex;border-radius: 20px;height:380px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
+			
+			<div class="bigContainer notice" style="display: flex;border-radius: 20px;height:380px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
 				<div class="row">
 				<div class=col-12>
 					<h1>
-						<i class="ni ni-check-bold"></i>공지사항
+						공지사항
 					</h1>
 				</div>
 					<div class=col-12 style="text-align: -webkit-center;">
-						<table>
+						<table class="table" style="width:100%;">
+							<a href="${path }/board/noticelist" style="color: inherit; text-decoration: none;">
+								<span style="font-size: 16px; float: right; padding: 0 24px 16px 0;">+더보기</span>
+							</a>
 							<c:forEach var="mainNotice" items="${mainNotice}">
 								<tr>
-									<td><a
+									<td class="notice-title"><a
 										href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
-									<td>${mainNotice.boardDate}</td>
+									
+									<c:choose>
+										<c:when test="${mainNotice.boardDate.year == 124}">
+						                    <td class="noitce-date" style="text-align: right;"><fmt:formatDate value="${mainNotice.boardDate}" pattern="MM-dd" /></td>
+						                </c:when>
+						                <c:otherwise>
+						                    <td class="noitce-date" style="text-align: right;"><fmt:formatDate value="${mainNotice.boardDate}" pattern="yyyy-MM-dd" /></td>
+						                </c:otherwise>
+						            </c:choose>
+						            
 								</tr>
 							</c:forEach>
+							<td></td><td></td>
 						</table>
 					</div>
 				</div>
 			</div>
+			
 		</div>
 		<div class=" col-7">
 			<div class="bigContainer">
 				<div class="row">
 					<div class=col-12 style="">
-						<img src="/resource/img/brand/COMA2.png">
+						<img src="${path }/resource/img/brand/COMA2.png">
 						<h1>${emp.empName }님	환영합니다</h1>
 					</div>
 				</div>
 			</div>
-			<div class="bigContainer" style="height:530px; display: flex; justify-content: center; align-items: center;">
-				<div id='calendar' style="width:90%;"></div>
-			</div>
+			<a href="${path }/calendar"> 
+				<div class="bigContainer" style="height:530px; display: flex; justify-content: center; align-items: center;">
+					<div id='calendar' style="width:90%;"></div>
+				</div>
+			</a>
 		</div>
-	<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
-	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>
+<!-- 	<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
+	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button> -->
 
    <div class=" col-1"></div>
    </div>
@@ -218,11 +242,7 @@ td {
     var time2 = (commuteStarttime-commuteClockin);
     var totalwork1 = (commuteStarttime-commuteClockin) + (commuteClockout-commuteEndtime);
     var totalwork2 = commuteClockout-commuteClockin;
-    var time3 = time2 + (nowTime -commuteEndtime);   
-    //값이 있으면 false
-    //console.log(!commuteStarttime);
-    //console.log(!commuteEndtime);    
-    
+    var time3 = time2 + (nowTime -commuteEndtime);       
     // 시간을 HH:mm:ss 형식으로 변환
     function formatTime(milliseconds) {
                 var seconds = Math.floor(milliseconds / 1000);
@@ -233,7 +253,6 @@ td {
                 hours %= 24;   
                 return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
     }
-    
     function pad(number) {
          return (number < 10 ? '0' : '') + number;
      }
@@ -343,38 +362,38 @@ td {
 let clockIn, clockout,endtime, starttime;
 //출근하기 버튼을 눌렀을 때
 if(!commuteClockin){
-document.getElementById('clockin').addEventListener('click', function() {
-    var empId = '${emp.empId}';
-    clockIn = new Date().getTime();
-    
-    console.log('출근 버튼'+clockIn);
-    // Fetch to insert commute record
-    fetch('${path}/commute/updateClockIn', {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            empId: empId
-        })
-    }).then(response => {
-        console.log(response);
-        if (response.status != 200) {
-            throw new Error("");
-        }
-        return response.json();
-    }).then(result => {
-        if (result > 0) {
-            alert("출근했습니다.");
-            var clockinDiv = document.getElementById('clockin1');
-            clockinDiv.remove();
-            // Display clock-in time
-            document.getElementById('clockin').textContent = getFormatTime(new Date());
-            //출근 누르면 타이머 시작!
-            generatePattern(1000);
-        }
-    }).catch(e => {
-        alert(e);
-    });
-});
+	document.getElementById('clockin').addEventListener('click', function() {
+	    var empId = '${emp.empId}';
+	    clockIn = new Date().getTime();
+	    
+	    console.log('출근 버튼'+clockIn);
+	    // Fetch to insert commute record
+	    fetch('${path}/commute/updateClockIn', {
+	        method: "post",
+	        headers: { "Content-Type": "application/json" },
+	        body: JSON.stringify({
+	            empId: empId
+	        })
+	    }).then(response => {
+	        console.log(response);
+	        if (response.status != 200) {
+	            throw new Error("");
+	        }
+	        return response.json();
+	    }).then(result => {
+	        if (result > 0) {
+	            alert("출근했습니다.");
+	            /* var clockinDiv = document.getElementById('clockin1'); */
+	            document.getElementById('clockin1').remove();
+	            // Display clock-in time
+	            document.getElementById('clockin').textContent = getFormatTime(new Date());
+	            //출근 누르면 타이머 시작!
+	            generatePattern(1000);
+	        }
+	    }).catch(e => {
+	        alert(e);
+	    });
+	});
 }
 
 //외출시작하기 눌렀을 때
@@ -539,18 +558,18 @@ if(!commuteClockout){
 }
 //휴가 근황 페이지 전환되는 기능 
 document.getElementById('vacationButton').addEventListener('click', function() {
-    window.location.href = '/mypage/MyvacationInfo';
+    window.location.href = '${path}/mypage/MyvacationInfo';
 });
 
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
-    window.location.href = '/commute/MyCommuteInfo';
+    window.location.href = '${path}/commute/MyCommuteInfo';
 });
-document.getElementById('checkInsert').addEventListener('click', function() {
+/* document.getElementById('checkInsert').addEventListener('click', function() {
     window.location.href = '/commute/checkInsert';
 });
 document.getElementById('updateUncleared').addEventListener('click', function() {
     window.location.href = '/commute/updateUncleared';
-}); 
+});  */
 
 </script>
 

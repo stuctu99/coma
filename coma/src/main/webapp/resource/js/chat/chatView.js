@@ -2,7 +2,7 @@ $("#exit-btn").click(function() {
 	if (confirm("채팅방을 완전히 나가겠습니까?")) {
 		const roomNo = $("#roomNo").val();
 		const empId = $("#loginMember").val();
-		fetch(path+"/chatting", {
+		fetch(path + "/chatting", {
 			method: "DELETE",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ "roomNo": roomNo, "empId": empId })
@@ -17,9 +17,9 @@ $("#exit-btn").click(function() {
 				if (data.result == "success") {
 
 					alert($(".connectView").val());
-					server.send(new Message("out","", "", "", empId, roomNo).convert());
+					server.send(new Message("out", "", "", "", empId, roomNo).convert());
 					close();
-					$(opener.location).attr("href","javascript:fn_roomListByType('engagement');");
+					$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
 				} else {
 					alert("관리자에게 문의하세요!");
 				}
@@ -36,7 +36,7 @@ $("#back").click(function() {
 })
 
 const connectUpdate = (roomNo, empId) => {
-	fetch(path+"/chatting/back", {
+	fetch(path + "/chatting/back", {
 		method: "delete",
 		headers: {
 			"Content-Type": "application/json"
@@ -65,7 +65,8 @@ $(function() {
 
 
 /* 채팅구현 */
-const server = new WebSocket("ws://" + location.host +path+"/chattingServer");
+
+const server = new WebSocket("ws://" + location.host + path + "/chattingServer");
 const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
 console.log(roomNo, empId);
@@ -79,8 +80,8 @@ server.onopen = (response) => {
 
 }
 
-server.onclose = () =>{
-	const msg = new Message("rest","","","",loginId,roomNo);
+server.onclose = () => {
+	const msg = new Message("rest", "", "", "", loginId, roomNo);
 	server.send(msg.convert());
 }
 
@@ -91,7 +92,7 @@ server.onmessage = (response) => {
 	switch (receiveMsg.type) {
 		case "open": openMessage(receiveMsg); break;
 		case "msg": messagePrint(receiveMsg); break;
-		case "invite":inviteReload(receiveMsg); break;
+		case "invite": inviteReload(receiveMsg); break;
 		case "rest": connectionRest(receiveMsg); break;
 		case "out": closeChatting(receiveMsg); break;
 		case "close": connectionRest(receiveMsg); break;
@@ -116,7 +117,7 @@ const messagePrint = (msg) => {
 	div.classList.add("row"); //메세지 라인 컨테이너
 	timeDiv.classList.add("time-container"); //전송 시간 컨테이너
 	//메세지 전송 시간 출력
-	console.log( );
+	console.log();
 	timeTag.innerText = ("0" + new Date(msg.chatCreateDate).getHours()).slice(-2) + ":" + ("0" + new Date(msg.chatCreateDate).getMinutes()).slice(-2) + "  ";
 	/*timTag.innerText = (new Date(msg.chatCreateDate).getHours());*/
 	timeDiv.appendChild(timeTag);
@@ -152,10 +153,10 @@ const messagePrint = (msg) => {
 	document.querySelector(".messageView" + msg.roomNo).appendChild(div);
 	document.querySelector(".messageView" + msg.roomNo).scrollTop = document.querySelector(".messageView" + msg.roomNo).scrollHeight;
 	/* 테스트 */
-	/*	$(opener.document).find(".updateMsg-"+msg.roomNo).remove();
-		const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
-		$updateMsg.text("Message : "+msg.chatContent);
-		$(opener.document).find("#chattingList #"+msg.roomNo).append($updateMsg);*/
+	/*   $(opener.document).find(".updateMsg-"+msg.roomNo).remove();
+	   const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
+	   $updateMsg.text("Message : "+msg.chatContent);
+	   $(opener.document).find("#chattingList #"+msg.roomNo).append($updateMsg);*/
 }
 
 const sendMessage = () => {
@@ -174,7 +175,7 @@ const openMessage = (msg) => {
 	const $connectFlag = $(".list-" + msg.roomNo + " #" + msg.empId);
 	$connectFlag.css("color", "lime");
 	memberList(msg.roomNo, msg.empId);
-	fetch(path+"/chatting", {
+	fetch(path + "/chatting", {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json"
@@ -222,7 +223,7 @@ const closeChatting = (msg) => {
 	$(opener.document).find("#chatting-active").removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick", "privateChatting('" + msg.empId + "','" + loginId + "');");
 	$(".emp-list-btn").click();
 	$("." + msg.empId).remove();
-	$(opener.location).attr("href","javascript:$('.emp-list-btn').click()");
+	$(opener.location).attr("href", "javascript:$('.emp-list-btn').click()");
 
 }
 
@@ -255,12 +256,12 @@ window.onload = () => {
 
 class Message {
 	/*constructor(type = "", sender = "", receiver = "", msg = "", room = "", time) {
-		this.type = type;
-		this.sender = sender;
-		this.reciever = receiver;
-		this.msg = msg;
-		this.room = room;
-		this.time = time;
+	   this.type = type;
+	   this.sender = sender;
+	   this.reciever = receiver;
+	   this.msg = msg;
+	   this.room = room;
+	   this.time = time;
 	}*/
 
 	constructor(type = "", chatNo = "", chatContent = "", chatCreateDate, empId = "", roomNo = "") {
@@ -291,7 +292,7 @@ $("#bars").click(function() {
 const memberList = (roomNo) => {
 	const $profileListDiv = $(".list-" + roomNo);
 	$profileListDiv.html("");
-	fetch(path+"/chatting/memberlist/" + roomNo)
+	fetch(path + "/chatting/memberlist/" + roomNo)
 		.then(response => {
 			return response.json();
 		})
@@ -319,9 +320,9 @@ const memberList = (roomNo) => {
 				$div_col1.append($connection);
 
 				if (d.emp_gender == 'M') {
-					$img.attr("src", path+"/resource/img/chat/profile_m.png");
+					$img.attr("src", path + "/resource/img/chat/profile_m.png");
 				} else {
-					$img.attr("src", path+"/resource/img/chat/profile_f.png");
+					$img.attr("src", path + "/resource/img/chat/profile_f.png");
 				}
 
 				$div_col2.append($img);
@@ -340,12 +341,12 @@ const fn_updateInfo = (roomNo) => {
 	$("#updateroomName").val($("#room_name").text());
 	let updateType = $("#updateroomType");
 	const roomType = $("#roomType").val();
-	if(roomType=='P'){
+	if (roomType == 'P') {
 		updateType.val("A").prop("selected", true);
-	}else{
+	} else {
 		updateType.val(roomType).prop("selected", true);
 	}
-	fetch(path+"/chatting/invitelist/" + roomNo)
+	fetch(path + "/chatting/invitelist/" + roomNo)
 		.then(response => {
 			if (response.status != 200) {
 				alert("조회실패!!!");
@@ -356,7 +357,7 @@ const fn_updateInfo = (roomNo) => {
 			const $div = $("#invite-list");
 			$div.html("");
 			data.dept.forEach(d => {
-				const $deptrow = $("<div>").addClass("row dept").css("backgroundColor","rgba(157, 190, 242,0.2)");
+				const $deptrow = $("<div>").addClass("row dept").css("backgroundColor", "rgba(157, 190, 242,0.2)");
 				const $dept = $("<div>").addClass("col-12 dept_title_container");
 				const $dept_title = $("<h3>").text(d.deptType + "부");
 				$dept.append($dept_title);
@@ -365,8 +366,8 @@ const fn_updateInfo = (roomNo) => {
 				data.inviteList.forEach(e => {
 					const $emprow = $("<div>").addClass("row emp");
 					const $col_8 = $("<div>").addClass("col-8");
-					const $label = $("<label>").attr("for",e.empId).text(e.empName + " " + e.job.jobType);
-					const $checkbox = $("<input>").addClass("emp_checkbox").attr("type", "checkbox").attr( "id", e.empId).val(e.empId);
+					const $label = $("<label>").attr("for", e.empId).text(e.empName + " " + e.job.jobType);
+					const $checkbox = $("<input>").addClass("emp_checkbox").attr("type", "checkbox").attr("id", e.empId).val(e.empId);
 					if (d.deptCode == e.dept.deptCode) {
 						$col_8.append($checkbox);
 						$col_8.append($label);
@@ -387,7 +388,7 @@ const fn_update = (roomNo) => {
 	const roomPasswordFlag = $("#updateroomPasswordFlag").val();
 	const roomType = $("#updateroomType").val();
 	const inviteCheckbox = $(".emp_checkbox");
-	
+
 	let inviteEmp = new Array();
 	let cnt = 0;
 
@@ -405,35 +406,35 @@ const fn_update = (roomNo) => {
 		"empId": empId,
 		"inviteEmp": inviteEmp
 	}
-	
+
 	console.log(inviteEmp);
-	fetch(path+"/messenger/invite/"+roomNo,{
-		method:"POST",
-		headers:{"Content-Type":"application/json"},
-		body:JSON.stringify(ChattingRoom)
+	fetch(path + "/messenger/invite/" + roomNo, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(ChattingRoom)
 	})
-	.then(response=>{
-		if(response.status!=200){
-			alert("관리자에게 문의하세요");
-		}
-		return response.json();
-	})
-	.then(data=>{
-		if(data.result=='success'){
-			const msg = new Message("invite","","","","",roomNo);
-			server.send(msg.convert());
-			$("#invite-modal").modal('hide');
-			/*memberList(msg.roomNo, msg.empId);*/
-		}else{
-			alert("접근할 수 없습니다. 관리자에게 문의하세요:(");
-		}
-	})
+		.then(response => {
+			if (response.status != 200) {
+				alert("관리자에게 문의하세요");
+			}
+			return response.json();
+		})
+		.then(data => {
+			if (data.result == 'success') {
+				const msg = new Message("invite", "", "", "", "", roomNo);
+				server.send(msg.convert());
+				$("#invite-modal").modal('hide');
+				/*memberList(msg.roomNo, msg.empId);*/
+			} else {
+				alert("접근할 수 없습니다. 관리자에게 문의하세요:(");
+			}
+		})
 }
 
-const inviteReload = (msg) =>{
+const inviteReload = (msg) => {
 	console.log("초대 함수 테스트");
 	memberList(msg.roomNo, msg.empId);
-	$(opener.location).attr("href","javascript:newRoom('');");
+	$(opener.location).attr("href", "javascript:newRoom('');");
 }
 
 
@@ -462,8 +463,8 @@ function NotReload(e) {
 document.onkeydown = NotReload;
 
 /*window.addEventListener('beforeunload', () => {
-	const roomNo = $("#roomNo").val();
-	const empId = loginId;
-	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+roomNo + "" + empId);
-	connectUpdate(roomNo,empId);
+   const roomNo = $("#roomNo").val();
+   const empId = loginId;
+   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+roomNo + "" + empId);
+   connectUpdate(roomNo,empId);
 })*/

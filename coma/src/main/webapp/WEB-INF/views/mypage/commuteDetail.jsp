@@ -50,8 +50,8 @@
 			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
 		</div>
 		
-		<div class="col-1">
-			<button type="button" class="btn btn-primary"  onclick="total()">전체보기</button>
+		<div class="">
+			<img src="${pageContext.request.contextPath }/resource/img/icons/common/back.png" style="width: 40px;"  id="total">
 		</div>
 	</div>
 	<div class="row">
@@ -193,7 +193,7 @@
 					<tbody class="list" id="empTable">
 						<c:if test="${not empty commute}">
 							<c:forEach var="c" items="${commute }">
-								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'NON-ANTTE'}">
+								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
 									<tr>
 										<td>
 										    <c:if test="${c.EMP_COMMUTE_STATUS eq 'Uncleared'}">
@@ -259,21 +259,16 @@ function updateTable(commuteList) {
     $("#empTable").empty();
     var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
     var absenceCount=0,latenessCount = 0,nonabsence =0;Uncleared = 0;
-    console.log(commuteList);
+    /* console.log(commuteList); */
     commuteList.forEach(c => {
-    	if(c.EMP_COMMUTE_STATUS!='NON-ANTTE'){
+    	if(c.EMP_COMMUTE_STATUS!='nonAntte'){
          clockInTime = c.EMP_COMMUTE_CLOCKIN;
          clockOutTime = c.EMP_COMMUTE_CLOCKOUT;
          startTime = c.EMP_COMMUTE_STARTTIME;
          endTime = c.EMP_COMMUTE_ENDTIME;
+         
          //날짜만 잘라준다 
-         workDate = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
-         console.log(clockOutTime-clockInTime);
-        /* console.error("clockInTime:", clockInTime);
-        console.error("clockOutTime:", clockOutTime);
-        console.error("startTime:", startTime);
-        console.error("endTime:", endTime);
-        console.error("workDate:", workDate); */  
+        workDate = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
         var row = document.createElement("tr");
 
         var statusCell = document.createElement("td");
@@ -296,16 +291,6 @@ function updateTable(commuteList) {
         var clockOutTimeCell = document.createElement("td");
         clockOutTimeCell.textContent = clockOutTime;
         row.appendChild(clockOutTimeCell);
-        
-        var clockOutTimeCell = document.createElement("td");
-        if(clockOutTime){
-        	clockOutTimeCell.textContent = clockOutTime-clockInTime;
-        }else{
-        	clockOutTimeCell.textContent = '퇴근 미처리';
-        }
-        row.appendChild(clockOutTimeCell);
-       
-        console.log(clockOutTime-clockInTime);
 
         var workDurationCell = document.createElement("td");
         workDurationCell.textContent = c.WORK_DURATION;
@@ -352,6 +337,9 @@ function updateTable(commuteList) {
 /* /approval/writedoc 결재로 넘어가기  */
 document.getElementById('commuteWriteBtn').addEventListener('click', function() {
     window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
+});
+document.getElementById('total').addEventListener('click', function() {
+    window.location.href = ${pageContext.request.contextPath}'/commute/commuteDetail';
 });
 /* 기간 막기 함수  */
 function updateEndTimeMin() {

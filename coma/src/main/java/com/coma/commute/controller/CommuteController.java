@@ -51,7 +51,6 @@ public class CommuteController {
 	   public int updateClockout(@RequestBody HashMap<String, Object> empId) {
 	      System.out.println(empId);
 	      int result = service.updateClockout(empId);
-	       //System.out.println("결과"+result);
 	       return result;
 	       
 	   }
@@ -61,7 +60,6 @@ public class CommuteController {
 	   public int updateStartTime(@RequestBody HashMap<String, Object> empId) {
 	      System.out.println(empId);
 	      int result = service.updateStartTime(empId);
-	       //System.out.println("결과"+result);
 	       return result;
 	       
 	   }
@@ -71,17 +69,14 @@ public class CommuteController {
 	   public int updateEndTime(@RequestBody HashMap<String, Object> empId) {
 	      System.out.println(empId);
 	      int result = service.updateEndTime(empId);
-	       //System.out.println("결과"+result);
 	       return result;
 	       
 	   }
 	   @GetMapping("/MyCommuteInfo")
 	   public ModelAndView selectCommuteAll(Principal pri) {
 	      String loginId=pri.getName();
-	      //System.out.println("아아아 달력에 넣을 정보 "+service.selectCommuteAll(loginId));
 	      List<Map> commute= service.selectCommuteAll(loginId);
 	      int count =service.countCommute(loginId);
-	      
 	      ModelAndView modelAndView = new ModelAndView("mypage/MyCommuteInfo");
 	      modelAndView.addObject("count",count);
 	      modelAndView.addObject("commute",commute);
@@ -147,36 +142,23 @@ public class CommuteController {
 	    //수정하기 
 	    @PostMapping("/updateEmployeeCommute")
 	 	public String  updateEmployeeCommute (@RequestParam Map<String, Object> commute, Model model) {
-	    	System.out.println("여기 왔ㄴ; ??");
-	    	System.out.println(commute);
-	    	String clockin = (String) commute.get("clockin");
-	    	String clockout = (String) commute.get("clockout");
-	    	String starttime = (String) commute.get("starttime");
-	    	String workdate = (String) commute.get("workdate");
-	    	System.out.println(workdate);
 	    	int result = service.updateEmployeeCommute(commute);
-	    	System.out.println(result);
 	    	String msg, loc;		
 	 		if(result>0) {
-	 			msg="입력성공";
+	 			msg="사원 정보가 수정되었습니다 ";
 	 			loc="admin/adminEmp";
 	 		}else {
 	 			String empId = (String)commute.get("empId");
-	 			msg="입력실패";
+	 			msg="사원 정보수정이 실패되었습니다.";
 	 			loc = "commute/empCommute?empId=" + empId;
 	 		}
 	 		model.addAttribute("msg",msg);
 			model.addAttribute("loc",loc);
 			return "common/msg";
-
 	     }
-	     
-	     
-	     
-	     
-	     
-	    
-		//@Scheduled(cron = "0 0 9 * * 1-5")
+
+	  //월요일부터 금요일까지 아침 10시에 퇴근 미처리 update
+	    //@Scheduled(cron = "0 0 22 * * 1-5")
 		@GetMapping("/updateUncleared") 
 		public void updateUncleared() {
 			System.out.println("잘들어왓구요 ");
@@ -185,28 +167,16 @@ public class CommuteController {
 		}
 
 	    
-		//월요일부터 금요일까지 아침 9시에 insert되게 
-		
+		//월요일부터 금요일까지 아침 9시에 insert
 		//@Scheduled(cron = "0 0 9 * * 1-5")
 		@GetMapping("/checkInsert") 
 		public void checkInsert() {
 			List <Map> empIds = empService.selectEmpId();
 			for (Map empIdMap : empIds) { 
 				String empId =(String) empIdMap.get("EMP_ID"); 
-				
 				if (empId != null) {
 				service.insertCommuteAll(empId);
-				
 				} 
 			}
-		}
-			 
-		
-	 
-
-
-	
-	
-	
-	
+		}	 
 }
