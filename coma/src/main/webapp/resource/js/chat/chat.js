@@ -80,8 +80,8 @@ function openEvent(data) {
 			return response.json();
 		})
 		.then(data => {
-			data.test.forEach(d => {
-				$("." + d.target).attr("onclick", "enter_chattingRoom('" + d.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
+			data.proom.forEach(d => {
+				$("." + d.target).attr("onclick", "enter_chattingRoom('" + d.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary p-" + d.roomNo).text("대화중");
 			})
 		})
 
@@ -132,7 +132,7 @@ function chatRoomContainer(data) {
 			$div_btn.append($room_enter);
 			$div.append($div_type);
 			$div.append($div_title);
-			$user_count.text('[NEW] ').css("color","red").css("font-weight","bolder");
+			$user_count.text('[NEW] ').css("color", "red").css("font-weight", "bolder");
 			$div_title.prepend($user_count);
 			$div_title.append($("<br>"));
 			$div_title.append($updateMsg);
@@ -149,20 +149,50 @@ function chatRoomContainer(data) {
 /* 1:1 채팅 이벤트 */
 function privateNewRoom(data) {
 	/*chatRoomContainer(data);*/
-	$("." + data.targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
-	$("." + data.loginId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
+	$("." + data.targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary p-" + data.roomNo).text("대화중");
+	$("." + data.loginId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary p-" + data.roomNo).text("대화중");
 	/* 1:1대화방 동적 생성 */
 	chatRoomContainer(data);
 }
 /*=============================================================================*/
 
-/* 방생성 시 방 제목 입력 체크 */
+/* 방생성 시 입력 체크 */
 const createRoomCheck = (empId) => {
 	const createTitle = $("#roomName");
+	const passwordFlag = $("#roomPasswordFlag");
+	const password = $("#roomPassword");
+	let inviteEmp = new Array();
+	let cnt = 0;
+	const inviteCheckbox = $(".invite_emp");
+	for (i = 0; i < inviteCheckbox.length; i++) {
+		if (inviteCheckbox[i].checked == true) {
+			inviteEmp[cnt] = inviteCheckbox[i].value;
+			cnt++;
+		}
+	}
+
+
 	if (createTitle.val().length > 0) {
-		createRoom(empId);
+		if (passwordFlag.val() == 'Y') {
+			if (password.val().length > 0) {
+				if (inviteEmp.length > 0) {
+					createRoom(empId);
+				} else {
+					alert("초대할 사원을 선택하세요.");
+				}
+			} else {
+				alert("패스워드를 입력하세요.")
+			}
+		} else {
+			if (inviteEmp.length > 0) {
+				createRoom(empId);
+			} else {
+				alert("초대할 사원을 선택하세요.");
+			}
+		}
+
 	} else {
-		alert("제목을 입력하세요.");
+		alert("방 제목을 입력하세요.");
 	}
 }
 
@@ -312,7 +342,7 @@ const privateChatting = (targetId, targetName, empId, empName) => {
 					mserver.send(msg.convert());
 				} else {
 					newRoom();
-					$("." + targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
+					$("." + targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary p-" + data.roomNo).text("대화중");
 				}
 			} else {
 				console.log("방생성 실패");
@@ -362,23 +392,20 @@ $(".emp-list-btn").click(function() {
 // 채팅 리스트 버튼 클릭 후 채팅 리스트 가져오기
 $(".chatting-list-btn").click(function() {
 	target = this;
-	const type = $("#searchType");
-	type.val("engagement").prop("selected", true);
 
 	empListHidden();
 	chatListDisplay(target);
 
-	fn_roomListByType(type.val());
+	fn_roomList();
 
 })
 
 /* 방 (유형별) 출력 */
-const fn_roomListByType = (type) => {
-	console.log("방 타입 정보 : " + type);
+const fn_roomList = () => {
 	empListHidden();
 	chatListDisplay();
 
-	fetch(path + "/messenger/roomlist/" + type + "/" + loginId)
+	fetch(path + "/messenger/roomlist/" + loginId)
 		.then(response => {
 			if (response != 200)
 				console.log(response.ok);
@@ -398,8 +425,8 @@ const fn_roomListByType = (type) => {
 					const $div_title = $("<div>").addClass("col-7 chatting-room").css("text-align", "left");
 					const $div_btn = $("<div>").addClass("col-2 chatting-room").css("padding-top", "12px");
 					const $strong_type = $("<strong>");
-					const $strong_title = $("<strong>").css("padding-right", "3px");
-					const $updateMsg = $("<span>").addClass("updateMsg-" + d.roomNo);
+					const $strong_title = $("<strong>").css("padding-right", "3px").addClass("room-title");
+					const $updateMsg = $("<span>").addClass("updateMsg updateMsg-" + d.roomNo);
 					const $i = $("<div>").addClass("col-1 chatting-room");
 					const $room_enter = $("<button>").addClass("enter-room btn btn-outline-primary").text("입장");
 					const $user_count = $("<span>");
@@ -424,11 +451,14 @@ const fn_roomListByType = (type) => {
 							return response.text();
 						})
 						.then(data => {
-							if (d.roomPasswordFlag == 'N' && type == 'engagement') {
+							if (d.roomPasswordFlag == 'N') {
 								if (data != "") {
-									$updateMsg.text("Message : " + data);
+									$updateMsg.text(" " + data);
 								}
-							} else {
+							} else if (d.newJoin == 'Y') {
+								$updateMsg.text("New");
+							}
+							else {
 								$div_title.css("line-height", 3.0);
 							}
 						})
@@ -468,8 +498,7 @@ const fn_roomListByType = (type) => {
 
 /* type별 채팅방 조회 */
 const fn_roomType = () => {
-	const type = $("#searchType").val();
-	fn_roomListByType(type);
+	fn_roomList();
 }
 
 /* 방생성 입력 창 패스워드 활성화 */

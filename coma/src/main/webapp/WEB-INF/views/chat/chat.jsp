@@ -117,16 +117,16 @@ div {
 			<div class="row">
 				<div class="col-2"
 					style="display: flex; justify-content: center; align-items: center;">
-					<select class="form-control form-control-sm" id="searchType"
+					<!-- <select class="form-control form-control-sm" id="searchType"
 						onchange="fn_roomType();">
 						<option id="0" value="engagement">참여중</option>
 						<option id="1" value="unengaged">미참여</option>
-					</select>
+					</select> -->
+					<button id="delete-room" class="btn btn-danger"
+						onclick="fn_deleteRoom();">삭제</button>
 				</div>
 				<div class="col-7"></div>
 				<div class="col-1" style="padding: 0px;">
-					<button id="delete-room" class="btn btn-danger"
-						onclick="fn_deleteRoom();">삭제</button>
 				</div>
 				<div class="col-2">
 					<input type="hidden" id="pathValue" value="${path }" />

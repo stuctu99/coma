@@ -4,130 +4,140 @@
 }*/
 
 header {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 110px;
-  z-index: 100;
-  background-color: white;
-}
-section {
-  padding-top: 110px; padding-bottom: 50px;
-}
-footer {
-  position: fixed;
-  bottom: 0; left: 0;
-  height: 5px;
-  width: 100%;
-  background-color:white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 110px;
+	z-index: 100;
+	background-color: white;
 }
 
-.col-1,.col-2{
+section {
+	padding-top: 110px;
+	padding-bottom: 50px;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 5px;
+	width: 100%;
+	background-color: white;
+}
+
+.col-1,
+.col-2 {
 	display: flex;
 	justify-content: center;
 }
 
-.btn{
-	padding:4px 15px !important;
+.btn {
+	padding: 4px 15px !important;
 	height: 30px;
 }
 
-div.container{
+div.container {
 	max-width: 1536px !important;
 	overflow: hidden;
 }
 
-div.container h4{
-	margin:0;
+div.container h4 {
+	margin: 0;
 }
 
 
-button.menu{
-	width:100%;
+button.menu {
+	width: 100%;
 }
 
-div.header-menu > div{
+div.header-menu>div {
 	padding: 0 0;
 }
 
 
-strong:has(div){
+strong:has(div) {
 	background-color: #f1ebf7;
 }
 
-.emp-list>.row:nth-child(1){
-	margin-top:10px;
+.emp-list>.row:nth-child(1) {
+	margin-top: 10px;
 	text-align: center;
 }
 
-.emp-profile-img{
+.emp-profile-img {
 	width: 30px;
 	height: 30px;
 	border-radius: 15px;
 }
 
-.chatting-list>.row:nth-child(1){
-	margin-top:10px;
+.chatting-list>.row:nth-child(1) {
+	margin-top: 10px;
 	text-align: center;
 }
 
-#chattingList>.row{
+#chattingList>.row {
 	padding: 0px 10px;
 	min-height: 73px !important;
 }
 
-#chattingList{
+#chattingList {
 	overflow-y: auto;
-    height: 363px;
+	height: 400px;
 }
 
-::-webkit-scrollbar{
-	width: 10px;
+::-webkit-scrollbar {
+	width: 5px;
 	height: 20px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #5e72e4; /* 스크롤바 막대 색상 */
-    border: 2px solid #5e72e4; /* 스크롤바 막대 테두리 설정  */
-    border-radius: 12px 12px 12px 12px;
+	background: #5e72e4;
+	/* 스크롤바 막대 색상 */
+	border: 2px solid #5e72e4;
+	/* 스크롤바 막대 테두리 설정  */
+	border-radius: 12px 12px 12px 12px;
 }
 
 ::-webkit-scrollbar-track {
 	border-radius: 12px 12px 12px 12px;
-	background: rgb(235, 224, 234); /* 스크롤바 뒷 배경 색상 */
+	background: rgb(235, 224, 234);
+	/* 스크롤바 뒷 배경 색상 */
 }
 
-#chatting-active{
+#chatting-active {
 	width: 80px;
 	height: 30px;
 }
 
-.enter-room{
+.enter-room {
 	width: 74.83px;
 	height: 30px;
 }
 
-.emp-list-btn, .chatting-list-btn{
+.emp-list-btn,
+.chatting-list-btn {
 	cursor: pointer;
 }
 
-div.header-menu img{
-	width:40px;
+div.header-menu img {
+	width: 40px;
 	height: 40px;
 	padding: 1px 1px;
 	margin-bottom: 5px;
 }
 
 hr {
-    margin: 2px 0 !important;
-    color: inherit;
-    border: 0;
-    border-top: var(--bs-border-width) solid;
-    opacity: .25;
+	margin: 2px 0 !important;
+	color: inherit;
+	border: 0;
+	border-top: var(--bs-border-width) solid;
+	opacity: .25;
 }
 
-.chat-title{
-	padding:5px;
+.chat-title {
+	padding: 5px;
 
 	background-color: #5e72e4;
 	box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
@@ -136,123 +146,140 @@ hr {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#create-room{
-	width: 74.83px;
+#create-room {
+	width: 80px!important;
 	height: 30px;
-	margin-right: 37px !important;
+	margin-right: 15px !important;
 }
 
-#delete-room{
+#delete-room {
 	padding: 0px !important;
 	text-align: center;
-	width:52px;
+	width: 52px;
 	height: 30px;
 	margin-right: 10px !important;
 	display: none;
 }
 
-#passwordScreen{
+#passwordScreen {
 	display: none;
 }
 
-#passwordScreen .modal-body{
+#passwordScreen .modal-body {
 	text-align: center;
 }
 
-.emp-list, .chatting-list{
-	margin-top:5px;
+.emp-list,
+.chatting-list {
+	margin-top: 5px;
 	padding: 0px 5px !important;
 	text-align: left;
 }
 
-.emp-list{
+.emp-list {
 	max-height: 492px;
 	overflow-y: auto !important;
 }
 
-.emp-list>div.row{
-	padding:3px 5px;
+.emp-list>div.row {
+	padding: 3px 5px;
 	margin-bottom: 2px;
 }
 
-.job-class{
+.job-class {
 	border-top: 1px solid rgba(236, 230, 237, 0.9);
 	border-bottom: 1px solid rgba(236, 230, 237, 0.9);
-	padding-top:5px;
+	padding-top: 5px;
 	padding-bottom: 5px;
-	margin-top:7px !important;
+	margin-top: 7px !important;
 	margin-bottom: 7px;
 }
 
-.job-name{
+.job-name {
 	text-align: right;
 	font-weight: bold;
 }
 
-.chatting-room{
+.chatting-room {
 	border-top: 1px solid rgba(236, 230, 237, 0.9);
 	border-bottom: 1px solid rgba(236, 230, 237, 0.9);
-	padding-top:5px;
+	padding-top: 5px;
 	padding-bottom: 5px;
-	margin-top:7px !important;
+	margin-top: 7px !important;
 	margin-bottom: 7px;
 }
 
-.footer-hr{
-	margin:5px 0 !important;
+.footer-hr {
+	margin: 5px 0 !important;
 }
 
 
 /* Create Room Modal */
-.modal-body{
-	padding-top:5px !important;
+.modal-body {
+	padding-top: 5px !important;
 	border-top: 1px solid rgba(236, 230, 237, 0.9);
 	border-bottom: 1px solid rgba(236, 230, 237, 0.9);
 }
 
-.modal-body .row{
+.modal-body .row {
 	margin: 5px 0px;
 }
 
-.content{
+.content {
 	padding: 0px 1px !important;
 }
 
-.chatting-list h2{
+.chatting-list h2 {
 	text-align: center;
 }
 
-img#joinList{
+img#joinList {
 	width: 15px;
 	height: 15px;
 }
 
-#invite-emp-list{
+#invite-emp-list {
 	height: 210px !important;
 	overflow-y: auto;
 }
 
-span[name=new]{
+span[name=new] {
 	width: 39px;
-    height: 17px;
-    padding-bottom: 14px;
-    margin-right: 9px;
-    font-size: 10px;
+	height: 17px;
+	padding-bottom: 14px;
+	margin-right: 9px;
+	font-size: 10px;
 }
 
-#invite-title{
+#invite-title {
 	padding: 5px 0px !important;
-	margin: 0px 0px !important;;
+	margin: 0px 0px !important;
+	;
 }
 
-#searchType{
+#searchType {
 	width: 90px;
-    margin-left: 10px;
+	margin-left: 10px;
 }
 
-#invite-alarm-body{
+#invite-alarm-body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 0px !important;
+}
+
+.room-title{
+	font-size: 1.1rem;
+}
+
+.updateMsg {
+	display: block;
+    width: 300px;
+    padding-top:5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 0.8rem;
+
 }
