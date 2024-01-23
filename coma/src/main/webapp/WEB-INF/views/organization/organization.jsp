@@ -57,7 +57,7 @@
 				</div>
 				<div class="col-1"></div>
 				<div class="row" style="display: flex; justify-content: center;">
-					<div class="card shadow" style="height: 450px; margin-top: 20px; width: 600px;">
+					<div class="card shadow" style="height: 450px; margin-top: 20px; width: 520px;">
 					    <div class="card-body">
 					        <div class="tab-content" id="myTabContent">
 					            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
@@ -115,7 +115,7 @@
 										그 과정의 시간을 헛되이 보내지 않도록 옆에서 도와드리겠습니다.<br>
 					                </p>
 					                <h1 class="description">
-					                	부장 : 취부장<br>
+					                	부장 : 교부장<br>
 					                	팀장 : 취팀장<br>
 					                	사원 : 취사원<br>
 					                </h1>

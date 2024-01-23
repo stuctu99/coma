@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class StudentController {
 	private final StudentService service;
 	
+	//강사 담당 학생 전체 출력
 	@GetMapping("/student")
 	public void selectStudentByEmpId(Principal pri, Model m) {
 		String loginId=pri.getName();
@@ -33,6 +34,7 @@ public class StudentController {
 
 	}
 	
+	//담당 학생 정보 출력
 	@PostMapping("/infoStudent")
 	public @ResponseBody List<Map> selectStudentByInfo(@RequestBody Map<String, Object> stuNo){
 		System.out.println(stuNo);
@@ -40,6 +42,7 @@ public class StudentController {
 		return stuInfo;
 	}
 	
+	//학생 출석 등록
 	@PostMapping("/insertStudent")
 	public String insertStudentByAttend(String[] attendance) {
 		int result=service.insertStudentByAttend(attendance);
@@ -47,6 +50,7 @@ public class StudentController {
 		
 	}
 	
+	//학생 특이사항 작성
 	@PostMapping("/studentSignificant")
 	public @ResponseBody int studentSignificantBystuNo(@RequestBody Map<String, Object> significantData) {
 		System.out.println(significantData);
