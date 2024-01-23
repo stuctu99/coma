@@ -309,6 +309,7 @@ document.querySelector("#search_ref").addEventListener("keyup",(()=>{
 			fetch(path+"/approval/apprline?data="+e.target.value)
 			.then(result=>result.text())
 			.then(data=>{
+			
 				$('.ref_op').remove();	
 				
 				JSON.parse(data).forEach(e=>{

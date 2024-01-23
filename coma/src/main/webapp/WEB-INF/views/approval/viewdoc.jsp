@@ -43,17 +43,23 @@
 			  			<table class="table table-bordered">
 						  
 						  <tbody>
+						  	<tr>
+						  		<th scope="row" class="mylabel">문서 번호</th>
+						  		<td>${doc.docNo }</td>
+						  		<th scope="row" class="mylabel">작성일</td>
+						     	<td>${onlyDate }</td>
+						  	</tr>
 						    <tr>
 						      <th scope="row" class="mylabel">문서 종류</th>
 						      <td>${typeKor }</td>
-						      <th scope="row" class="mylabel">작성일</td>
-						      <td>${onlyDate }</td>
+						   	  <th scope="row" class="mylabel">기안자</th>
+						      <td id="writer">${writer.empName }</td>
 						    </tr>
 						    <tr>
-						      <th scope="row" class="mylabel" >기안자</th>
-						      <td id="writer">${writer.empName }</td>
 						      <th scope="row" class="mylabel">부서</th>
 						      <td>${writer.dept.deptType } </td>
+						      <th scope="row" class="mylabel">직책</th>
+						      <td>${writer.job.jobType } </td>
 						    </tr>
 						    <tr>
 						      	<th scope="row" class="mylabel mytitle">결재자</th>

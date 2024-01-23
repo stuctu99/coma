@@ -311,20 +311,22 @@ public class ApprovalController {
    
 //--------------------------- 문서 상세보기 ------------------------------
    @GetMapping("/viewdoc")
-   public String viewDoc(String docNo, String docType, Model model) {
+   public String viewDoc(String docNo, Model model) {
 	   
 	 Map<String, String> data = new HashMap<String, String>();
 	
-	 
 	 data.put("docNo", docNo); 
+	
+	 //문서 타입 가져오기
+	 String docType = service.selectDocType(docNo);
 	 data.put("docType", docType); 
 	 
-	 //문서 번호로 해당 문서 정보 가져오기
-	 
+	 //문서 번호, 문서 타입으로로 해당 문서 정보 가져오기
 	 ApprovalDoc doc = service.selectAppDoc(data); 
-	 
+
 	 	model.addAttribute("doc",doc);
 	 
+	 	
 	 	
 	 //Date 시간 잘라내고 날짜만 가져오기	
 	 String fullDate = doc.getDocDate()+" ";
