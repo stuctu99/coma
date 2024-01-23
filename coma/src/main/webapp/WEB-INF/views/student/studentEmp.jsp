@@ -12,10 +12,7 @@
 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
-/*   	div{
-      border: 2px solid red;
-    }  */
-    
+
     input:read-only{
     	background-color:white;
     }
@@ -37,7 +34,7 @@
 			      </tr>
 		        </thead>
 		        <tbody class="list" id="studentTable">
-		        	<form action="/student/insertStudentEmp" method="post">
+		        	<form action="${path}/student/insertStudentEmp" method="post">
 			        <c:forEach var="s" items="${students }">
 			        	<tr>
 			        		<td><c:out value="${s.STU_NO }"/></td>

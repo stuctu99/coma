@@ -296,7 +296,9 @@ margin: 20px auto;
         	          dataType: 'json',
         	          contentType: 'application/json; charset=utf-8',
         	          data: JSON.stringify({
-        	            empId: loginmemberEmpId
+        	            empId: loginmemberEmpId,
+          	            jobCode: loginmemberJobCode,
+          	          	deptCode: loginmemberDeptCode
         	          }),
         	          success: function(data) {
         	            var events = [];
@@ -573,28 +575,28 @@ margin: 20px auto;
         };
         calendar.on("select",handleSelect);
         
-         //부서일정으로 ㄱㄱ
+         //부서일정으로 
          function fcDept() {
         	 	calType.value="DEPT";
         	    calColor.value="#fbdfc5";
         	    calId.value = "DEPT"; 
         	    Modal.style.display="none";
-        	    // 캘린더를 제거합니다.
+        	    // 캘린더를 제거합니다
         	    calendar.destroy();
-        	    // 새로운 이벤트 소스를 가져옵니다.
+        	    // 새로운 이벤트 소스를 가져옵니다
         	    const newEventSources = getEventSources(calId);
 
-        	    // 캘린더 옵션을 업데이트합니다.
+        	    // 캘린더 옵션을 업데이트합니다
         	    calendarOption.eventSources = newEventSources;
 
-        	    // 캘린더를 다시 생성합니다.
+        	    // 캘린더를 다시 생성합니다
         	    calendar = new FullCalendar.Calendar(calendarEl, calendarOption);
         	    calendar.render();
         	    
         	    calendar.on("eventClick",handleEventClick);
         	    calendar.on("eventClick",info=>{
         	    
-        	    	if(loginmemberJobCode=="J2"){
+        	    	if(loginmemberJobCode=="J2" || loginmemberJobCode=="J3"){
         	    	
         	    		addBtn.style.display="block";
         	    		delBtn.style.display="block";
@@ -608,7 +610,7 @@ margin: 20px auto;
         	    calendar.on("dateClick",handleDateClick);
         	    calendar.on("dateClick",info=>{
         	    
-        	    	if(loginmemberJobCode=="J2"){        	    		
+        	    	if(loginmemberJobCode=="J2" || loginmemberJobCode=="J3"){        	    		
         	    		Modal.style.display="block";
         	    	}else{
         	    		Modal.style.display="none";
@@ -616,7 +618,7 @@ margin: 20px auto;
         	    })
         	    calendar.on("select",handleSelect);
         	    calendar.on("select",info=>{
-           		 if(loginmemberJobCode=="J2"){
+           		 if(loginmemberJobCode=="J2" || loginmemberJobCode=="J3"){
            			Modal.style.display="block";         			
            		 }else{
            			Modal.style.display="none";
