@@ -41,6 +41,7 @@ div {
 }
 
 </style>
+<%-- ${ commute} --%>
 <div class="coma-container containerbig">  
 	<div class="row">
 		<div class="col-1"></div>
@@ -154,7 +155,7 @@ var year = today.getFullYear();
 var month = today.getMonth() + 1; 
 var day = today.getDate();
 // 날짜를 "YYYY-MM-DD" 형식의 문자열로 만들기
-var formattedDate = (year % 100) + '/' + (month < 10 ? '0' + month : month) + '/' + (day < 10 ? '0' + day : day);
+var formattedDate = (year % 100) + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
 console.log(formattedDate);
 // 입력 요소에 현재 날짜 설정
 document.getElementById('start').value = formattedDate;
@@ -201,17 +202,32 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     	    $trList.forEach($tr => {
     	        $tr.remove();
     	    });
-
+			console.log(data);
     	    data.commuteList.forEach(c => {
     	    	if(c.EMP_COMMUTE_STATUS!='nonAntte'){
 	    	        const $tr = document.createElement('tr');
 	
 	    	        const $td1 = document.createElement('td');
-	    	        if(c.EMP_COMMUTE_STATUS =='Uncleared'){
-	    	        	$td1.innerText = '퇴근 미처리';
-	    	        }else{
-	    	        	$td1.innerText = c.EMP_COMMUTE_STATUS;
-	    	        }
+
+	    	        const selectElement = document.createElement('select');
+	    	        selectElement.className = 'form-control';
+	    	        selectElement.id = 'exampleFormControlSelect1';
+	    	        selectElement.name = 'status';
+
+	    	        const options = ['근무중', '외근중', '퇴근 미처리', '퇴근', '결근', '지각', '연차', '반차'];
+
+	    	        options.forEach(optionValue => {
+	    	          const optionElement = document.createElement('option');
+	    	          optionElement.value = optionValue;
+
+	    	          // Use a ternary operator to check if the current optionValue is equal to c.STATUS and set selected accordingly
+	    	          optionElement.selected = (optionValue === c.STATUS);
+
+	    	          optionElement.innerText = optionValue;
+	    	          selectElement.appendChild(optionElement);
+	    	        });
+
+	    	        $td1.appendChild(selectElement);
 	    	        
 	    	        const $td2 = document.createElement('td');
 	    	        $td2.innerText = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
@@ -299,10 +315,6 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
         });
 }
 
-
-document.getElementById('commuteWriteBtn').addEventListener('click', function() {
-    window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
-});
 /* document.getElementById('total').addEventListener('click', function() {
     window.location.href = ${pageContext.request.contextPath}'/commute/empCommute?empId='${e.EMP_ID };
 }); */

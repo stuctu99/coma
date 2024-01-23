@@ -84,9 +84,7 @@ text-align: left;
 							        <option value='D2' <c:if test="${emp.dept.deptType eq '행정'}"> selected="selected" </c:if>>행정팀</option>
 							        <option value='D4' <c:if test="${emp.dept.deptType eq '교육'}"> selected="selected" </c:if>>교육팀</option>
 							        <option value='D5' <c:if test="${emp.dept.deptType eq '취업'}"> selected="selected" </c:if>>취업팀</option>
-							        <option value='D1' <c:if test="${emp.dept.deptType eq '관리자'}"> selected="selected" </c:if>>관리부</option>
-							        
-
+							        <option value='D1' <c:if test="${emp.dept.deptType eq '관리'}"> selected="selected" </c:if>>관리부</option>
 							    </select>
 						    </div>
 						    <div class="form-group col-6">
