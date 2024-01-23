@@ -113,7 +113,7 @@
 					        	<tr>
 					        		<td><c:out value="${v.DOC_NO}"/></td>
 					        		<td>
-					        			<a href="#">
+					        			<a href="${path }/approval/viewdoc?docNo=${ v.DOC_NO}">
 					        				<c:out value="${v.DOC_TITLE }"/>
 					        			</a>
 					        		</td>
