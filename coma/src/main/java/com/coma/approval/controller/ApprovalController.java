@@ -285,9 +285,7 @@ public class ApprovalController {
       doc.setFiles(files);
       doc.setApprover(approver);
       doc.setRef(ref);
-      
-      System.out.println("controller doc객체 확인"+doc);
-      
+   
       String msg, loc;
       try {
          int result = service.insertApproval(doc);   
@@ -429,21 +427,15 @@ public class ApprovalController {
 	   Map<String, String> data2 = new HashMap<String, String>();
 	   data2.put("docNo", docNo); 
 	     	   
-	   System.out.println("apprIdArr**********************" + apprIdArr);
 	  String[] signArr = new String[apprIdArr.length];
 	  int i=0;
 	  for(String apprId : apprIdArr) {
-		   System.out.println("apprId**********************" + apprId);
-
+	
 		  data2.put("empId", apprId); 
 		  String status = service.getStatusByIdAndDocNo(data2); //해당 결재자의 결재 상태
-
-		   System.out.println("apprId status###**********************################# " + status);
-		  
+  
 		  if(status!=null) {
 			  String sign = service.getSignByApprId(apprId); //결재 완료일 경우 사인 가져옴
-			   System.out.println("apprId sign**********************" + sign);
-
 			  
 			  signArr[i] = sign;
 		  }
@@ -523,7 +515,7 @@ public class ApprovalController {
    //---------------------------- 결재 승인 -------------------------------------
    
    @PostMapping("/reject")
-   public String reject(String docNo, String thisOrder, Model model) { //empId = 문서 기안자
+   public String reject(String docNo, String thisOrder, Model model, String empId) { //empId = 문서 기안자
 	  
 	   Map<String, String> data = new HashMap<String, String>();
 	   data.put("docNo", docNo);
@@ -534,10 +526,9 @@ public class ApprovalController {
 	   
 	   int result2 = service.updateAllMyturn(data);
 	   
-	   System.out.println("진행상태 반려 변경: " + result1+ "myturn 변경: " + result2);
-	   
+	  
 	   String msg="반려 처리 완료";
-       String loc="apprdoc/docList";
+       String loc="apprdoc/allList?empId="+empId;
 	   
        model.addAttribute("msg",msg);
        model.addAttribute("loc",loc);
@@ -562,7 +553,7 @@ public class ApprovalController {
 		   int result2 = service.updateNextOrder(data);
 		   
 		   String msg="승인 완료";
-	       String loc="apprdoc/docList";
+	       String loc="apprdoc/allList?empId="+empId;
 	       model.addAttribute("msg",msg);
 	       model.addAttribute("loc",loc);
 
@@ -593,8 +584,6 @@ public class ApprovalController {
 					   
 					   int result = service.updateVacation(dataL);
 					   
-					   System.out.println("잔여 휴가 변경 완료");
-					   
 				   }else {
 					   int result = service.updateVacationHalf(empId);
 				   }
@@ -615,7 +604,7 @@ public class ApprovalController {
    public void fileDownload(@PathVariable String file, HttpServletResponse response,  HttpSession session) throws IOException{
 	 
 	   String path = session.getServletContext().getRealPath("/resource/upload/approval");
-	    
+
 	   File f = new File(path, file);
 	   
 	// file 다운로드 설정
