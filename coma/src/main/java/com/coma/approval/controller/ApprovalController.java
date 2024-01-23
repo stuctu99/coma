@@ -293,7 +293,7 @@ public class ApprovalController {
          int result = service.insertApproval(doc);   
 
          msg="문서 등록 성공";
-         loc="apprdoc/allList"; // 결재 문서함 페이지로 이동
+         loc="apprdoc/allList?empId="+empId; // 결재 문서함 페이지로 이동
       }catch(RuntimeException e){
          msg="문서 등록 실패";
          loc="approval/writedoc";
