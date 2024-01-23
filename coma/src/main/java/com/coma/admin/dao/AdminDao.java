@@ -60,7 +60,7 @@ public class AdminDao {
 	}
 	
 	//사원 Chart Data
-	public List<Map> charEmpData(SqlSession session, Map<String, Integer> monthResult) {
+	public List<Map> charEmpData(SqlSession session, Map<String, Object> monthResult) {
 		return session.selectList("emp.charEmpData", monthResult);
 	}	
 	

@@ -256,7 +256,8 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
 }
 /*  ajax결과 */
 function updateTable(commuteList) {
-    $("#empTable").empty();
+	const $div=document.getElementById("pageBar");
+	$("#empTable").empty();
     var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
     var absenceCount=0,latenessCount = 0,nonabsence =0;Uncleared = 0;
     /* console.log(commuteList); */
@@ -330,6 +331,7 @@ function updateTable(commuteList) {
 	console.log(latenessCount);
 	console.log(Uncleared);
 	console.log("여기");
+	
     var total = absenceCount+nonabsence
     $('#lateCount').html(${'latenessCount'});
     $('#finishCount').html(${'absenceCount'});

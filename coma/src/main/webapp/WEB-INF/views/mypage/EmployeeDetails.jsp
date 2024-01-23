@@ -84,9 +84,7 @@ text-align: left;
 							        <option value='D2' <c:if test="${emp.dept.deptType eq '행정'}"> selected="selected" </c:if>>행정팀</option>
 							        <option value='D4' <c:if test="${emp.dept.deptType eq '교육'}"> selected="selected" </c:if>>교육팀</option>
 							        <option value='D5' <c:if test="${emp.dept.deptType eq '취업'}"> selected="selected" </c:if>>취업팀</option>
-							        <option value='D1' <c:if test="${emp.dept.deptType eq '관리자'}"> selected="selected" </c:if>>관리부</option>
-							        
-
+							        <option value='D1' <c:if test="${emp.dept.deptType eq '관리'}"> selected="selected" </c:if>>관리부</option>
 							    </select>
 						    </div>
 						    <div class="form-group col-6">
@@ -110,10 +108,10 @@ text-align: left;
 									<c:choose>
 									    <c:when test="${empVacation % 1 == 0}">
 									        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
-							 				<input class="form-control" type="number" value="${formattedNumber}" id="example-number-input" name = "empVacation" >
+							 				<input class="form-control" type="number" value="${formattedNumber}" id="example-number-input" name = "empVacation" oninput="validateInput()">
 									    </c:when>
 									    <c:otherwise>
-						        			<input class="form-control" type="number" value="${emp.empVacation}" id="example-number-input" name = "empVacation">
+						        			<input class="form-control" type="number" value="${emp.empVacation}" id="example-number-input" name = "empVacation"oninput="validateInput()">
 									    </c:otherwise>
 									</c:choose>	
 						    </div>
@@ -194,6 +192,17 @@ function count(type)  {
 	  // 결과 출력
 	  resultElement.innerText = number;
 	}
+//유효성 검사 함수
+function validateInput() {
+  var inputElement = document.getElementById("example-number-input");
+  var inputValue = inputElement.value;
+
+  // 음수인 경우 경고 메시지 출력 및 입력값 초기화
+  if (inputValue < 0) {
+    alert("음수는 입력할 수 없습니다.");
+    inputElement.value = "";
+  }
+}
 </script>
 
 

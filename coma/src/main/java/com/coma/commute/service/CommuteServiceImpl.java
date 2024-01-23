@@ -51,9 +51,9 @@ public class CommuteServiceImpl implements CommuteService {
    }
 
 	@Override
-	public List<Map> selectCommuteAll(String loginId) {
+	public List<Map> selectCommuteAll(Map<String, Object> commute) {
 		// TODO Auto-generated method stub
-		return dao.selectCommuteAll(session, loginId);
+		return dao.selectCommuteAll(session, commute);
 	}
 
 	@Override
@@ -96,6 +96,12 @@ public class CommuteServiceImpl implements CommuteService {
 	public int updateUncleared() {
 		
 		return dao.updateUncleared(session);
+	}
+
+	@Override
+	public List<Map> selectCommuteInfo2(String loginId) {
+		// TODO Auto-generated method stub
+		return dao.selectCommuteInfo2(session,loginId);
 	}
 
 
