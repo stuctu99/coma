@@ -54,12 +54,6 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 	
 	@Override
-	public String selectNowCreateChatRoomNo() {
-		// TODO Auto-generated method stub
-		return dao.selectNowCreateChatRoomNo(session);
-	}
-	
-	@Override
 	public List<ChattingPrivateRoom> selectPrivateChatJoinInfo(String loginId) {
 		// TODO Auto-generated method stub
 		return dao.selectPrivateChatJoinInfo(session, loginId);
@@ -92,7 +86,7 @@ public class MessengerServiceImpl implements MessengerService {
 	
 	@Override
 	@Transactional
-	public int insertChattingRoom(ChattingRoom room) {
+	public String insertChattingRoom(ChattingRoom room) {
 		// TODO Auto-generated method stub
 		return dao.insertChattingRoom(session, room);
 	}

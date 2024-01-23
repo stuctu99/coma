@@ -43,17 +43,23 @@
 			  			<table class="table table-bordered">
 						  
 						  <tbody>
+						  	<tr>
+						  		<th scope="row" class="mylabel">문서 번호</th>
+						  		<td>${doc.docNo }</td>
+						  		<th scope="row" class="mylabel">작성일</td>
+						     	<td>${onlyDate }</td>
+						  	</tr>
 						    <tr>
 						      <th scope="row" class="mylabel">문서 종류</th>
 						      <td>${typeKor }</td>
-						      <th scope="row" class="mylabel">작성일</td>
-						      <td>${onlyDate }</td>
+						   	  <th scope="row" class="mylabel">기안자</th>
+						      <td id="writer">${writer.empName }</td>
 						    </tr>
 						    <tr>
-						      <th scope="row" class="mylabel" >기안자</th>
-						      <td id="writer">${writer.empName }</td>
 						      <th scope="row" class="mylabel">부서</th>
 						      <td>${writer.dept.deptType } </td>
+						      <th scope="row" class="mylabel">직책</th>
+						      <td>${writer.job.jobType } </td>
 						    </tr>
 						    <tr>
 						      	<th scope="row" class="mylabel mytitle">결재자</th>
@@ -184,7 +190,23 @@
 					    </tr>
 			 		</table>
 			 	</div>
-		   </div>		
+		   </div>
+		   <c:if test="${doc.files.size()>0 }">
+			   <c:forEach var="file" items="${doc.files }">
+				   <div class="row">
+				   		<div class="col-3">
+				   		</div>
+				   		<div class="col-6">
+<%-- 				   			<c:set var="fileName" value="${file.attachReName}"/>      		 --%>
+							<a href="<c:url value='${path }/approval/fileDownload/${file.attachReName}'/>">${file.attachReName } </a><br>
+
+				   		</div>
+				   		<div class="col-3">
+				   		</div>
+				   </div>		
+			   
+			   </c:forEach>
+		   </c:if>
           <!-- coma content space -->
           
         </div>

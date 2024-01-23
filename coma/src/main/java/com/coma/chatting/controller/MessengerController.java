@@ -117,11 +117,11 @@ public class MessengerController {
 		}
 		System.out.println(roomInfo);
 //		int alreadyExistFlag = service.selectCountPrivateRoomCheck();
-		int result = service.insertChattingRoom(room);
+		String roomNo = service.insertChattingRoom(room);
 		Map<String, Object> data = new HashMap<>();
-		if (result > 0) {
+		if (roomNo!=null) {
 			data.put("result", "success");
-			data.put("roomNo", service.selectNowCreateChatRoomNo());
+			data.put("roomNo", roomNo);
 		} else {
 			data.put("result", "fail");
 		}

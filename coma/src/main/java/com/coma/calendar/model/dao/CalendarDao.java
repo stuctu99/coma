@@ -13,7 +13,7 @@ import com.coma.model.dto.Commute;
 public interface CalendarDao {
 
 	List<Calendar> selectCalendar(SqlSession session);
-	List<Calendar> selectCalendarDept(SqlSession session,String empId);
+	List<Calendar> selectCalendarDept(SqlSession session,Map<String,String> emp);
 	List<Calendar> selectCalendarMy(SqlSession session,String empId);
 	List<Calendar> selectCalendarAll(SqlSession session,String empId);
 	List<ApprovalLeave> selectCalendarApproval(SqlSession session, String empId);
