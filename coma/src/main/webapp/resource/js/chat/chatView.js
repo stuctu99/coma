@@ -1,3 +1,5 @@
+const nowPage = $(opener.document).find("#my-status").val();
+
 $("#exit-btn").click(function() {
 	if (confirm("채팅방을 완전히 나가겠습니까?")) {
 		const roomNo = $("#roomNo").val();
@@ -445,7 +447,7 @@ const fn_roomUpdate = (roomNo) => {
 				})
 				$("#invite-modal").modal('hide');
 				memberList(msg.roomNo, msg.empId);
-				$(opener.document).find(".chatting-list-btn").click();
+				$(opener.document).find(nowPage).click();
 			} else {
 				alert("접근할 수 없습니다. 관리자에게 문의하세요:(");
 			}

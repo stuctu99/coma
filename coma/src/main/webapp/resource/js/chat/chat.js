@@ -1,5 +1,6 @@
-/* 메신저 서버 */
+let nowPage = $("#my-status").val();
 
+/* 메신저 서버 */
 const mserver = new WebSocket("ws://" + location.host + path + "/messengerServer");
 
 /* 서버 접속 */
@@ -34,7 +35,7 @@ mserver.onmessage = (response) => {
 			break;
 		case "delete":
 			//채팅방 삭제
-			openEvent(respMsg);
+			delRoom(respMsg);
 			break;
 		case "msg":
 			//채팅방 메세지 로드
@@ -65,6 +66,12 @@ class MessageHandler {
 		return JSON.parse(msg);
 	}
 
+}
+
+function delRoom(data) {
+	const delRoom = data.roomNo;
+	console.log($("#" + delRoom).parent());
+	$("#" + delRoom).parent().remove();
 }
 
 /* 메신저 실행 시 함수 */
@@ -277,9 +284,11 @@ const createRoom = (empId) => {
 						})
 						.then(resp => {
 							if (resp.result == "success") {
-								const msg = new MessageHandler("new", empId, "", data.roomNo, "NEW");
-								mserver.send(msg.convert());
-								if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
+								/*(roomNo, sendName, targetId)*/
+								inviteEmp.forEach(targetId => {
+									fn_invite(data.roomNo, loginName, targetId);
+								})
+								if(confirm("채팅방으로 바로 입장하시겠습니까?")) {
 									initModal();
 									enter_chattingRoom(data.roomNo);
 								}
@@ -294,7 +303,6 @@ const createRoom = (empId) => {
 					}
 					const msg = new MessageHandler("new", empId, "", data.roomNo, "NEW");
 					mserver.send(msg.convert());
-					/*$(".chatting-list-btn").click();*/
 				}
 			} else {
 				console.log("방생성 실패");
@@ -384,6 +392,7 @@ const chatListHidden = () => {
 
 // 사원 리스트 버튼
 $(".emp-list-btn").click(function() {
+	$("#my-status").val("emp-list-btn");
 	target = this;
 	empListDisplay(this);
 	chatListHidden();
@@ -391,8 +400,8 @@ $(".emp-list-btn").click(function() {
 
 // 채팅 리스트 버튼 클릭 후 채팅 리스트 가져오기
 $(".chatting-list-btn").click(function() {
+	$("#my-status").val("chatting-list-btn");
 	target = this;
-
 	empListHidden();
 	chatListDisplay(target);
 
@@ -512,7 +521,6 @@ $("#roomPasswordFlag").click(function() {
 		$("#roomPassword").prop("disabled", true);
 		$(this).val("N");
 	}
-	console.log($(this).val());
 })
 
 
@@ -618,16 +626,17 @@ const fn_deleteRoom = () => {
 				if (data.result === 'success') {
 					alert("삭제가 완료되었습니다.");
 					$("#delete-room").css("display", "none");
-					const msg = new MessageHandler("delete", loginId);
-					mserver.send(msg.convert());
-					$(".chatting-list-btn").click();
+					delRoom.forEach(r => {
+						const msg = new MessageHandler("delete", loginId, "", r, "");
+						mserver.send(msg.convert());
+
+					})
 				} else {
 					alert("삭제 실패하였습니다. 관리자에게 문의하세요:");
 				}
 			})
 
 	}
-	console.log(delRoom);
 }
 /* 방입장 전 체크 */
 const enter_room = (roomNo, roomPasswordFlag) => {
@@ -635,7 +644,6 @@ const enter_room = (roomNo, roomPasswordFlag) => {
 		$("#check-roomNo").val(roomNo);
 		$(".enter-room").attr("data-toggle", "modal").attr("data-target", "#passwordScreen");
 	} else {
-		console.log(roomNo);
 		enter_chattingRoom(roomNo);
 	}
 }
@@ -669,7 +677,7 @@ const enter_chattingRoom = (roomNo) => {
 				const windowName = "chattingRoom " + roomNo;
 				const options = "width=600, height=700, scrollbars=yes"
 				$("#btn-" + roomNo).text("참여중").removeClass('btn-outline-primary').addClass('btn-primary');
-				$(".chatting-list-btn").click();
+				$("." + nowPage).click();
 				window.open(url, windowName, options);
 				$("div#" + roomNo + ">span").remove();
 				/*location.reload();*/
@@ -711,14 +719,16 @@ function inviteAlarm(data) {
 	$div.append($row);
 	$modal_body.append($div);
 	$("#invite-alarm").modal();
-
+	chatRoomContainer(data);
 
 }
 
 /* 초대 메세지에서 입장 클릭 시 모달 숨김 */
-$("#enterRoom-btn").click(function() {
-	$("#invite-alarm").modal('hide');
+$("#enterRoom-btn").click(function(){
+	$("#invite-alarm").modal('hide');	
 })
+
+
 
 
 /* 공부하기, 채팅방에서 작성한 채팅 메세지 채팅창에 실시간 출력 */
@@ -727,7 +737,7 @@ window.updateMsg = function(roomNo, content) {
 	fetch(path + "/messenger/room/" + roomNo)
 		.then(response => {
 			if (response.status != 200) {
-				alert("조회불가!!!");
+				alert("메세지 조회 과정에서 에러가 발생하였습니다. 관리자에게 문의하세요.");
 			}
 			return response.json();
 		})
@@ -742,16 +752,8 @@ window.updateMsg = function(roomNo, content) {
 
 /* updateMsg 실행 후 서버에서 접속 세션에 메세지 동기화 */
 const messageUpdate = (msg) => {
-
-	console.log(msg);
 	$(".updateMsg-" + msg.roomNo).remove();
 	const $updateMsg = $("<span>").addClass("updateMsg-" + msg.roomNo);
 	$updateMsg.text("Message : " + msg.msg);
 	$("#chattingList #" + msg.roomNo).append($updateMsg);
-}
-
-
-window.connectUpdate = function() {
-	console.log("닫혔다아아아!!!");
-
 }

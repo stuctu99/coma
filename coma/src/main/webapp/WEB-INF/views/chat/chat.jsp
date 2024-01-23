@@ -45,6 +45,7 @@ div {
 				<hr>
 				<div class="col-12 chat-title">
 					<h1>COMA MESSENGER</h1>
+					<input type="hidden" id="my-status" value="emp-list-btn"/>
 				</div>
 			</div>
 			<hr style="margin: 2px 0;">
@@ -337,6 +338,7 @@ div {
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script>
 	const loginId = '${loginmember.empId}';
+	const loginName = '${loginmember.empName}';
 	const autority = '${loginmember.job.jobCode}';
 	const path = '${path}';
 </script>
