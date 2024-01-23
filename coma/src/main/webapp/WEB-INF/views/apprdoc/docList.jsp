@@ -129,7 +129,7 @@
 	</div>
 	<div style="text-align: center">
 	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary" style="width:780px;">
-	  		<span style="font-size:16px;">+문서 작성하기</span>
+	  		<span style="font-size:16px;">+ 문서 작성하기</span>
 	    </a>
 	 </div>
    </div>
@@ -147,6 +147,7 @@
         >
         <option value=""></option>
         </select>
+        <input type="hidden" name="empId" value="${e.empId }"/>
         <button type="button" class="inline-flex items-center justify-center btn btn-primary" onclick="getSearchList()">
         	검색
 	    </button>
@@ -185,7 +186,22 @@
 	       		<c:forEach var="docs" items="${doc}">
 		        		<tr>
 			         		<td>${docs.docNo }</td>
-			         		<td>${docs.docType }</td>
+			         		<td class="doc-type">
+                            	<c:choose>
+                            		<c:when test="${docs.docType eq 'cash'}">
+							           	지출
+							        </c:when>
+							        <c:when test="${docs.docType eq 'leave'}">
+							            휴가
+							        </c:when>
+							        <c:when test="${docs.docType eq 'req'}">
+							           	품의
+							        </c:when>
+							        <c:when test="${docs.docType eq 'etc'}">
+							            기타
+							        </c:when>
+							    </c:choose>
+                            </td>
 			         		<td><a href="${path }/approval/viewdoc?docNo=${docs.docNo }">${docs.docTitle }</a></td>
 			         		<td>${docs.emp.empName }</td>
 			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
@@ -215,13 +231,29 @@ function getSearchList(){
 				.forEach(function(searchDoc){
 					console.log(searchDoc);
 					const writeDate=new Date(searchDoc.docDate);
+					const endDate=new Date(searchDoc.docEndDate);
 					str='<tr>'
 					str+="<td>"+searchDoc.docNo+"</td>";
-					str+="<td>"+searchDoc.docType+"</td>";
+					
+					switch (searchDoc.docType) {
+                    case 'etc':
+                        str += "<td>기타</td>";
+                        break;
+                    case 'cash':
+                        str += "<td>지출</td>";
+                        break;
+                    case 'req':
+                        str += "<td>품의</td>";
+                        break;
+                    case 'leave':
+                        str += "<td>휴가</td>";
+                        break;
+                	}
+					
 					str+="<td><a href = '/approval/viewdoc?docNo=" + searchDoc.docNo + "'>" + searchDoc.docTitle + "</a></td>";
 					str+="<td>"+searchDoc.emp.empName+"</td>";
 					str+="<td>"+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+"</td>";
-					str+="<td>"+searchDoc.docCorrectDate+"</td>";
+					str+="<td>"+endDate.getFullYear()+"-"+endDate.getMonth()+1+"-"+endDate.getDate()+"</td>";
 					str+="<td>"+searchDoc.docProgress+"</td>";
 					str+="</tr>";
 					console.log(str);

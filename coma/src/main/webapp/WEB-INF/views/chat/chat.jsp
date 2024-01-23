@@ -69,8 +69,7 @@ div {
 					<input type="hidden" id="empId" value="${loginmember.empId }" />
 					<h2>${loginmember.empName }님반갑습니다.</h2>
 				</div>
-				<div class="col-2">
-				</div>
+				<div class="col-2"></div>
 			</div>
 			<!------------------- 사원 데이터 ----------------------->
 			<c:if test="${not empty emp}">
@@ -88,7 +87,9 @@ div {
 									<small><c:out value="${e.job.jobType }" /></small>
 								</div>
 								<div class="col-7">
-									<img class="emp-profile-img" src="${path }/resource/upload/profile/${e.empPhoto }" /><strong>&nbsp;&nbsp;<c:out value="${e.empName}" /></strong>
+									<img class="emp-profile-img"
+										src="${path }/resource/upload/profile/${e.empPhoto }" /><strong>&nbsp;&nbsp;<c:out
+											value="${e.empName}" /></strong>
 								</div>
 								<c:if test="${e.empId!=loginmember.empId }">
 									<div class="col-2">
@@ -160,7 +161,7 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="text" name="roomName" id="roomName" value=""/>
+									<input type="text" name="roomName" id="roomName" value="" />
 								</div>
 								<div class="col-6">
 									<select name="roomType" id="roomType">
@@ -192,9 +193,10 @@ div {
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-12" style="border-top:1px solid black;border-bottom:1px solid black;">
+								<div class="col-12"
+									style="border-top: 1px solid black; border-bottom: 1px solid black;">
 									<h3 id="invite-title">사원리스트</h3>
-								</div>	
+								</div>
 							</div>
 							<div class="contain" id="invite-emp-list">
 								<c:forEach var="d" items="${dept}">
@@ -206,14 +208,15 @@ div {
 									<div class="row">
 										<div class="col-12">
 											<c:forEach var="e" items="${emp}">
-													<c:if test="${loginmember.empId != e.empId}">
-														<c:if test="${e.dept.deptCode == d.deptCode }">
+												<c:if test="${loginmember.empId != e.empId}">
+													<c:if test="${e.dept.deptCode == d.deptCode }">
 														<input type="checkbox" class="invite_emp"
 															name="invite_emp[]" id="${e.empId}" value="${e.empId}">
-														<label for="${e.empId }"><c:out value="${e.empName} ${e.job.jobType }" /></label>
+														<label for="${e.empId }"><c:out
+																value="${e.empName} ${e.job.jobType }" /></label>
 														<br>
-														</c:if>
 													</c:if>
+												</c:if>
 											</c:forEach>
 										</div>
 									</div>
@@ -277,6 +280,31 @@ div {
 							data-dismiss="modal">돌아가기</button>
 						<button type="button" class="btn btn-primary" id="password-check"
 							onclick="passwordCheck();">입장</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 초대 알림 -->
+		<!-- Modal -->
+		<div class="modal fade" id="invite-alarm" tabindex="-1" role="dialog"
+			aria-labelledby="inviteModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="inviteModalLabel">초대알림</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div id="invite-alarm-body" class="modal-body">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">닫기</button>
+						<button id="enterRoom-btn" type="button" class="btn btn-primary">입장
+						</button>
 					</div>
 				</div>
 			</div>

@@ -50,16 +50,17 @@ public class MessengerController {
 	@GetMapping("/init/{loginId}")
 	@ResponseBody
 	public Map<String, Object> initButton(@PathVariable String loginId) {
-		Map<String, Object> test = new HashMap<>();
+		Map<String, Object> param = new HashMap<>();
 		List<ChattingPrivateRoom> data = service.selectPrivateChatJoinInfo(loginId);
-		test.put("test", data);
-		return test;
+		param.put("test", data);
+		return param;
 	}
 
 	@GetMapping("/room/{roomNo}")
 	@ResponseBody
-	public String selectRoomPasswordFlag(@PathVariable String roomNo) {
-		return service.selectPasswordFlagByRoomNo(roomNo);
+	public ChattingRoom selectRoomByRoomNo(@PathVariable String roomNo) {
+		ChattingRoom room = service.selectRoomByRoomNo(roomNo); 
+		return room;
 	}
 
 	@GetMapping("/roomlist/{type}/{loginId}")
@@ -83,6 +84,17 @@ public class MessengerController {
 	public String recentChattingMessageByRoomNo(@PathVariable String roomNo) {
 		return service.selectRecentChattingMessageByRoomNo(roomNo);
 	}
+	
+	@PostMapping("/alarm")
+	@ResponseBody
+	public Map<String,Object> selectInviteInfo(@RequestBody Map<String,String> inviteInfo){
+		return service.selectInviteInfo(inviteInfo);
+		
+	}
+	
+	
+	
+	
 
 	@PostMapping("/createRoom")
 	@ResponseBody

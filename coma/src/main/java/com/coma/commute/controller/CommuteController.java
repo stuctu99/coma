@@ -83,7 +83,7 @@ public class CommuteController {
 	      return modelAndView;
 	      
 	   }
-	   
+	   //
 	     @GetMapping("/commuteDetail")
 	     public String commuteDetail(Principal pri, Model m,@RequestParam(defaultValue="1") int cPage,
 	            @RequestParam(defaultValue="10") int numPerpage) {
@@ -130,7 +130,7 @@ public class CommuteController {
 			
 			return "mypage/empCommute";
 	     }
-	     //ajax 리스트 메소
+	     //ajax 리스트 메소드
 	     @PostMapping("/empCommuteEnd")
 	     public @ResponseBody Map<String, Object> empCommuteEnd (@RequestBody Map<String, Object> commute) {	        
 	        int totalData =service.countSearchCommute(commute);
@@ -142,6 +142,7 @@ public class CommuteController {
 	    //수정하기 
 	    @PostMapping("/updateEmployeeCommute")
 	 	public String  updateEmployeeCommute (@RequestParam Map<String, Object> commute, Model model) {
+	    	
 	    	int result = service.updateEmployeeCommute(commute);
 	    	String msg, loc;		
 	 		if(result>0) {

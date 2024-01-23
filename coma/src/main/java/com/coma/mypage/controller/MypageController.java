@@ -69,14 +69,9 @@ public class MypageController {
 		//비밀번호 값 받아서 암호화하기 
 		String newPassword = (String) emp.get("empPw");
 	    String newEncryptedPassword = passwordEncoder.encode(newPassword);
-//	    System.out.println( "암호화된 비밀번호  "+newEncryptedPassword);
 	    emp.put("empPhoto", file.getOriginalFilename());
 	    emp.put("newEmpPw", newEncryptedPassword);
-	    
 		int result = service.updateEmp(emp);
-		System.out.println(result);
-		
-		//result 결과에 따라서 메세지 출력 
 		String msg, loc;		
 		if(result>0) {
 			msg="정보 수정이 완료되었습니다.";
@@ -105,40 +100,34 @@ public class MypageController {
 	    }
 	}
 
-	
 	//인사팀에서 상세보기들어가기 페이지  
 	@GetMapping("/EmployeeDetails")
-	public void employeeDetails(@RequestParam("empId") String empId, Model model) {
-	    //System.out.println("Received empId: " + empId);	    
+	public void employeeDetails(@RequestParam("empId") String empId, Model model) {    
 	    Emp e = empService.selectEmpById(empId);	    
-	    //System.out.println( "결과"+e);	    
-	    // 모델에 직원 정보를 추가하여 뷰에 전달
 	    model.addAttribute("emp", e);	    
 	}
 	
 	
 	@PostMapping("/EmployeeDetailEnd")
-	public String  updateEmployeeDetail(@RequestParam Map<String, Object> emp, Model model) {
-		//logger.debug();
-		//System.out.println("Received!!!"+emp);
-		//받은 값을 update 시키는 메소드 
+	public String  updateEmployeeDetail(@RequestParam Map<String, Object> emp, Model model) {		
+		System.out.println(emp.get("empVacation"));
+		System.out.println("여기");
+    	System.out.println(emp);
 		int result = service.updateEmployeeDetail(emp);
 		//result 결과에 따라서 메세지 출력 
 		String msg, loc;		
 		if(result>0) {
-			msg="입력성공";
+			msg= "직원 정보가 수정이 되었습니다.";
 			loc="admin/adminEmp";
 		}else {
 			Object empId = emp.get("empId");
-			msg="입력실패";
+			msg= "직원 정보 수정에 실패되었습니다.";
 			loc = "mypage/EmployeeDetails?empId=" + empId;
 			
 		}
 		model.addAttribute("msg",msg);
 		model.addAttribute("loc",loc);
 		return "common/msg";
-		//System.out.println(result);
-		//return "redirect:/admin/adminEmp";
 	}
 	
 	//휴가근황보는 메소드 
@@ -146,7 +135,6 @@ public class MypageController {
 	public void MyvacationInfo(@RequestParam(defaultValue="1") int cPage,
 								@RequestParam(defaultValue="10") int numPerpage,
 								Principal pri, Model m) {
-		//휴가 결재 리스트 가져오기 
 		String loginId=pri.getName();
 		List<Map> vacationList= service.selectVacationInfo(Map.of("cPage",cPage,"numPerpage",numPerpage,"loginId",loginId));		
 		System.out.println(vacationList);		
@@ -160,15 +148,11 @@ public class MypageController {
 		    if (!("완료".equals(vacation.get("DOC_PROGRESS")) || "반려".equals(vacation.get("DOC_PROGRESS")))) {
 		    	
 		        waitCount++;
-		        System.out.println("들어왔니 ?");
 		    }		    
 		    if ("완료".equals(vacation.get("DOC_PROGRESS"))){
 		    	finishCount++;
-		    	System.out.println("들어왔니 ?");
 		    }
-		    
 		}		
-		//System.out.println(waitCount);
 		int count=service.countVacation(loginId);
 		m.addAttribute("waitCount",waitCount);
 		m.addAttribute("finishCount",finishCount);
@@ -177,14 +161,6 @@ public class MypageController {
 		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/mypage/MyvacationInfo"));
 	}
 	
-	//@PostMapping("MyCommuteInfo")
-	//public void myCommuteInfo() { 	}
-
-
-
-	
-	
-
 	
 	
 }

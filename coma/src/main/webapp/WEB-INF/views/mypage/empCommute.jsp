@@ -6,9 +6,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
-<c:set var="emp"
-	value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
-<script src="/resource/js/jquery-3.7.0.js"></script>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
+<script src="${path }/resource/js/jquery-3.7.0.js"></script>
 <style>
 div {
 	/*  border: 2px solid red; */
@@ -31,7 +31,6 @@ div {
 	padding: 20px;
 	border-radius: 20px;
 }
-
 .smallbox {
 	margin: 30px;
 	/* border: 1px solid lightgrey;   */
@@ -41,12 +40,8 @@ div {
 	padding-top: 20px;
 }
 
-
 </style>
-<div class="coma-container containerbig">
- <%--  ${commute} 
-	  ${empId } --%>
-	  
+<div class="coma-container containerbig">  
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-4" style="display: flex;">
@@ -69,7 +64,7 @@ div {
 		    </div>
 		</div>
 		<div class="col-1">
-			<button type="button" class="btn btn-primary"  onclick="submitForm()">검색</button>
+			<button type="button" class="btn btn-primary"  onclick="submitForm();">검색</button>
 		</div>
 		<div class="col-1">
 			<a href="${path }/commute/empCommute?empId=${empId }">
@@ -97,18 +92,22 @@ div {
 					</thead>
 					
 					<tbody class="list" id="empTable">
-					
 						<c:if test="${not empty commute}">
 							<c:forEach var="c" items="${commute }">
 								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
 									<tr>
 										<td>
-											<c:if test="${c.EMP_COMMUTE_STATUS eq 'Uncleared'}">
-											    퇴근 미처리
-											</c:if>
-											<c:if test="${c.EMP_COMMUTE_STATUS ne 'Uncleared'}">
-											    ${c.EMP_COMMUTE_STATUS}
-											</c:if>
+										    <select class="form-control" id="exampleFormControlSelect1" name="status">
+										     <option value="근무중" <c:if test="${c.STATUS eq '근무중'}"> selected="selected" </c:if>>근무중</option>
+										     <option value="외근중"<c:if test="${c.STATUS eq '외근중'}"> selected="selected" </c:if>>외근중</option>
+										     <option value="퇴근 미처리"<c:if test="${c.STATUS eq '퇴근 미처리'}"> selected="selected" </c:if>>퇴근 미처리</option>
+										     <option value="퇴근"<c:if test="${c.STATUS eq '퇴근'}"> selected="selected" </c:if>>퇴근</option>
+										     <option value="결근"<c:if test="${c.STATUS eq '결근'}"> selected="selected" </c:if>>결근</option>
+										     <option value="지각" <c:if test="${c.STATUS eq '지각'}"> selected="selected" </c:if>>지각</option>
+										     <option value="연차" <c:if test="${c.STATUS eq '연차'}"> selected="selected" </c:if>>연차</option>
+										     <option value="반차" <c:if test="${c.STATUS eq '반차'}"> selected="selected" </c:if>>반차</option>
+										     </select>
+
 										</td>
 										<td>
 											<fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" />
@@ -134,15 +133,11 @@ div {
 										</td>
 									</tr>
 									<input type="hidden" value = "<fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yy/MM/dd" />" name= "workdate">
-									
-									<input type="hidden" value = "${empId }" name= "empId" id="empId" >
-									
+									<input type="hidden" value = "${empId }" name= "empId" id="empId" >									
 								</c:if>
 							</c:forEach>
 						</c:if>
-						
 					</tbody>
-					
 				</table>
 				</form>
 				<div id="pageBar">${pageBar }</div>
@@ -151,16 +146,6 @@ div {
 		<div class="col-1"></div>
 	</div>
 </div>
-<!--  -->
-
-<!-- <div class="coma-container">
-	<div class="row">
-		총 12칸
-		<div class="col-4">1</div>
-		<div class="col-4">2</div>
-		<div class="col-4">3</div>
-	</div>
-</div> -->
 
 <script>
 
@@ -187,7 +172,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     console.log(startTime);
     console.log(endTime);
     console.log(empId);
-    fetch("${path}/commute/empCommuteEnd", {
+    fetch(${path}"/commute/empCommuteEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

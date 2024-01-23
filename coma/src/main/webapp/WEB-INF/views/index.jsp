@@ -12,10 +12,6 @@
 
 <!-- TEAM COMA SPACE -->
 <style>
-
-/* div{
-   border: 2px solid red;
-}    */
 .bigContainer {
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
    text-align: center;
@@ -87,13 +83,12 @@ td {
 			<div class="bigContainer" style="border-radius: 20px; margin: 0px 0px 20px 0px; height:170px;">
 				<h1 id="stopwatch">00:00:00</h1>
 				<div class="row" style="display: flex; flex-direction: row; justify-content: space-evenly; height: 44px">
+					
 					<c:choose>
 						<%-- 출근 시간이 값이 없으면  --%>
 						<c:when test="${myCommute.commuteClockin == null}">
 							<div class=" col-3 " id="clockin">
-								<div class="btncss" id="clockin1">
-									<i class="ni ni-briefcase-24"></i>
-								</div>
+								<button type="button"  class="btn btn-primary" id = "clockin1" onclick="clockin1()"><i class="ni ni-briefcase-24"></i></button>
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -103,25 +98,42 @@ td {
 							</div>
 						</c:otherwise>
 					</c:choose>
+					<!-- 외출하기 -->
 					<c:choose>
 						<c:when test="${myCommute.commuteStarttime == null}">
-							<div class=" col-3" id="starttime">
-								<div class="btncss" id="starttime1">
-									<i class="ni ni-button-pause"></i>
-								</div>
-							</div>
+							<c:choose>
+								<c:when test="${myCommute.commuteClockin != null}">
+									<div class=" col-3" id="starttime">
+										<button type="button"  class="btn btn-primary" id = "starttime1" onclick="starttime1()"><i class="ni ni-button-pause"></i></button>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class=" col-3" id="starttime">
+										<button type="button"  class="btn btn-primary" id = "starttime1"  onclick="starttime1()" disabled ><i class="ni ni-button-pause"></i></button>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</c:when>
 						<c:otherwise>
-							<div class="col-3" id="starttimeResult"><fmt:formatDate value="${myCommute.commuteStarttime}" pattern="HH:mm:ss" /></div> 
+							<div class="col-3" id="starttimeResult">
+								<fmt:formatDate value="${myCommute.commuteStarttime}" pattern="HH:mm:ss" />
+							</div> 
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
 						<c:when test="${myCommute.commuteEndtime == null}">
-							<div class=" col-3" id="endtime">
-								<div class="btncss" id="endtime1">
-									<i class="ni ni-button-play"></i>
-								</div>
-							</div>
+							<c:choose>
+								<c:when test="${myCommute.commuteStarttime != null}">
+									<div class=" col-3" id="endtime">
+										<button type="button"  class="btn btn-primary" id = "endtime1" onclick="endtime1()" ><i class="ni ni-button-play"></i></button>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class=" col-3" id="endtime">
+										<button type="button"  class="btn btn-primary" id = "endtime1"  onclick="endtime1()" disabled ><i class="ni ni-button-play"></i></button>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</c:when>
 						<c:otherwise>
 							<div class="col-3" id="endtimeResult"><fmt:formatDate value="${myCommute.commuteEndtime}" pattern="HH:mm:ss" /></div>
@@ -129,17 +141,24 @@ td {
 					</c:choose>
 					<c:choose>
 						<c:when test="${myCommute.commuteClockout == null}">
-							<div class="col-3" id="clockout">
-								<div class="btncss" id="clockout1">
-									<i class="ni ni-spaceship"></i>
-								</div>
-							</div>
+							<c:choose>
+								<c:when test="${(myCommute.commuteClockin != null && myCommute.commuteStarttime != null && myCommute.commuteEndtime != null)
+									||(myCommute.commuteClockin != null && myCommute.commuteStarttime == null && myCommute.commuteEndtime == null) }">
+									<div class="col-3" id="clockout">
+										<button type="button"  class="btn btn-primary" id ="clockout1" onclick="clockout1()" ><i class="ni ni-spaceship"></i></button>							
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="col-3" id="clockout">
+										<button type="button"  class="btn btn-primary" id ="clockout1" onclick="clockout1()"disabled><i class="ni ni-spaceship"></i></button>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</c:when>
 						<c:otherwise>
 							<div class="col-3" id="clockoutResult"><fmt:formatDate value="${myCommute.commuteClockout}" pattern="HH:mm:ss" /></div>
 						</c:otherwise>
 					</c:choose>
-
 				</div>
 				<div class="row"style="display: flex; flex-direction: row; justify-content: space-evenly;">
 					<div class="col-3">
@@ -158,7 +177,18 @@ td {
 			</div>
 			<div class="bigContainer" style="display: flex;border-radius: 20px;height:150px;margin: 0px 0px 20px 0px;justify-content: center;flex-direction: column;">
 				<div>
-					<h2>잔여 휴가 ${emp.empVacation} 일 남았습니다.</h2>
+					<h2>잔여 휴가 
+						<c:set var="empVacation" value="${emp.empVacation}" />
+						<c:choose>
+						    <c:when test="${empVacation % 1 == 0}">
+						        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
+						    		${formattedNumber} 일
+						    </c:when>
+						    <c:otherwise>
+						       ${emp.empVacation} 일
+						    </c:otherwise>
+						</c:choose>
+					남았습니다.</h2>
 				</div>
 				<div class="row">
 					<div class="col-2"></div>
@@ -187,7 +217,7 @@ td {
 							<c:forEach var="mainNotice" items="${mainNotice}">
 								<tr>
 									<td class="notice-title"><a
-										href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
+										href="${path }/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
 									
 									<c:choose>
 										<c:when test="${mainNotice.boardDate.year == 124}">
@@ -197,10 +227,8 @@ td {
 						                    <td class="noitce-date" style="text-align: right;"><fmt:formatDate value="${mainNotice.boardDate}" pattern="yyyy-MM-dd" /></td>
 						                </c:otherwise>
 						            </c:choose>
-						            
 								</tr>
 							</c:forEach>
-							<td></td><td></td>
 						</table>
 					</div>
 				</div>
@@ -216,18 +244,19 @@ td {
 					</div>
 				</div>
 			</div>
-			<a href="${path }/calendar"> 
-				<div class="bigContainer" style="height:530px; display: flex; justify-content: center; align-items: center;">
-					<div id='calendar' style="width:90%;"></div>
-				</div>
-			</a>
+
+			<div class="bigContainer" style="height:530px; display: flex; justify-content: center; align-items: center;">
+				<div id='calendar' style="width:90%;"></div>
+			</div>
+
 		</div>
-<!-- 	<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
-	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button> -->
+ 	<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
+	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button> 
 
    <div class=" col-1"></div>
    </div>
 </div>
+
 <script>
     // myCommute 객체에서 시간 값들을 가져옴
     var ex = new Date('${myCommute.commuteClockin}').getTime();
@@ -327,10 +356,13 @@ td {
       }
    }
    /* 달력 */
-    document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
        const calendarEl = document.getElementById('calendar')
        const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
+          dateClick: function(info){
+             window.location.href="${path}/calendar";
+          },
+         initialView: 'dayGridMonth',
           firstDay:1,
           locale:'kr',
           headerToolbar:{
@@ -359,201 +391,195 @@ td {
     });
 
 
+
+//ajax로 받는 시간을 변수로 선언 
 let clockIn, clockout,endtime, starttime;
 //출근하기 버튼을 눌렀을 때
-if(!commuteClockin){
-	document.getElementById('clockin').addEventListener('click', function() {
-	    var empId = '${emp.empId}';
-	    clockIn = new Date().getTime();
-	    
-	    console.log('출근 버튼'+clockIn);
-	    // Fetch to insert commute record
-	    fetch('${path}/commute/updateClockIn', {
-	        method: "post",
-	        headers: { "Content-Type": "application/json" },
-	        body: JSON.stringify({
-	            empId: empId
-	        })
-	    }).then(response => {
-	        console.log(response);
-	        if (response.status != 200) {
-	            throw new Error("");
-	        }
-	        return response.json();
-	    }).then(result => {
-	        if (result > 0) {
-	            alert("출근했습니다.");
-	            /* var clockinDiv = document.getElementById('clockin1'); */
-	            document.getElementById('clockin1').remove();
-	            // Display clock-in time
-	            document.getElementById('clockin').textContent = getFormatTime(new Date());
-	            //출근 누르면 타이머 시작!
-	            generatePattern(1000);
-	        }
-	    }).catch(e => {
-	        alert(e);
-	    });
-	});
-}
+function clockin1(){
+    var empId = '${emp.empId}';
+    clockIn = new Date().getTime();
+    
+    console.log('출근 버튼'+clockIn);
+    // Fetch to insert commute record
+    fetch('${path}/commute/updateClockIn', {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            empId: empId
+        })
+    }).then(response => {
+        console.log(response);
+        if (response.status != 200) {
+            throw new Error("");
+        }
+        return response.json();
+    }).then(result => {
+        if (result > 0) {
+            alert("출근했습니다.");
+            document.getElementById('clockin').textContent = getFormatTime(new Date());
+            document.getElementById('starttime1').disabled = false;
+            document.getElementById('clockout1').disabled = false;
+            //출근 누르면 타이머 시작!
+            generatePattern(1000);
+            
+        }
+    }).catch(e => {
+        alert(e);
+    });
+};
+
 
 //외출시작하기 눌렀을 때
-if(!commuteStarttime){
-	document.getElementById('starttime1').addEventListener('click', function() {
-	    var empId = '${emp.empId}';
-	    starttime = new Date().getTime();  
-	    fetch('${path}/commute/updatestarttime', {
-	        method: "post",
-	        headers: { "Content-Type": "application/json" },
-	        body: JSON.stringify({
-	            empId: empId
-	        })
-	    }).then(response => {
-	        console.log(response);
-	        if (response.status != 200) {
-	            throw new Error("");
+function starttime1(){
+	var empId = '${emp.empId}';
+	starttime = new Date().getTime();  
+	fetch('${path}/commute/updatestarttime', {
+	    method: "post",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify({
+	        empId: empId
+	    })
+	}).then(response => {
+	    console.log(response);
+	    if (response.status != 200) {
+	        throw new Error("");
+	    }
+	    return response.json();
+	}).then(result => {
+	    if (result > 0) {
+	        alert("외출을 시작합니다.");
+	        //시간 찍기 
+	        document.getElementById('starttime').textContent = getFormatTime(new Date());
+	        //타이머 중지시키고 타이머 칸 비우기 
+	        clearInterval(interval);
+	        document.getElementById("stopwatch").innerText='';            
+	        if(commuteClockin){
+	           //commuteClockin 지금 새로고침해서 commuteClockin시간이 있다 !
+	           var now=  new Date().getTime()-commuteClockin;
+	            document.getElementById("stopwatch").innerText = formatTime(now-2000);
+	        }else {
+	           //지금 이시간 업성? 
+	           var now=  new Date().getTime()-clockIn;
+	            document.getElementById("stopwatch").innerText = formatTime(now);
 	        }
-	        return response.json();
-	    }).then(result => {
-	        if (result > 0) {
-	            alert("외출을 시작합니다.");
-	            //시간 찍기 
-	            var clockinDiv = document.getElementById('starttime1');
-	            clockinDiv.remove();
-	            document.getElementById('starttime').textContent = getFormatTime(new Date());
-	            //타이머 중지시키고 타이머 칸 비우기 
-	            clearInterval(interval);
-	            document.getElementById("stopwatch").innerText='';            
-	            if(commuteClockin){
-	            	//commuteClockin 지금 새로고침해서 commuteClockin시간이 있다 !
-	            	var now=  new Date().getTime()-commuteClockin;
-	                document.getElementById("stopwatch").innerText = formatTime(now-2000);
-	            }else {
-	            	//지금 이시간 업성? 
-	            	var now=  new Date().getTime()-clockIn;
-	                document.getElementById("stopwatch").innerText = formatTime(now);
-	            }
-	        }
-	    }).catch(e => {
-	        alert(e);
-	    });
+	        document.getElementById('endtime1').disabled = false;
+	        document.getElementById('clockout1').disabled = true;
+	    }
+	}).catch(e => {
+	    alert(e);
 	});
 }
  //외출하고 돌아왔을 때  눌렀을 때
- if(!commuteEndtime){
-	 document.getElementById('endtime1').addEventListener('click', function() {
-	    var empId = '${emp.empId}';
-	    endtime = new Date().getTime();
-	    
-	    fetch('${path}/commute/updateEndtime', {
-	        method: "post",
-	        headers: { "Content-Type": "application/json" },
-	        body: JSON.stringify({
-	            empId: empId
-	        })
-	    }).then(response => {
-	        console.log(response);
-	        if (response.status != 200) {
-	            throw new Error("");
+ function endtime1(){
+
+	var empId = '${emp.empId}';
+	endtime = new Date().getTime();
+	
+	fetch('${path}/commute/updateEndtime', {
+	    method: "post",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify({
+	        empId: empId
+	    })
+	}).then(response => {
+	    console.log(response);
+	    if (response.status != 200) {
+	        throw new Error("");
+	    }
+	    return response.json();
+	}).then(result => {
+	    if (result > 0) {
+	        alert("근무를 시작합니다.");
+	        document.getElementById('endtime').textContent = getFormatTime(new Date());
+	        //출근시간이 있니 ?
+	        if(commuteClockin){
+	           //외출 시작 시간이 있으면 한번은 새로고침한 상태 
+	           if(commuteStarttime){
+	              //복귀누르기 전에 새로고침을 한 상태
+	              generatePattern(time2);                 
+	           }else{
+	              //외출하기 전에 새로고침을 한 생태라서 js에 외출기록을 있음. 
+	              var timeResult= starttime-commuteClockin;
+	              generatePattern(timeResult);
+	           }
+	           
+	        }else{
+	           //외출 시작 시간 -> ajax로 남아있다.
+	           //console.log('지금 새로고침 한번도 안한 상태 !!!!!!!!!!!!!');
+	           var timeResult= starttime-clockIn;
+	            generatePattern(timeResult);
 	        }
-	        return response.json();
-	    }).then(result => {
-	        if (result > 0) {
-	            alert("근무를 시작합니다.");
-	            var clockinDiv = document.getElementById('endtime1');
-	            clockinDiv.remove();
-	            document.getElementById('endtime').textContent = getFormatTime(new Date());
-	            //출근시간이 있니 ?
-	            if(commuteClockin){
-	            	//외출 시작 시간이 있으면 한번은 새로고침한 상태 
-	            	if(commuteStarttime){
-	            		//복귀누르기 전에 새로고침을 한 상태
-	            		generatePattern(time2);           		
-	            	}else{
-	            		//외출하기 전에 새로고침을 한 생태라서 js에 외출기록을 있음. 
-	            		var timeResult= starttime-commuteClockin;
-	            		generatePattern(timeResult);
-	            	}
-	            	
-	            }else{
-	            	//외출 시작 시간 -> ajax로 남아있다.
-	            	//console.log('지금 새로고침 한번도 안한 상태 !!!!!!!!!!!!!');
-	            	var timeResult= starttime-clockIn;
-	                generatePattern(timeResult);
-	            }
-	        }
-	    }).catch(e => {
-	        alert(e);
-	    });
+	        document.getElementById('clockout1').disabled = false;
+	    }
+	}).catch(e => {
+	    alert(e);
 	});
  }
 //퇴근 눌렀을 때
-if(!commuteClockout){
-	 document.getElementById('clockout1').addEventListener('click', function() {
-	    var empId = '${emp.empId}';
-	    
-	    fetch('${path}/commute/updateclockout', {
-	        method: "post",
-	        headers: { "Content-Type": "application/json" },
-	        body: JSON.stringify({
-	            empId: empId
-	        })
-	    }).then(response => {
-	        console.log(response);
-	        if (response.status != 200) {
-	            throw new Error("");
+function clockout1(){
+	var empId = '${emp.empId}';
+	fetch('${path}/commute/updateclockout', {
+	    method: "post",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify({
+	        empId: empId
+	    })
+	}).then(response => {
+	    console.log(response);
+	    if (response.status != 200) {
+	        throw new Error("");
+	    }
+	    return response.json();
+	}).then(result => {
+	    if (result > 0) {
+	        alert("퇴근합니다.");
+	        document.getElementById('clockout').textContent = getFormatTime(new Date());
+	        //타이머 멈추기
+	        clearInterval(interval);
+	        //''비워주고 
+	        document.getElementById("stopwatch").innerText='';            
+	        var now;           
+	        if(commuteClockin){
+	           if(commuteStarttime){
+	              if(commuteEndtime){
+	                 console.log('퇴근하기 버튼누르기전에 새로고침한 상태 ');
+	                 now= (commuteStarttime-commuteClockin)+(new Date().getTime()-commuteEndtime) ; 
+	                 console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
+	              }else{
+	                 console.log('복귀하기 누르기전에 새로고침한 상태 ');                     
+	                 now= (commuteStarttime-commuteClockin)+(new Date().getTime()-endtime) ; 
+	                 console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);                     
+	              }
+	           }else{
+	              if(starttime){
+	                 console.log('출근 값은 DB -> 출근 버튼 누르고 새로고침한 상태 나머지 ajax 데이터가 있음 ');                  
+	                 now= (starttime-commuteClockin)+(new Date().getTime()-endtime) ; 
+	                 console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
+	              }else{
+	                 //외출안하고 퇴근하는 사람 
+	                 console.log('출근은 했는데 새로고침하고 외출안하고 퇴근하는 사람 ')
+	                 now= new Date().getTime()-commuteClockin;
+	              }
+	           }
+	           
+	        }else{
+	           //새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 
+	           if(starttime){
+	              console.log('새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 ');
+	              now= (starttime-clockIn)+(new Date().getTime()-endtime) ;   
+	              console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
+	           }else{
+	              //출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근 
+	              console.log ('출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근' );
+	              now= (new Date().getTime())-clockIn;
+	              console.log (now );
+	           }
 	        }
-	        return response.json();
-	    }).then(result => {
-	        if (result > 0) {
-	            alert("퇴근합니다.");
-	            var clockinDiv = document.getElementById('clockout1');
-	            clockinDiv.remove();
-	            document.getElementById('clockout').textContent = getFormatTime(new Date());
-	            //타이머 멈추기
-	            clearInterval(interval);
-	            //''비워주고 
-	            document.getElementById("stopwatch").innerText='';            
-	            var now;           
-	            if(commuteClockin){
-	            	if(commuteStarttime){
-	            		if(commuteEndtime){
-	            			//console.log('퇴근하기 버튼누르기전에 새로고침한 상태 ');
-	            			now= (commuteStarttime-commuteClockin)+(new Date().getTime()-commuteEndtime) ; 
-	            			//console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
-	            		}else{
-	            			//console.log('복귀하기 누르기전에 새로고침한 상태 ');            			
-	            			now= (commuteStarttime-commuteClockin)+(new Date().getTime()-endtime) ; 
-	            			//console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);            			
-	            		}
-	            	}else{
-	            		if(starttime){
-		            		//console.log('출근 값은 DB -> 출근 버튼 누르고 새로고침한 상태 나머지 ajax 데이터가 있음 ');            		
-		            		now= (starttime-commuteClockin)+(new Date().getTime()-endtime) ; 
-		            		//console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
-	            		}else{
-	            			//외출안하고 퇴근하는 사람 
-	            			//console.log('출근은 했는데 새로고침하고 외출안하고 퇴근하는 사람 ')
-	            			now= new Date().getTime()-commuteClockin;
-	            		}
-	            	}
-	            }else{
-	            	//새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 
-	            	if(starttime){
-	            		//console.log('새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 ');
-	            		now= (starttime-clockIn)+(new Date().getTime()-endtime) ;   
-	            		//console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
-	            	}else{
-	            		//출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근 
-	            		//console.log ('출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근' );
-	            		now= new Date().getTime()-clockIn;
-	            	}
-	            }
-	            //console.log('최종으로 근무시간을 찍어볼게요 ! '+formatTime(now));
-	            document.getElementById("stopwatch").innerText = formatTime(now);
-	        }
-	    }).catch(e => {
-	        alert(e);
-	    });
+	        console.log('최종으로 근무시간을 찍어볼게요 ! '+formatTime(now));
+	        document.getElementById("stopwatch").innerText = formatTime(now);
+	    }
+	}).catch(e => {
+	    alert(e);
 	});
 }
 //휴가 근황 페이지 전환되는 기능 
@@ -564,14 +590,15 @@ document.getElementById('vacationButton').addEventListener('click', function() {
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
     window.location.href = '${path}/commute/MyCommuteInfo';
 });
-/* document.getElementById('checkInsert').addEventListener('click', function() {
+ document.getElementById('checkInsert').addEventListener('click', function() {
     window.location.href = '/commute/checkInsert';
 });
 document.getElementById('updateUncleared').addEventListener('click', function() {
     window.location.href = '/commute/updateUncleared';
-});  */
+});  
 
 </script>
+
 
 <!-- TEAM COMA SPACE -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

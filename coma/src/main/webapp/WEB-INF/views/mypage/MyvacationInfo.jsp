@@ -6,17 +6,11 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
    <jsp:param name="id" value="mine" />
 </jsp:include>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <style>
-div {
-	/*  border: 2px solid red; */
-	
-}
 
 .bigbax {
-	/* border: 2px solid blue; */
-	/* margin: 15px; */
-	/* border: 2px solid lightgrey */;
 	border-radius: 20px;
 	background-color: #ffffff;
 	padding: 20px;
@@ -51,12 +45,23 @@ div {
 						<h3 class="">남은 연차</h3>
 					</div>
 					<div class="blank">
-						<h4> ${emp.empVacation } 일 <h4/>
+						<h4> 
+							<c:set var="empVacation" value="${emp.empVacation}" />
+							<c:choose>
+							    <c:when test="${empVacation % 1 == 0}">
+							        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
+							    		${formattedNumber} 일
+							    </c:when>
+							    <c:otherwise>
+							       ${emp.empVacation} 일
+							    </c:otherwise>
+							</c:choose>
+						<h4/>
 					</div>
 				</div>
 				<div class=" col-3 smallbox">
 					<div class=" ">
-						<h3 class="">사용한 연차</h3>
+						<h3 class="">승인된 휴가 결재</h3>
 					</div>
 					<div class="blank">
 						<h4>${finishCount } 회</h4>
@@ -84,7 +89,7 @@ div {
 					<div class=""></div>
 				</div>
 				<div class="col-1">
-					<button type="button" class="btn btn-primary" id ="vacationWriteBtn">휴가 신청하기</button>
+					<button type="button" class="btn btn-primary" onclick ="vacationWriteBtn()">휴가 신청하기</button>
 				</div>
 				<div class="col-1"></div>
 			</div>
@@ -133,9 +138,10 @@ div {
 </div>
 
 <script>
-document.getElementById('vacationWriteBtn').addEventListener('click', function() {
-    window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
-});
+function vacationWriteBtn(){
+	window.location.href = '${path}/approval/writedoc';
+}
+
 </script>
 
 

@@ -78,11 +78,16 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 	
 	@Override
-	public String selectPasswordFlagByRoomNo(String roomNo) {
+	public ChattingRoom selectRoomByRoomNo(String roomNo) {
 		// TODO Auto-generated method stub
-		return dao.selectPasswordFlagByRoomNo(session, roomNo);
+		return dao.selectRoomByRoomNo(session, roomNo);
 	}
 
+	@Override
+	public Map<String, Object> selectInviteInfo(Map<String, String> inviteInfo) {
+		// TODO Auto-generated method stub
+		return dao.selectInviteInfo(session, inviteInfo);
+	}
 	
 	
 	@Override
@@ -112,20 +117,5 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 		return dao.deleteChatRoomInfoByRoomNo(session, roomList);
 	}
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
 
 }
