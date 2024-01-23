@@ -38,7 +38,6 @@ mserver.onmessage = (response) => {
 			break;
 		case "msg":
 			//채팅방 메세지 로드
-			console.log("여긴?");
 			messageUpdate(respMsg);
 			break;
 		case "invite":
@@ -647,7 +646,7 @@ const enter_chattingRoom = (roomNo) => {
 				$(".chatting-list-btn").click();
 				window.open(url, windowName, options);
 				$("div#" + roomNo + ">span").remove();
-
+				location.reload();
 				/*if (!chattingView || chattingView.closed) {
 				   const url = "/chatting/room/" + roomNo;
 				   const windowName = "chattingRoom " + roomNo;
@@ -698,7 +697,7 @@ $("#enterRoom-btn").click(function() {
 
 /* 공부하기, 채팅방에서 작성한 채팅 메세지 채팅창에 실시간 출력 */
 window.updateMsg = function(roomNo, content) {
-	console.log(roomNo+content);
+	console.log(roomNo,"////"+content);
 	fetch(path + "/messenger/room/" + roomNo)
 		.then(response => {
 			if (response.status != 200) {
@@ -723,7 +722,6 @@ const messageUpdate = (msg) => {
 	const $updateMsg = $("<span>").addClass("updateMsg-" + msg.roomNo);
 	$updateMsg.text("Message : " + msg.msg);
 	$("#chattingList #" + msg.roomNo).append($updateMsg);
-
 }
 
 

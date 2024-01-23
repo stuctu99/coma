@@ -24,7 +24,7 @@ public interface CommuteDao {
 	
 	Commute selectCommute(SqlSession session, String empId);
 	
-	List<Map> selectCommuteAll (SqlSession session, String loginId);
+	List<Map> selectCommuteAll (SqlSession session, Map<String, Object> commute);
 	
 	int countCommute(SqlSession session,String loginId);
 	
@@ -39,6 +39,8 @@ public interface CommuteDao {
 	Emp selectEmpName(SqlSession session, String empId);
 	
 	int updateUncleared(SqlSession session);
+	
+	List<Map> selectCommuteInfo2(SqlSession session, String loginId);
 	
 
 	
