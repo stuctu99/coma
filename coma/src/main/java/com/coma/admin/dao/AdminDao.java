@@ -17,7 +17,7 @@ import com.coma.model.dto.Student;
 public class AdminDao {
 	
 	//사원관련 Dao
-	public List<Map> selectEmpAllByCurrent(SqlSession session, Map<String, Integer> page){
+	public List<Map> selectEmpAllByCurrent(SqlSession session, Map<String, Object> page){
 		int cPage=(Integer)page.get("cPage");
 		int numPerpage=(Integer)page.get("numPerpage");
 		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
