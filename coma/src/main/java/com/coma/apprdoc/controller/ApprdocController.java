@@ -161,12 +161,13 @@ public class ApprdocController {
 	@PostMapping("/search")
 	@ResponseBody
 	public ResponseEntity<List<ApprovalDoc>> searchDoc(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
-														String keyword, Model m){
+														String keyword, String empId,Model m){
 		
 		Map<String, Object> doc = new HashMap<>();
 		doc.put("keyword", keyword);
 		doc.put("cPage", cPage);
 		doc.put("numPerpage", numPerpage);
+		doc.put("empId", empId);
 		
 		List<ApprovalDoc> searchdoc= service.searchDoc(doc);
 //		int totalData = service.getSearchResultCount(board);

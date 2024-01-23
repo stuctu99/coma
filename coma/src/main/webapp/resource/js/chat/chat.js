@@ -38,6 +38,7 @@ mserver.onmessage = (response) => {
 			break;
 		case "msg":
 			//채팅방 메세지 로드
+			console.log("여긴?");
 			messageUpdate(respMsg);
 			break;
 		case "invite":
@@ -75,7 +76,7 @@ function openEvent(data) {
 		.then(response => {
 			console.log(response);
 			if (response.status != 200) {
-				alert("못잔다...");
+				alert("관리자에게 문의하세요.");
 			}
 			return response.json();
 		})
@@ -92,9 +93,8 @@ function newRoom(data) {
 	//type = "", loginId = "", targetId = "", roomNo = "", msg = ""
 	//방 생성 모달 초기화
 	initModal();
-
-	chatRoomContainer(data);
-	/*$(".chatting-list-btn").click();*/
+	location.reload();
+	$(".chatting-list-btn").click();
 }
 
 function chatRoomContainer(data) {
@@ -153,7 +153,7 @@ function chatRoomContainer(data) {
 
 /* 1:1 채팅 이벤트 */
 function privateNewRoom(data) {
-	chatRoomContainer(data);
+	/*chatRoomContainer(data);*/
 	$("." + data.targetId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 	$("." + data.loginId).attr("onclick", "enter_chattingRoom('" + data.roomNo + "');").removeClass("btn-outline-primary").addClass("btn-primary").text("대화중");
 }
@@ -698,12 +698,13 @@ $("#enterRoom-btn").click(function() {
 
 /* 공부하기, 채팅방에서 작성한 채팅 메세지 채팅창에 실시간 출력 */
 window.updateMsg = function(roomNo, content) {
+	console.log(roomNo+content);
 	fetch(path + "/messenger/room/" + roomNo)
 		.then(response => {
 			if (response.status != 200) {
 				alert("조회불가!!!");
 			}
-			return response.text();
+			return response.json();
 		})
 		.then(data => {
 			if (data.roomPasswordFlag == 'N') {
