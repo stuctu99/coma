@@ -542,22 +542,22 @@ function clockout1(){
 	        if(commuteClockin){
 	           if(commuteStarttime){
 	              if(commuteEndtime){
-	                 //console.log('퇴근하기 버튼누르기전에 새로고침한 상태 ');
+	                 console.log('퇴근하기 버튼누르기전에 새로고침한 상태 ');
 	                 now= (commuteStarttime-commuteClockin)+(new Date().getTime()-commuteEndtime) ; 
-	                 //console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
+	                 console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
 	              }else{
-	                 //console.log('복귀하기 누르기전에 새로고침한 상태 ');                     
+	                 console.log('복귀하기 누르기전에 새로고침한 상태 ');                     
 	                 now= (commuteStarttime-commuteClockin)+(new Date().getTime()-endtime) ; 
-	                 //console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);                     
+	                 console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);                     
 	              }
 	           }else{
 	              if(starttime){
-	                 //console.log('출근 값은 DB -> 출근 버튼 누르고 새로고침한 상태 나머지 ajax 데이터가 있음 ');                  
+	                 console.log('출근 값은 DB -> 출근 버튼 누르고 새로고침한 상태 나머지 ajax 데이터가 있음 ');                  
 	                 now= (starttime-commuteClockin)+(new Date().getTime()-endtime) ; 
-	                 //console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
+	                 console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
 	              }else{
 	                 //외출안하고 퇴근하는 사람 
-	                 //console.log('출근은 했는데 새로고침하고 외출안하고 퇴근하는 사람 ')
+	                 console.log('출근은 했는데 새로고침하고 외출안하고 퇴근하는 사람 ')
 	                 now= new Date().getTime()-commuteClockin;
 	              }
 	           }
@@ -575,7 +575,7 @@ function clockout1(){
 	              console.log (now );
 	           }
 	        }
-	        //console.log('최종으로 근무시간을 찍어볼게요 ! '+formatTime(now));
+	        console.log('최종으로 근무시간을 찍어볼게요 ! '+formatTime(now));
 	        document.getElementById("stopwatch").innerText = formatTime(now);
 	    }
 	}).catch(e => {
@@ -590,12 +590,12 @@ document.getElementById('vacationButton').addEventListener('click', function() {
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
     window.location.href = '${path}/commute/MyCommuteInfo';
 });
-/* document.getElementById('checkInsert').addEventListener('click', function() {
+ document.getElementById('checkInsert').addEventListener('click', function() {
     window.location.href = '/commute/checkInsert';
 });
 document.getElementById('updateUncleared').addEventListener('click', function() {
     window.location.href = '/commute/updateUncleared';
-});  */
+});  
 
 </script>
 

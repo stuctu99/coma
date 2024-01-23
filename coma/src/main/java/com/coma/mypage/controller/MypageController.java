@@ -110,7 +110,9 @@ public class MypageController {
 	
 	@PostMapping("/EmployeeDetailEnd")
 	public String  updateEmployeeDetail(@RequestParam Map<String, Object> emp, Model model) {		
-		System.out.println(emp.get("emp_name"));
+		System.out.println(emp.get("empVacation"));
+		System.out.println("여기");
+    	System.out.println(emp);
 		int result = service.updateEmployeeDetail(emp);
 		//result 결과에 따라서 메세지 출력 
 		String msg, loc;		
