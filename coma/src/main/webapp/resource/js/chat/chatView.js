@@ -206,9 +206,8 @@ const closeChatting = (msg) => {
 	$(".messageView" + msg.roomNo).append(container);
 	container.append(content);
 	container.append($("<br>"));
-	/*container.append(invite);*/
+	let count = $(opener.document).find("#"+msg.roomNo).var();
 	$(opener.document).find("#chatting-active").removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick", "privateChatting('" + msg.empId + "','" + loginId + "');");
-	$(".emp-list-btn").click();
 	$("." + msg.empId).remove();
 	$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
 }
