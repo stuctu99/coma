@@ -161,6 +161,11 @@ public class ApprovalDaoImpl implements ApprovalDao {
 	public int updateAllMyturn(SqlSession session, Map<String, String> data) {
 		return session.update("approval.updateAllMyturn", data);
 	}
+
+	@Override
+	public String selectDocType(SqlSession session, String docNo) {
+		return session.selectOne("approval.selectDocType", docNo);
+	}
 	
 	
 

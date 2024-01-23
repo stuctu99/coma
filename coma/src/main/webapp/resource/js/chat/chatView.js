@@ -90,7 +90,6 @@ server.onmessage = (response) => {
 		case "invite": inviteReload(receiveMsg); break;
 		case "rest": connectionRest(receiveMsg); break;
 		case "out": closeChatting(receiveMsg); break;
-		case "close": connectionRest(receiveMsg); break;
 	}
 
 	console.log(receiveMsg);
@@ -146,11 +145,6 @@ const messagePrint = (msg) => {
 	document.querySelector(".messageView" + msg.roomNo).appendChild(nameDiv);
 	document.querySelector(".messageView" + msg.roomNo).appendChild(div);
 	document.querySelector(".messageView" + msg.roomNo).scrollTop = document.querySelector(".messageView" + msg.roomNo).scrollHeight;
-	/* 테스트 */
-	/*   $(opener.document).find(".updateMsg-"+msg.roomNo).remove();
-	   const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
-	   $updateMsg.text("Message : "+msg.chatContent);
-	   $(opener.document).find("#chattingList #"+msg.roomNo).append($updateMsg);*/
 }
 
 const sendMessage = () => {
@@ -205,7 +199,7 @@ const connectionRest = (msg) => {
 }
 
 const closeChatting = (msg) => {
-	fn_updateInfo(msg.roomNo);
+	/*fn_updateInfo(msg.roomNo);*/
 	const container = $("<div>").addClass("row openMsgContainer");
 	const content = $("<h4>").text(`${msg.empObj.empName}님이 나가셨습니다.`);
 	/*const invite = $("<button>").addClass("btn btn-danger").text("다시초대하기");*/
@@ -216,8 +210,7 @@ const closeChatting = (msg) => {
 	$(opener.document).find("#chatting-active").removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick", "privateChatting('" + msg.empId + "','" + loginId + "');");
 	$(".emp-list-btn").click();
 	$("." + msg.empId).remove();
-	$(opener.location).attr("href", "javascript:$('.emp-list-btn').click()");
-
+	$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
 }
 
 window.onload = () => {
@@ -413,11 +406,11 @@ const fn_update = (roomNo) => {
 		.then(data => {
 			if (data.result == 'success') {
 				console.log(inviteEmp.length);
-				inviteEmp.forEach(id=>{
+				inviteEmp.forEach(id => {
 					console.log("몇번실행되니?");
-					const msg = new Message("invite","", "", "", id , roomNo);
+					const msg = new Message("invite", "", "", "", id, roomNo);
 					server.send(msg.convert());
-					
+
 				})
 				$("#invite-modal").modal('hide');
 				memberList(msg.roomNo, msg.empId);
@@ -429,7 +422,7 @@ const fn_update = (roomNo) => {
 
 const inviteReload = (msg) => {
 	memberList(msg.roomNo, msg.empId);
-	$(opener.location).attr("href","javascript:fn_invite('"+msg.roomNo+"','"+empName+"','"+msg.empId+"');");
+	$(opener.location).attr("href", "javascript:fn_invite('" + msg.roomNo + "','" + empName + "','" + msg.empId + "');");
 	$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
 }
 

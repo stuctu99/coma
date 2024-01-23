@@ -279,6 +279,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return dao.updateAllMyturn(session, data);
 	}
 
+	@Override
+	public String selectDocType(String docNo) {
+		return dao.selectDocType(session, docNo);
+	}
+
 
 
 	

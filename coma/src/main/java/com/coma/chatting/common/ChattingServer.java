@@ -78,22 +78,16 @@ public class ChattingServer extends TextWebSocketHandler {
 			saveChattingMessage();
 		}
 
-		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
-			if (chatRoom.getValue().isEmpty()) {
-				room.remove(chatRoom.getKey());
-			} else {
-				Iterator<Map.Entry<String, WebSocketSession>> client = chatRoom.getValue().entrySet().iterator();
-				while (client.hasNext()) {
-					Map.Entry<String, WebSocketSession> c = client.next();
-					if (c.getValue().equals(session)) {
-						String roomNo = chatRoom.getKey();
-						String empId = c.getKey();
-						client.remove();
-						sendMessage(tempMessage(roomNo, empId));
-					}
-				}
-			}
-		}
+		/*
+		 * for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom :
+		 * room.entrySet()) { if (chatRoom.getValue().isEmpty()) {
+		 * room.remove(chatRoom.getKey()); } else { Iterator<Map.Entry<String,
+		 * WebSocketSession>> client = chatRoom.getValue().entrySet().iterator(); while
+		 * (client.hasNext()) { Map.Entry<String, WebSocketSession> c = client.next();
+		 * if (c.getValue().equals(session)) { String roomNo = chatRoom.getKey(); String
+		 * empId = c.getKey(); client.remove(); sendMessage(tempMessage(roomNo, empId));
+		 * } } } }
+		 */
 
 		System.err.println("[ChattingServer] : 채팅서버종료");
 	}
@@ -127,62 +121,36 @@ public class ChattingServer extends TextWebSocketHandler {
 	}
 
 	private void sendMessage(ChattingMessage msg) {
-		String message = null;
 //		모든접속자에게 메세지 전송 => 특정 방 접속자에게 보낼 수 있는 로직 구현하기
-		if (msg.getType().equals("msg") && room.get(msg.getRoomNo()).size() != 1) {
+		if (msg.getType().equals("msg") && room.get(msg.getRoomNo()).size()!=1) {
 			msgPackages.add(msg);
-			if (msgPackages.size() >= 30) {
+			if (msgPackages.size() >= 0) {
 				saveChattingMessage();
 			}
-		} else if (msg.getType().equals("msg") && room.get(msg.getRoomNo()).size() == 1) {
+		}else if(msg.getType().equals("msg") && room.get(msg.getRoomNo()).size()==1){
 			msgPackages.add(msg);
 			saveChattingMessage();
-		} else if (msg.getType().equals("invite") && msgPackages.size() > 0) {
+		}else if(msg.getType().equals("invite") && msgPackages.size()>0){
+			msgPackages.add(msg);
 			saveChattingMessage();
 		}
-
+		
+		
 		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
 			if (chatRoom.getKey().equals(msg.getRoomNo())) {
 				for (Map.Entry<String, WebSocketSession> client : chatRoom.getValue().entrySet()) {
 					WebSocketSession session = client.getValue();
-					/* System.err.println("[ChattingServer 전달 세션 정보] : "+session); */
+					System.err.println("[ChattingServer 전달 세션 정보] : "+session);
 					try {
-						if (!chatRoom.getValue().isEmpty()) {
-							switch(msg.getType()) {
-							case "open":
-								if(!client.getKey().equals(msg.getEmpId())) {
-									message = mapper.writeValueAsString(msg);
-									session.sendMessage(new TextMessage(message));
-								}
-								break;
-							case "invite":
-								if(!client.getKey().equals(msg.getEmpId())) {
-									message = mapper.writeValueAsString(msg);
-									session.sendMessage(new TextMessage(message));
-								}
-								break;
-							case "msg":
-								message = mapper.writeValueAsString(msg);
-								session.sendMessage(new TextMessage(message));
-								break;
-								
-							case "out":
-								message = mapper.writeValueAsString(msg);
-								session.sendMessage(new TextMessage(message));
-								break;
-							}
-						
-							
-						}
+						String message = mapper.writeValueAsString(msg);
+						session.sendMessage(new TextMessage(message)); 
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
 		}
-
 	}
-
 	private void clientOut(ChattingMessage msg) {
 		for (Map.Entry<String, Map<String, WebSocketSession>> chatRoom : room.entrySet()) {
 			if (chatRoom.getValue().isEmpty()) {

@@ -42,12 +42,6 @@ public class MessengerDaoImpl implements MessengerDao {
 	}
 
 	@Override
-	public String selectNowCreateChatRoomNo(SqlSession session) {
-		// TODO Auto-generated method stub
-		return session.selectOne("chatting.selectNowCreateChatRoomNo");
-	}
-
-	@Override
 	public ChattingRoom passwordCheck(SqlSession session, Map<String, String> roomInfo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("chatting.selectRoomPasswordCheck", roomInfo);
@@ -97,19 +91,16 @@ public class MessengerDaoImpl implements MessengerDao {
 	// insert
 	@Override
 	@Transactional
-	public int insertChattingRoom(SqlSession session, ChattingRoom room) {
-		// TODO Auto-generated method stub
+	public String insertChattingRoom(SqlSession session, ChattingRoom room) {
+		String roomNo = null;
 		int result = session.insert("chatting.insertCreateRoom", room);
 		if (result > 0) {
 			Map<String, String> joiner = room.getIdList();
-			/*
-			 * Collection<String> values =creator.values(); List<String> idList = new
-			 * ArrayList<>(values);
-			 */
 			result = session.insert("chatting.insertJoinEmp", joiner);
+			roomNo = session.selectOne("chatting.selectNowCreateChatRoomNo");
 
 		}
-		return result;
+		return roomNo;
 	}
 
 	@Override

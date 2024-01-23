@@ -41,10 +41,8 @@ div {
 }
 
 </style>
-<div class="coma-container containerbig">
- <%--  ${commute} 
-	  ${empId } --%>
-	  
+<%-- ${ commute} --%>
+<div class="coma-container containerbig">  
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-4" style="display: flex;">
@@ -100,12 +98,17 @@ div {
 								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
 									<tr>
 										<td>
-											<c:if test="${c.EMP_COMMUTE_STATUS eq 'Uncleared'}">
-											    퇴근 미처리
-											</c:if>
-											<c:if test="${c.EMP_COMMUTE_STATUS ne 'Uncleared'}">
-											    ${c.EMP_COMMUTE_STATUS}
-											</c:if>
+										    <select class="form-control" id="exampleFormControlSelect1" name="status">
+										     <option value="근무중" <c:if test="${c.STATUS eq '근무중'}"> selected="selected" </c:if>>근무중</option>
+										     <option value="외근중"<c:if test="${c.STATUS eq '외근중'}"> selected="selected" </c:if>>외근중</option>
+										     <option value="퇴근 미처리"<c:if test="${c.STATUS eq '퇴근 미처리'}"> selected="selected" </c:if>>퇴근 미처리</option>
+										     <option value="퇴근"<c:if test="${c.STATUS eq '퇴근'}"> selected="selected" </c:if>>퇴근</option>
+										     <option value="결근"<c:if test="${c.STATUS eq '결근'}"> selected="selected" </c:if>>결근</option>
+										     <option value="지각" <c:if test="${c.STATUS eq '지각'}"> selected="selected" </c:if>>지각</option>
+										     <option value="연차" <c:if test="${c.STATUS eq '연차'}"> selected="selected" </c:if>>연차</option>
+										     <option value="반차" <c:if test="${c.STATUS eq '반차'}"> selected="selected" </c:if>>반차</option>
+										     </select>
+
 										</td>
 										<td>
 											<fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" />
@@ -152,7 +155,7 @@ var year = today.getFullYear();
 var month = today.getMonth() + 1; 
 var day = today.getDate();
 // 날짜를 "YYYY-MM-DD" 형식의 문자열로 만들기
-var formattedDate = (year % 100) + '/' + (month < 10 ? '0' + month : month) + '/' + (day < 10 ? '0' + day : day);
+var formattedDate = (year % 100) + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
 console.log(formattedDate);
 // 입력 요소에 현재 날짜 설정
 document.getElementById('start').value = formattedDate;
@@ -199,17 +202,32 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     	    $trList.forEach($tr => {
     	        $tr.remove();
     	    });
-
+			console.log(data);
     	    data.commuteList.forEach(c => {
     	    	if(c.EMP_COMMUTE_STATUS!='nonAntte'){
 	    	        const $tr = document.createElement('tr');
 	
 	    	        const $td1 = document.createElement('td');
-	    	        if(c.EMP_COMMUTE_STATUS =='Uncleared'){
-	    	        	$td1.innerText = '퇴근 미처리';
-	    	        }else{
-	    	        	$td1.innerText = c.EMP_COMMUTE_STATUS;
-	    	        }
+
+	    	        const selectElement = document.createElement('select');
+	    	        selectElement.className = 'form-control';
+	    	        selectElement.id = 'exampleFormControlSelect1';
+	    	        selectElement.name = 'status';
+
+	    	        const options = ['근무중', '외근중', '퇴근 미처리', '퇴근', '결근', '지각', '연차', '반차'];
+
+	    	        options.forEach(optionValue => {
+	    	          const optionElement = document.createElement('option');
+	    	          optionElement.value = optionValue;
+
+	    	          // Use a ternary operator to check if the current optionValue is equal to c.STATUS and set selected accordingly
+	    	          optionElement.selected = (optionValue === c.STATUS);
+
+	    	          optionElement.innerText = optionValue;
+	    	          selectElement.appendChild(optionElement);
+	    	        });
+
+	    	        $td1.appendChild(selectElement);
 	    	        
 	    	        const $td2 = document.createElement('td');
 	    	        $td2.innerText = c.EMP_COMMUTE_WORKDATE.substring(0, 10);
@@ -297,10 +315,6 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
         });
 }
 
-
-document.getElementById('commuteWriteBtn').addEventListener('click', function() {
-    window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
-});
 /* document.getElementById('total').addEventListener('click', function() {
     window.location.href = ${pageContext.request.contextPath}'/commute/empCommute?empId='${e.EMP_ID };
 }); */

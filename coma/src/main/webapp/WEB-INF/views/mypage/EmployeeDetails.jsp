@@ -51,15 +51,9 @@ label{
 text-align: left;
 }
 
-
-
-
-
 #example-tel-input
 </style>
 <!-- TEAM COMA SPACE -->
-
-
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 40px; margin-bottom: 5px;">
 			<div class="row">
@@ -90,9 +84,7 @@ text-align: left;
 							        <option value='D2' <c:if test="${emp.dept.deptType eq '행정'}"> selected="selected" </c:if>>행정팀</option>
 							        <option value='D4' <c:if test="${emp.dept.deptType eq '교육'}"> selected="selected" </c:if>>교육팀</option>
 							        <option value='D5' <c:if test="${emp.dept.deptType eq '취업'}"> selected="selected" </c:if>>취업팀</option>
-							        <option value='D1' <c:if test="${emp.dept.deptType eq '관리자'}"> selected="selected" </c:if>>관리부</option>
-							        
-
+							        <option value='D1' <c:if test="${emp.dept.deptType eq '관리'}"> selected="selected" </c:if>>관리부</option>
 							    </select>
 						    </div>
 						    <div class="form-group col-6">
@@ -103,7 +95,7 @@ text-align: left;
 							        <option value='J2' <c:if test="${emp.job.jobType eq '부장'}"> selected="selected" </c:if>>부장</option>
 							        <option value='J1' <c:if test="${emp.job.jobType eq '관리자'}"> selected="selected" </c:if>>관리자</option>
 							        <option value='TT' <c:if test="${emp.job.jobType eq '강사'}"> selected="selected" </c:if>>강사</option>							        
-							        <option value='JO' <c:if test="${emp.job.jobType eq '인턴'}"> selected="selected" </c:if>>인턴</option>
+							        <option value='J5' <c:if test="${emp.job.jobType eq '인턴'}"> selected="selected" </c:if>>인턴</option>
 							    
 							    </select>
 							</div>
@@ -116,10 +108,10 @@ text-align: left;
 									<c:choose>
 									    <c:when test="${empVacation % 1 == 0}">
 									        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
-							 				<input class="form-control" type="number" value="${formattedNumber}" id="example-number-input" name = "empVation" >
+							 				<input class="form-control" type="number" value="${formattedNumber}" id="example-number-input" name = "empVacation" >
 									    </c:when>
 									    <c:otherwise>
-						        			<input class="form-control" type="number" value="${emp.empVacation}" id="example-number-input" name = "empVation">
+						        			<input class="form-control" type="number" value="${emp.empVacation}" id="example-number-input" name = "empVacation">
 									    </c:otherwise>
 									</c:choose>	
 						    </div>

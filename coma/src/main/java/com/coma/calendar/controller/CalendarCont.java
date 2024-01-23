@@ -60,10 +60,17 @@ public class CalendarCont {
 	
 	@PostMapping("/calendarDept")
 	public List<Calendar> selectCalendarDept(@RequestBody Map<String,String> deptEvent){
-		System.out.println("안녕2");
-		System.out.println(deptEvent.get("empId"));
+		
+		String jobCode = deptEvent.get("jobCode");
+		
 		String empId = deptEvent.get("empId");
-		return service.selectCalendarDept(empId);
+		String deptCode = deptEvent.get("deptCode");
+	
+		Map<String, String> emp= new HashMap<>();
+		emp.put("jobCode", jobCode);
+		emp.put("empId", empId);
+		emp.put("deptCode", deptCode);
+		return service.selectCalendarDept(emp);
 	}
 	@PostMapping("/calendarMy")
 	public List<Calendar> selectCalendarMy(@RequestBody Map<String,String> deptEvent){

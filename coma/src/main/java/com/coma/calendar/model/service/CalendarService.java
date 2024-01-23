@@ -11,7 +11,7 @@ import com.coma.model.dto.Commute;
 public interface CalendarService {
 
 	List<Calendar> selectCalendar();
-	List<Calendar> selectCalendarDept(String empId);
+	List<Calendar> selectCalendarDept(Map<String,String> emp);
 	List<Calendar> selectCalendarMy(String empId);
 	List<Calendar> selectCalendarAll(String empId);
 	List<ApprovalLeave> selectCalendarApproval(String empId);
