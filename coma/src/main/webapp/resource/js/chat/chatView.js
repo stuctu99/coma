@@ -15,8 +15,8 @@ $("#exit-btn").click(function() {
 			})
 			.then(data => {
 				if (data.result == "success") {
-					server.send(new Message("out", "", "", "", empId, roomNo).convert());
 					close();
+					server.send(new Message("out", "", "", "", empId, roomNo).convert());
 					$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
 				} else {
 					alert("관리자에게 문의하세요!");
@@ -412,10 +412,15 @@ const fn_update = (roomNo) => {
 		})
 		.then(data => {
 			if (data.result == 'success') {
-				const msg = new Message("invite", "", "", "", "", roomNo);
-				server.send(msg.convert());
+				console.log(inviteEmp.length);
+				inviteEmp.forEach(id=>{
+					console.log("몇번실행되니?");
+					const msg = new Message("invite","", "", "", id , roomNo);
+					server.send(msg.convert());
+					
+				})
 				$("#invite-modal").modal('hide');
-				/*memberList(msg.roomNo, msg.empId);*/
+				memberList(msg.roomNo, msg.empId);
 			} else {
 				alert("접근할 수 없습니다. 관리자에게 문의하세요:(");
 			}
@@ -424,6 +429,7 @@ const fn_update = (roomNo) => {
 
 const inviteReload = (msg) => {
 	memberList(msg.roomNo, msg.empId);
+	$(opener.location).attr("href","javascript:fn_invite('"+msg.roomNo+"','"+empName+"','"+msg.empId+"');");
 	$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
 }
 

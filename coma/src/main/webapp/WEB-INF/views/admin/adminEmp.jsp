@@ -18,6 +18,12 @@
     .tableSize{
     	width:300px;
     }
+    a:link{
+    	color:black;
+    }
+    a:visited{
+    	color:black;
+    }
 </style>
 <!-- TEAM COMA SPACE -->
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
@@ -72,7 +78,7 @@
 			<input class="form-control form-control-sm" type="text" id="textData" placeholder="검색할 단어 입력">
 		</div>
 		<div class="col-5" style="padding-left:0px;">
-			<button type="button" class="btn btn-secondary btn-sm" style="width:50px;" onclick="fn_searchEmp();">검색</button>
+			<button type="button" class="btn btn-primary btn-sm" style="width:50px;" onclick="fn_searchEmp();">검색</button>
 		</div>
 		<div class="col-2">
 			<div class="row">
@@ -112,7 +118,7 @@
  		        		<td><c:out value="${e.DEPT_TYPE }"/></td>
 		        		<td><button type="button" class="btn btn-secondary btn-sm"><a href="${path }/commute/empCommute?empId=${e.EMP_ID }"><c:out value="${e.EMP_COMMUTE_STATUS!=null?e.EMP_COMMUTE_STATUS:'미출근'}"/></a></button></td>
 		        		<td>
-			        		<button type="button" class="btn btn-secondary btn-sm" onclick="fn_deleteEmp('${e.EMP_ID }');">삭제</button>
+			        		<button type="button" class="btn btn-outline-danger btn-sm" onclick="fn_deleteEmp('${e.EMP_ID }');">퇴사처리</button>
 		        		</td>
 		        	</tr>
 					 </c:forEach>
@@ -241,9 +247,9 @@
 					const $td6 = document.createElement('td');
 					const $button3 = document.createElement('button');
 					$button3.setAttribute('type', 'button');
-					$button3.setAttribute('class', 'btn btn-secondary btn-sm');
+					$button3.setAttribute('class', 'btn btn-outline-danger btn-sm');
 					$button3.setAttribute('onclick', `fn_deleteEmp('${e.empId}');`);
-					$button3.innerText = '삭제';
+					$button3.innerText = '퇴사처리';
 					$td6.appendChild($button3);
 					
 					$tr.appendChild($td1);

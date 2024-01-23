@@ -7,8 +7,8 @@
 	<jsp:param name="id" value="mine" />
 </jsp:include>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }" />
-
-<script src="/resource/js/jquery-3.7.0.js"></script>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<script src="${pageContext.request.contextPath}/resource/js/jquery-3.7.0.js"></script>
 <style>
 
 
@@ -163,7 +163,7 @@
 					<div class=""></div>
 				</div>
 				<div class="col-1">
-					<button type="button" class="btn btn-primary" id="commuteWriteBtn">근태 변경 신청하기</button>
+					<button type="button" class="btn btn-primary" onclick="commuteWriteBtn();">근태 변경 신청하기</button>
 				</div>
 			</div>
 			<div class="col-1"></div>
@@ -308,7 +308,7 @@ function updateTable(commuteList) {
         breakDurationCell.textContent = c.BREAK_DURATION;
         row.appendChild(breakDurationCell);
 
-        // Append the row to the table
+
         $("#empTable").append(row);
         if (c.EMP_COMMUTE_ABSENCE === 'Y') {
             absenceCount++;
@@ -325,7 +325,11 @@ function updateTable(commuteList) {
         }
     }
  });
-
+	console.log(absenceCount);
+	console.log(nonabsence);
+	console.log(latenessCount);
+	console.log(Uncleared);
+	console.log("여기");
     var total = absenceCount+nonabsence
     $('#lateCount').html(${'latenessCount'});
     $('#finishCount').html(${'absenceCount'});
@@ -335,12 +339,18 @@ function updateTable(commuteList) {
     
 }
 /* /approval/writedoc 결재로 넘어가기  */
-document.getElementById('commuteWriteBtn').addEventListener('click', function() {
-    window.location.href = ${pageContext.request.contextPath}'/approval/writedoc';
-});
+/* document.getElementById('commuteWriteBtn').addEventListener('click', function() {
+    window.location.href = '${pageContext.request.contextPath}/approval/writedoc';
+}); */
+function commuteWriteBtn(){
+	window.location.href = '${pageContext.request.contextPath}/approval/writedoc';
+}
 document.getElementById('total').addEventListener('click', function() {
-    window.location.href = ${pageContext.request.contextPath}'/commute/commuteDetail';
+    window.location.href = '${pageContext.request.contextPath}/commute/commuteDetail';
 });
+
+
+
 /* 기간 막기 함수  */
 function updateEndTimeMin() {
     

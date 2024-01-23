@@ -30,7 +30,7 @@
 			<div class="col-1"></div>
 			<div class="col-6">
 				<div style="width: 100%; height: 100%;">
-					<img src="${path }/resource/img/organization/COMA_demo.png" style="width: 100%; height: 800px; border-radius: 25px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+					<img src="${path }/resource/img/organization/COMA_demo.png" style="width: 100%; height: 650px; border-radius: 25px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
 				</div>
 			</div>
 			<div class="col-5">
@@ -57,7 +57,7 @@
 				</div>
 				<div class="col-1"></div>
 				<div class="row" style="display: flex; justify-content: center;">
-					<div class="card shadow" style="height: 500px; margin-top: 20px; width: 600px;">
+					<div class="card shadow" style="height: 450px; margin-top: 20px; width: 600px;">
 					    <div class="card-body">
 					        <div class="tab-content" id="myTabContent">
 					            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">

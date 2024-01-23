@@ -46,7 +46,7 @@ public class Emp implements UserDetails, Serializable{
    private String empCurrent;
    private String empPhone;
    private String empPhoto;
-   private int empVacation;
+   private double empVacation;
    private String empAccess;
    private Dept dept;
    private Job job;
