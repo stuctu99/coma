@@ -26,9 +26,9 @@ public class CalendarDaoImpl implements CalendarDao {
 		return session.insert("calendar.calendarInsert",event);
 	}
 	@Override
-	public List<Calendar> selectCalendarDept(SqlSession session, String empId) {
-		
-		return session.selectList("calendar.selectCalendarDept",empId);
+	public List<Calendar> selectCalendarDept(SqlSession session, Map<String,String> emp) {
+		System.out.println("찾아라 잡코드"+emp.get("jobCode"));
+		return session.selectList("calendar.selectCalendarDept",emp);
 	}
 	@Override
 	public int calendarUpdate(SqlSession session, Map<String, String> event) {

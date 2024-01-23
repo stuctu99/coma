@@ -113,7 +113,6 @@ const messagePrint = (msg) => {
 	//메세지 전송 시간 출력
 	console.log();
 	timeTag.innerText = ("0" + new Date(msg.chatCreateDate).getHours()).slice(-2) + ":" + ("0" + new Date(msg.chatCreateDate).getMinutes()).slice(-2) + "  ";
-	/*timTag.innerText = (new Date(msg.chatCreateDate).getHours());*/
 	timeDiv.appendChild(timeTag);
 
 	//메세지 컨테이너
@@ -146,11 +145,6 @@ const messagePrint = (msg) => {
 	document.querySelector(".messageView" + msg.roomNo).appendChild(nameDiv);
 	document.querySelector(".messageView" + msg.roomNo).appendChild(div);
 	document.querySelector(".messageView" + msg.roomNo).scrollTop = document.querySelector(".messageView" + msg.roomNo).scrollHeight;
-	/* 테스트 */
-	/*   $(opener.document).find(".updateMsg-"+msg.roomNo).remove();
-	   const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
-	   $updateMsg.text("Message : "+msg.chatContent);
-	   $(opener.document).find("#chattingList #"+msg.roomNo).append($updateMsg);*/
 }
 
 const sendMessage = () => {

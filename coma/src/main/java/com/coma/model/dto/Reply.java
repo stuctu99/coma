@@ -18,4 +18,5 @@ public class Reply {
 	private Date replyDate;
 	private String replyParentNo;
 	private Emp emp;
+	private int replyLevel;
 }

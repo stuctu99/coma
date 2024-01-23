@@ -41,10 +41,7 @@ div {
 }
 
 </style>
-<div class="coma-container containerbig">
- <%--  ${commute} 
-	  ${empId } --%>
-	  
+<div class="coma-container containerbig">  
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-4" style="display: flex;">
@@ -100,12 +97,17 @@ div {
 								<c:if test="${ c.EMP_COMMUTE_STATUS ne 'nonAntte'}">
 									<tr>
 										<td>
-											<c:if test="${c.EMP_COMMUTE_STATUS eq 'Uncleared'}">
-											    퇴근 미처리
-											</c:if>
-											<c:if test="${c.EMP_COMMUTE_STATUS ne 'Uncleared'}">
-											    ${c.EMP_COMMUTE_STATUS}
-											</c:if>
+										    <select class="form-control" id="exampleFormControlSelect1" name="status">
+										     <option value="근무중" <c:if test="${c.STATUS eq '근무중'}"> selected="selected" </c:if>>근무중</option>
+										     <option value="외근중"<c:if test="${c.STATUS eq '외근중'}"> selected="selected" </c:if>>외근중</option>
+										     <option value="퇴근 미처리"<c:if test="${c.STATUS eq '퇴근 미처리'}"> selected="selected" </c:if>>퇴근 미처리</option>
+										     <option value="퇴근"<c:if test="${c.STATUS eq '퇴근'}"> selected="selected" </c:if>>퇴근</option>
+										     <option value="결근"<c:if test="${c.STATUS eq '결근'}"> selected="selected" </c:if>>결근</option>
+										     <option value="지각" <c:if test="${c.STATUS eq '지각'}"> selected="selected" </c:if>>지각</option>
+										     <option value="연차" <c:if test="${c.STATUS eq '연차'}"> selected="selected" </c:if>>연차</option>
+										     <option value="반차" <c:if test="${c.STATUS eq '반차'}"> selected="selected" </c:if>>반차</option>
+										     </select>
+
 										</td>
 										<td>
 											<fmt:formatDate value="${c.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd" />

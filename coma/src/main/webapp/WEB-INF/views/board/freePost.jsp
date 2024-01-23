@@ -68,16 +68,18 @@
 						</td>
 					</tr>
 					
-					<c:if test="${post.boardType eq 1}">
+					<c:if test="${post.boardType eq 1 }">
 						<tr>
-					        <th>이름</th>
-					        <th>내용</th>
-					        <th>작성일</th>
+					        <th></th>
+					        <th></th>
+					        <th></th>
 					        <th></th>
 					    </tr>
 					    
 					    <c:forEach var="replys" items="${reply}">
-					        <tr>
+					   	<c:choose>
+					    	<c:when test="${replys.replyLevel == 1 }">
+					        <tr class="level1">
 					            <td>${replys.emp.empName}</td>
 					            <td>${replys.replyContent}</td>
 					            
@@ -104,10 +106,41 @@
 								
 					            <td>
 					            	<input type="hidden" class="replyNo" name="replyNo" value="${replys.replyNo }">
-					            	<button type="button" class="btn reply-re">답글</button>
+					            	<button type="button" value="${replys.replyNo }" class="btn reply-re">답글</button>
 					            	<button type="button" class="btn reply-del">삭제</button>
 					            </td>
 					        </tr>
+					        </c:when>
+					        
+					        <c:otherwise>
+					          <tr class="level2">
+					          	<td>ㄴ${replys.emp.empName}</td>
+					            <td>${replys.replyContent}</td>
+								<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
+								<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
+								<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
+								<td class="date">
+									<c:choose>
+										<c:when test="${replys.replyDate.toLocalDate() == today}">
+											<c:set var="checkHour" value='<%=(new java.util.Date().getTime()-((Reply)pageContext.getAttribute("replys"))
+															.getReplyDate().getTime())/(1000*60*60)%>'/>
+											<span>								
+												${checkHour>0?"".concat(checkHour).concat("시간 전"):'방금전'}
+											</span>
+									    </c:when>
+						                <c:when test="${free.boardDate.year == 124}">
+						                    <fmt:formatDate value="${replys.replyDate}" pattern="MM-dd" />
+						                </c:when>
+						                <c:otherwise>
+						                    <fmt:formatDate value="${replys.replyDate}" pattern="yyyy-MM-dd" />
+						                </c:otherwise>
+						            </c:choose>
+								</td>
+								
+					            <td></td>
+					        </tr>
+					        </c:otherwise>
+					    </c:choose>
 					    </c:forEach>
 					        
 					    <tr>
@@ -116,10 +149,11 @@
 							<form action="${path }/board/writeReply" class="reply-editor" method="post">
 							<div class="d-flex">
 								<input type="hidden" name="boardNo" value="${post.boardNo }">
+								<input type="hidden" name="level" value="1">
 								<input type="hidden" name="replyEmpId" value="${e.empId }">
-								<%-- <input type="hidden" name="replyNo" value="${reply.replyNo }"> --%>
+								<input type="hidden" name="replyParentNo" value="0">
 								<textarea class="form-control" id="contents" name="replyContent" style="width: 100%" placeholder="^0^"></textarea>
-								<button class="btn btn-primary m1-2">등록</button>
+								<button class="btn btn-primary m1-2" id="btn-insert">등록</button>
 							</div>
 							</form>
 						</td>
@@ -159,9 +193,13 @@
 	$(".reply-re").click(e=>{
 		
 		const $tr=$("<tr>");
-		const $td=$("<td>").attr("colspan","2");
+		const $td=$("<td>").attr("colspan","3");
 		const $form=$(".reply-editor").clone();
 		
+		$form.find("input[name=level]").val("2");
+		$form.find("textarea").attr("rows","2");
+		$form.find("button").removeAttr("id").addClass("btn-insert2");
+		$form.find("input[name=replyParentNo]").val($(e.target).val());
 		$td.append($form);
 		$tr.append($td);
 		
@@ -174,7 +212,7 @@
 		
 		if(confirmDelete){
 			
-			const replyNo = $(".replyNo").val();
+			const replyNo = $(e.target).closest("tr").find(".replyNo").val();
 			
 			$.ajax({
 				url: "/board/deleteReply",
