@@ -150,3 +150,8 @@ table.table .avatar {
 	width: 70px;
 	text-align: center;
 }
+
+textarea{
+	resize: none;
+	
+}

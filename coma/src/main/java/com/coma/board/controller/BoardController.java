@@ -103,17 +103,20 @@ public class BoardController {
 	
 	//댓글작성
 	@PostMapping("/writeReply")
-	public String insertReplyByBoard(@RequestParam("replyEmpId") String empId, @RequestParam int boardNo, @RequestParam String replyContent) {
+	public String insertReplyByBoard(@RequestParam("replyEmpId") String empId, @RequestParam int boardNo,
+									@RequestParam String replyContent, @RequestParam int level, @RequestParam int replyParentNo) {
 	
 		Map<String, Object> reply = new HashMap<>();
 				
 		reply.put("boardNo", boardNo);
 		reply.put("replyContent", replyContent);
 		reply.put("empId", empId);
+		reply.put("level", level);
+		reply.put("replyParentNo", replyParentNo);
 		
 		service.insertReplyByBoard(reply);
 		
-
+		
 		return "redirect:/board/freePost?boardNo="+boardNo;
 	}
 	

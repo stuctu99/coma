@@ -113,8 +113,7 @@
 			<a href="${path }/apprdoc/docList?empId=${e.empId}">
 		    <div class="card-body"> 
 				<div class="row">
-				    <div class="col">
-				    
+				    <div class="col">		    
 				        <h5 class="card-title text-uppercase text-muted mb-0">완료된 문서</h5>
 				        <span class="h2 font-weight-bold mb-0">${endCount }개</span>
 				   
@@ -137,7 +136,7 @@
 	</div>
 	<div style="text-align: center">
 	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary" style="width:780px;">
-	  		<span style="font-size:16px;">+문서 작성하기</span>
+	  		<span style="font-size:16px;">+ 문서 작성하기</span>
 	    </a>
 	 </div>
    </div>
@@ -152,9 +151,10 @@
           aria-hidden="true"
           tabindex="-1"
           style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
-        >
+        >   
         <option value=""></option>
         </select>
+        <input type="hidden" name="empId" value="${e.empId }"/>
         <button type="button" class="inline-flex items-center justify-center btn btn-primary" onclick="getSearchList()">
         	검색
 	    </button>
@@ -190,7 +190,22 @@
                     <c:forEach var="proceeds" items="${proceed}">
                         <tr>
                             <td class="doc-no">${proceeds.docNo }</td>
-                            <td class="doc-type">${proceeds.docType }</td>
+                            <td class="doc-type">
+                            	<c:choose>
+                            		<c:when test="${proceeds.docType eq 'cash'}">
+							           	지출
+							        </c:when>
+							        <c:when test="${proceeds.docType eq 'leave'}">
+							            휴가
+							        </c:when>
+							        <c:when test="${proceeds.docType eq 'req'}">
+							           	품의
+							        </c:when>
+							        <c:when test="${proceeds.docType eq 'etc'}">
+							            기타
+							        </c:when>
+							    </c:choose>
+                            </td>
                             <td class="doc-title"><a href="${path }/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
                             <td class="doc-writer">${proceeds.emp.empName }</td>
                             <td class="doc-date"><fmt:formatDate value="${proceeds.docDate}" pattern="YYYY-MM-dd" /></td>
@@ -220,16 +235,31 @@ function getSearchList(){
 					console.log(searchDoc);
 					const writeDate=new Date(searchDoc.docDate);
 					str='<tr>'
-						str+="<td>"+searchDoc.docNo+"</td>";
-						str+="<td>"+searchDoc.docType+"</td>";
-						str+="<td><a href = '/approval/viewdoc?docNo=" + searchDoc.docNo + "'>" + searchDoc.docTitle + "</a></td>";
-						str+="<td>"+searchDoc.emp.empName+"</td>";
-						str+="<td>"+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+"</td>";
-						str+="<td>"+searchDoc.docCorrectDate+"</td>";
-						str+="<td>"+searchDoc.docProgress+"</td>";
+						str+="<td class='doc-no'>"+searchDoc.docNo+"</td>";
+
+						switch (searchDoc.docType) {
+                        case 'etc':
+                            str += "<td>기타</td>";
+                            break;
+                        case 'cash':
+                            str += "<td>지출</td>";
+                            break;
+                        case 'req':
+                            str += "<td>품의</td>";
+                            break;
+                        case 'leave':
+                            str += "<td>휴가</td>";
+                            break;
+                    	}
+						
+						str+="<td class='doc-title'><a href = '/approval/viewdoc?docNo=" + searchDoc.docNo + "'>" + searchDoc.docTitle + "</a></td>";
+						str+="<td class='doc-writer'>"+searchDoc.emp.empName+"</td>";
+						str+="<td class='doc-date'>"+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+"</td>";
+						str+="<td class='doc-pg'>"+searchDoc.docProgress+"</td>";
 					str+="</tr>";
 					console.log(str);
 					$('.table').append(str);
+					
         		})
 			}
 		}

@@ -187,7 +187,7 @@ td {
 							<c:forEach var="mainNotice" items="${mainNotice}">
 								<tr>
 									<td class="notice-title"><a
-										href="/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
+										href="${path }/board/freePost?boardNo=${mainNotice.boardNo }">${mainNotice.boardTitle}</a></td>
 									
 									<c:choose>
 										<c:when test="${mainNotice.boardDate.year == 124}">
