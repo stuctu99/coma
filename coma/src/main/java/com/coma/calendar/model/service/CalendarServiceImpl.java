@@ -33,9 +33,9 @@ public class CalendarServiceImpl implements CalendarService {
 		return dao.calendarInsert(session,event);
 	}
 	@Override
-	public List<Calendar> selectCalendarDept(String empId) {
+	public List<Calendar> selectCalendarDept(Map<String,String> emp) {
 	
-		return dao.selectCalendarDept(session, empId);
+		return dao.selectCalendarDept(session, emp);
 	}
 	@Override
 	public int calendarUpdate(Map<String, String> event) {
