@@ -70,7 +70,7 @@ public class AdminController {
 		int nextMonth=monthData+1;
 		
 		//chart.js 메소드
-		List<Map> chartEmp=service.charEmpData(Map.of("relayMonth",relayMonth,"nextMonth",nextMonth,"yearData",yearData));	//차트에 넣을 사원 근태 데이터
+		List<Map> chartEmp=service.charEmpData(Map.of("relayMonth",relayMonth<10?"0"+relayMonth:relayMonth,"nextMonth",nextMonth<10?"0"+nextMonth:nextMonth,"yearData",yearData));	//차트에 넣을 사원 근태 데이터
 		Gson gson=new Gson();	//Gson 호출
 		JsonArray jArray=new JsonArray();	//Gson에서 제공하는 Json배열 호출
 		Iterator<Map> it=chartEmp.iterator();	//사원 데이터를 가져오기 위해 iterator<Map>을 생성

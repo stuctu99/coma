@@ -87,8 +87,8 @@
 		    	<div class="col-1"></div>
 		    	<div class="col-5"></div>
 		    	<div class="col-6" style="display: flex; justify-content: flex-end;">
-		    		<button type="reset" class="btn btn-secondary btn-sm">선택 취소</button>
 					<button type="submit" class="btn btn-primary btn-sm">입력 완료</button>
+		    		<button type="reset" class="btn btn-secondary btn-sm" style="margin-right:36px;">선택 취소</button>
 		    	</div>
 		    </div>
 		    </form>
@@ -149,7 +149,7 @@
 			</div>
 			<div id="stu_significant">
 				<div>
-					<textarea class="form-control" style="height:200px; resize:none;" aria-label="With textarea"></textarea>
+					<textarea class="form-control" style="height:180px; resize:none;" aria-label="With textarea"></textarea>
 				</div>
 			</div>
 		</div>
@@ -369,8 +369,9 @@
 	
 	//학생 특이사항 작성 기능
 	function fn_significant(stuNo){
-		const content = document.getElementById("significantContent_"+stuNo).value;
 		const select = document.getElementById("significantSelect").value;
+		const content = document.getElementById("significantContent_"+stuNo).value;
+		console.log(select);
 		if(select != '분류선택'){
 			fetch("${path}/student/studentSignificant",{
 				method:"post",
