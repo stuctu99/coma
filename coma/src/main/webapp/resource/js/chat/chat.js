@@ -38,6 +38,7 @@ mserver.onmessage = (response) => {
 			break;
 		case "msg":
 			//채팅방 메세지 로드
+			console.log("여긴?");
 			messageUpdate(respMsg);
 			break;
 		case "invite":
@@ -697,12 +698,13 @@ $("#enterRoom-btn").click(function() {
 
 /* 공부하기, 채팅방에서 작성한 채팅 메세지 채팅창에 실시간 출력 */
 window.updateMsg = function(roomNo, content) {
+	console.log(roomNo+content);
 	fetch(path + "/messenger/room/" + roomNo)
 		.then(response => {
 			if (response.status != 200) {
 				alert("조회불가!!!");
 			}
-			return response.text();
+			return response.json();
 		})
 		.then(data => {
 			if (data.roomPasswordFlag == 'N') {

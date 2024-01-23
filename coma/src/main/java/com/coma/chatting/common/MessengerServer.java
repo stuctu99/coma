@@ -148,7 +148,6 @@ public class MessengerServer extends TextWebSocketHandler {
 	
 //	초대 알림 메세지	
 	private void inviteAlarm(MessengerMessage msg) {
-		System.err.println("여기 안오셈?");
 		for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
 			if(client.getKey().equals(msg.getLoginId())) {
 				try {

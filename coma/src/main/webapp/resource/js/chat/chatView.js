@@ -113,7 +113,6 @@ const messagePrint = (msg) => {
 	//메세지 전송 시간 출력
 	console.log();
 	timeTag.innerText = ("0" + new Date(msg.chatCreateDate).getHours()).slice(-2) + ":" + ("0" + new Date(msg.chatCreateDate).getMinutes()).slice(-2) + "  ";
-	/*timTag.innerText = (new Date(msg.chatCreateDate).getHours());*/
 	timeDiv.appendChild(timeTag);
 
 	//메세지 컨테이너

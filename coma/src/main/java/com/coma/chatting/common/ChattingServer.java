@@ -166,6 +166,11 @@ public class ChattingServer extends TextWebSocketHandler {
 								session.sendMessage(new TextMessage(message));
 								break;
 								
+							case "rest":
+								message = mapper.writeValueAsString(msg);
+								session.sendMessage(new TextMessage(message));
+								break;
+								
 							case "out":
 								message = mapper.writeValueAsString(msg);
 								session.sendMessage(new TextMessage(message));
