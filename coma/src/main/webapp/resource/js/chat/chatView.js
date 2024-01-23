@@ -146,11 +146,6 @@ const messagePrint = (msg) => {
 	document.querySelector(".messageView" + msg.roomNo).appendChild(nameDiv);
 	document.querySelector(".messageView" + msg.roomNo).appendChild(div);
 	document.querySelector(".messageView" + msg.roomNo).scrollTop = document.querySelector(".messageView" + msg.roomNo).scrollHeight;
-	/* 테스트 */
-	/*   $(opener.document).find(".updateMsg-"+msg.roomNo).remove();
-	   const $updateMsg = $("<span>").addClass("updateMsg-"+msg.roomNo);
-	   $updateMsg.text("Message : "+msg.chatContent);
-	   $(opener.document).find("#chattingList #"+msg.roomNo).append($updateMsg);*/
 }
 
 const sendMessage = () => {
