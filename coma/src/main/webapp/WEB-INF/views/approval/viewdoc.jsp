@@ -190,7 +190,23 @@
 					    </tr>
 			 		</table>
 			 	</div>
-		   </div>		
+		   </div>
+		   <c:if test="${doc.files.size()>0 }">
+			   <c:forEach var="file" items="${doc.files }">
+				   <div class="row">
+				   		<div class="col-3">
+				   		</div>
+				   		<div class="col-6">
+<%-- 				   			<c:set var="fileName" value="${file.attachReName}"/>      		 --%>
+							<a href="<c:url value='${path }/approval/fileDownload/${file.attachReName}'/>">${file.attachReName } </a><br>
+
+				   		</div>
+				   		<div class="col-3">
+				   		</div>
+				   </div>		
+			   
+			   </c:forEach>
+		   </c:if>
           <!-- coma content space -->
           
         </div>

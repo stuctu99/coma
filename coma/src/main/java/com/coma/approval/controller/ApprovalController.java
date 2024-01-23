@@ -2,7 +2,9 @@ package com.coma.approval.controller;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,9 +19,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -606,5 +609,29 @@ public class ApprovalController {
 	      return "common/msg";
    }
    
-
+   //------------------- 파일 다운로드 ---------------------------
+   
+   @GetMapping("/fileDownload/{file}")
+   public void fileDownload(@PathVariable String file, HttpServletResponse response,  HttpSession session) throws IOException{
+	 
+	   String path = session.getServletContext().getRealPath("/resource/upload/approval");
+	    
+	   File f = new File(path, file);
+	   
+	// file 다운로드 설정
+       response.setContentType("application/download");
+       response.setContentLength((int)f.length());
+       response.setHeader("Content-disposition", "attachment;filename=\"" + file + "\"");
+     
+       // response 객체를 통해서 서버로부터 파일 다운로드
+       OutputStream os = response.getOutputStream();
+     
+       // 파일 입력 객체 생성
+       FileInputStream fis = new FileInputStream(f);
+       FileCopyUtils.copy(fis, os);
+       fis.close();
+       os.close();
+       
+   }
+   	
 }
