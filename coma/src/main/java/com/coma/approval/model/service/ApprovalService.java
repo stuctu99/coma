@@ -53,4 +53,5 @@ public interface ApprovalService {
 	int updateProgress(Map<String, String> data);
 	
 	int updateAllMyturn(Map<String, String> data);
+
 }

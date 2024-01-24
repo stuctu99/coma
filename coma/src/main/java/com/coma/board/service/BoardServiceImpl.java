@@ -115,6 +115,13 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return dao.deleteReply(session, replyNo);
 	}
+
+
+	@Override
+	public int checkDelete(List<Integer> ids) {
+		// TODO Auto-generated method stub
+		return dao.checkDelete(session, ids);
+	}
 	
 	
 

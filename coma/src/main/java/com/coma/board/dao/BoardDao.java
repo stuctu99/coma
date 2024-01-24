@@ -36,4 +36,6 @@ public interface BoardDao {
 	List<Board> searchBoard(SqlSession session, Map<String, Object> board);
 	
 	int deleteReply(SqlSession session, int replyNo);
+	
+	int checkDelete(SqlSession session, List<Integer> ids);
 }
