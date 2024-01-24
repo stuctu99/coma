@@ -69,7 +69,7 @@ div {
 		</div>
 		<div class="col-1">
 			<a href="${path }/commute/empCommute?empId=${empId }">
-				<img src="${pageContext.request.contextPath }/resource/img/icons/common/back.png" style="width: 40px;">
+				<img src="${path }/resource/img/icons/common/back.png" style="width: 40px;">
 			</a>
 		</div>
 	</div>
@@ -311,7 +311,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
 //기간 시작 기간보다 끝기간 못 지정하기 
 function updateEndTimeMin() {
     var startTimeInput = document.getElementById('endTime');
-    var selectedDate = startTimeInput.value;
+    var selectedDate = startTimeInput.value;ㄴ
     var endTimeInput = document.getElementById('start');
     endTimeInput.min = selectedDate;
 }

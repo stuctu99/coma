@@ -66,18 +66,18 @@ select:disabled, select[readonly] {
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
-		 <form id="employeeForm" action="${pageContext.request.contextPath}/mypage/updatemypage" method="post"  enctype="multipart/form-data">
+		 <form id="employeeForm" action="${path}/mypage/updatemypage" method="post"  enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-6">
 				 <input type="file" id="accompany-file" name="empPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
 					<div class="file-btn" onclick="openFileDialog();" style="cursor: pointer;">
 						  <%-- 프로필 이미지 가 없으면 기본이미지 --%>
 						 <c:if test="${emp.empPhoto == null}" >
-						 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 200px; height: 300px">
+						 	<img src="${path}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 200px; height: 300px">
 	                     </c:if>
 						 <%-- 프로필 이미지 가 있으면 이미지 --%>
 	                      <c:if test="${emp.empPhoto != null}" >
-								<img src="${pageContext.request.contextPath}/resource/upload/profile/${emp.empPhoto}" alt="Profile Image" id="profileImage"style="width: 200px; height: 300px">
+								<img src="${path}/resource/upload/profile/${emp.empPhoto}" alt="Profile Image" id="profileImage"style="width: 200px; height: 300px">
 	                      </c:if>
 					</div>
 					<div>
@@ -257,6 +257,7 @@ $(document).ready(function () {
       }
     }
 
+    
     $('#example-password-input, #example-password2-input').on('input', checkPasswordMatch);
   });
 </script>
