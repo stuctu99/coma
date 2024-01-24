@@ -43,9 +43,11 @@ public class CommuteDaoImpl implements CommuteDao {
    }
 
 	@Override
-	public List<Map> selectCommuteAll(SqlSession session, String loginId) {
-		// TODO Auto-generated method stub
-		return session.selectList("commute.selectCommuteAll",loginId);
+	public List<Map> selectCommuteAll(SqlSession session, Map<String, Object> commute) {
+		int cPage=(int)commute.get("cPage");
+		int numPerpage=(Integer)commute.get("numPerpage");
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage, numPerpage);
+		return session.selectList("commute.selectCommuteAll",commute , rb);
 	}
 
 	@Override
@@ -92,6 +94,19 @@ public class CommuteDaoImpl implements CommuteDao {
 	public int updateUncleared(SqlSession session) {
 		// TODO Auto-generated method stub
 		return session.update("commute.updateUncleared");
+	}
+
+	@Override
+	public List<Map> selectCommuteInfo2(SqlSession session, String loginId) {
+		// TODO Auto-generated method stub
+		return session.selectList("commute.selectCommuteInfo2",loginId);
+	}
+
+	@Override
+	public int searchCommuteByData(SqlSession session, Map<String, Object> commute) {
+		// TODO Auto-generated method stub
+		
+		return session.selectOne("commute.searchCommuteByData",commute);
 	}
 
 

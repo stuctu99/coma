@@ -55,7 +55,7 @@ div {
 				</div>
 				
 				<div class="col-1" style="padding: 0px 0px;">
-					<button class="invite" id="bars"  data-toggle="modal" data-target="#invite-modal" onclick="fn_updateInfo('${roomNo }');">
+					<button class="invite" id="bars"  data-toggle="modal" data-target="#invite-modal" onclick="fn_roomUpdateInfo('${roomNo }');">
 						<i class="fa-solid fa-gear"></i>
 					</button>
 				</div>
@@ -195,7 +195,7 @@ div {
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onclick="fn_update('${roomNo}');">&#43;초대 및 변경</button>
+						<button type="button" class="btn btn-primary" onclick="fn_roomUpdateCheck('${roomNo}');">&#43;초대 및 변경</button>
 						<button type="button" class="btn btn-link  ml-auto"
 							data-dismiss="modal">닫기</button>
 					</div>

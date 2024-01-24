@@ -14,8 +14,7 @@ public interface MessengerService {
 	List<Dept> selectDept();
 	List<ChattingRoom> selectRoomList();
 	List<ChattingJoin> selectMyJoinRoomById(String loginId);
-	String selectNowCreateChatRoomNo();
-	List<ChattingRoom> selectChatRoomListByType(Map<String,String> searchInfo);
+	List<ChattingRoom> selectChatRoomList(Map<String,String> searchInfo);
 	List<ChattingPrivateRoom> selectPrivateChatJoinInfo(String loginId);
 	String selectRecentChattingMessageByRoomNo(String roomNo);
 	Emp selectEmpByTargetId(String targetId);
@@ -24,8 +23,8 @@ public interface MessengerService {
 	
 	
 	ChattingRoom passwordCheck(Map<String,String> roomInfo);
-	int insertChattingRoom(ChattingRoom room);
-	int insertInviteEmp(Map<String,Object> inviteInsertInfo);
+	String insertChattingRoom(ChattingRoom room);
+	int insertInviteEmpAndUpdate(Map<String,Object> inviteInsertInfo);
 	
 	int deleteChatRoomInfoByRoomNo(List<String> roomList);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,7 +53,7 @@ public class MessengerController {
 	public Map<String, Object> initButton(@PathVariable String loginId) {
 		Map<String, Object> param = new HashMap<>();
 		List<ChattingPrivateRoom> data = service.selectPrivateChatJoinInfo(loginId);
-		param.put("test", data);
+		param.put("proom", data);
 		return param;
 	}
 
@@ -63,11 +64,11 @@ public class MessengerController {
 		return room;
 	}
 
-	@GetMapping("/roomlist/{type}/{loginId}")
+	@GetMapping("/roomlist/{loginId}")
 	@ResponseBody
-	public Map<String, Object> chatRoomListByType(@PathVariable String type, @PathVariable String loginId) {
-		Map<String, String> searchInfo = Map.of("type", type, "loginId", loginId);
-		List<ChattingRoom> roomList = service.selectChatRoomListByType(searchInfo);
+	public Map<String, Object> chatRoomListByType(@PathVariable String loginId) {
+		Map<String, String> searchInfo = Map.of("loginId", loginId);
+		List<ChattingRoom> roomList = service.selectChatRoomList(searchInfo);
 		List<ChattingJoin> joinRoom = service.selectMyJoinRoomById(loginId);
 		// 변수명 수정 필요
 		List<ChattingPrivateRoom> privateRoomList = service.selectPrivateChatJoinInfo(loginId);
@@ -117,11 +118,11 @@ public class MessengerController {
 		}
 		System.out.println(roomInfo);
 //		int alreadyExistFlag = service.selectCountPrivateRoomCheck();
-		int result = service.insertChattingRoom(room);
+		String roomNo = service.insertChattingRoom(room);
 		Map<String, Object> data = new HashMap<>();
-		if (result > 0) {
+		if (roomNo!=null) {
 			data.put("result", "success");
-			data.put("roomNo", service.selectNowCreateChatRoomNo());
+			data.put("roomNo", roomNo);
 		} else {
 			data.put("result", "fail");
 		}
@@ -150,7 +151,7 @@ public class MessengerController {
 		return data;
 	}
 
-	@PostMapping("/invite/{roomNo}")
+	@PutMapping("/update/{roomNo}")
 	@ResponseBody
 	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo, @RequestBody ChattingRoom room) {
 		List<String> inviteEmpList = new ArrayList<String>(Arrays.asList(room.getInviteEmp()));
@@ -160,7 +161,7 @@ public class MessengerController {
 		inviteInsertInfo.put("room", room);
 		inviteInsertInfo.put("roomNo", roomNo);
 		inviteInsertInfo.put("inviteEmpList", inviteEmpList);
-		int inviteInsertCheck = service.insertInviteEmp(inviteInsertInfo);
+		int inviteInsertCheck = service.insertInviteEmpAndUpdate(inviteInsertInfo);
 		if (inviteInsertCheck > 0) {
 			return Map.of("result", "success");
 		}

@@ -70,4 +70,6 @@ public interface ApprovalDao {
 	String selectWriterByDocNo(SqlSession session, String docNo);
 
 	int updateAllMyturn(SqlSession session, Map<String, String> data);
+	
+	String selectDocType(SqlSession session, String docNo);
 } 

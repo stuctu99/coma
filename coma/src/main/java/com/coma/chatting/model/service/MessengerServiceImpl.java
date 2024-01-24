@@ -42,21 +42,15 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 	
 	@Override
-	public List<ChattingRoom> selectChatRoomListByType(Map<String,String> searchInfo) {
+	public List<ChattingRoom> selectChatRoomList(Map<String,String> searchInfo) {
 		// TODO Auto-generated method stub
-		return dao.selectChatRoomListByType(session, searchInfo);
+		return dao.selectChatRoomList(session, searchInfo);
 	}
 	
 	@Override
 	public List<ChattingJoin> selectMyJoinRoomById(String loginId) {
 		// TODO Auto-generated method stub
 		return dao.selectMyJoinRoomById(session, loginId);
-	}
-	
-	@Override
-	public String selectNowCreateChatRoomNo() {
-		// TODO Auto-generated method stub
-		return dao.selectNowCreateChatRoomNo(session);
 	}
 	
 	@Override
@@ -92,15 +86,15 @@ public class MessengerServiceImpl implements MessengerService {
 	
 	@Override
 	@Transactional
-	public int insertChattingRoom(ChattingRoom room) {
+	public String insertChattingRoom(ChattingRoom room) {
 		// TODO Auto-generated method stub
 		return dao.insertChattingRoom(session, room);
 	}
 	
 	@Override
-	public int insertInviteEmp(Map<String,Object> inviteInsertInfo) {
+	public int insertInviteEmpAndUpdate(Map<String,Object> inviteInsertInfo) {
 		// TODO Auto-generated method stub
-		return dao.insertInviteEmp(session, inviteInsertInfo);
+		return dao.insertInviteEmpAndUpdate(session, inviteInsertInfo);
 	}
 	
 	
