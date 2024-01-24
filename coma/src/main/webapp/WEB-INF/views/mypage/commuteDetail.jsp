@@ -73,7 +73,7 @@
 							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" /> 
 							        </c:if>
 						   	 	</c:forEach>
-						    <h4 id="finishCount">${nomalCount-nonAntteCount} 일 </h4>
+						    <h4 id="totalCount">${nomalCount-nonAntteCount} </h4>
 						</c:if>
 					</div>
 				</div>
@@ -89,7 +89,7 @@
 						            <c:set var="nomalCount" value="${nomalCount + 1}" />
 						        </c:if>
 					   	 	</c:forEach>
-					    <h4 id="finishCount">${nomalCount} 일</h4>
+					    <h4 id="finishCount">${nomalCount} </h4>
 						</c:if>
 					</div>
 				</div>
@@ -106,7 +106,7 @@
 					        </c:if>
 					    </c:forEach>
 						
-					    <h4 id="lateCount">${lateCount} 회</h4>
+					    <h4 id="lateCount">${lateCount} </h4>
 					</c:if>
 					</div>
 				</div>
@@ -126,7 +126,7 @@
 							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" />
 							    </c:if>
 						    </c:forEach>
-						    <h4 id="finishCount">${absenceCount-nonAntteCount} 회</h4>
+						    <h4 id="finishCount">${absenceCount-nonAntteCount} </h4>
 						</c:if>
 					</div>
 				</div>
@@ -142,7 +142,7 @@
 						            <c:set var="Uncleared" value="${Uncleared + 1}" />
 						        </c:if>
 						    </c:forEach>						  
-						    <h4 id="Uncleared">${Uncleared} 회</h4>
+						    <h4 id="Uncleared"> ${Uncleared} </h4>
 						</c:if>
 					</div>
 					
@@ -227,7 +227,7 @@
 function submitForm(cPage = 1, numPerpage = 10, url) {
     var startTime = $("#example-date-input-start").val();
     var endTime = $("#example-date-input-end").val();
-    fetch("${path}/commute/commuteDetailEnd", {
+    fetch(url?"${path}"+url:"/commute/commuteDetailEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -247,8 +247,9 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
         .then(data => {      
             console.log(data);           
             updateTable(data.commuteList);
-            //console.log(totalData); 
-            //$('#totalwork').html(totalData);
+            const $div = document.getElementById("pageBar");
+            $div.innerText="";
+        	$div.innerHTML=data.pageBar;
         })
         .catch(error => {
             console.error("Error:", error);
@@ -259,7 +260,7 @@ function updateTable(commuteList) {
 	const $div=document.getElementById("pageBar");
 	$("#empTable").empty();
     var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
-    var absenceCount=0,latenessCount = 0,nonabsence =0;Uncleared = 0;
+    var absenceCount=0,latenessCount = 0,nonabsence =0, Uncleared=0 ,total= 0;
     /* console.log(commuteList); */
     commuteList.forEach(c => {
     	if(c.EMP_COMMUTE_STATUS!='nonAntte'){
@@ -311,32 +312,31 @@ function updateTable(commuteList) {
 
 
         $("#empTable").append(row);
-        if (c.EMP_COMMUTE_ABSENCE === 'Y') {
-            absenceCount++;
+        if (c.STATUS === '지각') {
+        	latenessCount++;
         }
-        if (c.EMP_COMMUTE_ABSENCE === 'N') {
-        	nonabsence++;
+        if (c.STATUS === '결근') {
+        	absenceCount++;
         }
 
-        if (c.EMP_COMMUTE_LATENESS === 'Y') {
-            latenessCount++;
-        } 
-        if(c.EMP_COMMUTE_STATUS == 'Uncleared'){
+        if (c.EMP_COMMUTE_STATUS === '퇴근 미처리') {
         	Uncleared++;
-        }
+        } 
+        total ++;
     }
  });
 	console.log(absenceCount);
 	console.log(nonabsence);
 	console.log(latenessCount);
 	console.log(Uncleared);
+	console.log(total);
 	console.log("여기");
 	
-    var total = absenceCount+nonabsence
+	nonabsence= total- latenessCount-absenceCount;
     $('#lateCount').html(${'latenessCount'});
     $('#finishCount').html(${'absenceCount'});
     $('#absence').html(${'nonabsence'});
-    $('#totalwork').html(${'total'});
+    $('#totalCount').html(${'total'});
     $('#Uncleared').html(${'Uncleared'});
     
 }
