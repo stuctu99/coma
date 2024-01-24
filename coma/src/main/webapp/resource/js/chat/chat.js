@@ -1,5 +1,3 @@
-let nowPage = $("#my-status").val();
-
 /* 메신저 서버 */
 const mserver = new WebSocket("ws://" + location.host + path + "/messengerServer");
 
@@ -268,11 +266,11 @@ const createRoom = (empId) => {
 				$("#createRoom").modal('hide');
 				initModal();
 				/* 초대 멤버가 존재할 때 실행 */
-
+				
 				if (inviteEmp.length > 0) {
 					ChattingRoom.inviteEmp = inviteEmp;
-					fetch(path + "/messenger/invite/" + data.roomNo, {
-						method: "post",
+					fetch(path + "/messenger/update/" + data.roomNo, {
+						method: "PUT",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify(ChattingRoom)
 					})
@@ -301,8 +299,8 @@ const createRoom = (empId) => {
 						initModal();
 						enter_chattingRoom(data.roomNo);
 					}
-					const msg = new MessageHandler("new", empId, "", data.roomNo, "NEW");
-					mserver.send(msg.convert());
+					/*const msg = new MessageHandler("new", empId, "", data.roomNo, "NEW");
+					mserver.send(msg.convert());*/
 				}
 			} else {
 				console.log("방생성 실패");
@@ -416,9 +414,9 @@ const fn_roomList = () => {
 
 	fetch(path + "/messenger/roomlist/" + loginId)
 		.then(response => {
-			if (response != 200)
-				console.log(response.ok);
-			console.log(response.status);
+			if (response != 200){
+								
+			}
 			return response.json();
 		})
 		.then(data => {
@@ -651,6 +649,7 @@ const enter_room = (roomNo, roomPasswordFlag) => {
 /* 채팅방 입장 */
 let chattingView;
 const enter_chattingRoom = (roomNo) => {
+	const nowPage = $("#my-status").val();
 	const empId = $("#empId").val();
 	const joinInfo = {
 		"roomNo": roomNo,
@@ -698,6 +697,7 @@ const enter_chattingRoom = (roomNo) => {
 
 /* 채팅화면 방 설정에서 사원 초대 시 */
 window.fn_invite = function(roomNo, sendName, targetId) {
+	console.log("여기로 넘오오나?");
 	const msg = new MessageHandler("invite", targetId, sendName, roomNo, "");
 	mserver.send(msg.convert());
 }

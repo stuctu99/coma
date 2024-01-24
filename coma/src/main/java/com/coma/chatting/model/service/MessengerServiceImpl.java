@@ -92,9 +92,9 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 	
 	@Override
-	public int insertInviteEmp(Map<String,Object> inviteInsertInfo) {
+	public int insertInviteEmpAndUpdate(Map<String,Object> inviteInsertInfo) {
 		// TODO Auto-generated method stub
-		return dao.insertInviteEmp(session, inviteInsertInfo);
+		return dao.insertInviteEmpAndUpdate(session, inviteInsertInfo);
 	}
 	
 	
