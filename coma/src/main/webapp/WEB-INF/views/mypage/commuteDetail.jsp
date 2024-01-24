@@ -227,7 +227,7 @@
 function submitForm(cPage = 1, numPerpage = 10, url) {
     var startTime = $("#example-date-input-start").val();
     var endTime = $("#example-date-input-end").val();
-    fetch(url?"${path}"+url:"/commute/commuteDetailEnd", {
+    fetch(url?"${path}"+url:"${path}/commute/commuteDetailEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

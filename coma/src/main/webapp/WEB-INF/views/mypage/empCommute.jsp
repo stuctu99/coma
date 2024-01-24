@@ -168,7 +168,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     console.log(startTime);
     console.log(endTime);
     console.log(empId);
-    fetch(url?"${path}"+url:"/commute/empCommuteEnd", {
+    fetch(url?"${path}"+url:"${path}/commute/empCommuteEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

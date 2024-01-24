@@ -25,6 +25,7 @@ import com.coma.model.dto.Emp;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 @RequestMapping("/commute")
 @Controller
@@ -94,7 +95,7 @@ public class CommuteController {
 	        int count =service.countCommute(loginId);
 	        m.addAttribute("commute",commute2);   
 	        m.addAttribute("count",count);
-	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "http://14.36.141.71:15555/GDJ71_COMA_final/commute/commuteDetail"));
+	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/commute/commuteDetail"));
 
 	        return "mypage/commuteDetail";
 	     }
@@ -130,7 +131,7 @@ public class CommuteController {
 			m.addAttribute("commute",commute2);   
 			m.addAttribute("count",count);
 			m.addAttribute("empId",empId);
-			m.addAttribute("pageBar",pageFactory.getPageByWh(cPage, numPerpage, count, "http://14.36.141.71:15555/GDJ71_COMA_final/commute/empCommute", empId));
+			m.addAttribute("pageBar",pageFactory.getPageByWh(cPage, numPerpage, count, "/commute/empCommute", empId));
 			
 			return "mypage/empCommute";
 	     }
