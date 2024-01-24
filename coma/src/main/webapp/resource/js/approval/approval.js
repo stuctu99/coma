@@ -601,8 +601,11 @@ const take_line=()=>{
 				&& line_key !== 'TOAST UI editor for localhost: Statistics' 	
 				&& line_key !== 'TOAST UI editor for 14.36.141.71: Statistics' 
 		) {
+			//해당 결재선 삭제 버튼
+			radioContainer.append("<i class='ni ni-fat-remove' style='cursor:pointer' onclick='del_this_line('"+line_key+"');'>&nbsp");
+			//라디오 버튼
 			radioContainer.append(
-			
+				
 				$('<label>').text(line_key).append(
 					$('<input>').attr({
 						type: 'radio',
@@ -697,7 +700,7 @@ const line_end=()=>{
 }
 
 //------- 결재선 불러오기 취소 -------
-fn_reset=()=>{
+const fn_reset=()=>{
 	
 	const btn_tag = $('<button type="button" id="take_btn" onclick="take_line();" class="btn btn-block btn-primary mb-3" data-toggle="modal" data-target="#modal-default">결재선 불러오기</button>');
 	
@@ -723,10 +726,15 @@ fn_reset=()=>{
 }
 
 //----- localStorage 결재선 초기화 ------
-del_line=()=>{
+const del_line=()=>{
 	localStorage.clear();
 	$('#modal-default').modal('hide'); //모달창 닫기
 }
 
+//----- localStorage 해당 결재선 삭제 -----
+const del_this_line=(line_key)=>{
+	console.log("확인",line_key);
+	localStorage.removeItem(line_key);
+}
 
 	
