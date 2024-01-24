@@ -121,28 +121,42 @@ margin: 20px auto;
 .typeBtn{      
     border: none;
     color: white;
-    box-shadow: 0 10px 14px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 10px 10px 0 rgba(0,0,0,0.2);
     padding: 10px 24px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 5px;
+    margin: 4px 10px;
     cursor: pointer;
     transition-duration: 0.4s;
     border-radius: 5px;
-
 }
-
+#myBtn:hover{
+	background-color:#dda7ad;
+}
+#allBtn:hover{
+	background-color:#b1bae7;
+}
+#deptBtn:hover{
+	background-color:#e7cbb1;
+}
  #myBtn   {
  background-color: #fbc5cb;
+ color: #787b80;
  }
+
  #allBtn{
  background-color: #c5cefb;
+ color: #787b80;
  }
  #deptBtn{
  background-color: #fbdfc5;
+ color: #787b80;
  }
+ .fc-list-empty-cushion {
+    display: none;
+}
     </style>
 </head>
 
@@ -222,7 +236,7 @@ margin: 20px auto;
     	const loginmemberJobCode="${loginmember.job.jobCode}";
     	const loginmemberDeptCode="${loginmember.dept.deptCode}";
     	const loginmemberEmpId = '${loginmember.empId}';
-   	  	const delBtn = document.querySelector("#delBtn");
+    	const delBtn = document.querySelector("#delBtn");
    	    const calNo = document.querySelector("#calNo");
         const Modal = document.querySelector("#Modal");
         const calendarEl = document.querySelector('#calendar');
@@ -267,6 +281,7 @@ margin: 20px auto;
         	                start: event.calStart,
         	                end: event.calEnd,
         	                backgroundColor: event.calColor,
+        	                textColor: '#787b80',
         	             
         	                extendedProps: {
         	                  calContent: event.calContent,
@@ -311,6 +326,7 @@ margin: 20px auto;
         	                start: event.calStart,
         	                end: event.calEnd,
         	                backgroundColor: event.calColor,
+        	                textColor: '#787b80',
         	                extendedProps: {
         	                  calContent: event.calContent,
         	                  empId: event.empId,
@@ -350,6 +366,7 @@ margin: 20px auto;
             	                start: event.calStart,
             	                end: event.calEnd,
             	                backgroundColor: event.calColor,
+            	                textColor: '#787b80',
             	                extendedProps: {
             	                  calContent: event.calContent,
             	                  empId: event.empId,
@@ -358,6 +375,7 @@ margin: 20px auto;
             	                }
             	              });
             	            });
+            	            
             	            successCallback(events);
             	            
             	          },
@@ -390,8 +408,8 @@ margin: 20px auto;
             	                title: event.leaveType,
             	                start: event.leaveStart,
             	                end: endDate.toISOString().split('T')[0],
-            	               backgroundColor: '#A2D2FF'
-            	               
+            	               backgroundColor: '#A2D2FF',
+            	               textColor: '#787b80',
             	              });
             	            });
             	            successCallback(events);           	              	           
@@ -441,7 +459,14 @@ margin: 20px auto;
                     dayMaxEventRows: 3
                 }
             }, 
-   
+            datesSet: function(view) {
+                setTimeout(function() {
+                    var noEventsMessageEl = document.querySelector('.fc-list-empty');
+                    if(noEventsMessageEl) {
+                        noEventsMessageEl.textContent = '등록된 일정이 없습니다.';
+                    }
+                }, 0);
+            },
             nowIndicator: true,            	    
             	}       
 		
@@ -548,8 +573,8 @@ margin: 20px auto;
         function handleSelect(info){       	
          	
   			console.log("야",info);
-    
-  	delBtn.style.display="none";
+  			 Modal.style.display="block";
+  			delBtn.style.display="none";
   			if(info.allDay){
              calStart.value=info.startStr+" 09:00:00";
            var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
@@ -668,6 +693,7 @@ margin: 20px auto;
         	 
          }
          function fcMy(){
+      
         	 calType.value="MY";
         	 calColor.value="#fbc5cb";
         	 calId.value="MY";
