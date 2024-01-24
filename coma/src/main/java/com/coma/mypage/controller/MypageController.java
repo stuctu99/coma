@@ -64,8 +64,6 @@ public class MypageController {
 		    String path = profilepath + file.getOriginalFilename();
 		    file.transferTo(new File(path));
 		}			
-
-		System.out.println("EMP" +emp);
 		//비밀번호 값 받아서 암호화하기 
 		String newPassword = (String) emp.get("empPw");
 	    String newEncryptedPassword = passwordEncoder.encode(newPassword);
@@ -93,7 +91,6 @@ public class MypageController {
 	    if (Files.notExists(path)) {
 	        try {
 	            Files.createDirectories(path);
-	            System.out.println("업로드 폴더 만들었다 !!  ");
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -110,9 +107,6 @@ public class MypageController {
 	
 	@PostMapping("/EmployeeDetailEnd")
 	public String  updateEmployeeDetail(@RequestParam Map<String, Object> emp, Model model) {		
-		System.out.println(emp.get("empVacation"));
-		System.out.println("여기");
-    	System.out.println(emp);
 		int result = service.updateEmployeeDetail(emp);
 		//result 결과에 따라서 메세지 출력 
 		String msg, loc;		
@@ -136,8 +130,7 @@ public class MypageController {
 								@RequestParam(defaultValue="10") int numPerpage,
 								Principal pri, Model m) {
 		String loginId=pri.getName();
-		List<Map> vacationList= service.selectVacationInfo(Map.of("cPage",cPage,"numPerpage",numPerpage,"loginId",loginId));		
-		System.out.println(vacationList);		
+		List<Map> vacationList= service.selectVacationInfo(Map.of("cPage",cPage,"numPerpage",numPerpage,"loginId",loginId));			
 		Iterator<Map> iterator = vacationList.iterator();
 		//결재가 진행중인 문서 수
 		int waitCount = 0;

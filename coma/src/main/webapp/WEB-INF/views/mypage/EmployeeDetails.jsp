@@ -108,10 +108,10 @@ text-align: left;
 									<c:choose>
 									    <c:when test="${empVacation % 1 == 0}">
 									        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
-							 				<input class="form-control" type="number" value="${formattedNumber}" id="example-number-input" name = "empVacation" >
+							 				<input class="form-control" type="number" value="${formattedNumber}" id="example-number-input" name = "empVacation" oninput="validateInput()">
 									    </c:when>
 									    <c:otherwise>
-						        			<input class="form-control" type="number" value="${emp.empVacation}" id="example-number-input" name = "empVacation">
+						        			<input class="form-control" type="number" value="${emp.empVacation}" id="example-number-input" name = "empVacation"oninput="validateInput()">
 									    </c:otherwise>
 									</c:choose>	
 						    </div>
@@ -192,6 +192,17 @@ function count(type)  {
 	  // 결과 출력
 	  resultElement.innerText = number;
 	}
+//유효성 검사 함수
+function validateInput() {
+  var inputElement = document.getElementById("example-number-input");
+  var inputValue = inputElement.value;
+
+  // 음수인 경우 경고 메시지 출력 및 입력값 초기화
+  if (inputValue < 0) {
+    alert("음수는 입력할 수 없습니다.");
+    inputElement.value = "";
+  }
+}
 </script>
 
 

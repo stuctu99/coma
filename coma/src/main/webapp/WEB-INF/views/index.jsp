@@ -123,11 +123,13 @@ td {
 					<c:choose>
 						<c:when test="${myCommute.commuteEndtime == null}">
 							<c:choose>
+								<%--외출한 시간이 있다면  --%>
 								<c:when test="${myCommute.commuteStarttime != null}">
 									<div class=" col-3" id="endtime">
 										<button type="button"  class="btn btn-primary" id = "endtime1" onclick="endtime1()" ><i class="ni ni-button-play"></i></button>
 									</div>
 								</c:when>
+								
 								<c:otherwise>
 									<div class=" col-3" id="endtime">
 										<button type="button"  class="btn btn-primary" id = "endtime1"  onclick="endtime1()" disabled ><i class="ni ni-button-play"></i></button>
@@ -250,8 +252,8 @@ td {
 			</div>
 
 		</div>
- 	<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
-	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button> 
+ 	<!-- <button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
+	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>   -->
 
    <div class=" col-1"></div>
    </div>
@@ -590,12 +592,12 @@ document.getElementById('vacationButton').addEventListener('click', function() {
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
     window.location.href = '${path}/commute/MyCommuteInfo';
 });
- document.getElementById('checkInsert').addEventListener('click', function() {
+/*   document.getElementById('checkInsert').addEventListener('click', function() {
     window.location.href = '/commute/checkInsert';
 });
 document.getElementById('updateUncleared').addEventListener('click', function() {
     window.location.href = '/commute/updateUncleared';
-});  
+});   */
 
 </script>
 

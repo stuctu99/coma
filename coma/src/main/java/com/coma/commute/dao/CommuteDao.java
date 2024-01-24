@@ -42,6 +42,8 @@ public interface CommuteDao {
 	
 	List<Map> selectCommuteInfo2(SqlSession session, String loginId);
 	
+	int searchCommuteByData(SqlSession session, Map<String, Object> commute);
+	
 
 	
 }

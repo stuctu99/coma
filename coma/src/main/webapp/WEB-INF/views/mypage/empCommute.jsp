@@ -147,7 +147,6 @@ div {
 		<div class="col-1"></div>
 	</div>
 </div>
-
 <script>
 
 var today = new Date();
@@ -161,10 +160,6 @@ console.log(formattedDate);
 document.getElementById('start').value = formattedDate;
 
 
-
-
-
-
 function submitForm(cPage = 1, numPerpage = 10, url) {
     var empId = $("#empId").val();
     var endTime = $("#start").val();
@@ -173,7 +168,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     console.log(startTime);
     console.log(endTime);
     console.log(empId);
-    fetch(${path}"/commute/empCommuteEnd", {
+    fetch(url?"${path}"+url:"/commute/empCommuteEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -220,7 +215,6 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
 	    	          const optionElement = document.createElement('option');
 	    	          optionElement.value = optionValue;
 
-	    	          // Use a ternary operator to check if the current optionValue is equal to c.STATUS and set selected accordingly
 	    	          optionElement.selected = (optionValue === c.STATUS);
 
 	    	          optionElement.innerText = optionValue;
@@ -295,9 +289,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
 	    	        // 필요한 hidden input 요소들을 각각의 td에 추가
 	    	        $td3.appendChild($hiddenInput1);
 	    	        $td3.appendChild($hiddenInput2);
-	
-	    	        // 필요에 따라 다른 작업을 수행할 수 있습니다.
-	    	        // 예를 들어, $tr을 $tbody에 추가하는 등의 작업을 수행할 수 있습니다.
+
 	    	        $tr.appendChild($td1);
 	    	        $tr.appendChild($td2);
 	    	        $tr.appendChild($td3);
@@ -308,16 +300,14 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
 	    	        $tbody.appendChild($tr);
     	    	}
     	    });
-            
+    	    $div.innerText="";
+			$div.innerHTML=data.pageBar;
         })
         .catch(error => {
             console.error("Error:", error);
         });
 }
 
-/* document.getElementById('total').addEventListener('click', function() {
-    window.location.href = ${pageContext.request.contextPath}'/commute/empCommute?empId='${e.EMP_ID };
-}); */
 //기간 시작 기간보다 끝기간 못 지정하기 
 function updateEndTimeMin() {
     var startTimeInput = document.getElementById('endTime');
@@ -327,7 +317,6 @@ function updateEndTimeMin() {
 }
 
 
-	
 </script>
 
 <script src="${path }/resource/js/plugins/jquery/dist/jquery.min.js"></script>
