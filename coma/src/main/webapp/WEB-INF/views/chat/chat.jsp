@@ -302,7 +302,7 @@ div {
 						
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
+						<button id="close-invite-modal" type="button" class="btn btn-secondary"
 							data-dismiss="modal">닫기</button>
 						<button id="enterRoom-btn" type="button" class="btn btn-primary">입장
 						</button>

@@ -24,7 +24,7 @@ public interface MessengerService {
 	
 	ChattingRoom passwordCheck(Map<String,String> roomInfo);
 	String insertChattingRoom(ChattingRoom room);
-	int insertInviteEmp(Map<String,Object> inviteInsertInfo);
+	int insertInviteEmpAndUpdate(Map<String,Object> inviteInsertInfo);
 	
 	int deleteChatRoomInfoByRoomNo(List<String> roomList);
 }

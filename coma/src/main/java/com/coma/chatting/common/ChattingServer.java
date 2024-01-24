@@ -107,16 +107,17 @@ public class ChattingServer extends TextWebSocketHandler {
 
 				}
 			}
-			sendMessage(msg);
+			/* sendMessage(msg); */
 		} else {
 			// 채팅방 정보가 없을 때 최초 입장하는 세션을 기준으로 방정보를 session에 먼저 넣기
 			/* System.err.println("[ChattingServer] : 최초입장"); */
 			clients = new HashMap<String, WebSocketSession>();
 			clients.put(msg.getEmpId(), session);
 			room.put(msg.getRoomNo(), clients);
-			sendMessage(msg);
+			/* sendMessage(msg); */
 		}
 		System.err.println("[ChattingServer] : 채팅방에 존재하는 세션정보: " + room.get(msg.getRoomNo()));
+		sendMessage(msg);
 
 	}
 
