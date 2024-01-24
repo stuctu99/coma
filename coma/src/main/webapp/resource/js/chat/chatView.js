@@ -1,3 +1,5 @@
+const nowPage = $(opener.document).find("#my-status").val();
+
 $("#exit-btn").click(function() {
 	if (confirm("채팅방을 완전히 나가겠습니까?")) {
 		const roomNo = $("#roomNo").val();
@@ -206,9 +208,8 @@ const closeChatting = (msg) => {
 	$(".messageView" + msg.roomNo).append(container);
 	container.append(content);
 	container.append($("<br>"));
-	/*container.append(invite);*/
+	let count = $(opener.document).find("#"+msg.roomNo).var();
 	$(opener.document).find("#chatting-active").removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick", "privateChatting('" + msg.empId + "','" + loginId + "');");
-	$(".emp-list-btn").click();
 	$("." + msg.empId).remove();
 	$(opener.location).attr("href", "javascript:fn_roomListByType('engagement');");
 }
@@ -321,7 +322,8 @@ const memberList = (roomNo) => {
 		})
 }
 
-const fn_updateInfo = (roomNo) => {
+const fn_roomUpdateInfo = (roomNo) => {
+	initRoomUpdateModal();
 	$("#updateroomName").val($("#room_name").text());
 	let updateType = $("#updateroomType");
 	const roomType = $("#roomType").val();
@@ -365,8 +367,39 @@ const fn_updateInfo = (roomNo) => {
 		})
 }
 
+const fn_roomUpdateCheck = (roomNo) =>{
+	const roomNameVal = $("#updateroomName").val();
+	const roomPasswordVal = $("#updateroomPassword").val();
+	const roomPasswordFlag = $("#updateroomPasswordFlag").val();
+	
+	if(roomNameVal.length>0){
+		if(roomPasswordFlag=='Y'){
+			if(roomPasswordVal.length>0){
+				fn_roomUpdate(roomNo);				
+			}else{
+				alert("비밀번호 입력하셔야 합니다. 원하지 않을 시 체크를 해제하세요.");
+			}
+		}else{
+			fn_roomUpdate(roomNo);
+		}
+	}else{
+		alert("방 제목은 공란일 수 없습니다. 제목을 입력하세요.");
+	}
+}
+const initRoomUpdateModal = ()=>{
+	const roomPassword = $("#updateroomPassword");
+	const roomPasswordFlag = $("#updateroomPasswordFlag");
+	const roomType = $("#updateroomType");
+	const inviteCheckbox = $(".emp_checkbox");
+	
+	roomPassword.val("");
+	roomPassword.prop("disabled",true);
+	roomPasswordFlag.prop("checked",false);
+	roomType.val("A");
+	inviteCheckbox.prop("checked",false);
+}
 
-const fn_update = (roomNo) => {
+const fn_roomUpdate = (roomNo) => {
 	const roomName = $("#updateroomName").val();
 	const roomPassword = $("#updateroomPassword").val();
 	const roomPasswordFlag = $("#updateroomPasswordFlag").val();
@@ -414,6 +447,7 @@ const fn_update = (roomNo) => {
 				})
 				$("#invite-modal").modal('hide');
 				memberList(msg.roomNo, msg.empId);
+				$(opener.document).find(nowPage).click();
 			} else {
 				alert("접근할 수 없습니다. 관리자에게 문의하세요:(");
 			}

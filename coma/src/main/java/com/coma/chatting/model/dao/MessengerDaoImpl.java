@@ -48,9 +48,9 @@ public class MessengerDaoImpl implements MessengerDao {
 	}
 
 	@Override
-	public List<ChattingRoom> selectChatRoomListByType(SqlSession session, Map<String, String> searchInfo) {
+	public List<ChattingRoom> selectChatRoomList(SqlSession session, Map<String, String> searchInfo) {
 		// TODO Auto-generated method stub
-		return session.selectList("chatting.selectChatRoomListByType", searchInfo);
+		return session.selectList("chatting.selectChatRoomList", searchInfo);
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public class MessengerController {
 	public Map<String, Object> initButton(@PathVariable String loginId) {
 		Map<String, Object> param = new HashMap<>();
 		List<ChattingPrivateRoom> data = service.selectPrivateChatJoinInfo(loginId);
-		param.put("test", data);
+		param.put("proom", data);
 		return param;
 	}
 
@@ -63,11 +63,11 @@ public class MessengerController {
 		return room;
 	}
 
-	@GetMapping("/roomlist/{type}/{loginId}")
+	@GetMapping("/roomlist/{loginId}")
 	@ResponseBody
-	public Map<String, Object> chatRoomListByType(@PathVariable String type, @PathVariable String loginId) {
-		Map<String, String> searchInfo = Map.of("type", type, "loginId", loginId);
-		List<ChattingRoom> roomList = service.selectChatRoomListByType(searchInfo);
+	public Map<String, Object> chatRoomListByType(@PathVariable String loginId) {
+		Map<String, String> searchInfo = Map.of("loginId", loginId);
+		List<ChattingRoom> roomList = service.selectChatRoomList(searchInfo);
 		List<ChattingJoin> joinRoom = service.selectMyJoinRoomById(loginId);
 		// 변수명 수정 필요
 		List<ChattingPrivateRoom> privateRoomList = service.selectPrivateChatJoinInfo(loginId);
