@@ -21,4 +21,8 @@ public interface ApprdocDao {
 		int selectApprCount(SqlSession session, Map<String, Object> pgMap);
 		
 		List<ApprovalDoc> selectMyList(SqlSession session, Map<String, Integer> page, Map<String, Object> myMap);
+		
+		List<ApprovalDoc> filterDoc(SqlSession session, Map<String, Object> filMap);
+		
+		List<ApprovalDoc> filterDocAll(SqlSession session, Map<String, Object> filMap);
 }

@@ -9,14 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,11 +63,12 @@ public class BoardController {
 	
 	//자유게시판리스트
 	@GetMapping("/freelist")
-	public void selectBoardFree(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "20") int numPerpage,
+	public void selectBoardFree(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "15") int numPerpage,
 								@RequestParam(required = false, defaultValue="1") int boardType, Model m){
 		
 		//Type이 1(자유)인 게시글 List타입으로 가져오기+페이징처리
 		List<Board> boards = service.selectReplyCount(Map.of("cPage", cPage, "numPerpage", numPerpage),boardType);
+		
 		
 		//Type이 1(자유)인 게시글 총 갯수
 		int totalData=service.selectBoardCount(boardType);
@@ -287,18 +287,18 @@ public class BoardController {
 	}
 	
 	//공지글 체크삭제
-//    @GetMapping("/checkDelete")
-//    @ResponseBody
-//    public ResponseEntity<String> deleteSelectedPosts(@RequestBody List<Integer> ids) {
-//        // ids를 사용하여 삭제 작업을 수행하는 로직을 구현
-//    	
+    @PostMapping("/checkDelete")
+    @ResponseBody
+    public ResponseEntity<String> deleteSelectedPosts(@RequestBody List<Integer> ids) {
+        // ids를 사용하여 삭제 작업을 수행하는 로직을 구현
+    	
 //        for (Integer id : ids) {
-//            service.checkDelete(id);
+            service.checkDelete(ids);
 //        }
-//
-//        // 삭제 작업이 완료되면 성공 응답을 반환
-//        return ResponseEntity.ok("삭제가 성공적으로 수행되었습니다.");
-//    }
+
+        // 삭제 작업이 완료되면 성공 응답을 반환
+        return ResponseEntity.ok("삭제되었습니다");
+    }
 
 	
 	

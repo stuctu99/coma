@@ -38,5 +38,7 @@ public interface CommuteService {
 	
 	List<Map> selectCommuteInfo2(String loginId);
 	
+	int searchCommuteByData(Map<String, Object> commute);
+	
 	
 }

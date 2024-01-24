@@ -23,6 +23,8 @@ import com.coma.emp.service.EmpService;
 import com.coma.model.dto.Commute;
 import com.coma.model.dto.Emp;
 
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 @RequestMapping("/commute")
 @Controller
@@ -92,20 +94,21 @@ public class CommuteController {
 	        int count =service.countCommute(loginId);
 	        m.addAttribute("commute",commute2);   
 	        m.addAttribute("count",count);
-	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/commute/commuteDetail"));
+	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "http://14.36.141.71:15555/GDJ71_COMA_final/commute/commuteDetail"));
 
 	        return "mypage/commuteDetail";
 	     }
-	     
+	     //근태 상세페이지 AJAX
 	     @PostMapping("/commuteDetailEnd")
 	     public @ResponseBody Map<String, Object> commuteDetailEnd (@RequestBody Map<String, Object> commute,Principal pri) {
-	        String startTime = (String) commute.get("startTime");
-	        
+	       
 	        String loginId=pri.getName();
 	        commute.put("loginId", loginId);
 	        
 	        int totalData =service.countSearchCommute(commute);
 	        List <Commute> commuteList = service.searchCommute(commute);
+	        System.out.println("여기"+totalData);
+	        System.out.println("여기"+commuteList);
 	        return Map.of("totalData",totalData,"commuteList",commuteList,"pageBar",pageFactory.pageAjax((int)commute.get("cPage"), (int)commute.get("numPerpage"), totalData, "/commute/commuteDetailEnd",(String)commute.get("jsName")));
 
 	     }
@@ -113,8 +116,10 @@ public class CommuteController {
 	     //사원 근태 수정하기 페이지 맵핑
 	     @GetMapping("/empCommute")
 	     public String  empCommute (@RequestParam("empId") String empId, Model m,@RequestParam(defaultValue="1") int cPage,
-		            @RequestParam(defaultValue="10") int numPerpage,Map<String, Object> commute) {
-	    	
+		            @RequestParam(defaultValue="10") int numPerpage,Map<String, Object> commute, HttpServletRequest request) {
+	    	String url = request.getContextPath();
+	    	System.err.println(url);
+	    	System.out.println("");
 	    	commute.put("loginId",empId);
 	    	commute.put("cPage",cPage);
 	    	commute.put("numPerpage",numPerpage);
@@ -125,21 +130,15 @@ public class CommuteController {
 			m.addAttribute("commute",commute2);   
 			m.addAttribute("count",count);
 			m.addAttribute("empId",empId);
-			m.addAttribute("pageBar",pageFactory.getPageByWh(cPage, numPerpage, count, "/commute/empCommute", empId));
+			m.addAttribute("pageBar",pageFactory.getPageByWh(cPage, numPerpage, count, "http://14.36.141.71:15555/GDJ71_COMA_final/commute/empCommute", empId));
 			
 			return "mypage/empCommute";
 	     }
 	     //ajax 리스트 메소드
 	     @PostMapping("/empCommuteEnd")
-	     public @ResponseBody Map<String, Object> empCommuteEnd (@RequestBody Map<String, Object> commute,
-	    		@RequestParam(defaultValue="1") int cPage,
-		        @RequestParam(defaultValue="10") int numPerpage) {	
-	    	 
-		    commute.put("cPage",cPage);
-		    commute.put("numPerpage",numPerpage);
-	        int totalData =service.countSearchCommute(commute);
+	     public @ResponseBody Map<String, Object> empCommuteEnd (@RequestBody Map<String, Object> commute) {	
+	        int totalData =service.searchCommuteByData(commute);
 	        List <Commute> commuteList = service.searchCommute(commute); 
-
 	        return Map.of("commuteList",commuteList,"pageBar",pageFactory.pageAjax((int)commute.get("cPage"), (int)commute.get("numPerpage"), totalData, "/commute/empCommuteEnd",(String)commute.get("jsName")));
 	     }
 	     
@@ -165,7 +164,7 @@ public class CommuteController {
 
 	  //월요일부터 금요일까지 아침 10시에 퇴근 미처리 update
 	    @Scheduled(cron = "0 0 22 * * 1-5")
-	//	@GetMapping("/updateUncleared") 
+	    //@GetMapping("/updateUncleared") 
 		public void updateUncleared() {
 			int result = service.updateUncleared();
 		}

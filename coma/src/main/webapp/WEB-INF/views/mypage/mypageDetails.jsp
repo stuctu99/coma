@@ -101,10 +101,10 @@ select:disabled, select[readonly] {
 									<c:choose>
 									    <c:when test="${empVacation % 1 == 0}">
 									        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
-							 				<input class="form-control" type="text" value="${formattedNumber}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
+							 				<input class="form-control" type="text" value="${formattedNumber}" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
 									    </c:when>
 									    <c:otherwise>
-							 				<input class="form-control" type="text" value="${emp.empVacation}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
+							 				<input class="form-control" type="text" value="${emp.empVacation}" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
 									    </c:otherwise>
 									</c:choose>	
 							  </div>
@@ -180,10 +180,7 @@ select:disabled, select[readonly] {
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Assuming emp.empVacation holds the initial value
     var initialVacationValue = "${emp.empVacation}";
-    
-    // Set the selected attribute based on the initial value
     var selectElement = document.getElementById("exampleFormControlSelect1");
     for (var i = 0; i < selectElement.options.length; i++) {
       if (selectElement.options[i].value === initialVacationValue) {

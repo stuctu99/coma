@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -150,7 +151,7 @@ public class MessengerController {
 		return data;
 	}
 
-	@PostMapping("/invite/{roomNo}")
+	@PutMapping("/update/{roomNo}")
 	@ResponseBody
 	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo, @RequestBody ChattingRoom room) {
 		List<String> inviteEmpList = new ArrayList<String>(Arrays.asList(room.getInviteEmp()));
@@ -160,7 +161,7 @@ public class MessengerController {
 		inviteInsertInfo.put("room", room);
 		inviteInsertInfo.put("roomNo", roomNo);
 		inviteInsertInfo.put("inviteEmpList", inviteEmpList);
-		int inviteInsertCheck = service.insertInviteEmp(inviteInsertInfo);
+		int inviteInsertCheck = service.insertInviteEmpAndUpdate(inviteInsertInfo);
 		if (inviteInsertCheck > 0) {
 			return Map.of("result", "success");
 		}
