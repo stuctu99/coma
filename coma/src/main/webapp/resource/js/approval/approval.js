@@ -564,6 +564,25 @@ let selectedRadio = '';
 
 const take_line=()=>{
 	
+	//--추가돼있던 결재선 삭제
+	
+	$('.appr_container').empty(); 
+	
+
+	let appr_result = $('.appr_result');
+
+	for (let i=0; i < app_all_arr.length; i++) {
+	    
+		appr_result[i].value = ""; //hidden input 비워주기
+	}
+
+	for (let i = app_all_arr.length - 1; i >= 0; i--) { //배열 값 삭제
+	    app_all_arr.pop(); // 역순으로 pop 호출
+	}
+	
+	//ㄴ--삭제 끝
+	
+	
 	let all_appr_line = "";
 
 	let radioContainer = $('#take_line');
