@@ -252,8 +252,8 @@ td {
 			</div>
 
 		</div>
-<!--  	<button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
-	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>  -->
+ 	<!-- <button type="button" class="btn btn-primary" id="updateUncleared">퇴근 미처리</button>
+	<button type="button" class="btn btn-primary" id="checkInsert">근태 정보</button>   -->
 
    <div class=" col-1"></div>
    </div>
@@ -592,7 +592,7 @@ document.getElementById('vacationButton').addEventListener('click', function() {
 document.getElementById('myCommuteBtn').addEventListener('click', function() {
     window.location.href = '${path}/commute/MyCommuteInfo';
 });
-/*  document.getElementById('checkInsert').addEventListener('click', function() {
+/*   document.getElementById('checkInsert').addEventListener('click', function() {
     window.location.href = '/commute/checkInsert';
 });
 document.getElementById('updateUncleared').addEventListener('click', function() {

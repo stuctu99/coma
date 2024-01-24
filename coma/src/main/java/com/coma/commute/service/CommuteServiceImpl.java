@@ -104,6 +104,12 @@ public class CommuteServiceImpl implements CommuteService {
 		return dao.selectCommuteInfo2(session,loginId);
 	}
 
+	@Override
+	public int searchCommuteByData(Map<String, Object> commute) {
+		// TODO Auto-generated method stub
+		return dao.searchCommuteByData(session,commute);
+	}
+
 
 
 

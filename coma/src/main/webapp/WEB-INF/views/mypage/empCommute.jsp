@@ -168,7 +168,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     console.log(startTime);
     console.log(endTime);
     console.log(empId);
-    fetch(${path}"/commute/empCommuteEnd", {
+    fetch(url?"${path}"+url:"/commute/empCommuteEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -300,13 +300,14 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
 	    	        $tbody.appendChild($tr);
     	    	}
     	    });
-            
+    	    $div.innerText="";
+			$div.innerHTML=data.pageBar;
         })
         .catch(error => {
             console.error("Error:", error);
         });
 }
-ㄴ
+
 //기간 시작 기간보다 끝기간 못 지정하기 
 function updateEndTimeMin() {
     var startTimeInput = document.getElementById('endTime');

@@ -96,16 +96,17 @@ public class CommuteController {
 
 	        return "mypage/commuteDetail";
 	     }
-	     
+	     //근태 상세페이지 AJAX
 	     @PostMapping("/commuteDetailEnd")
 	     public @ResponseBody Map<String, Object> commuteDetailEnd (@RequestBody Map<String, Object> commute,Principal pri) {
-	        String startTime = (String) commute.get("startTime");
-	        
+	       
 	        String loginId=pri.getName();
 	        commute.put("loginId", loginId);
 	        
 	        int totalData =service.countSearchCommute(commute);
 	        List <Commute> commuteList = service.searchCommute(commute);
+	        System.out.println("여기"+totalData);
+	        System.out.println("여기"+commuteList);
 	        return Map.of("totalData",totalData,"commuteList",commuteList,"pageBar",pageFactory.pageAjax((int)commute.get("cPage"), (int)commute.get("numPerpage"), totalData, "/commute/commuteDetailEnd",(String)commute.get("jsName")));
 
 	     }
@@ -131,15 +132,9 @@ public class CommuteController {
 	     }
 	     //ajax 리스트 메소드
 	     @PostMapping("/empCommuteEnd")
-	     public @ResponseBody Map<String, Object> empCommuteEnd (@RequestBody Map<String, Object> commute,
-	    		@RequestParam(defaultValue="1") int cPage,
-		        @RequestParam(defaultValue="10") int numPerpage) {	
-	    	 
-		    commute.put("cPage",cPage);
-		    commute.put("numPerpage",numPerpage);
-	        int totalData =service.countSearchCommute(commute);
+	     public @ResponseBody Map<String, Object> empCommuteEnd (@RequestBody Map<String, Object> commute) {	
+	        int totalData =service.searchCommuteByData(commute);
 	        List <Commute> commuteList = service.searchCommute(commute); 
-
 	        return Map.of("commuteList",commuteList,"pageBar",pageFactory.pageAjax((int)commute.get("cPage"), (int)commute.get("numPerpage"), totalData, "/commute/empCommuteEnd",(String)commute.get("jsName")));
 	     }
 	     
@@ -165,7 +160,7 @@ public class CommuteController {
 
 	  //월요일부터 금요일까지 아침 10시에 퇴근 미처리 update
 	    @Scheduled(cron = "0 0 22 * * 1-5")
-	//	@GetMapping("/updateUncleared") 
+	    //@GetMapping("/updateUncleared") 
 		public void updateUncleared() {
 			int result = service.updateUncleared();
 		}
