@@ -125,13 +125,13 @@
 			<h1>출석 현황</h1>
 			<div class="row" id="stu_regulatoryStatus">
 				<div class="col-4">
-			        <label for="example-text-input" class="form-control-label">총 출석 수</label>
+			        <label for="example-text-input" class="form-control-label">출석일 수/총 수업일 수</label>
 			        <input class="form-control" type="text" value="0/120" id="example-text-input" style="text-align:center;" >
 				</div>
 				<div class="col-8">
 			        <div style="width:470px; margin-left: 10px;">
 					  <div class="progress-info" style="margin-top: 3px;">
-					    <label for="example-text-input" class="form-control-label">출석일 수/총 수업일 수</label>
+					    <label for="example-text-input" class="form-control-label">출석율</label>
 					    <div class="progress-percentage">
 					      <span>0%</span>
 					    </div>
