@@ -147,11 +147,34 @@ table.table .avatar {
 }
 
 .no{
-	width: 70px;
+	width: 80px;
+	text-align: center;
+}
+
+
+.writer{
+	width: 100px;
+	text-align: center;
+}
+
+.date{
+	text-align: center;
+	width: 105px;
+}
+
+.read{
+	
 	text-align: center;
 }
 
 textarea{
 	resize: none;
-	
+}
+
+body{
+ -ms-overflow-style: none;
+ }
+ 
+::-webkit-scrollbar {
+  display: none;
 }

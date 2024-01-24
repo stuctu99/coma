@@ -44,7 +44,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 		int result = dao.insertApprovalDoc(session, all);
 		
-		System.out.println("doc result: "+ result);
 		
 		//휴가신청서 객체
 		//지출결의서 객체

@@ -47,6 +47,20 @@ public class ApprdocServicImpl implements ApprdocService {
 		// TODO Auto-generated method stub
 		return dao.selectMyList(session, page, myMap);
 	}
+
+	@Override
+	public List<ApprovalDoc> filterDoc(Map<String, Object> filMap) {
+		// TODO Auto-generated method stub
+		return dao.filterDoc(session, filMap);
+	}
+
+	@Override
+	public List<ApprovalDoc> filterDocAll(Map<String, Object> filMap) {
+		// TODO Auto-generated method stub
+		return dao.filterDocAll(session, filMap);
+	}
+	
+	
 	
 	
 	

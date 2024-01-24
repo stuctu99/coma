@@ -197,8 +197,7 @@
 				   		<div class="col-3">
 				   		</div>
 				   		<div class="col-6">
-<%-- 				   			<c:set var="fileName" value="${file.attachReName}"/>      		 --%>
-							<a href="<c:url value='${path }/approval/fileDownload/${file.attachReName}'/>">${file.attachReName } </a><br>
+							<a href="${path }/approval/fileDownload/${file.attachReName}">${file.attachReName } </a><br>
 
 				   		</div>
 				   		<div class="col-3">
