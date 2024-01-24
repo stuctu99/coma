@@ -11,7 +11,6 @@
 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
-
 /* 	div{
       border: 2px solid red;
     } */
@@ -188,7 +187,7 @@
 		const searchData=document.getElementById("searchData").value;
 		const textData=document.getElementById("textData").value;
 		console.log(searchData,textData);
-			fetch(url?'${path}'+url:"/admin/searchEmp",{
+			fetch(url?'${path}'+url:"${path}/admin/searchEmp",{
 				method:"post",
 				headers:{"Content-Type":"application/json"},
 				body:JSON.stringify({

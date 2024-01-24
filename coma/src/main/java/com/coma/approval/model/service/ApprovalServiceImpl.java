@@ -44,7 +44,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 		int result = dao.insertApprovalDoc(session, all);
 		
-		System.out.println("doc result: "+ result);
 		
 		//휴가신청서 객체
 		//지출결의서 객체
@@ -277,6 +276,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int updateAllMyturn(Map<String, String> data) {
 		return dao.updateAllMyturn(session, data);
+	}
+
+	@Override
+	public String selectDocType(String docNo) {
+		return dao.selectDocType(session, docNo);
 	}
 
 

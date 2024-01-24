@@ -97,6 +97,12 @@ public class BoardDaoImpl implements BoardDao {
 		// TODO Auto-generated method stub
 		return session.insert("board.insertBoardFile",bf);
 	}
+
+	@Override
+	public int checkDelete(SqlSession session, List<Integer> ids) {
+		// TODO Auto-generated method stub
+		return session.delete("board.checkDelete", ids);
+	}
 	
 	
 	

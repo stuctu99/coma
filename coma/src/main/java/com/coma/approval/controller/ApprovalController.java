@@ -2,7 +2,9 @@ package com.coma.approval.controller;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,9 +19,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -282,15 +285,13 @@ public class ApprovalController {
       doc.setFiles(files);
       doc.setApprover(approver);
       doc.setRef(ref);
-      
-      System.out.println("controller doc객체 확인"+doc);
-      
+   
       String msg, loc;
       try {
          int result = service.insertApproval(doc);   
 
          msg="문서 등록 성공";
-         loc="apprdoc/allList"; // 결재 문서함 페이지로 이동
+         loc="apprdoc/allList?empId="+empId; // 결재 문서함 페이지로 이동
       }catch(RuntimeException e){
          msg="문서 등록 실패";
          loc="approval/writedoc";
@@ -311,20 +312,22 @@ public class ApprovalController {
    
 //--------------------------- 문서 상세보기 ------------------------------
    @GetMapping("/viewdoc")
-   public String viewDoc(String docNo, String docType, Model model) {
+   public String viewDoc(String docNo, Model model) {
 	   
 	 Map<String, String> data = new HashMap<String, String>();
 	
-	 
 	 data.put("docNo", docNo); 
+	
+	 //문서 타입 가져오기
+	 String docType = service.selectDocType(docNo);
 	 data.put("docType", docType); 
 	 
-	 //문서 번호로 해당 문서 정보 가져오기
-	 
+	 //문서 번호, 문서 타입으로로 해당 문서 정보 가져오기
 	 ApprovalDoc doc = service.selectAppDoc(data); 
-	 
+
 	 	model.addAttribute("doc",doc);
 	 
+	 	
 	 	
 	 //Date 시간 잘라내고 날짜만 가져오기	
 	 String fullDate = doc.getDocDate()+" ";
@@ -424,21 +427,15 @@ public class ApprovalController {
 	   Map<String, String> data2 = new HashMap<String, String>();
 	   data2.put("docNo", docNo); 
 	     	   
-	   System.out.println("apprIdArr**********************" + apprIdArr);
 	  String[] signArr = new String[apprIdArr.length];
 	  int i=0;
 	  for(String apprId : apprIdArr) {
-		   System.out.println("apprId**********************" + apprId);
-
+	
 		  data2.put("empId", apprId); 
 		  String status = service.getStatusByIdAndDocNo(data2); //해당 결재자의 결재 상태
-
-		   System.out.println("apprId status###**********************################# " + status);
-		  
+  
 		  if(status!=null) {
 			  String sign = service.getSignByApprId(apprId); //결재 완료일 경우 사인 가져옴
-			   System.out.println("apprId sign**********************" + sign);
-
 			  
 			  signArr[i] = sign;
 		  }
@@ -518,7 +515,7 @@ public class ApprovalController {
    //---------------------------- 결재 승인 -------------------------------------
    
    @PostMapping("/reject")
-   public String reject(String docNo, String thisOrder, Model model) { //empId = 문서 기안자
+   public String reject(String docNo, String thisOrder, Model model, String empId) { //empId = 문서 기안자
 	  
 	   Map<String, String> data = new HashMap<String, String>();
 	   data.put("docNo", docNo);
@@ -529,10 +526,9 @@ public class ApprovalController {
 	   
 	   int result2 = service.updateAllMyturn(data);
 	   
-	   System.out.println("진행상태 반려 변경: " + result1+ "myturn 변경: " + result2);
-	   
+	  
 	   String msg="반려 처리 완료";
-       String loc="apprdoc/docList";
+       String loc="apprdoc/allList?empId="+empId;
 	   
        model.addAttribute("msg",msg);
        model.addAttribute("loc",loc);
@@ -557,7 +553,7 @@ public class ApprovalController {
 		   int result2 = service.updateNextOrder(data);
 		   
 		   String msg="승인 완료";
-	       String loc="apprdoc/docList";
+	       String loc="apprdoc/allList?empId="+empId;
 	       model.addAttribute("msg",msg);
 	       model.addAttribute("loc",loc);
 
@@ -588,8 +584,6 @@ public class ApprovalController {
 					   
 					   int result = service.updateVacation(dataL);
 					   
-					   System.out.println("잔여 휴가 변경 완료");
-					   
 				   }else {
 					   int result = service.updateVacationHalf(empId);
 				   }
@@ -604,5 +598,29 @@ public class ApprovalController {
 	      return "common/msg";
    }
    
+   //------------------- 파일 다운로드 ---------------------------
+   
+   @GetMapping("/fileDownload/{file}")
+   public void fileDownload(@PathVariable String file, HttpServletResponse response,  HttpSession session) throws IOException{
+	 
+	   String path = session.getServletContext().getRealPath("/resource/upload/approval");
 
+	   File f = new File(path, file);
+	   
+	// file 다운로드 설정
+       response.setContentType("application/download");
+       response.setContentLength((int)f.length());
+       response.setHeader("Content-disposition", "attachment;filename=\"" + file + "\"");
+     
+       // response 객체를 통해서 서버로부터 파일 다운로드
+       OutputStream os = response.getOutputStream();
+     
+       // 파일 입력 객체 생성
+       FileInputStream fis = new FileInputStream(f);
+       FileCopyUtils.copy(fis, os);
+       fis.close();
+       os.close();
+       
+   }
+   	
 }

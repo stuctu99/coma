@@ -42,21 +42,15 @@ public class MessengerDaoImpl implements MessengerDao {
 	}
 
 	@Override
-	public String selectNowCreateChatRoomNo(SqlSession session) {
-		// TODO Auto-generated method stub
-		return session.selectOne("chatting.selectNowCreateChatRoomNo");
-	}
-
-	@Override
 	public ChattingRoom passwordCheck(SqlSession session, Map<String, String> roomInfo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("chatting.selectRoomPasswordCheck", roomInfo);
 	}
 
 	@Override
-	public List<ChattingRoom> selectChatRoomListByType(SqlSession session, Map<String, String> searchInfo) {
+	public List<ChattingRoom> selectChatRoomList(SqlSession session, Map<String, String> searchInfo) {
 		// TODO Auto-generated method stub
-		return session.selectList("chatting.selectChatRoomListByType", searchInfo);
+		return session.selectList("chatting.selectChatRoomList", searchInfo);
 	}
 
 	@Override
@@ -97,24 +91,21 @@ public class MessengerDaoImpl implements MessengerDao {
 	// insert
 	@Override
 	@Transactional
-	public int insertChattingRoom(SqlSession session, ChattingRoom room) {
-		// TODO Auto-generated method stub
+	public String insertChattingRoom(SqlSession session, ChattingRoom room) {
+		String roomNo = null;
 		int result = session.insert("chatting.insertCreateRoom", room);
 		if (result > 0) {
 			Map<String, String> joiner = room.getIdList();
-			/*
-			 * Collection<String> values =creator.values(); List<String> idList = new
-			 * ArrayList<>(values);
-			 */
 			result = session.insert("chatting.insertJoinEmp", joiner);
+			roomNo = session.selectOne("chatting.selectNowCreateChatRoomNo");
 
 		}
-		return result;
+		return roomNo;
 	}
 
 	@Override
 	@Transactional
-	public int insertInviteEmp(SqlSession session, Map<String, Object> inviteInsertInfo) {
+	public int insertInviteEmpAndUpdate(SqlSession session, Map<String, Object> inviteInsertInfo) {
 		int result = 0;
 		if (((ChattingRoom)inviteInsertInfo.get("room")).getInviteEmp().length!=0) {
 			result = session.insert("chatting.insertInviteEmp", inviteInsertInfo);

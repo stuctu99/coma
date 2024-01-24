@@ -85,9 +85,6 @@ public class MessengerServer extends TextWebSocketHandler {
 	}
 	
 	private void createChatroom(MessengerMessage msg) {
-		String roomNo = service.selectNowCreateChatRoomNo();
-		msg.setRoomNo(roomNo);
-		msg.setMsg("new");
 		try {
 			for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
 				WebSocketSession session = client.getValue();
@@ -136,6 +133,7 @@ public class MessengerServer extends TextWebSocketHandler {
 	
 //	메세지 전송 시 해당 접속자에게 채팅방 리스트의 채팅방에 최신메세지
 	private void updateMsg(MessengerMessage msg) {
+		System.err.println("여기에 메세지가 전달되?");
 		try {
 			for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
 				WebSocketSession session = client.getValue();
@@ -149,6 +147,7 @@ public class MessengerServer extends TextWebSocketHandler {
 //	초대 알림 메세지	
 	private void inviteAlarm(MessengerMessage msg) {
 		for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
+			System.err.println(msg.getTargetId());
 			if(client.getKey().equals(msg.getLoginId())) {
 				try {
 					WebSocketSession session = client.getValue();

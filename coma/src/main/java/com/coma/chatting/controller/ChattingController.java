@@ -60,8 +60,10 @@ public class ChattingController {
 	@ResponseBody
 	public Map<String, Object> selectMemberlistByRoomNo(@PathVariable String roomNo) {
 		List<Emp> roomMemberList = service.selectRoomMemberList(roomNo);
-
-		return Map.of("roomMemberList", roomMemberList, "roomMemberCheck", roomMember.get(roomNo));
+		Map<String, Object> memberList = new HashMap<String,Object>();
+		memberList.put("roomMemberList", roomMemberList);
+		memberList.put("roomMemberCheck", roomMember.get(roomNo));
+		return memberList;
 	}
 	
 	@GetMapping("/invitelist/{roomNo}")

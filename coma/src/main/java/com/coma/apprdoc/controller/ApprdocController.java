@@ -31,8 +31,8 @@ public class ApprdocController {
 	private final PageFactory pageFactory;
 	
 	@GetMapping("/allList")
-	public void	selectAllList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
-			  @RequestParam(required = false, defaultValue="대기") String docProgress, String empId,Model m) {
+	public void	selectAllList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+			  @RequestParam(required = false) String docProgress, String empId,Model m) {
 			
 //			List<ApprovalDoc> appr = new ArrayList<>();
 			List<ApprovalDoc> myAppr = new ArrayList<>();
@@ -69,7 +69,7 @@ public class ApprdocController {
 			
 			
 			m.addAttribute("proceed", myAppr);
-			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, numPerpage, docProgress));
+			m.addAttribute("pageBar", pageFactory.getPage(cPage, numPerpage, allCount, "/apprdoc/allList"+empId));
 		
 	}
 	
@@ -174,6 +174,46 @@ public class ApprdocController {
 		
 		
 		return ResponseEntity.ok(searchdoc);
+		
+	}
+	
+	//필터링 메소드
+	@PostMapping("/filter")
+	@ResponseBody
+	public ResponseEntity<List<ApprovalDoc>> filterDoc(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
+														@RequestParam("filter") String filter, @RequestParam("empId") String empId,Model m){
+		
+		System.out.println(empId);
+		
+		Map<String, Object> filMap = new HashMap<>();
+		filMap.put("filter", filter);
+		filMap.put("cPage", cPage);
+		filMap.put("numPerpage", numPerpage);
+		filMap.put("empId", empId);
+		
+		List<ApprovalDoc> filterdoc = service.filterDoc(filMap);	
+		
+		return ResponseEntity.ok(filterdoc);
+		
+	}
+	
+	//필터링 메소드
+	@PostMapping("/filterAll")
+	@ResponseBody
+	public ResponseEntity<List<ApprovalDoc>> filterAllDoc(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
+														@RequestParam("filter") String filter, @RequestParam("empId") String empId,Model m){
+		
+		System.out.println(empId);
+		
+		Map<String, Object> filMap = new HashMap<>();
+		filMap.put("filter", filter);
+		filMap.put("cPage", cPage);
+		filMap.put("numPerpage", numPerpage);
+		filMap.put("empId", empId);
+		
+		List<ApprovalDoc> filterdoc = service.filterDocAll(filMap);	
+		
+		return ResponseEntity.ok(filterdoc);
 		
 	}
 	

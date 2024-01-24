@@ -67,7 +67,7 @@ public class AdminService {
 	}
 	
 	//chart.js 메소드
-	public List<Map> charEmpData(Map<String, Integer> monthResult) {
+	public List<Map> charEmpData(Map<String, Object> monthResult) {
 		return dao.charEmpData(session, monthResult);
 	}
 	

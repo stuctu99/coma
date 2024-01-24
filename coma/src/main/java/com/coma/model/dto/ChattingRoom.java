@@ -27,5 +27,6 @@ public class ChattingRoom {
 	private Emp empObj;
 	private int memberCount;
 	private String[] inviteEmp;
+	private String newJoin;
 	/* private List<ChattingJoin> joinMember; */
 }
