@@ -8,7 +8,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="id" value="mine" />
 </jsp:include>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script  src="${path }http://code.jquery.com/jquery-latest.min.js"></script>
 
 <style>
 /*  div{
@@ -66,7 +66,7 @@ select:disabled, select[readonly] {
 <div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
-		 <form id="employeeForm" action="${pageContext.request.contextPath}/mypage/updatemypage" method="post"  enctype="multipart/form-data">
+		 <form id="employeeForm" action="${path }/mypage/updatemypage" method="post"  enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-6">
 				 <input type="file" id="accompany-file" name="empPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
@@ -177,7 +177,7 @@ select:disabled, select[readonly] {
 	</form>
 </div>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="${path }/t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     var initialVacationValue = "${emp.empVacation}";
@@ -247,7 +247,6 @@ $(document).ready(function () {
       var newPassword = $('#example-password-input').val();
       var confirmPassword = $('#example-password2-input').val();
       var messageElement = $('#passwordMatchMessage');
-
       if (newPassword === confirmPassword) {
         messageElement.text('비밀번호가 일치합니다.');
         messageElement.css('color', 'green'); 
