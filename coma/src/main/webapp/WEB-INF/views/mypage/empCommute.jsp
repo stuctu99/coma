@@ -311,7 +311,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
 //기간 시작 기간보다 끝기간 못 지정하기 
 function updateEndTimeMin() {
     var startTimeInput = document.getElementById('endTime');
-    var selectedDate = startTimeInput.value;ㄴ
+    var selectedDate = startTimeInput.value;
     var endTimeInput = document.getElementById('start');
     endTimeInput.min = selectedDate;
 }
