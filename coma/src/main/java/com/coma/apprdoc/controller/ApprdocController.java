@@ -31,7 +31,7 @@ public class ApprdocController {
 	private final PageFactory pageFactory;
 	
 	@GetMapping("/allList")
-	public void	selectAllList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+	public void	selectAllList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "50") int numPerpage,
 			  @RequestParam(required = false) String docProgress, String empId,Model m) {
 			
 //			List<ApprovalDoc> appr = new ArrayList<>();
