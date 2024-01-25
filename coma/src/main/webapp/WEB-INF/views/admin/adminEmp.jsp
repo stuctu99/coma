@@ -77,7 +77,7 @@
 			<input class="form-control form-control-sm" type="text" id="textData" placeholder="검색할 단어 입력">
 		</div>
 		<div class="col-5" style="padding-left:0px;">
-			<button type="button" class="btn btn-primary btn-sm" style="width:50px;" onclick="searchEmp();">검색</button>
+			<button type="button" class="btn btn-primary btn-sm" style="width:50px;" onclick="fn_searchEmp();">검색</button>
 		</div>
 		<div class="col-2">
 			<div class="row">
