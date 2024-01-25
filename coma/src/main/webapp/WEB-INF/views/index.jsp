@@ -12,6 +12,11 @@
 
 <!-- TEAM COMA SPACE -->
 <style>
+::-webkit-scrollbar {
+   /* 스크롤바 숨기기 */
+   display: none;
+   /*#5e72e4*/
+}
 .bigContainer {
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
    text-align: center;

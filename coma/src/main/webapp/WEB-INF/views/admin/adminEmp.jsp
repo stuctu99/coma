@@ -187,7 +187,7 @@
 		const searchData=document.getElementById("searchData").value;
 		const textData=document.getElementById("textData").value;
 		console.log(searchData,textData);
-			fetch(url?'${path}'+url:"/admin/searchEmp",{
+			fetch(url?'${path}'+url:"${path}/admin/searchEmp",{
 				method:"post",
 				headers:{"Content-Type":"application/json"},
 				body:JSON.stringify({

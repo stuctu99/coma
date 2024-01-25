@@ -45,13 +45,62 @@
 	width: 100px;
 }
 
+.dropbtn{
+  display : block;
+  background-color: #fcfcfc;
+  font-weight: 400;
+  color : rgb(124, 124, 124);
+  padding : 12px;
+  width :140px;
+  height: 40px;
+  text-align: left;
+  cursor : pointer;
+  font-size : 12px;
+  z-index :1;
+  position : relative;
+}
+
+.dropdown-content{
+  display : none;
+  font-weight: 400;
+  background-color: #fcfcfc;
+  width: 110px;
+  border-radius: 8px;
+  height : 167px;
+  overflow : hidden;
+  box-shadow: 0px 0px 10px 3px rgba(190, 190, 190, 0.6);
+}
+.dropdown-content::-webkit-scrollbar{
+  width : 5px;
+  height : 10px;
+}
+.dropdown-content::-webkit-scrollbar-thumb{
+  border-radius : 2px;
+  background-color :rgb(194, 194, 194)
+}
+
+.dropdown-content div{
+  display : block;
+  text-decoration : none;
+  color : rgb(37, 37, 37);
+  font-size: 12px;
+  padding : 12px 20px;
+}
+
+.dropdown-content div:hover{
+  background-color: rgb(226, 226, 226);
+}
+
+.dropdown-content.show{
+  display : block;
+
 </style>
 
     <div class="coma-container" style="margin-top:20px; margin-bottom: 5px;">
 
     <div class="space-y-2" style="text-align: center">
       <div class="flex flex-col">
-      	<h1>문서함</h1>
+      	<h1>${e.empName } 문서함</h1>
       </div>
     </div>
     
@@ -128,7 +177,7 @@
 		</div>
 	</div>
 	<div style="text-align: center">
-	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary" style="width:780px;">
+	    <a href="${path }/approval/writedoc" class="inline-flex items-center justify-center btn btn-primary" style="width:46%;">
 	  		<span style="font-size:16px;">+ 문서 작성하기</span>
 	    </a>
 	 </div>
@@ -136,7 +185,21 @@
     
   <main class="flex-1 p-5" style="padding-left: 139.91px !important; padding-right: 139.91px !important;">
     <div class="flex justify-between items-center mb-3">
-      <div class="flex space-x-2" style ="text-align: right;">
+      <div class="flex space-x-2" style ="text-align: right; display: flex; justify-content: space-between;">
+      	
+      <div class="dropdown" style="position : relative; display : inline-block; height: 40px; width: 98.41px;">
+		    <button class="dropbtn_click btn btn-outline-primary"  onclick="dropdown()" style="width: 111.64px;">
+		    	모든 문서
+		    </button>
+		    
+		    <div class="dropdown-content">
+		      <div class="mydoc" onclick="showMenu('모든 문서') getData('모든');">모든 문서</div>	
+		      <div class="mydoc" onclick="showMenu('참조 문서'); getData('참조');">참조 문서</div>
+		      <div class="mydoc" onclick="showMenu('결재할 문서'); getData('결재');">결재할 문서</div>
+		      <div class="mydoc" onclick="showMenu('작성한 문서'); getData('작성');">작성한 문서</div>
+		    </div>
+	  </div>
+      
       <form name="searchForm" autocomplete="off">
         <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
           placeholder="문서 검색" name="keyword"/>
@@ -156,7 +219,7 @@
     </div>
     <div class="bg-white p-5 border rounded">
       <div class="relative w-full overflow-auto">
-        <table class="table w-full caption-bottom text-sm">
+        <table class="table table-hover w-full caption-bottom text-sm">
           <thead class="[&amp;_tr]:border-b">
             <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
               <th class="doc-no">
@@ -263,5 +326,101 @@ function getSearchList(){
 		}
 	})
 }
+
+//문서 필터링
+window.onload=()=>{
+    document.querySelector('.dropbtn_click').onclick = ()=>{
+      dropdown();
+    }
+    
+    document.getElementsByClassName('mydoc').onclick = ()=>{
+      showMenu(value);
+    };
+    
+    dropdown = () => {
+      var v = document.querySelector('.dropdown-content');
+      var dropbtn = document.querySelector('.dropbtn')
+      v.classList.toggle('show');
+    }
+
+    showMenu=(value)=>{
+      var dropbtn_content = document.querySelector('.dropbtn_content');
+      var dropbtn_click = document.querySelector('.dropbtn_click');
+      var dropbtn = document.querySelector('.dropbtn');
+
+      dropbtn_click.innerText = '';
+      dropbtn_click.innerText = value;
+      
+      
+    }
+  }
+  
+  window.onclick= (e)=>{
+    if(!e.target.matches('.dropbtn_click')){
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      
+      var dropbtn_content = document.querySelector('.dropbtn_content');
+      var dropbtn_click = document.querySelector('.dropbtn_click');
+      var dropbtn = document.querySelector('.dropbtn');
+
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+  
+  function getData(value) {
+	  	
+	  	const empId = "${e.empId}";
+	  
+	    $.ajax({
+	        url: '${path}/apprdoc/filterAll',
+	        type: 'POST',
+	        data: { filter: value,
+	            empId: empId},
+	        dataType: 'json',
+	        success: function (response) {
+	            $('.table > tbody').empty();
+	            if (response.length >= 1) {
+	                response.forEach(function (filterdoc) {
+	                    console.log(filterdoc);
+	                    const writeDate=new Date(filterdoc.docDate);
+	                    var str = `<tr>`;
+	                    str += `<td class='no'>`+filterdoc.docNo+`</td>`;
+	                    
+	                    switch (filterdoc.docType) {
+                        case 'etc':
+                            str += "<td>기타</td>";
+                            break;
+                        case 'cash':
+                            str += "<td>지출</td>";
+                            break;
+                        case 'req':
+                            str += "<td>품의</td>";
+                            break;
+                        case 'leave':
+                            str += "<td>휴가</td>";
+                            break;
+                    	}
+	                    
+	                    str += `<td class='title'><a href='${path}/approval/viewdoc?docNo=`+filterdoc.docNo+`'>`+filterdoc.docTitle+`</a></td>`;
+	                    str += `<td class='writer'>`+filterdoc.emp.empName+`</td>`;
+	                    str += `<td class='date'>`+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+`</td>`;
+	                    str += `<td class='read'>`+filterdoc.docProgress+`</td>`;
+	                    str += `</tr>`;
+	                    console.log(str);
+	                    $('.table').append(str);
+	                });
+	            }
+	        },
+	        error: function (error) {
+	            console.log('AJAX 요청 실패:', error);
+	        }
+	    });
+	}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

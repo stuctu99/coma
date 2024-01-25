@@ -1,7 +1,6 @@
 package com.coma.commute.controller;
 
 import java.security.Principal;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,7 @@ import com.coma.emp.service.EmpService;
 import com.coma.model.dto.Commute;
 import com.coma.model.dto.Emp;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 @RequestMapping("/commute")
 @Controller
@@ -81,7 +81,7 @@ public class CommuteController {
 	   //
 	     @GetMapping("/commuteDetail")
 	     public String commuteDetail(Principal pri, Model m,@RequestParam(defaultValue="1") int cPage,
-	            @RequestParam(defaultValue="10") int numPerpage,Map<String, Object> commute) {
+	            @RequestParam(defaultValue="10") int numPerpage,Map<String, Object> commute, HttpServletRequest reuqest) {
 	        
 	    	String loginId=pri.getName();
 	    	commute.put("loginId",loginId);
@@ -92,7 +92,7 @@ public class CommuteController {
 	        int count =service.countCommute(loginId);
 	        m.addAttribute("commute",commute2);   
 	        m.addAttribute("count",count);
-	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "/commute/commuteDetail"));
+	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, reuqest.getContextPath()+"/commute/commuteDetail"));
 
 	        return "mypage/commuteDetail";
 	     }
@@ -114,8 +114,10 @@ public class CommuteController {
 	     //사원 근태 수정하기 페이지 맵핑
 	     @GetMapping("/empCommute")
 	     public String  empCommute (@RequestParam("empId") String empId, Model m,@RequestParam(defaultValue="1") int cPage,
-		            @RequestParam(defaultValue="10") int numPerpage,Map<String, Object> commute) {
-	    	
+		            @RequestParam(defaultValue="10") int numPerpage,Map<String, Object> commute, HttpServletRequest request) {
+	    	String url = request.getContextPath();
+	    	System.err.println(url);
+	    	System.out.println("");
 	    	commute.put("loginId",empId);
 	    	commute.put("cPage",cPage);
 	    	commute.put("numPerpage",numPerpage);
@@ -126,7 +128,7 @@ public class CommuteController {
 			m.addAttribute("commute",commute2);   
 			m.addAttribute("count",count);
 			m.addAttribute("empId",empId);
-			m.addAttribute("pageBar",pageFactory.getPageByWh(cPage, numPerpage, count, "/commute/empCommute", empId));
+			m.addAttribute("pageBar",pageFactory.getPageByWh(cPage, numPerpage, count, request.getContextPath()+"/commute/empCommute", empId));
 			
 			return "mypage/empCommute";
 	     }

@@ -20,10 +20,16 @@
 				<div class="row">
 					<div class="col-sm-6">
 						<a href="${path }"><h2>공지사항</h2></a>
+						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
+							<div class="col-sm-6" style="text-align: right;">
+						      <a href="${path }/board/writeView?boardType=0" class="btn btn-primary"><span>공지작성</span></a>   
+						      <button onclick="deleteSelected()" class="btn btn-primary">공지삭제</button>   
+						  	</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
-			<table class="table table-striped table-hover">
+			<table class="table table-hover">
 				<thead>
 					<tr>
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
@@ -45,7 +51,7 @@
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						<td>
 							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox1" name="options[]" value="1" onclick="boxClicked()">
+								<input type="checkbox" id="checkbox1" name="options[]" value="${boards.boardNo }" onclick="boxClicked()">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
@@ -86,12 +92,7 @@
 				</tbody>
 			</table>
 			
-			<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-				<div class="col-sm-6" style="text-align: right;">
-			      <a href="${path }/board/writeView?boardType=0" class="btn btn-primary"><span>공지작성</span></a>   
-			      <a onclick="deleteSelected()" class="btn btn-primary"><span>공지삭제</span></a>   
-			  	</div>
-			</c:if>
+			
 			
 				<div class="search-container">
 				    <form name="searchForm" autocomplete="off">
@@ -123,7 +124,7 @@
 
 <script>
 	
-	//체크박스
+	//관리자(COMA_1) 체크박스 글삭제
 	function allChecked() {
 	    // 'selectAll' 체크박스가 변경되면 모든 하위 체크박스를 선택/해제
 	    var checkboxes = document.getElementsByName('options[]');
@@ -158,7 +159,7 @@
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
                 // 여기에서 선택된 체크박스의 ID 값을 추출하고 배열에 추가
-                selectedIds.push(checkboxes[i].value);
+            	selectedIds.push(checkboxes[i].getAttribute('value'));
             }
         }
 
@@ -166,12 +167,17 @@
         if (selectedIds.length > 0) {
             // 여기에서 선택된 ID 값을 사용하여 삭제 동작 수행
         	 $.ajax({
-                 url: '/board/checkDelete', 
-                 method: 'GET',
-                 data: { ids: selectedIds },
+                 url: '${path}/board/checkDelete', 
+                 method: 'POST',
+                 contentType: 'application/json',
+                 data: JSON.stringify(selectedIds),
                  success: function(response) {
                      alert('삭제 성공!');
+                     location.reload();
                  },
+                 error: function(error) {
+                     console.error("삭제 실패", error);
+                 }
              });
 			
         } else {

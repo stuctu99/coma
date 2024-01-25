@@ -69,7 +69,7 @@ div {
 		</div>
 		<div class="col-1">
 			<a href="${path }/commute/empCommute?empId=${empId }">
-				<img src="${pageContext.request.contextPath }/resource/img/icons/common/back.png" style="width: 40px;">
+				<img src="${path }/resource/img/icons/common/back.png" style="width: 40px;">
 			</a>
 		</div>
 	</div>
@@ -149,15 +149,7 @@ div {
 </div>
 <script>
 
-var today = new Date();
-var year = today.getFullYear();
-var month = today.getMonth() + 1; 
-var day = today.getDate();
-// 날짜를 "YYYY-MM-DD" 형식의 문자열로 만들기
-var formattedDate = (year % 100) + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
-console.log(formattedDate);
-// 입력 요소에 현재 날짜 설정
-document.getElementById('start').value = formattedDate;
+
 
 
 function submitForm(cPage = 1, numPerpage = 10, url) {
@@ -168,7 +160,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     console.log(startTime);
     console.log(endTime);
     console.log(empId);
-    fetch(url?"${path}"+url:"/commute/empCommuteEnd", {
+    fetch(url?"${path}"+url:"${path}/commute/empCommuteEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

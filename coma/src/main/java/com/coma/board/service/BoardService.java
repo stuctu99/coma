@@ -33,4 +33,7 @@ public interface BoardService {
 	
 	int deleteReply(int replyNo);
 	
+	
+	int checkDelete(List<Integer> ids);
+	
 }

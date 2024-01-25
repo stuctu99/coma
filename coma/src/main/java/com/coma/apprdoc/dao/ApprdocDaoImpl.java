@@ -54,6 +54,19 @@ public class ApprdocDaoImpl implements ApprdocDao {
 		
 		return session.selectList("approval.selectMyList",myMap,rb);
 	}
+
+	@Override
+	public List<ApprovalDoc> filterDoc(SqlSession session, Map<String, Object> filMap) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval.selectFilter", filMap);
+	}
+
+	@Override
+	public List<ApprovalDoc> filterDocAll(SqlSession session, Map<String, Object> filMap) {
+		// TODO Auto-generated method stub
+		return session.selectList("approval.selectFilterAll", filMap);
+	}
+	
 	
 	
 
