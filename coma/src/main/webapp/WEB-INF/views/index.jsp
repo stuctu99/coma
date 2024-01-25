@@ -363,39 +363,76 @@ td {
       }
    }
    /* 달력 */
- document.addEventListener('DOMContentLoaded', function() {
-       const calendarEl = document.getElementById('calendar')
-       const calendar = new FullCalendar.Calendar(calendarEl, {
-          dateClick: function(info){
-             window.location.href="${path}/calendar";
-          },
-         initialView: 'dayGridMonth',
-          firstDay:1,
-          locale:'kr',
-          headerToolbar:{
-             left:'',
-             center:'title',
-             right:'customPrev,customNext'
-          },
-          customButtons:{
-             customPrev:{
+document.addEventListener('DOMContentLoaded', function() {
+	 var empId = '${emp.empId}';
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {    	   
+        dateClick: function(info){
+            window.location.href="${path}/calendar";
+        },
+        eventClick: function(info){
+            window.location.href="${path}/calendar";
+        }, 
+        initialView: 'dayGridMonth',
+        firstDay:1,
+        locale:'kr',
+        headerToolbar:{
+            left:'',
+            center:'title',
+            right:'customPrev,customNext'
+        },
+        views: {
+            dayGridMonth: {
+                dayMaxEventRows: 1
+            }
+        }, 
+        customButtons:{
+            customPrev:{
                 text: '전달',
                 click: function(){
-                   calendar.prev();
+                    calendar.prev();
                 }
-             },
-             customNext:{
+            },
+            customNext:{
                 text:'다음달',
                 click: function(){
-                   calendar.next();
+                    calendar.next();
                 }
-             }  
-          },
-          
-           expandRows: true, // 화면에 맞게 높이 설정
-       })
-           calendar.render();
+            }  
+        },
+        
+        events: function(fetchInfo, successCallback, failureCallback) {
+            $.ajax({
+                url: "${path}/calendar/calendarMy",
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({
+                    empId: empId
+                }),
+                success: function(data) {
+                    var events = [];
+                    data.forEach(event => {
+                        events.push({
+                            id:'MY',
+                            title: event.calTitle,
+                            start: event.calStart,
+                            end: event.calEnd,
+                            backgroundColor:'#fbc5cb',
+                            textColor: '#787b80'
+                        });
+                    });
+                    successCallback(events);
+                },
+                error: function() {
+                    failureCallback();
+                }
+            });
+        },
+        expandRows: true,
     });
+    calendar.render();
+});
 
 
 

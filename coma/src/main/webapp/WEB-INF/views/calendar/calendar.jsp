@@ -238,6 +238,7 @@ margin: 20px auto;
         </div>
     </div>
     <script>
+    	const path = "${path}";
     	const loginmemberJobCode="${loginmember.job.jobCode}";
     	const loginmemberDeptCode="${loginmember.dept.deptCode}";
     	const loginmemberEmpId = '${loginmember.empId}';
@@ -794,7 +795,7 @@ margin: 20px auto;
            
             if(!calNo.value){
             $.ajax({
-                url: "${path}/calendar/calendarInsert",
+                url:path+"/calendar/calendarInsert",
                 method: "POST",
                 dataType: "json",
                 data: JSON.stringify(event),
