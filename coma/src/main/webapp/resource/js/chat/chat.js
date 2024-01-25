@@ -2,7 +2,7 @@
 const mserver = new WebSocket("ws://" + location.host + path + "/messengerServer");
 
 /* 서버 접속 */
-mserver.onopen = () => {
+mserver.CONNECTING.onopen = () => {
 	const msg = new MessageHandler("exec", loginId);
 	mserver.send(msg.convert());
 }

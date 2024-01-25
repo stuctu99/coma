@@ -72,7 +72,7 @@ const server = new WebSocket("ws://" + location.host + path + "/chattingServer")
 const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
 
-server.onopen = (response) => {
+server.CONNECTING.onopen = (response) => {
 
 	const msg = new Message("open", "", "", new Date(Date.now()), loginId, roomNo);
 	server.send(msg.convert());
