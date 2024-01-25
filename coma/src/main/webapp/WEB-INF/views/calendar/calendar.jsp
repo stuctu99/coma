@@ -131,6 +131,7 @@ margin: 20px auto;
     cursor: pointer;
     transition-duration: 0.4s;
     border-radius: 5px;
+     font-weight: bold;
 }
 #myBtn:hover{
 	background-color:#dda7ad;
@@ -149,6 +150,7 @@ margin: 20px auto;
  #allBtn{
  background-color: #c5cefb;
  color: #787b80;
+
  }
  #deptBtn{
  background-color: #fbdfc5;
@@ -157,6 +159,9 @@ margin: 20px auto;
  .fc-list-empty-cushion {
     display: none;
 }
+ .fc-event-main-frame>.fc-event-time{
+ 	font-size: 1rem;
+ }
     </style>
 </head>
 
@@ -250,6 +255,42 @@ margin: 20px auto;
 		
 		const calId =document.querySelector("#calId");
 		const eventSources = getEventSources(calId);
+		
+		var calStart2 = document.getElementById('calStart');
+		var calEnd2 = document.getElementById('calEnd');
+
+		calStart2.addEventListener('change', validateDateTime);
+		calEnd2.addEventListener('change', validateDateTime);
+
+		function formatDate(date) {
+		    var year = date.getFullYear();
+		    var month = ("0" + (date.getMonth() + 1)).slice(-2); 
+		    var day = ("0" + date.getDate()).slice(-2);
+		    var hours = ("0" + date.getHours()).slice(-2);
+		    var minutes = ("0" + date.getMinutes()).slice(-2);
+		    return year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
+		}
+
+		function validateDateTime() {
+		    var start = new Date(calStart.value);
+		    var end = new Date(calEnd.value);
+
+		    if(start.getHours() < 9) {
+		        alert('시작 시간은 오전 9시 이후로 설정해야 합니다.');
+		        start.setHours(9, 0, 0, 0);
+		        calStart.value = formatDate(start);
+		    } else if (end.getHours() > 18) {
+		        alert('종료 시간은 오후 6시 이전으로 설정해야 합니다.');
+		        end.setHours(18, 0, 0, 0);
+		        calEnd.value = formatDate(end);
+		    } else if(start >= end) {
+		        alert('시작 시간은 종료 시간보다 이전이어야 합니다.');
+		        start.setHours(9, 0, 0, 0);
+		        end.setHours(18, 0, 0, 0);
+		        calStart.value = formatDate(start);
+		        calEnd.value = formatDate(end);
+		    }
+		}
         //캘린더 헤더 옵션
         const headerToolbar = {
             left: 'prevYear,prev,next,nextYear today',
@@ -484,7 +525,7 @@ margin: 20px auto;
       
    
         function handleEventClick(info){
-   			
+        	console.log("어딜",info.event);
 			 if( info.event.endStr.length>10){
             calTitle.value= info.event.title;
             calNo.value= info.event.extendedProps.calNo;
@@ -522,7 +563,7 @@ margin: 20px auto;
         calendar.on("eventClick",handleEventClick);
    
         function handleDateClick(info){        	
-      
+      		
         	var year = info.date.getFullYear();
         	var month = info.date.getMonth()+1;
         	if(month < 10) {
@@ -750,6 +791,7 @@ margin: 20px auto;
                     calType: calType.value, //추가
                     calColor: calColor.value
             }; 
+           
             if(!calNo.value){
             $.ajax({
                 url: "${path}/calendar/calendarInsert",
