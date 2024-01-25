@@ -183,6 +183,8 @@
 
 <script>
 
+const path='${path}';
+
 //관리자(COMA_1) 체크박스 글삭제
 function allChecked() {
     // 'selectAll' 체크박스가 변경되면 모든 하위 체크박스를 선택/해제
@@ -226,7 +228,7 @@ function deleteSelected() {
     if (selectedIds.length > 0) {
         // 여기에서 선택된 ID 값을 사용하여 삭제 동작 수행
     	 $.ajax({
-             url: '${path}/board/checkDelete', 
+             url: path+'/board/checkDelete', 
              method: 'POST',
              contentType: 'application/json',
              data: JSON.stringify(selectedIds),
@@ -262,7 +264,7 @@ function deleteSelected() {
 		console.log($("form[name=searchForm]"));
 		$.ajax({
 			type: 'POST',
-			url : "${path}/board/search",
+			url : path+"/board/search",
 			data : $("form[name=searchForm]").serialize(),
 			success : function(result){
 				$('.table > tbody').empty();

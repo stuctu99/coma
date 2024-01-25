@@ -73,8 +73,6 @@ public class BoardController {
 		//Type이 1(자유)인 게시글 총 갯수
 		int totalData=service.selectBoardCount(boardType);
 		
-		System.out.println("asdasad,ald,lsa,"+boards);
-		
 		//자유게시글 List로 model에 저장
 		m.addAttribute("frees", boards);
 		//자유 페이지바 model에 저장

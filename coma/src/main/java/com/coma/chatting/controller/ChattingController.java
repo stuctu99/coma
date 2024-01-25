@@ -134,6 +134,19 @@ public class ChattingController {
 
 	}
 
+	@DeleteMapping("/back")
+	@ResponseBody
+	public Map<String, Boolean> memberCheckOut(@RequestBody Map<String, String> data) {
+		Map<String, Boolean> check = new HashMap<>();
+		Map<String, String> memberlist = roomMember.get(data.get("roomNo"));
+		memberlist.remove(data.get("empId"));
+		
+//		System.err.println(" 채팅방 남은 인원 : " + memberlist);
+		check.put("result", true);
+		return check;
+	}
+	
+
 //	채팅방 완전 가갔을 때 정보 삭제
 //	채팅방 인원 1명이 나갔을 때 채팅방 삭제하기 구현해야한다.
 	@DeleteMapping
@@ -169,18 +182,6 @@ public class ChattingController {
 		}
 
 		return msg;
-	}
-
-	@DeleteMapping("/back")
-	@ResponseBody
-	public Map<String, Boolean> memberCheckOut(@RequestBody Map<String, String> data) {
-		Map<String, Boolean> check = new HashMap<>();
-		Map<String, String> memberlist = roomMember.get(data.get("roomNo"));
-		memberlist.remove(data.get("empId"));
-
-//		System.err.println(" 채팅방 남은 인원 : " + memberlist);
-		check.put("result", true);
-		return check;
 	}
 
 }
