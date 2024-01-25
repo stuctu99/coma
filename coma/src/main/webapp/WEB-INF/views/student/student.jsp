@@ -61,8 +61,8 @@
 							        </button>
 							      </div>
 							      <div class="modal-body">
-									<select class="form-control form-control-sm" id="significantSelect" style="width:120px; text-align:center; margin-bottom:10px;">
-										<option>분류선택</option>
+									<select class="form-control form-control-sm" id="significantSelect_${s.STU_NO}" style="width:120px; text-align:center; margin-bottom:10px;">
+										<option value="default">분류선택</option>
 										<option>병가</option>
 										<option>경조사</option>
 										<option>개인사</option>
@@ -369,10 +369,9 @@
 	
 	//학생 특이사항 작성 기능
 	function fn_significant(stuNo){
-		const select = document.getElementById("significantSelect").value;
+		const select = document.getElementById("significantSelect_"+stuNo).value;
 		const content = document.getElementById("significantContent_"+stuNo).value;
-		console.log(select);
-		if(select != '분류선택'){
+		if(select !== 'default'){
 			fetch("${path}/student/studentSignificant",{
 				method:"post",
 				headers:{"Content-Type":"application/json"},
@@ -385,7 +384,6 @@
 				if(response.status!=200) throw new Error(repsonse.status);
 				return response.json();
 			}).then(result=>{
-				console.log(result);
 				if(result>0){
 					alert("입력이 완료 되었습니다");
 					$("#exampleModal_"+stuNo).modal('hide');
