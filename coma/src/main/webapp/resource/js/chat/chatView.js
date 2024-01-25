@@ -15,7 +15,9 @@ $("#exit-btn").click(function() {
 				return response.json();
 			})
 			.then(data => {
+				console.log("나가기전!!!");
 				if (data.result == "success") {
+					console.log("최후의 1인");
 					close();
 					server.send(new Message("out", "", "", "", empId, roomNo).convert());
 					$(opener.location).attr("href", "javascript:fn_exitDelRoom('" + roomNo + "','" + empId + "');");
@@ -73,7 +75,9 @@ const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
 
 server.onopen = () => {
+	
 	if (server.readyState === WebSocket.OPEN) {
+		/*$(".messageView"+roomNo).html("");*/
 		const msg = new Message("open", "", "", new Date(Date.now()), loginId, roomNo);
 		server.send(msg.convert());
 	} else {
@@ -486,3 +490,8 @@ function NotReload(e) {
 	}
 }
 document.onkeydown = NotReload;
+
+
+function test (){
+	alert("삭제!!!");
+}

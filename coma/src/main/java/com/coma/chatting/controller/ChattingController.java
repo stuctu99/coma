@@ -165,11 +165,6 @@ public class ChattingController {
 				if (result > 0) {
 					msg.put("result", "success");
 					roomMember.remove(exitEmp.get("roomNo"));
-					Iterator<Map.Entry<String, Map<String, String>>> entries = roomMember.entrySet().iterator();
-					while (entries.hasNext()) {
-//						System.err.println("확인데이터" + entries.next());
-					}
-
 				}
 
 			}
