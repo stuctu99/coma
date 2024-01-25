@@ -72,10 +72,15 @@ const server = new WebSocket("ws://" + location.host + path + "/chattingServer")
 const roomNo = $("#roomNo").val();
 const empId = $("#loginMember").val();
 
-server.CONNECTING.onopen = (response) => {
-
-	const msg = new Message("open", "", "", new Date(Date.now()), loginId, roomNo);
-	server.send(msg.convert());
+server.onopen = () => {
+	if (server.readyState === WebSocket.OPEN) {
+		const msg = new Message("open", "", "", new Date(Date.now()), loginId, roomNo);
+		server.send(msg.convert());
+	} else {
+		setTimeout(() => {
+			server.onopen()
+		}, 500);
+	}
 
 }
 
@@ -85,14 +90,15 @@ server.onclose = () => {
 }
 
 server.onmessage = (response) => {
-	const receiveMsg = Message.deconvert(response.data);
-	switch (receiveMsg.type) {
-		case "open": openMessage(receiveMsg); break;
-		case "msg": messagePrint(receiveMsg); break;
-		case "invite": inviteReload(receiveMsg); break;
-		case "rest": connectionRest(receiveMsg); break;
-		case "out": closeChatting(receiveMsg); break;
-	}
+		const receiveMsg = Message.deconvert(response.data);
+
+		switch (receiveMsg.type) {
+			case "open": openMessage(receiveMsg); break;
+			case "msg": messagePrint(receiveMsg); break;
+			case "invite": inviteReload(receiveMsg); break;
+			case "rest": connectionRest(receiveMsg); break;
+			case "out": closeChatting(receiveMsg); break;
+		}
 
 }
 const messagePrint = (msg) => {
