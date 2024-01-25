@@ -812,7 +812,7 @@ margin: 20px auto;
             })
             }else{
             	$.ajax({
-            		url: "${path}/calendar/calendarUpdate",
+            		url:path+"/calendar/calendarUpdate",
             		method: "POST",
             		dataType: "json",
             		data: JSON.stringify(event),
