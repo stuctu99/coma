@@ -15,7 +15,6 @@ mserver.close = () => {
 
 /* 메신저 서버 메세지 처리 */
 mserver.onmessage = (response) => {
-	console.log(response.data);
 	const respMsg = MessageHandler.deconvert(response.data);
 	switch (respMsg.type) {
 		case "exec":
@@ -68,17 +67,18 @@ class MessageHandler {
 
 function delRoom(data) {
 	const delRoom = data.roomNo;
-	console.log($("#" + delRoom).parent());
 	$("#" + delRoom).parent().remove();
+}
+
+window.fn_exitDelRoom = (roomNo,empId) => {
+	$("#" + roomNo).parent().remove();
 }
 
 /* 메신저 실행 시 함수 */
 function openEvent(data) {
 	const loginId = data.loginId;
-	console.log(loginId);
 	fetch(path + "/messenger/init/" + loginId)
 		.then(response => {
-			console.log(response);
 			if (response.status != 200) {
 				alert("관리자에게 문의하세요.");
 			}
@@ -143,7 +143,6 @@ function chatRoomContainer(data) {
 			$div_title.append($updateMsg);
 			$div.append($i);
 			$div.append($div_btn);
-			console.log($div);
 			$container.prepend($div);
 		})
 
@@ -313,7 +312,6 @@ const createRoom = (empId) => {
 
 /* 1:1 채팅 */
 const privateChatting = (targetId, targetName, empId, empName) => {
-	console.log(targetId, empId);
 	const privateChat = {
 		"roomName": targetName + ", " + empName + " 대화방",
 		"roomType": "P",
@@ -322,7 +320,6 @@ const privateChatting = (targetId, targetName, empId, empName) => {
 		"empId": loginId,
 		"targetId": targetId
 	}
-	console.log(privateChat);
 	fetch(path + "/messenger/createRoom", {
 		method: "POST",
 		headers: {
@@ -331,7 +328,6 @@ const privateChatting = (targetId, targetName, empId, empName) => {
 		body: JSON.stringify(privateChat)
 	})
 		.then(response => {
-			console.log(response);
 			if (response.status != 200) {
 				alert("잘못된접근");
 			}
@@ -358,7 +354,6 @@ const privateChatting = (targetId, targetName, empId, empName) => {
 
 // 사원 리스트 뷰 출력
 const empListDisplay = (target) => {
-	console.log(target);
 	$(target).css("backgroundColor", "#edebf0").css("opacity", 0.9);
 	$(target).children().css("width", "45px").css("height", "45px");
 	$(".chatting-list-btn").css("backgroundColor", "white").css("cursor", "pointer").css("opacity", 1.0);
@@ -390,6 +385,7 @@ const chatListHidden = () => {
 
 // 사원 리스트 버튼
 $(".emp-list-btn").click(function() {
+	location.reload();
 	$("#my-status").val("emp-list-btn");
 	target = this;
 	empListDisplay(this);
@@ -420,8 +416,6 @@ const fn_roomList = () => {
 			return response.json();
 		})
 		.then(data => {
-			console.log(data);
-			/*const $content = $(".chatting-list");*/
 			const $content = $(".content");
 			$content.attr("id");
 			$content.html("");
@@ -485,7 +479,6 @@ const fn_roomList = () => {
 					$div_title.append($updateMsg);
 					$div.append($i);
 					$div.append($div_btn);
-					console.log($div);
 					$content.append($div);
 				})
 
@@ -511,7 +504,6 @@ const fn_roomType = () => {
 /* 방생성 입력 창 패스워드 활성화 */
 $("#roomPasswordFlag").click(function() {
 	if ($("#roomPasswordFlag").is(":checked")) {
-		console.log("체크");
 		$(this).val("Y");
 		$("#roomPassword").prop("disabled", false);
 		$("#roomPassword").focus();
@@ -530,8 +522,6 @@ const passwordCheck = () => {
 		"roomNo": roomNo,
 		"password": password
 	}
-	console.log(roomNo);
-	console.log(password);
 	fetch(path + "/messenger/passwordCheck", {
 		method: "post",
 		headers: {
@@ -547,7 +537,6 @@ const passwordCheck = () => {
 			return response.json();
 		})
 		.then(data => {
-			console.log(data);
 			if (data.flag) {
 				$("#passwordCode").val("");
 				enter_chattingRoom(data.room.roomNo);
@@ -607,7 +596,6 @@ const fn_deleteRoom = () => {
 			cnt++;
 		}
 	}
-	console.log(delRoom);
 	if (confirm("정말로 삭제하시겠습니까?")) {
 		fetch(path + "/messenger", {
 			method: "delete",
@@ -666,7 +654,6 @@ const enter_chattingRoom = (roomNo) => {
 			if (response.status != 200) {
 				alert("채팅방입장불가!");
 			}
-			console.log(response);
 			return response.json();
 		})
 		.then(data => {
@@ -697,7 +684,6 @@ const enter_chattingRoom = (roomNo) => {
 
 /* 채팅화면 방 설정에서 사원 초대 시 */
 window.fn_invite = function(roomNo, sendName, targetId) {
-	console.log("여기로 넘오오나?");
 	const msg = new MessageHandler("invite", targetId, sendName, roomNo, "");
 	mserver.send(msg.convert());
 }
@@ -733,7 +719,6 @@ $("#enterRoom-btn").click(function(){
 
 /* 공부하기, 채팅방에서 작성한 채팅 메세지 채팅창에 실시간 출력 */
 window.updateMsg = function(roomNo, content) {
-	console.log(roomNo, "////" + content);
 	fetch(path + "/messenger/room/" + roomNo)
 		.then(response => {
 			if (response.status != 200) {

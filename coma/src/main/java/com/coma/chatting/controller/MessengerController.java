@@ -25,6 +25,7 @@ import com.coma.model.dto.ChattingRoomType;
 import com.coma.model.dto.Dept;
 import com.coma.model.dto.Emp;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -156,7 +157,8 @@ public class MessengerController {
 	public Map<String, String> inviteCreateChatRoom(@PathVariable String roomNo, @RequestBody ChattingRoom room) {
 		List<String> inviteEmpList = new ArrayList<String>(Arrays.asList(room.getInviteEmp()));
 		Map<String, Object> inviteInsertInfo = new HashMap<String, Object>();
-
+		
+		
 		room.setRoomNo(roomNo);
 		inviteInsertInfo.put("room", room);
 		inviteInsertInfo.put("roomNo", roomNo);
