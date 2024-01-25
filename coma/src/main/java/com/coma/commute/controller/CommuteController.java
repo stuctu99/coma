@@ -1,7 +1,6 @@
 package com.coma.commute.controller;
 
 import java.security.Principal;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,6 @@ import com.coma.emp.service.EmpService;
 import com.coma.model.dto.Commute;
 import com.coma.model.dto.Emp;
 
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 @RequestMapping("/commute")
@@ -83,7 +81,7 @@ public class CommuteController {
 	   //
 	     @GetMapping("/commuteDetail")
 	     public String commuteDetail(Principal pri, Model m,@RequestParam(defaultValue="1") int cPage,
-	            @RequestParam(defaultValue="10") int numPerpage,Map<String, Object> commute) {
+	            @RequestParam(defaultValue="10") int numPerpage,Map<String, Object> commute, HttpServletRequest reuqest) {
 	        
 	    	String loginId=pri.getName();
 	    	commute.put("loginId",loginId);
@@ -94,7 +92,7 @@ public class CommuteController {
 	        int count =service.countCommute(loginId);
 	        m.addAttribute("commute",commute2);   
 	        m.addAttribute("count",count);
-	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, "http://14.36.141.71:15555/GDJ71_COMA_final/commute/commuteDetail"));
+	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, reuqest.getContextPath()+"/commute/commuteDetail"));
 
 	        return "mypage/commuteDetail";
 	     }
@@ -130,7 +128,7 @@ public class CommuteController {
 			m.addAttribute("commute",commute2);   
 			m.addAttribute("count",count);
 			m.addAttribute("empId",empId);
-			m.addAttribute("pageBar",pageFactory.getPageByWh(cPage, numPerpage, count, "http://14.36.141.71:15555/GDJ71_COMA_final/commute/empCommute", empId));
+			m.addAttribute("pageBar",pageFactory.getPageByWh(cPage, numPerpage, count, request.getContextPath()+"/commute/empCommute", empId));
 			
 			return "mypage/empCommute";
 	     }

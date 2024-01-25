@@ -69,7 +69,7 @@ div {
 		</div>
 		<div class="col-1">
 			<a href="${path }/commute/empCommute?empId=${empId }">
-				<img src="${pageContext.request.contextPath }/resource/img/icons/common/back.png" style="width: 40px;">
+				<img src="${path }/resource/img/icons/common/back.png" style="width: 40px;">
 			</a>
 		</div>
 	</div>
@@ -168,7 +168,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
     console.log(startTime);
     console.log(endTime);
     console.log(empId);
-    fetch(url?"${path}"+url:"/commute/empCommuteEnd", {
+    fetch(url?"${path}"+url:"${path}/commute/empCommuteEnd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

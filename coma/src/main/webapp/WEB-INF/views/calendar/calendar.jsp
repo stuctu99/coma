@@ -121,27 +121,46 @@ margin: 20px auto;
 .typeBtn{      
     border: none;
     color: white;
-    box-shadow: 0 10px 14px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 10px 10px 0 rgba(0,0,0,0.2);
     padding: 10px 24px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 5px;
+    margin: 4px 10px;
     cursor: pointer;
     transition-duration: 0.4s;
     border-radius: 5px;
-
+     font-weight: bold;
 }
-
+#myBtn:hover{
+	background-color:#dda7ad;
+}
+#allBtn:hover{
+	background-color:#b1bae7;
+}
+#deptBtn:hover{
+	background-color:#e7cbb1;
+}
  #myBtn   {
  background-color: #fbc5cb;
+ color: #787b80;
  }
+
  #allBtn{
  background-color: #c5cefb;
+ color: #787b80;
+
  }
  #deptBtn{
  background-color: #fbdfc5;
+ color: #787b80;
+ }
+ .fc-list-empty-cushion {
+    display: none;
+}
+ .fc-event-main-frame>.fc-event-time{
+ 	font-size: 1rem;
  }
     </style>
 </head>
@@ -222,7 +241,7 @@ margin: 20px auto;
     	const loginmemberJobCode="${loginmember.job.jobCode}";
     	const loginmemberDeptCode="${loginmember.dept.deptCode}";
     	const loginmemberEmpId = '${loginmember.empId}';
-   	  	const delBtn = document.querySelector("#delBtn");
+    	const delBtn = document.querySelector("#delBtn");
    	    const calNo = document.querySelector("#calNo");
         const Modal = document.querySelector("#Modal");
         const calendarEl = document.querySelector('#calendar');
@@ -236,6 +255,42 @@ margin: 20px auto;
 		
 		const calId =document.querySelector("#calId");
 		const eventSources = getEventSources(calId);
+		
+		var calStart2 = document.getElementById('calStart');
+		var calEnd2 = document.getElementById('calEnd');
+
+		calStart2.addEventListener('change', validateDateTime);
+		calEnd2.addEventListener('change', validateDateTime);
+
+		function formatDate(date) {
+		    var year = date.getFullYear();
+		    var month = ("0" + (date.getMonth() + 1)).slice(-2); 
+		    var day = ("0" + date.getDate()).slice(-2);
+		    var hours = ("0" + date.getHours()).slice(-2);
+		    var minutes = ("0" + date.getMinutes()).slice(-2);
+		    return year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
+		}
+
+		function validateDateTime() {
+		    var start = new Date(calStart.value);
+		    var end = new Date(calEnd.value);
+
+		    if(start.getHours() < 9) {
+		        alert('시작 시간은 오전 9시 이후로 설정해야 합니다.');
+		        start.setHours(9, 0, 0, 0);
+		        calStart.value = formatDate(start);
+		    } else if (end.getHours() > 18) {
+		        alert('종료 시간은 오후 6시 이전으로 설정해야 합니다.');
+		        end.setHours(18, 0, 0, 0);
+		        calEnd.value = formatDate(end);
+		    } else if(start >= end) {
+		        alert('시작 시간은 종료 시간보다 이전이어야 합니다.');
+		        start.setHours(9, 0, 0, 0);
+		        end.setHours(18, 0, 0, 0);
+		        calStart.value = formatDate(start);
+		        calEnd.value = formatDate(end);
+		    }
+		}
         //캘린더 헤더 옵션
         const headerToolbar = {
             left: 'prevYear,prev,next,nextYear today',
@@ -267,6 +322,7 @@ margin: 20px auto;
         	                start: event.calStart,
         	                end: event.calEnd,
         	                backgroundColor: event.calColor,
+        	                textColor: '#787b80',
         	             
         	                extendedProps: {
         	                  calContent: event.calContent,
@@ -311,6 +367,7 @@ margin: 20px auto;
         	                start: event.calStart,
         	                end: event.calEnd,
         	                backgroundColor: event.calColor,
+        	                textColor: '#787b80',
         	                extendedProps: {
         	                  calContent: event.calContent,
         	                  empId: event.empId,
@@ -350,6 +407,7 @@ margin: 20px auto;
             	                start: event.calStart,
             	                end: event.calEnd,
             	                backgroundColor: event.calColor,
+            	                textColor: '#787b80',
             	                extendedProps: {
             	                  calContent: event.calContent,
             	                  empId: event.empId,
@@ -358,6 +416,7 @@ margin: 20px auto;
             	                }
             	              });
             	            });
+            	            
             	            successCallback(events);
             	            
             	          },
@@ -390,8 +449,8 @@ margin: 20px auto;
             	                title: event.leaveType,
             	                start: event.leaveStart,
             	                end: endDate.toISOString().split('T')[0],
-            	               backgroundColor: '#A2D2FF'
-            	               
+            	               backgroundColor: '#A2D2FF',
+            	               textColor: '#787b80',
             	              });
             	            });
             	            successCallback(events);           	              	           
@@ -441,7 +500,14 @@ margin: 20px auto;
                     dayMaxEventRows: 3
                 }
             }, 
-   
+            datesSet: function(view) {
+                setTimeout(function() {
+                    var noEventsMessageEl = document.querySelector('.fc-list-empty');
+                    if(noEventsMessageEl) {
+                        noEventsMessageEl.textContent = '등록된 일정이 없습니다.';
+                    }
+                }, 0);
+            },
             nowIndicator: true,            	    
             	}       
 		
@@ -459,7 +525,7 @@ margin: 20px auto;
       
    
         function handleEventClick(info){
-   			
+        	console.log("어딜",info.event);
 			 if( info.event.endStr.length>10){
             calTitle.value= info.event.title;
             calNo.value= info.event.extendedProps.calNo;
@@ -497,7 +563,7 @@ margin: 20px auto;
         calendar.on("eventClick",handleEventClick);
    
         function handleDateClick(info){        	
-      
+      		
         	var year = info.date.getFullYear();
         	var month = info.date.getMonth()+1;
         	if(month < 10) {
@@ -548,8 +614,8 @@ margin: 20px auto;
         function handleSelect(info){       	
          	
   			console.log("야",info);
-    
-  	delBtn.style.display="none";
+  			 Modal.style.display="block";
+  			delBtn.style.display="none";
   			if(info.allDay){
              calStart.value=info.startStr+" 09:00:00";
            var endData=new Date(info.endStr.substr(0,4),info.endStr.substr(5,2)-1,info.endStr.substr(8,2));
@@ -668,6 +734,7 @@ margin: 20px auto;
         	 
          }
          function fcMy(){
+      
         	 calType.value="MY";
         	 calColor.value="#fbc5cb";
         	 calId.value="MY";
@@ -724,6 +791,7 @@ margin: 20px auto;
                     calType: calType.value, //추가
                     calColor: calColor.value
             }; 
+           
             if(!calNo.value){
             $.ajax({
                 url: "${path}/calendar/calendarInsert",
