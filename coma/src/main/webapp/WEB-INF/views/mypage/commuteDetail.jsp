@@ -51,7 +51,7 @@
 		</div>
 		
 		<div class="">
-			<img src="${pageContext.request.contextPath }/resource/img/icons/common/back.png" style="width: 40px;"  id="total">
+			<img src="${path }/resource/img/icons/common/back.png" style="width: 40px;"  id="total">
 		</div>
 	</div>
 	<div class="row">

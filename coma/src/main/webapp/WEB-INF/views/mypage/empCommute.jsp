@@ -69,7 +69,7 @@ div {
 		</div>
 		<div class="col-1">
 			<a href="${path }/commute/empCommute?empId=${empId }">
-				<img src="${pageContext.request.contextPath }/resource/img/icons/common/back.png" style="width: 40px;">
+				<img src="${path }/resource/img/icons/common/back.png" style="width: 40px;">
 			</a>
 		</div>
 	</div>
