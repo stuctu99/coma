@@ -18,8 +18,8 @@ $("#exit-btn").click(function() {
 				if (data.result == "success") {
 					close();
 					server.send(new Message("out", "", "", "", empId, roomNo).convert());
-					$(opener.location).attr("href", "javascript:fn_exitDelRoom('"+roomNo+"','"+empId+"');");
-					if(nowPage == 'emp-list-btn'){
+					$(opener.location).attr("href", "javascript:fn_exitDelRoom('" + roomNo + "','" + empId + "');");
+					if (nowPage == 'emp-list-btn') {
 						opener.location.reload();
 					}
 					/*$(opener.document).find("."+empId).removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick", "privateChatting('" + msg.empId + "','" + loginId + "');");*/
@@ -198,13 +198,16 @@ const connectionRest = (msg) => {
 }
 
 const closeChatting = (msg) => {
-	
+	const nowPage = $(opener.document).find("#my-status").val();
 	const container = $("<div>").addClass("row openMsgContainer");
 	const content = $("<h4>").text(`${msg.empObj.empName}님이 나가셨습니다.`);
 	$(".messageView" + msg.roomNo).append(container);
 	container.append(content);
 	container.append($("<br>"));
 	$("." + msg.empId).remove();
+	if (nowPage == 'emp-list-btn') {
+		opener.location.reload();
+	}
 	/*$(opener.location).attr("href", "javascript:fn_roomList();");*/
 }
 
@@ -360,36 +363,36 @@ const fn_roomUpdateInfo = (roomNo) => {
 		})
 }
 
-const fn_roomUpdateCheck = (roomNo) =>{
+const fn_roomUpdateCheck = (roomNo) => {
 	const roomNameVal = $("#updateroomName").val();
 	const roomPasswordVal = $("#updateroomPassword").val();
 	const roomPasswordFlag = $("#updateroomPasswordFlag").val();
-	
-	if(roomNameVal.length>0){
-		if(roomPasswordFlag=='Y'){
-			if(roomPasswordVal.length>0){
-				fn_roomUpdate(roomNo);				
-			}else{
+
+	if (roomNameVal.length > 0) {
+		if (roomPasswordFlag == 'Y') {
+			if (roomPasswordVal.length > 0) {
+				fn_roomUpdate(roomNo);
+			} else {
 				alert("비밀번호 입력하셔야 합니다. 원하지 않을 시 체크를 해제하세요.");
 			}
-		}else{
+		} else {
 			fn_roomUpdate(roomNo);
 		}
-	}else{
+	} else {
 		alert("방 제목은 공란일 수 없습니다. 제목을 입력하세요.");
 	}
 }
-const initRoomUpdateModal = ()=>{
+const initRoomUpdateModal = () => {
 	const roomPassword = $("#updateroomPassword");
 	const roomPasswordFlag = $("#updateroomPasswordFlag");
 	const roomType = $("#updateroomType");
 	const inviteCheckbox = $(".emp_checkbox");
-	
+
 	roomPassword.val("");
-	roomPassword.prop("disabled",true);
-	roomPasswordFlag.prop("checked",false);
+	roomPassword.prop("disabled", true);
+	roomPasswordFlag.prop("checked", false);
 	roomType.val("A");
-	inviteCheckbox.prop("checked",false);
+	inviteCheckbox.prop("checked", false);
 }
 
 const fn_roomUpdate = (roomNo) => {
@@ -409,7 +412,7 @@ const fn_roomUpdate = (roomNo) => {
 			cnt++;
 		}
 	}
-	
+
 	const ChattingRoom = {
 		"roomName": roomName,
 		"roomPassword": roomPassword,
@@ -441,7 +444,7 @@ const fn_roomUpdate = (roomNo) => {
 				})
 				$("#invite-modal").modal('hide');
 				memberList(msg.roomNo, msg.empId);
-				$(opener.document).find("."+nowPage).click();
+				$(opener.document).find("." + nowPage).click();
 			} else {
 				alert("접근할 수 없습니다. 관리자에게 문의하세요:(");
 			}

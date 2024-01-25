@@ -70,7 +70,7 @@ function delRoom(data) {
 	$("#" + delRoom).parent().remove();
 }
 
-window.fn_exitDelRoom = (roomNo,empId) => {
+window.fn_exitDelRoom = (roomNo, empId) => {
 	$("#" + roomNo).parent().remove();
 }
 
@@ -265,7 +265,7 @@ const createRoom = (empId) => {
 				$("#createRoom").modal('hide');
 				initModal();
 				/* 초대 멤버가 존재할 때 실행 */
-				
+
 				if (inviteEmp.length > 0) {
 					ChattingRoom.inviteEmp = inviteEmp;
 					fetch(path + "/messenger/update/" + data.roomNo, {
@@ -285,7 +285,7 @@ const createRoom = (empId) => {
 								inviteEmp.forEach(targetId => {
 									fn_invite(data.roomNo, loginName, targetId);
 								})
-								if(confirm("채팅방으로 바로 입장하시겠습니까?")) {
+								if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
 									initModal();
 									enter_chattingRoom(data.roomNo);
 								}
@@ -336,6 +336,7 @@ const privateChatting = (targetId, targetName, empId, empName) => {
 		})
 		.then(data => {
 			if (data.result == "success") {
+				fn_invite(data.roomNo, loginName, targetId);
 				$("#createRoom").modal('hide');
 				if (confirm("채팅방으로 바로 입장하시겠습니까?")) {
 					initModal();
@@ -410,8 +411,8 @@ const fn_roomList = () => {
 
 	fetch(path + "/messenger/roomlist/" + loginId)
 		.then(response => {
-			if (response != 200){
-								
+			if (response != 200) {
+
 			}
 			return response.json();
 		})
@@ -710,8 +711,8 @@ function inviteAlarm(data) {
 }
 
 /* 초대 메세지에서 입장 클릭 시 모달 숨김 */
-$("#enterRoom-btn").click(function(){
-	$("#invite-alarm").modal('hide');	
+$("#enterRoom-btn").click(function() {
+	$("#invite-alarm").modal('hide');
 })
 
 
