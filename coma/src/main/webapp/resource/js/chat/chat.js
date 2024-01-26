@@ -378,24 +378,24 @@ const privateChatting = (targetId, targetName, empId, empName) => {
 
 // 사원 리스트 뷰 출력
 const empListDisplay = (target) => {
-	$(target).css("backgroundColor", "#edebf0").css("opacity", 0.9);
+	$(target).css("backgroundColor", "white").css("opacity", 0.9);
 	$(target).children().css("width", "45px").css("height", "45px");
-	$(".chatting-list-btn").css("backgroundColor", "white").css("cursor", "pointer").css("opacity", 1.0);
+	$(".chatting-list-btn").css("backgroundColor", "#edebf0").css("cursor", "pointer").css("opacity", 1.0);
 	$(".chatting-list-btn").children().css("width", "40px").css("height", "40px");
 	$(".emp-list").css("display", "block");
 }
 
 // 채팅방 리스트 버튼 클릭 시 사원리스트 숨기기
 const empListHidden = () => {
-	$(this).css("backgroundColor", "#edebf0").css("opacity", 0.9);
+	$(this).css("backgroundColor", "white").css("opacity", 0.9);
 	$(this).children().css("width", "45px").css("height", "45px");
-	$(".emp-list-btn").css("backgroundColor", "white").css("cursor", "pointer").css("opacity", 1.0);
+	$(".emp-list-btn").css("backgroundColor", "#edebf0").css("cursor", "pointer").css("opacity", 1.0);
 	$(".emp-list-btn").children().css("width", "40px").css("height", "40px");
 	$(".emp-list").css("display", "none");
 }
 // 채팅방 리스트 버튼 클릭 시 채팅방 리스트 뷰 출력
 const chatListDisplay = (target) => {
-	$(target).css("backgroundColor", "#edebf0").css("opacity", 0.9);
+	$(target).css("backgroundColor", "white").css("opacity", 0.9);
 	$(target).children().css("width", "45px").css("height", "45px");
 	$(".chatting-list").css("display", "block");
 	$("#create-room").css("display", "block");

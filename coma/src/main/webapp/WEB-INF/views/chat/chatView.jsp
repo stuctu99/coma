@@ -34,7 +34,7 @@ Latest compiled JavaScript
 <!-- CSS Files -->
 <link href="${path }/resource/css/argon-dashboard.css?v=1.1.2"
 	rel="stylesheet" />
-<style> 
+<style>
 div {
 	/* border: 1px solid red; */
 	
@@ -72,11 +72,11 @@ div {
 			</div>
 			<hr style="margin: 2px 0;">
 			<div class="row">
-				<div class="col-1">
+				<div class="col-1" style="padding-top: 6px;" >
 					<button id="back" style="transform: rotate(180deg);">&#10132</button>
 				</div>
 				<div class="col-10">
-					<h4 id="room_name" style="line-height: 2.0;">${room.roomName }</h4>
+					<h4 id="room_name" style="line-height: 2.3;">${room.roomName }</h4>
 					<input type="hidden" id="roomType"
 						value="${room.roomTypeObj.roomType }" />
 				</div>

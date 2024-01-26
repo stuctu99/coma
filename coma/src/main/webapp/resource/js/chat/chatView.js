@@ -278,7 +278,7 @@ class Message {
 
 $("#bars").click(function() {
 	const roomNo = $("#roomNo").val();
-	memberList(roomNo, loginId);
+	memberList(roomNo);
 })
 
 const memberList = (roomNo) => {
