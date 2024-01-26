@@ -142,7 +142,7 @@
 		        <tbody class="list" id="studentTable">
 		        <c:forEach var="s" items="${students }">
 		        	<tr>
-		        		<td><a href="#"><c:out value="${s.STU_NAME }"/></a></td>
+		        		<td><c:out value="${s.STU_NAME }"/></td>
 		        		<td><c:out value="${s.EMP_NAME }"/></td>
 		        		<td><c:out value="${s.STU_COM_STATUS }"/></td>
 		        		<td><c:out value="${s.STU_EMP_STATUS }"/></td>
