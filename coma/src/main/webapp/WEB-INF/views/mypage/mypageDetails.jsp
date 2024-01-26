@@ -103,10 +103,10 @@ select:disabled, select[readonly] {
 									<c:choose>
 									    <c:when test="${empVacation % 1 == 0}">
 									        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
-							 				<input class="form-control" type="text" value="${formattedNumber}" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
+							 				<input class="form-control" type="text" value="${formattedNumber}/15" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
 									    </c:when>
 									    <c:otherwise>
-							 				<input class="form-control" type="text" value="${emp.empVacation}" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
+							 				<input class="form-control" type="text" value="${emp.empVacation}/15" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
 									    </c:otherwise>
 									</c:choose>	
 							  </div>

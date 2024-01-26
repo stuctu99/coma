@@ -17,7 +17,7 @@ table {
 td {
 	width: 150px;
 	height: 100px;
-	display: inline-grid;
+	
 	
 }
 .calendarContainer{
@@ -197,13 +197,13 @@ td
 		<c:forEach var="item" items="${commute}">
 			var tdId = '<fmt:formatDate value="${item.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd"/>'
 			var clockIn = "${item.EMP_COMMUTE_CLOCKIN}";
-			clockIn = clockIn.substring(10, clockIn.length - 2);			
+			clockIn = clockIn.substring(10, clockIn.length - 5);			
 			/* console.log(tdId); */
 			var str = "";
 			str +="<span style='font-weight: bold;color: #F7878E1'>" +clockIn+" </span><span style='color: #F7878E1;font-weight: bold;'>출근 </span>";
 			if("${item.EMP_COMMUTE_CLOCKOUT}"){
 				var clockOut = "${item.EMP_COMMUTE_CLOCKOUT}"
-				clockOut = clockOut.substring(10, clockOut.length - 2);
+				clockOut = clockOut.substring(10, clockOut.length - 5);
 				str += "<br><span style='font-weight: bold; color: #F7878E1;'>"+clockOut+ "</span><span style='color: #F7878E1;font-weight: bold;' > 퇴근</span> ";
 			}
 			
