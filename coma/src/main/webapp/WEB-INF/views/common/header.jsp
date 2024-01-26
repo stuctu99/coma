@@ -114,8 +114,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link " href="${path }/calendar">
-              <i class="ni ni-pin-3 text-orange"></i> 캘린더
+              <i class="ni ni-calendar-grid-58 text-orange"></i> 캘린더
             </a>
+            
           </li>
           <li class="nav-item">
             <a class="nav-link ">
@@ -133,9 +134,19 @@
             <ul class="sub-menu" style="display: none;list-style-type: none; font-size: 0.9rem; padding-left: 70px;">
               <li><a href="${path }/admin/adminEmp">사원관리</a></li>
               <li><a href="${path }/admin/adminStudent">학생관리</a></li>
-              <li><a href="${path }/student/student">학생 페이지</a></li>
-              <li><a href="${path }/student/studentEmp">학생 취업현황</a></li>
             </ul>
+          </li>
+          <li class="nav-item">
+          	<a class="nav-link" href="${path }/student/student">
+          		<i class="ni ni-badge text-green"></i>학생 출결
+          	</a>
+          	
+          </li>
+          <li class="nav-item">
+          	<a class="nav-link" href="${path }/student/studentEmp">
+          		<i class="ni ni-building text-black"></i>학생 취업
+          	</a>
+          	
           </li>
           <li class="nav-item">
             <a class="nav-link" id="messenger-btn" onclick="messenger_active('${pageContext.request.contextPath}');">
