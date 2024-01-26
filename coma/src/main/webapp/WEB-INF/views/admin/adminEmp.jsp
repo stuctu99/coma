@@ -30,7 +30,7 @@
 		<div class="col-1"></div>
 		<div class="col-7" >
 			<div style="text-align:center;">
-				<h1>사원 관리 페이지</h1>
+				<h1>부서 월 근태 현황</h1>
 			</div>
 			<div style="width:100%; height:100%;">
 				<canvas id="myChart"></canvas>
@@ -38,7 +38,7 @@
 		</div>
 		<div class="col-3">
 			<div class="tableSize" style="text-align:center;">
-				<h1>부서별 사원 명수</h1>
+				<h1>부서 총 사원 수</h1>
 				<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 					<thead class="list">
 						<tr>
@@ -60,7 +60,7 @@
 </div>
 <div style="border: 1px solid #c1c0c073;"></div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
-	<h1>사원 리스트</h1>
+	<h1>사원 명단</h1>
 </div>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row" style="display: flex; align-items: center;">

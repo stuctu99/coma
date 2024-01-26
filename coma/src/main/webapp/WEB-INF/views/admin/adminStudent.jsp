@@ -32,7 +32,7 @@
 		<div class="col-4">
 			<div class="row" style="display: flex; justify-content: center;">
 				<div class="tableSize" style="text-align:center;">
-					<h1>학생 근태 수치</h1>
+					<h1>수강 학생 수</h1>
 					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 						<thead class="list">
 							<c:forEach var="s" items="${studentCount }">
@@ -67,7 +67,7 @@
 		<div class="col-4">
 			<div class="row" style="display: flex; justify-content: center;">
 				<div class="tableSize" style="text-align:center;">
-					<h1>학생 수료율 수치</h1>
+					<h1>수료율 수치</h1>
 					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 						<thead class="list">
 							<c:forEach var="sbc" items="${studentByComTable}">
@@ -97,7 +97,7 @@
 		<div class="col-4">
 			<div class="row" style="display: flex; justify-content: center;">
 				<div class="tableSize" style="text-align:center;">
-					<h1>학생 취업율 수치</h1>
+					<h1>취업율 수치</h1>
 					<table class="table align-items-center" style="text-align: center; margin-top: 39px;">
 						<thead class="list">
 							<c:forEach var="sbe" items="${studentByEmpTable}">
@@ -116,7 +116,7 @@
 </div>
 <div style="border: 1px solid #c1c0c073;"></div>
 <div style="text-align:center; margin:10px 0px 10px 0px;">
-	<h1 style="margin-top:50px;">학생 리스트</h1>
+	<h1 style="margin-top:50px;">학생 명단</h1>
 </div>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row" style="display: flex; align-items: center;">
