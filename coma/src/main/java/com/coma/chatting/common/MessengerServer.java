@@ -150,6 +150,7 @@ public class MessengerServer extends TextWebSocketHandler {
 			System.err.println(msg.getTargetId());
 			if(client.getKey().equals(msg.getLoginId())) {
 				try {
+					System.err.println("초대 알림 받는 인원"+msg.getLoginId());
 					WebSocketSession session = client.getValue();
 					session.sendMessage(messageConverter(msg));
 				}catch(Exception e) {
