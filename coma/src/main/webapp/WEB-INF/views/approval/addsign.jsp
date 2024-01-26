@@ -12,6 +12,12 @@
 <link href="${path }/resource/css/approval/viewdoc.css" rel="stylesheet" />
 <c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
     <!-- TEAM COMA SPACE -->
+<style>
+#canvas{
+
+}
+
+</style>
 
     <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
         <div class="container" style="text-align: left; margin-top:5px; margin-bottom: 5px;">
@@ -29,7 +35,8 @@
                          </span>
                       </div>
                       <div class="col-2">
-                         <input type="button" onclick="openSign();" class="btn btn-primary btn-lg" style="width:110px;" value="서명 만들기">
+	                     <input type="button" onclick="openSign();" class="btn btn-primary btn-lg" style="width:110px;" value="서명 만들기"> 
+            
                       </div>
                       <div class="col-2">
                       </div>
@@ -94,6 +101,8 @@
                       <div class="col-4">
                       </div>
                 </div>
+                
+						
       </form>
           <!-- coma content space -->
 
@@ -102,9 +111,6 @@
     <!-- TEAM COMA SPACE -->
     </div>
   </div>
-
-
-
 
 
 <script>
