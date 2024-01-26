@@ -300,29 +300,32 @@
 	} 
 
 	//사원 퇴사후 아이디 비활성화
-	function fn_deleteEmp(e){
-		fetch("${path}/admin/deleteEmp",{
-			method:"post",
-			headers:{"Content-Type":"application/json"},
-			body:JSON.stringify({
-				empId:e
-			})
-		})
-		.then(response=>{
-			console.log(response);
-			if(response.status!=200){
-				throw new Error("");
-			}
-			return response.json();
-		}).then(result=>{
-			if(result>0){
-				alert("퇴사처리 완료 되었습니다.");
-				window.location.href = "${path}/admin/adminEmp";
-			}
-		}).catch(e=>{
-			alert(e);
-		}); 
 	
+	function fn_deleteEmp(e){
+		if(confirm("해당 사원을 퇴사처리 하시겠습니까?")){
+			fetch("${path}/admin/deleteEmp",{
+				method:"post",
+				headers:{"Content-Type":"application/json"},
+				body:JSON.stringify({
+					empId:e
+				})
+			})
+			.then(response=>{
+				console.log(response);
+				if(response.status!=200){
+					throw new Error("");
+				}
+				return response.json();
+			}).then(result=>{
+				if(result>0){
+					alert("퇴사처리 완료 되었습니다.");
+					window.location.href = "${path}/admin/adminEmp";
+				}
+			}).catch(e=>{
+				alert(e);
+			}); 
+		
+		}
 	}
 
 	function fn_resetEmp(){
