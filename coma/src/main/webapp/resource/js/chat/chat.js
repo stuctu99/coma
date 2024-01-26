@@ -54,7 +54,9 @@ mserver.onmessage = (response) => {
 			break;
 		case "invite":
 			//채팅방 초대
-			inviteAlarm(respMsg);
+			setTimeout(()=>{
+				inviteAlarm(respMsg);				
+			},1500);
 			break;
 
 	}
@@ -84,8 +86,6 @@ function delRoom(data) {
 	const nowPage = $("#my-status").val();
 	$("#" + delRoom).parent().remove();
 	$("."+nowPage).click();
-	
-	
 }
 
 window.fn_exitDelRoom = (roomNo, empId) => {
