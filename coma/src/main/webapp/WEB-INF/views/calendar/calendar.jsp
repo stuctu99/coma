@@ -238,6 +238,7 @@ margin: 20px auto;
         </div>
     </div>
     <script>
+    	const path = "${path}";
     	const loginmemberJobCode="${loginmember.job.jobCode}";
     	const loginmemberDeptCode="${loginmember.dept.deptCode}";
     	const loginmemberEmpId = '${loginmember.empId}';
@@ -275,13 +276,13 @@ margin: 20px auto;
 		    var start = new Date(calStart.value);
 		    var end = new Date(calEnd.value);
 
-		    if(start.getHours() < 9) {
-		        alert('시작 시간은 오전 9시 이후로 설정해야 합니다.');
-		        start.setHours(9, 0, 0, 0);
+		    if(start.getHours() < 8) {
+		        alert('시작 시간은 오전 8시 이후로 설정해야 합니다.');
+		        start.setHours(8, 0, 0, 0);
 		        calStart.value = formatDate(start);
 		    } else if (end.getHours() > 18) {
-		        alert('종료 시간은 오후 6시 이전으로 설정해야 합니다.');
-		        end.setHours(18, 0, 0, 0);
+		        alert('종료 시간은 오후 10시 이전으로 설정해야 합니다.');
+		        end.setHours(10, 0, 0, 0);
 		        calEnd.value = formatDate(end);
 		    } else if(start >= end) {
 		        alert('시작 시간은 종료 시간보다 이전이어야 합니다.');
@@ -480,8 +481,8 @@ margin: 20px auto;
             eventSources: eventSources, //내가 설정한 이벤트 소스
             height: '700px', // calendar 높이 설정
             expandRows: true, // 화면에 맞게 높이 재설정
-            slotMinTime: '09:00', // Day 캘린더 시작 시간
-            slotMaxTime: '18:00', // Day 캘린더 종료 시간
+            slotMinTime: '08:00', // Day 캘린더 시작 시간
+            slotMaxTime: '22:00', // Day 캘린더 종료 시간
             // 맨 위 헤더 지정
             headerToolbar: headerToolbar,
             initialView: 'dayGridMonth',   // default: dayGridMonth 'dayGridWeek', 'timeGridDay', 'listWeek'
@@ -794,7 +795,7 @@ margin: 20px auto;
            
             if(!calNo.value){
             $.ajax({
-                url: "${path}/calendar/calendarInsert",
+                url:path+"/calendar/calendarInsert",
                 method: "POST",
                 dataType: "json",
                 data: JSON.stringify(event),
@@ -811,13 +812,14 @@ margin: 20px auto;
             })
             }else{
             	$.ajax({
-            		url: "${path}/calendar/calendarUpdate",
+            		url:path+"/calendar/calendarUpdate",
             		method: "POST",
             		dataType: "json",
             		data: JSON.stringify(event),
             		contentType: 'application/json',
             		success: function(data){
             			calendar.refetchEvents();
+            			alert("일정이 수정되었습니다.")
             		},
             		error: function(e){
             			alert('일정 수정중 요류가 발생하였습니다. 다시 입력 하십시오');
