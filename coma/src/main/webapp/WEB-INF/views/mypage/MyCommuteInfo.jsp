@@ -17,6 +17,7 @@ table {
 td {
 	width: 150px;
 	height: 100px;
+	display: inline-grid;
 	
 }
 .calendarContainer{
@@ -27,13 +28,14 @@ td {
 	border-radius: 50px; 
 
 }
+td
 </style>
 <body onload="autoReload();">
 	<div class="coma-container containerbig">
 		<div class="row" style = "padding: 40px 0px 20px; ">
 			<div class="col-2 "></div>
 			<div class="col-7 ">
-				<h1>나의 근태확인하기</h1>
+				<h1 style="text-align:center;">나의 근태 확인하기</h1>
 			</div>
 			<div class="col-3"><button type="button" class="btn btn-primary" id="commuteDetail">  근태 상세 보기</button></div>
 			

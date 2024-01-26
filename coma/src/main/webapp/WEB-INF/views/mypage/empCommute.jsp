@@ -68,9 +68,10 @@ div {
 			<button type="button" class="btn btn-primary"  onclick="submitForm();">검색</button>
 		</div>
 		<div class="col-1">
-			<a href="${path }/commute/empCommute?empId=${empId }">
+			<button type="button" class="btn btn-primary"  onclick="totalBtn();">전체보기</button>
+			<%-- <a href="${path }/commute/empCommute?empId=${empId }">
 				<img src="${path }/resource/img/icons/common/back.png" style="width: 40px;">
-			</a>
+			</a> --%>
 		</div>
 	</div>
 	<td>            

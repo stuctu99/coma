@@ -54,13 +54,9 @@ text-align: left;
 #example-tel-input
 </style>
 <!-- TEAM COMA SPACE -->
-<div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
-	<div class="container" style="text-align: center; margin-top: 40px; margin-bottom: 5px;">
-			<div class="row">
-				<div class="col-2">
-					<h1>직원 정보</h1>
-				</div>					
-			</div>
+<div class="coma-container" style="margin-top: 5px; ">
+<h1 style="text-align:center;margin-top: 20px;">직원 정보</h1>
+	<div class="container" style="text-align: center; margin-top: 30px; margin-bottom: 5px;">
 			<div class="row">
 				<div class="col-6">
 					<div class="file-btn" >
@@ -74,10 +70,10 @@ text-align: left;
 	                      </c:if>
 					</div>
 					<div>
-						<div class="row">
+						<div class="row" style="margin-top: 52px;">
 							<div class="form-group col-6">
 							<form action="${path}/mypage/EmployeeDetailEnd" method="post">	
-							<label for="dept" class="form-control-label">부서</label>
+							<label for="dept" class="form-control-label" style="text-align: center;">부서</label>
 							    <select class="form-control" id="dept " name="dept">
 								    <option value='D6' <c:if test="${emp.dept.deptType eq '미배치'}"> selected="selected" </c:if>>미배치</option>
 							    	<option value='D3' <c:if test="${emp.dept.deptType eq '회계'}"> selected="selected" </c:if>>회계팀</option>
@@ -137,7 +133,7 @@ text-align: left;
 					</div>
 				    <div class="row">
 					    <div class="form-group col-6" style="display:block">
-					        <label for="example-birthday-input" class="form-control-label">생일</label>
+					        <label for="example-birthday-input" class="form-control-label">생일월일</label>
 					        <input class="form-control" type="date" value="${emp.empBrithDate}" id="example-birthday-input" style="background-color:  #f1edff;" readonly>
 					    </div>
 						<div class="form-group col-6">
@@ -150,9 +146,9 @@ text-align: left;
 				        <input type= "email" class="form-control" value= "${emp.empPhone}"  id="example-tel-input" style="background-color:  #f1edff;" readonly>
 				    </div>
 				    <div class="form-group" > 
-					    <label for="address_kakao" class="form-control-label">주소 변경</label>
-						<input class="form-control" type="text" id="address_kakao"  value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="width:500px; background-color:  #f1edff;" readonly>
-						<input class="form-control" type="text"  value= "${emp.empAddrDetail}" placeholder="상세주소" style="width:500px; background-color:  #f1edff;" readonly>
+					    <label for="address_kakao" class="form-control-label"style="margin-top: 17px;">주소 변경</label>
+						<input class="form-control" type="text" id="address_kakao"  value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style=" background-color:  #f1edff;" readonly>
+						<input class="form-control" type="text"  value= "${emp.empAddrDetail}" placeholder="상세주소" style=" background-color:  #f1edff;" readonly>
 				    </div>
 				    <button type="submit" class="btn btn-primary"  >회원정보 변경</button>
 				</div>

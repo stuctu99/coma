@@ -94,8 +94,7 @@
 				<div class="col-1"></div>
 			</div>
 			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-10">
+				<div class="col-12" >
 					<table class="table align-items-center" style="text-align: center;">
 						<thead class="thead-light">
 							<tr>
@@ -130,7 +129,6 @@
 					</table>
 					<div id="pageBar">${pageBar }</div>
 				</div>
-				<div class="col-1"></div>
 			</div>
 		</div>
 		<div class="col-1"></div>
