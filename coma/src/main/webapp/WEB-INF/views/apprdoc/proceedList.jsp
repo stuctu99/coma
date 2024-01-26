@@ -290,7 +290,7 @@ function getSearchList(){
 	console.log($("form[name=searchForm]"));
 	$.ajax({
 		type: 'POST',
-		url : "/apprdoc/search",
+		url : "${path}/apprdoc/search",
 		data : $("form[name=searchForm]").serialize(),
 		success : function(result){
 			$('.table > tbody').empty();

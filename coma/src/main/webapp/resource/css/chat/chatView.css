@@ -11,7 +11,7 @@ html {
 
 header>div.container {
 	z-index: -99;
-	height: 85px !important;
+	height: 110px !important;
 }
 
 footer#chatView-footer {
@@ -25,7 +25,7 @@ footer#chatView-footer {
 }
 
 section {
-	background-color: white;
+	background-color: rgba(227, 229, 232, 0.2);
 	padding-top: 110px;
 	padding-bottom: 10px;
 	padding-left: 5px;
@@ -33,9 +33,11 @@ section {
 }
 
 section>div:nth-child(1) {
-	max-height: 535px !important;
+	padding-top:5px!important;
+	padding-bottom:5px!important;
+	max-height: 545px !important;
 	overflow: auto;
-	background-color: white;
+	background-color: rgba(227, 229, 232, 0.2);
 	margin: 0 auto;
 }
 
@@ -59,6 +61,7 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 }
 
 .messageView {
+	background-color: rgba(227, 229, 232, 0.2);
 	overflow: hidden !important;
 }
 
@@ -85,7 +88,7 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 
 .profile-list {
 	width: 210px !important;
-	height: 550px !important;
+	height: 510px !important;
 	padding-top: 15px;
 	margin-bottom: 15px;
 	opacity: 1.5;
@@ -93,7 +96,8 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 
 .profile-list>.row {
 	padding-top: 10px;
-	padding-left: 30px;
+	padding-left: 20px;
+	padding-right: 10px;
 	margin-bottom: 4px;
 	display: flex;
 	justify-content: end;
@@ -139,9 +143,9 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 
 .me>div.msg-container {
 	color: white;
-	font-weight: 900;
+	font-weight: 600;
 	max-width: 300px !important;
-	background-color: #1fb0ff;
+	background-color: #5e72e4;
 	border-radius: 8px;
 	padding: 10px 15px;
 }
@@ -154,10 +158,10 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 }
 
 .other>div.msg-container {
-	color: white;
-	font-weight: 900;
+	color: black;
+	font-weight: 600;
 	max-width: 300px !important;
-	background-color: #15db12;
+	background-color: white;
 	border-radius: 8px;
 	padding: 10px 15px;
 }
@@ -188,6 +192,10 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 	cursor: pointer;
 	color: white;
 	font-size: 22px;
+}
+
+#room_name{
+	padding-top: 4px !important;
 }
 
 #back {
@@ -231,7 +239,7 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 #menu>ul {
 	list-style: none;
 	padding-left: 0px;
-	margin-bottom: 1rem !important;
+	margin-bottom: 60px !important;
 	/*border-bottom: 1px solid slateblue;*/
 }
 
@@ -249,13 +257,17 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 
 
 .openMsgContainer {
+	border-radius: 7px;
 	margin: 5px auto !important;
 	padding: 4px 0px;
 	width: 100%;
 	justify-content: center;
 	margin-bottom: 5px;
-	background-color: aliceblue;
-	opacity: 0.9;
+	background-color: #5e72e4;
+	opacity: 0.8;
+}
+.openMsgContainer>h4{
+	color: white;
 }
 
 .input-group {

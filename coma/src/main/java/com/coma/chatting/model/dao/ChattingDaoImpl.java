@@ -111,7 +111,7 @@ public class ChattingDaoImpl implements ChattingDao {
 	public int deleteChattingMsgByRoomNo(SqlSession session, Map<String, String> exitEmp) {
 		int result = session.delete("chatting.deleteChattingMsgByRoomNo",exitEmp);
 		List<String> roomNo = List.of(exitEmp.get("roomNo"));
-		result = session.delete("chatting.deleteChattingRoom",roomNo);
+		session.delete("chatting.deleteChattingRoom",roomNo);
 		return result;
 	}
 

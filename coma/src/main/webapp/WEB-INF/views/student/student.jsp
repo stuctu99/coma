@@ -28,7 +28,7 @@
 			        <th>학생 이름</th>
 			        <th>담당 강사</th>
 			        <th>
-		        	<form action="/student/insertStudent" method="post">
+		        	<form action="${path}/student/insertStudent" method="post">
 			          <div class="custom-control custom-checkbox">
 			            <input type="checkbox" class="custom-control-input" id="attendanceToggle" onclick="fn_Checkboxes('attendance')">
 			            <label class="custom-control-label" for="attendanceToggle">출석 여부</label>
@@ -48,7 +48,7 @@
 			        		</td>
 			        		<!-- Button -->
 			        		<td>
-			        			<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModal_${s.STU_NO}">작성버튼</button>
+			        			<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal_${s.STU_NO}">작성버튼</button>
 			        		</td>
 					        <!-- Modal -->
 							<div class="modal fade" id="exampleModal_${s.STU_NO}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -61,8 +61,8 @@
 							        </button>
 							      </div>
 							      <div class="modal-body">
-									<select class="form-control form-control-sm" id="significantSelect" style="width:120px; text-align:center; margin-bottom:10px;">
-										<option>분류선택</option>
+									<select class="form-control form-control-sm" id="significantSelect_${s.STU_NO}" style="width:120px; text-align:center; margin-bottom:10px;">
+										<option value="default">분류선택</option>
 										<option>병가</option>
 										<option>경조사</option>
 										<option>개인사</option>
@@ -98,9 +98,8 @@
 			<h1 style="">학생 정보창</h1>
 			<div class="row">
 				<div class="col-6">
-					<input type="file" id="accompany-file" name="studentPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
 					<div class="file-btn" onclick="openFileDialog();" style="cursor: pointer; margin-top:50px;">
-					 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 300px; height: 300px;">
+					 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" style="width: 300px; height: 300px;">
 					</div>
 				</div>
 				<div class="col-6" id="stu_viewDetails">
@@ -117,7 +116,7 @@
 				        <input class="form-control" type="date" value="" id="example-email-input" >
 				    </div>
 				    <div class="form-group">
-				        <label for="example-datetime-local-input" class="form-control-label">생일</label>
+				        <label for="example-datetime-local-input" class="form-control-label">생일년월</label>
 				        <input class="form-control" type="date" value="" id="example-datetime-local-input" >
 				    </div>
 				</div>
@@ -149,7 +148,7 @@
 			</div>
 			<div id="stu_significant">
 				<div>
-					<textarea class="form-control" style="height:180px; resize:none;" aria-label="With textarea"></textarea>
+					<textarea class="form-control" style="height:130px; resize:none;" aria-label="With textarea"></textarea>
 				</div>
 			</div>
 		</div>
@@ -269,7 +268,7 @@
 				const $label4=document.createElement("label");
 				$label4.className = "form-control-label";
 				$label4.htmlFor = "example-datetime-local-input";
-				$label4.textContent = "생일";
+				$label4.textContent = "생일년월";
 				$div4.appendChild($label4);
 				$div4.appendChild($input4);
 				
@@ -294,7 +293,7 @@
 				const $label5=document.createElement("label");
 				$label5.className = "form-control-label";
 				$label5.htmlFor = "example-text-input";
-				$label5.textContent = "총 출석 수";
+				$label5.textContent = "출석일 수/총 수업일 수";
 				$div5.appendChild($label5);
 				$div5.appendChild($input5);
 				
@@ -310,7 +309,7 @@
 				const $label6=document.createElement("label");
 				$label6.className = "form-control-label";
 				$label6.htmlFor = "example-text-input";
-				$label6.textContent = "출석일 수/총 수업일 수";
+				$label6.textContent = "출석율";
 				const $div9=document.createElement("div");
 				$div9.className = "progress-percentage";
 				const $span=document.createElement("span");
@@ -339,7 +338,7 @@
 				const $div13=document.createElement("div");
 				const textarea = document.createElement("textarea");
 				textarea.className = "form-control";
-				textarea.style.height = "200px";
+				textarea.style.height = "130px";
 				textarea.style.resize = "none";
 				textarea.setAttribute("aria-label", "With textarea");
 				if(typeof student.STU_SIGNIFICANT_CONTENT !== "undefined" && student.STU_SIGNIFICANT_CONTENT !== null){
@@ -369,10 +368,9 @@
 	
 	//학생 특이사항 작성 기능
 	function fn_significant(stuNo){
-		const select = document.getElementById("significantSelect").value;
+		const select = document.getElementById("significantSelect_"+stuNo).value;
 		const content = document.getElementById("significantContent_"+stuNo).value;
-		console.log(select);
-		if(select != '분류선택'){
+		if(select !== 'default'){
 			fetch("${path}/student/studentSignificant",{
 				method:"post",
 				headers:{"Content-Type":"application/json"},
@@ -385,7 +383,6 @@
 				if(response.status!=200) throw new Error(repsonse.status);
 				return response.json();
 			}).then(result=>{
-				console.log(result);
 				if(result>0){
 					alert("입력이 완료 되었습니다");
 					$("#exampleModal_"+stuNo).modal('hide');

@@ -55,6 +55,9 @@ button.menu {
 div.header-menu>div {
 	padding: 0 0;
 }
+.header-menu{
+	height: 50px !important;
+}
 
 
 strong:has(div) {
