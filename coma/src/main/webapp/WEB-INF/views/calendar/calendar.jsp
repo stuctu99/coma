@@ -819,6 +819,7 @@ margin: 20px auto;
             		contentType: 'application/json',
             		success: function(data){
             			calendar.refetchEvents();
+            			alert("일정이 수정되었습니다.")
             		},
             		error: function(e){
             			alert('일정 수정중 요류가 발생하였습니다. 다시 입력 하십시오');

@@ -28,7 +28,7 @@
 			        <th>학생 이름</th>
 			        <th>담당 강사</th>
 			        <th>
-		        	<form action="/student/insertStudent" method="post">
+		        	<form action="${path}/student/insertStudent" method="post">
 			          <div class="custom-control custom-checkbox">
 			            <input type="checkbox" class="custom-control-input" id="attendanceToggle" onclick="fn_Checkboxes('attendance')">
 			            <label class="custom-control-label" for="attendanceToggle">출석 여부</label>
@@ -117,7 +117,7 @@
 				        <input class="form-control" type="date" value="" id="example-email-input" >
 				    </div>
 				    <div class="form-group">
-				        <label for="example-datetime-local-input" class="form-control-label">생일</label>
+				        <label for="example-datetime-local-input" class="form-control-label">생일년월</label>
 				        <input class="form-control" type="date" value="" id="example-datetime-local-input" >
 				    </div>
 				</div>
@@ -149,7 +149,7 @@
 			</div>
 			<div id="stu_significant">
 				<div>
-					<textarea class="form-control" style="height:180px; resize:none;" aria-label="With textarea"></textarea>
+					<textarea class="form-control" style="height:130px; resize:none;" aria-label="With textarea"></textarea>
 				</div>
 			</div>
 		</div>
@@ -269,7 +269,7 @@
 				const $label4=document.createElement("label");
 				$label4.className = "form-control-label";
 				$label4.htmlFor = "example-datetime-local-input";
-				$label4.textContent = "생일";
+				$label4.textContent = "생일년월";
 				$div4.appendChild($label4);
 				$div4.appendChild($input4);
 				
@@ -294,7 +294,7 @@
 				const $label5=document.createElement("label");
 				$label5.className = "form-control-label";
 				$label5.htmlFor = "example-text-input";
-				$label5.textContent = "총 출석 수";
+				$label5.textContent = "출석일 수/총 수업일 수";
 				$div5.appendChild($label5);
 				$div5.appendChild($input5);
 				
@@ -310,7 +310,7 @@
 				const $label6=document.createElement("label");
 				$label6.className = "form-control-label";
 				$label6.htmlFor = "example-text-input";
-				$label6.textContent = "출석일 수/총 수업일 수";
+				$label6.textContent = "출석율";
 				const $div9=document.createElement("div");
 				$div9.className = "progress-percentage";
 				const $span=document.createElement("span");
@@ -339,7 +339,7 @@
 				const $div13=document.createElement("div");
 				const textarea = document.createElement("textarea");
 				textarea.className = "form-control";
-				textarea.style.height = "200px";
+				textarea.style.height = "130px";
 				textarea.style.resize = "none";
 				textarea.setAttribute("aria-label", "With textarea");
 				if(typeof student.STU_SIGNIFICANT_CONTENT !== "undefined" && student.STU_SIGNIFICANT_CONTENT !== null){
