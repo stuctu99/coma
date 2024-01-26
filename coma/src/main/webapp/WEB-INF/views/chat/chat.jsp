@@ -36,6 +36,11 @@ div {
 	/* border: 1px solid red; */
 	
 }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+	
+	* {
+	font-family: 'Noto Sans KR', sans-serif;
+	}
 </style>
 </head>
 <body>
@@ -51,10 +56,10 @@ div {
 			<hr style="margin: 2px 0;">
 			<div class="row header-menu">
 				<div class="col-6 emp-list-btn"
-					style="background-color: #edebf0; opacity: 0.9;">
+					style="background-color: white; opacity: 0.9;">
 					<img src="${path }/resource/img/chat/list-icon.png" />
 				</div>
-				<div class="col-6 chatting-list-btn">
+				<div class="col-6 chatting-list-btn" style="background-color:#edebf0;">
 					<img src="${path }/resource/img/chat/chat-icon.png" />
 				</div>
 			</div>
@@ -131,7 +136,7 @@ div {
 				</div>
 				<div class="col-2">
 					<input type="hidden" id="pathValue" value="${path }" />
-					<button id="create-room" type="button" class="btn btn-primary"
+					<button id="create-room" type="button" class="btn btn-outline-primary"
 						data-toggle="modal" data-target="#createRoom">방생성</button>
 				</div>
 			</div>
@@ -303,7 +308,7 @@ div {
 					</div>
 					<div class="modal-footer">
 						<button id="close-invite-modal" type="button" class="btn btn-secondary"
-							data-dismiss="modal">닫기</button>
+							data-dismiss="modal" onclick="pageLoad();">닫기</button>
 						<button id="enterRoom-btn" type="button" class="btn btn-primary">입장
 						</button>
 					</div>
@@ -336,6 +341,7 @@ div {
 <!--   Argon JS   -->
 <script src="${path }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
 <script>
 	const loginId = '${loginmember.empId}';
 	const loginName = '${loginmember.empName}';

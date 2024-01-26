@@ -149,15 +149,7 @@ div {
 </div>
 <script>
 
-var today = new Date();
-var year = today.getFullYear();
-var month = today.getMonth() + 1; 
-var day = today.getDate();
-// 날짜를 "YYYY-MM-DD" 형식의 문자열로 만들기
-var formattedDate = (year % 100) + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
-console.log(formattedDate);
-// 입력 요소에 현재 날짜 설정
-document.getElementById('start').value = formattedDate;
+
 
 
 function submitForm(cPage = 1, numPerpage = 10, url) {
@@ -311,7 +303,7 @@ function submitForm(cPage = 1, numPerpage = 10, url) {
 //기간 시작 기간보다 끝기간 못 지정하기 
 function updateEndTimeMin() {
     var startTimeInput = document.getElementById('endTime');
-    var selectedDate = startTimeInput.value;ㄴ
+    var selectedDate = startTimeInput.value;
     var endTimeInput = document.getElementById('start');
     endTimeInput.min = selectedDate;
 }

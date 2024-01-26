@@ -131,6 +131,7 @@ margin: 20px auto;
     cursor: pointer;
     transition-duration: 0.4s;
     border-radius: 5px;
+     font-weight: bold;
 }
 #myBtn:hover{
 	background-color:#dda7ad;
@@ -149,6 +150,7 @@ margin: 20px auto;
  #allBtn{
  background-color: #c5cefb;
  color: #787b80;
+
  }
  #deptBtn{
  background-color: #fbdfc5;
@@ -157,6 +159,9 @@ margin: 20px auto;
  .fc-list-empty-cushion {
     display: none;
 }
+ .fc-event-main-frame>.fc-event-time{
+ 	font-size: 1rem;
+ }
     </style>
 </head>
 
@@ -233,6 +238,7 @@ margin: 20px auto;
         </div>
     </div>
     <script>
+    	const path = "${path}";
     	const loginmemberJobCode="${loginmember.job.jobCode}";
     	const loginmemberDeptCode="${loginmember.dept.deptCode}";
     	const loginmemberEmpId = '${loginmember.empId}';
@@ -250,6 +256,42 @@ margin: 20px auto;
 		
 		const calId =document.querySelector("#calId");
 		const eventSources = getEventSources(calId);
+		
+		var calStart2 = document.getElementById('calStart');
+		var calEnd2 = document.getElementById('calEnd');
+
+		calStart2.addEventListener('change', validateDateTime);
+		calEnd2.addEventListener('change', validateDateTime);
+
+		function formatDate(date) {
+		    var year = date.getFullYear();
+		    var month = ("0" + (date.getMonth() + 1)).slice(-2); 
+		    var day = ("0" + date.getDate()).slice(-2);
+		    var hours = ("0" + date.getHours()).slice(-2);
+		    var minutes = ("0" + date.getMinutes()).slice(-2);
+		    return year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
+		}
+
+		function validateDateTime() {
+		    var start = new Date(calStart.value);
+		    var end = new Date(calEnd.value);
+
+		    if(start.getHours() < 8) {
+		        alert('시작 시간은 오전 8시 이후로 설정해야 합니다.');
+		        start.setHours(8, 0, 0, 0);
+		        calStart.value = formatDate(start);
+		    } else if (end.getHours() > 18) {
+		        alert('종료 시간은 오후 10시 이전으로 설정해야 합니다.');
+		        end.setHours(10, 0, 0, 0);
+		        calEnd.value = formatDate(end);
+		    } else if(start >= end) {
+		        alert('시작 시간은 종료 시간보다 이전이어야 합니다.');
+		        start.setHours(9, 0, 0, 0);
+		        end.setHours(18, 0, 0, 0);
+		        calStart.value = formatDate(start);
+		        calEnd.value = formatDate(end);
+		    }
+		}
         //캘린더 헤더 옵션
         const headerToolbar = {
             left: 'prevYear,prev,next,nextYear today',
@@ -439,8 +481,8 @@ margin: 20px auto;
             eventSources: eventSources, //내가 설정한 이벤트 소스
             height: '700px', // calendar 높이 설정
             expandRows: true, // 화면에 맞게 높이 재설정
-            slotMinTime: '09:00', // Day 캘린더 시작 시간
-            slotMaxTime: '18:00', // Day 캘린더 종료 시간
+            slotMinTime: '08:00', // Day 캘린더 시작 시간
+            slotMaxTime: '22:00', // Day 캘린더 종료 시간
             // 맨 위 헤더 지정
             headerToolbar: headerToolbar,
             initialView: 'dayGridMonth',   // default: dayGridMonth 'dayGridWeek', 'timeGridDay', 'listWeek'
@@ -484,7 +526,7 @@ margin: 20px auto;
       
    
         function handleEventClick(info){
-   			
+        	console.log("어딜",info.event);
 			 if( info.event.endStr.length>10){
             calTitle.value= info.event.title;
             calNo.value= info.event.extendedProps.calNo;
@@ -522,7 +564,7 @@ margin: 20px auto;
         calendar.on("eventClick",handleEventClick);
    
         function handleDateClick(info){        	
-      
+      		
         	var year = info.date.getFullYear();
         	var month = info.date.getMonth()+1;
         	if(month < 10) {
@@ -750,9 +792,10 @@ margin: 20px auto;
                     calType: calType.value, //추가
                     calColor: calColor.value
             }; 
+           
             if(!calNo.value){
             $.ajax({
-                url: "${path}/calendar/calendarInsert",
+                url:path+"/calendar/calendarInsert",
                 method: "POST",
                 dataType: "json",
                 data: JSON.stringify(event),
@@ -769,13 +812,14 @@ margin: 20px auto;
             })
             }else{
             	$.ajax({
-            		url: "${path}/calendar/calendarUpdate",
+            		url:path+"/calendar/calendarUpdate",
             		method: "POST",
             		dataType: "json",
             		data: JSON.stringify(event),
             		contentType: 'application/json',
             		success: function(data){
             			calendar.refetchEvents();
+            			alert("일정이 수정되었습니다.")
             		},
             		error: function(e){
             			alert('일정 수정중 요류가 발생하였습니다. 다시 입력 하십시오');

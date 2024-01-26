@@ -39,6 +39,14 @@ div {
 	/* border: 1px solid red; */
 	
 }
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap')
+	;
+
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
 </style>
 </head>
 <body>
@@ -53,20 +61,22 @@ div {
 					<input type="hidden" id="roomNo" value="${roomNo}" /> <input
 						type="hidden" id="loginMember" value="${loginmember.empId }" />
 				</div>
-				
+
 				<div class="col-1" style="padding: 0px 0px;">
-					<button class="invite" id="bars"  data-toggle="modal" data-target="#invite-modal" onclick="fn_roomUpdateInfo('${roomNo }');">
+					<button class="invite" id="bars" data-toggle="modal"
+						data-target="#invite-modal"
+						onclick="fn_roomUpdateInfo('${roomNo }');">
 						<i class="fa-solid fa-gear"></i>
 					</button>
 				</div>
 			</div>
 			<hr style="margin: 2px 0;">
 			<div class="row">
-				<div class="col-1">
+				<div class="col-1" style="padding-top: 6px;" >
 					<button id="back" style="transform: rotate(180deg);">&#10132</button>
 				</div>
 				<div class="col-10">
-					<h4 id="room_name" style="line-height: 2.0;">${room.roomName }</h4>
+					<h4 id="room_name" style="line-height: 2.3;">${room.roomName }</h4>
 					<input type="hidden" id="roomType"
 						value="${room.roomTypeObj.roomType }" />
 				</div>
@@ -77,9 +87,8 @@ div {
 						</li>
 
 					</ul>
-					<div class="container profile-list list-${roomNo } }" style="height: 499px;">
-						
-					</div>
+					<div class="container profile-list list-${roomNo } }"
+						style="height: 499px;"></div>
 					<div>
 						<button class="btn btn-primary" id="exit-btn">채팅방 나가기</button>
 					</div>
@@ -141,7 +150,7 @@ div {
 					</div>
 
 					<div class="modal-body invite-modal-body">
-						<div class="contain" style="border-bottom:1px solid black;">
+						<div class="contain" style="border-bottom: 1px solid black;">
 							<div class="row">
 								<div class="col-6">
 									<strong>채팅방 제목</strong>
@@ -152,7 +161,8 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="text" name="updateroomName" id="updateroomName" value=""/>
+									<input type="text" name="updateroomName" id="updateroomName"
+										value="" />
 								</div>
 								<div class="col-6">
 									<select name="updateroomType" id="updateroomType">
@@ -172,8 +182,8 @@ div {
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="password" name="updateroomPassword" id="updateroomPassword"
-										value="" disabled />
+									<input type="password" name="updateroomPassword"
+										id="updateroomPassword" value="" disabled />
 								</div>
 							</div>
 							<div class="row">
@@ -185,17 +195,16 @@ div {
 							</div>
 						</div>
 						<div class="contain">
-							<div class="row" style="border-bottom:1px solid black;">
+							<div class="row" style="border-bottom: 1px solid black;">
 								<h3>&nbsp;&nbsp;&nbsp;&nbsp;초대리스트</h3>
-							</div>							
+							</div>
 						</div>
-						<div class="contain invite-list" id="invite-list">
-							
-						</div>
+						<div class="contain invite-list" id="invite-list"></div>
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onclick="fn_roomUpdateCheck('${roomNo}');">&#43;초대 및 변경</button>
+						<button type="button" class="btn btn-primary"
+							onclick="fn_roomUpdateCheck('${roomNo}');">&#43;초대 및 변경</button>
 						<button type="button" class="btn btn-link  ml-auto"
 							data-dismiss="modal">닫기</button>
 					</div>

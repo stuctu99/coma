@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -41,7 +42,7 @@ public class AdminController {
 	/*사원관련 컨트롤러*/
 	//전체 사원 출력
 	@GetMapping("/adminEmp")
-	public void selectEmpAllByCurrent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m) {
+	public void selectEmpAllByCurrent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m, HttpServletRequest request) {
 		int year=sysDate.getYear();
 		int month=sysDate.getMonthValue();
 		int day=sysDate.getDayOfMonth();
@@ -90,7 +91,7 @@ public class AdminController {
 		m.addAttribute("chartEmpData",jsonString);
 		m.addAttribute("emps",emps);
 		m.addAttribute("empCount",empCount);
-		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, "/admin/adminEmp"));
+		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, request.getContextPath()+"/admin/adminEmp"));
 		m.addAttribute("totalEmp",totalData);
 	}
 	
@@ -114,7 +115,7 @@ public class AdminController {
 	
 	//사원 검색
 	@PostMapping("/searchEmp")
-	public @ResponseBody Map<String,Object> searchEmp(@RequestBody HashMap<String, Object> searchMap) {
+	public @ResponseBody Map<String,Object> searchEmp(@RequestBody HashMap<String, Object> searchMap, HttpServletRequest request) {
 		int year=sysDate.getYear();
 		int month=sysDate.getMonthValue();
 		int day=sysDate.getDayOfMonth();
@@ -127,7 +128,7 @@ public class AdminController {
 		searchMap.put("dateData", dateData);
 		List<Map> emps=service.searchEmp(searchMap);
 		int totalData=service.countEmpByData(searchMap);
-		return Map.of("emps",emps,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchEmp",(String)searchMap.get("jsName")));
+		return Map.of("emps",emps,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, request.getContextPath()+"/admin/searchEmp",(String)searchMap.get("jsName")));
 	}
 	
 	//사원 데이터 Excel 다운
@@ -141,7 +142,7 @@ public class AdminController {
 	/*학생관련 컨트롤러*/
 	//전체 학생 출력
 	@GetMapping("/adminStudent")
-	public void adminStudent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m) {
+	public void adminStudent(@RequestParam(defaultValue="1") int cPage, @RequestParam(defaultValue="10") int numPerpage, Model m, HttpServletRequest request) {
 		List<Map> students=service.selectStudent(Map.of("cPage",cPage,"numPerpage",numPerpage));	//전체 학생 데이터 출력
 		int totalData=service.countStudent();	//전체 학생 수 출력
 		List<Map> studentCount=service.studentCountByEmpId();
@@ -149,7 +150,7 @@ public class AdminController {
 		//List<Map> chartDate=service.chartFilterDate();
 		
 		m.addAttribute("students",students);
-		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, "/admin/adminStudent"));
+		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, request.getContextPath()+"/admin/adminStudent"));
 		m.addAttribute("studentCount",studentCount);
 		m.addAttribute("totalStudent",totalData);
 		//m.addAttribute("chartDate",chartDate);
@@ -220,7 +221,7 @@ public class AdminController {
 	
 	//학생 검색 기능
 	@PostMapping("/searchStudent")
-	public @ResponseBody Map<String,Object> searchStudent(@RequestBody HashMap<String, Object> searchMap){
+	public @ResponseBody Map<String,Object> searchStudent(@RequestBody HashMap<String, Object> searchMap, HttpServletRequest request){
 		List<Map> students=service.searchStudent(searchMap);
 		int totalData=service.countStudentByData(searchMap);
 		return Map.of("students",students,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchStudent",(String)searchMap.get("jsName")));

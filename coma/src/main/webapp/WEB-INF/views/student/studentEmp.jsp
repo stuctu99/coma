@@ -13,9 +13,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
 
-    input:read-only{
-    	background-color:white;
-    }
+input:read-only{
+	background-color:white;
+}
+    
+html{
+    overflow-x: hidden;
+}
 </style>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row">
