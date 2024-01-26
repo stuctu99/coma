@@ -12,24 +12,24 @@
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
 <c:set var="board" value="${boards}"/>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+
 <div class="coma-container">
-<div class="container-xl">
-	<div class="table-responsive">
-		<div class="table-wrapper">
-			<div class="table-title">
-				<div class="row">
-					<div class="col-sm-6">
-						<a href="${path }"><h2>공지사항</h2></a>
+				<div class="row" style="display: flex;">
+					<div class="col-1"></div>
+				<div class="table-wrapper col-8">
+						<a href="${path }/board/noticelist"><h1>공지사항</h1></a>
+				</div>
+				<div class="col-2" style="align-self: center;">
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-							<div class="col-sm-6" style="text-align: right;">
 						      <a href="${path }/board/writeView?boardType=0" class="btn btn-primary"><span>공지작성</span></a>   
 						      <button onclick="deleteSelected()" class="btn btn-primary">공지삭제</button>   
-						  	</div>
 						</c:if>
-					</div>
+				</div>		
+				<div class="col-1"></div>
 				</div>
-			</div>
-			<table class="table table-hover">
+		<div class="row">
+			<div class="col-1"></div>
+			<table class="table table-hover col-10">
 				<thead>
 					<tr>
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
@@ -91,10 +91,14 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<div class="col-1"></div>
+			</div>
 			
 			
 			
-				<div class="search-container">
+				<div class="row">
+				<div class="col-1"></div>
+					<div class="col-10">
 				    <form name="searchForm" autocomplete="off">
 					    <select class="se" id="category" name="search-type">
 					        <option value="search-title">제목</option>
@@ -108,18 +112,18 @@
 							</svg>
 					    </button>
 				    </form>
-					<%-- <div class="wrtie" style="text-align: right;">
-						<a href="${path }/board/writeView?boardType=1" class="btn btn-success"><span>글쓰기</span></a>	
-					</div> --%>
+				    </div>
+				<div class="col-1"></div>
 				</div>
 				
-			 	 <div>
+			 	 <div class="row">
+			 	 <div class="col-1"></div>
+			 	 <div class="col-10" style="text-align: center">
 			      ${pageBarNotice }
+			 	 </div>
+			      <div class="col-1"></div>
 			  	</div>
 	</div>        
-</div>
-</div>
-</div>
 
 
 <script>

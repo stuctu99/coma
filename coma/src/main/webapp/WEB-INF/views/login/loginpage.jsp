@@ -102,6 +102,8 @@
   <script src="${pageContext.request.contextPath }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+  const path = '${pageContext.request.contextPath }';
+  
     window.TrackJS &&
       TrackJS.install({
         token: "ee6fab19c5a04ac1a32a645abde4613a",
@@ -109,18 +111,20 @@
       });
     
     /* 로그인유지 체크박스 데이터 */
-/*     const data = {
-            remember-2me: document.getElementById('customCheckLogin').checked,
-        }; */
+    /*    const data = {
+            remember_me: document.getElementById('customCheckLogin').checked,
+        };
     
-   /*  fetch('/security', {
+        fetch(path+'/security', {
     	method: 'POST',
     	headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data), 
     })
-    .then(response => response.json());  */   
+    .then(response => response.json()); */
+        
+        
   </script>
 </body>
 

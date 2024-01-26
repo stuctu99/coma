@@ -301,12 +301,15 @@
   	<div>${pageBar }</div>
   </div> 
 <script>
+
+const path = "${path}"
+
 //검색기능
 function getSearchList(){
 	console.log($("form[name=searchForm]"));
 	$.ajax({
 		type: 'POST',
-		url : "${path}/apprdoc/search",
+		url : path+"/apprdoc/search",
 		data : $("form[name=searchForm]").serialize(),
 		success : function(result){
 			$('.table > tbody').empty();
@@ -398,7 +401,7 @@ window.onload=()=>{
 	  	const empId = "${e.empId}";
 	  
 	    $.ajax({
-	        url: '${path}/apprdoc/filterAll',
+	        url: path+'/apprdoc/filterAll',
 	        type: 'POST',
 	        data: { filter: value,
 	            empId: empId},
