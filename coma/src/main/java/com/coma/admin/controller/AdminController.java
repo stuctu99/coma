@@ -91,7 +91,7 @@ public class AdminController {
 		m.addAttribute("chartEmpData",jsonString);
 		m.addAttribute("emps",emps);
 		m.addAttribute("empCount",empCount);
-		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, request.getContextPath()+"/admin/adminEmp"));
+		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, "/admin/adminEmp"));
 		m.addAttribute("totalEmp",totalData);
 	}
 	
@@ -224,7 +224,7 @@ public class AdminController {
 	public @ResponseBody Map<String,Object> searchStudent(@RequestBody HashMap<String, Object> searchMap, HttpServletRequest request){
 		List<Map> students=service.searchStudent(searchMap);
 		int totalData=service.countStudentByData(searchMap);
-		return Map.of("students",students,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, request.getContextPath()+"/admin/searchStudent",(String)searchMap.get("jsName")));
+		return Map.of("students",students,"pageBar",pageFactory.pageAjax((int)searchMap.get("cPage"), (int)searchMap.get("numPerpage"), totalData, "/admin/searchStudent",(String)searchMap.get("jsName")));
 	}
 
 }
