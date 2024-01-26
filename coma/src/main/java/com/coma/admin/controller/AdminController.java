@@ -91,7 +91,7 @@ public class AdminController {
 		m.addAttribute("chartEmpData",jsonString);
 		m.addAttribute("emps",emps);
 		m.addAttribute("empCount",empCount);
-		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, "/admin/adminEmp"));
+		m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, totalData, request.getContextPath()+"/admin/adminEmp"));
 		m.addAttribute("totalEmp",totalData);
 	}
 	
