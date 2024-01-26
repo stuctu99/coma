@@ -20,6 +20,7 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+
 </style>
 
 
@@ -51,7 +52,7 @@
 		</div>
 		
 		<div class="">
-			<img src="${path }/resource/img/icons/common/back.png" style="width: 40px;"  id="total">
+			<button type="button" class="btn btn-primary"  onclick="totalBtn();">전체보기</button>
 		</div>
 	</div>
 	<div class="row">
@@ -347,10 +348,9 @@ function updateTable(commuteList) {
 function commuteWriteBtn(){
 	window.location.href = '${pageContext.request.contextPath}/approval/writedoc';
 }
-document.getElementById('total').addEventListener('click', function() {
+function totalBtn() {
     window.location.href = '${pageContext.request.contextPath}/commute/commuteDetail';
-});
-
+}
 
 
 /* 기간 막기 함수  */
