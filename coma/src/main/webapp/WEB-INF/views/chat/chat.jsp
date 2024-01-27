@@ -56,10 +56,10 @@ div {
 			<hr style="margin: 2px 0;">
 			<div class="row header-menu">
 				<div class="col-6 emp-list-btn"
-					style="background-color: #edebf0; opacity: 0.9;">
+					style="background-color: white; opacity: 0.9;">
 					<img src="${path }/resource/img/chat/list-icon.png" />
 				</div>
-				<div class="col-6 chatting-list-btn">
+				<div class="col-6 chatting-list-btn" style="background-color:#edebf0;">
 					<img src="${path }/resource/img/chat/chat-icon.png" />
 				</div>
 			</div>

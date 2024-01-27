@@ -223,7 +223,7 @@
 							                <div class="input-group-prepend">
 							                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 							                </div>
-							                <input class="form-control" name="leaveStart" placeholder="시작 날짜" type="text" >
+							                <input class="form-control" id="start_date"  onchange="updateEndTimeMin()" name="leaveStart" placeholder="시작 날짜" type="text" >
 							            </div>
 							        </div>
 							    </div>
@@ -233,7 +233,7 @@
 						                <div class="input-group-prepend">
 						                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
 						                </div>
-						                <input class="form-control" name="leaveEnd" placeholder="끝 날짜" type="text" >
+						                <input class="form-control" id="end_date" name="leaveEnd" placeholder="끝 날짜" type="text" >
 						            </div>
 						        </div>
 						    </div>
@@ -334,7 +334,7 @@
 <!--------------------- 토스트 에디터 ----------------------->
     <div class="row">
       <div class="col-12">
-       	  <div id="content" name="content"></div>
+       	  <div id="content" style="position: relative; z-index:-999;" name="content"></div>
       </div>
     </div>      
     
