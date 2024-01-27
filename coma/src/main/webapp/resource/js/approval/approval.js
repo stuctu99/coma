@@ -737,4 +737,18 @@ const del_this_line=(line_key)=>{
 	localStorage.removeItem(line_key);
 }
 
-	
+
+
+//-------------- 휴가신청 datepicker 날짜 제한
+
+ function updateEndTimeMin() {
+       
+        var startTimeInput = document.getElementById('start_date');
+        var selectedDate = startTimeInput.value;
+        
+        // 날짜 형식 변환 (mm/dd/yyyy -> yyyy-mm-dd)
+        var formattedDate = selectedDate.split('/').reverse().join('-');
+
+        var endTimeInput = document.getElementById('end_date');
+        endTimeInput.min = formattedDate;
+    }
