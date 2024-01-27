@@ -21,7 +21,6 @@ body {
 .table-title {        
 	padding-bottom: 15px;
 	padding: 16px 30px;
-	margin: -20px -25px 10px;
 	border-radius: 3px 3px 0 0;
 }
 .table-title h2 {
@@ -143,7 +142,7 @@ table.table .avatar {
 	font-size: 13px;
 } 
 .ck-content{
-	height: 500px;
+	height: 440px;
 }
 
 .no{

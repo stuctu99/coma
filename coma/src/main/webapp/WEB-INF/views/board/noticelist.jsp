@@ -12,6 +12,30 @@
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
 <c:set var="board" value="${boards}"/>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+<style>
+    .search-container {
+        display: flex;
+        align-items: center;
+         min-height: 38px;
+    }
+
+    .search-container select,
+    .search-container input {
+        margin-right: 10px;
+    }
+    
+    .board-check {
+    	width: 100px !important;
+    }
+    .board-date {
+    	width: 100px !important;
+    }
+    
+    .board-title {
+    	width: 1200px !important;
+    }
+</style>
+
 
 <div class="coma-container">
 				<div class="row" style="display: flex;">
@@ -19,7 +43,7 @@
 				<div class="table-wrapper col-8">
 						<a href="${path }/board/noticelist"><h1>공지사항</h1></a>
 				</div>
-				<div class="col-2" style="align-self: center;">
+				<div class="col-2" style="align-self: center; display: flex">
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						      <a href="${path }/board/writeView?boardType=0" class="btn btn-primary"><span>공지작성</span></a>   
 						      <button onclick="deleteSelected()" class="btn btn-primary">공지삭제</button>   
@@ -33,23 +57,23 @@
 				<thead>
 					<tr>
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-						<th>
+						<th class="board-check">
 							<span class="custom-checkbox">
 								<input type="checkbox" id="selectAll" onclick="allChecked()">
 								<label for="selectAll"></label>
 							</span>
 						</th>
 						</c:if>
-						<th>작성일</th>
-						<th>제목</th>
-						<th>조회수</th>
+						<th class="board-date">작성일</th>
+						<th class="board-title">제목</th>
+						<!-- <th>조회수</th> -->
 					</tr>
 				</thead>
 				<tbody>
    					<c:forEach var="boards" items="${notices}">
 					<tr>
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-						<td>
+						<td class="board-check">
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="${boards.boardNo }" onclick="boxClicked()">
 								<label for="checkbox1"></label>
@@ -60,7 +84,7 @@
 						<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
 						<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
 						<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
-						<td>
+						<td class="board-date">
 				          <%--   <%=java.time.ChronoUnit.HOURS.between(java.time.LocalDate.now(),
 				            		pageContext.getAttribute("boards"))%> --%>
 							<c:choose>
@@ -84,9 +108,9 @@
 				            </c:choose>
 						</td>
 						
-	   					<td><a href="${path }/board/freePost?boardNo=${boards.boardNo }">
+	   					<td class="board-title"><a href="${path }/board/freePost?boardNo=${boards.boardNo }">
 	   						${boards.boardTitle }</a></td>
-	   					<td>${boards.boardReadCount }</td>
+	   					<%-- <td>${boards.boardReadCount }</td> --%>
 					</tr>				
 					</c:forEach>
 				</tbody>

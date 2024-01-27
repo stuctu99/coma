@@ -7,7 +7,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices.RememberMeTokenAlgorithm;
 
 @Configuration
 @EnableWebSecurity
@@ -22,26 +24,29 @@ public class SecurityConfing {
 		return http
 				.csrf(csrf->csrf.disable())
 				.authorizeHttpRequests(request->{
-					request.requestMatchers("/loginpage").permitAll()
+					request
+					.requestMatchers("/loginpage").permitAll()
 					.requestMatchers("/resource/**").permitAll()
 					.requestMatchers("/WEB-INF/views/**").permitAll()
+							/* .requestMatchers(antMatcher("/WEB-INF/views/")).hasAnyAuthority() */
 					.anyRequest().authenticated();
+					
 				})	
 				.formLogin(formlogin->{
 					formlogin
 					.loginPage("/loginpage")
 					.successForwardUrl("/loginsuccess")
 					.loginProcessingUrl("/logintest");
-				})
-				.rememberMe(rememberMe->{
-					rememberMe
-					.rememberMeParameter("remember_me")
-					.tokenValiditySeconds(3600*24)
-	                .userDetailsService(dbpv);
+				}).rememberMe(remember->{
+					remember
+					.rememberMeParameter("rememberck")
+					.userDetailsService(dbpv);
 				})
 				.logout(logout->logout.logoutUrl("/logout"))
 				.authenticationProvider(dbpv)
 				.build();
 				
 	}
+	
+
 }

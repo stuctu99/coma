@@ -13,7 +13,16 @@
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
 <style>
+    .search-container {
+        display: flex;
+        align-items: center;
+         min-height: 38px;
+    }
 
+    .search-container select,
+    .search-container input {
+        margin-right: 10px;
+    }
 
 	
 </style>

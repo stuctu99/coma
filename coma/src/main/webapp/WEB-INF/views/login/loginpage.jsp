@@ -50,7 +50,7 @@
                 <div class="custom-control custom-control-alternative custom-checkbox" style="margin-bottom: 14px;">
                 
                   <input class="custom-control-input remember-me" 
-                  name="remember_me" id=" customCheckLogin" type="checkbox">
+                  name="rememberck" id=" customCheckLogin" type="checkbox">
                   <label class="custom-control-label" for=" customCheckLogin">
                     <span class="text-muted" style="text-align: center">로그인 유지</span>
                   </label>
@@ -110,8 +110,8 @@
         application: "argon-dashboard-free"
       });
     
-    /* 로그인유지 체크박스 데이터 */
-    /*    const data = {
+    //* * 로그인유지 체크박스 데이터 */
+   /*  const data = {
             remember_me: document.getElementById('customCheckLogin').checked,
         };
     
