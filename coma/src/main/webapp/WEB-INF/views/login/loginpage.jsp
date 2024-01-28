@@ -80,7 +80,7 @@
           </div>
           <div class="row mt-3" style="justify-content: center;">
             <div class="col-6" style="text-align: center;">
-              <a href="#" class="text-light"><small>계정에 문제가 생기셨나요?</small></a>
+              <a href="#" class="text-light" data-toggle="modal" data-target="#modal-default"><small>계정에 문제가 생기셨나요?</small></a>
             </div>
             <!-- <div class="col-6 text-right">
               <a href="#" class="text-light"><small>Create new account</small></a>
@@ -93,7 +93,37 @@
       <div class="container">
       </div>
     </footer>
-  </div> 
+  </div>
+  
+  <!-- modal -->
+  <div class="row">
+	  <div class="col-md-4">
+	     
+	      <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+		    <div class="modal-dialog modal- modal-dialog-centered modal-">
+		       	 <div class="modal-content">
+			        	
+			            <div class="modal-header">
+				                
+				                
+			            </div>
+			            
+		           		<div class="modal-body" id="take_line" style="align-self: center;">
+		           		 		<h2 class="modal-title" id="modal-title-default">관리자에게 문의하세요</h2>
+		           		</div>
+			            
+			            <div class="modal-footer" style="align-self: center;">
+			                <button type="button" onclick="line_end();"  data-dismiss="modal" aria-label="Close" class="btn btn-primary ml-auto">확인</button>
+			            </div>
+			            
+			        </div>
+			    </div>
+			</div>
+	    </div>
+	</div>	
+  
+  
+  
   <!--   Core   -->
   <script src="${pageContext.request.contextPath }/resource/js/plugins/jquery/dist/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath }/resource/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -123,7 +153,8 @@
         body: JSON.stringify(data), 
     })
     .then(response => response.json()); */
-        
+    
+    
         
   </script>
 </body>
