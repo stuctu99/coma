@@ -61,15 +61,15 @@
 				</div>
 				<div class=" col-3 smallbox">
 					<div class=" ">
-						<h3 class="">승인된 휴가 결재</h3>
+						<h3 class="">완료된 휴가 문서</h3>
 					</div>
 					<div class="blank">
-						<h4>${finishCount } 회</h4>
+						<h4>${finishCount } 건</h4>
 					</div>
 				</div>
 				<div class=" col-3 smallbox">
 					<div class="">
-						<h3 class="">결재 중인 휴가 결재</h3>
+						<h3 class="">결재 중인 휴가 문서</h3>
 					</div>
 					<div class="blank">
 						<h4>${ waitCount} 건</h4>
