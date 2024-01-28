@@ -50,7 +50,7 @@
                 <div class="custom-control custom-control-alternative custom-checkbox" style="margin-bottom: 14px;">
                 
                   <input class="custom-control-input remember-me" 
-                  name="remember_me" id=" customCheckLogin" type="checkbox">
+                  name="rememberck" id=" customCheckLogin" type="checkbox">
                   <label class="custom-control-label" for=" customCheckLogin">
                     <span class="text-muted" style="text-align: center">로그인 유지</span>
                   </label>
@@ -102,25 +102,29 @@
   <script src="${pageContext.request.contextPath }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+  const path = '${pageContext.request.contextPath }';
+  
     window.TrackJS &&
       TrackJS.install({
         token: "ee6fab19c5a04ac1a32a645abde4613a",
         application: "argon-dashboard-free"
       });
     
-    /* 로그인유지 체크박스 데이터 */
-/*     const data = {
-            remember-2me: document.getElementById('customCheckLogin').checked,
-        }; */
+    //* * 로그인유지 체크박스 데이터 */
+   /*  const data = {
+            remember_me: document.getElementById('customCheckLogin').checked,
+        };
     
-   /*  fetch('/security', {
+        fetch(path+'/security', {
     	method: 'POST',
     	headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data), 
     })
-    .then(response => response.json());  */   
+    .then(response => response.json()); */
+        
+        
   </script>
 </body>
 

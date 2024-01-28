@@ -16,24 +16,13 @@
     .search-container {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+         min-height: 38px;
     }
 
-    .search-container form {
-        display: flex;
-        gap: 0;
+    .search-container select,
+    .search-container input {
+        margin-right: 10px;
     }
-
-    #searchInput {
-        flex: 1;
-    }
-    
-    .se {
-		border-radius: 0;
-		border: 1px solid #375472;
-		height: 30px;
-	}
-	
 
 	
 </style>
@@ -44,7 +33,7 @@
 		<div class="col-9 table-wrapper">
 			<div class="title">
 					<div class="">
-						<a href="${path }"><h1>자유게시판</h1></a>
+						<a href="${path }/board/freelist"><h1>자유게시판</h1></a>
 					</div>
 					
 				</div>
@@ -108,7 +97,7 @@
 		   					</a>
 	   					</td>
 	   					
-	   					<td class="writer" data-toggle="tooltip" data-placement="top" 
+	   					<td class="writer" data-toggle="tooltip" data-placement="top"
 	   										title='<c:if test="${free.emp.dept.deptType != '관리' }">
 	   													${free.emp.dept.deptType }과</c:if>
 	   													${free.emp.job.jobType}'>
@@ -153,22 +142,24 @@
 			
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="col-3 search-container">
-				    <form name="searchForm" autocomplete="off">
-					    <select class="se" id="category" name="search-type">
-					        <option value="search-title">제목</option>
-					        <option value="search-content">내용</option>
-					        <option value="search-writer">작성자</option>
-					    </select>
-					    <input type="hidden" name="boardType" value="${type }">
-					    <input class="se" type="text" name="search-keyword" id="searchInput">
-					    <button type="button" class="se btn btn-primary" onclick="getSearchList()">
-					   		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-							</svg>
-					    </button>
-				    </form>
-				</div>
+					<div class="row" style="display: flex">
+						<div class="col-12">
+						    <form name="searchForm" autocomplete="off">
+							    <select class="" id="category" name="search-type">
+							        <option value="search-title">제목</option>
+							        <option value="search-content">내용</option>
+							        <option value="search-writer">작성자</option>
+							    </select>
+							    <input type="hidden" name="boardType" value="${type }">
+							    <input class="form-control-sm" type="text" name="search-keyword" id="searchInput">
+							    <button type="button" class="btn btn-primary" onclick="getSearchList()">
+							   		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+									  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+									</svg>
+							    </button>
+						    </form>
+						</div>
+					</div>
 				<div class="col-4 pageBar-container">
 							${pageBarFree }
 				</div>
@@ -184,6 +175,19 @@
 <script>
 
 const path='${path}';
+
+// 페이지 로딩 시 체크박스 초기화
+window.onbeforeunload = function (event) {
+	  var checkboxes = document.getElementsByName('options[]');
+	  for (var i = 0; i < checkboxes.length; i++) {
+	    checkboxes[i].checked = false;
+	  }
+	  
+	  var selectAllCheckbox = document.getElementById('selectAll');
+	  if (selectAllCheckbox) {
+	    selectAllCheckbox.checked = false;
+	  }
+	};
 
 //관리자(COMA_1) 체크박스 글삭제
 function allChecked() {
