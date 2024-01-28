@@ -151,6 +151,19 @@
 
 
 <script>
+//페이지 로딩 시 체크박스 초기화
+window.onbeforeunload = function (event) {
+	  var checkboxes = document.getElementsByName('options[]');
+	  for (var i = 0; i < checkboxes.length; i++) {
+	    checkboxes[i].checked = false;
+	  }
+	  
+	  var selectAllCheckbox = document.getElementById('selectAll');
+	  if (selectAllCheckbox) {
+	    selectAllCheckbox.checked = false;
+	  }
+	};
+	
 	
 	//관리자(COMA_1) 체크박스 글삭제
 	function allChecked() {

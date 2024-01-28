@@ -125,7 +125,7 @@
 				        <span class="h2 font-weight-bold mb-0">${allCount }개</span>
 				    </div>
 				    <div class="col-auto">
-				      <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+				      <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
 				          <i class="ni ni-archive-2"></i>
 				      </div>
 				    </div>
@@ -146,7 +146,7 @@
 				        <span class="h2 font-weight-bold mb-0">${startCount }개</span>
 				    </div>
 				    <div class="col-auto">
-				      <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+				      <div class="icon icon-shape bg-green text-white rounded-circle shadow">
 				          <i class="ni ni-button-play"></i>
 				      </div>
 				    </div>
