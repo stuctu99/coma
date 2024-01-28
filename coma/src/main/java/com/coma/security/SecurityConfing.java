@@ -52,7 +52,7 @@ public class SecurityConfing {
 				.exceptionHandling(exceptionHandlingConfigurer ->
                 exceptionHandlingConfigurer
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    response.sendRedirect("/error-page/403");
+                    response.sendRedirect("/WEB-INF/views/error-page/403");
                 }))
 				.logout(logout->logout.logoutUrl("/logout"))
 				.authenticationProvider(dbpv)

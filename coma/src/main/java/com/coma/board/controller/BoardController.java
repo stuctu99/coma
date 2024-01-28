@@ -55,7 +55,7 @@ public class BoardController {
 	    //공지 List로 model에 저장
 	    m.addAttribute("notices", boards);
 	    //공지 페이지바 model에저장
-	    m.addAttribute("pageBarNotice", pageFactory.getPage(cPage, numPerpage, totalData, "/board/noticelist"));
+	    m.addAttribute("pageBarNotice", pageFactory.getPage(cPage, numPerpage, totalData, "noticelist"));
 	    //공지 총글갯수 model에저장
 	    m.addAttribute("totalData", totalData);
 	        
