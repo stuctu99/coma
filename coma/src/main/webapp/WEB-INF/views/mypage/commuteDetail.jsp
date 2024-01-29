@@ -23,7 +23,7 @@
 
 </style>
 
-${commute}
+<%-- ${commute} --%>
 
 <div class="coma-container" style="margin-top: 40px;">
 	  <%-- ${commute}  --%>
