@@ -41,7 +41,7 @@ font-family: 'Noto Sans KR', sans-serif;
 }
 
 .doc-date{
-	width: 140px;
+	width: 100px;
 }
 
 .doc-end{
@@ -243,7 +243,7 @@ font-family: 'Noto Sans KR', sans-serif;
                 &nbsp;기안자
               </th>
               <th class="doc-date">
-                &nbsp;&nbsp; 기안일
+                &nbsp;기안일
               </th>
               <th class="doc-pg">
                 상태
@@ -272,7 +272,18 @@ font-family: 'Noto Sans KR', sans-serif;
                             </td>
 			          		<td><a href="${path }/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
 			          		<td>${proceeds.emp.empName }</td>
-			          		<td><fmt:formatDate value="${proceeds.docDate}" pattern="YYYY-MM-dd" /></td>
+			          		<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
+						<td class="doc-date">
+							<c:choose>
+				                <c:when test="${proceeds.docDate.year == 124}">
+				                    <fmt:formatDate value="${proceeds.docDate}" pattern="MM-dd" />
+				                </c:when>
+				                <c:otherwise>
+				                    <fmt:formatDate value="${proceeds.docDate}" pattern="yyyy-MM-dd" />
+				                </c:otherwise>
+				            </c:choose>
+				            
+						</td>
 			          		<td>${proceeds.docProgress }</td>
 		         		</tr>
           		</c:forEach>

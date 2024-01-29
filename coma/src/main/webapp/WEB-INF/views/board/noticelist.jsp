@@ -46,7 +46,7 @@
 				<div class="col-2" style="align-self: center; display: flex; justify-content: right;">
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						      <a href="${path }/board/writeView?boardType=0" class="btn btn-primary"><span>공지작성</span></a>   
-						      <button onclick="deleteSelected()" class="btn btn-primary">공지삭제</button>   
+						      <button onclick="deleteSelected()" class="btn btn-outline-primary">공지삭제</button>   
 						</c:if>
 				</div>
 						
@@ -84,7 +84,7 @@
 						<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
 						<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
 						<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
-						<td class="board-date" style="font-size: 16px;">
+						<td class="board-date" style="font-size: 16px; height:78px;">
 				          <%--   <%=java.time.ChronoUnit.HOURS.between(java.time.LocalDate.now(),
 				            		pageContext.getAttribute("boards"))%> --%>
 							<c:choose>

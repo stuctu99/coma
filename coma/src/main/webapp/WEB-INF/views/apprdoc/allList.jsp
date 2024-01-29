@@ -33,12 +33,12 @@
 }
 
 .doc-writer{
-	width: 100px;
+	width: 90px;
 	text-align: center !important;
 }
 
 .doc-date{
-	width: 140px;
+	width: 100px;
 	text-align: center !important;
 }
 
@@ -245,7 +245,7 @@
                 &nbsp;기안자
               </th>
               <th class="doc-date">
-                &nbsp;&nbsp; 기안일
+                기안일
               </th>
               <th class="doc-pg">
                 상태
