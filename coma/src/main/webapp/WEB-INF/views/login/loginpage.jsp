@@ -21,6 +21,9 @@
   <link href="${pageContext.request.contextPath }/resource/assets/test.css"/>
 </head>
 <style>
+body{
+ overflow: hidden;
+ }
 </style>
 <body class="bg-gradient-primary">
   <div class="main-content">

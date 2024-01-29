@@ -17,7 +17,7 @@
 			<div class="table-title">
 				<div class="row">
 					<div class="col-1"></div>
-					<div class="board-name col-5">
+					<div class="board-name col-8">
 						<c:choose>
 					      <c:when test="${post.boardType eq 0}">
 					          <a href="${path }/board/noticelist"><h1>공지사항</h1></a>
@@ -28,7 +28,7 @@
 					  	</c:choose>
 					</div>
 						<c:if test="${post.emp.empId eq e.empId or fn:contains(e.authorities, 'ADMIN')}">	
-							<div>
+							<div class="col-2">
 								<a href="${path }/board/updatePost?boardNo=${post.boardNo }" class="btn btn-primary"><span>글수정</span></a>
 								<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-primary"><span>글삭제</span></a>
 							</div>
@@ -38,7 +38,7 @@
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="table col-10 post-details-flex justify-content-center align-items-center" style="text-align: center">
+				<div class="table col-10" style="text-align: center">
 		    	<table class="board_detail">
 					<tbody>
 						<tr>
@@ -55,7 +55,7 @@
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td colspan="6">
+							<td>
 								<div class="" id="contents" name="contents" style="">
 									<span>${post.boardTitle}</span>
 								</div>
@@ -63,7 +63,7 @@
 						</tr>
 						<tr>
 							<th></th>
-							<td colspan="6" style="height:300px; vertical-align:baseline; text-align: left;">
+							<td style="height:300px; vertical-align:baseline; text-align: left;">
 								<div class="" id="contents" name="contents" >
 									<span>${post.boardContent}</span>
 								</div>
@@ -149,7 +149,7 @@
 						        
 						    <tr>
 							<th>${e.empName }</th>
-							<td colspan="6" class="view_text">
+							<td class="view_text">
 								<form action="${path }/board/writeReply" class="reply-editor" method="post">
 								<div class="d-flex">
 									<input type="hidden" name="boardNo" value="${post.boardNo }">
