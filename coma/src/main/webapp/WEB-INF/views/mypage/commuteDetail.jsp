@@ -23,6 +23,7 @@
 
 </style>
 
+${commute}
 
 <div class="coma-container" style="margin-top: 40px;">
 	  <%-- ${commute}  --%>
@@ -65,17 +66,7 @@
 						<h3 >근무 일수</h3>
 					</div>
 					<div class="blank">
-						<c:if test="${not empty commute}">
-						    <c:set var="nomalCount" value="0" />
-						    <c:set var="nonAntteCount" value="0" />
-						    	<c:forEach var="c" items="${commute}" varStatus="loop">
-							        <c:set var="nomalCount" value="${nomalCount + 1}" />
-							        <c:if test="${c. EMP_COMMUTE_STATUS == 'nonAntte'}">
-							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" /> 
-							        </c:if>
-						   	 	</c:forEach>
-						    <h4 id="totalCount">${nomalCount-nonAntteCount} </h4>
-						</c:if>
+						<h4 id="totalCount">${count} </h4>
 					</div>
 				</div>
 				<div class="col-2 smallbox" >
@@ -83,68 +74,31 @@
 						<h3 class="">정상 근무</h3>
 					</div>
 					<div class="blank">
-						<c:if test="${not empty commute}">
-					    <c:set var="nomalCount" value="0" />
-					    	<c:forEach var="c" items="${commute}" varStatus="loop">
-						        <c:if test="${c. EMP_COMMUTE_LATENESS == 'N'}">
-						            <c:set var="nomalCount" value="${nomalCount + 1}" />
-						        </c:if>
-					   	 	</c:forEach>
-					    <h4 id="finishCount">${nomalCount} </h4>
-						</c:if>
+					    <h4 id="nomalCount">${nomalCount} </h4>
 					</div>
 				</div>
 				<div class=" col-2 smallbox">
 					<div class="">
 						<h3 class="">지각</h3>
 					</div>
-					<div class="blank">
-						<c:if test="${not empty commute}">
-					    <c:set var="lateCount" value="0" />
-					    <c:forEach var="c" items="${commute}" varStatus="loop">
-					        <c:if test="${c. EMP_COMMUTE_LATENESS == 'Y'}">
-					            <c:set var="lateCount" value="${lateCount + 1}" />
-					        </c:if>
-					    </c:forEach>
-						
+					<div class="blank">	
 					    <h4 id="lateCount">${lateCount} </h4>
-					</c:if>
 					</div>
 				</div>
 				<div class=" col-2 smallbox">
 					<div class="">
 						<h3 class="">결근</h3>
 					</div>
-					<div class="blank">
-						<c:set var="nonAntteCount" value="0" />
-						<c:if test="${not empty commute}">
-						    <c:set var="absenceCount" value="0" />
-						    <c:forEach var="c" items="${commute}" varStatus="loop">
-						        <c:if test="${c.EMP_COMMUTE_ABSENCE == 'Y'}">
-						            <c:set var="absenceCount" value="${absenceCount + 1}" />
-						        </c:if> 
-						        <c:if test="${c. EMP_COMMUTE_STATUS == 'nonAntte'}">
-							        	<c:set var="nonAntteCount" value="${nonAntteCount + 1}" />
-							    </c:if>
-						    </c:forEach>
-						    <h4 id="finishCount">${absenceCount-nonAntteCount} </h4>
-						</c:if>
+					<div class="blank">						
+						<h4 id="absenceCount">${absenceCount} </h4>
 					</div>
 				</div>
 				<div class=" col-2 smallbox">
 					<div class="">
 						<h3 class="">퇴근 미처리</h3>
 					</div>
-					<div class="blank">
-						<c:if test="${not empty commute}">
-						    <c:set var="Uncleared" value="0" />
-						    <c:forEach var="c" items="${commute}" varStatus="loop">				    
-						        <c:if test="${c.EMP_COMMUTE_STATUS == 'Uncleared'}">
-						            <c:set var="Uncleared" value="${Uncleared + 1}" />
-						        </c:if>
-						    </c:forEach>						  
-						    <h4 id="Uncleared"> ${Uncleared} </h4>
-						</c:if>
+					<div class="blank">					  
+						<h4 id="notFinishCount"> ${notFinishCount} </h4>
 					</div>
 					
 				</div>
@@ -261,7 +215,8 @@ function updateTable(commuteList) {
 	const $div=document.getElementById("pageBar");
 	$("#empTable").empty();
     var clockInTime, clockOutTime,startTime,endTime,workDate,absenceCount,latenessCount ;
-    var absenceCount=0,latenessCount = 0,nonabsence =0, Uncleared=0 ,total= 0;
+    
+    var nomalCount=0,notFinishCount = 0,lateCount =0, absenceCount=0 ,total= 0;
     /* console.log(commuteList); */
     commuteList.forEach(c => {
     	if(c.EMP_COMMUTE_STATUS!='nonAntte'){
@@ -314,31 +269,34 @@ function updateTable(commuteList) {
 
         $("#empTable").append(row);
         if (c.STATUS === '지각') {
-        	latenessCount++;
+        	lateCount++;
         }
         if (c.STATUS === '결근') {
         	absenceCount++;
         }
 
-        if (c.EMP_COMMUTE_STATUS === '퇴근 미처리') {
-        	Uncleared++;
-        } 
+        if (c.STATUS === '퇴근 미처리') {
+        	notFinishCount++;
+        }
+        if(c.STATUS === '퇴근'){
+        	nomalCount++;
+        }
         total ++;
     }
  });
+	console.log(nomalCount);
+	console.log(notFinishCount);
+	console.log(lateCount);
 	console.log(absenceCount);
-	console.log(nonabsence);
-	console.log(latenessCount);
-	console.log(Uncleared);
 	console.log(total);
 	console.log("여기");
 	
 	nonabsence= total- latenessCount-absenceCount;
-    $('#lateCount').html(${'latenessCount'});
-    $('#finishCount').html(${'absenceCount'});
-    $('#absence').html(${'nonabsence'});
+    $('#nomalCount').html(${'nomalCount'});
+    $('#notFinishCount').html(${'notFinishCount'});
+    $('#lateCount').html(${'lateCount'});
     $('#totalCount').html(${'total'});
-    $('#Uncleared').html(${'Uncleared'});
+    $('#absenceCount').html(${'absenceCount'});
     
 }
 /* /approval/writedoc 결재로 넘어가기  */

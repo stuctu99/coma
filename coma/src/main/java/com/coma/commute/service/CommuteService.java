@@ -40,5 +40,7 @@ public interface CommuteService {
 	
 	int searchCommuteByData(Map<String, Object> commute);
 	
+	List<Map> selectCommuteAll2(Map<String, Object> commute);
+	
 	
 }

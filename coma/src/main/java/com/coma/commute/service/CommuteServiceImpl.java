@@ -110,6 +110,12 @@ public class CommuteServiceImpl implements CommuteService {
 		return dao.searchCommuteByData(session,commute);
 	}
 
+	@Override
+	public List<Map> selectCommuteAll2(Map<String, Object> commute) {
+		// TODO Auto-generated method stub
+		return dao.selectCommuteAll2(session, commute);
+	}
+
 
 
 
