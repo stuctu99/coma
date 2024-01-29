@@ -65,6 +65,13 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 	overflow: hidden !important;
 }
 
+#sender-profile{
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	margin-top: 10px;
+}
+
 .chat-title {}
 
 .emp-info {
@@ -141,6 +148,11 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 	overflow-wrap: break-word;
 }
 
+.other>span{
+	padding-left: 5px;
+	line-height: 3.0 !important;
+}
+
 .me>div.msg-container {
 	color: white;
 	font-weight: 600;
@@ -153,7 +165,6 @@ section>div:nth-child(1)::-webkit-scrollbar-track {
 .other {
 	justify-content: flex-start;
 	float: left;
-	margin-bottom: 5px;
 
 }
 
