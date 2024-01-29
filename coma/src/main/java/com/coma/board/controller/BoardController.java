@@ -42,7 +42,7 @@ public class BoardController {
 	//공지사항리스트
 	//타입으로 분류해서 BoardList model에추가
 	@GetMapping("/noticelist")
-	public void selectBoardNotice(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "10") int numPerpage,
+	public void selectBoardNotice(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "8") int numPerpage,
 								  @RequestParam(required = false, defaultValue="0") int boardType, Model m){
 		
 		//Type이 0(공지)인 게시글 List타입으로 가져오기+페이징처리
@@ -55,7 +55,7 @@ public class BoardController {
 	    //공지 List로 model에 저장
 	    m.addAttribute("notices", boards);
 	    //공지 페이지바 model에저장
-	    m.addAttribute("pageBarNotice", pageFactory.getPage(cPage, numPerpage, totalData, "/board/noticelist"));
+	    m.addAttribute("pageBarNotice", pageFactory.getPage(cPage, numPerpage, totalData, "noticelist"));
 	    //공지 총글갯수 model에저장
 	    m.addAttribute("totalData", totalData);
 	        
@@ -63,7 +63,7 @@ public class BoardController {
 	
 	//자유게시판리스트
 	@GetMapping("/freelist")
-	public void selectBoardFree(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "15") int numPerpage,
+	public void selectBoardFree(@RequestParam(defaultValue = "1") int cPage, @RequestParam(defaultValue = "14") int numPerpage,
 								@RequestParam(required = false, defaultValue="1") int boardType, Model m){
 		
 		//Type이 1(자유)인 게시글 List타입으로 가져오기+페이징처리

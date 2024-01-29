@@ -63,7 +63,9 @@ select:disabled, select[readonly] {
 
 </style>
 <!-- TEAM COMA SPACE -->
-<div class="coma-container" style="margin-top: 5px; margin-bottom: 5px;">
+<div class="coma-container" style="margin-top: 5px; margin-bottom: 5px; ">
+
+<h1 style="text-align: center;">내 정보 보기 </h1>
 	<div class="container" style="text-align: center; margin-top: 5px; margin-bottom: 5px;">
 		<!-- coma content space -->
 		 <form id="employeeForm" action="${path}/mypage/updatemypage" method="post"  enctype="multipart/form-data">
@@ -84,12 +86,12 @@ select:disabled, select[readonly] {
 						<h5>사진을 눌러주세요</h5>	
 					</div>
 					<div>
-						<div class="row">
+						<div class="row" style="margin-top: 40px;">
 							<div class="form-group col-6">
 						        <label for="example-deptCode-input" class="form-control-label">부서</label>
 						        <input class="form-control" type="text" value="${emp.dept.deptType}" id="example-deptCode-input" style="background-color:  #f1edff;" readonly>
 						    </div>
-						    <div class="form-group col-6">
+						    <div class="form-group col-6" >
 						        <label for="example-jobCode-input" class="form-control-label">직책</label>
 						        <input class="form-control" type="text" value="${emp.job.jobType}" id="example-jobCode-input" style="background-color:  #f1edff;" readonly>
 						    </div>
@@ -101,10 +103,10 @@ select:disabled, select[readonly] {
 									<c:choose>
 									    <c:when test="${empVacation % 1 == 0}">
 									        <fmt:formatNumber var="formattedNumber" value="${empVacation}" pattern="0" />
-							 				<input class="form-control" type="text" value="${formattedNumber}" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
+							 				<input class="form-control" type="text" value="${formattedNumber}/15" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
 									    </c:when>
 									    <c:otherwise>
-							 				<input class="form-control" type="text" value="${emp.empVacation}" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
+							 				<input class="form-control" type="text" value="${emp.empVacation}/15" id="exampleFormControlSelect1" style="background-color:  #f1edff;" readonly>
 									    </c:otherwise>
 									</c:choose>	
 							  </div>
@@ -128,11 +130,11 @@ select:disabled, select[readonly] {
 					</div>
 					<div class="row">
 					  <div class="form-group col-6" style="margin-bottom: 0;">
-					    <label for="example-password-input" class="form-control-label">New Password</label>
+					    <label for="example-password-input" class="form-control-label">새 비밀번호</label>
 					    <input class="form-control" type="password" placeholder="새 비밀번호" id="example-password-input" name="empPw">
 					  </div>
 					  <div class="form-group col-6" style="margin-bottom: 0;">
-					    <label for="example-password2-input" class="form-control-label">Password</label>
+					    <label for="example-password2-input" class="form-control-label">새 비밀번호 확인</label>
 					    <input class="form-control" type="password" placeholder="비밀번호 확인" id="example-password2-input">
 					  </div>
 					</div>
@@ -141,19 +143,19 @@ select:disabled, select[readonly] {
 					</div>
 				    <div class="row">
 					    <div class="form-group col-6" style="display:block">
-					        <label for="example-birthday-input" class="form-control-label">생일</label>
+					        <label for="example-birthday-input" class="form-control-label">생년월일 </label>
 					        <input class="form-control" type="date" value="${emp.empBrithDate}" id="example-birthday-input" name="empBrithDate">
 					    </div>
 						<div class="form-group col-6">
 						    <label class="form-control-label">성별</label>
-						    <div class="row">
+						    <div class="row" style="display: flex; justify-content: center;">
 						        <div class="custom-control custom-radio mb-3 col-4">
 						            <input type="radio" id="customRadio1" name="empGender" value="M" class="custom-control-input"
 						                   <c:if test="${emp.empGender == 'M'}">checked</c:if>>
 						            <label class="custom-control-label" for="customRadio1">M</label>
 						        </div>
 						
-						        <div class="custom-control custom-radio col-8">
+						        <div class="custom-control custom-radio col-4">
 						            <input type="radio" id="customRadio2" name="empGender" value="F" class="custom-control-input"
 						                   <c:if test="${emp.empGender == 'F'}">checked</c:if>>
 						            <label class="custom-control-label" for="customRadio2">F</label>
@@ -166,9 +168,9 @@ select:disabled, select[readonly] {
 				        <input type= "tel" class="form-control" value= "${emp.empPhone}"  id="example-tel-input" name="empPhone">
 				    </div>
 				    <div class="form-group"  > 
-					    <label for="address_kakao" class="form-control-label">주소 변경</label>
-						<input class="form-control" type="text" id="address_kakao" name="address" value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="width:500px;cursor: pointer;">
-						<input class="form-control" type="text" name="address_detail" value= "${emp.empAddrDetail}" placeholder="상세주소" style="width:500px;">
+					    <label for="address_kakao" class="form-control-label" style="margin-top: 17px;">주소 변경</label>
+						<input class="form-control" type="text" id="address_kakao" name="address" value= "${emp.empAddr}" placeholder="주소입력시 클릭하세요." style="cursor: pointer;">
+						<input class="form-control" type="text" name="address_detail" value= "${emp.empAddrDetail}" placeholder="상세주소">
 				    </div>
 				    <button type="button" class="btn btn-primary" onclick="submitEmployeeForm()">회원정보 변경</button>
 				</div>
@@ -233,12 +235,16 @@ function submitEmployeeForm() {
     var confirmPassword = $('#example-password2-input').val();
     if (newPassword === confirmPassword) {
     	var form = document.getElementById("employeeForm");
-        form.submit();
+    	newPassword='';
+    	confirmPassword='';
+    	form.submit();
+        
       } else {
         alert('비밀번호를 확인해주세요.');
         
       }
 }
+
 
 
 /* 비밀번호 확인 여부 ajax */
@@ -260,6 +266,9 @@ $(document).ready(function () {
     
     $('#example-password-input, #example-password2-input').on('input', checkPasswordMatch);
   });
+
+
+  
 </script>
 
 <!-- TEAM COMA SPACE -->

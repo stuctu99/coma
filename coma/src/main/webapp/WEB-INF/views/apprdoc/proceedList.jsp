@@ -41,7 +41,7 @@ font-family: 'Noto Sans KR', sans-serif;
 }
 
 .doc-date{
-	width: 140px;
+	width: 100px;
 }
 
 .doc-end{
@@ -125,7 +125,7 @@ font-family: 'Noto Sans KR', sans-serif;
 				        <span class="h2 font-weight-bold mb-0">${allCount }개</span>
 				    </div>
 				    <div class="col-auto">
-				      <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+				      <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
 				          <i class="ni ni-archive-2"></i>
 				      </div>
 				    </div>
@@ -146,7 +146,7 @@ font-family: 'Noto Sans KR', sans-serif;
 				        <span class="h2 font-weight-bold mb-0">${startCount }개</span>
 				    </div>
 				    <div class="col-auto">
-				      <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+				      <div class="icon icon-shape bg-green text-white rounded-circle shadow">
 				          <i class="ni ni-button-play"></i>
 				      </div>
 				    </div>
@@ -201,7 +201,7 @@ font-family: 'Noto Sans KR', sans-serif;
 		    </button>
 		    
 		    <div class="dropdown-content">
-		      <div class="mydoc" onclick="showMenu('모든 문서') getData('모든');">모든 문서</div>	
+		      <div class="mydoc" onclick="showMenu('모든 문서'); getData('모든');">모든 문서</div>	
 		      <div class="mydoc" onclick="showMenu('참조 문서'); getData('참조');">참조 문서</div>
 		      <div class="mydoc" onclick="showMenu('결재할 문서'); getData('결재');">결재할 문서</div>
 		      <div class="mydoc" onclick="showMenu('작성한 문서'); getData('작성');">작성한 문서</div>
@@ -243,7 +243,7 @@ font-family: 'Noto Sans KR', sans-serif;
                 &nbsp;기안자
               </th>
               <th class="doc-date">
-                &nbsp;&nbsp; 기안일
+                &nbsp;기안일
               </th>
               <th class="doc-pg">
                 상태
@@ -272,7 +272,18 @@ font-family: 'Noto Sans KR', sans-serif;
                             </td>
 			          		<td><a href="${path }/approval/viewdoc?docNo=${proceeds.docNo }">${proceeds.docTitle }</a></td>
 			          		<td>${proceeds.emp.empName }</td>
-			          		<td><fmt:formatDate value="${proceeds.docDate}" pattern="YYYY-MM-dd" /></td>
+			          		<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
+						<td class="doc-date">
+							<c:choose>
+				                <c:when test="${proceeds.docDate.year == 124}">
+				                    <fmt:formatDate value="${proceeds.docDate}" pattern="MM-dd" />
+				                </c:when>
+				                <c:otherwise>
+				                    <fmt:formatDate value="${proceeds.docDate}" pattern="yyyy-MM-dd" />
+				                </c:otherwise>
+				            </c:choose>
+				            
+						</td>
 			          		<td>${proceeds.docProgress }</td>
 		         		</tr>
           		</c:forEach>
@@ -285,12 +296,15 @@ font-family: 'Noto Sans KR', sans-serif;
   </div>
   
 <script>
+
+const path = "${path}"
+
 //검색기능
 function getSearchList(){
 	console.log($("form[name=searchForm]"));
 	$.ajax({
 		type: 'POST',
-		url : "${path}/apprdoc/search",
+		url : path+"/apprdoc/search",
 		data : $("form[name=searchForm]").serialize(),
 		success : function(result){
 			$('.table > tbody').empty();
@@ -317,7 +331,7 @@ function getSearchList(){
                             break;
                     	}
 						
-						str+="<td><a href = '${path}/approval/viewdoc?docNo=" + searchDoc.docNo + "'>" + searchDoc.docTitle + "</a></td>";
+						str+="<td><a href = path+'/approval/viewdoc?docNo=" + searchDoc.docNo + "'>" + searchDoc.docTitle + "</a></td>";
 						str+="<td>"+searchDoc.emp.empName+"</td>";
 						str+="<td>"+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+"</td>";
 
@@ -388,7 +402,7 @@ window.onload=()=>{
 	  	const empId = "${e.empId}";
 	  
 	    $.ajax({
-	        url: '${path}/apprdoc/filter',
+	        url: path+'/apprdoc/filter',
 	        type: 'POST',
 	        data: { filter: value,
 	            empId: empId},
@@ -417,7 +431,7 @@ window.onload=()=>{
                             break;
                     	}
 	                    
-	                    str += `<td class='title'><a href='${path}/approval/viewdoc?docNo=`+filterdoc.docNo+`'>`+filterdoc.docTitle+`</a></td>`;
+	                    str+="<td class='doc-title'><a href = '${path}/approval/viewdoc?docNo=" + filterdoc.docNo + "'>" + filterdoc.docTitle + "</a></td>";
 	                    str += `<td class='writer'>`+filterdoc.emp.empName+`</td>`;
 	                    str += `<td class='date'>`+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+`</td>`;
 	                    str += `<td class='read'>`+filterdoc.docProgress+`</td>`;

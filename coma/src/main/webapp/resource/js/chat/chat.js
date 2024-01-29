@@ -56,7 +56,7 @@ mserver.onmessage = (response) => {
 			//채팅방 초대
 			setTimeout(()=>{
 				inviteAlarm(respMsg);				
-			},1500);
+			},1000);
 			break;
 
 	}
@@ -479,9 +479,9 @@ const fn_roomList = () => {
 							if (d.roomPasswordFlag == 'N') {
 								if (data != "") {
 									$updateMsg.text(" " + data);
+								}else{
+									$updateMsg.text("NEW").css("color","red").css("font-weight","bold");
 								}
-							} else if (d.newJoin == 'Y') {
-								$updateMsg.text("New");
 							}
 							else {
 								$div_title.css("line-height", 3.0);
@@ -579,6 +579,10 @@ $(document).ready(function() {
 		}
 	})
 
+})
+
+$("#passwordReset").click(function(){
+	$("input#passwordCode").val("");
 })
 
 /* modal창 출력 시 input태그 autofocus하는 방법 */
@@ -785,6 +789,9 @@ window.updateMsg = function(roomNo, content) {
 
 /* updateMsg 실행 후 서버에서 접속 세션에 메세지 동기화 */
 const messageUpdate = (msg) => {
+	const room = $("#"+msg.roomNo).parent();
+	$("#chattingList").prepend(room.clone());	
+	room.remove();
 	$(".updateMsg-" + msg.roomNo).remove();
 	const $updateMsg = $("<span>").addClass("updateMsg updateMsg-" + msg.roomNo);
 	$updateMsg.text(" " + msg.msg);
