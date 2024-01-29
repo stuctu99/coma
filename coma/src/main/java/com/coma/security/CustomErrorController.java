@@ -24,7 +24,5 @@ public class CustomErrorController implements ErrorController{
         return request.getContextPath()+"errors/500";
     }
 
-	
-	
-	
+
 }
