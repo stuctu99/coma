@@ -15,9 +15,7 @@ $("#exit-btn").click(function() {
 				return response.json();
 			})
 			.then(data => {
-				console.log("나가기전!!!");
 				if (data.result == "success") {
-					console.log("최후의 1인");
 					close();
 					server.send(new Message("out", "", "", "", empId, roomNo).convert());
 					$(opener.location).attr("href", "javascript:fn_exitDelRoom('" + roomNo + "','" + empId + "');");
@@ -91,10 +89,8 @@ server.onopen = () => {
 }
 
 server.onclose = () => {
-	if(server.readyState === WebSocket.CLOSED){
 		const msg = new Message("rest", "", "", "", loginId, roomNo);
 		server.send(msg.convert());
-	}
 }
 
 server.onmessage = (response) => {
