@@ -431,7 +431,7 @@ window.onload=()=>{
                             break;
                     	}
 	                    
-	                    str+="<td class='doc-title'><a href = '/approval/viewdoc?docNo=" + filterdoc.docNo + "'>" + filterdoc.docTitle + "</a></td>";
+	                    str+="<td class='doc-title'><a href = '${path}/approval/viewdoc?docNo=" + filterdoc.docNo + "'>" + filterdoc.docTitle + "</a></td>";
 	                    str += `<td class='writer'>`+filterdoc.emp.empName+`</td>`;
 	                    str += `<td class='date'>`+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+`</td>`;
 	                    str += `<td class='read'>`+filterdoc.docProgress+`</td>`;
