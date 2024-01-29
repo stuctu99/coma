@@ -113,6 +113,7 @@ body{
 		           		<div class="modal-body" id="take_line" style="align-self: center;">
 		           		
 		           		 		<h2>행정과 김구디</h2>
+		           		 		<h4>&nbsp;&nbsp;&nbsp;02)900-7272</h4>
 		           		</div>
 			            
 			            <div class="modal-footer" style="align-self: center;">

@@ -109,6 +109,12 @@ public class CommuteDaoImpl implements CommuteDao {
 		return session.selectOne("commute.searchCommuteByData",commute);
 	}
 
+	@Override
+	public List<Map> selectCommuteAll2(SqlSession session, Map<String, Object> commute) {
+		// TODO Auto-generated method stub
+		return session.selectList("commute.selectCommuteAll",commute );
+	}
+
 
 
 

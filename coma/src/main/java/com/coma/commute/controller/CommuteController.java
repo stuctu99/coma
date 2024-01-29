@@ -87,10 +87,37 @@ public class CommuteController {
 	    	commute.put("loginId",loginId);
 	    	commute.put("cPage",cPage);
 	    	commute.put("numPerpage",numPerpage);
-	    	
+	    	//페이징 처리를 위한 리스트 
 	        List<Map> commute2= service.selectCommuteAll(commute);
+	        //카운트하기 위한 리스트
+	        List<Map> commute3= service.selectCommuteAll2(commute);
+	        int nomalCount = 0,lateCount=0,notFinishCount=0 ,absenceCount=0;
+	        
+	        for (Map<String, Object> commuteMap : commute3) {
+	            // 각 맵에서 "status" 키의 값을 가져와서 출력
+	            Object status = commuteMap.get("STATUS");
+	            if (status != null) {
+	            	if(status.equals("퇴근")) {
+	            		nomalCount ++;
+	            	}else if (status.equals("퇴근 미처리")){
+	            		notFinishCount++;
+	            	}else if(status.equals("지각")) {
+	            		lateCount ++;
+	            	}else if(status.equals("결근")) {
+	            		absenceCount ++;
+	            	}
+	            } 
+	        }
+	        
+	        
+	        
 	        int count =service.countCommute(loginId);
 	        m.addAttribute("commute",commute2);   
+	        
+	        m.addAttribute("nomalCount",nomalCount);   
+	        m.addAttribute("notFinishCount",notFinishCount);   
+	        m.addAttribute("lateCount",lateCount);   
+	        m.addAttribute("absenceCount",absenceCount); 
 	        m.addAttribute("count",count);
 	        m.addAttribute("pageBar",pageFactory.getPage(cPage, numPerpage, count, reuqest.getContextPath()+"/commute/commuteDetail"));
 

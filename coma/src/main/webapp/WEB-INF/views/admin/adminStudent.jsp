@@ -189,7 +189,7 @@ const myChart = new Chart(ctx, {
   data: {
       labels: labelList,
       datasets: [{
-      	 label: '사원 근태 통계',
+      	 label: '학생 출결 통계',
            data: valueList,
           backgroundColor: colorList
       }]
@@ -340,7 +340,6 @@ function fn_searchStudent(cPage=1,numPerpage=10,url){
 			const $tr=document.createElement('tr');
 			const $td1=document.createElement('td');
 			const $a=document.createElement('a');
-			$a.setAttribute('href','#');
 			$a.innerText=e.STU_NAME;
 			$td1.appendChild($a);
 			const $td2=document.createElement('td');
