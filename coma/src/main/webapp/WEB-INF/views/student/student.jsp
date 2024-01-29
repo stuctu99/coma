@@ -14,6 +14,9 @@
 /*   	div{
       border: 2px solid red;
     }  */
+html{
+     overflow-x: hidden;
+}
 </style>
 <div class="coma-container" style="margin-top:5px; margin-bottom: 5px;">
 	<div class="row">
