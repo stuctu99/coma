@@ -14,14 +14,13 @@ body {
 	font-size: 13px;
 }
 .table-wrapper {
-	padding: 20px 25px;
+	padding: 20px 15px;
 	border-radius: 3px;
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .table-title {        
 	padding-bottom: 15px;
 	padding: 16px 30px;
-	margin: -20px -25px 10px;
 	border-radius: 3px 3px 0 0;
 }
 .table-title h2 {
@@ -143,7 +142,7 @@ table.table .avatar {
 	font-size: 13px;
 } 
 .ck-content{
-	height: 500px;
+	height: 440px;
 }
 
 .no{

@@ -48,7 +48,7 @@
 			        		</td>
 			        		<!-- Button -->
 			        		<td>
-			        			<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModal_${s.STU_NO}">작성버튼</button>
+			        			<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal_${s.STU_NO}">작성버튼</button>
 			        		</td>
 					        <!-- Modal -->
 							<div class="modal fade" id="exampleModal_${s.STU_NO}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -87,8 +87,8 @@
 		    	<div class="col-1"></div>
 		    	<div class="col-5"></div>
 		    	<div class="col-6" style="display: flex; justify-content: flex-end;">
+		    		<button type="reset" class="btn btn-default btn-sm" style="margin-right:36px;">선택 취소</button>
 					<button type="submit" class="btn btn-primary btn-sm">입력 완료</button>
-		    		<button type="reset" class="btn btn-secondary btn-sm" style="margin-right:36px;">선택 취소</button>
 		    	</div>
 		    </div>
 		    </form>
@@ -98,9 +98,8 @@
 			<h1 style="">학생 정보창</h1>
 			<div class="row">
 				<div class="col-6">
-					<input type="file" id="accompany-file" name="studentPhoto" accept="image/bmp,image/gif,image/jpg,image/jpeg,image/png,image/raw,image/tif,image/heif,image/heic,image/mp4,image/avi,image/mov,image/wmv,image/mkv,image/mpg,image/rm,image/asf,image/m4v,image/mpeg,image/mpg" style="display: none; margin: 0px; padding: 0px;">
 					<div class="file-btn" onclick="openFileDialog();" style="cursor: pointer; margin-top:50px;">
-					 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" alt="Profile Image" id="profileImage" style="width: 300px; height: 300px;">
+					 	<img src="${pageContext.request.contextPath}/resource/upload/profile/user.png" style="width: 300px; height: 300px;">
 					</div>
 				</div>
 				<div class="col-6" id="stu_viewDetails">

@@ -133,7 +133,6 @@ public class MessengerServer extends TextWebSocketHandler {
 	
 //	메세지 전송 시 해당 접속자에게 채팅방 리스트의 채팅방에 최신메세지
 	private void updateMsg(MessengerMessage msg) {
-		System.err.println("여기에 메세지가 전달되?");
 		try {
 			for(Map.Entry<String, WebSocketSession> client : clients.entrySet()) {
 				WebSocketSession session = client.getValue();
@@ -150,7 +149,6 @@ public class MessengerServer extends TextWebSocketHandler {
 			System.err.println(msg.getTargetId());
 			if(client.getKey().equals(msg.getLoginId())) {
 				try {
-					System.err.println("초대 알림 받는 인원"+msg.getLoginId());
 					WebSocketSession session = client.getValue();
 					session.sendMessage(messageConverter(msg));
 				}catch(Exception e) {
@@ -168,7 +166,6 @@ public class MessengerServer extends TextWebSocketHandler {
 				client.remove();
 			}
 		}
-		System.err.println("메신저 접속 세션 정보 : "+clients);
 	}
 
 //	데이터 전송 메세지 Jackson mappaer 이용하여 변환하기

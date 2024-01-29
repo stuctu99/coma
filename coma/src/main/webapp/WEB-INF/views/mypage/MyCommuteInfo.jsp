@@ -18,6 +18,7 @@ td {
 	width: 150px;
 	height: 100px;
 	
+	
 }
 .calendarContainer{
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
@@ -27,13 +28,14 @@ td {
 	border-radius: 50px; 
 
 }
+td
 </style>
 <body onload="autoReload();">
 	<div class="coma-container containerbig">
 		<div class="row" style = "padding: 40px 0px 20px; ">
 			<div class="col-2 "></div>
 			<div class="col-7 ">
-				<h1>나의 근태확인하기</h1>
+				<h1 style="text-align:center;">나의 근태 확인하기</h1>
 			</div>
 			<div class="col-3"><button type="button" class="btn btn-primary" id="commuteDetail">  근태 상세 보기</button></div>
 			
@@ -195,13 +197,13 @@ td {
 		<c:forEach var="item" items="${commute}">
 			var tdId = '<fmt:formatDate value="${item.EMP_COMMUTE_WORKDATE}" pattern="yyyy-MM-dd"/>'
 			var clockIn = "${item.EMP_COMMUTE_CLOCKIN}";
-			clockIn = clockIn.substring(10, clockIn.length - 2);			
+			clockIn = clockIn.substring(10, clockIn.length - 5);			
 			/* console.log(tdId); */
 			var str = "";
 			str +="<span style='font-weight: bold;color: #F7878E1'>" +clockIn+" </span><span style='color: #F7878E1;font-weight: bold;'>출근 </span>";
 			if("${item.EMP_COMMUTE_CLOCKOUT}"){
 				var clockOut = "${item.EMP_COMMUTE_CLOCKOUT}"
-				clockOut = clockOut.substring(10, clockOut.length - 2);
+				clockOut = clockOut.substring(10, clockOut.length - 5);
 				str += "<br><span style='font-weight: bold; color: #F7878E1;'>"+clockOut+ "</span><span style='color: #F7878E1;font-weight: bold;' > 퇴근</span> ";
 			}
 			

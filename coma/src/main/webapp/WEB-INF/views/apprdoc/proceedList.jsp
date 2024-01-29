@@ -125,7 +125,7 @@ font-family: 'Noto Sans KR', sans-serif;
 				        <span class="h2 font-weight-bold mb-0">${allCount }개</span>
 				    </div>
 				    <div class="col-auto">
-				      <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+				      <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
 				          <i class="ni ni-archive-2"></i>
 				      </div>
 				    </div>
@@ -146,7 +146,7 @@ font-family: 'Noto Sans KR', sans-serif;
 				        <span class="h2 font-weight-bold mb-0">${startCount }개</span>
 				    </div>
 				    <div class="col-auto">
-				      <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+				      <div class="icon icon-shape bg-green text-white rounded-circle shadow">
 				          <i class="ni ni-button-play"></i>
 				      </div>
 				    </div>
@@ -285,12 +285,15 @@ font-family: 'Noto Sans KR', sans-serif;
   </div>
   
 <script>
+
+const path = "${path}"
+
 //검색기능
 function getSearchList(){
 	console.log($("form[name=searchForm]"));
 	$.ajax({
 		type: 'POST',
-		url : "${path}/apprdoc/search",
+		url : path+"/apprdoc/search",
 		data : $("form[name=searchForm]").serialize(),
 		success : function(result){
 			$('.table > tbody').empty();
@@ -317,7 +320,7 @@ function getSearchList(){
                             break;
                     	}
 						
-						str+="<td><a href = '${path}/approval/viewdoc?docNo=" + searchDoc.docNo + "'>" + searchDoc.docTitle + "</a></td>";
+						str+="<td><a href = path+'/approval/viewdoc?docNo=" + searchDoc.docNo + "'>" + searchDoc.docTitle + "</a></td>";
 						str+="<td>"+searchDoc.emp.empName+"</td>";
 						str+="<td>"+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+"</td>";
 
@@ -388,7 +391,7 @@ window.onload=()=>{
 	  	const empId = "${e.empId}";
 	  
 	    $.ajax({
-	        url: '${path}/apprdoc/filter',
+	        url: path+'/apprdoc/filter',
 	        type: 'POST',
 	        data: { filter: value,
 	            empId: empId},
@@ -417,7 +420,7 @@ window.onload=()=>{
                             break;
                     	}
 	                    
-	                    str += `<td class='title'><a href='${path}/approval/viewdoc?docNo=`+filterdoc.docNo+`'>`+filterdoc.docTitle+`</a></td>`;
+	                    str += `<td class='title'><a href= path+'/approval/viewdoc?docNo=`+filterdoc.docNo+`'>`+filterdoc.docTitle+`</a></td>`;
 	                    str += `<td class='writer'>`+filterdoc.emp.empName+`</td>`;
 	                    str += `<td class='date'>`+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+`</td>`;
 	                    str += `<td class='read'>`+filterdoc.docProgress+`</td>`;

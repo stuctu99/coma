@@ -61,10 +61,39 @@ public class Emp implements UserDetails, Serializable{
 		
 		//기본등급 EMP
 		//empId가 coma_1인 계정은 ADMIN 권한을 갖도록함
-		if(empId.equals("COMA_1")){
+		/*
+		 * if(empId.equals("COMA_1")){ auth.add(new
+		 * SimpleGrantedAuthority(MyAuthority.ADMIN.name())); } else { auth.add(new
+		 * SimpleGrantedAuthority(MyAuthority.EMP.name())); }
+		 */
+		
+		switch (empId) {
+		
+		//관리자
+		case "COMA_1":
 			auth.add(new SimpleGrantedAuthority(MyAuthority.ADMIN.name()));
-		} else {
-			auth.add(new SimpleGrantedAuthority(MyAuthority.EMP.name()));			
+			break;
+		//행정부장
+		case "COMA_2":
+			auth.add(new SimpleGrantedAuthority(MyAuthority.DIRECTOR1.name()));
+			break;
+		//교육부장
+		case "COMA_3":
+			auth.add(new SimpleGrantedAuthority(MyAuthority.DIRECTOR2.name()));
+			break;
+		//취업팀
+		case "COMA_4","COMA_5","COMA_6","COMA_7","COMA_8":
+			auth.add(new SimpleGrantedAuthority(MyAuthority.EMPTEAM.name()));
+			break;
+		//강사
+		case "COMA_10","COMA_11","COMA_12","COMA_13","COMA_14":
+			auth.add(new SimpleGrantedAuthority(MyAuthority.TEACHER.name()));
+			break;
+			
+		//기본등급 EMP
+		default:
+			auth.add(new SimpleGrantedAuthority(MyAuthority.EMP.name()));	
+			break;
 		}
 		
 		return auth;
@@ -96,15 +125,15 @@ public class Emp implements UserDetails, Serializable{
 		return true;
 	}
 
-	public Emp getPassword(PasswordEncoder encoder) {
-		this.empPw = encoder.encode(this.empPw);
-		return this;
-	}
+//	public Emp getPassword(PasswordEncoder encoder) {
+//		this.empPw = encoder.encode(this.empPw);
+//		return this;
+//	}
 
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return null;
+		return empPw;
 	}
 	
 }
