@@ -20,11 +20,11 @@ public class CustomErrorController implements ErrorController{
 		
     }
 
-	@GetMapping("/error-page/500")
-    public String errorPage500() {
-		return "errors/500"; 
-		
-    }
+//	@GetMapping("/error-page/500")
+//    public String errorPage500() {
+//		return "errors/500"; 
+//		
+//    }
 
 
 }
