@@ -11,13 +11,13 @@
 <c:set var="loginMember" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/> 
 <c:set var="post" value="${post }"/>
 
-<div class="container" style="margin-top:30px">
+<div class="container" style="">
 	<div class="row">
 		<div class="col-sm-12">
-	      <div class="table-title">
+	      <div class="col-9 table-wrapper">
 				<div class="row">
-					<div class="col-sm-6">
-						<h2>글수정</h2>
+					<div class="col-10">
+						<h1>글수정</h1>
 					</div>
 					
 				</div>
@@ -28,7 +28,7 @@
 				  <input type="text" class="form-control" id="title" name="title" value="${post.boardTitle }">
 				</div>
 	        	<div>
-	        		<input type="text" class="form-control" value="${loginMember.empName }" style="width:100px;" disabled="disabled">
+	        		<input type="hidden" class="form-control" value="${loginMember.empName }" style="width:100px;" disabled="disabled">
 	        		<input type="hidden" name="boardNo" value="${post.boardNo }" >
 	        	</div>
 				<br>
@@ -39,7 +39,7 @@
 				<textarea name="content" id="editor">${post.boardContent }</textarea>
 				
 				
-			    <button type="button" class="btn btn-primary" onclick="insertBoard();">글수정</button>
+			    <button type="button" class="btn btn-primary" onclick="insertBoard();" onclick="insertBoard();" style="float: right; width:120px; margin-top: 15px;">수정</button>
 			  </form>
 		</div>
 	</div>

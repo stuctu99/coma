@@ -50,7 +50,7 @@
                 <div class="custom-control custom-control-alternative custom-checkbox" style="margin-bottom: 14px;">
                 
                   <input class="custom-control-input remember-me" 
-                  name="remember_me" id=" customCheckLogin" type="checkbox">
+                  name="rememberck" id=" customCheckLogin" type="checkbox">
                   <label class="custom-control-label" for=" customCheckLogin">
                     <span class="text-muted" style="text-align: center">로그인 유지</span>
                   </label>
@@ -80,7 +80,7 @@
           </div>
           <div class="row mt-3" style="justify-content: center;">
             <div class="col-6" style="text-align: center;">
-              <a href="#" class="text-light"><small>계정에 문제가 생기셨나요?</small></a>
+              <a href="#" class="text-light" data-toggle="modal" data-target="#modal-default"><small>계정에 문제가 생기셨나요?</small></a>
             </div>
             <!-- <div class="col-6 text-right">
               <a href="#" class="text-light"><small>Create new account</small></a>
@@ -93,7 +93,37 @@
       <div class="container">
       </div>
     </footer>
-  </div> 
+  </div>
+  
+  <!-- modal -->
+  <div class="row">
+	  <div class="col-md-4">
+	     
+	      <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+		    <div class="modal-dialog modal- modal-dialog-centered modal-">
+		       	 <div class="modal-content">
+			        	
+			            <div class="modal-header">
+				                
+				                
+			            </div>
+			            
+		           		<div class="modal-body" id="take_line" style="align-self: center;">
+		           		 		<h2 class="modal-title" id="modal-title-default">관리자에게 문의하세요</h2>
+		           		</div>
+			            
+			            <div class="modal-footer" style="align-self: center;">
+			                <button type="button" onclick="line_end();"  data-dismiss="modal" aria-label="Close" class="btn btn-primary ml-auto">확인</button>
+			            </div>
+			            
+			        </div>
+			    </div>
+			</div>
+	    </div>
+	</div>	
+  
+  
+  
   <!--   Core   -->
   <script src="${pageContext.request.contextPath }/resource/js/plugins/jquery/dist/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath }/resource/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -102,25 +132,30 @@
   <script src="${pageContext.request.contextPath }/resource/js/argon-dashboard.min.js?v=1.1.2"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+  const path = '${pageContext.request.contextPath }';
+  
     window.TrackJS &&
       TrackJS.install({
         token: "ee6fab19c5a04ac1a32a645abde4613a",
         application: "argon-dashboard-free"
       });
     
-    /* 로그인유지 체크박스 데이터 */
-/*     const data = {
-            remember-2me: document.getElementById('customCheckLogin').checked,
-        }; */
+    //* * 로그인유지 체크박스 데이터 */
+   /*  const data = {
+            remember_me: document.getElementById('customCheckLogin').checked,
+        };
     
-   /*  fetch('/security', {
+        fetch(path+'/security', {
     	method: 'POST',
     	headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data), 
     })
-    .then(response => response.json());  */   
+    .then(response => response.json()); */
+    
+    
+        
   </script>
 </body>
 

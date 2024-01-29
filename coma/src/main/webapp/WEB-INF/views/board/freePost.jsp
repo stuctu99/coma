@@ -12,11 +12,12 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <c:set var="post" value="${post }"/>
 <c:set var="e" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+
 <div class="coma-container">
 			<div class="table-title">
 				<div class="row">
 					<div class="col-1"></div>
-					<div class="board-name col-10">
+					<div class="board-name col-5">
 						<c:choose>
 					      <c:when test="${post.boardType eq 0}">
 					          <a href="${path }/board/noticelist"><h1>공지사항</h1></a>
@@ -26,6 +27,12 @@
 					      </c:when>
 					  	</c:choose>
 					</div>
+						<c:if test="${post.emp.empId eq e.empId or fn:contains(e.authorities, 'ADMIN')}">	
+							<div>
+								<a href="${path }/board/updatePost?boardNo=${post.boardNo }" class="btn btn-primary"><span>글수정</span></a>
+								<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-primary"><span>글삭제</span></a>
+							</div>
+						</c:if>		
 					<div class="col-1"></div>
 				</div>
 			</div>
@@ -33,12 +40,6 @@
 				<div class="col-1"></div>
 				<div class="table col-10 post-details-flex justify-content-center align-items-center" style="text-align: center">
 		    	<table class="board_detail">
-					<%-- <colgroup>
-						<col width="20%"/>
-						<col width="35%"/>
-						<col width="15%"/>
-						<col width="35%"/>
-					</colgroup> --%>
 					<tbody>
 						<tr>
 							<th>글 번호</th>
@@ -107,15 +108,17 @@
 									
 						            <td>
 						            	<input type="hidden" class="replyNo" name="replyNo" value="${replys.replyNo }">
-						            	<button type="button" value="${replys.replyNo }" class="btn reply-re">답글</button>
-						            	<button type="button" class="btn reply-del">삭제</button>
+						            	<button type="button" value="${replys.replyNo }" class="btn btn-outline-primary reply-re">답글</button>
+						            	<c:if test="${replys.emp.empId eq e.empId }">
+						            	<button type="button" class="btn btn-outline-primary reply-del">삭제</button>
+						            	</c:if>
 						            </td>
 						        </tr>
 						        </c:when>
 						        
 						        <c:otherwise>
 						          <tr class="level2">
-						          	<td>ㄴ${replys.emp.empName}</td>
+						          	<td style="text-align: right;">ㄴ${replys.emp.empName}</td>
 						            <td>${replys.replyContent}</td>
 									<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
 									<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
@@ -172,20 +175,13 @@
 								     </c:otherwise>
 								 </c:choose>
 							</td>
-							<c:if test="${post.emp.empId eq e.empId or fn:contains(e.authorities, 'ADMIN')}">	
-							<td>
-								<a href="${path }/board/updatePost?boardNo=${post.boardNo }" class="btn btn-primary"><span>글수정</span></a>
-							</td>
-							<td>
-								<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-primary"><span>글삭제</span></a>
-							</td>
-							</c:if>		
 						</tr>	
 					</tbody>
 				</table>
 				
 			</div>
 			<div class="col-1"></div>
+</div>
 </div>
 
 <script>

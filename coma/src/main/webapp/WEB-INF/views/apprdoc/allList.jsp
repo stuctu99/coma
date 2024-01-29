@@ -125,7 +125,7 @@
 				        <span class="h2 font-weight-bold mb-0">${allCount }개</span>
 				    </div>
 				    <div class="col-auto">
-				      <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+				      <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
 				          <i class="ni ni-archive-2"></i>
 				      </div>
 				    </div>
@@ -146,7 +146,7 @@
 				        <span class="h2 font-weight-bold mb-0">${startCount }개</span>
 				    </div>
 				    <div class="col-auto">
-				      <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+				      <div class="icon icon-shape bg-green text-white rounded-circle shadow">
 				          <i class="ni ni-button-play"></i>
 				      </div>
 				    </div>
@@ -301,12 +301,15 @@
   	<div>${pageBar }</div>
   </div> 
 <script>
+
+const path = "${path}"
+
 //검색기능
 function getSearchList(){
 	console.log($("form[name=searchForm]"));
 	$.ajax({
 		type: 'POST',
-		url : "${path}/apprdoc/search",
+		url : path+"/apprdoc/search",
 		data : $("form[name=searchForm]").serialize(),
 		success : function(result){
 			$('.table > tbody').empty();
@@ -398,7 +401,7 @@ window.onload=()=>{
 	  	const empId = "${e.empId}";
 	  
 	    $.ajax({
-	        url: '${path}/apprdoc/filterAll',
+	        url: path+'/apprdoc/filterAll',
 	        type: 'POST',
 	        data: { filter: value,
 	            empId: empId},

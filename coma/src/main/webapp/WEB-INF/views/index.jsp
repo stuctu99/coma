@@ -586,22 +586,22 @@ function clockout1(){
 	        if(commuteClockin){
 	           if(commuteStarttime){
 	              if(commuteEndtime){
-	                 console.log('퇴근하기 버튼누르기전에 새로고침한 상태 ');
+	                 //console.log('퇴근하기 버튼누르기전에 새로고침한 상태 ');
 	                 now= (commuteStarttime-commuteClockin)+(new Date().getTime()-commuteEndtime) ; 
-	                 console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
+	                 //console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
 	              }else{
-	                 console.log('복귀하기 누르기전에 새로고침한 상태 ');                     
+	                 //console.log('복귀하기 누르기전에 새로고침한 상태 ');                     
 	                 now= (commuteStarttime-commuteClockin)+(new Date().getTime()-endtime) ; 
-	                 console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);                     
+	                 //console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);                     
 	              }
 	           }else{
 	              if(starttime){
-	                 console.log('출근 값은 DB -> 출근 버튼 누르고 새로고침한 상태 나머지 ajax 데이터가 있음 ');                  
+	                 //console.log('출근 값은 DB -> 출근 버튼 누르고 새로고침한 상태 나머지 ajax 데이터가 있음 ');                  
 	                 now= (starttime-commuteClockin)+(new Date().getTime()-endtime) ; 
-	                 console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
+	                 //console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
 	              }else{
 	                 //외출안하고 퇴근하는 사람 
-	                 console.log('출근은 했는데 새로고침하고 외출안하고 퇴근하는 사람 ')
+	                 //console.log('출근은 했는데 새로고침하고 외출안하고 퇴근하는 사람 ')
 	                 now= new Date().getTime()-commuteClockin;
 	              }
 	           }
@@ -609,14 +609,14 @@ function clockout1(){
 	        }else{
 	           //새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 
 	           if(starttime){
-	              console.log('새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 ');
+	              //console.log('새로고침 한번도 안하고 모든 데이터가 ajax로 값을 구하는 것 ');
 	              now= (starttime-clockIn)+(new Date().getTime()-endtime) ;   
-	              console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
+	              //console.log('퇴근 시작 !!!!!!!!!!!!!!!!!!!!'+now);
 	           }else{
 	              //출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근 
-	              console.log ('출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근' );
+	              //console.log ('출근하고 외출안한상태에서 한번도 새로고침안하고 퇴근' );
 	              now= (new Date().getTime())-clockIn;
-	              console.log (now );
+	              //console.log (now );
 	           }
 	        }
 	        console.log('최종으로 근무시간을 찍어볼게요 ! '+formatTime(now));

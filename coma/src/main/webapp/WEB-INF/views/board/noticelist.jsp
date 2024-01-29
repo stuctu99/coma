@@ -12,55 +12,79 @@
 <link href="${path }/resource/css/board/board.css" rel="stylesheet">
 <c:set var="board" value="${boards}"/>
 <c:set var="emp" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal }"/>
+<style>
+    .search-container {
+        display: flex;
+        align-items: center;
+         min-height: 38px;
+    }
+
+    .search-container select,
+    .search-container input {
+        margin-right: 10px;
+    }
+    
+    .board-check {
+    	width: 100px !important;
+    }
+    .board-date {
+    	width: 100px !important;
+    }
+    
+    .board-title {
+    	width: 1200px !important;
+    }
+</style>
+
+
 <div class="coma-container">
-<div class="container-xl">
-	<div class="table-responsive">
-		<div class="table-wrapper">
-			<div class="table-title">
-				<div class="row">
-					<div class="col-sm-6">
-						<a href="${path }"><h2>공지사항</h2></a>
+				<div class="row" style="display: flex;">
+					<div class="col-1"></div>
+				<div class="table-wrapper col-8">
+						<a href="${path }/board/noticelist"><h1>공지사항</h1></a>
+				</div>
+				<div class="col-2" style="align-self: center; display: flex; justify-content: right;">
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-							<div class="col-sm-6" style="text-align: right;">
 						      <a href="${path }/board/writeView?boardType=0" class="btn btn-primary"><span>공지작성</span></a>   
 						      <button onclick="deleteSelected()" class="btn btn-primary">공지삭제</button>   
-						  	</div>
 						</c:if>
-					</div>
 				</div>
-			</div>
-			<table class="table table-hover">
+						
+				<div class="col-1"></div>
+				</div>
+		<div class="row">
+			<div class="col-1"></div>
+			<table class="table table-hover col-10">
 				<thead>
 					<tr>
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-						<th>
+						<th class="board-check">
 							<span class="custom-checkbox">
 								<input type="checkbox" id="selectAll" onclick="allChecked()">
 								<label for="selectAll"></label>
 							</span>
 						</th>
 						</c:if>
-						<th>작성일</th>
-						<th>제목</th>
-						<th>조회수</th>
+						<th class="board-date">작성일</th>
+						<th class="board-title">제목</th>
+						<!-- <th>조회수</th> -->
 					</tr>
 				</thead>
 				<tbody>
    					<c:forEach var="boards" items="${notices}">
 					<tr>
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-						<td>
+						<td class="board-check">
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="${boards.boardNo }" onclick="boxClicked()">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
 						</c:if>
-						
 						<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
 						<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
 						<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
-						<td>
+						<td class="board-date">
 				          <%--   <%=java.time.ChronoUnit.HOURS.between(java.time.LocalDate.now(),
 				            		pageContext.getAttribute("boards"))%> --%>
 							<c:choose>
@@ -84,45 +108,62 @@
 				            </c:choose>
 						</td>
 						
-	   					<td><a href="${path }/board/freePost?boardNo=${boards.boardNo }">
+	   					<td class="board-title"><a href="${path }/board/freePost?boardNo=${boards.boardNo }">
 	   						${boards.boardTitle }</a></td>
-	   					<td>${boards.boardReadCount }</td>
+	   					<%-- <td>${boards.boardReadCount }</td> --%>
 					</tr>				
 					</c:forEach>
 				</tbody>
 			</table>
+			<div class="col-1"></div>
+			</div>
 			
 			
 			
-				<div class="search-container">
-				    <form name="searchForm" autocomplete="off">
+				<div class="row">
+				<div class="col-1"></div>
+					<div class="col-10">
+				    <form name="searchForm" autocomplete="off" style="display: flex; justify-content: center; height: 29px; margin-bottom: 15px;">
 					    <select class="se" id="category" name="search-type">
 					        <option value="search-title">제목</option>
 					        <option value="search-content">내용</option>
 					    </select>
 					    <input type="hidden" name="boardType" value="${board.boardType }">
-					    <input class="se" type="text" name="search-keyword" id="searchInput">
-					    <button type="button" class="se btn btn-primary" onclick="getSearchList()">
+					    <input class="se" type="text" name="search-keyword" id="searchInput" style="width:390px;">
+					    <button type="button" class="se btn btn-primary" onclick="getSearchList()" style="border-radius: 0;">
 					   		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 							</svg>
 					    </button>
 				    </form>
-					<%-- <div class="wrtie" style="text-align: right;">
-						<a href="${path }/board/writeView?boardType=1" class="btn btn-success"><span>글쓰기</span></a>	
-					</div> --%>
+				    </div>
+				<div class="col-1"></div>
 				</div>
 				
-			 	 <div>
+			 	 <div class="row">
+			 	 <div class="col-1"></div>
+			 	 <div class="col-10" style="display: flex; justify-content: center;">
 			      ${pageBarNotice }
+			 	 </div>
+			      <div class="col-1"></div>
 			  	</div>
 	</div>        
-</div>
-</div>
-</div>
 
 
 <script>
+//페이지 로딩 시 체크박스 초기화
+window.onbeforeunload = function (event) {
+	  var checkboxes = document.getElementsByName('options[]');
+	  for (var i = 0; i < checkboxes.length; i++) {
+	    checkboxes[i].checked = false;
+	  }
+	  
+	  var selectAllCheckbox = document.getElementById('selectAll');
+	  if (selectAllCheckbox) {
+	    selectAllCheckbox.checked = false;
+	  }
+	};
+	
 	
 	//관리자(COMA_1) 체크박스 글삭제
 	function allChecked() {
