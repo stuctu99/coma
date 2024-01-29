@@ -222,14 +222,14 @@
  
  <form action="${path }/approval/approve" id="approve" method="post">
  	<input type="hidden" name="docNo" value="${ doc.docNo }">
- 	<input type="hidden" name="empId" value="${doc.empId }">
+ 	<input type="hidden" name="empId" value="${loginMember.empId }">
  	<input type="hidden" name="thisOrder" id="thisOrder">
  	<input type="hidden" name="nextOrder" id="nextOrder">
  	<input type="hidden" name="docType" value="${doc.docType }">
  </form>
  <form action="${path }/approval/reject" id="reject" method="post">
 	<input type="hidden" name="docNo" value="${ doc.docNo }">
- 	<input type="hidden" name="empId" value="${doc.empId }">
+ 	<input type="hidden" name="empId" value="${loginMember.empId }">
  	<input type="hidden" name="thisOrder" id="thisOrder">
  </form>
  

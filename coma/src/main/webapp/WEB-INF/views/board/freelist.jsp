@@ -39,16 +39,18 @@
 				</div>
 			</div>
 			<!-- 관리자 글삭제 -->
-				<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-					<div class="col-1" style="align-self: center;">
-				      <button onclick="deleteSelected()" class="btn btn-outline-primary">게시글삭제</button>   
-				  	</div>
-				</c:if>
-			<div class="col-1 wrtie" style="text-align: right; align-self: center;">
-						<a href="${path }/board/writeView?boardType=1" class="btn btn-primary" ><span>글쓰기</span></a>	
-			</div>	
+				<div class="col-2" style="text-align: right; align-self: center; display: flex; justify-content: right;">
+					<div class="wrtie">
+						<a href="${path }/board/writeView?boardType=1" class="btn btn-primary" style="margin-right: 10px;" ><span>글쓰기</span></a>	
+					</div>
+					<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
+						<div class="" style="">
+					      <button onclick="deleteSelected()" class="btn btn-outline-primary">게시글삭제</button>   
+					  	</div>
+					</c:if>
+				</div>
 			<div class="col-1"></div>
-			</div>
+	</div>
 			
 			<div class="row">
 			<div class="col-1"></div>
