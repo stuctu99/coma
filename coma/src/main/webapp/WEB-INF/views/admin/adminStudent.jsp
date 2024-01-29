@@ -189,7 +189,7 @@ const myChart = new Chart(ctx, {
   data: {
       labels: labelList,
       datasets: [{
-      	 label: '사원 근태 통계',
+      	 label: '학생 출결 통계',
            data: valueList,
           backgroundColor: colorList
       }]
