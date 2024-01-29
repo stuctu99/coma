@@ -52,7 +52,8 @@ public class SecurityConfing {
 				.exceptionHandling(exceptionHandlingConfigurer ->
                 exceptionHandlingConfigurer
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    response.sendRedirect("/WEB-INF/views/error-page/403");
+                    response.sendRedirect(request.getContextPath()+"/error-page/403");
+//                	response.sendRedirect(request.getContextPath()+"/errors/403");
                 }))
 				.logout(logout->logout.logoutUrl("/logout"))
 				.authenticationProvider(dbpv)
