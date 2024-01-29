@@ -196,7 +196,7 @@ public class CommuteController {
 
 	    
 		//월요일부터 금요일까지 아침 9시에 insert
-		@Scheduled(cron = "0 0 9 * * 1-5")
+		@Scheduled(cron = "0 0 7 * * 1-5")
 		//@GetMapping("/checkInsert") 
 		public void checkInsert() {
 			List <Map> empIds = empService.selectEmpId();
