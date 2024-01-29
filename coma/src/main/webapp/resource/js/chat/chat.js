@@ -56,7 +56,7 @@ mserver.onmessage = (response) => {
 			//채팅방 초대
 			setTimeout(()=>{
 				inviteAlarm(respMsg);				
-			},1500);
+			},1000);
 			break;
 
 	}

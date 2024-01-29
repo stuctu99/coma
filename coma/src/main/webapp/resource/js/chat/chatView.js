@@ -38,6 +38,10 @@ $("#back").click(function() {
 
 })
 
+window.onbeforeunload = () =>{
+	$("#back").click();
+}
+
 const connectUpdate = (roomNo, empId) => {
 	fetch(path + "/chatting/back", {
 		method: "delete",
