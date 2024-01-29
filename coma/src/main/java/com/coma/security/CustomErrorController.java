@@ -10,19 +10,19 @@ import jakarta.servlet.http.HttpServletRequest;
 public class CustomErrorController implements ErrorController{
 	
 	@GetMapping("/error-page/403")
-	public String errorPage403(HttpServletRequest request){
-		return request.getContextPath()+"errors/403"; 
+	public String errorPage403(){
+		return "errors/403"; 
 	}
 	
 	@GetMapping("/error-page/404")
-    public String errorPage404(HttpServletRequest request) {
-		return request.getContextPath()+"errors/404"; 
+    public String errorPage404() {
+		return "errors/404"; 
 		
     }
 
 	@GetMapping("/error-page/500")
-    public String errorPage500(HttpServletRequest request) {
-		return request.getContextPath()+"errors/500"; 
+    public String errorPage500() {
+		return "errors/500"; 
 		
     }
 
