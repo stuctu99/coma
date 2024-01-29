@@ -162,6 +162,9 @@ margin: 20px auto;
  .fc-event-main-frame>.fc-event-time{
  	font-size: 1rem;
  }
+ html{
+    overflow-x: hidden;
+}
     </style>
 </head>
 
@@ -275,16 +278,8 @@ margin: 20px auto;
 		function validateDateTime() {
 		    var start = new Date(calStart.value);
 		    var end = new Date(calEnd.value);
-
-		    if(start.getHours() < 8) {
-		        alert('시작 시간은 오전 8시 이후로 설정해야 합니다.');
-		        start.setHours(8, 0, 0, 0);
-		        calStart.value = formatDate(start);
-		    } else if (end.getHours() > 18) {
-		        alert('종료 시간은 오후 10시 이전으로 설정해야 합니다.');
-		        end.setHours(10, 0, 0, 0);
-		        calEnd.value = formatDate(end);
-		    } else if(start >= end) {
+			
+		     if(start >= end) {
 		        alert('시작 시간은 종료 시간보다 이전이어야 합니다.');
 		        start.setHours(9, 0, 0, 0);
 		        end.setHours(18, 0, 0, 0);

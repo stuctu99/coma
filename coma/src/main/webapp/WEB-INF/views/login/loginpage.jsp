@@ -21,6 +21,9 @@
   <link href="${pageContext.request.contextPath }/resource/assets/test.css"/>
 </head>
 <style>
+body{
+ overflow: hidden;
+ }
 </style>
 <body class="bg-gradient-primary">
   <div class="main-content">
@@ -103,13 +106,14 @@
 		    <div class="modal-dialog modal- modal-dialog-centered modal-">
 		       	 <div class="modal-content">
 			        	
-			            <div class="modal-header">
-				                
-				                
+			            <div class="modal-header" style="align-self: center;">
+				             <h2 class="modal-title" id="modal-title-default">관리자에게 문의하세요</h2> 
 			            </div>
 			            
 		           		<div class="modal-body" id="take_line" style="align-self: center;">
-		           		 		<h2 class="modal-title" id="modal-title-default">관리자에게 문의하세요</h2>
+		           		
+		           		 		<h2>행정과 김구디</h2>
+		           		 		<h4>&nbsp;&nbsp;&nbsp;02)900-7272</h4>
 		           		</div>
 			            
 			            <div class="modal-footer" style="align-self: center;">

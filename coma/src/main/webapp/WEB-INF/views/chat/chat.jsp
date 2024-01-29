@@ -282,7 +282,7 @@ div {
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
+						<button id="passwordReset" type="button" class="btn btn-secondary"
 							data-dismiss="modal">돌아가기</button>
 						<button type="button" class="btn btn-primary" id="password-check"
 							onclick="passwordCheck();">입장</button>
