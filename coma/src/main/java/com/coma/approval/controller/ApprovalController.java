@@ -515,7 +515,7 @@ public class ApprovalController {
    //---------------------------- 결재 승인 -------------------------------------
    
    @PostMapping("/reject")
-   public String reject(String docNo, String thisOrder, Model model, String empId) { //empId = 문서 기안자
+   public String reject(String docNo, String thisOrder, Model model, String empId) { //empId = 로그인 아이디
 	  
 	   Map<String, String> data = new HashMap<String, String>();
 	   data.put("docNo", docNo);
