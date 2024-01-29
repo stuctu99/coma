@@ -193,7 +193,7 @@
 		    </button>
 		    
 		    <div class="dropdown-content">
-		      <div class="mydoc" onclick="showMenu('모든 문서') getData('모든');">모든 문서</div>	
+		      <div class="mydoc" onclick="showMenu('모든 문서'); getData('모든');">모든 문서</div>	
 		      <div class="mydoc" onclick="showMenu('참조 문서'); getData('참조');">참조 문서</div>
 		      <div class="mydoc" onclick="showMenu('결재할 문서'); getData('결재');">결재할 문서</div>
 		      <div class="mydoc" onclick="showMenu('작성한 문서'); getData('작성');">작성한 문서</div>

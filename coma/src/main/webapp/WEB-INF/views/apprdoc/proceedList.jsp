@@ -201,7 +201,7 @@ font-family: 'Noto Sans KR', sans-serif;
 		    </button>
 		    
 		    <div class="dropdown-content">
-		      <div class="mydoc" onclick="showMenu('모든 문서') getData('모든');">모든 문서</div>	
+		      <div class="mydoc" onclick="showMenu('모든 문서'); getData('모든');">모든 문서</div>	
 		      <div class="mydoc" onclick="showMenu('참조 문서'); getData('참조');">참조 문서</div>
 		      <div class="mydoc" onclick="showMenu('결재할 문서'); getData('결재');">결재할 문서</div>
 		      <div class="mydoc" onclick="showMenu('작성한 문서'); getData('작성');">작성한 문서</div>
@@ -431,7 +431,7 @@ window.onload=()=>{
                             break;
                     	}
 	                    
-	                    str += `<td class='title'><a href= path+'/approval/viewdoc?docNo=`+filterdoc.docNo+`'>`+filterdoc.docTitle+`</a></td>`;
+	                    str+="<td class='doc-title'><a href = '/approval/viewdoc?docNo=" + filterdoc.docNo + "'>" + filterdoc.docTitle + "</a></td>";
 	                    str += `<td class='writer'>`+filterdoc.emp.empName+`</td>`;
 	                    str += `<td class='date'>`+writeDate.getFullYear()+"-"+writeDate.getMonth()+1+"-"+writeDate.getDate()+`</td>`;
 	                    str += `<td class='read'>`+filterdoc.docProgress+`</td>`;

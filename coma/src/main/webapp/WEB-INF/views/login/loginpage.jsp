@@ -106,13 +106,13 @@ body{
 		    <div class="modal-dialog modal- modal-dialog-centered modal-">
 		       	 <div class="modal-content">
 			        	
-			            <div class="modal-header">
-				                
-				                
+			            <div class="modal-header" style="align-self: center;">
+				             <h2 class="modal-title" id="modal-title-default">관리자에게 문의하세요</h2> 
 			            </div>
 			            
 		           		<div class="modal-body" id="take_line" style="align-self: center;">
-		           		 		<h2 class="modal-title" id="modal-title-default">관리자에게 문의하세요</h2>
+		           		
+		           		 		<h2>행정과 김구디</h2>
 		           		</div>
 			            
 			            <div class="modal-footer" style="align-self: center;">
