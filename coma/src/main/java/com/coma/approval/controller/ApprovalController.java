@@ -539,10 +539,11 @@ public class ApprovalController {
  
    
    @PostMapping("/approve")
-   public String approve(String docNo, String thisOrder, String nextOrder, Model model, String docType, String empId) {
+   public String approve(String docNo, String thisOrder, String nextOrder, Model model, 
+		   String docType, String empId) {
 	   //empId = 문서 기안자
-	   
-		   Map<String, String> data = new HashMap<String, String>();
+	 
+	   	Map<String, String> data = new HashMap<String, String>();
 			
 		   data.put("docNo", docNo);
 		   data.put("thisOrder", thisOrder);
