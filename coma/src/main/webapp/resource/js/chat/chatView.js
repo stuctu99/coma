@@ -24,7 +24,6 @@ $("#exit-btn").click(function() {
 					if (nowPage == 'emp-list-btn') {
 						opener.location.reload();
 					}
-					/*$(opener.document).find("."+empId).removeClass("btn-primary").addClass("btn-outline-primary").text('대화').attr("onclick", "privateChatting('" + msg.empId + "','" + loginId + "');");*/
 				} else {
 					alert("관리자에게 문의하세요!");
 				}
@@ -35,10 +34,13 @@ $("#exit-btn").click(function() {
 $("#back").click(function() {
 	const roomNo = $("#roomNo").val();
 	const empId = loginId;
-	/*$connect.css("color","black");*/
 	connectUpdate(roomNo, empId);
 
 })
+
+window.onbeforeunload = () =>{
+	$("#back").click();
+}
 
 const connectUpdate = (roomNo, empId) => {
 	fetch(path + "/chatting/back", {
@@ -89,8 +91,10 @@ server.onopen = () => {
 }
 
 server.onclose = () => {
-	const msg = new Message("rest", "", "", "", loginId, roomNo);
-	server.send(msg.convert());
+	if(server.readyState === WebSocket.CLOSED){
+		const msg = new Message("rest", "", "", "", loginId, roomNo);
+		server.send(msg.convert());
+	}
 }
 
 server.onmessage = (response) => {
@@ -117,12 +121,23 @@ const messagePrint = (msg) => {
 	const content = document.createElement("span");
 	const timeDiv = document.createElement("div");
 	const timeTag = document.createElement("small");
-
+	const $profile_img = $("<img>");
+	fetch(path+"/chatting/"+msg.empId)
+	.then(response=>{
+		if(response.status!=200){
+			alert("잘못된접근!");
+		}
+		return response.json();
+	})
+	.then(data=>{
+		$profile_img.attr("id","sender-profile").attr("src", path + "/resource/upload/profile/" + data.empPhoto);
+		
+	})
+	console.log($profile_img[0]);
 	div.classList.add("row"); //메세지 라인 컨테이너
 	timeDiv.classList.add("time-container"); //전송 시간 컨테이너
 	//메세지 전송 시간 출력
 	timeTag.innerText = ("0" + new Date(msg.chatCreateDate).getHours()).slice(-2) + ":" + ("0" + new Date(msg.chatCreateDate).getMinutes()).slice(-2) + "  ";
-	/*timTag.innerText = (new Date(msg.chatCreateDate).getHours());*/
 	timeDiv.appendChild(timeTag);
 
 	//메세지 컨테이너
@@ -140,9 +155,10 @@ const messagePrint = (msg) => {
 		div.appendChild(timeDiv);
 		div.appendChild(msgDiv);
 	} else {
-		//이외 receiver
+		//이외
 		nameDiv.classList.add("row", "other");
 		nameSpan.innerText = msg.empObj.empName + " " + msg.empObj.job.jobType;
+		nameDiv.append($profile_img[0]);
 		nameDiv.appendChild(nameSpan);
 		div.classList.add("other");
 		/*div.appendChild(nameDiv);*/
@@ -248,6 +264,9 @@ window.onload = () => {
 	})
 }
 
+window.onbeforeunload = () =>{
+	
+}
 class Message {
 	/*constructor(type = "", sender = "", receiver = "", msg = "", room = "", time) {
 	   this.type = type;
@@ -492,6 +511,3 @@ function NotReload(e) {
 document.onkeydown = NotReload;
 
 
-function test (){
-	alert("삭제!!!");
-}

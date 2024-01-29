@@ -33,12 +33,12 @@
 }
 
 .doc-writer{
-	width: 100px;
+	width: 90px;
 	text-align: center !important;
 }
 
 .doc-date{
-	width: 140px;
+	width: 100px;
 	text-align: center !important;
 }
 
@@ -70,7 +70,7 @@
   background-color: #fcfcfc;
   width: 110px;
   border-radius: 8px;
-  height : 167px;
+  height : 207px;
   overflow : hidden;
   box-shadow: 0px 0px 10px 3px rgba(190, 190, 190, 0.6);
 }
@@ -202,11 +202,11 @@
 		    </button>
 		    
 		    <div class="dropdown-content">
-		      <div class="mydoc" onclick="showMenu('모든 문서') getData('모든');">모든 문서</div>	
+		      <div class="mydoc" onclick="showMenu('모든 문서'); getData('모든');">모든 문서</div>	
 		      <div class="mydoc" onclick="showMenu('휴가신청서'); getData('휴가');">휴가신청서</div>
 		      <div class="mydoc" onclick="showMenu('지출결의서'); getData('지출');">지출결의서</div>
 		      <div class="mydoc" onclick="showMenu('품의서'); getData('품의');">품의서</div>
-		      <div class="mydoc" onclick="showMenu('기타'); getData('기타');">기타</div>
+		      <div class="mydoc" onclick="showMenu('기타 문서'); getData('기타');">기타 문서</div>
 		    </div>
 		  </div>
       
@@ -245,7 +245,7 @@
                 &nbsp;기안자
               </th>
               <th class="doc-date">
-                &nbsp;&nbsp; 기안일
+                기안일
               </th>
               <th class="doc-pg">
                 상태

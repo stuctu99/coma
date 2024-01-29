@@ -72,7 +72,7 @@ div {
 			</div>
 			<hr style="margin: 2px 0;">
 			<div class="row">
-				<div class="col-1" style="padding-top: 6px;" >
+				<div class="col-1" style="padding-top: 6px;">
 					<button id="back" style="transform: rotate(180deg);">&#10132</button>
 				</div>
 				<div class="col-10">
@@ -118,6 +118,8 @@ div {
 					</c:if>
 					<c:if test="${msg.empId != loginmember.empId }">
 						<div class="row other">
+							<img id="sender-profile"
+								src="${path }/resource/upload/profile/${msg.empObj.empPhoto}">
 							<span>${msg.empObj.empName } ${msg.empObj.job.jobType }</span>
 						</div>
 						<div class="row other">
@@ -133,6 +135,29 @@ div {
 				</c:forEach>
 			</c:if>
 		</div>
+		<!-- profile Modal  -->
+		<!-- 프로필 클릭 시 해당 사원의 프로필 정보보기  -->
+		<!-- <div class="modal fade" id="profile_modal" tabindex="-1" role="dialog"
+			aria-labelledby="profile_modal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="profile_modal_title">Modal title</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save
+							changes</button>
+					</div>
+				</div>
+			</div>
+		</div> -->
 
 		<!-- invite Modal  -->
 		<div class="modal fade" id="invite-modal" tabindex="-1" role="dialog"
@@ -261,6 +286,7 @@ div {
 
 	const loginId = "${loginmember.empId}";
 	const empName = "${loginmember.empName}";
+	const loginMemberProfile = "${loginmember.empPhoto}";
 	const path = '${path}';
 </script>
 <script src="${path }/resource/js/chat/chatView.js"></script>

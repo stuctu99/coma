@@ -33,9 +33,9 @@ public class SecurityConfing {
 					//학생관리 페이지 COMA_1(원장), COMA_3(교육부장)
 					.requestMatchers(antMatcher("/admin/adminStudent")).hasAnyAuthority(MyAuthority.ADMIN.name(),MyAuthority.DIRECTOR2.name())
 					//학생 출결 COMA_10~14(강사)
-					.requestMatchers(antMatcher("/student/student")).hasAnyAuthority(MyAuthority.ADMIN.name(),MyAuthority.TEACHER.name())
+					.requestMatchers(antMatcher("/student/student")).hasAnyAuthority(MyAuthority.TEACHER.name())
 					//학생 취업 COMA_4~8(취업)
-					.requestMatchers(antMatcher("/student/studentEmp")).hasAnyAuthority(MyAuthority.ADMIN.name(),MyAuthority.EMPTEAM.name())
+					.requestMatchers(antMatcher("/student/studentEmp")).hasAnyAuthority(MyAuthority.EMPTEAM.name())
 					.anyRequest().authenticated();
 					
 				})	
@@ -52,7 +52,8 @@ public class SecurityConfing {
 				.exceptionHandling(exceptionHandlingConfigurer ->
                 exceptionHandlingConfigurer
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    response.sendRedirect("/error-page/403");
+                    response.sendRedirect(request.getContextPath()+"/error-page/403");
+//                	response.sendRedirect(request.getContextPath()+"/errors/403");
                 }))
 				.logout(logout->logout.logoutUrl("/logout"))
 				.authenticationProvider(dbpv)

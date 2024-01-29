@@ -25,10 +25,10 @@
     }
     
     .board-check {
-    	width: 100px !important;
+    	width: 54px !important;
     }
     .board-date {
-    	width: 100px !important;
+    	width: 109px !important;
     }
     
     .board-title {
@@ -43,12 +43,13 @@
 				<div class="table-wrapper col-8">
 						<a href="${path }/board/noticelist"><h1>공지사항</h1></a>
 				</div>
-				<div class="col-2" style="align-self: center; display: flex">
+				<div class="col-2" style="align-self: center; display: flex; justify-content: right;">
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
 						      <a href="${path }/board/writeView?boardType=0" class="btn btn-primary"><span>공지작성</span></a>   
-						      <button onclick="deleteSelected()" class="btn btn-primary">공지삭제</button>   
+						      <button onclick="deleteSelected()" class="btn btn-outline-primary">공지삭제</button>   
 						</c:if>
-				</div>		
+				</div>
+						
 				<div class="col-1"></div>
 				</div>
 		<div class="row">
@@ -64,8 +65,8 @@
 							</span>
 						</th>
 						</c:if>
-						<th class="board-date">작성일</th>
-						<th class="board-title">제목</th>
+						<th class="board-date" style="font-size: 16px;">작성일</th>
+						<th class="board-title" style="font-size: 16px;">제목</th>
 						<!-- <th>조회수</th> -->
 					</tr>
 				</thead>
@@ -73,18 +74,17 @@
    					<c:forEach var="boards" items="${notices}">
 					<tr>
 						<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-						<td class="board-check">
+						<td class="board-check" style="height:78px;">
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="${boards.boardNo }" onclick="boxClicked()">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
 						</c:if>
-						
 						<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
 						<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
 						<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
-						<td class="board-date">
+						<td class="board-date" style="font-size: 16px; height:78px;">
 				          <%--   <%=java.time.ChronoUnit.HOURS.between(java.time.LocalDate.now(),
 				            		pageContext.getAttribute("boards"))%> --%>
 							<c:choose>
@@ -108,7 +108,7 @@
 				            </c:choose>
 						</td>
 						
-	   					<td class="board-title"><a href="${path }/board/freePost?boardNo=${boards.boardNo }">
+	   					<td class="board-title" style="font-size: 16px;"><a href="${path }/board/freePost?boardNo=${boards.boardNo }">
 	   						${boards.boardTitle }</a></td>
 	   					<%-- <td>${boards.boardReadCount }</td> --%>
 					</tr>				
@@ -123,14 +123,14 @@
 				<div class="row">
 				<div class="col-1"></div>
 					<div class="col-10">
-				    <form name="searchForm" autocomplete="off">
+				    <form name="searchForm" autocomplete="off" style="display: flex; justify-content: center; height: 29px; margin-bottom: 15px;">
 					    <select class="se" id="category" name="search-type">
 					        <option value="search-title">제목</option>
 					        <option value="search-content">내용</option>
 					    </select>
 					    <input type="hidden" name="boardType" value="${board.boardType }">
-					    <input class="se" type="text" name="search-keyword" id="searchInput">
-					    <button type="button" class="se btn btn-primary" onclick="getSearchList()">
+					    <input class="se" type="text" name="search-keyword" id="searchInput" style="width:390px; border: 1px solid #e9ecef !important;">
+					    <button type="button" class="se btn btn-primary" onclick="getSearchList()" style="border-radius: 0; line-height: 0.25px;">
 					   		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 							</svg>
@@ -142,7 +142,7 @@
 				
 			 	 <div class="row">
 			 	 <div class="col-1"></div>
-			 	 <div class="col-10" style="text-align: center">
+			 	 <div class="col-10" style="display: flex; justify-content: center;">
 			      ${pageBarNotice }
 			 	 </div>
 			      <div class="col-1"></div>

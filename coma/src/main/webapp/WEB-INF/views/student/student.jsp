@@ -87,8 +87,8 @@
 		    	<div class="col-1"></div>
 		    	<div class="col-5"></div>
 		    	<div class="col-6" style="display: flex; justify-content: flex-end;">
+		    		<button type="reset" class="btn btn-default btn-sm" style="margin-right:36px;">선택 취소</button>
 					<button type="submit" class="btn btn-primary btn-sm">입력 완료</button>
-		    		<button type="reset" class="btn btn-secondary btn-sm" style="margin-right:36px;">선택 취소</button>
 		    	</div>
 		    </div>
 		    </form>
