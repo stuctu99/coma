@@ -34,11 +34,11 @@
 }
 
 .doc-date{
-	width: 140px;
+	width: 100px;
 }
 
 .doc-end{
-	width: 140px;
+	width: 100px;
 }
 
 .doc-pg{
@@ -193,7 +193,7 @@
 		    </button>
 		    
 		    <div class="dropdown-content">
-		      <div class="mydoc" onclick="showMenu('모든 문서') getData('모든');">모든 문서</div>	
+		      <div class="mydoc" onclick="showMenu('모든 문서'); getData('모든');">모든 문서</div>	
 		      <div class="mydoc" onclick="showMenu('참조 문서'); getData('참조');">참조 문서</div>
 		      <div class="mydoc" onclick="showMenu('결재할 문서'); getData('결재');">결재할 문서</div>
 		      <div class="mydoc" onclick="showMenu('작성한 문서'); getData('작성');">작성한 문서</div>
@@ -235,10 +235,10 @@
                 &nbsp;기안자
               </th>
               <th class="doc-date">
-                &nbsp;&nbsp; 기안일
+                &nbsp;기안일
               </th>
               <th class="doc-end">
-                &nbsp;&nbsp;&nbsp; 완료일
+                &nbsp;완료일
               </th>
               <th class="doc-pg">
                 상태
@@ -267,8 +267,30 @@
                             </td>
 			         		<td><a href="${path }/approval/viewdoc?docNo=${docs.docNo }">${docs.docTitle }</a></td>
 			         		<td>${docs.emp.empName }</td>
-			         		<td><fmt:formatDate value="${docs.docDate}" pattern="YYYY-MM-dd" /></td>
-			         		<td><fmt:formatDate value="${docs.docEndDate}" pattern="YYYY-MM-dd" /></td>
+			         		 <!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
+						<td class="doc-date">
+							<c:choose>
+				                <c:when test="${docs.docDate.year == 124}">
+				                    <fmt:formatDate value="${docs.docDate}" pattern="MM-dd" />
+				                </c:when>
+				                <c:otherwise>
+				                    <fmt:formatDate value="${docs.docDate}" pattern="yyyy-MM-dd" />
+				                </c:otherwise>
+				            </c:choose>
+				            
+						</td>
+			         	 <!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
+						<td class="doc-end">
+							<c:choose>
+				                <c:when test="${docs.docEndDate.year == 124}">
+				                    <fmt:formatDate value="${docs.docEndDate}" pattern="MM-dd" />
+				                </c:when>
+				                <c:otherwise>
+				                    <fmt:formatDate value="${docs.docEndDate}" pattern="yyyy-MM-dd" />
+				                </c:otherwise>
+				            </c:choose>
+				            
+						</td>
 		         			<td>${docs.docProgress }</td>
 		        		</tr>
 	       		</c:forEach>

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
+import com.coma.apprdoc.controller.ApprdocInterceptor;
 import com.coma.chatting.common.ChattingRoomInterceptor;
 import com.coma.model.dto.Emp;
 
@@ -38,11 +39,11 @@ public class WebMVCConfigration implements WebMvcConfigurer{
 //		registry.addViewController("/docList").setViewName("apprdoc/docList");
 		
 	}
-	
-	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(chattingRoomInterceptor).addPathPatterns("/chatting/room/*");
+		registry.addInterceptor(new ApprdocInterceptor())
+        .addPathPatterns("/apprdoc/allList/**");
 	}
 
 	

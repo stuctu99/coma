@@ -39,16 +39,18 @@
 				</div>
 			</div>
 			<!-- 관리자 글삭제 -->
-				<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
-					<div class="col-1" style="align-self: center;">
-				      <button onclick="deleteSelected()" class="btn btn-outline-primary">게시글삭제</button>   
-				  	</div>
-				</c:if>
-			<div class="col-1 wrtie" style="text-align: right; align-self: center;">
-						<a href="${path }/board/writeView?boardType=1" class="btn btn-primary" ><span>글쓰기</span></a>	
-			</div>	
+				<div class="col-2" style="text-align: right; align-self: center; display: flex; justify-content: right;">
+					<div class="wrtie">
+						<a href="${path }/board/writeView?boardType=1" class="btn btn-primary" style="margin-right: 10px;" ><span>글쓰기</span></a>	
+					</div>
+					<c:if test="${fn:contains(emp.authorities, 'ADMIN')}">
+						<div class="" style="">
+					      <button onclick="deleteSelected()" class="btn btn-outline-primary">게시글삭제</button>   
+					  	</div>
+					</c:if>
+				</div>
 			<div class="col-1"></div>
-			</div>
+	</div>
 			
 			<div class="row">
 			<div class="col-1"></div>
@@ -153,8 +155,8 @@
 							        <option value="search-writer">작성자</option>
 							    </select>
 							    <input type="hidden" name="boardType" value="${type }">
-							    <input class="se" type="text" name="search-keyword" id="searchInput" style="width:390px;">
-							    <button type="button" class="btn btn-primary" onclick="getSearchList()" style="border-radius: 0;">
+							    <input class="se" type="text" name="search-keyword" id="searchInput" style="width:390px; border: 1px solid #e9ecef !important;">
+							    <button type="button" class="btn btn-primary" onclick="getSearchList()" style="border-radius: 0; line-height: 0.25px;">
 							   		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 									  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 									</svg>
