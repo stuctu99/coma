@@ -300,7 +300,6 @@
 	} 
 
 	//사원 퇴사후 아이디 비활성화
-	
 	function fn_deleteEmp(e){
 		if(confirm("해당 사원을 퇴사처리 하시겠습니까?")){
 			fetch("${path}/admin/deleteEmp",{

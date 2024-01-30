@@ -30,6 +30,7 @@ td {
 }
 td
 </style>
+<%-- ${commute} --%>
 <body onload="autoReload();">
 	<div class="coma-container containerbig">
 		<div class="row" style = "padding: 40px 0px 20px; ">
