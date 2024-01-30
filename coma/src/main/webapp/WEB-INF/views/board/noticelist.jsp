@@ -253,7 +253,7 @@ window.onbeforeunload = function (event) {
 						console.log(searchBoard);
 						str='<tr>'
 						str += "<td>"+searchBoard.boardDate+"</td>";
-						str+="<td><a href = '/board/freePost?boardNo=" + searchBoard.boardNo + "'>" + searchBoard.boardTitle + "</a></td>";
+						str+="<td><a href = '${path}/board/freePost?boardNo=" + searchBoard.boardNo + "'>" + searchBoard.boardTitle + "</a></td>";
 						str+="<td>"+searchBoard.boardReadCount+"</td>";
 						str+="</tr>";
 						console.log(str);

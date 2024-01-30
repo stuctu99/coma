@@ -282,7 +282,7 @@ function deleteSelected() {
 						console.log(searchBoard);
 						str='<tr>'
 						str += "<td class='no'>"+searchBoard.boardNo+"</td>";
-						str+="<td class='title'><a href = '/board/freePost?boardNo=" + searchBoard.boardNo + "'>" + searchBoard.boardTitle + "</a></td>";
+						str+="<td class='title'><a href = '${path}/board/freePost?boardNo=" + searchBoard.boardNo + "'>" + searchBoard.boardTitle + "</a></td>";
 						str+="<td class='writer'>"+searchBoard.emp.empName+"</td>";
 						str+="<td class='date'>"+searchBoard.boardDate+"</td>";
 						str+="<td class='read'>"+searchBoard.boardReadCount+"</td>";
