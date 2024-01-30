@@ -244,7 +244,7 @@ window.onbeforeunload = function (event) {
 		console.log($("form[name=searchForm]"));
 		$.ajax({
 			type: 'POST',
-			url : "/board/search",
+			url : "${path}/board/search",
 			data : $("form[name=searchForm]").serialize(),
 			success : function(result){
 				$('.table > tbody').empty();
@@ -252,9 +252,8 @@ window.onbeforeunload = function (event) {
 					result.forEach(function(searchBoard){
 						console.log(searchBoard);
 						str='<tr>'
-						str += "<td>"+searchBoard.boardDate+"</td>";
-						str+="<td><a href = '${path}/board/freePost?boardNo=" + searchBoard.boardNo + "'>" + searchBoard.boardTitle + "</a></td>";
-						str+="<td>"+searchBoard.boardReadCount+"</td>";
+						str+= "<td class='board-date'>"+searchBoard.boardDate+"</td>";
+						str+="<td class='board-title'><a href = '${path}/board/freePost?boardNo=" + searchBoard.boardNo + "'>" + searchBoard.boardTitle + "</a></td>";
 						str+="</tr>";
 						console.log(str);
 						$('.table').append(str);

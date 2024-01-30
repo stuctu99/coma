@@ -38,13 +38,13 @@
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-				<div class="table col-10" style="text-align: center">
+				<div class="table col-9" style="text-align: center">
 		    	<table class="board_detail">
 					<tbody>
 						<tr>
 							<th class="col-1">글 번호</th>
-							<td class="col-2">${post.boardNo }</td>
-							<th class="col-3">조회수</th>
+							<td class="col-1">${post.boardNo }</td>
+							<th class="col-1">조회수</th>
 							<td>${post.boardReadCount }</td>
 						</tr>
 						<tr>
@@ -55,7 +55,7 @@
 						</tr>
 						<tr>
 							<th  class="col-1">제목</th>
-							<td class="col-5">
+							<td class="col-1">
 								<div class="" id="contents" name="contents" style="">
 									<span>${post.boardTitle}</span>
 								</div>
@@ -99,7 +99,7 @@
 													${checkHour>0?"".concat(checkHour).concat("시간 전"):'방금전'}
 												</span>
 										    </c:when>
-							                <c:when test="${free.boardDate.year == 124}">
+							                <c:when test="${replys.replyDate.year == 124}">
 							                    <fmt:formatDate value="${replys.replyDate}" pattern="MM-dd" />
 							                </c:when>
 							                <c:otherwise>
@@ -123,8 +123,6 @@
 						          	<td style="text-align: right;">ㄴ${replys.emp.empName}</td>
 						            <td>${replys.replyContent}</td>
 									<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
-									<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
-									<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
 									<td class="date">
 										<c:choose>
 											<c:when test="${replys.replyDate.toLocalDate() == today}">
@@ -134,7 +132,7 @@
 													${checkHour>0?"".concat(checkHour).concat("시간 전"):'방금전'}
 												</span>
 										    </c:when>
-							                <c:when test="${free.boardDate.year == 124}">
+							                <c:when test="${replys.replyDate.year == 124}">
 							                    <fmt:formatDate value="${replys.replyDate}" pattern="MM-dd" />
 							                </c:when>
 							                <c:otherwise>
