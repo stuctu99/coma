@@ -28,7 +28,7 @@
 					  	</c:choose>
 					</div>
 						<c:if test="${post.emp.empId eq e.empId or fn:contains(e.authorities, 'ADMIN')}">	
-							<div class="col-2">
+							<div class="col-2" style="display: flex">
 								<a href="${path }/board/updatePost?boardNo=${post.boardNo }" class="btn btn-primary"><span>글수정</span></a>
 								<a href="${path }/board/delete?boardNo=${post.boardNo }&boardType=${post.boardType}" class="btn btn-primary"><span>글삭제</span></a>
 							</div>
@@ -42,9 +42,9 @@
 		    	<table class="board_detail">
 					<tbody>
 						<tr>
-							<th>글 번호</th>
-							<td>${post.boardNo }</td>
-							<th>조회수</th>
+							<th class="col-1">글 번호</th>
+							<td class="col-2">${post.boardNo }</td>
+							<th class="col-3">조회수</th>
 							<td>${post.boardReadCount }</td>
 						</tr>
 						<tr>
@@ -54,12 +54,14 @@
 							<td>${post.boardDate }</td>
 						</tr>
 						<tr>
-							<th>제목</th>
-							<td>
+							<th  class="col-1">제목</th>
+							<td class="col-5">
 								<div class="" id="contents" name="contents" style="">
 									<span>${post.boardTitle}</span>
 								</div>
 							</td>
+							<th style="border-bottom: 1px solid #e9ecef;">
+							<td style="border-bottom: 1px solid #e9ecef;">
 						</tr>
 						<tr>
 							<th></th>
@@ -88,7 +90,7 @@
 									<!-- 날짜출력 오늘: 시간:분 , 24년도-> 월-일만 출력, 그 외 년-월-일 -->
 									<c:set var="today" value="<%=java.time.LocalDate.now()%>"/>
 									<c:set var="todayHour" value="<%=java.time.LocalDateTime.now().getHour()%>"/>
-									<td class="date">
+									<td class="date" style="border-bottom: 1px solid #e9ecef;">
 										<c:choose>
 											<c:when test="${replys.replyDate.toLocalDate() == today}">
 												<c:set var="checkHour" value='<%=(new java.util.Date().getTime()-((Reply)pageContext.getAttribute("replys"))
@@ -106,7 +108,7 @@
 							            </c:choose>
 									</td>
 									
-						            <td>
+						            <td style="border-bottom: 1px solid #e9ecef;">
 						            	<input type="hidden" class="replyNo" name="replyNo" value="${replys.replyNo }">
 						            	<button type="button" value="${replys.replyNo }" class="btn btn-outline-primary reply-re">답글</button>
 						            	<c:if test="${replys.emp.empId eq e.empId }">
@@ -148,8 +150,8 @@
 						    </c:forEach>
 						        
 						    <tr>
-							<th>${e.empName }</th>
-							<td class="view_text">
+							<th style="border: none;">${e.empName }</th>
+							<td class="view_text col-10">
 								<form action="${path }/board/writeReply" class="reply-editor" method="post">
 								<div class="d-flex">
 									<input type="hidden" name="boardNo" value="${post.boardNo }">
@@ -168,7 +170,7 @@
 							<td>
 								 <c:choose>
 								     <c:when test="${post.boardType eq 0}">
-								         <a href="${path}/board/noticelist" class="btn btn-primary"><span>글목록</span></a>
+								         <a href="${path}/board/noticelist" class="btn btn-primary" style="border-to"><span>글목록</span></a>
 								     </c:when>
 								     <c:otherwise>
 								         <a href="${path}/board/freelist" class="btn btn-primary"><span>글목록</span></a>
