@@ -48,9 +48,9 @@ public class AdminController {
 		int day=sysDate.getDayOfMonth();
 		String dateData="";
 		if(month>=10) {
-			dateData=year+"-"+month+"-"+day;
+			dateData=year+"/"+month+"/"+day;
 		}else {
-			dateData=year+"-0"+month+"-"+day;			
+			dateData=year+"/0"+month+"/"+day;			
 		}
 		List<Map> emps=service.selectEmpAllByCurrent(Map.of("cPage",cPage,"numPerpage",numPerpage,"dateData", dateData));	//전체 사원 데이터 가져오기
 		//List<Map> empCommutes=service.selectEmpAllByCommute();	//사원 근태 형황 데이터 가져오기
@@ -121,9 +121,9 @@ public class AdminController {
 		int day=sysDate.getDayOfMonth();
 		String dateData="";
 		if(month>=10) {
-			dateData=year+"-"+month+"-"+day;
+			dateData=year+"/"+month+"/"+day;
 		}else {
-			dateData=year+"-0"+month+"-"+day;			
+			dateData=year+"/0"+month+"/"+day;			
 		}
 		searchMap.put("dateData", dateData);
 		List<Map> emps=service.searchEmp(searchMap);
