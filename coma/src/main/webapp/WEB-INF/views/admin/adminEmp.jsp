@@ -115,7 +115,7 @@
 		        		<td><button type="button" class="btn btn-secondary btn-sm"><a href="${path }/mypage/EmployeeDetails?empId=${e.EMP_ID }"><c:out value="${e.EMP_NAME }"/></a></button></td>
 		        		<td><c:out value="${e.JOB_TYPE }"/></td>
  		        		<td><c:out value="${e.DEPT_TYPE }"/></td>
-		        		<td><button type="button" class="btn btn-secondary btn-sm"><a href="${path }/commute/empCommute?empId=${e.EMP_ID }"><c:out value="${e.EMP_COMMUTE_STATUS != 'nonAntte'?e.EMP_COMMUTE_STATUS:'미출근'}"/></a></button></td>
+		        		<td><button type="button" class="btn btn-secondary btn-sm"><a href="${path }/commute/empCommute?empId=${e.EMP_ID }"><c:out value="${e.EMP_COMMUTE_STATUS != null?e.EMP_COMMUTE_STATUS:'미출근'}"/></a></button></td>
 		        		<td>
 			        		<button type="button" class="btn btn-outline-danger btn-sm" onclick="fn_deleteEmp('${e.EMP_ID }');">퇴사처리</button>
 		        		</td>
@@ -235,7 +235,7 @@
 					$button2.type = 'button';
 					$button2.className = 'btn btn-secondary btn-sm';
 					$a2.setAttribute('href','${path }/commute/empCommute?empId='+e.EMP_ID);
-					if(e.EMP_COMMUTE_STATUS!='nonAntte'){
+					if(e.EMP_COMMUTE_STATUS!=null){
 						$a2.innerText=e.EMP_COMMUTE_STATUS;
 					}else{
 						$a2.innerText='미출근';
